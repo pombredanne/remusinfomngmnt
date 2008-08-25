@@ -1,0 +1,54 @@
+/*******************************************************************************
+ * Copyright (c) 2008 Tom Seidel, Remus Software
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *
+ * Contributors:
+ *     Tom Seidel - initial API and implementation
+ *******************************************************************************/
+package org.remus.infomngmnt.core.extension;
+
+import java.io.InputStream;
+
+import org.apache.lucene.document.Document;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.remus.infomngmnt.InformationUnit;
+
+/**
+ * @author Tom Seidel <toms@tomosch.de>
+ *
+ */
+public abstract class AbstractInformationRepresentation {
+
+	private InformationUnit value;
+
+	public AbstractInformationRepresentation() {
+		super();
+	}
+
+	/**
+	 * Executed after the serialization of the Info-Object. Useful
+	 * @param derivedFile
+	 */
+	public abstract void handlePostBuild(IFile derivedFile, IProgressMonitor monitor) throws CoreException;
+
+	public abstract InputStream handleSerialization(IProgressMonitor monitor) throws CoreException;
+
+	public abstract Document handleIndexing(IProgressMonitor monitor) throws CoreException;
+
+	public InformationUnit getValue() {
+		return this.value;
+	}
+
+	public void setValue(final InformationUnit value) {
+		this.value = value;
+	}
+
+
+
+}

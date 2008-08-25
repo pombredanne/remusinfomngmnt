@@ -16,10 +16,14 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.remus.infomngmnt.application.application"
-            name="RCP Application">
+            name="Remus Information Management">
          <property
                name="windowImages"
                value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+         </property>
+         <property
+               name="appName"
+               value="Remus Information Management">
          </property>
       </product>
    </extension>

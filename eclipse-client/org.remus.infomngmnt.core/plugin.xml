@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+	<extension-point id="informationType" name="A pluggable Content-Type for Information" schema="schema/informationType.exsd"/>
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
@@ -21,6 +22,14 @@
                org.eclipse.emf.edit.provider.IItemPropertySource"
             uri="http://remus-software.org/infomngmnt">
       </factory>
+   </extension>
+   <extension
+         id="id1"
+         point="org.eclipse.core.resources.builders">
+      <builder>
+         <run
+               class="org.remus.infomngmnt.core.builder.InformationBuilder">
+         </run></builder>
    </extension>
 
 </plugin>

@@ -6,6 +6,39 @@
       <primaryWizard
             id="org.remus.infomngmnt.ui.primaryWizard1">
       </primaryWizard>
+      <wizard
+            category="Information Management"
+            class="org.remus.infomngmnt.project.NewProjectWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            id="org.remus.infomngmnt.ui.newInfoProjectWizard"
+            name="Information Project"
+            project="true">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.remus.infomngmnt.perspective.Perspective"
+            id="org.remus.infomngmnt.ui.infoperspective"
+            name="Information Management">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.remus.infomngmnt.ui.views.NavigationView"
+            id="org.remus.infomngmnt.ui.views.NavigationView"
+            name="Navigation">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.ui.newInfoProjectWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

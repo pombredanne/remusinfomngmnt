@@ -3,7 +3,6 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
-
    <configIni use="default">
    </configIni>
 
@@ -13,14 +12,12 @@
 
    <windowImages i16="icons/alt_window_16.gif" i32="icons/alt_window_32.gif"/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>
@@ -42,9 +39,12 @@
       <plugin id="org.eclipse.core.runtime"/>
       <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
       <plugin id="org.eclipse.emf.common"/>
+      <plugin id="org.eclipse.emf.common.ui"/>
       <plugin id="org.eclipse.emf.ecore"/>
+      <plugin id="org.eclipse.emf.ecore.edit"/>
       <plugin id="org.eclipse.emf.ecore.xmi"/>
       <plugin id="org.eclipse.emf.edit"/>
+      <plugin id="org.eclipse.emf.edit.ui"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.preferences"/>

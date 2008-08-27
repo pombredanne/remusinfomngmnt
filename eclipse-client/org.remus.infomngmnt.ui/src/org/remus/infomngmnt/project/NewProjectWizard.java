@@ -64,6 +64,8 @@ import org.eclipse.ui.internal.util.PrefUtil;
 import org.eclipse.ui.internal.wizards.newresource.ResourceMessages;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.remus.infomngmnt.core.builder.InformationBuilder;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -173,6 +175,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		final IProjectDescription description = workspace
 		.newProjectDescription(newProjectHandle.getName());
 		description.setLocationURI(location);
+		addBuilder(description);
 
 		// update the referenced project if provided
 		// create the new project operation
@@ -194,7 +197,6 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 				}
 			}
 		};
-
 		// run the new project creation operation
 		try {
 			getContainer().run(true, true, op);
@@ -243,6 +245,10 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		return this.newProject;
 	}
 
+	private void addBuilder(IProjectDescription description) {
+		ResourceUtil.addBuilder(description, InformationBuilder.BUILDER_ID);
+
+	}
 	/**
 	 * Updates the perspective based on the current settings in the
 	 * Workbench/Perspectives preference page.

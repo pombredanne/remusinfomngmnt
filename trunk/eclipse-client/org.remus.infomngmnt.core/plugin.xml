@@ -24,12 +24,21 @@
       </factory>
    </extension>
    <extension
-         id="id1"
+         id="infobuilder"
          point="org.eclipse.core.resources.builders">
       <builder>
          <run
                class="org.remus.infomngmnt.core.builder.InformationBuilder">
          </run></builder>
+   </extension>
+   <extension
+         id="id1"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.remus.infomngmnt.core.ProjectNature1">
+         </run>
+      </runtime>
    </extension>
 
 </plugin>

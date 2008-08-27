@@ -371,6 +371,35 @@ public interface InfomngmntPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.ApplicationRootImpl <em>Application Root</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.ApplicationRootImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getApplicationRoot()
+	 * @generated
+	 */
+	int APPLICATION_ROOT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Root Categories</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICATION_ROOT__ROOT_CATEGORIES = 0;
+
+	/**
+	 * The number of structural features of the '<em>Application Root</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICATION_ROOT_FEATURE_COUNT = 1;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationUnit <em>Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -630,6 +659,27 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getInformationUnitListItem_WorkspacePath();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.ApplicationRoot <em>Application Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Application Root</em>'.
+	 * @see org.remus.infomngmnt.ApplicationRoot
+	 * @generated
+	 */
+	EClass getApplicationRoot();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.ApplicationRoot#getRootCategories <em>Root Categories</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Root Categories</em>'.
+	 * @see org.remus.infomngmnt.ApplicationRoot#getRootCategories()
+	 * @see #getApplicationRoot()
+	 * @generated
+	 */
+	EReference getApplicationRoot_RootCategories();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -852,6 +902,24 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = eINSTANCE.getInformationUnitListItem_WorkspacePath();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ApplicationRootImpl <em>Application Root</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.ApplicationRootImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getApplicationRoot()
+		 * @generated
+		 */
+		EClass APPLICATION_ROOT = eINSTANCE.getApplicationRoot();
+
+		/**
+		 * The meta object literal for the '<em><b>Root Categories</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference APPLICATION_ROOT__ROOT_CATEGORIES = eINSTANCE.getApplicationRoot_RootCategories();
 
 	}
 

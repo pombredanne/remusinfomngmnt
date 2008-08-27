@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.remus.infomngmnt.core.CorePlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -25,6 +26,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class InformationBuilder extends IncrementalProjectBuilder {
+
+	public static final String BUILDER_ID = CorePlugin.PLUGIN_ID + ".infobuilder"; //$NON-NLS-1$
 
 	/**
 	 * 

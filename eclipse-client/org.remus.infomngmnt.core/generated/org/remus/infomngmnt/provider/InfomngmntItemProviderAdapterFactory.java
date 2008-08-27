@@ -176,6 +176,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.ApplicationRoot} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ApplicationRootItemProvider applicationRootItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.ApplicationRoot}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createApplicationRootAdapter() {
+		if (applicationRootItemProvider == null) {
+			applicationRootItemProvider = new ApplicationRootItemProvider(this);
+		}
+
+		return applicationRootItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -278,6 +301,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (usageItemProvider != null) usageItemProvider.dispose();
 		if (categoryItemProvider != null) categoryItemProvider.dispose();
 		if (informationUnitListItemItemProvider != null) informationUnitListItemItemProvider.dispose();
+		if (applicationRootItemProvider != null) applicationRootItemProvider.dispose();
 	}
 
 }

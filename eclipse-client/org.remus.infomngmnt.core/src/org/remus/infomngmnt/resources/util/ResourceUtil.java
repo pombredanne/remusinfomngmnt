@@ -4,10 +4,10 @@ import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
+import org.remus.infomngmnt.core.builder.InformationBuilder;
 
 public class ResourceUtil {
 
-	public static final String BUILDER_NAME = "net.remus.infobroker.resources.remus_infoBuilder";
 	public static final String FILE_EXTENSION = "infobroker";
 	public static final String PRIMARY_CONTENT_FILE = "primaryContent.info"; //$NON-NLS-1$
 	public static final String SETTINGS_FOLDER = ".settings"; //$NON-NLS-1$
@@ -19,7 +19,7 @@ public class ResourceUtil {
 			final ICommand[] buildSpec = project.getDescription()
 			.getBuildSpec();
 			for (final ICommand command : buildSpec) {
-				if (BUILDER_NAME.equals(command.getBuilderName())) {
+				if (InformationBuilder.BUILDER_ID.equals(command.getBuilderName())) {
 					return true;
 				}
 			}
@@ -111,7 +111,5 @@ public class ResourceUtil {
 		return null;
 
 	}
-
-	// public static CreateFileOperation getFileOperation
 
 }

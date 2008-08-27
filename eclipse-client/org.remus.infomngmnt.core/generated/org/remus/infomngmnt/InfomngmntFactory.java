@@ -70,6 +70,15 @@ public interface InfomngmntFactory extends EFactory {
 	InformationUnitListItem createInformationUnitListItem();
 
 	/**
+	 * Returns a new object of class '<em>Application Root</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Application Root</em>'.
+	 * @generated
+	 */
+	ApplicationRoot createApplicationRoot();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

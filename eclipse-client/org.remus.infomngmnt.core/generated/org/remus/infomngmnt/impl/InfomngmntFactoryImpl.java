@@ -72,6 +72,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.USAGE: return createUsage();
 			case InfomngmntPackage.CATEGORY: return createCategory();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM: return createInformationUnitListItem();
+			case InfomngmntPackage.APPLICATION_ROOT: return createApplicationRoot();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -115,6 +116,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public InformationUnitListItem createInformationUnitListItem() {
 		InformationUnitListItemImpl informationUnitListItem = new InformationUnitListItemImpl();
 		return informationUnitListItem;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ApplicationRoot createApplicationRoot() {
+		ApplicationRootImpl applicationRoot = new ApplicationRootImpl();
+		return applicationRoot;
 	}
 
 	/**

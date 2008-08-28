@@ -21,6 +21,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResourceStatus;
@@ -64,7 +66,11 @@ import org.eclipse.ui.internal.util.PrefUtil;
 import org.eclipse.ui.internal.wizards.newresource.ResourceMessages;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.core.builder.InformationBuilder;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -100,10 +106,10 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	@Override
 	public boolean performFinish() {
 		createNewProject();
-
 		if (this.newProject == null) {
 			return false;
 		}
+		createDescriptor();
 
 		updatePerspective();
 
@@ -111,6 +117,35 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		return true;
 	}
 
+	private void createDescriptor() {
+		IRunnableWithProgress op = new IRunnableWithProgress() {
+
+			public void run(IProgressMonitor monitor)
+			throws InvocationTargetException, InterruptedException {
+				IFolder folder = NewProjectWizard.this.newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
+				try {
+					folder.create(true, true, monitor);
+					IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
+					Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory());
+					rootCategory.setLabel(NewProjectWizard.this.newProject.getName());
+					ApplicationModelPool.getInstance().getModel().getRootCategories().add(rootCategory);
+				} catch (CoreException e) {
+					throw new InvocationTargetException(e);
+				}
+			}
+
+		};
+		try {
+			getContainer().run(true, false, op);
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	/**
 	 * Stores the configuration element for the wizard. The config element will
 	 * be used in <code>performFinish</code> to set the result perspective.

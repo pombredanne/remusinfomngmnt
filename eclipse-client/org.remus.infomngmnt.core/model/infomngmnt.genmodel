@@ -37,5 +37,9 @@
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItem/workspacePath"/>
     </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//ApplicationRoot">
+      <genFeatures children="true" createChild="true" propertyCategory="" propertySortChoices="true"
+          ecoreFeature="ecore:EReference infomngmnt.ecore#//ApplicationRoot/rootCategories"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

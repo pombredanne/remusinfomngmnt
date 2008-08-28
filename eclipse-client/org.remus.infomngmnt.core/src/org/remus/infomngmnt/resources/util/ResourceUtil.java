@@ -1,8 +1,12 @@
 package org.remus.infomngmnt.resources.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.remus.infomngmnt.core.builder.InformationBuilder;
 
@@ -27,6 +31,17 @@ public class ResourceUtil {
 			// do nothing
 		}
 		return false;
+	}
+
+	public static IProject[] getRelevantProjects() {
+		List<IProject> returnValue = new ArrayList<IProject>();
+		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		for (IProject project : projects) {
+			if (isRelevantProject(project)) {
+				returnValue.add(project);
+			}
+		}
+		return returnValue.toArray(new IProject[returnValue.size()]);
 	}
 
 	/**

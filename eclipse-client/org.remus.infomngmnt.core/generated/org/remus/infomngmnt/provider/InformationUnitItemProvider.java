@@ -332,7 +332,7 @@ public class InformationUnitItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((InformationUnit)object).getId();
+		String label = ((InformationUnit)object).getLabel();
 		return label == null || label.length() == 0 ?
 			getString("_UI_InformationUnit_type") :
 			getString("_UI_InformationUnit_type") + " " + label;

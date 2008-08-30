@@ -64,7 +64,14 @@ public class NewInfoProjectWizardPage extends WizardPage {
 
 	private WorkingSetGroup workingSetGroup;
 
-	private Text text_1;
+	private Text descriptionLabel;
+
+	protected String descriptionText;
+
+	public String getDescriptionText() {
+		return this.descriptionText;
+	}
+
 
 	// constants
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
@@ -111,8 +118,13 @@ public class NewInfoProjectWizardPage extends WizardPage {
 		descriptionLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true));
 		descriptionLabel.setText("Description");
 
-		this.text_1 = new Text(descriptionGroup, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
-		this.text_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		this.descriptionLabel = new Text(descriptionGroup, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
+		this.descriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		descriptionLabel.addListener(SWT.Modify, new Listener() {
+			public void handleEvent(Event event) {
+				NewInfoProjectWizardPage.this.descriptionText = ((Text) event.widget).getText();
+			}
+		});
 
 
 		// Scale the button based on the rest of the dialog
@@ -378,6 +390,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	public boolean useDefaults() {
 		return this.locationArea.isDefault();
 	}
+
 
 	/**
 	 * Return the selected working sets, if any. If this page is not configured

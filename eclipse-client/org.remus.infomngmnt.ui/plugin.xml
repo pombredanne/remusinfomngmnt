@@ -14,6 +14,11 @@
             name="Information Project"
             project="true">
       </wizard>
+      <wizard
+            class="org.remus.infomngmnt.category.NewCategoryWizard"
+            id="org.remus.infomngmnt.ui.newCategoryWizard"
+            name="Category">
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">

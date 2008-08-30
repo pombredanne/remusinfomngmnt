@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -128,7 +129,10 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 					IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
 					Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory());
 					rootCategory.setLabel(NewProjectWizard.this.newProject.getName());
+					rootCategory.setId(new UniversalUniqueIdentifier().toString());
+					rootCategory.setDescription(NewProjectWizard.this.page1.getDescriptionText());
 					ApplicationModelPool.getInstance().getModel().getRootCategories().add(rootCategory);
+					EditingUtil.getInstance().saveObjectToResource(rootCategory);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				}

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.Category#getLabel <em>Label</em>}</li>
  *   <li>{@link org.remus.infomngmnt.Category#getChildren <em>Children</em>}</li>
  *   <li>{@link org.remus.infomngmnt.Category#getInformationUnit <em>Information Unit</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.Category#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -121,5 +122,31 @@ public interface Category extends EObject {
 	 * @generated
 	 */
 	EList<InformationUnitListItem> getInformationUnit();
+
+	/**
+	 * Returns the value of the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Description</em>' attribute.
+	 * @see #setDescription(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getCategory_Description()
+	 * @model
+	 * @generated
+	 */
+	String getDescription();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.Category#getDescription <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Description</em>' attribute.
+	 * @see #getDescription()
+	 * @generated
+	 */
+	void setDescription(String value);
 
 } // Category

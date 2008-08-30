@@ -8,7 +8,7 @@
   <foreignModel>infomngmnt.ecore</foreignModel>
   <genPackages prefix="Infomngmnt" basePackage="org.remus" disposableProviderFactory="true"
       ecorePackage="infomngmnt.ecore#/">
-    <genClasses ecoreClass="infomngmnt.ecore#//InformationUnit">
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationUnit" labelFeature="#//infomngmnt/AbstractInformationUnit/label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/stringValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/longValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/boolValue"/>
@@ -24,13 +24,15 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Usage/lastAccess"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Usage/accessCount"/>
     </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//Category">
+    <genClasses ecoreClass="infomngmnt.ecore#//Category" labelFeature="#//infomngmnt/Category/label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/label"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/children"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/informationUnit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/description"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="infomngmnt.ecore#//AbstractInformationUnit">
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//AbstractInformationUnit"
+        labelFeature="#//infomngmnt/AbstractInformationUnit/label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//AbstractInformationUnit/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//AbstractInformationUnit/label"/>
     </genClasses>

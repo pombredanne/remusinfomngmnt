@@ -315,13 +315,22 @@ public interface InfomngmntPackage extends EPackage {
 	int CATEGORY__INFORMATION_UNIT = 3;
 
 	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__DESCRIPTION = 4;
+
+	/**
 	 * The number of structural features of the '<em>Category</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY_FEATURE_COUNT = 4;
+	int CATEGORY_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl <em>Information Unit List Item</em>}' class.
@@ -606,6 +615,17 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getCategory_InformationUnit();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Category#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.remus.infomngmnt.Category#getDescription()
+	 * @see #getCategory()
+	 * @generated
+	 */
+	EAttribute getCategory_Description();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.AbstractInformationUnit <em>Abstract Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -858,6 +878,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CATEGORY__INFORMATION_UNIT = eINSTANCE.getCategory_InformationUnit();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CATEGORY__DESCRIPTION = eINSTANCE.getCategory_Description();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl <em>Abstract Information Unit</em>}' class.

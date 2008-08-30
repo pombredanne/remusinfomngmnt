@@ -77,6 +77,7 @@ public class CategoryItemProvider
 
 			addIdPropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -117,6 +118,28 @@ public class CategoryItemProvider
 				 getString("_UI_Category_label_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Category_label_feature", "_UI_Category_type"),
 				 InfomngmntPackage.Literals.CATEGORY__LABEL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Description feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDescriptionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Category_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Category_description_feature", "_UI_Category_type"),
+				 InfomngmntPackage.Literals.CATEGORY__DESCRIPTION,
 				 true,
 				 false,
 				 false,
@@ -175,7 +198,7 @@ public class CategoryItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Category)object).getId();
+		String label = ((Category)object).getLabel();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Category_type") :
 			getString("_UI_Category_type") + " " + label;
@@ -195,6 +218,7 @@ public class CategoryItemProvider
 		switch (notification.getFeatureID(Category.class)) {
 			case InfomngmntPackage.CATEGORY__ID:
 			case InfomngmntPackage.CATEGORY__LABEL:
+			case InfomngmntPackage.CATEGORY__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case InfomngmntPackage.CATEGORY__CHILDREN:

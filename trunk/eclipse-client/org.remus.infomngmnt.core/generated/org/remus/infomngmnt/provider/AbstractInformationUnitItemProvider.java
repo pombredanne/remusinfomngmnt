@@ -130,7 +130,7 @@ public class AbstractInformationUnitItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((AbstractInformationUnit)object).getId();
+		String label = ((AbstractInformationUnit)object).getLabel();
 		return label == null || label.length() == 0 ?
 			getString("_UI_AbstractInformationUnit_type") :
 			getString("_UI_AbstractInformationUnit_type") + " " + label;

@@ -1,10 +1,11 @@
 package org.remus.infomngmnt.ui.views;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -12,13 +13,18 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.part.ViewPart;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 
+/**
+ * @author Tom Seidel <tom.seidel@remus-software.org>
+ */
 public class NavigationView extends ViewPart {
 
 	public static final String ID = "org.remus.infomngmnt.ui.views.NavigationView"; //$NON-NLS-1$
 	private AdapterFactoryContentProvider contentProvider;
-	private AdapterFactoryLabelProvider labelProvider;
+	private DelegatingStyledCellLabelProvider labelProvider;
 	private TreeViewer viewer;
+	private TreeViewerColumn tvc1;
 
 	/**
 	 * Create contents of the view part
@@ -33,6 +39,8 @@ public class NavigationView extends ViewPart {
 
 		this.viewer = new TreeViewer(tree);
 
+		this.tvc1 = new TreeViewerColumn(this.viewer, SWT.NONE);
+		this.tvc1.getColumn().setWidth(200);
 
 		initProvider();
 		initInput();
@@ -48,9 +56,9 @@ public class NavigationView extends ViewPart {
 
 	private void initProvider() {
 		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
-		this.labelProvider = new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory());
+		this.labelProvider = new DelegatingStyledCellLabelProvider(new NavigationCellLabelProvider());
 		this.viewer.setContentProvider(this.contentProvider);
-		this.viewer.setLabelProvider(this.labelProvider);
+		this.tvc1.setLabelProvider(this.labelProvider);
 
 	}
 

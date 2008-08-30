@@ -1,0 +1,136 @@
+/*******************************************************************************
+ * Copyright (c) 2008 Tom Seidel, Remus Software
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *
+ * Contributors:
+ *     Tom Seidel - initial API and implementation
+ *******************************************************************************/
+
+package org.remus.infomngmnt.category;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
+import org.eclipse.ui.dialogs.ISelectionStatusValidator;
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.model.CategoryUtil;
+import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
+
+/**
+ * The new category wizard provides the ability for the user to
+ * create new category under a given category.
+ * 
+ * 
+ * @author Tom Seidel <tom.seidel@remus-software.org>
+ * @noextend This class is not intended to be subclassed by clients.
+ * @noinstantiate This class is not intended to be instantiated by clients.
+ */
+public class NewCategoryWizardPage extends WizardPage {
+
+	private Text parentCategoryText;
+	private Text categoryNameText;
+	private final Category selection;
+	/**
+	 * Create the wizard
+	 * @param selection
+	 */
+	public NewCategoryWizardPage(Category selection) {
+		super("wizardPage");
+		this.selection = selection;
+		setTitle("Wizard Page title");
+		setDescription("Wizard Page description");
+	}
+
+	/**
+	 * Create contents of the wizard
+	 * @param parent
+	 */
+	public void createControl(Composite parent) {
+		Composite container = new Composite(parent, SWT.NULL);
+		final GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 3;
+		container.setLayout(gridLayout);
+		//
+
+		final Label parentCategoryLabel = new Label(container, SWT.NONE);
+		parentCategoryLabel.setText("Parent Category");
+
+		this.categoryNameText = new Text(container, SWT.BORDER);
+		this.categoryNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.categoryNameText.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				validatePage();
+			}
+		});
+		if (this.selection != null) {
+			this.categoryNameText.setText(CategoryUtil.categoryToString(this.selection));
+		}
+		final Button browseButton = new Button(container, SWT.NONE);
+		browseButton.setText("B&rowse...");
+		browseButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
+				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory());
+				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),adapterFactoryLabelProvider,adapterFactoryContentProvider);
+				dialog.setAllowMultiple(false);
+				dialog.setDoubleClickSelects(true);
+				dialog.setValidator(new ISelectionStatusValidator() {
+					public IStatus validate(Object[] selection) {
+						if (selection.length == 0) {
+							return StatusCreator.newStatus("No parent category selected...");
+						}
+						return StatusCreator.newStatus(IStatus.OK, "",null);
+					}
+				});
+				dialog.setInput(ApplicationModelPool.getInstance().getModel());
+				dialog.setInitialSelection(NewCategoryWizardPage.this.selection);
+				if (dialog.open() == IDialogConstants.OK_ID) {
+					Object[] result = dialog.getResult();
+					Category selectedCategory = (Category) result[0];
+					NewCategoryWizardPage.this.categoryNameText.setText(CategoryUtil.categoryToString(selectedCategory));
+				}
+			}
+
+		});
+
+		final Label nameLabel = new Label(container, SWT.NONE);
+		nameLabel.setText("Name");
+
+		this.parentCategoryText = new Text(container, SWT.BORDER);
+		this.parentCategoryText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+
+		setControl(container);
+
+	}
+
+	/**
+	 * Validates the wizard-page. The page is complete
+	 * if the Parent-Category path is a valid path to categories
+	 * 
+	 * @see CategoryUtil#categoryToString(Category)
+	 */
+	protected void validatePage() {
+		// TODO Auto-generated method stub
+
+	}
+
+
+}

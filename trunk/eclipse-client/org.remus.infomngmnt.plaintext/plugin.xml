@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            editPage="org.remus.infomngmnt.plaintext.FormPage:1"
+            icon="icons/text.png"
+            presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
+            type="PLAINTEXT">
+      </information>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="org.remus.infomngmnt.plaintext.wizard.NewPlainTextWizard"
+            id="org.remus.infomngmnt.plaintext.wizard1"
+            name="Plain Text">
+      </wizard>
+   </extension>
+
+</plugin>

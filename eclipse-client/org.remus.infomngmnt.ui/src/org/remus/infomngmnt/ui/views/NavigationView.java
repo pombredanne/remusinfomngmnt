@@ -4,12 +4,14 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -18,7 +20,7 @@ import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class NavigationView extends ViewPart {
+public class NavigationView extends ViewPart implements ISetSelectionTarget {
 
 	public static final String ID = "org.remus.infomngmnt.ui.views.NavigationView"; //$NON-NLS-1$
 	private AdapterFactoryContentProvider contentProvider;
@@ -34,14 +36,14 @@ public class NavigationView extends ViewPart {
 	public void createPartControl(Composite parent) {
 
 		//
-		Tree tree = new Tree(parent, SWT.SINGLE | SWT.FULL_SELECTION);
+		Tree tree = new Tree(parent, SWT.MULTI | SWT.FULL_SELECTION);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		this.viewer = new TreeViewer(tree);
 
 		this.tvc1 = new TreeViewerColumn(this.viewer, SWT.NONE);
 		this.tvc1.getColumn().setWidth(200);
-
+		getSite().setSelectionProvider(this.viewer);
 		initProvider();
 		initInput();
 		createActions();
@@ -88,6 +90,11 @@ public class NavigationView extends ViewPart {
 	@Override
 	public void setFocus() {
 		// Set the focus
+	}
+
+	public void selectReveal(ISelection selection) {
+		this.viewer.setSelection(selection, true);
+
 	}
 
 }

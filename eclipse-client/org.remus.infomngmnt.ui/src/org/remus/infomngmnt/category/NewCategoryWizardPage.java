@@ -45,9 +45,11 @@ import org.remus.infomngmnt.core.model.StatusCreator;
  */
 public class NewCategoryWizardPage extends WizardPage {
 
+	private Text newCategoriyName;
 	private Text parentCategoryText;
-	private Text categoryNameText;
 	private final Category selection;
+	private String newCategoryValue;
+	private String parentCategoryValue;
 	/**
 	 * Create the wizard
 	 * @param selection
@@ -73,16 +75,17 @@ public class NewCategoryWizardPage extends WizardPage {
 		final Label parentCategoryLabel = new Label(container, SWT.NONE);
 		parentCategoryLabel.setText("Parent Category");
 
-		this.categoryNameText = new Text(container, SWT.BORDER);
-		this.categoryNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		this.categoryNameText.addListener(SWT.Selection, new Listener() {
+		this.parentCategoryText = new Text(container, SWT.BORDER);
+		this.parentCategoryText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		if (this.selection != null) {
+			this.parentCategoryText.setText(CategoryUtil.categoryToString(this.selection));
+		}
+		this.parentCategoryText.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
 				validatePage();
 			}
 		});
-		if (this.selection != null) {
-			this.categoryNameText.setText(CategoryUtil.categoryToString(this.selection));
-		}
+
 		final Button browseButton = new Button(container, SWT.NONE);
 		browseButton.setText("B&rowse...");
 		browseButton.addListener(SWT.Selection, new Listener() {
@@ -105,7 +108,7 @@ public class NewCategoryWizardPage extends WizardPage {
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();
 					Category selectedCategory = (Category) result[0];
-					NewCategoryWizardPage.this.categoryNameText.setText(CategoryUtil.categoryToString(selectedCategory));
+					NewCategoryWizardPage.this.parentCategoryText.setText(CategoryUtil.categoryToString(selectedCategory));
 				}
 			}
 
@@ -114,9 +117,14 @@ public class NewCategoryWizardPage extends WizardPage {
 		final Label nameLabel = new Label(container, SWT.NONE);
 		nameLabel.setText("Name");
 
-		this.parentCategoryText = new Text(container, SWT.BORDER);
-		this.parentCategoryText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-
+		this.newCategoriyName = new Text(container, SWT.BORDER);
+		this.newCategoriyName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		this.newCategoriyName.addListener(SWT.Modify, new Listener() {
+			public void handleEvent(Event event) {
+				validatePage();
+			}
+		});
+		setPageComplete(false);
 		setControl(container);
 
 	}
@@ -128,8 +136,24 @@ public class NewCategoryWizardPage extends WizardPage {
 	 * @see CategoryUtil#categoryToString(Category)
 	 */
 	protected void validatePage() {
-		// TODO Auto-generated method stub
+		if (CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText()).getSeverity() == IStatus.OK
+				&& CategoryUtil.isCategoryNameValid(this.newCategoriyName.getText()).getSeverity() == IStatus.OK
+				&& CategoryUtil.isCategoryStructureValid(this.parentCategoryText.getText(),this.newCategoriyName.getText()).getSeverity() == IStatus.OK) {
+			setPageComplete(true);
+			this.newCategoryValue = this.newCategoriyName.getText();
+			this.parentCategoryValue = this.parentCategoryText.getText();
+		} else {
+			setPageComplete(false);
+		}
 
+	}
+
+	public String getNewCategoryValue() {
+		return this.newCategoryValue;
+	}
+
+	public String getParentCategoryValue() {
+		return this.parentCategoryValue;
 	}
 
 

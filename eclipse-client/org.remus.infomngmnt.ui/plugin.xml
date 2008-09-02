@@ -45,5 +45,16 @@
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.remus.infomngmnt.ui.editors.InformationEditor"
+            contributorClass="org.remus.infomngmnt.ui.editors.InformationMultiPageEditorContributor"
+            extensions="infomngmnt"
+            icon="icons/sample.gif"
+            id="org.remus.infomngmnt.ui.editors.InformationEditor"
+            name="InformationInfoEditor">
+      </editor>
+   </extension>
 
 </plugin>

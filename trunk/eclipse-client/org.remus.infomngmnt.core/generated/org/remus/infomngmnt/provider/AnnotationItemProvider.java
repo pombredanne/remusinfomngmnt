@@ -34,16 +34,16 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.remus.infomngmnt.AbstractInformationUnit;
+import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.InfomngmntPackage;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.AbstractInformationUnit} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.Annotation} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AbstractInformationUnitItemProvider
+public class AnnotationItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -57,7 +57,7 @@ public class AbstractInformationUnitItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AbstractInformationUnitItemProvider(AdapterFactory adapterFactory) {
+	public AnnotationItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -72,27 +72,25 @@ public class AbstractInformationUnitItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
-			addLabelPropertyDescriptor(object);
-			addTypePropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Description feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addDescriptionPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AbstractInformationUnit_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractInformationUnit_id_feature", "_UI_AbstractInformationUnit_type"),
-				 InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__ID,
+				 getString("_UI_Annotation_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Annotation_description_feature", "_UI_Annotation_type"),
+				 InfomngmntPackage.Literals.ANNOTATION__DESCRIPTION,
 				 true,
 				 false,
 				 false,
@@ -102,47 +100,14 @@ public class AbstractInformationUnitItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Label feature.
+	 * This returns Annotation.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_AbstractInformationUnit_label_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractInformationUnit_label_feature", "_UI_AbstractInformationUnit_type"),
-				 InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Type feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_AbstractInformationUnit_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractInformationUnit_type_feature", "_UI_AbstractInformationUnit_type"),
-				 InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__TYPE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Annotation"));
 	}
 
 	/**
@@ -153,10 +118,10 @@ public class AbstractInformationUnitItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((AbstractInformationUnit)object).getLabel();
+		String label = ((Annotation)object).getDescription();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AbstractInformationUnit_type") :
-			getString("_UI_AbstractInformationUnit_type") + " " + label;
+			getString("_UI_Annotation_type") :
+			getString("_UI_Annotation_type") + " " + label;
 	}
 
 	/**
@@ -170,10 +135,8 @@ public class AbstractInformationUnitItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(AbstractInformationUnit.class)) {
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__ID:
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
+		switch (notification.getFeatureID(Annotation.class)) {
+			case InfomngmntPackage.ANNOTATION__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

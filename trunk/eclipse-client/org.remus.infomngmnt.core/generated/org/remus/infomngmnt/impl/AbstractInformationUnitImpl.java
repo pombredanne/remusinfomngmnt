@@ -33,6 +33,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -78,6 +79,26 @@ public abstract class AbstractInformationUnitImpl extends EObjectImpl implements
 	 * @ordered
 	 */
 	protected String label = LABEL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String type = TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -145,6 +166,27 @@ public abstract class AbstractInformationUnitImpl extends EObjectImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(String newType) {
+		String oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -152,6 +194,8 @@ public abstract class AbstractInformationUnitImpl extends EObjectImpl implements
 				return getId();
 			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
 				return getLabel();
+			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
+				return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -169,6 +213,9 @@ public abstract class AbstractInformationUnitImpl extends EObjectImpl implements
 				return;
 			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
 				setLabel((String)newValue);
+				return;
+			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
+				setType((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -188,6 +235,9 @@ public abstract class AbstractInformationUnitImpl extends EObjectImpl implements
 			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
 				setLabel(LABEL_EDEFAULT);
 				return;
+			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -204,6 +254,8 @@ public abstract class AbstractInformationUnitImpl extends EObjectImpl implements
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
 				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
+				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -222,6 +274,8 @@ public abstract class AbstractInformationUnitImpl extends EObjectImpl implements
 		result.append(id);
 		result.append(", label: ");
 		result.append(label);
+		result.append(", type: ");
+		result.append(type);
 		result.append(')');
 		return result.toString();
 	}

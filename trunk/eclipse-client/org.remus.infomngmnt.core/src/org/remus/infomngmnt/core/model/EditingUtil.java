@@ -13,7 +13,6 @@
 package org.remus.infomngmnt.core.model;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
@@ -44,14 +43,11 @@ import org.remus.infomngmnt.provider.InfomngmntItemProviderAdapterFactory;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class EditingUtil {
-	public static final String DATE_FORMAT = "MM/dd/yy"; //$NON-NLS-1$
 
 	private static EditingUtil INSTANCE;
 
 	private final EditingDomain editingDomain;
 	private final ComposedAdapterFactory adapterFactory;
-	private final SimpleDateFormat dateFormat;
-
 
 	public static EditingUtil getInstance() {
 		if (EditingUtil.INSTANCE == null) {
@@ -73,7 +69,6 @@ public class EditingUtil {
 		this.editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put
 		(InfomngmntPackage.eNS_URI,
 				InfomngmntPackage.eINSTANCE);
-		this.dateFormat = new SimpleDateFormat(EditingUtil.DATE_FORMAT);
 	}
 
 	/**
@@ -178,12 +173,12 @@ public class EditingUtil {
 		return this.editingDomain;
 	}
 
-	public ComposedAdapterFactory getAdapterFactory() {
-		return this.adapterFactory;
+	public EditingDomain createNewEditingDomain() {
+		return new AdapterFactoryEditingDomain(this.adapterFactory, new BasicCommandStack());
 	}
 
-	public SimpleDateFormat getDateFormat()
-	{
-		return this.dateFormat;
+
+	public ComposedAdapterFactory getAdapterFactory() {
+		return this.adapterFactory;
 	}
 }

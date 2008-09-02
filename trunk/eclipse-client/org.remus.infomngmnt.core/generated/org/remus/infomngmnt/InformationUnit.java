@@ -34,7 +34,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getChildValues <em>Child Values</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getCreationDate <em>Creation Date</em>}</li>
- *   <li>{@link org.remus.infomngmnt.InformationUnit#getType <em>Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getUsageData <em>Usage Data</em>}</li>
  * </ul>
  * </p>
@@ -231,32 +230,6 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @generated
 	 */
 	void setCreationDate(Date value);
-
-	/**
-	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see #setType(String)
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_Type()
-	 * @model
-	 * @generated
-	 */
-	String getType();
-
-	/**
-	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see #getType()
-	 * @generated
-	 */
-	void setType(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Usage Data</b></em>' reference.

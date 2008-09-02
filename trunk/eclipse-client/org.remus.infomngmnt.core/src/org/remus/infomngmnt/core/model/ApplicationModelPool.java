@@ -13,10 +13,14 @@
 package org.remus.infomngmnt.core.model;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -27,6 +31,29 @@ import org.remus.infomngmnt.resources.util.ResourceUtil;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ApplicationModelPool {
+
+	private final class AdapterImplExtension extends EContentAdapter {
+		private final Category category;
+
+		AdapterImplExtension(Category category) {
+			this.category = category;
+		}
+
+		@Override
+		public void notifyChanged(Notification msg) {
+			if (msg.getNotifier() instanceof ResourceImpl) {
+				return;
+			}
+			System.out.println(msg);
+			try {
+				this.category.eResource().save(null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			super.notifyChanged(msg);
+		}
+	}
 
 	private static ApplicationModelPool INSTANCE;
 
@@ -48,13 +75,19 @@ public class ApplicationModelPool {
 		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
 		for (IProject project : relevantProjects) {
 			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator + ResourceUtil.PRIMARY_CONTENT_FILE));
-			Category category = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(), true);
+			final Category category = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(), true);
+			category.eResource().eAdapters().add(new AdapterImplExtension(category));
 			this.model.getRootCategories().add(category);
 		}
 	}
 
 	public ApplicationRoot getModel() {
 		return this.model;
+	}
+
+	public void addRootCategory(Category category) {
+		this.model.getRootCategories().add(category);
+		category.eAdapters().add(new AdapterImplExtension(category));
 	}
 
 }

@@ -50,7 +50,6 @@ import org.remus.infomngmnt.Usage;
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getChildValues <em>Child Values</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getLinks <em>Links</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getCreationDate <em>Creation Date</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getUsageData <em>Usage Data</em>}</li>
  * </ul>
  * </p>
@@ -197,26 +196,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @ordered
 	 */
 	protected Date creationDate = CREATION_DATE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getUsageData() <em>Usage Data</em>}' reference.
@@ -402,27 +381,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Usage getUsageData() {
 		if (usageData != null && usageData.eIsProxy()) {
 			InternalEObject oldUsageData = (InternalEObject)usageData;
@@ -494,8 +452,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return getLinks();
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
 				return getCreationDate();
-			case InfomngmntPackage.INFORMATION_UNIT__TYPE:
-				return getType();
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				if (resolve) return getUsageData();
 				return basicGetUsageData();
@@ -538,9 +494,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
 				setCreationDate((Date)newValue);
 				return;
-			case InfomngmntPackage.INFORMATION_UNIT__TYPE:
-				setType((String)newValue);
-				return;
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				setUsageData((Usage)newValue);
 				return;
@@ -580,9 +533,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
 				setCreationDate(CREATION_DATE_EDEFAULT);
 				return;
-			case InfomngmntPackage.INFORMATION_UNIT__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				setUsageData((Usage)null);
 				return;
@@ -614,8 +564,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return links != null && !links.isEmpty();
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
 				return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
-			case InfomngmntPackage.INFORMATION_UNIT__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				return usageData != null;
 		}
@@ -644,8 +592,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 		result.append(dateValue);
 		result.append(", creationDate: ");
 		result.append(creationDate);
-		result.append(", type: ");
-		result.append(type);
 		result.append(')');
 		return result.toString();
 	}

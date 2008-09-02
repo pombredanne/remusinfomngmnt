@@ -29,7 +29,7 @@ public class ResourceUtil {
 			}
 		} catch (final CoreException e) {
 			// do nothing
-		}
+		}System.out.println("test");
 		return false;
 	}
 

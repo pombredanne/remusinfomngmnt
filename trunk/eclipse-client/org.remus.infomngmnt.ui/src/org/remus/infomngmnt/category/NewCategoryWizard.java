@@ -12,11 +12,16 @@
 
 package org.remus.infomngmnt.category;
 
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.core.model.CategoryUtil;
+import org.remus.infomngmnt.ui.UIUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -47,8 +52,14 @@ public class NewCategoryWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public boolean performFinish() {
-		// TODO Auto-generated method stub
-		return false;
+		String parentCategoryValue = this.page1.getParentCategoryValue();
+		Category findCategory = CategoryUtil.findCategory(parentCategoryValue, true);
+		Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
+		createCategory.setId(new UniversalUniqueIdentifier().toString());
+		createCategory.setLabel(this.page1.getNewCategoryValue());
+		findCategory.getChildren().add(createCategory);
+		UIUtil.selectAndReveal(createCategory, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -60,6 +71,11 @@ public class NewCategoryWizard extends Wizard implements INewWizard {
 			this.selection = (Category) selection.getFirstElement();
 		}
 
+	}
+
+	@Override
+	public boolean canFinish() {
+		return this.page1.isPageComplete();
 	}
 
 }

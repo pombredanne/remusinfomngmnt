@@ -131,7 +131,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 					rootCategory.setLabel(NewProjectWizard.this.newProject.getName());
 					rootCategory.setId(new UniversalUniqueIdentifier().toString());
 					rootCategory.setDescription(NewProjectWizard.this.page1.getDescriptionText());
-					ApplicationModelPool.getInstance().getModel().getRootCategories().add(rootCategory);
+					ApplicationModelPool.getInstance().addRootCategory(rootCategory);
 					EditingUtil.getInstance().saveObjectToResource(rootCategory);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);

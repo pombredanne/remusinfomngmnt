@@ -29,17 +29,19 @@ import org.remus.infomngmnt.core.model.StatusCreator;
  */
 public class NewPlainTextWizardPage extends WizardPage {
 
-	private Text text_4;
-	private Text text_3;
-	private Text text_2;
-	private Text text_1;
-	private Text text;
+	private Text descriptionText;
+	private Text keywordsText;
+	private Text nameText;
+	private Text parentInformationUnitText;
+	private Text parentCategoryText;
 	private InformationUnitListItem selection;
 	private Category category;
 	private Button browserButton;
 	private Button browseButton;
 	private Button categoryButton;
 	private Button informationunitButton;
+	private String categoryString;
+	private String nameString;
 	/**
 	 * Create the wizard
 	 */
@@ -79,14 +81,19 @@ public class NewPlainTextWizardPage extends WizardPage {
 		this.categoryButton.setText("Category");
 		this.categoryButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				NewPlainTextWizardPage.this.text.setEnabled(((Button) event.widget).getSelection());
+				NewPlainTextWizardPage.this.parentCategoryText.setEnabled(((Button) event.widget).getSelection());
 				NewPlainTextWizardPage.this.browserButton.setEnabled(((Button) event.widget).getSelection());
 			}
 		});
 
-		this.text = new Text(parentElementGroup, SWT.BORDER);
-		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
+		this.parentCategoryText = new Text(parentElementGroup, SWT.BORDER);
+		final GridData gd_parentCategoryText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.parentCategoryText.setLayoutData(gd_parentCategoryText);
+		this.parentCategoryText.addListener(SWT.Modify, new Listener() {
+			public void handleEvent(Event event) {
+				validatePage();
+			}
+		});
 		this.browserButton = new Button(parentElementGroup, SWT.NONE);
 		this.browserButton.setText("B&rowse...");
 		this.browserButton.addListener(SWT.Selection, new Listener() {
@@ -109,7 +116,7 @@ public class NewPlainTextWizardPage extends WizardPage {
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();
 					NewPlainTextWizardPage.this.category = (Category) result[0];
-					NewPlainTextWizardPage.this.text.setText(CategoryUtil.categoryToString(NewPlainTextWizardPage.this.category));
+					NewPlainTextWizardPage.this.parentCategoryText.setText(CategoryUtil.categoryToString(NewPlainTextWizardPage.this.category));
 				}
 			}
 		});
@@ -118,12 +125,13 @@ public class NewPlainTextWizardPage extends WizardPage {
 		this.informationunitButton.setText("Information-Unit");
 		this.informationunitButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				NewPlainTextWizardPage.this.text_1.setEnabled(((Button) event.widget).getSelection());
+				NewPlainTextWizardPage.this.parentInformationUnitText.setEnabled(((Button) event.widget).getSelection());
 				NewPlainTextWizardPage.this.browseButton.setEnabled(((Button) event.widget).getSelection());
 			}
 		});
-		this.text_1 = new Text(parentElementGroup, SWT.BORDER);
-		this.text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.parentInformationUnitText = new Text(parentElementGroup, SWT.BORDER);
+		final GridData gd_parentInformationUnitText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.parentInformationUnitText.setLayoutData(gd_parentInformationUnitText);
 
 		this.browseButton = new Button(parentElementGroup, SWT.NONE);
 		this.browseButton.setText("Br&owse...");
@@ -138,35 +146,75 @@ public class NewPlainTextWizardPage extends WizardPage {
 		final Label nameLabel = new Label(propertiesGroup, SWT.NONE);
 		nameLabel.setText("Name");
 
-		this.text_2 = new Text(propertiesGroup, SWT.BORDER);
-		this.text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.nameText = new Text(propertiesGroup, SWT.BORDER);
+		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.nameText.setLayoutData(gd_nameText);
+		this.nameText.addListener(SWT.Modify, new Listener() {
+			public void handleEvent(Event event) {
+				validatePage();
+			}
+		});
+
 
 		final Label keywordsLabel = new Label(propertiesGroup, SWT.NONE);
 		keywordsLabel.setText("Keywords");
 
-		this.text_3 = new Text(propertiesGroup, SWT.BORDER);
-		this.text_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.keywordsText = new Text(propertiesGroup, SWT.BORDER);
+		final GridData gd_keywordsText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.keywordsText.setLayoutData(gd_keywordsText);
+
 
 		final Label descriptionLabel = new Label(propertiesGroup, SWT.NONE);
 		descriptionLabel.setText("Description");
 
-		this.text_4 = new Text(propertiesGroup, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
-		this.text_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		this.descriptionText = new Text(propertiesGroup, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, true);
+		this.descriptionText.setLayoutData(gd_descriptionText);
 		presetValues();
 		setPageComplete(false);
 		setControl(container);
 	}
 
+	void validatePage() {
+		if(this.categoryButton.getSelection()) {
+			this.categoryString = this.parentCategoryText.getText();
+			IStatus categoryPathStringValid = CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText());
+			if (categoryPathStringValid.getSeverity() != IStatus.OK) {
+				setErrorMessage(categoryPathStringValid.getMessage());
+				setPageComplete(false);
+				return;
+			}
+		}
+		IStatus categoryNameValid = CategoryUtil.isCategoryNameValid(this.nameText.getText());
+		this.nameString = this.nameText.getText();
+		if (categoryNameValid.getSeverity() != IStatus.OK) {
+			setErrorMessage(categoryNameValid.getMessage());
+			setPageComplete(false);
+			return;
+		}
+		setErrorMessage(null);
+		setPageComplete(true);
+
+	}
+
 	private void presetValues() {
 		if (this.category != null) {
 			this.categoryButton.setSelection(true);
-			this.text.setText(CategoryUtil.categoryToString(this.category));
+			this.parentCategoryText.setText(CategoryUtil.categoryToString(this.category));
 		} else if (this.selection != null) {
 			this.informationunitButton.setSelection(true);
 		} else {
 			this.categoryButton.setSelection(true);
 		}
 
+	}
+
+	public String getCategoryString() {
+		return this.categoryString;
+	}
+
+	public String getNameString() {
+		return this.nameString;
 	}
 
 }

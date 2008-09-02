@@ -4,7 +4,7 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            editPage="org.remus.infomngmnt.plaintext.FormPage:1"
+            editPage="org.remus.infomngmnt.plaintext.ui.FormPage"
             icon="icons/text.png"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
             type="PLAINTEXT">

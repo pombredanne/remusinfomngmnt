@@ -72,7 +72,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.remus.infobroker.infobroker.extension.AbstractInformationRepresentation:"/>
+                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.AbstractInformationRepresentation:"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -82,7 +82,17 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.remus.infobroker.infobroker.extension.AbstractCreationFactory:"/>
+                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.AbstractCreationFactory:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="editPage" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.ui.forms.editor.FormPage:"/>
                </appinfo>
             </annotation>
          </attribute>

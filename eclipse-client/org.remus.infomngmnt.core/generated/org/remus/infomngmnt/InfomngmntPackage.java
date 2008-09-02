@@ -96,13 +96,22 @@ public interface InfomngmntPackage extends EPackage {
 	int ABSTRACT_INFORMATION_UNIT__LABEL = 1;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_INFORMATION_UNIT__TYPE = 2;
+
+	/**
 	 * The number of structural features of the '<em>Abstract Information Unit</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT = 2;
+	int ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitImpl <em>Information Unit</em>}' class.
@@ -131,6 +140,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int INFORMATION_UNIT__LABEL = ABSTRACT_INFORMATION_UNIT__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT__TYPE = ABSTRACT_INFORMATION_UNIT__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>String Value</b></em>' attribute.
@@ -205,22 +223,13 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__CREATION_DATE = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 7;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INFORMATION_UNIT__TYPE = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 8;
-
-	/**
 	 * The feature id for the '<em><b>Usage Data</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__USAGE_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 9;
+	int INFORMATION_UNIT__USAGE_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>Information Unit</em>' class.
@@ -229,7 +238,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 10;
+	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.UsageImpl <em>Usage</em>}' class.
@@ -361,6 +370,15 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM__LABEL = ABSTRACT_INFORMATION_UNIT__LABEL;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM__TYPE = ABSTRACT_INFORMATION_UNIT__TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Workspace Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -406,6 +424,35 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int APPLICATION_ROOT_FEATURE_COUNT = 1;
+
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.AnnotationImpl <em>Annotation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.AnnotationImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAnnotation()
+	 * @generated
+	 */
+	int ANNOTATION = 6;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION__DESCRIPTION = 0;
+
+	/**
+	 * The number of structural features of the '<em>Annotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION_FEATURE_COUNT = 1;
 
 
 	/**
@@ -505,17 +552,6 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInformationUnit_CreationDate();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.InformationUnit#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.remus.infomngmnt.InformationUnit#getType()
-	 * @see #getInformationUnit()
-	 * @generated
-	 */
-	EAttribute getInformationUnit_Type();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.InformationUnit#getUsageData <em>Usage Data</em>}'.
@@ -658,6 +694,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getAbstractInformationUnit_Label();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.AbstractInformationUnit#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.remus.infomngmnt.AbstractInformationUnit#getType()
+	 * @see #getAbstractInformationUnit()
+	 * @generated
+	 */
+	EAttribute getAbstractInformationUnit_Type();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationUnitListItem <em>Information Unit List Item</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -698,6 +745,27 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getApplicationRoot_RootCategories();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.Annotation <em>Annotation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Annotation</em>'.
+	 * @see org.remus.infomngmnt.Annotation
+	 * @generated
+	 */
+	EClass getAnnotation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Annotation#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.remus.infomngmnt.Annotation#getDescription()
+	 * @see #getAnnotation()
+	 * @generated
+	 */
+	EAttribute getAnnotation_Description();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -794,14 +862,6 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INFORMATION_UNIT__CREATION_DATE = eINSTANCE.getInformationUnit_CreationDate();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute INFORMATION_UNIT__TYPE = eINSTANCE.getInformationUnit_Type();
 
 		/**
 		 * The meta object literal for the '<em><b>Usage Data</b></em>' reference feature.
@@ -914,6 +974,14 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute ABSTRACT_INFORMATION_UNIT__LABEL = eINSTANCE.getAbstractInformationUnit_Label();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ABSTRACT_INFORMATION_UNIT__TYPE = eINSTANCE.getAbstractInformationUnit_Type();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl <em>Information Unit List Item</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -948,6 +1016,24 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference APPLICATION_ROOT__ROOT_CATEGORIES = eINSTANCE.getApplicationRoot_RootCategories();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AnnotationImpl <em>Annotation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.AnnotationImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAnnotation()
+		 * @generated
+		 */
+		EClass ANNOTATION = eINSTANCE.getAnnotation();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ANNOTATION__DESCRIPTION = eINSTANCE.getAnnotation_Description();
 
 	}
 

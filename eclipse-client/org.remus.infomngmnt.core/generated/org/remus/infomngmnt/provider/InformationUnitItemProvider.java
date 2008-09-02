@@ -79,7 +79,6 @@ public class InformationUnitItemProvider
 			addDateValuePropertyDescriptor(object);
 			addLinksPropertyDescriptor(object);
 			addCreationDatePropertyDescriptor(object);
-			addTypePropertyDescriptor(object);
 			addUsageDataPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -240,28 +239,6 @@ public class InformationUnitItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Type feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_InformationUnit_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_type_feature", "_UI_InformationUnit_type"),
-				 InfomngmntPackage.Literals.INFORMATION_UNIT__TYPE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This adds a property descriptor for the Usage Data feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -356,7 +333,6 @@ public class InformationUnitItemProvider
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
-			case InfomngmntPackage.INFORMATION_UNIT__TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:

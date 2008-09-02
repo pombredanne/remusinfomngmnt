@@ -199,6 +199,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Annotation} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AnnotationItemProvider annotationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.Annotation}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAnnotationAdapter() {
+		if (annotationItemProvider == null) {
+			annotationItemProvider = new AnnotationItemProvider(this);
+		}
+
+		return annotationItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -302,6 +325,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (categoryItemProvider != null) categoryItemProvider.dispose();
 		if (informationUnitListItemItemProvider != null) informationUnitListItemItemProvider.dispose();
 		if (applicationRootItemProvider != null) applicationRootItemProvider.dispose();
+		if (annotationItemProvider != null) annotationItemProvider.dispose();
 	}
 
 }

@@ -15,10 +15,12 @@ package org.remus.infomngmnt.core.builder;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.remus.infomngmnt.core.CorePlugin;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -28,12 +30,13 @@ import org.remus.infomngmnt.core.CorePlugin;
 public class InformationBuilder extends IncrementalProjectBuilder {
 
 	public static final String BUILDER_ID = CorePlugin.PLUGIN_ID + ".infobuilder"; //$NON-NLS-1$
+	private final InformationDeltaVisitor visitor;
 
 	/**
 	 * 
 	 */
 	public InformationBuilder() {
-		// TODO Auto-generated constructor stub
+		this.visitor = new InformationDeltaVisitor();
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +46,19 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
 	throws CoreException {
 
+		if (getDelta(getProject()) != null) {
+			proceedDelta(getDelta(getProject()), monitor);
+		}
 		return null;
+	}
+
+	private void proceedDelta(final IResourceDelta delta, final IProgressMonitor monitor) {
+		try {
+			this.visitor.setMonitor(monitor);
+			delta.accept(this.visitor);
+		} catch (CoreException e) {
+			InfomngmntEditPlugin.INSTANCE.log(e.getStatus());
+		}
 	}
 
 }

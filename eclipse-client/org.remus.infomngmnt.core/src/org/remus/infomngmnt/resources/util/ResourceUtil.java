@@ -1,22 +1,27 @@
 package org.remus.infomngmnt.resources.util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.remus.infomngmnt.core.builder.InformationBuilder;
 
 public class ResourceUtil {
 
-	public static final String FILE_EXTENSION = "infobroker";
+	public static final String FILE_EXTENSION = "info";
 	public static final String PRIMARY_CONTENT_FILE = "primaryContent.info"; //$NON-NLS-1$
 	public static final String SETTINGS_FOLDER = ".settings"; //$NON-NLS-1$
 	public static final String BIN_FOLDER = "bin"; //$NON-NLS-1$
-	private static final String HTML_EXTENSION = "html";
+	public static final String HTML_EXTENSION = "html";
 
 	public static boolean isRelevantProject(final IProject project) {
 		try {
@@ -125,6 +130,17 @@ public class ResourceUtil {
 		}
 		return null;
 
+	}
+
+	public static String computeBinFileLocation(IFile originalFile) {
+		IPath binPath = originalFile.getProject().getLocation().append(new Path(ResourceUtil.BIN_FOLDER + File.separator + originalFile.getProjectRelativePath()));
+		return Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(binPath.toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
+	}
+
+	public static IPath computeBinFileFulllPath(IFile originalFile) {
+		String replacedProjectRelativePath = Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(originalFile.getProjectRelativePath().toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
+		IPath binPath = originalFile.getProject().getFullPath().append(new Path(ResourceUtil.BIN_FOLDER)).append(replacedProjectRelativePath);
+		return binPath;
 	}
 
 }

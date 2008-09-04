@@ -62,7 +62,7 @@ import org.eclipse.ui.statushandlers.AbstractStatusHandler;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
-import org.remus.infomngmnt.perspective.Perspective;
+import org.remus.infomngmnt.ui.perspective.Perspective;
 
 
 

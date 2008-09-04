@@ -9,13 +9,17 @@
  * Contributors:
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
-package org.remus.infomngmnt.core.extension;
+package org.remus.infomngmnt.core.internal.extension;
 
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
+import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 
 /**
  * A object represenation of a registered information type. This class is
@@ -23,7 +27,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * @noextend This class is not intended to be subclassed by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
-public class InfoType {
+public class InfoType implements IInfoType{
 
 	/** The configuration element which comes from the plugin-registry **/
 	private final IConfigurationElement configurationElement;
@@ -44,7 +48,7 @@ public class InfoType {
 	 * @param createFactoryClass
 	 * @param imageFilePath
 	 */
-	InfoType(final IConfigurationElement configurationElement,
+	public InfoType(final IConfigurationElement configurationElement,
 			final String contributor,
 			final String type,
 			final String createFactoryClass,

@@ -11,17 +11,15 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.extension;
 
-import java.io.InputStream;
-
 import org.apache.lucene.document.Document;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.remus.infomngmnt.InformationUnit;
 
+
 /**
- * @author Tom Seidel <toms@tomosch.de>
- *
+ * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class AbstractInformationRepresentation {
 
@@ -37,9 +35,10 @@ public abstract class AbstractInformationRepresentation {
 	 */
 	public abstract void handlePostBuild(IFile derivedFile, IProgressMonitor monitor) throws CoreException;
 
-	public abstract InputStream handleSerialization(IProgressMonitor monitor) throws CoreException;
+	public abstract String handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
 
 	public abstract Document handleIndexing(IProgressMonitor monitor) throws CoreException;
+
 
 	public InformationUnit getValue() {
 		return this.value;

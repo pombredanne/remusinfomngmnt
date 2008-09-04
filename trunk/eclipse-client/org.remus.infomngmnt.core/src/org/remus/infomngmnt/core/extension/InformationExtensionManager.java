@@ -18,10 +18,11 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.remus.infomngmnt.core.CorePlugin;
+import org.remus.infomngmnt.core.internal.extension.InfoType;
 
 /**
  * @author Tom Seidel <toms@tomosch.de>
- *
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class InformationExtensionManager {
 
@@ -39,7 +40,7 @@ public class InformationExtensionManager {
 
 	private static InformationExtensionManager INSTANCE;
 
-	private Map<String,InfoType> items;
+	private Map<String,IInfoType> items;
 
 	public static InformationExtensionManager getInstance() {
 		if (INSTANCE == null) {
@@ -57,7 +58,7 @@ public class InformationExtensionManager {
 	}
 
 	private void init() {
-		this.items = new HashMap<String,InfoType>();
+		this.items = new HashMap<String,IInfoType>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
 		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
@@ -71,7 +72,7 @@ public class InformationExtensionManager {
 		}
 	}
 
-	public InfoType getInfoTypeByType(final String type) {
+	public IInfoType getInfoTypeByType(final String type) {
 		return this.items.get(type);
 	}
 

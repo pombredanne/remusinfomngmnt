@@ -1,4 +1,4 @@
-package org.remus.infomngmnt.perspective;
+package org.remus.infomngmnt.ui.perspective;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;

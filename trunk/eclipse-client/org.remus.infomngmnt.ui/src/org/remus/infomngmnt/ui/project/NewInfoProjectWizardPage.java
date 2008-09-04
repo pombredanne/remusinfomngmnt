@@ -1,4 +1,4 @@
-package org.remus.infomngmnt.project;
+package org.remus.infomngmnt.ui.project;
 
 import java.net.URI;
 

@@ -17,8 +17,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.forms;bundle-version="3.3.100"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.remus.infomngmnt.perspective,
- org.remus.infomngmnt.project,
- org.remus.infomngmnt.ui,
+Export-Package: org.remus.infomngmnt.ui,
  org.remus.infomngmnt.ui.editors,
+ org.remus.infomngmnt.ui.extension,
+ org.remus.infomngmnt.ui.perspective,
+ org.remus.infomngmnt.ui.project,
  org.remus.infomngmnt.ui.views

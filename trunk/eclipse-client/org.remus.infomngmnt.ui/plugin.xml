@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+   <extension-point id="informationUi" name="informationUi" schema="schema/informationUi.exsd"/>
    <extension
          point="org.eclipse.ui.newWizards">
       <primaryWizard
@@ -8,14 +9,14 @@
       </primaryWizard>
       <wizard
             category="Information Management"
-            class="org.remus.infomngmnt.project.NewProjectWizard"
+            class="org.remus.infomngmnt.ui.project.NewProjectWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             id="org.remus.infomngmnt.ui.newInfoProjectWizard"
             name="Information Project"
             project="true">
       </wizard>
       <wizard
-            class="org.remus.infomngmnt.category.NewCategoryWizard"
+            class="org.remus.infomngmnt.ui.category.NewCategoryWizard"
             id="org.remus.infomngmnt.ui.newCategoryWizard"
             name="Category">
       </wizard>
@@ -23,7 +24,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="org.remus.infomngmnt.perspective.Perspective"
+            class="org.remus.infomngmnt.ui.perspective.Perspective"
             id="org.remus.infomngmnt.ui.infoperspective"
             name="Information Management">
       </perspective>

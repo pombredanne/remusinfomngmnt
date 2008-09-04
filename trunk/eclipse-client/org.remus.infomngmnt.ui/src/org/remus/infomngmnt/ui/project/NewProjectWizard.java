@@ -10,7 +10,7 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.project;
+package org.remus.infomngmnt.ui.project;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;

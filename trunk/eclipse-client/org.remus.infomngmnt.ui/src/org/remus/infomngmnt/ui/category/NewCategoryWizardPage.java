@@ -10,7 +10,7 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.category;
+package org.remus.infomngmnt.ui.category;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;

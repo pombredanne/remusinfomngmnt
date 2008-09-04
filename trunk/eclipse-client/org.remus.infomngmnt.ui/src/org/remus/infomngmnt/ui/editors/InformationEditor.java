@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IMarker;
@@ -64,6 +65,9 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.extension.IEditPage;
+import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 
 public class InformationEditor extends SharedHeaderFormEditor implements IEditingDomainProvider, IGotoMarker{
 
@@ -231,6 +235,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			// Ignore.
 		}
 	};
+
 	private ViewPage page1;
 	private ComposedAdapterFactory adapterFactory;
 	private AdapterFactoryEditingDomain editingDomain;
@@ -255,6 +260,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		site.getPage().addPartListener(this.partListener);
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this.resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
 		createModel();
+
 	}
 
 
@@ -263,7 +269,15 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	{
 		try
 		{
-			addPage( this.page1 = new ViewPage( this ) );
+			addPage(this.page1 = new ViewPage(this ,getPrimaryModel()));
+			List<IEditPage> editPageByType = UIExtensionManager.getInstance().getEditPageByType(getPrimaryModel().getType());
+			for (int i = 0, n = editPageByType.size(); i < n; i++) {
+				AbstractInformationFormPage editPage = editPageByType.get(i).getEditPage();
+				editPage.initialize(this);
+				addPage(editPage);
+				setPageImage(i + 1, editPageByType.get(i).getImage().createImage());
+			}
+
 		}
 		catch ( final PartInitException e )
 		{

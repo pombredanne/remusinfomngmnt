@@ -12,8 +12,6 @@
 
 package org.remus.infomngmnt.plaintext.extension;
 
-import java.io.InputStream;
-
 import org.apache.lucene.document.Document;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -41,10 +39,9 @@ AbstractInformationRepresentation {
 	}
 
 	@Override
-	public InputStream handleSerialization(IProgressMonitor monitor)
+	public String handleHtmlGeneration(IProgressMonitor monitor)
 	throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
+		return getValue().getStringValue();
 	}
 
 }

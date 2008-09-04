@@ -4,7 +4,6 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            editPage="org.remus.infomngmnt.plaintext.ui.FormPage"
             icon="icons/text.png"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
             type="PLAINTEXT">
@@ -17,6 +16,15 @@
             id="org.remus.infomngmnt.plaintext.wizard1"
             name="Plain Text">
       </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.plaintext.ui.FormPage"
+            icon="icons/text.png"
+            id="editPage1"
+            type="PLAINTEXT">
+      </editPage>
    </extension>
 
 </plugin>

@@ -1,12 +1,15 @@
 package org.remus.infomngmnt.plaintext.ui;
 
-import org.eclipse.ui.forms.editor.FormEditor;
+import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
-public class FormPage extends org.eclipse.ui.forms.editor.FormPage {
+public class FormPage extends AbstractInformationFormPage {
 
-	public FormPage(FormEditor editor, String id, String title) {
-		super(editor, id, title);
-		// TODO Auto-generated constructor stub
+	@Override
+	protected String getString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
 
 }

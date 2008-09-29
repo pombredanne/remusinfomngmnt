@@ -36,14 +36,11 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget {
 	public void createPartControl(Composite parent) {
 
 		//
-		Tree tree = new Tree(parent, SWT.MULTI | SWT.FULL_SELECTION);
+		Tree tree = new Tree(parent, SWT.MULTI);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		this.viewer = new TreeViewer(tree);
 
-		this.tvc1 = new TreeViewerColumn(this.viewer, SWT.NONE);
-		this.tvc1.getColumn().setWidth(200);
-		getSite().setSelectionProvider(this.viewer);
 		initProvider();
 		initInput();
 		createActions();
@@ -60,7 +57,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget {
 		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
 		this.labelProvider = new DelegatingStyledCellLabelProvider(new NavigationCellLabelProvider());
 		this.viewer.setContentProvider(this.contentProvider);
-		this.tvc1.setLabelProvider(this.labelProvider);
+		this.viewer.setLabelProvider(this.labelProvider);
 
 	}
 

@@ -32,4 +32,14 @@ public class EditorUtil {
 		return Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(binPath.toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
 	}
 
+	public static IFile getBinFile(IFileEditorInput input) {
+		IFile file = input.getFile();
+		return file.getProject()
+		.getFile(new Path(ResourceUtil.BIN_FOLDER).append(Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(file.getName()).replaceFirst(ResourceUtil.HTML_EXTENSION)));
+	}
+
+
+
+
+
 }

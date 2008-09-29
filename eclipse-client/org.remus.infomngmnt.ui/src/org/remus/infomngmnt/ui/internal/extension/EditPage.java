@@ -34,6 +34,7 @@ public class EditPage implements IEditPage {
 	private final String contributor;
 	private final String imageFilePath;
 	private final String id;
+	private final String label;
 
 
 
@@ -50,27 +51,26 @@ public class EditPage implements IEditPage {
 			final String contributor,
 			final String type,
 			final String id,
+			final String label,
 			final String imageFilePath) {
 		this.configurationElement = configurationElement;
 		this.contributor = contributor;
 		this.type = type;
 		this.id = id;
+		this.label = label;
 		this.imageFilePath = imageFilePath;
 
 	}
 
 
 	public AbstractInformationFormPage getEditPage() {
-		if (this.formPage == null) {
-			try {
-				this.formPage =
-					(AbstractInformationFormPage) this.configurationElement
-					.createExecutableExtension(UIExtensionManager.EDIT_PAGE_ATT);
-			} catch (final CoreException e) {
-				//TODO Logging
-			}
+
+		try {
+			return (AbstractInformationFormPage) this.configurationElement
+			.createExecutableExtension(UIExtensionManager.EDIT_PAGE_ATT);
+		} catch (CoreException e) {
+			throw new IllegalArgumentException("Could not initialize edit-page");
 		}
-		return this.formPage;
 	}
 
 	public String getType() {
@@ -87,6 +87,11 @@ public class EditPage implements IEditPage {
 
 	public String getId() {
 		return this.id;
+	}
+
+
+	public String getLabel() {
+		return this.label;
 	}
 
 }

@@ -39,6 +39,8 @@ public class UIExtensionManager {
 
 	public static final String ICON_ATT = "icon"; //$NON-NLS-1$
 
+	public static final String LABEL_ATT = "label"; //$NON-NLS-1$
+
 	public static final String EDIT_PAGE_ATT = "editpage"; //$NON-NLS-1$
 
 	private static UIExtensionManager INSTANCE;
@@ -70,6 +72,7 @@ public class UIExtensionManager {
 					configurationElement.getContributor().getName(),
 					configurationElement.getAttribute(TYPE_ATT),
 					configurationElement.getAttribute(ID_ATT),
+					configurationElement.getAttribute(LABEL_ATT),
 					configurationElement.getAttribute(ICON_ATT));
 			if (this.items.get(configurationElement.getAttribute(TYPE_ATT)) == null) {
 				this.items.put(editPage.getType(),new ArrayList<IEditPage>());

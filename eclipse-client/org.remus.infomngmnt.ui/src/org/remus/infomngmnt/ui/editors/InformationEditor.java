@@ -58,6 +58,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.editor.IFormPage;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
@@ -255,11 +256,12 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	public void init(final IEditorSite site, final IEditorInput editorInput) {
 		setSite(site);
 		setInputWithNotify(editorInput);
-		setPartName(editorInput.getName());
+
 		//site.setSelectionProvider(this);
 		site.getPage().addPartListener(this.partListener);
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this.resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
 		createModel();
+		setPartName(getPrimaryModel().getLabel());
 
 	}
 
@@ -274,8 +276,10 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			for (int i = 0, n = editPageByType.size(); i < n; i++) {
 				AbstractInformationFormPage editPage = editPageByType.get(i).getEditPage();
 				editPage.initialize(this);
+				editPage.setModelObject(getPrimaryModel());
 				addPage(editPage);
 				setPageImage(i + 1, editPageByType.get(i).getImage().createImage());
+				setPageText(i + 1, editPageByType.get(i).getLabel());
 			}
 
 		}
@@ -397,6 +401,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 	private InformationUnit primaryModel;
 
+	private boolean dirty;
+
 
 
 
@@ -410,6 +416,18 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		}
 	}
 
+	public void setDirty(boolean dirty) {
+		if (dirty != this.dirty) {
+			this.dirty = dirty;
+			firePropertyChange(PROP_DIRTY);
+		}
+	}
+
+	@Override
+	public boolean isDirty() {
+		return this.dirty;
+	}
+
 
 	/**
 	 * This is for implementing {@link IEditorPart} and simply saves the model file.
@@ -419,6 +437,12 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	 */
 	@Override
 	public void doSave(final IProgressMonitor progressMonitor) {
+		for (int i=0; i<this.pages.size(); i++) {
+			if (this.pages.get(i) != null && ((IFormPage)this.pages.get(i)).isDirty()) {
+				((IFormPage)this.pages.get(i)).doSave(progressMonitor);
+				progressMonitor.internalWorked(i);
+			}
+		}
 		// Save only resources that have actually changed.
 		//
 		final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
@@ -468,6 +492,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		}
 		this.updateProblemIndication = true;
 		updateProblemIndication();
+		setDirty(false);
 	}
 
 	/**

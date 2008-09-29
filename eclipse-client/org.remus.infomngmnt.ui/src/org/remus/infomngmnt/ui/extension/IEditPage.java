@@ -28,4 +28,6 @@ public interface IEditPage {
 
 	String getId();
 
+	String getLabel();
+
 }

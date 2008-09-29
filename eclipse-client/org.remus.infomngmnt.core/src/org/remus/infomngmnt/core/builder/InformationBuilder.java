@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.builder;
 
 import java.util.Map;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -21,6 +22,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -45,6 +47,17 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 	@Override
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
 	throws CoreException {
+		switch (kind) {
+		case FULL_BUILD:
+			IFolder folder = getProject().getFolder(ResourceUtil.BIN_FOLDER);
+			if (!folder.exists()) {
+				folder.create(true, true, monitor);
+			}
+			break;
+		default:
+			break;
+		}
+
 
 		if (getDelta(getProject()) != null) {
 			proceedDelta(getDelta(getProject()), monitor);

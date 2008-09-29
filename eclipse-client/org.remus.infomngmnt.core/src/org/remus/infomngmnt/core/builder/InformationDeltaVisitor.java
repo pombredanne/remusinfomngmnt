@@ -48,9 +48,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 		for (IResourceDelta resourceDelta : affectedChildren) {
 			InformationUnit objectFromFile = null;
 			IInfoType infoTypeByType = null;
-			if (resourceDelta.getResource().getType() == IResource.FOLDER
-					&& resourceDelta.getResource().getParent().getType() == IResource.PROJECT
-					&& ResourceUtil.SETTINGS_FOLDER.equals(resourceDelta.getResource().getName())) {
+			if (resourceDelta.getResource().getParent() != null
+					&& resourceDelta.getResource().getParent().getName().equals(ResourceUtil.SETTINGS_FOLDER)) {
 				return;
 			}
 
@@ -104,7 +103,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(computeBinFilePath);
 		ByteArrayInputStream byteArrayInputStream = null;
 		try {
-			byteArrayInputStream = new ByteArrayInputStream(content.getBytes(origFile.getCharset()));
+			byteArrayInputStream = new ByteArrayInputStream(content == null ? new byte[0] :content.getBytes(origFile.getCharset()));
 			if (file.exists()) {
 				file.setContents(byteArrayInputStream, true,true, progressMonitor);
 			} else {

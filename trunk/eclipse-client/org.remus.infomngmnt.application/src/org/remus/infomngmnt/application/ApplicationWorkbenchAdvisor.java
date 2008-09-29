@@ -146,6 +146,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 		// make sure we always save and restore workspace state
 		configurer.setSaveAndRestore(true);
 
+
 		// register workspace adapters
 		WorkbenchAdapterBuilder.registerAdapters();
 

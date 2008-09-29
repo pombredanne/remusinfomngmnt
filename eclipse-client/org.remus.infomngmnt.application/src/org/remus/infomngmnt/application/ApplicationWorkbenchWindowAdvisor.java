@@ -85,6 +85,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		}
 	};
 
+
+
 	private IAdaptable lastInput;
 
 	private IWorkbenchAction openPerspectiveAction;
@@ -101,6 +103,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			final IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 		this.wbAdvisor = wbAdvisor;
+
 	}
 
 	/*
@@ -192,8 +195,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 
 		configurer.setInitialSize(new Point(1024, 768));
-		configurer.setShowCoolBar(false);
+		configurer.setShowCoolBar(true);
 		configurer.setShowStatusLine(true);
+		configurer.setShowMenuBar(true);
 		configurer.setShowProgressIndicator(true);
 		hookTitleUpdateListeners(configurer);
 	}

@@ -22,6 +22,10 @@
                value="icons/alt_window_16.gif,icons/alt_window_32.gif">
          </property>
          <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+         <property
                name="appName"
                value="Remus Information Management">
          </property>

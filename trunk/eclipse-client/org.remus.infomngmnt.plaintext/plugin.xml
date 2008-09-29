@@ -23,6 +23,7 @@
             editpage="org.remus.infomngmnt.plaintext.ui.FormPage"
             icon="icons/text.png"
             id="editPage1"
+            label="Edit"
             type="PLAINTEXT">
       </editPage>
    </extension>

@@ -68,6 +68,25 @@ public interface InfomngmntPackage extends EPackage {
 	InfomngmntPackage eINSTANCE = org.remus.infomngmnt.impl.InfomngmntPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.AdapterImpl <em>Adapter</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.AdapterImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAdapter()
+	 * @generated
+	 */
+	int ADAPTER = 9;
+
+	/**
+	 * The number of structural features of the '<em>Adapter</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADAPTER_FEATURE_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl <em>Abstract Information Unit</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +103,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_INFORMATION_UNIT__ID = 0;
+	int ABSTRACT_INFORMATION_UNIT__ID = ADAPTER_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -93,7 +112,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_INFORMATION_UNIT__LABEL = 1;
+	int ABSTRACT_INFORMATION_UNIT__LABEL = ADAPTER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -102,7 +121,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_INFORMATION_UNIT__TYPE = 2;
+	int ABSTRACT_INFORMATION_UNIT__TYPE = ADAPTER_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Abstract Information Unit</em>' class.
@@ -111,7 +130,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT = 3;
+	int ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitImpl <em>Information Unit</em>}' class.
@@ -205,13 +224,22 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__CHILD_VALUES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>References</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT__REFERENCES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 6;
+
+	/**
 	 * The feature id for the '<em><b>Links</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__LINKS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 6;
+	int INFORMATION_UNIT__LINKS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
@@ -220,7 +248,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__CREATION_DATE = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 7;
+	int INFORMATION_UNIT__CREATION_DATE = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Usage Data</b></em>' reference.
@@ -229,7 +257,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__USAGE_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 8;
+	int INFORMATION_UNIT__USAGE_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>Information Unit</em>' class.
@@ -238,7 +266,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 9;
+	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 10;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.UsageImpl <em>Usage</em>}' class.
@@ -294,7 +322,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__ID = 0;
+	int CATEGORY__ID = ADAPTER_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -303,7 +331,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__LABEL = 1;
+	int CATEGORY__LABEL = ADAPTER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -312,7 +340,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__CHILDREN = 2;
+	int CATEGORY__CHILDREN = ADAPTER_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Information Unit</b></em>' containment reference list.
@@ -321,7 +349,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__INFORMATION_UNIT = 3;
+	int CATEGORY__INFORMATION_UNIT = ADAPTER_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -330,7 +358,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__DESCRIPTION = 4;
+	int CATEGORY__DESCRIPTION = ADAPTER_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Category</em>' class.
@@ -339,7 +367,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY_FEATURE_COUNT = 5;
+	int CATEGORY_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl <em>Information Unit List Item</em>}' class.
@@ -456,6 +484,90 @@ public interface InfomngmntPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.LinkImpl <em>Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.LinkImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLink()
+	 * @generated
+	 */
+	int LINK = 7;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK__TARGET = 0;
+
+	/**
+	 * The feature id for the '<em><b>Linktype</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK__LINKTYPE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.LinkTypeImpl <em>Link Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.LinkTypeImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkType()
+	 * @generated
+	 */
+	int LINK_TYPE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_TYPE__DESCRIPTION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_TYPE__ID = 1;
+
+	/**
+	 * The feature id for the '<em><b>Image Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_TYPE__IMAGE_PATH = 2;
+
+	/**
+	 * The number of structural features of the '<em>Link Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_TYPE_FEATURE_COUNT = 3;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationUnit <em>Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -530,6 +642,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getInformationUnit_ChildValues();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.InformationUnit#getReferences <em>References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>References</em>'.
+	 * @see org.remus.infomngmnt.InformationUnit#getReferences()
+	 * @see #getInformationUnit()
+	 * @generated
+	 */
+	EReference getInformationUnit_References();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}'.
@@ -768,6 +891,91 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getAnnotation_Description();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.Link <em>Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Link</em>'.
+	 * @see org.remus.infomngmnt.Link
+	 * @generated
+	 */
+	EClass getLink();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.Link#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see org.remus.infomngmnt.Link#getTarget()
+	 * @see #getLink()
+	 * @generated
+	 */
+	EReference getLink_Target();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.Link#getLinktype <em>Linktype</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Linktype</em>'.
+	 * @see org.remus.infomngmnt.Link#getLinktype()
+	 * @see #getLink()
+	 * @generated
+	 */
+	EReference getLink_Linktype();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.LinkType <em>Link Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Link Type</em>'.
+	 * @see org.remus.infomngmnt.LinkType
+	 * @generated
+	 */
+	EClass getLinkType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.remus.infomngmnt.LinkType#getDescription()
+	 * @see #getLinkType()
+	 * @generated
+	 */
+	EAttribute getLinkType_Description();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.remus.infomngmnt.LinkType#getId()
+	 * @see #getLinkType()
+	 * @generated
+	 */
+	EAttribute getLinkType_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#getImagePath <em>Image Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Image Path</em>'.
+	 * @see org.remus.infomngmnt.LinkType#getImagePath()
+	 * @see #getLinkType()
+	 * @generated
+	 */
+	EAttribute getLinkType_ImagePath();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.Adapter <em>Adapter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Adapter</em>'.
+	 * @see org.remus.infomngmnt.Adapter
+	 * @generated
+	 */
+	EClass getAdapter();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -846,6 +1054,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INFORMATION_UNIT__CHILD_VALUES = eINSTANCE.getInformationUnit_ChildValues();
+
+		/**
+		 * The meta object literal for the '<em><b>References</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INFORMATION_UNIT__REFERENCES = eINSTANCE.getInformationUnit_References();
 
 		/**
 		 * The meta object literal for the '<em><b>Links</b></em>' reference list feature.
@@ -1034,6 +1250,76 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ANNOTATION__DESCRIPTION = eINSTANCE.getAnnotation_Description();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.LinkImpl <em>Link</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.LinkImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLink()
+		 * @generated
+		 */
+		EClass LINK = eINSTANCE.getLink();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LINK__TARGET = eINSTANCE.getLink_Target();
+
+		/**
+		 * The meta object literal for the '<em><b>Linktype</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LINK__LINKTYPE = eINSTANCE.getLink_Linktype();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.LinkTypeImpl <em>Link Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.LinkTypeImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkType()
+		 * @generated
+		 */
+		EClass LINK_TYPE = eINSTANCE.getLinkType();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LINK_TYPE__DESCRIPTION = eINSTANCE.getLinkType_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LINK_TYPE__ID = eINSTANCE.getLinkType_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Image Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LINK_TYPE__IMAGE_PATH = eINSTANCE.getLinkType_ImagePath();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AdapterImpl <em>Adapter</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.AdapterImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAdapter()
+		 * @generated
+		 */
+		EClass ADAPTER = eINSTANCE.getAdapter();
 
 	}
 

@@ -108,6 +108,18 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createAnnotationAdapter();
 			}
 			@Override
+			public Adapter caseLink(Link object) {
+				return createLinkAdapter();
+			}
+			@Override
+			public Adapter caseLinkType(LinkType object) {
+				return createLinkTypeAdapter();
+			}
+			@Override
+			public Adapter caseAdapter(org.remus.infomngmnt.Adapter object) {
+				return createAdapterAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -222,6 +234,48 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAnnotationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Link <em>Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.Link
+	 * @generated
+	 */
+	public Adapter createLinkAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.LinkType <em>Link Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.LinkType
+	 * @generated
+	 */
+	public Adapter createLinkTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Adapter <em>Adapter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.Adapter
+	 * @generated
+	 */
+	public Adapter createAdapterAdapter() {
 		return null;
 	}
 

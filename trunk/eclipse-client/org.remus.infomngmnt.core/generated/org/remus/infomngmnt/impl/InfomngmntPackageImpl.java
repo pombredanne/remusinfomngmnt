@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
+import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
@@ -29,6 +30,8 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.LinkType;
 import org.remus.infomngmnt.Usage;
 
 /**
@@ -86,6 +89,27 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass annotationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass linkEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass linkTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass adapterEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -223,7 +247,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getInformationUnit_Links() {
+	public EReference getInformationUnit_References() {
 		return (EReference)informationUnitEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -232,8 +256,17 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getInformationUnit_Links() {
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getInformationUnit_CreationDate() {
-		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -242,7 +275,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EReference getInformationUnit_UsageData() {
-		return (EReference)informationUnitEClass.getEStructuralFeatures().get(8);
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -421,6 +454,78 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getLink() {
+		return linkEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLink_Target() {
+		return (EReference)linkEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLink_Linktype() {
+		return (EReference)linkEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLinkType() {
+		return linkTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLinkType_Description() {
+		return (EAttribute)linkTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLinkType_Id() {
+		return (EAttribute)linkTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLinkType_ImagePath() {
+		return (EAttribute)linkTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAdapter() {
+		return adapterEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public InfomngmntFactory getInfomngmntFactory() {
 		return (InfomngmntFactory)getEFactoryInstance();
 	}
@@ -451,6 +556,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__BINARY_VALUE);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__DATE_VALUE);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__CHILD_VALUES);
+		createEReference(informationUnitEClass, INFORMATION_UNIT__REFERENCES);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__LINKS);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__CREATION_DATE);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__USAGE_DATA);
@@ -479,6 +585,17 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		annotationEClass = createEClass(ANNOTATION);
 		createEAttribute(annotationEClass, ANNOTATION__DESCRIPTION);
+
+		linkEClass = createEClass(LINK);
+		createEReference(linkEClass, LINK__TARGET);
+		createEReference(linkEClass, LINK__LINKTYPE);
+
+		linkTypeEClass = createEClass(LINK_TYPE);
+		createEAttribute(linkTypeEClass, LINK_TYPE__DESCRIPTION);
+		createEAttribute(linkTypeEClass, LINK_TYPE__ID);
+		createEAttribute(linkTypeEClass, LINK_TYPE__IMAGE_PATH);
+
+		adapterEClass = createEClass(ADAPTER);
 	}
 
 	/**
@@ -510,6 +627,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		// Add supertypes to classes
 		informationUnitEClass.getESuperTypes().add(this.getAbstractInformationUnit());
+		categoryEClass.getESuperTypes().add(this.getAdapter());
+		abstractInformationUnitEClass.getESuperTypes().add(this.getAdapter());
 		informationUnitListItemEClass.getESuperTypes().add(this.getAbstractInformationUnit());
 
 		// Initialize classes and features; add operations and parameters
@@ -520,6 +639,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getInformationUnit_BinaryValue(), ecorePackage.getEByte(), "binaryValue", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_DateValue(), ecorePackage.getEDate(), "dateValue", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_ChildValues(), this.getInformationUnit(), null, "childValues", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInformationUnit_References(), this.getInformationUnit(), null, "references", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_Links(), this.getInformationUnit(), null, "links", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_CreationDate(), ecorePackage.getEDate(), "creationDate", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_UsageData(), this.getUsage(), null, "usageData", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -548,6 +668,17 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAnnotation_Description(), ecorePackage.getEString(), "description", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getLink_Target(), this.getInformationUnit(), null, "target", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLink_Linktype(), this.getLinkType(), null, "linktype", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(linkTypeEClass, LinkType.class, "LinkType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLinkType_Description(), ecorePackage.getEString(), "description", null, 0, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLinkType_Id(), ecorePackage.getEString(), "id", null, 1, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLinkType_ImagePath(), ecorePackage.getEString(), "imagePath", null, 0, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(adapterEClass, Adapter.class, "Adapter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

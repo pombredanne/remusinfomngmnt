@@ -21,25 +21,45 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.LinkType;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Abstract Information Unit</b></em>'.
+ * An implementation of the model object '<em><b>Link Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.LinkTypeImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.LinkTypeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.LinkTypeImpl#getImagePath <em>Image Path</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class AbstractInformationUnitImpl extends AdapterImpl implements AbstractInformationUnit {
+public class LinkTypeImpl extends EObjectImpl implements LinkType {
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -61,51 +81,31 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	protected String id = ID_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * The default value of the '{@link #getImagePath() <em>Image Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLabel()
+	 * @see #getImagePath()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String LABEL_EDEFAULT = null;
+	protected static final String IMAGE_PATH_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * The cached value of the '{@link #getImagePath() <em>Image Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLabel()
+	 * @see #getImagePath()
 	 * @generated
 	 * @ordered
 	 */
-	protected String label = LABEL_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
+	protected String imagePath = IMAGE_PATH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected AbstractInformationUnitImpl() {
+	protected LinkTypeImpl() {
 		super();
 	}
 
@@ -116,7 +116,28 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT;
+		return InfomngmntPackage.Literals.LINK_TYPE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK_TYPE__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -137,7 +158,7 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 		String oldId = id;
 		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK_TYPE__ID, oldId, id));
 	}
 
 	/**
@@ -145,8 +166,8 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getLabel() {
-		return label;
+	public String getImagePath() {
+		return imagePath;
 	}
 
 	/**
@@ -154,32 +175,11 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setLabel(String newLabel) {
-		String oldLabel = label;
-		label = newLabel;
+	public void setImagePath(String newImagePath) {
+		String oldImagePath = imagePath;
+		imagePath = newImagePath;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL, oldLabel, label));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK_TYPE__IMAGE_PATH, oldImagePath, imagePath));
 	}
 
 	/**
@@ -190,12 +190,12 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__ID:
+			case InfomngmntPackage.LINK_TYPE__DESCRIPTION:
+				return getDescription();
+			case InfomngmntPackage.LINK_TYPE__ID:
 				return getId();
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
-				return getLabel();
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
-				return getType();
+			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
+				return getImagePath();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -208,14 +208,14 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__ID:
+			case InfomngmntPackage.LINK_TYPE__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
+			case InfomngmntPackage.LINK_TYPE__ID:
 				setId((String)newValue);
 				return;
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
-				setLabel((String)newValue);
-				return;
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
-				setType((String)newValue);
+			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
+				setImagePath((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -229,14 +229,14 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__ID:
+			case InfomngmntPackage.LINK_TYPE__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
+			case InfomngmntPackage.LINK_TYPE__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
-				setLabel(LABEL_EDEFAULT);
-				return;
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
-				setType(TYPE_EDEFAULT);
+			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
+				setImagePath(IMAGE_PATH_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -250,12 +250,12 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__ID:
+			case InfomngmntPackage.LINK_TYPE__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case InfomngmntPackage.LINK_TYPE__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
-				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
+				return IMAGE_PATH_EDEFAULT == null ? imagePath != null : !IMAGE_PATH_EDEFAULT.equals(imagePath);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -270,14 +270,14 @@ public abstract class AbstractInformationUnitImpl extends AdapterImpl implements
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
+		result.append(" (description: ");
+		result.append(description);
+		result.append(", id: ");
 		result.append(id);
-		result.append(", label: ");
-		result.append(label);
-		result.append(", type: ");
-		result.append(type);
+		result.append(", imagePath: ");
+		result.append(imagePath);
 		result.append(')');
 		return result.toString();
 	}
 
-} //AbstractInformationUnitImpl
+} //LinkTypeImpl

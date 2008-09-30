@@ -15,6 +15,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/binaryValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/dateValue"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/childValues"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/references"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/links"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/creationDate"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/usageData"/>
@@ -46,5 +47,15 @@
     <genClasses ecoreClass="infomngmnt.ecore#//Annotation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Annotation/description"/>
     </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Link">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Link/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Link/linktype"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//LinkType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/imagePath"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//Adapter"/>
   </genPackages>
 </genmodel:GenModel>

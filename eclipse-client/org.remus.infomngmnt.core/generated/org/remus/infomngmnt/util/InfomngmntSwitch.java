@@ -99,6 +99,7 @@ public class InfomngmntSwitch<T> {
 				InformationUnit informationUnit = (InformationUnit)theEObject;
 				T result = caseInformationUnit(informationUnit);
 				if (result == null) result = caseAbstractInformationUnit(informationUnit);
+				if (result == null) result = caseAdapter(informationUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -111,12 +112,14 @@ public class InfomngmntSwitch<T> {
 			case InfomngmntPackage.CATEGORY: {
 				Category category = (Category)theEObject;
 				T result = caseCategory(category);
+				if (result == null) result = caseAdapter(category);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT: {
 				AbstractInformationUnit abstractInformationUnit = (AbstractInformationUnit)theEObject;
 				T result = caseAbstractInformationUnit(abstractInformationUnit);
+				if (result == null) result = caseAdapter(abstractInformationUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -124,6 +127,7 @@ public class InfomngmntSwitch<T> {
 				InformationUnitListItem informationUnitListItem = (InformationUnitListItem)theEObject;
 				T result = caseInformationUnitListItem(informationUnitListItem);
 				if (result == null) result = caseAbstractInformationUnit(informationUnitListItem);
+				if (result == null) result = caseAdapter(informationUnitListItem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -136,6 +140,24 @@ public class InfomngmntSwitch<T> {
 			case InfomngmntPackage.ANNOTATION: {
 				Annotation annotation = (Annotation)theEObject;
 				T result = caseAnnotation(annotation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.LINK: {
+				Link link = (Link)theEObject;
+				T result = caseLink(link);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.LINK_TYPE: {
+				LinkType linkType = (LinkType)theEObject;
+				T result = caseLinkType(linkType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.ADAPTER: {
+				Adapter adapter = (Adapter)theEObject;
+				T result = caseAdapter(adapter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -245,6 +267,51 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseAnnotation(Annotation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Link</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Link</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLink(Link object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Link Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Link Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLinkType(LinkType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Adapter</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Adapter</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAdapter(Adapter object) {
 		return null;
 	}
 

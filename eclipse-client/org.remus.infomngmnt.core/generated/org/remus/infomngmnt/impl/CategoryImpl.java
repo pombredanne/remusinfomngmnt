@@ -51,7 +51,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
  *
  * @generated
  */
-public class CategoryImpl extends EObjectImpl implements Category {
+public class CategoryImpl extends AdapterImpl implements Category {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->

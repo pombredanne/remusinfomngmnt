@@ -74,6 +74,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM: return createInformationUnitListItem();
 			case InfomngmntPackage.APPLICATION_ROOT: return createApplicationRoot();
 			case InfomngmntPackage.ANNOTATION: return createAnnotation();
+			case InfomngmntPackage.LINK: return createLink();
+			case InfomngmntPackage.LINK_TYPE: return createLinkType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -137,6 +139,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public Annotation createAnnotation() {
 		AnnotationImpl annotation = new AnnotationImpl();
 		return annotation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Link createLink() {
+		LinkImpl link = new LinkImpl();
+		return link;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LinkType createLinkType() {
+		LinkTypeImpl linkType = new LinkTypeImpl();
+		return linkType;
 	}
 
 	/**

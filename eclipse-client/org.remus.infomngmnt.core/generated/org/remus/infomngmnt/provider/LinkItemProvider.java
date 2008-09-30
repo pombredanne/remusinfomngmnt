@@ -30,21 +30,18 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InfomngmntPackage;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.AbstractInformationUnit} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.Link} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AbstractInformationUnitItemProvider
-	extends AdapterItemProvider
+public class LinkItemProvider
+	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -57,7 +54,7 @@ public class AbstractInformationUnitItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AbstractInformationUnitItemProvider(AdapterFactory adapterFactory) {
+	public LinkItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -72,77 +69,65 @@ public class AbstractInformationUnitItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
-			addLabelPropertyDescriptor(object);
-			addTypePropertyDescriptor(object);
+			addTargetPropertyDescriptor(object);
+			addLinktypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Target feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addTargetPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AbstractInformationUnit_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractInformationUnit_id_feature", "_UI_AbstractInformationUnit_type"),
-				 InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__ID,
+				 getString("_UI_Link_target_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Link_target_feature", "_UI_Link_type"),
+				 InfomngmntPackage.Literals.LINK__TARGET,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Label feature.
+	 * This adds a property descriptor for the Linktype feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(Object object) {
+	protected void addLinktypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AbstractInformationUnit_label_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractInformationUnit_label_feature", "_UI_AbstractInformationUnit_type"),
-				 InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL,
+				 getString("_UI_Link_linktype_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Link_linktype_feature", "_UI_Link_type"),
+				 InfomngmntPackage.Literals.LINK__LINKTYPE,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Type feature.
+	 * This returns Link.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_AbstractInformationUnit_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractInformationUnit_type_feature", "_UI_AbstractInformationUnit_type"),
-				 InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__TYPE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Link"));
 	}
 
 	/**
@@ -153,10 +138,7 @@ public class AbstractInformationUnitItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((AbstractInformationUnit)object).getLabel();
-		return label == null || label.length() == 0 ?
-			getString("_UI_AbstractInformationUnit_type") :
-			getString("_UI_AbstractInformationUnit_type") + " " + label;
+		return getString("_UI_Link_type");
 	}
 
 	/**
@@ -169,14 +151,6 @@ public class AbstractInformationUnitItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(AbstractInformationUnit.class)) {
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__ID:
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__LABEL:
-			case InfomngmntPackage.ABSTRACT_INFORMATION_UNIT__TYPE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 
@@ -190,6 +164,17 @@ public class AbstractInformationUnitItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return InfomngmntEditPlugin.INSTANCE;
 	}
 
 }

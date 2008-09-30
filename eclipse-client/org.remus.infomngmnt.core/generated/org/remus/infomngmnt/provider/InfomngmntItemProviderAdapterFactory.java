@@ -222,6 +222,52 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Link} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LinkItemProvider linkItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.Link}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLinkAdapter() {
+		if (linkItemProvider == null) {
+			linkItemProvider = new LinkItemProvider(this);
+		}
+
+		return linkItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.LinkType} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LinkTypeItemProvider linkTypeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.LinkType}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLinkTypeAdapter() {
+		if (linkTypeItemProvider == null) {
+			linkTypeItemProvider = new LinkTypeItemProvider(this);
+		}
+
+		return linkTypeItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -326,6 +372,8 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (informationUnitListItemItemProvider != null) informationUnitListItemItemProvider.dispose();
 		if (applicationRootItemProvider != null) applicationRootItemProvider.dispose();
 		if (annotationItemProvider != null) annotationItemProvider.dispose();
+		if (linkItemProvider != null) linkItemProvider.dispose();
+		if (linkTypeItemProvider != null) linkTypeItemProvider.dispose();
 	}
 
 }

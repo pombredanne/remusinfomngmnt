@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.extension;
 
-import org.apache.lucene.document.Document;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -37,8 +36,11 @@ public abstract class AbstractInformationRepresentation {
 
 	public abstract String handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
 
-	public abstract Document handleIndexing(IProgressMonitor monitor) throws CoreException;
+	public abstract String getTitleForIndexing(IProgressMonitor monitor) throws CoreException;
 
+	public abstract String getBodyForIndexing(IProgressMonitor monitor) throws CoreException;
+
+	public abstract String getAdditionalsForIndexing(IProgressMonitor monitor) throws CoreException;
 
 	public InformationUnit getValue() {
 		return this.value;

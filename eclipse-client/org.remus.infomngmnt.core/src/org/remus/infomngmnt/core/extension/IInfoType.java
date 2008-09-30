@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.core.extension;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -25,6 +26,8 @@ public interface IInfoType {
 
 	String getType();
 
-	ImageDescriptor getImage();
+	ImageDescriptor getImageDescriptor();
+
+	Image getImage();
 
 }

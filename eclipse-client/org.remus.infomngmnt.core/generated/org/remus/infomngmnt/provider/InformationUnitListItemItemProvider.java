@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,9 +29,10 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
+import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 
 /**
  * This is the item provider adapter for a {@link org.remus.infomngmnt.InformationUnitListItem} object.
@@ -41,13 +41,13 @@ import org.remus.infomngmnt.InformationUnitListItem;
  * @generated
  */
 public class InformationUnitListItemItemProvider
-	extends AbstractInformationUnitItemProvider
-	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+extends AbstractInformationUnitItemProvider
+implements
+IEditingDomainItemProvider,
+IStructuredItemContentProvider,
+ITreeItemContentProvider,
+IItemLabelProvider,
+IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -66,12 +66,12 @@ public class InformationUnitListItemItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addWorkspacePathPropertyDescriptor(object);
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -81,44 +81,44 @@ public class InformationUnitListItemItemProvider
 	 * @generated
 	 */
 	protected void addWorkspacePathPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_InformationUnitListItem_workspacePath_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItem_workspacePath_feature", "_UI_InformationUnitListItem_type"),
-				 InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+		this.itemPropertyDescriptors.add
+		(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_InformationUnitListItem_workspacePath_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItem_workspacePath_feature", "_UI_InformationUnitListItem_type"),
+						InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,
+						true,
+						false,
+						false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+						null,
+						null));
 	}
 
 	/**
 	 * This returns InformationUnitListItem.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/InformationUnitListItem"));
+		return InformationExtensionManager.getInstance().getInfoTypeByType(((AbstractInformationUnit) object).getType()).getImage();
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((InformationUnitListItem)object).getId();
+		String label = ((InformationUnitListItem)object).getLabel();
 		return label == null || label.length() == 0 ?
-			getString("_UI_InformationUnitListItem_type") :
-			getString("_UI_InformationUnitListItem_type") + " " + label;
+				getString("_UI_InformationUnitListItem_type") :
+					label;
 	}
 
 	/**
@@ -133,9 +133,9 @@ public class InformationUnitListItemItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(InformationUnitListItem.class)) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
+		case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		}
 		super.notifyChanged(notification);
 	}

@@ -15,6 +15,7 @@ package org.remus.infomngmnt.core.internal.extension;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
@@ -33,6 +34,7 @@ public class InfoType implements IInfoType{
 	private final IConfigurationElement configurationElement;
 	/** The info-types image **/
 	private ImageDescriptor img;
+	private Image image;
 	private final String type;
 	private AbstractCreationFactory createFactory;
 	private AbstractInformationRepresentation informationRepresentation;
@@ -94,12 +96,19 @@ public class InfoType implements IInfoType{
 		return this.type;
 	}
 
-	public ImageDescriptor getImage() {
+	public ImageDescriptor getImageDescriptor() {
 		if (this.img == null) {
 			this.img = AbstractUIPlugin.imageDescriptorFromPlugin(this.contributor, this.imageFilePath);
 		}
 		return this.img;
 
+	}
+
+	public Image getImage() {
+		if (this.image == null) {
+			this.image = getImageDescriptor().createImage();
+		}
+		return this.image;
 	}
 
 

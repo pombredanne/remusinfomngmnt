@@ -12,7 +12,6 @@
 
 package org.remus.infomngmnt.plaintext.extension;
 
-import org.apache.lucene.document.Document;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -24,12 +23,7 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 public class PlainTextInformationRepresentation extends
 AbstractInformationRepresentation {
 
-	@Override
-	public Document handleIndexing(IProgressMonitor monitor)
-	throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public void handlePostBuild(IFile derivedFile, IProgressMonitor monitor)
@@ -42,6 +36,27 @@ AbstractInformationRepresentation {
 	public String handleHtmlGeneration(IProgressMonitor monitor)
 	throws CoreException {
 		return getValue().getStringValue();
+	}
+
+	@Override
+	public String getAdditionalsForIndexing(IProgressMonitor monitor)
+	throws CoreException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getBodyForIndexing(IProgressMonitor monitor)
+	throws CoreException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getTitleForIndexing(IProgressMonitor monitor)
+	throws CoreException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

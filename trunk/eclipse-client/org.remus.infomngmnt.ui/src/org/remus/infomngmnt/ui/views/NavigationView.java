@@ -1,15 +1,24 @@
 package org.remus.infomngmnt.ui.views;
 
+import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
@@ -20,7 +29,7 @@ import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class NavigationView extends ViewPart implements ISetSelectionTarget {
+public class NavigationView extends ViewPart implements ISetSelectionTarget, IEditingDomainProvider, ISelectionProvider, IViewerProvider {
 
 	public static final String ID = "org.remus.infomngmnt.ui.views.NavigationView"; //$NON-NLS-1$
 	private AdapterFactoryContentProvider contentProvider;
@@ -46,6 +55,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget {
 		createActions();
 		initializeToolBar();
 		initializeMenu();
+		hookContextMenu();
 	}
 
 	private void initInput() {
@@ -77,6 +87,22 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget {
 	}
 
 	/**
+	 * @param viewer2
+	 */
+	private void hookContextMenu() {
+		final MenuManager contextMenu = new MenuManager("#PopUpMenu");
+		contextMenu.setRemoveAllWhenShown(true);
+		final NavigationContextMenu actionBar = new NavigationContextMenu();
+		actionBar.init(getViewSite().getActionBars());
+		actionBar.setActiveDomain(this);
+		contextMenu.addMenuListener(actionBar);
+		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
+		this.viewer.getControl().setMenu(menu);
+		getSite().registerContextMenu("de.spiritlink.facebook.ui.views.View.context",contextMenu, new UnwrappingSelectionProvider(this.viewer));
+
+	}
+
+	/**
 	 * Initialize the menu
 	 */
 	private void initializeMenu() {
@@ -92,6 +118,33 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget {
 	public void selectReveal(ISelection selection) {
 		this.viewer.setSelection(selection, true);
 
+	}
+
+	public EditingDomain getEditingDomain() {
+		return EditingUtil.getInstance().createNewEditingDomain();
+	}
+
+	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		this.viewer.addSelectionChangedListener(listener);
+
+	}
+
+	public ISelection getSelection() {
+		return this.viewer.getSelection();
+	}
+
+	public void removeSelectionChangedListener(
+			ISelectionChangedListener listener) {
+		this.viewer.removeSelectionChangedListener(listener);
+	}
+
+	public void setSelection(ISelection selection) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Viewer getViewer() {
+		return this.viewer;
 	}
 
 }

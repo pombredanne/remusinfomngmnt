@@ -292,7 +292,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	@Override
 	protected void createHeaderContents(final IManagedForm headerForm) {
 		headerForm.getForm().setText(getPrimaryModel().getLabel());
-		headerForm.getForm().setImage(InformationExtensionManager.getInstance().getInfoTypeByType(getPrimaryModel().getType()).getImage().createImage());
+		headerForm.getForm().setImage(InformationExtensionManager.getInstance().getInfoTypeByType(getPrimaryModel().getType()).getImageDescriptor().createImage());
 		getToolkit().decorateFormHeading(headerForm.getForm().getForm());
 	}
 

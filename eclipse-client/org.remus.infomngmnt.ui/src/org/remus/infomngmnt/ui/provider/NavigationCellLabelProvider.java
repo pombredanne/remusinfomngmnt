@@ -14,10 +14,11 @@ package org.remus.infomngmnt.ui.provider;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.remus.infomngmnt.core.model.EditingUtil;
 
@@ -26,13 +27,13 @@ import org.remus.infomngmnt.core.model.EditingUtil;
  */
 public class NavigationCellLabelProvider extends ColumnLabelProvider implements IStyledLabelProvider{
 
-	private final AdapterFactoryLabelProvider delegatingLabelProvider;
+	private final LabelProvider delegatingLabelProvider;
 
 	public NavigationCellLabelProvider() {
-		this.delegatingLabelProvider = new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory());
+		this.delegatingLabelProvider = new DecoratingLabelProvider(new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()),
+				PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
+
 	}
-
-
 
 	@Override
 	public String getText(Object element) {
@@ -41,7 +42,7 @@ public class NavigationCellLabelProvider extends ColumnLabelProvider implements 
 
 	@Override
 	public Image getImage(Object element) {
-		return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
+		return this.delegatingLabelProvider.getImage(element);
 	}
 
 

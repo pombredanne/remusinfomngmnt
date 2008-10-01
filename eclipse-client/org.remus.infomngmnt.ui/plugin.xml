@@ -5,10 +5,13 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <primaryWizard
-            id="org.remus.infomngmnt.ui.primaryWizard1">
+            id="org.remus.infomngmnt.ui.newInfoProjectWizard">
+      </primaryWizard>
+      <primaryWizard
+            id="org.remus.infomngmnt.ui.newCategoryWizard">
       </primaryWizard>
       <wizard
-            category="Information Management"
+            category="org.remus.infomngmnt.ui.general"
             class="org.remus.infomngmnt.ui.project.NewProjectWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             id="org.remus.infomngmnt.ui.newInfoProjectWizard"
@@ -16,10 +19,20 @@
             project="true">
       </wizard>
       <wizard
+            category="org.remus.infomngmnt.ui.general"
             class="org.remus.infomngmnt.ui.category.NewCategoryWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             id="org.remus.infomngmnt.ui.newCategoryWizard"
             name="Category">
       </wizard>
+      <category
+            id="org.remus.infomngmnt.ui.general"
+            name="General">
+      </category>
+      <category
+            id="org.remus.infomngmnt.ui.simple"
+            name="Simple">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
@@ -43,6 +56,9 @@
             targetID="org.remus.infomngmnt.ui.infoperspective">
          <newWizardShortcut
                id="org.remus.infomngmnt.ui.newInfoProjectWizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="org.remus.infomngmnt.ui.newCategoryWizard">
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>

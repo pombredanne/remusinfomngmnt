@@ -60,7 +60,7 @@ public class InformationEditorInput extends FileEditorInput implements IFileEdit
 	@Override
 	public ImageDescriptor getImageDescriptor() {
 		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(this.type);
-		return infoTypeByType.getImage();
+		return infoTypeByType.getImageDescriptor();
 	}
 
 	@Override

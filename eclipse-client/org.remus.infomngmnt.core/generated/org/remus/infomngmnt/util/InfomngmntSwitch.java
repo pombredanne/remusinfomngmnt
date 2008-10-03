@@ -16,6 +16,7 @@ package org.remus.infomngmnt.util;
 
 import java.util.List;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
@@ -158,6 +159,18 @@ public class InfomngmntSwitch<T> {
 			case InfomngmntPackage.ADAPTER: {
 				Adapter adapter = (Adapter)theEObject;
 				T result = caseAdapter(adapter);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.LINK_TYPE_COLLECTION: {
+				LinkTypeCollection linkTypeCollection = (LinkTypeCollection)theEObject;
+				T result = caseLinkTypeCollection(linkTypeCollection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.STRING_TO_LINK_TYPE_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, LinkType> stringToLinkTypeMap = (Map.Entry<String, LinkType>)theEObject;
+				T result = caseStringToLinkTypeMap(stringToLinkTypeMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -312,6 +325,36 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseAdapter(Adapter object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Link Type Collection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Link Type Collection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLinkTypeCollection(LinkTypeCollection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Link Type Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Link Type Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToLinkTypeMap(Map.Entry<String, LinkType> object) {
 		return null;
 	}
 

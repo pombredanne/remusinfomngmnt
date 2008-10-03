@@ -268,6 +268,52 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.LinkTypeCollection} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LinkTypeCollectionItemProvider linkTypeCollectionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.LinkTypeCollection}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLinkTypeCollectionAdapter() {
+		if (linkTypeCollectionItemProvider == null) {
+			linkTypeCollectionItemProvider = new LinkTypeCollectionItemProvider(this);
+		}
+
+		return linkTypeCollectionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StringToLinkTypeMapItemProvider stringToLinkTypeMapItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link java.util.Map.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createStringToLinkTypeMapAdapter() {
+		if (stringToLinkTypeMapItemProvider == null) {
+			stringToLinkTypeMapItemProvider = new StringToLinkTypeMapItemProvider(this);
+		}
+
+		return stringToLinkTypeMapItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -374,6 +420,8 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (annotationItemProvider != null) annotationItemProvider.dispose();
 		if (linkItemProvider != null) linkItemProvider.dispose();
 		if (linkTypeItemProvider != null) linkTypeItemProvider.dispose();
+		if (linkTypeCollectionItemProvider != null) linkTypeCollectionItemProvider.dispose();
+		if (stringToLinkTypeMapItemProvider != null) stringToLinkTypeMapItemProvider.dispose();
 	}
 
 }

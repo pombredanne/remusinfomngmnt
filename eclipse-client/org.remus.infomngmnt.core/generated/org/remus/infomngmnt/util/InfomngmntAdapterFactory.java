@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmnt.util;
 
+import java.util.Map;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -118,6 +119,14 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseAdapter(org.remus.infomngmnt.Adapter object) {
 				return createAdapterAdapter();
+			}
+			@Override
+			public Adapter caseLinkTypeCollection(LinkTypeCollection object) {
+				return createLinkTypeCollectionAdapter();
+			}
+			@Override
+			public Adapter caseStringToLinkTypeMap(Map.Entry<String, LinkType> object) {
+				return createStringToLinkTypeMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -276,6 +285,34 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAdapterAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.LinkTypeCollection <em>Link Type Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.LinkTypeCollection
+	 * @generated
+	 */
+	public Adapter createLinkTypeCollectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Link Type Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToLinkTypeMapAdapter() {
 		return null;
 	}
 

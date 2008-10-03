@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.Usage;
 
 /**
@@ -186,7 +187,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<InformationUnit> links;
+	protected EList<Link> links;
 
 	/**
 	 * The default value of the '{@link #getCreationDate() <em>Creation Date</em>}' attribute.
@@ -371,9 +372,9 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<InformationUnit> getLinks() {
+	public EList<Link> getLinks() {
 		if (links == null) {
-			links = new EObjectResolvingEList<InformationUnit>(InformationUnit.class, this, InfomngmntPackage.INFORMATION_UNIT__LINKS);
+			links = new EObjectResolvingEList<Link>(Link.class, this, InfomngmntPackage.INFORMATION_UNIT__LINKS);
 		}
 		return links;
 	}
@@ -518,7 +519,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__LINKS:
 				getLinks().clear();
-				getLinks().addAll((Collection<? extends InformationUnit>)newValue);
+				getLinks().addAll((Collection<? extends Link>)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
 				setCreationDate((Date)newValue);

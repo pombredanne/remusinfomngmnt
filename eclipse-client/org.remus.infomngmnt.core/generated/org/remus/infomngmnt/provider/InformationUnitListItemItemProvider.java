@@ -66,12 +66,12 @@ IItemPropertySource {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (this.itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addWorkspacePathPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -81,19 +81,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addWorkspacePathPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnitListItem_workspacePath_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItem_workspacePath_feature", "_UI_InformationUnitListItem_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnitListItem_workspacePath_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItem_workspacePath_feature", "_UI_InformationUnitListItem_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -133,9 +133,9 @@ IItemPropertySource {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(InformationUnitListItem.class)) {
-		case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 		}
 		super.notifyChanged(notification);
 	}

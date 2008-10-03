@@ -106,6 +106,15 @@ public interface InfomngmntFactory extends EFactory {
 	LinkType createLinkType();
 
 	/**
+	 * Returns a new object of class '<em>Link Type Collection</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Link Type Collection</em>'.
+	 * @generated
+	 */
+	LinkTypeCollection createLinkTypeCollection();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

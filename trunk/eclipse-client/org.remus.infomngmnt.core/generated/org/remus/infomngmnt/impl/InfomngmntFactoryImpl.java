@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmnt.impl;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -76,6 +77,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.ANNOTATION: return createAnnotation();
 			case InfomngmntPackage.LINK: return createLink();
 			case InfomngmntPackage.LINK_TYPE: return createLinkType();
+			case InfomngmntPackage.LINK_TYPE_COLLECTION: return createLinkTypeCollection();
+			case InfomngmntPackage.STRING_TO_LINK_TYPE_MAP: return (EObject)createStringToLinkTypeMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -159,6 +162,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public LinkType createLinkType() {
 		LinkTypeImpl linkType = new LinkTypeImpl();
 		return linkType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LinkTypeCollection createLinkTypeCollection() {
+		LinkTypeCollectionImpl linkTypeCollection = new LinkTypeCollectionImpl();
+		return linkTypeCollection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, LinkType> createStringToLinkTypeMap() {
+		StringToLinkTypeMapImpl stringToLinkTypeMap = new StringToLinkTypeMapImpl();
+		return stringToLinkTypeMap;
 	}
 
 	/**

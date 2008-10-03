@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmnt.impl;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -32,6 +33,7 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.LinkType;
+import org.remus.infomngmnt.LinkTypeCollection;
 import org.remus.infomngmnt.Usage;
 
 /**
@@ -110,6 +112,20 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass adapterEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass linkTypeCollectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToLinkTypeMapEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -526,6 +542,51 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getLinkTypeCollection() {
+		return linkTypeCollectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLinkTypeCollection_AvailableLinkTypes() {
+		return (EReference)linkTypeCollectionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToLinkTypeMap() {
+		return stringToLinkTypeMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToLinkTypeMap_Key() {
+		return (EAttribute)stringToLinkTypeMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToLinkTypeMap_Value() {
+		return (EReference)stringToLinkTypeMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public InfomngmntFactory getInfomngmntFactory() {
 		return (InfomngmntFactory)getEFactoryInstance();
 	}
@@ -596,6 +657,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(linkTypeEClass, LINK_TYPE__IMAGE_PATH);
 
 		adapterEClass = createEClass(ADAPTER);
+
+		linkTypeCollectionEClass = createEClass(LINK_TYPE_COLLECTION);
+		createEReference(linkTypeCollectionEClass, LINK_TYPE_COLLECTION__AVAILABLE_LINK_TYPES);
+
+		stringToLinkTypeMapEClass = createEClass(STRING_TO_LINK_TYPE_MAP);
+		createEAttribute(stringToLinkTypeMapEClass, STRING_TO_LINK_TYPE_MAP__KEY);
+		createEReference(stringToLinkTypeMapEClass, STRING_TO_LINK_TYPE_MAP__VALUE);
 	}
 
 	/**
@@ -679,6 +747,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getLinkType_ImagePath(), ecorePackage.getEString(), "imagePath", null, 0, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(adapterEClass, Adapter.class, "Adapter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(linkTypeCollectionEClass, LinkTypeCollection.class, "LinkTypeCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getLinkTypeCollection_AvailableLinkTypes(), this.getStringToLinkTypeMap(), null, "availableLinkTypes", null, 0, -1, LinkTypeCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToLinkTypeMapEClass, Map.Entry.class, "StringToLinkTypeMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToLinkTypeMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToLinkTypeMap_Value(), this.getLinkType(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

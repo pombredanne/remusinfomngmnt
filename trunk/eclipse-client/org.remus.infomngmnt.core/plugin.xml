@@ -44,6 +44,12 @@
          </adapter>
       </factory>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.remus.infomngmnt.core.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
   
 
 </plugin>

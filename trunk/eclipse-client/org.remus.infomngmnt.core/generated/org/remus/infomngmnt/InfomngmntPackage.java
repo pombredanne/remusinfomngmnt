@@ -568,6 +568,72 @@ public interface InfomngmntPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.LinkTypeCollectionImpl <em>Link Type Collection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.LinkTypeCollectionImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkTypeCollection()
+	 * @generated
+	 */
+	int LINK_TYPE_COLLECTION = 10;
+
+	/**
+	 * The feature id for the '<em><b>Available Link Types</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_TYPE_COLLECTION__AVAILABLE_LINK_TYPES = 0;
+
+	/**
+	 * The number of structural features of the '<em>Link Type Collection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_TYPE_COLLECTION_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.StringToLinkTypeMapImpl <em>String To Link Type Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.StringToLinkTypeMapImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getStringToLinkTypeMap()
+	 * @generated
+	 */
+	int STRING_TO_LINK_TYPE_MAP = 11;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_LINK_TYPE_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_LINK_TYPE_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Link Type Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_LINK_TYPE_MAP_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationUnit <em>Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -976,6 +1042,61 @@ public interface InfomngmntPackage extends EPackage {
 	EClass getAdapter();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.LinkTypeCollection <em>Link Type Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Link Type Collection</em>'.
+	 * @see org.remus.infomngmnt.LinkTypeCollection
+	 * @generated
+	 */
+	EClass getLinkTypeCollection();
+
+	/**
+	 * Returns the meta object for the map '{@link org.remus.infomngmnt.LinkTypeCollection#getAvailableLinkTypes <em>Available Link Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Available Link Types</em>'.
+	 * @see org.remus.infomngmnt.LinkTypeCollection#getAvailableLinkTypes()
+	 * @see #getLinkTypeCollection()
+	 * @generated
+	 */
+	EReference getLinkTypeCollection_AvailableLinkTypes();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Link Type Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Link Type Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="org.remus.infomngmnt.LinkType" valueContainment="true"
+	 * @generated
+	 */
+	EClass getStringToLinkTypeMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToLinkTypeMap()
+	 * @generated
+	 */
+	EAttribute getStringToLinkTypeMap_Key();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToLinkTypeMap()
+	 * @generated
+	 */
+	EReference getStringToLinkTypeMap_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1320,6 +1441,50 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ADAPTER = eINSTANCE.getAdapter();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.LinkTypeCollectionImpl <em>Link Type Collection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.LinkTypeCollectionImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkTypeCollection()
+		 * @generated
+		 */
+		EClass LINK_TYPE_COLLECTION = eINSTANCE.getLinkTypeCollection();
+
+		/**
+		 * The meta object literal for the '<em><b>Available Link Types</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LINK_TYPE_COLLECTION__AVAILABLE_LINK_TYPES = eINSTANCE.getLinkTypeCollection_AvailableLinkTypes();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.StringToLinkTypeMapImpl <em>String To Link Type Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.StringToLinkTypeMapImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getStringToLinkTypeMap()
+		 * @generated
+		 */
+		EClass STRING_TO_LINK_TYPE_MAP = eINSTANCE.getStringToLinkTypeMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_LINK_TYPE_MAP__KEY = eINSTANCE.getStringToLinkTypeMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_LINK_TYPE_MAP__VALUE = eINSTANCE.getStringToLinkTypeMap_Value();
 
 	}
 

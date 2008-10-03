@@ -208,7 +208,7 @@ public interface InformationUnit extends AbstractInformationUnit {
 
 	/**
 	 * Returns the value of the '<em><b>Links</b></em>' reference list.
-	 * The list contents are of type {@link org.remus.infomngmnt.InformationUnit}.
+	 * The list contents are of type {@link org.remus.infomngmnt.Link}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Links</em>' reference list isn't clear,
@@ -220,7 +220,7 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @model
 	 * @generated
 	 */
-	EList<InformationUnit> getLinks();
+	EList<Link> getLinks();
 
 	/**
 	 * Returns the value of the '<em><b>Creation Date</b></em>' attribute.

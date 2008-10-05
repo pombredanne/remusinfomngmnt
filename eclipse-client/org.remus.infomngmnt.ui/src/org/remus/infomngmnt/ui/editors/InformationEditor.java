@@ -25,12 +25,14 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -62,6 +64,8 @@ import org.eclipse.ui.forms.editor.IFormPage;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -69,6 +73,7 @@ import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 import org.remus.infomngmnt.ui.extension.IEditPage;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
+import org.remus.infomngmnt.ui.views.LinkOutline;
 
 public class InformationEditor extends SharedHeaderFormEditor implements IEditingDomainProvider, IGotoMarker{
 
@@ -202,6 +207,16 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		}
 	};
 
+	protected Adapter dirtyAdapter = new EContentAdapter() {
+		@Override
+		public void notifyChanged(Notification notification) {
+			super.notifyChanged(notification);
+			if (notification.getEventType() != Notification.RESOLVE
+					&& notification.getEventType() != Notification.REMOVING_ADAPTER) {
+				setDirty(true);
+			}
+		}
+	};
 
 	/**
 	 * This listens for when the outline becomes active
@@ -277,6 +292,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				AbstractInformationFormPage editPage = editPageByType.get(i).getEditPage();
 				editPage.initialize(this);
 				editPage.setModelObject(getPrimaryModel());
+				editPage.setEditingDomain(this.editingDomain);
+				editPage.setBindingContext(this.ctx);
 				addPage(editPage);
 				setPageImage(i + 1, editPageByType.get(i).getImage().createImage());
 				setPageText(i + 1, editPageByType.get(i).getLabel());
@@ -403,6 +420,10 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 	private boolean dirty;
 
+	private LinkOutline contentOutlinePage;
+
+	private EMFDataBindingContext ctx;
+
 
 
 
@@ -414,6 +435,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		{
 			( (CTabFolder) getContainer() ).setTabHeight( 0 );
 		}
+		getPrimaryModel().eAdapters().add(this.dirtyAdapter);
 	}
 
 	public void setDirty(boolean dirty) {
@@ -483,7 +505,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			// Refresh the necessary state.
 			//
 			((BasicCommandStack)this.editingDomain.getCommandStack()).saveIsDone();
-			firePropertyChange(IEditorPart.PROP_DIRTY);
+			//firePropertyChange(IEditorPart.PROP_DIRTY);
 		}
 		catch (final Exception exception) {
 			// Something went wrong that shouldn't.
@@ -564,7 +586,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		// Create an adapter factory that yields item providers.
 		//
 		this.adapterFactory = EditingUtil.getInstance().getAdapterFactory();
-
+		this.ctx = new EMFDataBindingContext();
 
 		// Create the command stack that will notify this editor as commands are executed.
 		//
@@ -835,6 +857,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 		this.adapterFactory.dispose();
 
+		getPrimaryModel().eAdapters().remove(this.dirtyAdapter);
+
 		if (getActionBarContributor().getActiveEditor() == this) {
 			getActionBarContributor().setActiveEditor(null);
 		}
@@ -848,6 +872,28 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		//        }
 
 		super.dispose();
+	}
+
+	@Override
+	public Object getAdapter(Class adapter) {
+		if (adapter.equals(IContentOutlinePage.class)) {
+			System.out.println("GET adapter...");
+			return getContentOutline();
+		}
+		return super.getAdapter(adapter);
+	}
+
+	public ContentOutlinePage getContentOutline() {
+		if (this.contentOutlinePage == null) {
+			this.contentOutlinePage = new LinkOutline(getPrimaryModel(), this.editingDomain) {
+				@Override
+				public void setActionBars(IActionBars actionBars) {
+					super.setActionBars(actionBars);
+					getActionBarContributor().shareGlobalActions(this, actionBars);
+				}
+			};
+		}
+		return this.contentOutlinePage;
 	}
 
 

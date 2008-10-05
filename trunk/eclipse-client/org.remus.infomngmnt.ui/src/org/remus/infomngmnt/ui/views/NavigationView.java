@@ -1,29 +1,43 @@
 package org.remus.infomngmnt.ui.views;
 
+import java.util.List;
+
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
+import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.ui.editors.InformationEditor;
+import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 
 /**
@@ -52,10 +66,40 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 		initProvider();
 		initInput();
+		initOpen();
 		createActions();
 		initializeToolBar();
 		initializeMenu();
+		initDrag();
 		hookContextMenu();
+	}
+
+	private void initOpen() {
+		this.viewer.addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				List list = ((IStructuredSelection) event.getSelection()).toList();
+				for (Object object : list) {
+					if (object instanceof InformationUnitListItem) {
+						try {
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
+									new InformationEditorInput((InformationUnitListItem) object), InformationEditor.ID);
+						} catch (PartInitException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+
+		});
+
+	}
+
+	private void initDrag() {
+		final int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
+		final Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
+		this.viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(this.viewer));
+
 	}
 
 	private void initInput() {
@@ -68,6 +112,8 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		this.labelProvider = new DelegatingStyledCellLabelProvider(new NavigationCellLabelProvider());
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);
+		getSite().setSelectionProvider(this.viewer);
+
 
 	}
 

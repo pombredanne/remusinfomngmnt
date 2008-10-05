@@ -13,7 +13,8 @@ public class Perspective implements IPerspectiveFactory {
 		layout.setEditorAreaVisible(true);
 		layout.setFixed(false);
 
-		layout.addView(NavigationView.ID,  IPageLayout.LEFT, 0.7f, editorArea);
+		layout.addView(NavigationView.ID,  IPageLayout.LEFT, 0.3f, editorArea);
+		layout.addView(IPageLayout.ID_OUTLINE,  IPageLayout.RIGHT, 0.7f, editorArea);
 	}
 
 }

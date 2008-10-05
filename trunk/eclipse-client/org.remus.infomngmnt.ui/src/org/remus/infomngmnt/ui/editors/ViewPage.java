@@ -41,7 +41,8 @@ public class ViewPage extends FormPage {
 				if (resourceDelta.getResource().equals(ViewPage.this.binFile)) {
 					getSite().getShell().getDisplay().asyncExec(new Runnable() {
 						public void run() {
-							ViewPage.this.browser.setUrl(EditorUtil.computeBinFileLocation((IFileEditorInput) getEditorInput()));
+							if (!ViewPage.this.browser.isDisposed())
+								ViewPage.this.browser.setUrl(EditorUtil.computeBinFileLocation((IFileEditorInput) getEditorInput()));
 						}
 
 					});

@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 public class FormPage extends AbstractInformationFormPage {
@@ -24,9 +25,9 @@ public class FormPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		this.styledText = toolkit.createText(body,getModelObject().getStringValue() == null ? "" : getModelObject().getStringValue(), SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL);
+		this.styledText = toolkit.createText(body,"",SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL); //$NON-NLS-1$
 		this.styledText.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
-		addDirtyOnModifyListener(this.styledText);
+		addDirtyOnTextModifyListener(this.styledText, InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		toolkit.adapt(this.styledText, true, true);
 
 
@@ -34,7 +35,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		getModelObject().setStringValue(this.styledText.getText());
+		//		getModelObject().setStringValue(this.styledText.getText());
 		setDirty(false);
 		super.doSave(monitor);
 	}

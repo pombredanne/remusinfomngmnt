@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.LinkType#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmnt.LinkType#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.LinkType#getImagePath <em>Image Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.LinkType#isEditable <em>Editable</em>}</li>
  * </ul>
  * </p>
  *
@@ -112,5 +113,31 @@ public interface LinkType extends EObject {
 	 * @generated
 	 */
 	void setImagePath(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Editable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Editable</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Editable</em>' attribute.
+	 * @see #setEditable(boolean)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getLinkType_Editable()
+	 * @model
+	 * @generated
+	 */
+	boolean isEditable();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.LinkType#isEditable <em>Editable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Editable</em>' attribute.
+	 * @see #isEditable()
+	 * @generated
+	 */
+	void setEditable(boolean value);
 
 } // LinkType

@@ -233,7 +233,7 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__REFERENCES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Links</b></em>' reference list.
+	 * The feature id for the '<em><b>Links</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -558,13 +558,22 @@ public interface InfomngmntPackage extends EPackage {
 	int LINK_TYPE__IMAGE_PATH = 2;
 
 	/**
+	 * The feature id for the '<em><b>Editable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_TYPE__EDITABLE = 3;
+
+	/**
 	 * The number of structural features of the '<em>Link Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LINK_TYPE_FEATURE_COUNT = 3;
+	int LINK_TYPE_FEATURE_COUNT = 4;
 
 
 	/**
@@ -721,10 +730,10 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getInformationUnit_References();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Links</em>'.
+	 * @return the meta object for the containment reference list '<em>Links</em>'.
 	 * @see org.remus.infomngmnt.InformationUnit#getLinks()
 	 * @see #getInformationUnit()
 	 * @generated
@@ -1032,6 +1041,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getLinkType_ImagePath();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#isEditable <em>Editable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Editable</em>'.
+	 * @see org.remus.infomngmnt.LinkType#isEditable()
+	 * @see #getLinkType()
+	 * @generated
+	 */
+	EAttribute getLinkType_Editable();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.Adapter <em>Adapter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1185,7 +1205,7 @@ public interface InfomngmntPackage extends EPackage {
 		EReference INFORMATION_UNIT__REFERENCES = eINSTANCE.getInformationUnit_References();
 
 		/**
-		 * The meta object literal for the '<em><b>Links</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Links</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1431,6 +1451,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute LINK_TYPE__IMAGE_PATH = eINSTANCE.getLinkType_ImagePath();
+
+		/**
+		 * The meta object literal for the '<em><b>Editable</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LINK_TYPE__EDITABLE = eINSTANCE.getLinkType_Editable();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AdapterImpl <em>Adapter</em>}' class.

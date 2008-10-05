@@ -75,6 +75,7 @@ public class LinkTypeItemProvider
 			addDescriptionPropertyDescriptor(object);
 			addIdPropertyDescriptor(object);
 			addImagePathPropertyDescriptor(object);
+			addEditablePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -146,6 +147,28 @@ public class LinkTypeItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Editable feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addEditablePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_LinkType_editable_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_LinkType_editable_feature", "_UI_LinkType_type"),
+				 InfomngmntPackage.Literals.LINK_TYPE__EDITABLE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns LinkType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -185,6 +208,7 @@ public class LinkTypeItemProvider
 			case InfomngmntPackage.LINK_TYPE__DESCRIPTION:
 			case InfomngmntPackage.LINK_TYPE__ID:
 			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
+			case InfomngmntPackage.LINK_TYPE__EDITABLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

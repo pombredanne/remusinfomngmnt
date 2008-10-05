@@ -34,6 +34,7 @@ import org.remus.infomngmnt.LinkType;
  *   <li>{@link org.remus.infomngmnt.impl.LinkTypeImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.LinkTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.LinkTypeImpl#getImagePath <em>Image Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.LinkTypeImpl#isEditable <em>Editable</em>}</li>
  * </ul>
  * </p>
  *
@@ -99,6 +100,26 @@ public class LinkTypeImpl extends EObjectImpl implements LinkType {
 	 * @ordered
 	 */
 	protected String imagePath = IMAGE_PATH_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isEditable() <em>Editable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEditable()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean EDITABLE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isEditable() <em>Editable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEditable()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean editable = EDITABLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -187,6 +208,27 @@ public class LinkTypeImpl extends EObjectImpl implements LinkType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isEditable() {
+		return editable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setEditable(boolean newEditable) {
+		boolean oldEditable = editable;
+		editable = newEditable;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK_TYPE__EDITABLE, oldEditable, editable));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -196,6 +238,8 @@ public class LinkTypeImpl extends EObjectImpl implements LinkType {
 				return getId();
 			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
 				return getImagePath();
+			case InfomngmntPackage.LINK_TYPE__EDITABLE:
+				return isEditable() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -216,6 +260,9 @@ public class LinkTypeImpl extends EObjectImpl implements LinkType {
 				return;
 			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
 				setImagePath((String)newValue);
+				return;
+			case InfomngmntPackage.LINK_TYPE__EDITABLE:
+				setEditable(((Boolean)newValue).booleanValue());
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -238,6 +285,9 @@ public class LinkTypeImpl extends EObjectImpl implements LinkType {
 			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
 				setImagePath(IMAGE_PATH_EDEFAULT);
 				return;
+			case InfomngmntPackage.LINK_TYPE__EDITABLE:
+				setEditable(EDITABLE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -256,6 +306,8 @@ public class LinkTypeImpl extends EObjectImpl implements LinkType {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
 				return IMAGE_PATH_EDEFAULT == null ? imagePath != null : !IMAGE_PATH_EDEFAULT.equals(imagePath);
+			case InfomngmntPackage.LINK_TYPE__EDITABLE:
+				return editable != EDITABLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -276,6 +328,8 @@ public class LinkTypeImpl extends EObjectImpl implements LinkType {
 		result.append(id);
 		result.append(", imagePath: ");
 		result.append(imagePath);
+		result.append(", editable: ");
+		result.append(editable);
 		result.append(')');
 		return result.toString();
 	}

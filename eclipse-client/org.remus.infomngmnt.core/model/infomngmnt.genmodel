@@ -55,7 +55,15 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/imagePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/editable"/>
     </genClasses>
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//Adapter"/>
+    <genClasses ecoreClass="infomngmnt.ecore#//LinkTypeCollection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//LinkTypeCollection/availableLinkTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//StringToLinkTypeMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//StringToLinkTypeMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//StringToLinkTypeMap/value"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

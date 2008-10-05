@@ -180,7 +180,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	protected EList<InformationUnit> references;
 
 	/**
-	 * The cached value of the '{@link #getLinks() <em>Links</em>}' reference list.
+	 * The cached value of the '{@link #getLinks() <em>Links</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getLinks()
@@ -374,7 +374,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 */
 	public EList<Link> getLinks() {
 		if (links == null) {
-			links = new EObjectResolvingEList<Link>(Link.class, this, InfomngmntPackage.INFORMATION_UNIT__LINKS);
+			links = new EObjectContainmentEList<Link>(Link.class, this, InfomngmntPackage.INFORMATION_UNIT__LINKS);
 		}
 		return links;
 	}
@@ -448,6 +448,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 		switch (featureID) {
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				return ((InternalEList<?>)getChildValues()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.INFORMATION_UNIT__LINKS:
+				return ((InternalEList<?>)getLinks()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}

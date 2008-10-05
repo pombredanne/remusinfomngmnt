@@ -207,7 +207,7 @@ public interface InformationUnit extends AbstractInformationUnit {
 	EList<InformationUnit> getReferences();
 
 	/**
-	 * Returns the value of the '<em><b>Links</b></em>' reference list.
+	 * Returns the value of the '<em><b>Links</b></em>' containment reference list.
 	 * The list contents are of type {@link org.remus.infomngmnt.Link}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -215,9 +215,9 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Links</em>' reference list.
+	 * @return the value of the '<em>Links</em>' containment reference list.
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_Links()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Link> getLinks();

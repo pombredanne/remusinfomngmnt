@@ -27,5 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model abstract="true"
  * @generated not
  */
-public interface Adapter extends EObject {
+public interface Adapter extends EObject, IAdaptable {
+
+
 } // Adapter

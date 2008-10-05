@@ -48,6 +48,7 @@ public class EditingUtil {
 
 	private final EditingDomain editingDomain;
 	private final ComposedAdapterFactory adapterFactory;
+	private final EditingDomain navigationEditingDomain;
 
 	public static EditingUtil getInstance() {
 		if (EditingUtil.INSTANCE == null) {
@@ -66,6 +67,7 @@ public class EditingUtil {
 		this.adapterFactory.addAdapterFactory(new InfomngmntItemProviderAdapterFactory());
 		this.adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		this.editingDomain = new AdapterFactoryEditingDomain(this.adapterFactory, new BasicCommandStack());
+		this.navigationEditingDomain = new AdapterFactoryEditingDomain(this.adapterFactory, new BasicCommandStack());
 		this.editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put
 		(InfomngmntPackage.eNS_URI,
 				InfomngmntPackage.eINSTANCE);
@@ -180,5 +182,9 @@ public class EditingUtil {
 
 	public ComposedAdapterFactory getAdapterFactory() {
 		return this.adapterFactory;
+	}
+
+	public EditingDomain getNavigationEditingDomain() {
+		return this.navigationEditingDomain;
 	}
 }

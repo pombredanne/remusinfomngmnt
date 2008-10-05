@@ -14,9 +14,11 @@ package org.remus.infomngmnt.core.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -25,12 +27,15 @@ import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ApplicationModelPool {
+
+	private final AvailableInformationCache cache;
 
 	private final class AdapterImplExtension extends EContentAdapter {
 		private final Category category;
@@ -79,6 +84,7 @@ public class ApplicationModelPool {
 			category.eResource().eAdapters().add(new AdapterImplExtension(category));
 			this.model.getRootCategories().add(category);
 		}
+		this.cache = new AvailableInformationCache();
 	}
 
 	public ApplicationRoot getModel() {
@@ -89,5 +95,17 @@ public class ApplicationModelPool {
 		this.model.getRootCategories().add(category);
 		category.eAdapters().add(new AdapterImplExtension(category));
 	}
+
+	public Map<String, InformationUnitListItem> getAllItems(
+			IProgressMonitor monitor) {
+		return this.cache.getAllItems(monitor);
+	}
+
+	public InformationUnitListItem getItemById(String id,
+			IProgressMonitor monitor) {
+		return this.cache.getItemById(id, monitor);
+	}
+
+
 
 }

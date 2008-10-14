@@ -19,10 +19,16 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import org.remus.search.provider.SearchPlugin;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class SearchBuilder extends IncrementalProjectBuilder {
+
+
+
+	public static final String BUILDER_ID = SearchPlugin.PLUGIN_ID + ".searchbuilder"; //$NON-NLS-1$
 
 	/**
 	 * 
@@ -36,7 +42,7 @@ public class SearchBuilder extends IncrementalProjectBuilder {
 	 */
 	@Override
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
-			throws CoreException {
+	throws CoreException {
 		// TODO Auto-generated method stub
 		return null;
 	}

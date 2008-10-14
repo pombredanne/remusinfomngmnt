@@ -68,7 +68,7 @@ IItemPropertySource {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (this.itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addStringValuePropertyDescriptor(object);
@@ -81,7 +81,7 @@ IItemPropertySource {
 			addCreationDatePropertyDescriptor(object);
 			addUsageDataPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -91,19 +91,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addStringValuePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_stringValue_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_stringValue_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_stringValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_stringValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -113,19 +113,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addLongValuePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_longValue_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_longValue_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_longValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_longValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -135,19 +135,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addBoolValuePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_boolValue_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_boolValue_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_boolValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_boolValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -157,19 +157,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addBinaryValuePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_binaryValue_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_binaryValue_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_binaryValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_binaryValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -179,19 +179,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addDateValuePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_dateValue_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_dateValue_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_dateValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_dateValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -201,19 +201,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addReferencesPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_references_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_references_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__REFERENCES,
-						true,
-						false,
-						true,
-						null,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_references_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_references_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__REFERENCES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -223,19 +223,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addLinksPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_links_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_links_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS,
-						true,
-						false,
-						true,
-						null,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_links_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_links_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -245,19 +245,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addCreationDatePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_creationDate_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_creationDate_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__CREATION_DATE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_creationDate_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_creationDate_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__CREATION_DATE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -267,19 +267,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addUsageDataPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_InformationUnit_usageData_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_usageData_feature", "_UI_InformationUnit_type"),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__USAGE_DATA,
-						true,
-						false,
-						true,
-						null,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_usageData_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_usageData_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__USAGE_DATA,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -292,11 +292,11 @@ IItemPropertySource {
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (this.childrenFeatures == null) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES);
+			childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -316,7 +316,7 @@ IItemPropertySource {
 	 * This returns InformationUnit.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
 	public Object getImage(Object object) {
@@ -333,8 +333,8 @@ IItemPropertySource {
 	public String getText(Object object) {
 		String label = ((InformationUnit)object).getLabel();
 		return label == null || label.length() == 0 ?
-				getString("_UI_InformationUnit_type") :
-					getString("_UI_InformationUnit_type") + " " + label;
+			getString("_UI_InformationUnit_type") :
+			getString("_UI_InformationUnit_type") + " " + label;
 	}
 
 	/**
@@ -349,17 +349,17 @@ IItemPropertySource {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(InformationUnit.class)) {
-		case InfomngmntPackage.INFORMATION_UNIT__STRING_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__LONG_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
-		case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-			return;
+			case InfomngmntPackage.INFORMATION_UNIT__STRING_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__LONG_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -376,9 +376,9 @@ IItemPropertySource {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 				(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
-						InfomngmntFactory.eINSTANCE.createInformationUnit()));
+				 InfomngmntFactory.eINSTANCE.createInformationUnit()));
 	}
 
 }

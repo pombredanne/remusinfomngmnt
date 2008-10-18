@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ui Plug-in
+Bundle-SymbolicName: org.remus.infomngmnt.common.ui
+Bundle-Version: 1.0.0
+Bundle-Activator: org.remus.infomngmnt.common.ui.Activator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.forms;bundle-version="3.3.100"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.nebula.widgets.calendarcombo,
+ org.remus.infomngmnt.common.ui,
+ org.remus.infomngmnt.common.ui.view

@@ -42,11 +42,14 @@
       <plugin id="org.eclipse.draw2d"/>
       <plugin id="org.eclipse.emf.common"/>
       <plugin id="org.eclipse.emf.common.ui"/>
+      <plugin id="org.eclipse.emf.databinding"/>
+      <plugin id="org.eclipse.emf.databinding.edit"/>
       <plugin id="org.eclipse.emf.ecore"/>
       <plugin id="org.eclipse.emf.ecore.edit"/>
       <plugin id="org.eclipse.emf.ecore.xmi"/>
       <plugin id="org.eclipse.emf.edit"/>
       <plugin id="org.eclipse.emf.edit.ui"/>
+      <plugin id="org.eclipse.emf.query"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.preferences"/>
@@ -71,10 +74,12 @@
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
       <plugin id="org.eclipse.update.configurator"/>
       <plugin id="org.remus.infomngmnt.application"/>
+      <plugin id="org.remus.infomngmnt.common.ui"/>
       <plugin id="org.remus.infomngmnt.core"/>
       <plugin id="org.remus.infomngmnt.jslib"/>
       <plugin id="org.remus.infomngmnt.libs"/>
       <plugin id="org.remus.infomngmnt.plaintext"/>
+      <plugin id="org.remus.infomngmnt.search"/>
       <plugin id="org.remus.infomngmnt.ui"/>
    </plugins>
 

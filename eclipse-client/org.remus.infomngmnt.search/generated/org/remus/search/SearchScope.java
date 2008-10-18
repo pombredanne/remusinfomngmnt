@@ -41,34 +41,22 @@ public enum SearchScope implements Enumerator {
 	ALL(0, "ALL", "All resources"),
 
 	/**
-	 * The '<em><b>SINGLE PROJECT</b></em>' literal object.
+	 * The '<em><b>SELECTED INFO UNIT</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SINGLE_PROJECT_VALUE
+	 * @see #SELECTED_INFO_UNIT_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SINGLE_PROJECT(1, "SINGLE_PROJECT", "Single Project"),
-
-	/**
-	 * The '<em><b>SINGLE CATEGORY</b></em>' literal object.
+	SELECTED_INFO_UNIT(1, "SELECTED_INFO_UNIT", "Selected "), /**
+	 * The '<em><b>OPEN EDITORS</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SINGLE_CATEGORY_VALUE
+	 * @see #OPEN_EDITORS_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SINGLE_CATEGORY(2, "SINGLE_CATEGORY", "Single Category"),
-
-	/**
-	 * The '<em><b>MIXED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #MIXED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	MIXED(3, "MIXED", "MIXED");
+	OPEN_EDITORS(2, "OPEN_EDITORS", "Opened Editors");
 
 	/**
 	 * The '<em><b>ALL</b></em>' literal value.
@@ -86,49 +74,34 @@ public enum SearchScope implements Enumerator {
 	public static final int ALL_VALUE = 0;
 
 	/**
-	 * The '<em><b>SINGLE PROJECT</b></em>' literal value.
+	 * The '<em><b>SELECTED INFO UNIT</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>SINGLE PROJECT</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>SELECTED INFO UNIT</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #SINGLE_PROJECT
-	 * @model literal="Single Project"
+	 * @see #SELECTED_INFO_UNIT
+	 * @model literal="Selected "
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SINGLE_PROJECT_VALUE = 1;
+	public static final int SELECTED_INFO_UNIT_VALUE = 1;
 
 	/**
-	 * The '<em><b>SINGLE CATEGORY</b></em>' literal value.
+	 * The '<em><b>OPEN EDITORS</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>SINGLE CATEGORY</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>OPEN EDITORS</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #SINGLE_CATEGORY
-	 * @model literal="Single Category"
+	 * @see #OPEN_EDITORS
+	 * @model literal="Opened Editors"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SINGLE_CATEGORY_VALUE = 2;
-
-	/**
-	 * The '<em><b>MIXED</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>MIXED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #MIXED
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
-	public static final int MIXED_VALUE = 3;
+	public static final int OPEN_EDITORS_VALUE = 2;
 
 	/**
 	 * An array of all the '<em><b>Scope</b></em>' enumerators.
@@ -139,9 +112,8 @@ public enum SearchScope implements Enumerator {
 	private static final SearchScope[] VALUES_ARRAY =
 		new SearchScope[] {
 			ALL,
-			SINGLE_PROJECT,
-			SINGLE_CATEGORY,
-			MIXED,
+			SELECTED_INFO_UNIT,
+			OPEN_EDITORS,
 		};
 
 	/**
@@ -193,9 +165,8 @@ public enum SearchScope implements Enumerator {
 	public static SearchScope get(int value) {
 		switch (value) {
 			case ALL_VALUE: return ALL;
-			case SINGLE_PROJECT_VALUE: return SINGLE_PROJECT;
-			case SINGLE_CATEGORY_VALUE: return SINGLE_CATEGORY;
-			case MIXED_VALUE: return MIXED;
+			case SELECTED_INFO_UNIT_VALUE: return SELECTED_INFO_UNIT;
+			case OPEN_EDITORS_VALUE: return OPEN_EDITORS;
 		}
 		return null;
 	}

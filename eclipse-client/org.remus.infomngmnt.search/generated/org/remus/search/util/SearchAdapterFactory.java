@@ -88,6 +88,14 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 				return createSearchResultAdapter();
 			}
 			@Override
+			public Adapter caseSavedSearches(SavedSearches object) {
+				return createSavedSearchesAdapter();
+			}
+			@Override
+			public Adapter caseLatestSearchStrings(LatestSearchStrings object) {
+				return createLatestSearchStringsAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -132,6 +140,34 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSearchResultAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.search.SavedSearches <em>Saved Searches</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.search.SavedSearches
+	 * @generated
+	 */
+	public Adapter createSavedSearchesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.search.LatestSearchStrings <em>Latest Search Strings</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.search.LatestSearchStrings
+	 * @generated
+	 */
+	public Adapter createLatestSearchStringsAdapter() {
 		return null;
 	}
 

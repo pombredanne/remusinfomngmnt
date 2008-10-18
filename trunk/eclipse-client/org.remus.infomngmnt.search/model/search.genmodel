@@ -11,9 +11,8 @@
       ecorePackage="search.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="search.ecore#//SearchScope">
       <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/ALL"/>
-      <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/SINGLE_PROJECT"/>
-      <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/SINGLE_CATEGORY"/>
-      <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/MIXED"/>
+      <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/SELECTED_INFO_UNIT"/>
+      <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/OPEN_EDITORS"/>
     </genEnums>
     <genClasses ecoreClass="search.ecore#//Search">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/searchString"/>
@@ -30,6 +29,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/text"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/path"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/infoType"/>
+    </genClasses>
+    <genClasses ecoreClass="search.ecore#//SavedSearches">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference search.ecore#//SavedSearches/searches"/>
+    </genClasses>
+    <genClasses ecoreClass="search.ecore#//LatestSearchStrings">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//LatestSearchStrings/strings"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -52,6 +52,24 @@ public interface SearchFactory extends EFactory {
 	SearchResult createSearchResult();
 
 	/**
+	 * Returns a new object of class '<em>Saved Searches</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Saved Searches</em>'.
+	 * @generated
+	 */
+	SavedSearches createSavedSearches();
+
+	/**
+	 * Returns a new object of class '<em>Latest Search Strings</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Latest Search Strings</em>'.
+	 * @generated
+	 */
+	LatestSearchStrings createLatestSearchStrings();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

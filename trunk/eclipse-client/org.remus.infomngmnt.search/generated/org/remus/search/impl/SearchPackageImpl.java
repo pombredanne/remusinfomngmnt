@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.remus.search.LatestSearchStrings;
+import org.remus.search.SavedSearches;
 import org.remus.search.Search;
 import org.remus.search.SearchFactory;
 import org.remus.search.SearchPackage;
@@ -48,6 +50,20 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	private EClass searchResultEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass savedSearchesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass latestSearchStringsEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -255,6 +271,42 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSavedSearches() {
+		return savedSearchesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSavedSearches_Searches() {
+		return (EReference)savedSearchesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLatestSearchStrings() {
+		return latestSearchStringsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLatestSearchStrings_Strings() {
+		return (EAttribute)latestSearchStringsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSearchScope() {
 		return searchScopeEEnum;
 	}
@@ -302,6 +354,12 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		createEAttribute(searchResultEClass, SEARCH_RESULT__TEXT);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__PATH);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__INFO_TYPE);
+
+		savedSearchesEClass = createEClass(SAVED_SEARCHES);
+		createEReference(savedSearchesEClass, SAVED_SEARCHES__SEARCHES);
+
+		latestSearchStringsEClass = createEClass(LATEST_SEARCH_STRINGS);
+		createEAttribute(latestSearchStringsEClass, LATEST_SEARCH_STRINGS__STRINGS);
 
 		// Create enums
 		searchScopeEEnum = createEEnum(SEARCH_SCOPE);
@@ -353,12 +411,17 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		initEAttribute(getSearchResult_Path(), ecorePackage.getEString(), "path", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearchResult_InfoType(), ecorePackage.getEString(), "infoType", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(savedSearchesEClass, SavedSearches.class, "SavedSearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSavedSearches_Searches(), this.getSearch(), null, "searches", null, 0, -1, SavedSearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(latestSearchStringsEClass, LatestSearchStrings.class, "LatestSearchStrings", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLatestSearchStrings_Strings(), ecorePackage.getEString(), "strings", null, 0, -1, LatestSearchStrings.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(searchScopeEEnum, SearchScope.class, "SearchScope");
 		addEEnumLiteral(searchScopeEEnum, SearchScope.ALL);
-		addEEnumLiteral(searchScopeEEnum, SearchScope.SINGLE_PROJECT);
-		addEEnumLiteral(searchScopeEEnum, SearchScope.SINGLE_CATEGORY);
-		addEEnumLiteral(searchScopeEEnum, SearchScope.MIXED);
+		addEEnumLiteral(searchScopeEEnum, SearchScope.SELECTED_INFO_UNIT);
+		addEEnumLiteral(searchScopeEEnum, SearchScope.OPEN_EDITORS);
 
 		// Create resource
 		createResource(eNS_URI);

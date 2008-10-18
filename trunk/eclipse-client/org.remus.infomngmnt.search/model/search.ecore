@@ -15,9 +15,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SearchScope">
     <eLiterals name="ALL" literal="All resources"/>
-    <eLiterals name="SINGLE_PROJECT" value="1" literal="Single Project"/>
-    <eLiterals name="SINGLE_CATEGORY" value="2" literal="Single Category"/>
-    <eLiterals name="MIXED" value="3"/>
+    <eLiterals name="SELECTED_INFO_UNIT" value="1" literal="Selected "/>
+    <eLiterals name="OPEN_EDITORS" value="2" literal="Opened Editors"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SearchResult">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="infoId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -25,5 +24,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="infoType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SavedSearches">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="searches" upperBound="-1"
+        eType="#//Search" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LatestSearchStrings">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="strings" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

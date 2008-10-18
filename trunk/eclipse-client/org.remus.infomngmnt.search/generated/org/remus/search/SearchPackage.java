@@ -215,6 +215,62 @@ public interface SearchPackage extends EPackage {
 	int SEARCH_RESULT_FEATURE_COUNT = 5;
 
 	/**
+	 * The meta object id for the '{@link org.remus.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.search.impl.SavedSearchesImpl
+	 * @see org.remus.search.impl.SearchPackageImpl#getSavedSearches()
+	 * @generated
+	 */
+	int SAVED_SEARCHES = 2;
+
+	/**
+	 * The feature id for the '<em><b>Searches</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAVED_SEARCHES__SEARCHES = 0;
+
+	/**
+	 * The number of structural features of the '<em>Saved Searches</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAVED_SEARCHES_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.remus.search.impl.LatestSearchStringsImpl <em>Latest Search Strings</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.search.impl.LatestSearchStringsImpl
+	 * @see org.remus.search.impl.SearchPackageImpl#getLatestSearchStrings()
+	 * @generated
+	 */
+	int LATEST_SEARCH_STRINGS = 3;
+
+	/**
+	 * The feature id for the '<em><b>Strings</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LATEST_SEARCH_STRINGS__STRINGS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Latest Search Strings</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LATEST_SEARCH_STRINGS_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.remus.search.SearchScope <em>Scope</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -222,7 +278,7 @@ public interface SearchPackage extends EPackage {
 	 * @see org.remus.search.impl.SearchPackageImpl#getSearchScope()
 	 * @generated
 	 */
-	int SEARCH_SCOPE = 2;
+	int SEARCH_SCOPE = 4;
 
 
 	/**
@@ -378,6 +434,48 @@ public interface SearchPackage extends EPackage {
 	EAttribute getSearchResult_InfoType();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.search.SavedSearches <em>Saved Searches</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Saved Searches</em>'.
+	 * @see org.remus.search.SavedSearches
+	 * @generated
+	 */
+	EClass getSavedSearches();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.search.SavedSearches#getSearches <em>Searches</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Searches</em>'.
+	 * @see org.remus.search.SavedSearches#getSearches()
+	 * @see #getSavedSearches()
+	 * @generated
+	 */
+	EReference getSavedSearches_Searches();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.search.LatestSearchStrings <em>Latest Search Strings</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Latest Search Strings</em>'.
+	 * @see org.remus.search.LatestSearchStrings
+	 * @generated
+	 */
+	EClass getLatestSearchStrings();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.remus.search.LatestSearchStrings#getStrings <em>Strings</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Strings</em>'.
+	 * @see org.remus.search.LatestSearchStrings#getStrings()
+	 * @see #getLatestSearchStrings()
+	 * @generated
+	 */
+	EAttribute getLatestSearchStrings_Strings();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.search.SearchScope <em>Scope</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -524,6 +622,42 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SEARCH_RESULT__INFO_TYPE = eINSTANCE.getSearchResult_InfoType();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.search.impl.SavedSearchesImpl
+		 * @see org.remus.search.impl.SearchPackageImpl#getSavedSearches()
+		 * @generated
+		 */
+		EClass SAVED_SEARCHES = eINSTANCE.getSavedSearches();
+
+		/**
+		 * The meta object literal for the '<em><b>Searches</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SAVED_SEARCHES__SEARCHES = eINSTANCE.getSavedSearches_Searches();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.search.impl.LatestSearchStringsImpl <em>Latest Search Strings</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.search.impl.LatestSearchStringsImpl
+		 * @see org.remus.search.impl.SearchPackageImpl#getLatestSearchStrings()
+		 * @generated
+		 */
+		EClass LATEST_SEARCH_STRINGS = eINSTANCE.getLatestSearchStrings();
+
+		/**
+		 * The meta object literal for the '<em><b>Strings</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LATEST_SEARCH_STRINGS__STRINGS = eINSTANCE.getLatestSearchStrings_Strings();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.search.SearchScope <em>Scope</em>}' enum.

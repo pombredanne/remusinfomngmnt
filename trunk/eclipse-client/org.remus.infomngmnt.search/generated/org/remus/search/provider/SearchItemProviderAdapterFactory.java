@@ -130,6 +130,52 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.search.SavedSearches} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SavedSearchesItemProvider savedSearchesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.search.SavedSearches}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSavedSearchesAdapter() {
+		if (savedSearchesItemProvider == null) {
+			savedSearchesItemProvider = new SavedSearchesItemProvider(this);
+		}
+
+		return savedSearchesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.search.LatestSearchStrings} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LatestSearchStringsItemProvider latestSearchStringsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.search.LatestSearchStrings}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLatestSearchStringsAdapter() {
+		if (latestSearchStringsItemProvider == null) {
+			latestSearchStringsItemProvider = new LatestSearchStringsItemProvider(this);
+		}
+
+		return latestSearchStringsItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -230,6 +276,8 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	public void dispose() {
 		if (searchItemProvider != null) searchItemProvider.dispose();
 		if (searchResultItemProvider != null) searchResultItemProvider.dispose();
+		if (savedSearchesItemProvider != null) savedSearchesItemProvider.dispose();
+		if (latestSearchStringsItemProvider != null) latestSearchStringsItemProvider.dispose();
 	}
 
 }

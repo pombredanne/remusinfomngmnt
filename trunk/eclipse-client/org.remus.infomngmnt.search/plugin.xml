@@ -9,5 +9,32 @@
                class="org.remus.infomngmnt.search.builder.SearchBuilder">
          </run></builder>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <view
+               closeable="true"
+               id="org.remus.infomngmnt.search.ui.view.SearchView"
+               minimized="false"
+               moveable="true"
+               relationship="stack"
+               relative="org.remus.infomngmnt.ui.views.NavigationView"
+               showTitle="true"
+               standalone="false"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.remus.infomngmnt.search.ui.view.SearchView"
+            icon="images/search.gif"
+            id="org.remus.infomngmnt.search.ui.view.SearchView"
+            name="Search"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>

@@ -11,12 +11,14 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.extension;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.internal.extension.InfoType;
 
@@ -74,6 +76,13 @@ public class InformationExtensionManager {
 
 	public IInfoType getInfoTypeByType(final String type) {
 		return this.items.get(type);
+
 	}
+
+	public Collection<IInfoType> getTypes() {
+		return this.items.values();
+	}
+
+
 
 }

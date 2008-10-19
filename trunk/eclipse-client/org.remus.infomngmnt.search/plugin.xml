@@ -36,5 +36,18 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="org.remus.infomngmnt.search.gloablSearchBar">
+            <control
+                  class="org.remus.infomngmnt.search.menu.SearchFieldContribution"
+                  id="org.remus.infomngmnt.search.menu.SearchFieldContribution">
+            </control>
+         </toolbar>
+      </menuContribution>
+   </extension>
 
 </plugin>

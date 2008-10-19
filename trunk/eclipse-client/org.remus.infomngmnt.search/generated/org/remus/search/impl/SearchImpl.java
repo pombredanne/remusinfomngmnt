@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -117,24 +118,14 @@ public class SearchImpl extends EObjectImpl implements Search {
 	protected Date endDate = END_DATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getInfoType() <em>Info Type</em>}' attribute.
+	 * The cached value of the '{@link #getInfoType() <em>Info Type</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getInfoType()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String INFO_TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getInfoType() <em>Info Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInfoType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String infoType = INFO_TYPE_EDEFAULT;
+	protected EList<String> infoType;
 
 	/**
 	 * The default value of the '{@link #getScope() <em>Scope</em>}' attribute.
@@ -273,20 +264,11 @@ public class SearchImpl extends EObjectImpl implements Search {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getInfoType() {
+	public EList<String> getInfoType() {
+		if (infoType == null) {
+			infoType = new EDataTypeUniqueEList<String>(String.class, this, SearchPackage.SEARCH__INFO_TYPE);
+		}
 		return infoType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setInfoType(String newInfoType) {
-		String oldInfoType = infoType;
-		infoType = newInfoType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.SEARCH__INFO_TYPE, oldInfoType, infoType));
 	}
 
 	/**
@@ -402,7 +384,8 @@ public class SearchImpl extends EObjectImpl implements Search {
 				setEndDate((Date)newValue);
 				return;
 			case SearchPackage.SEARCH__INFO_TYPE:
-				setInfoType((String)newValue);
+				getInfoType().clear();
+				getInfoType().addAll((Collection<? extends String>)newValue);
 				return;
 			case SearchPackage.SEARCH__SCOPE:
 				setScope((SearchScope)newValue);
@@ -436,7 +419,7 @@ public class SearchImpl extends EObjectImpl implements Search {
 				setEndDate(END_DATE_EDEFAULT);
 				return;
 			case SearchPackage.SEARCH__INFO_TYPE:
-				setInfoType(INFO_TYPE_EDEFAULT);
+				getInfoType().clear();
 				return;
 			case SearchPackage.SEARCH__SCOPE:
 				setScope(SCOPE_EDEFAULT);
@@ -466,7 +449,7 @@ public class SearchImpl extends EObjectImpl implements Search {
 			case SearchPackage.SEARCH__END_DATE:
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
 			case SearchPackage.SEARCH__INFO_TYPE:
-				return INFO_TYPE_EDEFAULT == null ? infoType != null : !INFO_TYPE_EDEFAULT.equals(infoType);
+				return infoType != null && !infoType.isEmpty();
 			case SearchPackage.SEARCH__SCOPE:
 				return scope != SCOPE_EDEFAULT;
 			case SearchPackage.SEARCH__RESULT:

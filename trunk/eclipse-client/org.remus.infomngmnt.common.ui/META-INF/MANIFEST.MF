@@ -7,9 +7,14 @@ Bundle-Activator: org.remus.infomngmnt.common.ui.Activator
 Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ui.forms;bundle-version="3.3.100"
+ org.eclipse.ui.forms;bundle-version="3.3.100",
+ org.eclipse.core.databinding;bundle-version="1.1.0",
+ org.eclipse.emf.ecore;bundle-version="2.4.0",
+ org.eclipse.emf.databinding;bundle-version="1.0.0",
+ org.eclipse.jface.databinding;bundle-version="1.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.nebula.widgets.calendarcombo,
  org.remus.infomngmnt.common.ui,
+ org.remus.infomngmnt.common.ui.databinding,
  org.remus.infomngmnt.common.ui.view

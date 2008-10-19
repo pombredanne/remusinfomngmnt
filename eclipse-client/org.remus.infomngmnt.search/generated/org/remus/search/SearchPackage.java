@@ -106,7 +106,7 @@ public interface SearchPackage extends EPackage {
 	int SEARCH__END_DATE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Info Type</b></em>' attribute.
+	 * The feature id for the '<em><b>Info Type</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -325,10 +325,10 @@ public interface SearchPackage extends EPackage {
 	EAttribute getSearch_EndDate();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.Search#getInfoType <em>Info Type</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.remus.search.Search#getInfoType <em>Info Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Info Type</em>'.
+	 * @return the meta object for the attribute list '<em>Info Type</em>'.
 	 * @see org.remus.search.Search#getInfoType()
 	 * @see #getSearch()
 	 * @generated
@@ -542,7 +542,7 @@ public interface SearchPackage extends EPackage {
 		EAttribute SEARCH__END_DATE = eINSTANCE.getSearch_EndDate();
 
 		/**
-		 * The meta object literal for the '<em><b>Info Type</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Info Type</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

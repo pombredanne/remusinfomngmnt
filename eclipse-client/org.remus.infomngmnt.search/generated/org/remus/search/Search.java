@@ -122,33 +122,24 @@ public interface Search extends EObject {
 	void setEndDate(Date value);
 
 	/**
-	 * Returns the value of the '<em><b>Info Type</b></em>' attribute.
+	 * Returns the value of the '<em><b>Info Type</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Info Type</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Info Type</em>' attribute.
-	 * @see #setInfoType(String)
+	 * @return the value of the '<em>Info Type</em>' attribute list.
 	 * @see org.remus.search.SearchPackage#getSearch_InfoType()
 	 * @model
 	 * @generated
 	 */
-	String getInfoType();
-
-	/**
-	 * Sets the value of the '{@link org.remus.search.Search#getInfoType <em>Info Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Info Type</em>' attribute.
-	 * @see #getInfoType()
-	 * @generated
-	 */
-	void setInfoType(String value);
+	EList<String> getInfoType();
 
 	/**
 	 * Returns the value of the '<em><b>Scope</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
 	 * The literals are from the enumeration {@link org.remus.search.SearchScope}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -160,7 +151,7 @@ public interface Search extends EObject {
 	 * @see org.remus.search.SearchScope
 	 * @see #setScope(SearchScope)
 	 * @see org.remus.search.SearchPackage#getSearch_Scope()
-	 * @model
+	 * @model default="0"
 	 * @generated
 	 */
 	SearchScope getScope();

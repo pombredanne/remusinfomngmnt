@@ -36,6 +36,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getCreationDate <em>Creation Date</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getUsageData <em>Usage Data</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnit#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnit#getKeywords <em>Keywords</em>}</li>
  * </ul>
  * </p>
  *
@@ -273,5 +275,57 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @generated
 	 */
 	void setUsageData(Usage value);
+
+	/**
+	 * Returns the value of the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Description</em>' attribute.
+	 * @see #setDescription(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_Description()
+	 * @model
+	 * @generated
+	 */
+	String getDescription();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getDescription <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Description</em>' attribute.
+	 * @see #getDescription()
+	 * @generated
+	 */
+	void setDescription(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Keywords</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Keywords</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Keywords</em>' attribute.
+	 * @see #setKeywords(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_Keywords()
+	 * @model
+	 * @generated
+	 */
+	String getKeywords();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getKeywords <em>Keywords</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Keywords</em>' attribute.
+	 * @see #getKeywords()
+	 * @generated
+	 */
+	void setKeywords(String value);
 
 } // InformationUnit

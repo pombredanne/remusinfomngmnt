@@ -53,6 +53,8 @@ import org.remus.infomngmnt.Usage;
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getLinks <em>Links</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getCreationDate <em>Creation Date</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getUsageData <em>Usage Data</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getKeywords <em>Keywords</em>}</li>
  * </ul>
  * </p>
  *
@@ -218,6 +220,46 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @ordered
 	 */
 	protected Usage usageData;
+
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getKeywords() <em>Keywords</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKeywords()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String KEYWORDS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getKeywords() <em>Keywords</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKeywords()
+	 * @generated
+	 * @ordered
+	 */
+	protected String keywords = KEYWORDS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -443,6 +485,48 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION, oldDescription, description));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getKeywords() {
+		return keywords;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setKeywords(String newKeywords) {
+		String oldKeywords = keywords;
+		keywords = newKeywords;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__KEYWORDS, oldKeywords, keywords));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -483,6 +567,10 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				if (resolve) return getUsageData();
 				return basicGetUsageData();
+			case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
+				return getDescription();
+			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
+				return getKeywords();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -529,6 +617,12 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				setUsageData((Usage)newValue);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
+				setKeywords((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -571,6 +665,12 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				setUsageData((Usage)null);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
+				setKeywords(KEYWORDS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -603,6 +703,10 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
 			case InfomngmntPackage.INFORMATION_UNIT__USAGE_DATA:
 				return usageData != null;
+			case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
+				return KEYWORDS_EDEFAULT == null ? keywords != null : !KEYWORDS_EDEFAULT.equals(keywords);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -629,6 +733,10 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 		result.append(dateValue);
 		result.append(", creationDate: ");
 		result.append(creationDate);
+		result.append(", description: ");
+		result.append(description);
+		result.append(", keywords: ");
+		result.append(keywords);
 		result.append(')');
 		return result.toString();
 	}

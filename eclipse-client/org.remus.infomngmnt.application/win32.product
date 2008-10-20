@@ -4,6 +4,7 @@
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
    <configIni use="default">
+      <win32>/org.remus.infomngmnt.application/config.ini</win32>
    </configIni>
 
    <launcherArgs>
@@ -80,6 +81,7 @@
       <plugin id="org.remus.infomngmnt.libs"/>
       <plugin id="org.remus.infomngmnt.plaintext"/>
       <plugin id="org.remus.infomngmnt.search"/>
+      <plugin id="org.remus.infomngmnt.search.local"/>
       <plugin id="org.remus.infomngmnt.ui"/>
    </plugins>
 

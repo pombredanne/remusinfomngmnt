@@ -80,6 +80,8 @@ IItemPropertySource {
 			addLinksPropertyDescriptor(object);
 			addCreationDatePropertyDescriptor(object);
 			addUsageDataPropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
+			addKeywordsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -283,6 +285,50 @@ IItemPropertySource {
 	}
 
 	/**
+	 * This adds a property descriptor for the Description feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDescriptionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_description_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Keywords feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addKeywordsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_keywords_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_keywords_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -355,6 +401,8 @@ IItemPropertySource {
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
+			case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
+			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:

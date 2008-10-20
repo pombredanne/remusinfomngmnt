@@ -260,13 +260,31 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__USAGE_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 9;
 
 	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT__DESCRIPTION = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Keywords</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT__KEYWORDS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 11;
+
+	/**
 	 * The number of structural features of the '<em>Information Unit</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 10;
+	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 12;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.UsageImpl <em>Usage</em>}' class.
@@ -763,6 +781,28 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getInformationUnit_UsageData();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.InformationUnit#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.remus.infomngmnt.InformationUnit#getDescription()
+	 * @see #getInformationUnit()
+	 * @generated
+	 */
+	EAttribute getInformationUnit_Description();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.InformationUnit#getKeywords <em>Keywords</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Keywords</em>'.
+	 * @see org.remus.infomngmnt.InformationUnit#getKeywords()
+	 * @see #getInformationUnit()
+	 * @generated
+	 */
+	EAttribute getInformationUnit_Keywords();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.Usage <em>Usage</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1227,6 +1267,22 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INFORMATION_UNIT__USAGE_DATA = eINSTANCE.getInformationUnit_UsageData();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INFORMATION_UNIT__DESCRIPTION = eINSTANCE.getInformationUnit_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Keywords</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INFORMATION_UNIT__KEYWORDS = eINSTANCE.getInformationUnit_Keywords();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.UsageImpl <em>Usage</em>}' class.

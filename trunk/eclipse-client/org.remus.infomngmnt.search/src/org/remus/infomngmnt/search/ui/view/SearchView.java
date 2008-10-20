@@ -7,6 +7,7 @@ import java.util.Map;
 import org.eclipse.core.databinding.UpdateListStrategy;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.set.ISetChangeListener;
 import org.eclipse.core.databinding.observable.set.SetChangeEvent;
 import org.eclipse.core.databinding.observable.set.SetDiff;
@@ -15,6 +16,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -248,24 +250,37 @@ public class SearchView extends AbstractScrolledTitledView {
 		radioButtonCtx.bind(mObsAllScope);
 
 		// informationtype
-		// TODO find a better way of doing that here...
-		// --->8------------>8---
-		this.checkedElements = new HashSet<IInfoType>();
 		EList<String> infoType = this.currentSearch.getInfoType();
+		final IObservableList list = new WritableList();
 		for (String string : infoType) {
-			this.checkedElements.add(InformationExtensionManager.getInstance().getInfoTypeByType(string));
+			// at first we have to create a list for the binding to the emf list.
+			list.add(InformationExtensionManager.getInstance().getInfoTypeByType(string));
 		}
-		this.viewer.setCheckedElements(this.checkedElements.toArray());
-		IViewerObservableSet elements = ViewersObservables.observeCheckedElements(this.viewer, this.checkedElements);
+		// we have to set the initial selection manually because we are syncing just
+		// in one direction.
+		this.viewer.setCheckedElements(list.toArray());
+		IViewerObservableSet elements = ViewersObservables.observeCheckedElements(this.viewer, new HashSet());
+		// we convert all changes from the set to the list
 		elements.addSetChangeListener(new ISetChangeListener() {
-
 			public void handleSetChange(SetChangeEvent event) {
 				SetDiff diff = event.diff;
-				SearchView.this.checkedElements.removeAll(diff.getRemovals());
-				SearchView.this.checkedElements.addAll(diff.getAdditions());
+				list.removeAll(diff.getRemovals());
+				list.addAll(diff.getAdditions());
 			}
 		});
-		// --->8------------>8---
+		IObservableList observeList2 = EMFObservables.observeList(this.currentSearch, SearchPackage.Literals.SEARCH__INFO_TYPE);
+		this.ctx.bindList(observeList2, list,  new UpdateListStrategy() {
+			@Override
+			public Object convert(Object element) {
+				return InformationExtensionManager.getInstance().getInfoTypeByType((String) element);
+			}
+		}, new UpdateListStrategy() {
+			@Override
+			public Object convert(Object element) {
+				return ((IInfoType) element).getType();
+			}
+		});
+
 
 		// latest search entries
 		IObservableList observeList = EMFEditObservables.observeList(Realm.getDefault(), this.editingDomain , this.latestSearchStrings, SearchPackage.Literals.LATEST_SEARCH_STRINGS__STRINGS);
@@ -308,10 +323,6 @@ public class SearchView extends AbstractScrolledTitledView {
 
 	@Override
 	public void saveState(IMemento memento) {
-		this.currentSearch.getInfoType().clear();
-		for (IInfoType element : this.checkedElements) {
-			this.currentSearch.getInfoType().add(element.getType());
-		}
 		getSavedSearchHandler().saveLatestSearch(this.currentSearch);
 		getSavedSearchHandler().saveSearchStrings(this.latestSearchStrings);
 		super.saveState(memento);

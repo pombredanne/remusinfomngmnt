@@ -19,12 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.store.Directory;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -39,7 +33,22 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.search.Search;
+import org.remus.search.SearchFactory;
+import org.remus.search.SearchResult;
 import org.remus.search.provider.SearchPlugin;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.TopFieldDocs;
 
 
 /**
@@ -48,6 +57,17 @@ import org.remus.search.provider.SearchPlugin;
 public class LuceneSearchService {
 
 	private static LuceneSearchService INSTANCE;
+
+	public static final String SEARCHINDEX_ITEM_ID = "document_id"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_INFOTYPE_ID = "document_infotype_id"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_KEYWORDS = "document_keywords"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_DESCRIPTION = "document_description"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_LABEL = "document_label"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_CONTENT = "document_content"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_ADDITIONALS = "document_additionals"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_CREATIONDATE = "document_creationdate"; //$NON-NLS-1$
+	public static final String SEARCHINDEX_PROJECT = "document_project"; //$NON-NLS-1$
+
 
 	public static LuceneSearchService getInstance() {
 		if (LuceneSearchService.INSTANCE == null) {
@@ -60,6 +80,8 @@ public class LuceneSearchService {
 		return LuceneSearchService.INSTANCE;
 	}
 	private final WriteQueueJob writeQueueJob;
+
+	private final Map<IProject, IndexSearcher> projectToSearcherMap = new HashMap<IProject, IndexSearcher>();
 
 	private LuceneSearchService() {
 		this.writeQueueJob = new WriteQueueJob();
@@ -114,7 +136,7 @@ public class LuceneSearchService {
 							monitor.beginTask("Deleting obsolete entries from index...", IProgressMonitor.UNKNOWN);
 							try {
 								for (final IProject project : deleteKeySet) {
-									reader = IndexReader.open(getIndexDirectory(project));
+									reader = IndexReader.open(getSearchService().getIndexDirectory(project));
 									final List<IFile> list = clonedDeleteMap.get(project);
 									for (final IFile path : list) {
 										final InformationUnit document = EditingUtil.getInstance().getObjectFromFile(path, InfomngmntPackage.Literals.INFORMATION_UNIT,false);
@@ -148,8 +170,9 @@ public class LuceneSearchService {
 								final long timeMillis = System.currentTimeMillis();
 								if (list.size() > 0)
 								{
-									writer = new IndexWriter(getIndexDirectory(project),
-											getAnalyser());
+									relaseIndexSearcher(project);
+									writer = new IndexWriter(getSearchService().getIndexDirectory(project),
+											getSearchService().getAnalyser());
 									writer.setUseCompoundFile(false);
 									for (final IFile path : list)
 									{
@@ -158,8 +181,8 @@ public class LuceneSearchService {
 											monitor.setTaskName(NLS.bind(
 													"Adding {0} to queue",
 													infoUnit.getLabel()));
-											writer.addDocument(getLuceneDocument(infoUnit,
-													project));
+											writer.addDocument(getSearchService().getLuceneDocument(infoUnit,
+													project, monitor));
 											infoUnit.eResource().unload();
 											monitor.worked(1);
 										} catch (final Exception e) {
@@ -213,6 +236,7 @@ public class LuceneSearchService {
 			schedule(500);
 			return Status.OK_STATUS;
 		}
+
 		public void addToQueue(final List<IFile> removeDocuments, final List<IFile> addDocuments, final IProject project) {
 			this.lastAdding = System.currentTimeMillis();
 			if (this.indexQueue.get(project) == null) {
@@ -229,22 +253,103 @@ public class LuceneSearchService {
 
 
 	}
-	protected Document getLuceneDocument(InformationUnit document,
-			IProject project) {
-		// TODO Auto-generated method stub
-		return null;
+
+	protected ILuceneCustomizer getSearchService() {
+		ILuceneCustomizer service = SearchPlugin.getPlugin().getService();
+		if (service == null) {
+			throw new IllegalStateException("No service implementation for local search found...");
+		}
+		return service;
 	}
-	protected Directory getIndexDirectory(IProject project) {
-		// TODO Auto-generated method stub
-		return null;
+	protected void relaseIndexSearcher(IProject project) {
+		IndexSearcher indexSearcher = this.projectToSearcherMap.get(project);
+		if (indexSearcher != null) {
+			try {
+				indexSearcher.close();
+			} catch (IOException e) {
+				// do nothing
+			}
+			indexSearcher = null;
+		}
+		this.projectToSearcherMap.remove(project);
+
 	}
-	protected Analyzer getAnalyser() {
-		// TODO Auto-generated method stub
-		return null;
+
+	protected IndexSearcher acquireIndexSearcher(IProject project) {
+		IndexSearcher indexSearcher = this.projectToSearcherMap.get(project);
+		if (indexSearcher == null) {
+			try {
+				indexSearcher = new IndexSearcher(getSearchService().getIndexDirectory(project));
+				this.projectToSearcherMap.put(project, indexSearcher);
+			} catch (CorruptIndexException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return indexSearcher;
 	}
+
+
 	public void addToIndex(List<IFile> filesTodeleteFromIndex,
 			List<IFile> filesToAddToIndex, IProject project) {
 		this.writeQueueJob.addToQueue(filesTodeleteFromIndex, filesToAddToIndex, project);
 
+	}
+	public String search(Search currentSearch) {
+		SearchJob newSearch = new SearchJob(currentSearch);
+		newSearch.schedule();
+		return newSearch.getTicket();
+	}
+
+	private class SearchJob extends Job {
+
+		private final Search currentSearch;
+
+
+
+		public String getTicket() {
+			return this.currentSearch.getId();
+		}
+
+		public SearchJob(Search currentSearch) {
+			super(NLS.bind("Search \"{0}\"", currentSearch.getSearchString()));
+			this.currentSearch = currentSearch;
+			currentSearch.setId(String.valueOf(System.nanoTime()));
+		}
+
+		@Override
+		protected IStatus run(IProgressMonitor monitor) {
+			BooleanQuery.setMaxClauseCount(4096);
+			this.currentSearch.getResult().clear();
+			Query queryStringFromSearchQuery =
+				getSearchService().getQueryStringFromSearchQuery(this.currentSearch, monitor);
+			IProject[] projectsToSearch = getSearchService().getProjectsToSearch(this.currentSearch);
+			for (IProject project : projectsToSearch) {
+				try {
+					TopFieldDocs search = acquireIndexSearcher(project).search(
+							queryStringFromSearchQuery,null,getSearchService().getMaxResults(),new Sort());
+					final ScoreDoc[] scoreDocs = search.scoreDocs;
+					for (ScoreDoc scoreDoc : scoreDocs) {
+						Document doc = acquireIndexSearcher(project).doc(scoreDoc.doc);
+						this.currentSearch.getResult().add(createSearchResult(doc));
+					}
+				} catch (Exception e) {
+					// do nothign...we continue..
+				}
+			}
+			return null;
+		}
+
+	}
+
+	public SearchResult createSearchResult(Document doc) {
+		SearchResult newSearchResult = SearchFactory.eINSTANCE.createSearchResult();
+		newSearchResult.setInfoId(doc.getField(SEARCHINDEX_ITEM_ID).stringValue());
+		newSearchResult.setInfoType(doc.getField(SEARCHINDEX_INFOTYPE_ID).stringValue());
+
+		return newSearchResult;
 	}
 }

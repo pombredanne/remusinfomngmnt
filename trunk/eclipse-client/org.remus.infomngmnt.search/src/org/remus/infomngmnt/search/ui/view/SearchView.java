@@ -58,6 +58,7 @@ import org.remus.infomngmnt.common.ui.view.AbstractScrolledTitledView;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.search.save.SavedSearchesHandler;
+import org.remus.infomngmnt.search.service.LuceneSearchService;
 import org.remus.search.LatestSearchStrings;
 import org.remus.search.Search;
 import org.remus.search.SearchPackage;
@@ -212,9 +213,12 @@ public class SearchView extends AbstractScrolledTitledView {
 	}
 
 	protected void handleSearchButtonPressed() {
-		if (!this.latestSearchStrings.getStrings().contains(this.combo.getText())) {
-			this.latestSearchStrings.getStrings().add(this.combo.getText());
+		String text = this.combo.getText();
+		if (!this.latestSearchStrings.getStrings().contains(text)) {
+			this.latestSearchStrings.getStrings().add(text);
+			this.combo.setText(text);
 		}
+		LuceneSearchService.getInstance().search(this.currentSearch);
 
 	}
 

@@ -16,6 +16,11 @@ package org.remus.search.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
+
+import org.remus.infomngmnt.search.service.ILuceneCustomizer;
+import org.remus.infomngmnt.search.service.LuceneSearchCustomizeTracker;
 
 /**
  * This is the central singleton for the Search edit plugin.
@@ -85,9 +90,12 @@ public final class SearchPlugin extends EMFPlugin {
 	 * The actual implementation of the Eclipse <b>Plugin</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public static class Implementation extends EclipsePlugin {
+
+		private ServiceTracker tracker;
+
 		/**
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
@@ -100,6 +108,23 @@ public final class SearchPlugin extends EMFPlugin {
 			// Remember the static instance.
 			//
 			plugin = this;
+		}
+
+		@Override
+		public void start(BundleContext context) throws Exception {
+			super.start(context);
+			this.tracker = new LuceneSearchCustomizeTracker(context);
+			this.tracker.open();
+		}
+
+		@Override
+		public void stop(BundleContext context) throws Exception {
+			super.stop(context);
+			this.tracker.close();
+		}
+
+		public ILuceneCustomizer getService() {
+			return (ILuceneCustomizer) this.tracker.getService();
 		}
 	}
 

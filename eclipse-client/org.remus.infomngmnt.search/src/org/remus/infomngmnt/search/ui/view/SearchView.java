@@ -57,13 +57,13 @@ import org.remus.infomngmnt.common.ui.databinding.RadioButtonGroupEnumBinding;
 import org.remus.infomngmnt.common.ui.view.AbstractScrolledTitledView;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.search.LatestSearchStrings;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchScope;
+import org.remus.infomngmnt.search.provider.SearchItemProviderAdapterFactory;
 import org.remus.infomngmnt.search.save.SavedSearchesHandler;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
-import org.remus.search.LatestSearchStrings;
-import org.remus.search.Search;
-import org.remus.search.SearchPackage;
-import org.remus.search.SearchScope;
-import org.remus.search.provider.SearchItemProviderAdapterFactory;
 
 public class SearchView extends AbstractScrolledTitledView {
 

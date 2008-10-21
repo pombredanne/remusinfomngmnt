@@ -16,7 +16,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.search.Search;
+import org.remus.infomngmnt.search.Search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;

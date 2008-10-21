@@ -19,7 +19,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import org.remus.search.provider.SearchPlugin;
+import org.remus.infomngmnt.search.provider.SearchPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

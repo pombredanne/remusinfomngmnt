@@ -12,43 +12,42 @@
  *
  * $Id$
  */
-package org.remus.search;
+package org.remus.infomngmnt.search;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Saved Searches</b></em>'.
+ * A representation of the model object '<em><b>Latest Search Strings</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.remus.search.SavedSearches#getSearches <em>Searches</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.LatestSearchStrings#getStrings <em>Strings</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.remus.search.SearchPackage#getSavedSearches()
+ * @see org.remus.infomngmnt.search.SearchPackage#getLatestSearchStrings()
  * @model
  * @generated
  */
-public interface SavedSearches extends EObject {
+public interface LatestSearchStrings extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Searches</b></em>' containment reference list.
-	 * The list contents are of type {@link org.remus.search.Search}.
+	 * Returns the value of the '<em><b>Strings</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Searches</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Strings</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Searches</em>' containment reference list.
-	 * @see org.remus.search.SearchPackage#getSavedSearches_Searches()
-	 * @model containment="true"
+	 * @return the value of the '<em>Strings</em>' attribute list.
+	 * @see org.remus.infomngmnt.search.SearchPackage#getLatestSearchStrings_Strings()
+	 * @model
 	 * @generated
 	 */
-	EList<Search> getSearches();
+	EList<String> getStrings();
 
-} // SavedSearches
+} // LatestSearchStrings

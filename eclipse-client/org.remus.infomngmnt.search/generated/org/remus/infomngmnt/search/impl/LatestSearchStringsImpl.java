@@ -12,20 +12,17 @@
  *
  * $Id$
  */
-package org.remus.search.impl;
+package org.remus.infomngmnt.search.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
-import org.remus.search.LatestSearchStrings;
-import org.remus.search.SearchPackage;
+import org.remus.infomngmnt.search.LatestSearchStrings;
+import org.remus.infomngmnt.search.SearchPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,7 +31,7 @@ import org.remus.search.SearchPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.search.impl.LatestSearchStringsImpl#getStrings <em>Strings</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.LatestSearchStringsImpl#getStrings <em>Strings</em>}</li>
  * </ul>
  * </p>
  *

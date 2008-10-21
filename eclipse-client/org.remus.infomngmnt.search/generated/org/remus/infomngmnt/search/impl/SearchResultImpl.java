@@ -12,17 +12,17 @@
  *
  * $Id$
  */
-package org.remus.search.impl;
+package org.remus.infomngmnt.search.impl;
+
+import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.remus.search.SearchPackage;
-import org.remus.search.SearchResult;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchResult;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,11 +31,12 @@ import org.remus.search.SearchResult;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.search.impl.SearchResultImpl#getInfoId <em>Info Id</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchResultImpl#getTitle <em>Title</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchResultImpl#getText <em>Text</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchResultImpl#getPath <em>Path</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchResultImpl#getInfoType <em>Info Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getInfoId <em>Info Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getTitle <em>Title</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getText <em>Text</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getPath <em>Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getInfoType <em>Info Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getDate <em>Date</em>}</li>
  * </ul>
  * </p>
  *
@@ -141,6 +142,26 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 	 * @ordered
 	 */
 	protected String infoType = INFO_TYPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDate() <em>Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Date DATE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDate() <em>Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected Date date = DATE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -271,6 +292,27 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Date getDate() {
+		return date;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDate(Date newDate) {
+		Date oldDate = date;
+		date = newDate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.SEARCH_RESULT__DATE, oldDate, date));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -284,6 +326,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return getPath();
 			case SearchPackage.SEARCH_RESULT__INFO_TYPE:
 				return getInfoType();
+			case SearchPackage.SEARCH_RESULT__DATE:
+				return getDate();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -310,6 +354,9 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return;
 			case SearchPackage.SEARCH_RESULT__INFO_TYPE:
 				setInfoType((String)newValue);
+				return;
+			case SearchPackage.SEARCH_RESULT__DATE:
+				setDate((Date)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -338,6 +385,9 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 			case SearchPackage.SEARCH_RESULT__INFO_TYPE:
 				setInfoType(INFO_TYPE_EDEFAULT);
 				return;
+			case SearchPackage.SEARCH_RESULT__DATE:
+				setDate(DATE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -360,6 +410,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
 			case SearchPackage.SEARCH_RESULT__INFO_TYPE:
 				return INFO_TYPE_EDEFAULT == null ? infoType != null : !INFO_TYPE_EDEFAULT.equals(infoType);
+			case SearchPackage.SEARCH_RESULT__DATE:
+				return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -384,6 +436,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 		result.append(path);
 		result.append(", infoType: ");
 		result.append(infoType);
+		result.append(", date: ");
+		result.append(date);
 		result.append(')');
 		return result.toString();
 	}

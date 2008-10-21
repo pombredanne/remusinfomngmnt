@@ -12,23 +12,25 @@
  *
  * $Id$
  */
-package org.remus.search.util;
+package org.remus.infomngmnt.search.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
-import org.remus.search.*;
+import org.remus.infomngmnt.search.LatestSearchStrings;
+import org.remus.infomngmnt.search.SavedSearches;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchResult;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.remus.search.SearchPackage
+ * @see org.remus.infomngmnt.search.SearchPackage
  * @generated
  */
 public class SearchAdapterFactory extends AdapterFactoryImpl {
@@ -116,13 +118,13 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.search.Search <em>Search</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.search.Search <em>Search</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.remus.search.Search
+	 * @see org.remus.infomngmnt.search.Search
 	 * @generated
 	 */
 	public Adapter createSearchAdapter() {
@@ -130,13 +132,13 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.search.SearchResult <em>Result</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.search.SearchResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.remus.search.SearchResult
+	 * @see org.remus.infomngmnt.search.SearchResult
 	 * @generated
 	 */
 	public Adapter createSearchResultAdapter() {
@@ -144,13 +146,13 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.search.SavedSearches <em>Saved Searches</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.search.SavedSearches <em>Saved Searches</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.remus.search.SavedSearches
+	 * @see org.remus.infomngmnt.search.SavedSearches
 	 * @generated
 	 */
 	public Adapter createSavedSearchesAdapter() {
@@ -158,13 +160,13 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.search.LatestSearchStrings <em>Latest Search Strings</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.search.LatestSearchStrings <em>Latest Search Strings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.remus.search.LatestSearchStrings
+	 * @see org.remus.infomngmnt.search.LatestSearchStrings
 	 * @generated
 	 */
 	public Adapter createLatestSearchStringsAdapter() {

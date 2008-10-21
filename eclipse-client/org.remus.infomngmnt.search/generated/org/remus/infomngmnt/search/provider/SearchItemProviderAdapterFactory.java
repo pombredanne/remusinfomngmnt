@@ -12,7 +12,7 @@
  *
  * $Id$
  */
-package org.remus.search.provider;
+package org.remus.infomngmnt.search.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +20,6 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -33,7 +32,7 @@ import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
-import org.remus.search.util.SearchAdapterFactory;
+import org.remus.infomngmnt.search.util.SearchAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -84,7 +83,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.search.Search} instances.
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.search.Search} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -92,7 +91,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	protected SearchItemProvider searchItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.remus.search.Search}.
+	 * This creates an adapter for a {@link org.remus.infomngmnt.search.Search}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -107,7 +106,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.search.SearchResult} instances.
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.search.SearchResult} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -115,7 +114,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	protected SearchResultItemProvider searchResultItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.remus.search.SearchResult}.
+	 * This creates an adapter for a {@link org.remus.infomngmnt.search.SearchResult}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -130,7 +129,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.search.SavedSearches} instances.
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.search.SavedSearches} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -138,7 +137,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	protected SavedSearchesItemProvider savedSearchesItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.remus.search.SavedSearches}.
+	 * This creates an adapter for a {@link org.remus.infomngmnt.search.SavedSearches}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -153,7 +152,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.search.LatestSearchStrings} instances.
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.search.LatestSearchStrings} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -161,7 +160,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	protected LatestSearchStringsItemProvider latestSearchStringsItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.remus.search.LatestSearchStrings}.
+	 * This creates an adapter for a {@link org.remus.infomngmnt.search.LatestSearchStrings}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

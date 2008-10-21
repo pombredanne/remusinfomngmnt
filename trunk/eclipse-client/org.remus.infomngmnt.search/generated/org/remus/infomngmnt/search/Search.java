@@ -12,12 +12,11 @@
  *
  * $Id$
  */
-package org.remus.search;
+package org.remus.infomngmnt.search;
 
 import java.util.Date;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -28,17 +27,17 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.remus.search.Search#getSearchString <em>Search String</em>}</li>
- *   <li>{@link org.remus.search.Search#getDateStart <em>Date Start</em>}</li>
- *   <li>{@link org.remus.search.Search#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.remus.search.Search#getInfoType <em>Info Type</em>}</li>
- *   <li>{@link org.remus.search.Search#getScope <em>Scope</em>}</li>
- *   <li>{@link org.remus.search.Search#getResult <em>Result</em>}</li>
- *   <li>{@link org.remus.search.Search#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getSearchString <em>Search String</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getDateStart <em>Date Start</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getEndDate <em>End Date</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getInfoType <em>Info Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getScope <em>Scope</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getResult <em>Result</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.remus.search.SearchPackage#getSearch()
+ * @see org.remus.infomngmnt.search.SearchPackage#getSearch()
  * @model
  * @generated
  */
@@ -53,14 +52,14 @@ public interface Search extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Search String</em>' attribute.
 	 * @see #setSearchString(String)
-	 * @see org.remus.search.SearchPackage#getSearch_SearchString()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_SearchString()
 	 * @model
 	 * @generated
 	 */
 	String getSearchString();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.Search#getSearchString <em>Search String</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.Search#getSearchString <em>Search String</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Search String</em>' attribute.
@@ -79,14 +78,14 @@ public interface Search extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Date Start</em>' attribute.
 	 * @see #setDateStart(Date)
-	 * @see org.remus.search.SearchPackage#getSearch_DateStart()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_DateStart()
 	 * @model
 	 * @generated
 	 */
 	Date getDateStart();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.Search#getDateStart <em>Date Start</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.Search#getDateStart <em>Date Start</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Date Start</em>' attribute.
@@ -105,14 +104,14 @@ public interface Search extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>End Date</em>' attribute.
 	 * @see #setEndDate(Date)
-	 * @see org.remus.search.SearchPackage#getSearch_EndDate()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_EndDate()
 	 * @model
 	 * @generated
 	 */
 	Date getEndDate();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.Search#getEndDate <em>End Date</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.Search#getEndDate <em>End Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>End Date</em>' attribute.
@@ -126,12 +125,12 @@ public interface Search extends EObject {
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Info Type</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Info Type</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Info Type</em>' attribute list.
-	 * @see org.remus.search.SearchPackage#getSearch_InfoType()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_InfoType()
 	 * @model
 	 * @generated
 	 */
@@ -140,7 +139,7 @@ public interface Search extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Scope</b></em>' attribute.
 	 * The default value is <code>"0"</code>.
-	 * The literals are from the enumeration {@link org.remus.search.SearchScope}.
+	 * The literals are from the enumeration {@link org.remus.infomngmnt.search.SearchScope}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Scope</em>' attribute isn't clear,
@@ -148,20 +147,20 @@ public interface Search extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Scope</em>' attribute.
-	 * @see org.remus.search.SearchScope
+	 * @see org.remus.infomngmnt.search.SearchScope
 	 * @see #setScope(SearchScope)
-	 * @see org.remus.search.SearchPackage#getSearch_Scope()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_Scope()
 	 * @model default="0"
 	 * @generated
 	 */
 	SearchScope getScope();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.Search#getScope <em>Scope</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.Search#getScope <em>Scope</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Scope</em>' attribute.
-	 * @see org.remus.search.SearchScope
+	 * @see org.remus.infomngmnt.search.SearchScope
 	 * @see #getScope()
 	 * @generated
 	 */
@@ -169,7 +168,7 @@ public interface Search extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Result</b></em>' containment reference list.
-	 * The list contents are of type {@link org.remus.search.SearchResult}.
+	 * The list contents are of type {@link org.remus.infomngmnt.search.SearchResult}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Result</em>' containment reference list isn't clear,
@@ -177,7 +176,7 @@ public interface Search extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Result</em>' containment reference list.
-	 * @see org.remus.search.SearchPackage#getSearch_Result()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_Result()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -193,14 +192,14 @@ public interface Search extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
-	 * @see org.remus.search.SearchPackage#getSearch_Id()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_Id()
 	 * @model required="true"
 	 * @generated
 	 */
 	String getId();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.Search#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.Search#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Id</em>' attribute.

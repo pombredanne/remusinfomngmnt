@@ -7,7 +7,7 @@
     modelName="Search" editPluginClass="org.remus.search.provider.SearchPlugin" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false">
   <foreignModel>search.ecore</foreignModel>
-  <genPackages prefix="Search" basePackage="org.remus" disposableProviderFactory="true"
+  <genPackages prefix="Search" basePackage="org.remus.infomngmnt" disposableProviderFactory="true"
       ecorePackage="search.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="search.ecore#//SearchScope">
       <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/ALL"/>
@@ -29,6 +29,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/text"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/path"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/infoType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/date"/>
     </genClasses>
     <genClasses ecoreClass="search.ecore#//SavedSearches">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference search.ecore#//SavedSearches/searches"/>

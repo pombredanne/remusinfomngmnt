@@ -12,7 +12,7 @@
  *
  * $Id$
  */
-package org.remus.search;
+package org.remus.infomngmnt.search;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.remus.search.SearchPackage
+ * @see org.remus.infomngmnt.search.SearchPackage
  * @generated
  */
 public interface SearchFactory extends EFactory {
@@ -31,7 +31,7 @@ public interface SearchFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	SearchFactory eINSTANCE = org.remus.search.impl.SearchFactoryImpl.init();
+	SearchFactory eINSTANCE = org.remus.infomngmnt.search.impl.SearchFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Search</em>'.

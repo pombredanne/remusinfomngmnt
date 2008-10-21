@@ -12,7 +12,7 @@
  *
  * $Id$
  */
-package org.remus.search.provider;
+package org.remus.infomngmnt.search.provider;
 
 
 import java.util.Collection;
@@ -20,9 +20,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -34,23 +32,23 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.remus.search.SearchPackage;
-import org.remus.search.SearchResult;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchResult;
 
 /**
- * This is the item provider adapter for a {@link org.remus.search.SearchResult} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.search.SearchResult} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
 public class SearchResultItemProvider
-	extends ItemProviderAdapter
-	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+extends ItemProviderAdapter
+implements
+IEditingDomainItemProvider,
+IStructuredItemContentProvider,
+ITreeItemContentProvider,
+IItemLabelProvider,
+IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -69,7 +67,7 @@ public class SearchResultItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addInfoIdPropertyDescriptor(object);
@@ -77,8 +75,9 @@ public class SearchResultItemProvider
 			addTextPropertyDescriptor(object);
 			addPathPropertyDescriptor(object);
 			addInfoTypePropertyDescriptor(object);
+			addDatePropertyDescriptor(object);
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -88,19 +87,19 @@ public class SearchResultItemProvider
 	 * @generated
 	 */
 	protected void addInfoIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SearchResult_infoId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoId_feature", "_UI_SearchResult_type"),
-				 SearchPackage.Literals.SEARCH_RESULT__INFO_ID,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+		this.itemPropertyDescriptors.add
+		(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_SearchResult_infoId_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoId_feature", "_UI_SearchResult_type"),
+						SearchPackage.Literals.SEARCH_RESULT__INFO_ID,
+						true,
+						false,
+						false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+						null,
+						null));
 	}
 
 	/**
@@ -110,19 +109,19 @@ public class SearchResultItemProvider
 	 * @generated
 	 */
 	protected void addTitlePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SearchResult_title_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_title_feature", "_UI_SearchResult_type"),
-				 SearchPackage.Literals.SEARCH_RESULT__TITLE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+		this.itemPropertyDescriptors.add
+		(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_SearchResult_title_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_title_feature", "_UI_SearchResult_type"),
+						SearchPackage.Literals.SEARCH_RESULT__TITLE,
+						true,
+						false,
+						false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+						null,
+						null));
 	}
 
 	/**
@@ -132,19 +131,19 @@ public class SearchResultItemProvider
 	 * @generated
 	 */
 	protected void addTextPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SearchResult_text_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_text_feature", "_UI_SearchResult_type"),
-				 SearchPackage.Literals.SEARCH_RESULT__TEXT,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+		this.itemPropertyDescriptors.add
+		(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_SearchResult_text_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_text_feature", "_UI_SearchResult_type"),
+						SearchPackage.Literals.SEARCH_RESULT__TEXT,
+						true,
+						false,
+						false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+						null,
+						null));
 	}
 
 	/**
@@ -154,19 +153,19 @@ public class SearchResultItemProvider
 	 * @generated
 	 */
 	protected void addPathPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SearchResult_path_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_path_feature", "_UI_SearchResult_type"),
-				 SearchPackage.Literals.SEARCH_RESULT__PATH,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+		this.itemPropertyDescriptors.add
+		(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_SearchResult_path_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_path_feature", "_UI_SearchResult_type"),
+						SearchPackage.Literals.SEARCH_RESULT__PATH,
+						true,
+						false,
+						false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+						null,
+						null));
 	}
 
 	/**
@@ -176,19 +175,41 @@ public class SearchResultItemProvider
 	 * @generated
 	 */
 	protected void addInfoTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SearchResult_infoType_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoType_feature", "_UI_SearchResult_type"),
-				 SearchPackage.Literals.SEARCH_RESULT__INFO_TYPE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+		this.itemPropertyDescriptors.add
+		(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_SearchResult_infoType_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoType_feature", "_UI_SearchResult_type"),
+						SearchPackage.Literals.SEARCH_RESULT__INFO_TYPE,
+						true,
+						false,
+						false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+						null,
+						null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Date feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDatePropertyDescriptor(Object object) {
+		this.itemPropertyDescriptors.add
+		(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_SearchResult_date_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_date_feature", "_UI_SearchResult_type"),
+						SearchPackage.Literals.SEARCH_RESULT__DATE,
+						true,
+						false,
+						false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+						null,
+						null));
 	}
 
 	/**
@@ -212,8 +233,8 @@ public class SearchResultItemProvider
 	public String getText(Object object) {
 		String label = ((SearchResult)object).getInfoId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_SearchResult_type") :
-			getString("_UI_SearchResult_type") + " " + label;
+				getString("_UI_SearchResult_type") :
+					getString("_UI_SearchResult_type") + " " + label;
 	}
 
 	/**
@@ -228,13 +249,14 @@ public class SearchResultItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SearchResult.class)) {
-			case SearchPackage.SEARCH_RESULT__INFO_ID:
-			case SearchPackage.SEARCH_RESULT__TITLE:
-			case SearchPackage.SEARCH_RESULT__TEXT:
-			case SearchPackage.SEARCH_RESULT__PATH:
-			case SearchPackage.SEARCH_RESULT__INFO_TYPE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
+		case SearchPackage.SEARCH_RESULT__INFO_ID:
+		case SearchPackage.SEARCH_RESULT__TITLE:
+		case SearchPackage.SEARCH_RESULT__TEXT:
+		case SearchPackage.SEARCH_RESULT__PATH:
+		case SearchPackage.SEARCH_RESULT__INFO_TYPE:
+		case SearchPackage.SEARCH_RESULT__DATE:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		}
 		super.notifyChanged(notification);
 	}

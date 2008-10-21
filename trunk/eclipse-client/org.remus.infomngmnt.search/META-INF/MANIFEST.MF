@@ -21,7 +21,7 @@ Bundle-ClassPath: libs/lucene-core-2.3.1.jar,
  libs/lucene-highlighter-2.3.1.jar,
  .
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.remus.search.provider.SearchPlugin$Implementation
+Bundle-Activator: org.remus.infomngmnt.search.provider.SearchPlugin$Implementation
 Export-Package: org.apache.lucene,
  org.apache.lucene.analysis,
  org.apache.lucene.analysis.standard,
@@ -36,6 +36,6 @@ Export-Package: org.apache.lucene,
  org.apache.lucene.store,
  org.apache.lucene.util,
  org.remus.infomngmnt.search.service,
- org.remus.search,
- org.remus.search.provider,
- org.remus.search.util
+ org.remus.infomngmnt.search,
+ org.remus.infomngmnt.search.provider,
+ org.remus.infomngmnt.search.util

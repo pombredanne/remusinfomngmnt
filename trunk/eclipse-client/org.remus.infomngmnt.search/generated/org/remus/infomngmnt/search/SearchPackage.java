@@ -12,7 +12,7 @@
  *
  * $Id$
  */
-package org.remus.search;
+package org.remus.infomngmnt.search;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.remus.search.SearchFactory
+ * @see org.remus.infomngmnt.search.SearchFactory
  * @model kind="package"
  * @generated
  */
@@ -66,14 +66,14 @@ public interface SearchPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	SearchPackage eINSTANCE = org.remus.search.impl.SearchPackageImpl.init();
+	SearchPackage eINSTANCE = org.remus.infomngmnt.search.impl.SearchPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.remus.search.impl.SearchImpl <em>Search</em>}' class.
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SearchImpl <em>Search</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.remus.search.impl.SearchImpl
-	 * @see org.remus.search.impl.SearchPackageImpl#getSearch()
+	 * @see org.remus.infomngmnt.search.impl.SearchImpl
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearch()
 	 * @generated
 	 */
 	int SEARCH = 0;
@@ -151,11 +151,11 @@ public interface SearchPackage extends EPackage {
 	int SEARCH_FEATURE_COUNT = 7;
 
 	/**
-	 * The meta object id for the '{@link org.remus.search.impl.SearchResultImpl <em>Result</em>}' class.
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SearchResultImpl <em>Result</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.remus.search.impl.SearchResultImpl
-	 * @see org.remus.search.impl.SearchPackageImpl#getSearchResult()
+	 * @see org.remus.infomngmnt.search.impl.SearchResultImpl
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchResult()
 	 * @generated
 	 */
 	int SEARCH_RESULT = 1;
@@ -206,20 +206,29 @@ public interface SearchPackage extends EPackage {
 	int SEARCH_RESULT__INFO_TYPE = 4;
 
 	/**
+	 * The feature id for the '<em><b>Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEARCH_RESULT__DATE = 5;
+
+	/**
 	 * The number of structural features of the '<em>Result</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SEARCH_RESULT_FEATURE_COUNT = 5;
+	int SEARCH_RESULT_FEATURE_COUNT = 6;
 
 	/**
-	 * The meta object id for the '{@link org.remus.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.remus.search.impl.SavedSearchesImpl
-	 * @see org.remus.search.impl.SearchPackageImpl#getSavedSearches()
+	 * @see org.remus.infomngmnt.search.impl.SavedSearchesImpl
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSavedSearches()
 	 * @generated
 	 */
 	int SAVED_SEARCHES = 2;
@@ -243,11 +252,11 @@ public interface SearchPackage extends EPackage {
 	int SAVED_SEARCHES_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.remus.search.impl.LatestSearchStringsImpl <em>Latest Search Strings</em>}' class.
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.LatestSearchStringsImpl <em>Latest Search Strings</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.remus.search.impl.LatestSearchStringsImpl
-	 * @see org.remus.search.impl.SearchPackageImpl#getLatestSearchStrings()
+	 * @see org.remus.infomngmnt.search.impl.LatestSearchStringsImpl
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getLatestSearchStrings()
 	 * @generated
 	 */
 	int LATEST_SEARCH_STRINGS = 3;
@@ -271,216 +280,227 @@ public interface SearchPackage extends EPackage {
 	int LATEST_SEARCH_STRINGS_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.remus.search.SearchScope <em>Scope</em>}' enum.
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.remus.search.SearchScope
-	 * @see org.remus.search.impl.SearchPackageImpl#getSearchScope()
+	 * @see org.remus.infomngmnt.search.SearchScope
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchScope()
 	 * @generated
 	 */
 	int SEARCH_SCOPE = 4;
 
 
 	/**
-	 * Returns the meta object for class '{@link org.remus.search.Search <em>Search</em>}'.
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.Search <em>Search</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Search</em>'.
-	 * @see org.remus.search.Search
+	 * @see org.remus.infomngmnt.search.Search
 	 * @generated
 	 */
 	EClass getSearch();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.Search#getSearchString <em>Search String</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Search#getSearchString <em>Search String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Search String</em>'.
-	 * @see org.remus.search.Search#getSearchString()
+	 * @see org.remus.infomngmnt.search.Search#getSearchString()
 	 * @see #getSearch()
 	 * @generated
 	 */
 	EAttribute getSearch_SearchString();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.Search#getDateStart <em>Date Start</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Search#getDateStart <em>Date Start</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Date Start</em>'.
-	 * @see org.remus.search.Search#getDateStart()
+	 * @see org.remus.infomngmnt.search.Search#getDateStart()
 	 * @see #getSearch()
 	 * @generated
 	 */
 	EAttribute getSearch_DateStart();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.Search#getEndDate <em>End Date</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Search#getEndDate <em>End Date</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>End Date</em>'.
-	 * @see org.remus.search.Search#getEndDate()
+	 * @see org.remus.infomngmnt.search.Search#getEndDate()
 	 * @see #getSearch()
 	 * @generated
 	 */
 	EAttribute getSearch_EndDate();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.remus.search.Search#getInfoType <em>Info Type</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.remus.infomngmnt.search.Search#getInfoType <em>Info Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Info Type</em>'.
-	 * @see org.remus.search.Search#getInfoType()
+	 * @see org.remus.infomngmnt.search.Search#getInfoType()
 	 * @see #getSearch()
 	 * @generated
 	 */
 	EAttribute getSearch_InfoType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.Search#getScope <em>Scope</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Search#getScope <em>Scope</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Scope</em>'.
-	 * @see org.remus.search.Search#getScope()
+	 * @see org.remus.infomngmnt.search.Search#getScope()
 	 * @see #getSearch()
 	 * @generated
 	 */
 	EAttribute getSearch_Scope();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.remus.search.Search#getResult <em>Result</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.search.Search#getResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Result</em>'.
-	 * @see org.remus.search.Search#getResult()
+	 * @see org.remus.infomngmnt.search.Search#getResult()
 	 * @see #getSearch()
 	 * @generated
 	 */
 	EReference getSearch_Result();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.Search#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Search#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.remus.search.Search#getId()
+	 * @see org.remus.infomngmnt.search.Search#getId()
 	 * @see #getSearch()
 	 * @generated
 	 */
 	EAttribute getSearch_Id();
 
 	/**
-	 * Returns the meta object for class '{@link org.remus.search.SearchResult <em>Result</em>}'.
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.SearchResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Result</em>'.
-	 * @see org.remus.search.SearchResult
+	 * @see org.remus.infomngmnt.search.SearchResult
 	 * @generated
 	 */
 	EClass getSearchResult();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.SearchResult#getInfoId <em>Info Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.SearchResult#getInfoId <em>Info Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Info Id</em>'.
-	 * @see org.remus.search.SearchResult#getInfoId()
+	 * @see org.remus.infomngmnt.search.SearchResult#getInfoId()
 	 * @see #getSearchResult()
 	 * @generated
 	 */
 	EAttribute getSearchResult_InfoId();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.SearchResult#getTitle <em>Title</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.SearchResult#getTitle <em>Title</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Title</em>'.
-	 * @see org.remus.search.SearchResult#getTitle()
+	 * @see org.remus.infomngmnt.search.SearchResult#getTitle()
 	 * @see #getSearchResult()
 	 * @generated
 	 */
 	EAttribute getSearchResult_Title();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.SearchResult#getText <em>Text</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.SearchResult#getText <em>Text</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Text</em>'.
-	 * @see org.remus.search.SearchResult#getText()
+	 * @see org.remus.infomngmnt.search.SearchResult#getText()
 	 * @see #getSearchResult()
 	 * @generated
 	 */
 	EAttribute getSearchResult_Text();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.SearchResult#getPath <em>Path</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.SearchResult#getPath <em>Path</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Path</em>'.
-	 * @see org.remus.search.SearchResult#getPath()
+	 * @see org.remus.infomngmnt.search.SearchResult#getPath()
 	 * @see #getSearchResult()
 	 * @generated
 	 */
 	EAttribute getSearchResult_Path();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.search.SearchResult#getInfoType <em>Info Type</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.SearchResult#getInfoType <em>Info Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Info Type</em>'.
-	 * @see org.remus.search.SearchResult#getInfoType()
+	 * @see org.remus.infomngmnt.search.SearchResult#getInfoType()
 	 * @see #getSearchResult()
 	 * @generated
 	 */
 	EAttribute getSearchResult_InfoType();
 
 	/**
-	 * Returns the meta object for class '{@link org.remus.search.SavedSearches <em>Saved Searches</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.SearchResult#getDate <em>Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Date</em>'.
+	 * @see org.remus.infomngmnt.search.SearchResult#getDate()
+	 * @see #getSearchResult()
+	 * @generated
+	 */
+	EAttribute getSearchResult_Date();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.SavedSearches <em>Saved Searches</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Saved Searches</em>'.
-	 * @see org.remus.search.SavedSearches
+	 * @see org.remus.infomngmnt.search.SavedSearches
 	 * @generated
 	 */
 	EClass getSavedSearches();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.remus.search.SavedSearches#getSearches <em>Searches</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.search.SavedSearches#getSearches <em>Searches</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Searches</em>'.
-	 * @see org.remus.search.SavedSearches#getSearches()
+	 * @see org.remus.infomngmnt.search.SavedSearches#getSearches()
 	 * @see #getSavedSearches()
 	 * @generated
 	 */
 	EReference getSavedSearches_Searches();
 
 	/**
-	 * Returns the meta object for class '{@link org.remus.search.LatestSearchStrings <em>Latest Search Strings</em>}'.
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.LatestSearchStrings <em>Latest Search Strings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Latest Search Strings</em>'.
-	 * @see org.remus.search.LatestSearchStrings
+	 * @see org.remus.infomngmnt.search.LatestSearchStrings
 	 * @generated
 	 */
 	EClass getLatestSearchStrings();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.remus.search.LatestSearchStrings#getStrings <em>Strings</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.remus.infomngmnt.search.LatestSearchStrings#getStrings <em>Strings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Strings</em>'.
-	 * @see org.remus.search.LatestSearchStrings#getStrings()
+	 * @see org.remus.infomngmnt.search.LatestSearchStrings#getStrings()
 	 * @see #getLatestSearchStrings()
 	 * @generated
 	 */
 	EAttribute getLatestSearchStrings_Strings();
 
 	/**
-	 * Returns the meta object for enum '{@link org.remus.search.SearchScope <em>Scope</em>}'.
+	 * Returns the meta object for enum '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Scope</em>'.
-	 * @see org.remus.search.SearchScope
+	 * @see org.remus.infomngmnt.search.SearchScope
 	 * @generated
 	 */
 	EEnum getSearchScope();
@@ -508,11 +528,11 @@ public interface SearchPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.remus.search.impl.SearchImpl <em>Search</em>}' class.
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SearchImpl <em>Search</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.remus.search.impl.SearchImpl
-		 * @see org.remus.search.impl.SearchPackageImpl#getSearch()
+		 * @see org.remus.infomngmnt.search.impl.SearchImpl
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearch()
 		 * @generated
 		 */
 		EClass SEARCH = eINSTANCE.getSearch();
@@ -574,11 +594,11 @@ public interface SearchPackage extends EPackage {
 		EAttribute SEARCH__ID = eINSTANCE.getSearch_Id();
 
 		/**
-		 * The meta object literal for the '{@link org.remus.search.impl.SearchResultImpl <em>Result</em>}' class.
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SearchResultImpl <em>Result</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.remus.search.impl.SearchResultImpl
-		 * @see org.remus.search.impl.SearchPackageImpl#getSearchResult()
+		 * @see org.remus.infomngmnt.search.impl.SearchResultImpl
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchResult()
 		 * @generated
 		 */
 		EClass SEARCH_RESULT = eINSTANCE.getSearchResult();
@@ -624,11 +644,19 @@ public interface SearchPackage extends EPackage {
 		EAttribute SEARCH_RESULT__INFO_TYPE = eINSTANCE.getSearchResult_InfoType();
 
 		/**
-		 * The meta object literal for the '{@link org.remus.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
+		 * The meta object literal for the '<em><b>Date</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.remus.search.impl.SavedSearchesImpl
-		 * @see org.remus.search.impl.SearchPackageImpl#getSavedSearches()
+		 * @generated
+		 */
+		EAttribute SEARCH_RESULT__DATE = eINSTANCE.getSearchResult_Date();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.search.impl.SavedSearchesImpl
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSavedSearches()
 		 * @generated
 		 */
 		EClass SAVED_SEARCHES = eINSTANCE.getSavedSearches();
@@ -642,11 +670,11 @@ public interface SearchPackage extends EPackage {
 		EReference SAVED_SEARCHES__SEARCHES = eINSTANCE.getSavedSearches_Searches();
 
 		/**
-		 * The meta object literal for the '{@link org.remus.search.impl.LatestSearchStringsImpl <em>Latest Search Strings</em>}' class.
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.LatestSearchStringsImpl <em>Latest Search Strings</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.remus.search.impl.LatestSearchStringsImpl
-		 * @see org.remus.search.impl.SearchPackageImpl#getLatestSearchStrings()
+		 * @see org.remus.infomngmnt.search.impl.LatestSearchStringsImpl
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getLatestSearchStrings()
 		 * @generated
 		 */
 		EClass LATEST_SEARCH_STRINGS = eINSTANCE.getLatestSearchStrings();
@@ -660,11 +688,11 @@ public interface SearchPackage extends EPackage {
 		EAttribute LATEST_SEARCH_STRINGS__STRINGS = eINSTANCE.getLatestSearchStrings_Strings();
 
 		/**
-		 * The meta object literal for the '{@link org.remus.search.SearchScope <em>Scope</em>}' enum.
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.remus.search.SearchScope
-		 * @see org.remus.search.impl.SearchPackageImpl#getSearchScope()
+		 * @see org.remus.infomngmnt.search.SearchScope
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchScope()
 		 * @generated
 		 */
 		EEnum SEARCH_SCOPE = eINSTANCE.getSearchScope();

@@ -12,7 +12,9 @@
  *
  * $Id$
  */
-package org.remus.search;
+package org.remus.infomngmnt.search;
+
+import java.util.Date;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -24,15 +26,16 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.remus.search.SearchResult#getInfoId <em>Info Id</em>}</li>
- *   <li>{@link org.remus.search.SearchResult#getTitle <em>Title</em>}</li>
- *   <li>{@link org.remus.search.SearchResult#getText <em>Text</em>}</li>
- *   <li>{@link org.remus.search.SearchResult#getPath <em>Path</em>}</li>
- *   <li>{@link org.remus.search.SearchResult#getInfoType <em>Info Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getInfoId <em>Info Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getTitle <em>Title</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getText <em>Text</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getPath <em>Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getInfoType <em>Info Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getDate <em>Date</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.remus.search.SearchPackage#getSearchResult()
+ * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult()
  * @model
  * @generated
  */
@@ -47,14 +50,14 @@ public interface SearchResult extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Info Id</em>' attribute.
 	 * @see #setInfoId(String)
-	 * @see org.remus.search.SearchPackage#getSearchResult_InfoId()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_InfoId()
 	 * @model
 	 * @generated
 	 */
 	String getInfoId();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.SearchResult#getInfoId <em>Info Id</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.SearchResult#getInfoId <em>Info Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Info Id</em>' attribute.
@@ -73,14 +76,14 @@ public interface SearchResult extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Title</em>' attribute.
 	 * @see #setTitle(String)
-	 * @see org.remus.search.SearchPackage#getSearchResult_Title()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_Title()
 	 * @model
 	 * @generated
 	 */
 	String getTitle();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.SearchResult#getTitle <em>Title</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.SearchResult#getTitle <em>Title</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Title</em>' attribute.
@@ -99,14 +102,14 @@ public interface SearchResult extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Text</em>' attribute.
 	 * @see #setText(String)
-	 * @see org.remus.search.SearchPackage#getSearchResult_Text()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_Text()
 	 * @model
 	 * @generated
 	 */
 	String getText();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.SearchResult#getText <em>Text</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.SearchResult#getText <em>Text</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Text</em>' attribute.
@@ -125,14 +128,14 @@ public interface SearchResult extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Path</em>' attribute.
 	 * @see #setPath(String)
-	 * @see org.remus.search.SearchPackage#getSearchResult_Path()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_Path()
 	 * @model
 	 * @generated
 	 */
 	String getPath();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.SearchResult#getPath <em>Path</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.SearchResult#getPath <em>Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Path</em>' attribute.
@@ -151,14 +154,14 @@ public interface SearchResult extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Info Type</em>' attribute.
 	 * @see #setInfoType(String)
-	 * @see org.remus.search.SearchPackage#getSearchResult_InfoType()
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_InfoType()
 	 * @model
 	 * @generated
 	 */
 	String getInfoType();
 
 	/**
-	 * Sets the value of the '{@link org.remus.search.SearchResult#getInfoType <em>Info Type</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.SearchResult#getInfoType <em>Info Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Info Type</em>' attribute.
@@ -166,5 +169,31 @@ public interface SearchResult extends EObject {
 	 * @generated
 	 */
 	void setInfoType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Date</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Date</em>' attribute.
+	 * @see #setDate(Date)
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_Date()
+	 * @model
+	 * @generated
+	 */
+	Date getDate();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.SearchResult#getDate <em>Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Date</em>' attribute.
+	 * @see #getDate()
+	 * @generated
+	 */
+	void setDate(Date value);
 
 } // SearchResult

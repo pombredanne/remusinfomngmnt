@@ -12,30 +12,26 @@
  *
  * $Id$
  */
-package org.remus.search.impl;
+package org.remus.infomngmnt.search.impl;
 
 import java.util.Collection;
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.remus.search.Search;
-import org.remus.search.SearchPackage;
-import org.remus.search.SearchResult;
-import org.remus.search.SearchScope;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchResult;
+import org.remus.infomngmnt.search.SearchScope;
 
 /**
  * <!-- begin-user-doc -->
@@ -44,13 +40,13 @@ import org.remus.search.SearchScope;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.search.impl.SearchImpl#getSearchString <em>Search String</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchImpl#getDateStart <em>Date Start</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchImpl#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchImpl#getInfoType <em>Info Type</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchImpl#getScope <em>Scope</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchImpl#getResult <em>Result</em>}</li>
- *   <li>{@link org.remus.search.impl.SearchImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getSearchString <em>Search String</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getDateStart <em>Date Start</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getEndDate <em>End Date</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getInfoType <em>Info Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getScope <em>Scope</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getResult <em>Result</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *

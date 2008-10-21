@@ -12,23 +12,22 @@
  *
  * $Id$
  */
-package org.remus.search.impl;
+package org.remus.infomngmnt.search.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import org.remus.search.LatestSearchStrings;
-import org.remus.search.SavedSearches;
-import org.remus.search.Search;
-import org.remus.search.SearchFactory;
-import org.remus.search.SearchPackage;
-import org.remus.search.SearchResult;
-import org.remus.search.SearchScope;
+import org.remus.infomngmnt.search.LatestSearchStrings;
+import org.remus.infomngmnt.search.SavedSearches;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchFactory;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchResult;
+import org.remus.infomngmnt.search.SearchScope;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,7 +82,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.remus.search.SearchPackage#eNS_URI
+	 * @see org.remus.infomngmnt.search.SearchPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -271,6 +270,15 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getSearchResult_Date() {
+		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSavedSearches() {
 		return savedSearchesEClass;
 	}
@@ -354,6 +362,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		createEAttribute(searchResultEClass, SEARCH_RESULT__TEXT);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__PATH);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__INFO_TYPE);
+		createEAttribute(searchResultEClass, SEARCH_RESULT__DATE);
 
 		savedSearchesEClass = createEClass(SAVED_SEARCHES);
 		createEReference(savedSearchesEClass, SAVED_SEARCHES__SEARCHES);
@@ -410,6 +419,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		initEAttribute(getSearchResult_Text(), ecorePackage.getEString(), "text", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearchResult_Path(), ecorePackage.getEString(), "path", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearchResult_InfoType(), ecorePackage.getEString(), "infoType", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_Date(), ecorePackage.getEDate(), "date", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(savedSearchesEClass, SavedSearches.class, "SavedSearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSavedSearches_Searches(), this.getSearch(), null, "searches", null, 0, -1, SavedSearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

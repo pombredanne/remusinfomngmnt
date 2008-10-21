@@ -12,7 +12,7 @@
  *
  * $Id$
  */
-package org.remus.search;
+package org.remus.infomngmnt.search;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Scope</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.remus.search.SearchPackage#getSearchScope()
+ * @see org.remus.infomngmnt.search.SearchPackage#getSearchScope()
  * @model
  * @generated
  */
@@ -48,7 +48,9 @@ public enum SearchScope implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	SELECTED_INFO_UNIT(1, "SELECTED_INFO_UNIT", "Selected "), /**
+	SELECTED_INFO_UNIT(1, "SELECTED_INFO_UNIT", "Selected "),
+
+	/**
 	 * The '<em><b>OPEN EDITORS</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

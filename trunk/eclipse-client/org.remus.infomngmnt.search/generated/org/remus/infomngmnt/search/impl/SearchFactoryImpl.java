@@ -12,18 +12,22 @@
  *
  * $Id$
  */
-package org.remus.search.impl;
+package org.remus.infomngmnt.search.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import org.remus.search.*;
+import org.remus.infomngmnt.search.LatestSearchStrings;
+import org.remus.infomngmnt.search.SavedSearches;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchFactory;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchResult;
+import org.remus.infomngmnt.search.SearchScope;
 
 /**
  * <!-- begin-user-doc -->

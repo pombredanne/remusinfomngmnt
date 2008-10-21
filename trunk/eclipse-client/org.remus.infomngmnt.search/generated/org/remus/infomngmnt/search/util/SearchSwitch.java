@@ -12,14 +12,18 @@
  *
  * $Id$
  */
-package org.remus.search.util;
+package org.remus.infomngmnt.search.util;
 
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
-import org.remus.search.*;
+import org.remus.infomngmnt.search.LatestSearchStrings;
+import org.remus.infomngmnt.search.SavedSearches;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.SearchResult;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +35,7 @@ import org.remus.search.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.remus.search.SearchPackage
+ * @see org.remus.infomngmnt.search.SearchPackage
  * @generated
  */
 public class SearchSwitch<T> {

@@ -25,11 +25,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
-import org.remus.search.LatestSearchStrings;
-import org.remus.search.Search;
-import org.remus.search.SearchFactory;
-import org.remus.search.SearchPackage;
-import org.remus.search.provider.SearchPlugin;
+import org.remus.infomngmnt.search.LatestSearchStrings;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchFactory;
+import org.remus.infomngmnt.search.SearchPackage;
+import org.remus.infomngmnt.search.provider.SearchPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

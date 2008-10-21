@@ -33,10 +33,10 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
-import org.remus.search.Search;
-import org.remus.search.SearchFactory;
-import org.remus.search.SearchResult;
-import org.remus.search.provider.SearchPlugin;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchFactory;
+import org.remus.infomngmnt.search.SearchResult;
+import org.remus.infomngmnt.search.provider.SearchPlugin;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;

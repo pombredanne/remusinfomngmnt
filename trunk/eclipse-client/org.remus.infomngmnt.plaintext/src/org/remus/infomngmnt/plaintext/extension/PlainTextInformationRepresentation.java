@@ -15,6 +15,7 @@ package org.remus.infomngmnt.plaintext.extension;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 
 /**
@@ -41,22 +42,19 @@ AbstractInformationRepresentation {
 	@Override
 	public String getAdditionalsForIndexing(IProgressMonitor monitor)
 	throws CoreException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getBodyForIndexing(IProgressMonitor monitor)
 	throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
+		return getValue().getStringValue();
 	}
 
 	@Override
 	public String getTitleForIndexing(IProgressMonitor monitor)
 	throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
+		return getValue().getLabel();
 	}
 
 }

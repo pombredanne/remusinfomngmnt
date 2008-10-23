@@ -14,11 +14,15 @@ package org.remus.infomngmnt.search.builder;
 
 import java.util.Map;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
 
 /**
@@ -28,13 +32,14 @@ public class SearchBuilder extends IncrementalProjectBuilder {
 
 
 
-	public static final String BUILDER_ID = SearchPlugin.PLUGIN_ID + ".searchbuilder"; //$NON-NLS-1$
+	public static final String BUILDER_ID = SearchPlugin.PLUGIN_ID + ".searchBuilder"; //$NON-NLS-1$
+	private SearchVisitor visitor;
 
 	/**
 	 * 
 	 */
 	public SearchBuilder() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/* (non-Javadoc)
@@ -43,8 +48,29 @@ public class SearchBuilder extends IncrementalProjectBuilder {
 	@Override
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
 	throws CoreException {
-		// TODO Auto-generated method stub
+		switch (kind) {
+		case FULL_BUILD:
+			IFolder folder = getProject().getFolder(ResourceUtil.BIN_FOLDER);
+			if (!folder.exists()) {
+				folder.create(true, true, monitor);
+			}
+			break;
+		default:
+			break;
+		}
+
+		this.visitor = new SearchVisitor(getProject());
+		if (getDelta(getProject()) != null) {
+			proceedDelta(getDelta(getProject()), monitor);
+		}
 		return null;
 	}
 
+	private void proceedDelta(final IResourceDelta delta, final IProgressMonitor monitor) {
+		try {
+			delta.accept(this.visitor);
+		} catch (CoreException e) {
+			InfomngmntEditPlugin.INSTANCE.log(e.getStatus());
+		}
+	}
 }

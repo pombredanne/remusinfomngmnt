@@ -68,7 +68,7 @@ public class SearchVisitor implements IResourceDeltaVisitor {
 		for (IResourceDelta resourceDelta : affectedChildren) {
 			if (resourceDelta.getResource() != null
 					&& resourceDelta.getResource().getType() == IResource.FILE
-					&& resourceDelta.getResource().getFileExtension().equals(INFO_FILE_EXTENSION)) {
+					&& resourceDelta.getResource().getFileExtension().equals(INFO_FILE_EXTENSION) && resourceDelta.getResource().getParent().getType() == IResource.PROJECT) {
 				switch (resourceDelta.getKind()) {
 				case IResourceDelta.CHANGED:
 					if (resourceDelta.getResource().getType() == IResource.FILE && resourceDelta.getResource().getFileExtension().equals(INFO_FILE_EXTENSION)) {

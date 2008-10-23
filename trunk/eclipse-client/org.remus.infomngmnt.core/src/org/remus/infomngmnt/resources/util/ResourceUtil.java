@@ -11,8 +11,13 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+
+import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.builder.InformationBuilder;
 
 public class ResourceUtil {
@@ -141,6 +146,45 @@ public class ResourceUtil {
 		String replacedProjectRelativePath = Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(originalFile.getProjectRelativePath().toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
 		IPath binPath = originalFile.getProject().getFullPath().append(new Path(ResourceUtil.BIN_FOLDER)).append(replacedProjectRelativePath);
 		return binPath;
+	}
+
+	public static void postProjectCreation(IProjectDescription description) {
+		PostProjectHandleExtensionManager manager = new PostProjectHandleExtensionManager(description);
+		manager.executeProxyImplementations();
+	}
+
+	/**
+	 * <p>
+	 * Class that looks through extension registry to find present
+	 * postproject Handle Implementations.
+	 * </p>
+	 * 
+	 * 
+	 * @author Tom Seidel <tom.seidel@remus-software.org>
+	 */
+	static final class PostProjectHandleExtensionManager {
+		public static final String EXTENSION_POINT = CorePlugin.PLUGIN_ID + ".postProjectHandle"; //$NON-NLS-1$
+		public static final String HANDLE_IMPL_NODE_NAME = "handle"; //$NON-NLS-1$
+		private final IProjectDescription description;
+
+		public PostProjectHandleExtensionManager(IProjectDescription description) {
+			this.description = description;
+		}
+
+		void executeProxyImplementations() {
+			final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
+			final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+			for (final IConfigurationElement configurationElement : configurationElements) {
+				try {
+					IPostProjectHandle extension = (IPostProjectHandle) configurationElement
+					.createExecutableExtension(HANDLE_IMPL_NODE_NAME);
+					extension.postProjectCreation(this.description);
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

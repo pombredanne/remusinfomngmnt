@@ -28,9 +28,9 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.service.ILuceneCustomizer;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
-import org.remus.search.Search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -258,7 +258,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		return 200;
 	}
 
-	public IProject[] getProjectsToSearch(Search search) {
+	public IProject[] getProjectsToSearch(org.remus.infomngmnt.search.Search search) {
 		// scope comes later.
 		return ResourceUtil.getRelevantProjects();
 	}

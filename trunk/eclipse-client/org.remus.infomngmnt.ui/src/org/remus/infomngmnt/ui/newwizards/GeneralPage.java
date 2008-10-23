@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
@@ -42,6 +43,8 @@ public class GeneralPage extends WizardPage {
 	private Button informationunitButton;
 	private String categoryString;
 	private String nameString;
+	private String keywordString;
+	private String descriptionString;
 	/**
 	 * Create the wizard
 	 */
@@ -192,6 +195,8 @@ public class GeneralPage extends WizardPage {
 			setPageComplete(false);
 			return;
 		}
+		this.descriptionString = this.descriptionText.getText();
+		this.keywordString = this.keywordsText.getText();
 		setErrorMessage(null);
 		setPageComplete(true);
 
@@ -215,6 +220,14 @@ public class GeneralPage extends WizardPage {
 
 	public String getNameString() {
 		return this.nameString;
+	}
+
+	public String getKeywordString() {
+		return this.keywordString;
+	}
+
+	public String getDescriptionString() {
+		return this.descriptionString;
 	}
 
 }

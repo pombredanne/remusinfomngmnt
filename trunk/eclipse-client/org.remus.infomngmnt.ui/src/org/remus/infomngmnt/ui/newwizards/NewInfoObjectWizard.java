@@ -12,10 +12,13 @@
 
 package org.remus.infomngmnt.ui.newwizards;
 
+import java.util.Date;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -50,7 +53,10 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 	 */
 	protected InformationUnit createNewInformationUnit() {
 		InformationUnit newInfoObject = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		newInfoObject.setCreationDate(new Date());
 		newInfoObject.setLabel(this.page1.getNameString());
+		newInfoObject.setDescription(this.page1.getDescriptionString());
+		newInfoObject.setKeywords(this.page1.getKeywordString());
 		return newInfoObject;
 	}
 

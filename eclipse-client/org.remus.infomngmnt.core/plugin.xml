@@ -2,6 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
 	<extension-point id="informationType" name="A pluggable Content-Type for Information" schema="schema/informationType.exsd"/>
+ <extension-point id="postProjectHandle" name="postProjectHandle" schema="schema/postProjectHandle.exsd"/>
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
@@ -56,6 +57,12 @@
       <initializer
             class="org.remus.infomngmnt.core.preferences.PreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.postProjectHandle">
+      <projectHandle
+            handle="org.remus.infomngmnt.core.builder.InformationBuilderHandle">
+      </projectHandle>
    </extension>
   
 

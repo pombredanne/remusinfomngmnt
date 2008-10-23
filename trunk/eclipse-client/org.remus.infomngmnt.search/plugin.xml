@@ -49,5 +49,11 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.core.postProjectHandle">
+      <projectHandle
+            handle="org.remus.infomngmnt.search.builder.SearchBuilderHandle">
+      </projectHandle>
+   </extension>
 
 </plugin>

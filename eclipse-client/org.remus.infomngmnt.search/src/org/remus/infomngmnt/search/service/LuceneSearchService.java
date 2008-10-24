@@ -33,6 +33,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.progress.CancelableJob;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchResult;
@@ -141,7 +142,7 @@ public class LuceneSearchService {
 									for (final IFile path : list) {
 										final InformationUnit document = EditingUtil.getInstance().getObjectFromFile(path, InfomngmntPackage.Literals.INFORMATION_UNIT,false);
 										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"", document.getLabel()));
-										final Term term = new Term("ID",
+										final Term term = new Term(SEARCHINDEX_ITEM_ID,
 												document.getId());
 										reader.deleteDocuments(term);
 									}
@@ -298,32 +299,34 @@ public class LuceneSearchService {
 		this.writeQueueJob.addToQueue(filesTodeleteFromIndex, filesToAddToIndex, project);
 
 	}
-	public String search(Search currentSearch) {
-		SearchJob newSearch = new SearchJob(currentSearch);
+	public String search(Search currentSearch, boolean openEditor) {
+		SearchJob newSearch = new SearchJob(currentSearch, openEditor);
 		newSearch.schedule();
 		return newSearch.getTicket();
 	}
 
-	private class SearchJob extends Job {
+	private class SearchJob extends CancelableJob  {
 
 		private final Search currentSearch;
-
-
+		private final boolean openEditor;
 
 		public String getTicket() {
 			return this.currentSearch.getId();
 		}
 
-		public SearchJob(Search currentSearch) {
+		public SearchJob(Search currentSearch, boolean openEditor) {
 			super(NLS.bind("Search \"{0}\"", currentSearch.getSearchString()));
 			this.currentSearch = currentSearch;
-			currentSearch.setId(String.valueOf(System.nanoTime()));
+			this.openEditor = openEditor;
+			currentSearch.setId(String.valueOf(System.currentTimeMillis()));
 		}
 
 		@Override
-		protected IStatus run(IProgressMonitor monitor) {
+		protected IStatus runCancelable(IProgressMonitor monitor) {
 			BooleanQuery.setMaxClauseCount(4096);
-			this.currentSearch.getResult().clear();
+			if (this.currentSearch != null) {
+				this.currentSearch.getResult().clear();
+			}
 			Query queryStringFromSearchQuery =
 				getSearchService().getQueryStringFromSearchQuery(this.currentSearch, monitor);
 			IProject[] projectsToSearch = getSearchService().getProjectsToSearch(this.currentSearch);
@@ -340,7 +343,7 @@ public class LuceneSearchService {
 					// do nothign...we continue..
 				}
 			}
-			return null;
+			return Status.OK_STATUS;
 		}
 
 	}
@@ -349,7 +352,9 @@ public class LuceneSearchService {
 		SearchResult newSearchResult = SearchFactory.eINSTANCE.createSearchResult();
 		newSearchResult.setInfoId(doc.getField(SEARCHINDEX_ITEM_ID).stringValue());
 		newSearchResult.setInfoType(doc.getField(SEARCHINDEX_INFOTYPE_ID).stringValue());
-
+		newSearchResult.setText(doc.getField(SEARCHINDEX_CONTENT).stringValue());
+		newSearchResult.setTitle(doc.getField(SEARCHINDEX_LABEL).stringValue());
+		newSearchResult.setKeywords(doc.getField(SEARCHINDEX_KEYWORDS).stringValue());
 		return newSearchResult;
 	}
 }

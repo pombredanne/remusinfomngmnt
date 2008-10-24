@@ -215,13 +215,22 @@ public interface SearchPackage extends EPackage {
 	int SEARCH_RESULT__DATE = 5;
 
 	/**
+	 * The feature id for the '<em><b>Keywords</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEARCH_RESULT__KEYWORDS = 6;
+
+	/**
 	 * The number of structural features of the '<em>Result</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SEARCH_RESULT_FEATURE_COUNT = 6;
+	int SEARCH_RESULT_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
@@ -454,6 +463,17 @@ public interface SearchPackage extends EPackage {
 	EAttribute getSearchResult_Date();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.SearchResult#getKeywords <em>Keywords</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Keywords</em>'.
+	 * @see org.remus.infomngmnt.search.SearchResult#getKeywords()
+	 * @see #getSearchResult()
+	 * @generated
+	 */
+	EAttribute getSearchResult_Keywords();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.SavedSearches <em>Saved Searches</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -650,6 +670,14 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SEARCH_RESULT__DATE = eINSTANCE.getSearchResult_Date();
+
+		/**
+		 * The meta object literal for the '<em><b>Keywords</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SEARCH_RESULT__KEYWORDS = eINSTANCE.getSearchResult_Keywords();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.

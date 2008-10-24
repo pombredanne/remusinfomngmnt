@@ -67,7 +67,7 @@ IItemPropertySource {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (this.itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addInfoIdPropertyDescriptor(object);
@@ -76,8 +76,9 @@ IItemPropertySource {
 			addPathPropertyDescriptor(object);
 			addInfoTypePropertyDescriptor(object);
 			addDatePropertyDescriptor(object);
+			addKeywordsPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -87,19 +88,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addInfoIdPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_SearchResult_infoId_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoId_feature", "_UI_SearchResult_type"),
-						SearchPackage.Literals.SEARCH_RESULT__INFO_ID,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_infoId_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoId_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__INFO_ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -109,19 +110,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addTitlePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_SearchResult_title_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_title_feature", "_UI_SearchResult_type"),
-						SearchPackage.Literals.SEARCH_RESULT__TITLE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_title_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_title_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__TITLE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -131,19 +132,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addTextPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_SearchResult_text_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_text_feature", "_UI_SearchResult_type"),
-						SearchPackage.Literals.SEARCH_RESULT__TEXT,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_text_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_text_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__TEXT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -153,19 +154,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addPathPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_SearchResult_path_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_path_feature", "_UI_SearchResult_type"),
-						SearchPackage.Literals.SEARCH_RESULT__PATH,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_path_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_path_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__PATH,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -175,19 +176,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addInfoTypePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_SearchResult_infoType_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoType_feature", "_UI_SearchResult_type"),
-						SearchPackage.Literals.SEARCH_RESULT__INFO_TYPE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_infoType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_infoType_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__INFO_TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -197,19 +198,41 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addDatePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_SearchResult_date_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_date_feature", "_UI_SearchResult_type"),
-						SearchPackage.Literals.SEARCH_RESULT__DATE,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_date_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_date_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__DATE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Keywords feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addKeywordsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_keywords_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_keywords_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__KEYWORDS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -233,8 +256,8 @@ IItemPropertySource {
 	public String getText(Object object) {
 		String label = ((SearchResult)object).getInfoId();
 		return label == null || label.length() == 0 ?
-				getString("_UI_SearchResult_type") :
-					getString("_UI_SearchResult_type") + " " + label;
+			getString("_UI_SearchResult_type") :
+			getString("_UI_SearchResult_type") + " " + label;
 	}
 
 	/**
@@ -249,14 +272,15 @@ IItemPropertySource {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SearchResult.class)) {
-		case SearchPackage.SEARCH_RESULT__INFO_ID:
-		case SearchPackage.SEARCH_RESULT__TITLE:
-		case SearchPackage.SEARCH_RESULT__TEXT:
-		case SearchPackage.SEARCH_RESULT__PATH:
-		case SearchPackage.SEARCH_RESULT__INFO_TYPE:
-		case SearchPackage.SEARCH_RESULT__DATE:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
+			case SearchPackage.SEARCH_RESULT__INFO_ID:
+			case SearchPackage.SEARCH_RESULT__TITLE:
+			case SearchPackage.SEARCH_RESULT__TEXT:
+			case SearchPackage.SEARCH_RESULT__PATH:
+			case SearchPackage.SEARCH_RESULT__INFO_TYPE:
+			case SearchPackage.SEARCH_RESULT__DATE:
+			case SearchPackage.SEARCH_RESULT__KEYWORDS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 		}
 		super.notifyChanged(notification);
 	}

@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
+import org.remus.infomngmnt.search.*;
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.SavedSearches;
 import org.remus.infomngmnt.search.Search;

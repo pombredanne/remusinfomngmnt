@@ -96,7 +96,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		}
 		try {
 			Field contentField = new Field(
-					LuceneSearchService.SEARCHINDEX_CONTENT, checkNull(informationRepresentation.getTitleForIndexing(monitor)),Field.Store.YES, Field.Index.TOKENIZED);
+					LuceneSearchService.SEARCHINDEX_CONTENT, checkNull(informationRepresentation.getBodyForIndexing(monitor)),Field.Store.YES, Field.Index.TOKENIZED);
 			contentField.setBoost(1.5f);
 			returnValue.add(contentField);
 		} catch (CoreException e) {
@@ -129,6 +129,10 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		Field projectField = new Field(
 				LuceneSearchService.SEARCHINDEX_PROJECT, project.getName(),Field.Store.YES,Field.Index.UN_TOKENIZED);
 		returnValue.add(projectField);
+
+		Field infoTypeField = new Field(
+				LuceneSearchService.SEARCHINDEX_INFOTYPE_ID, document.getType(),Field.Store.YES,Field.Index.UN_TOKENIZED);
+		returnValue.add(infoTypeField);
 
 		return returnValue;
 	}
@@ -244,7 +248,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		if (searchWordQuery != null) {
 			booleanQuery.add(searchWordQuery, Occur.MUST);
 		}
-		if (mustHaveQuery != null) {
+		if (mustHaveQuery != null && termList.size() > 0) {
 			booleanQuery.add(mustHaveQuery, Occur.MUST);
 		}
 

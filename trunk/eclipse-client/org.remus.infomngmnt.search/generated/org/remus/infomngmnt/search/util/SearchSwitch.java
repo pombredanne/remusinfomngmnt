@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import org.remus.infomngmnt.search.*;
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.SavedSearches;
 import org.remus.infomngmnt.search.Search;

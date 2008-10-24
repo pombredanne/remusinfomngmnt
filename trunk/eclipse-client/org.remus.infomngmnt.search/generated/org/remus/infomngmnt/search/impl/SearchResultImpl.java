@@ -37,6 +37,7 @@ import org.remus.infomngmnt.search.SearchResult;
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getPath <em>Path</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getInfoType <em>Info Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getDate <em>Date</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getKeywords <em>Keywords</em>}</li>
  * </ul>
  * </p>
  *
@@ -162,6 +163,26 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 	 * @ordered
 	 */
 	protected Date date = DATE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getKeywords() <em>Keywords</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKeywords()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String KEYWORDS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getKeywords() <em>Keywords</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKeywords()
+	 * @generated
+	 * @ordered
+	 */
+	protected String keywords = KEYWORDS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -313,6 +334,27 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getKeywords() {
+		return keywords;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setKeywords(String newKeywords) {
+		String oldKeywords = keywords;
+		keywords = newKeywords;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.SEARCH_RESULT__KEYWORDS, oldKeywords, keywords));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -328,6 +370,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return getInfoType();
 			case SearchPackage.SEARCH_RESULT__DATE:
 				return getDate();
+			case SearchPackage.SEARCH_RESULT__KEYWORDS:
+				return getKeywords();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -357,6 +401,9 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return;
 			case SearchPackage.SEARCH_RESULT__DATE:
 				setDate((Date)newValue);
+				return;
+			case SearchPackage.SEARCH_RESULT__KEYWORDS:
+				setKeywords((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -388,6 +435,9 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 			case SearchPackage.SEARCH_RESULT__DATE:
 				setDate(DATE_EDEFAULT);
 				return;
+			case SearchPackage.SEARCH_RESULT__KEYWORDS:
+				setKeywords(KEYWORDS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -412,6 +462,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return INFO_TYPE_EDEFAULT == null ? infoType != null : !INFO_TYPE_EDEFAULT.equals(infoType);
 			case SearchPackage.SEARCH_RESULT__DATE:
 				return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
+			case SearchPackage.SEARCH_RESULT__KEYWORDS:
+				return KEYWORDS_EDEFAULT == null ? keywords != null : !KEYWORDS_EDEFAULT.equals(keywords);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -438,6 +490,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 		result.append(infoType);
 		result.append(", date: ");
 		result.append(date);
+		result.append(", keywords: ");
+		result.append(keywords);
 		result.append(')');
 		return result.toString();
 	}

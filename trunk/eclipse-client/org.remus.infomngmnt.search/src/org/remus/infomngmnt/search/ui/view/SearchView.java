@@ -218,7 +218,7 @@ public class SearchView extends AbstractScrolledTitledView {
 			this.latestSearchStrings.getStrings().add(text);
 			this.combo.setText(text);
 		}
-		LuceneSearchService.getInstance().search(this.currentSearch);
+		LuceneSearchService.getInstance().search(this.currentSearch, true);
 
 	}
 

@@ -279,6 +279,15 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getSearchResult_Keywords() {
+		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSavedSearches() {
 		return savedSearchesEClass;
 	}
@@ -363,6 +372,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		createEAttribute(searchResultEClass, SEARCH_RESULT__PATH);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__INFO_TYPE);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__DATE);
+		createEAttribute(searchResultEClass, SEARCH_RESULT__KEYWORDS);
 
 		savedSearchesEClass = createEClass(SAVED_SEARCHES);
 		createEReference(savedSearchesEClass, SAVED_SEARCHES__SEARCHES);
@@ -420,6 +430,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		initEAttribute(getSearchResult_Path(), ecorePackage.getEString(), "path", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearchResult_InfoType(), ecorePackage.getEString(), "infoType", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearchResult_Date(), ecorePackage.getEDate(), "date", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_Keywords(), ecorePackage.getEString(), "keywords", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(savedSearchesEClass, SavedSearches.class, "SavedSearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSavedSearches_Searches(), this.getSearch(), null, "searches", null, 0, -1, SavedSearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

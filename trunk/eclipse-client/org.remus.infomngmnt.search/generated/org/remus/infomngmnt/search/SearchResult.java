@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.search.SearchResult#getPath <em>Path</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.SearchResult#getInfoType <em>Info Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.SearchResult#getDate <em>Date</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getKeywords <em>Keywords</em>}</li>
  * </ul>
  * </p>
  *
@@ -195,5 +196,31 @@ public interface SearchResult extends EObject {
 	 * @generated
 	 */
 	void setDate(Date value);
+
+	/**
+	 * Returns the value of the '<em><b>Keywords</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Keywords</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Keywords</em>' attribute.
+	 * @see #setKeywords(String)
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_Keywords()
+	 * @model
+	 * @generated
+	 */
+	String getKeywords();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.SearchResult#getKeywords <em>Keywords</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Keywords</em>' attribute.
+	 * @see #getKeywords()
+	 * @generated
+	 */
+	void setKeywords(String value);
 
 } // SearchResult

@@ -12,8 +12,10 @@
 package org.remus.infomngmnt.core.extension;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+
 import org.remus.infomngmnt.InformationUnit;
 
 
@@ -23,6 +25,8 @@ import org.remus.infomngmnt.InformationUnit;
 public abstract class AbstractInformationRepresentation {
 
 	private InformationUnit value;
+
+	private IFileState previousVersion;
 
 	public AbstractInformationRepresentation() {
 		super();
@@ -46,8 +50,16 @@ public abstract class AbstractInformationRepresentation {
 		return this.value;
 	}
 
-	public void setValue(final InformationUnit value) {
+	public final void setValue(final InformationUnit value) {
 		this.value = value;
+	}
+
+	public IFileState getPreviousVersion() {
+		return this.previousVersion;
+	}
+
+	public final void setPreviousVersion(IFileState previousVersion) {
+		this.previousVersion = previousVersion;
 	}
 
 

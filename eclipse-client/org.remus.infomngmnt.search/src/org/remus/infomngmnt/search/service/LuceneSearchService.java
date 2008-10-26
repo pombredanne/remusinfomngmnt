@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.search.service;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +24,17 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -37,7 +44,9 @@ import org.remus.infomngmnt.core.progress.CancelableJob;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchResult;
+import org.remus.infomngmnt.search.editor.SearchResultEditor;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
+import org.remus.infomngmnt.search.save.SavedSearchesHandler;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
@@ -343,6 +352,21 @@ public class LuceneSearchService {
 					// do nothign...we continue..
 				}
 			}
+			final IPath savePath = SearchPlugin.getPlugin().getStateLocation().append(this.currentSearch.getId());
+			new SavedSearchesHandler().saveObjectToResource(
+					savePath , this.currentSearch);
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					try {
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+						.getActivePage().openEditor(new URIEditorInput(URI.createFileURI(savePath.toOSString())), SearchResultEditor.class.getName());
+					} catch (PartInitException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			});
 			return Status.OK_STATUS;
 		}
 
@@ -355,6 +379,11 @@ public class LuceneSearchService {
 		newSearchResult.setText(doc.getField(SEARCHINDEX_CONTENT).stringValue());
 		newSearchResult.setTitle(doc.getField(SEARCHINDEX_LABEL).stringValue());
 		newSearchResult.setKeywords(doc.getField(SEARCHINDEX_KEYWORDS).stringValue());
+		try {
+			newSearchResult.setDate(getSearchService().getDateFormat().parse(doc.getField(SEARCHINDEX_CREATIONDATE).stringValue()));
+		} catch (ParseException e) {
+			// do nothing
+		}
 		return newSearchResult;
 	}
 }

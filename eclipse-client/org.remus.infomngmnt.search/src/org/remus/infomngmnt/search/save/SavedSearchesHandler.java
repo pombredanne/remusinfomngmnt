@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -67,39 +68,9 @@ public class SavedSearchesHandler {
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas) {
-		Resource resource = null;
-		ResourceSet resourceSet = null;
-		T returnValue;
+	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas) {
 		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createFileURI(uri.toString());
-		File file = new File(createURI.toFileString());
-		resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
-				new XMLResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put
-		(SearchPackage.eNS_URI,
-				SearchPackage.eINSTANCE);
-
-		if (file.exists()) {
-			try {
-				resource = resourceSet.getResource(createURI, true);
-			} catch (final Exception e) {
-				resource = resourceSet.getResource(createURI, false);
-			}
-			returnValue = (T) resource.getContents().get(0);
-		} else {
-			final EObject create = SearchFactory.eINSTANCE.create(objectClas);
-			resource = resourceSet.createResource(createURI);
-			resource.getContents().add(create);
-			try {
-				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
-			} catch (final IOException e) {
-				// FIXME What to do here?
-			}
-			returnValue = (T) create;
-		}
-		return returnValue;
+		return getObjectFromUri(createURI, objectClas);
 	}
 
 	public void saveObjectToResource(final IPath target, final EObject object) {
@@ -123,6 +94,40 @@ public class SavedSearchesHandler {
 			// FIXME Error-Handling
 			e.printStackTrace();
 		}
+	}
+
+	public <T extends EObject> T getObjectFromUri(final URI uri, final EClass objectClas) {
+		Resource resource = null;
+		ResourceSet resourceSet = null;
+		T returnValue;
+		File file = new File(uri.toFileString());
+		resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+				new XMLResourceFactoryImpl());
+		resourceSet.getPackageRegistry().put
+		(SearchPackage.eNS_URI,
+				SearchPackage.eINSTANCE);
+
+		if (file.exists()) {
+			try {
+				resource = resourceSet.getResource(uri, true);
+			} catch (final Exception e) {
+				resource = resourceSet.getResource(uri, false);
+			}
+			returnValue = (T) resource.getContents().get(0);
+		} else {
+			final EObject create = SearchFactory.eINSTANCE.create(objectClas);
+			resource = resourceSet.createResource(uri);
+			resource.getContents().add(create);
+			try {
+				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			} catch (final IOException e) {
+				// FIXME What to do here?
+			}
+			returnValue = (T) create;
+		}
+		return returnValue;
 	}
 
 }

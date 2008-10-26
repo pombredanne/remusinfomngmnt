@@ -55,5 +55,16 @@
             handle="org.remus.infomngmnt.search.builder.SearchBuilderHandle">
       </projectHandle>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.remus.infomngmnt.search.editor.SearchResultEditor"
+            default="false"
+            extensions="searchresult"
+            icon="images/search.gif"
+            id="org.remus.infomngmnt.search.editor.SearchResultEditor"
+            name="SearchResult">
+      </editor>
+   </extension>
 
 </plugin>

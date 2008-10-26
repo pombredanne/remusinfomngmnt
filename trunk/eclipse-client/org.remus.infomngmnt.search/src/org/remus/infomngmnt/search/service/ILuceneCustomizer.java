@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.search.service;
 
+import java.text.SimpleDateFormat;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -40,5 +42,7 @@ public interface ILuceneCustomizer {
 	int getMaxResults();
 
 	IProject[] getProjectsToSearch(Search search);
+
+	SimpleDateFormat getDateFormat();
 
 }

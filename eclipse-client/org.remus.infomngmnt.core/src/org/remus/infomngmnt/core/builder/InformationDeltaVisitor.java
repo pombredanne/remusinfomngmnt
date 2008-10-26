@@ -15,6 +15,7 @@ package org.remus.infomngmnt.core.builder;
 import java.io.ByteArrayInputStream;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
@@ -23,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
@@ -68,6 +70,10 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 					try {
 						AbstractInformationRepresentation informationRepresentation = infoTypeByType.getInformationRepresentation();
 						informationRepresentation.setValue(objectFromFile);
+						IFileState[] history = ((IFile) resourceDelta.getResource()).getHistory(this.monitor);
+						if (history.length > 0) {
+							informationRepresentation.setPreviousVersion(history[0]);
+						}
 						String handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
 						IFile writeContent = null;
 						try {

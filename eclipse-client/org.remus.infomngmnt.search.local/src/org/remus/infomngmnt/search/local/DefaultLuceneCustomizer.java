@@ -49,7 +49,7 @@ import org.apache.lucene.store.FSDirectory;
  */
 public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	/* (non-Javadoc)
 	 * @see org.remus.infomngmnt.search.service.ILuceneCustomizer#getAnalyser()
@@ -260,6 +260,10 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 	 */
 	public int getMaxResults() {
 		return 200;
+	}
+
+	public SimpleDateFormat getDateFormat() {
+		return DATE_FORMAT;
 	}
 
 	public IProject[] getProjectsToSearch(org.remus.infomngmnt.search.Search search) {

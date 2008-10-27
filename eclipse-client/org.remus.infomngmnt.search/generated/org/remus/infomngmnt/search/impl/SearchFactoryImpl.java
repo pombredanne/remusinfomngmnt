@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmnt.search.impl;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;

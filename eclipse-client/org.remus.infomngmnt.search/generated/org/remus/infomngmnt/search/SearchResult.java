@@ -16,6 +16,7 @@ package org.remus.infomngmnt.search;
 
 import java.util.Date;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.ecore.EObject;
 
 /**

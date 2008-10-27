@@ -27,6 +27,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.ui.URIEditorInput;
@@ -41,6 +42,7 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableJob;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchResult;
@@ -379,6 +381,8 @@ public class LuceneSearchService {
 		newSearchResult.setText(doc.getField(SEARCHINDEX_CONTENT).stringValue());
 		newSearchResult.setTitle(doc.getField(SEARCHINDEX_LABEL).stringValue());
 		newSearchResult.setKeywords(doc.getField(SEARCHINDEX_KEYWORDS).stringValue());
+		newSearchResult.setPath(ResourcesPlugin.getWorkspace().getRoot().getProject(doc.getField(SEARCHINDEX_PROJECT).stringValue()).getFile(
+				new Path(doc.getField(SEARCHINDEX_ITEM_ID).stringValue()).addFileExtension(ResourceUtil.FILE_EXTENSION)).getFullPath().toString());
 		try {
 			newSearchResult.setDate(getSearchService().getDateFormat().parse(doc.getField(SEARCHINDEX_CREATIONDATE).stringValue()));
 		} catch (ParseException e) {

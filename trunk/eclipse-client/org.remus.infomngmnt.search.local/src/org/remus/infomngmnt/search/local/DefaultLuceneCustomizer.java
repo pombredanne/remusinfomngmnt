@@ -195,7 +195,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		if(search.getDateStart() != null && search.getEndDate() != null) {
 			StringBuilder termStringBuilder = new StringBuilder();
 			fieldList.add(LuceneSearchService.SEARCHINDEX_CREATIONDATE);
-			termList.add(termStringBuilder.append("[").append(DATE_FORMAT.format(search.getDateStart())).append(" TO ").append(DATE_FORMAT.format(search.getEndDate())).append("]").toString()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			termList.add(termStringBuilder.append("[\"").append(DATE_FORMAT.format(search.getDateStart())).append("\" TO \"").append(DATE_FORMAT.format(search.getEndDate())).append("\"]").toString()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			flagList.add(Occur.MUST);
 		}
 

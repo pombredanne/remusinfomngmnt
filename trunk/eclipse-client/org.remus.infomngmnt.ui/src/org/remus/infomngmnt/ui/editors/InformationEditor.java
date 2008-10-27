@@ -66,6 +66,7 @@ import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -863,21 +864,12 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			getActionBarContributor().setActiveEditor(null);
 		}
 
-		//        if (propertySheetPage != null) {
-		//            propertySheetPage.dispose();
-		//        }
-		//
-		//        if (contentOutlinePage != null) {
-		//            contentOutlinePage.dispose();
-		//        }
-
 		super.dispose();
 	}
 
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter.equals(IContentOutlinePage.class)) {
-			System.out.println("GET adapter...");
 			return getContentOutline();
 		}
 		return super.getAdapter(adapter);

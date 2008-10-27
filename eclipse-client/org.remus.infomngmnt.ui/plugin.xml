@@ -67,7 +67,7 @@
       <editor
             class="org.remus.infomngmnt.ui.editors.InformationEditor"
             contributorClass="org.remus.infomngmnt.ui.editors.InfomngmntActionBarContributor"
-            extensions="infomngmnt"
+            extensions="info"
             icon="icons/sample.gif"
             id="org.remus.infomngmnt.ui.editors.InformationEditor"
             name="InformationInfoEditor">

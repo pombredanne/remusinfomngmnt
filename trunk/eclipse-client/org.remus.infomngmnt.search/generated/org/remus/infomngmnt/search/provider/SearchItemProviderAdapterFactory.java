@@ -175,6 +175,52 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.search.Websearches} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected WebsearchesItemProvider websearchesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.search.Websearches}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createWebsearchesAdapter() {
+		if (websearchesItemProvider == null) {
+			websearchesItemProvider = new WebsearchesItemProvider(this);
+		}
+
+		return websearchesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.search.Websearch} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected WebsearchItemProvider websearchItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.search.Websearch}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createWebsearchAdapter() {
+		if (websearchItemProvider == null) {
+			websearchItemProvider = new WebsearchItemProvider(this);
+		}
+
+		return websearchItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -277,6 +323,8 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 		if (searchResultItemProvider != null) searchResultItemProvider.dispose();
 		if (savedSearchesItemProvider != null) savedSearchesItemProvider.dispose();
 		if (latestSearchStringsItemProvider != null) latestSearchStringsItemProvider.dispose();
+		if (websearchesItemProvider != null) websearchesItemProvider.dispose();
+		if (websearchItemProvider != null) websearchItemProvider.dispose();
 	}
 
 }

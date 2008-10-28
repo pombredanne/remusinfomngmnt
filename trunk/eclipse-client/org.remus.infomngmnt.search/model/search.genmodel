@@ -38,5 +38,15 @@
     <genClasses ecoreClass="search.ecore#//LatestSearchStrings">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//LatestSearchStrings/strings"/>
     </genClasses>
+    <genClasses ecoreClass="search.ecore#//Websearches">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference search.ecore#//Websearches/websearch"/>
+    </genClasses>
+    <genClasses ecoreClass="search.ecore#//Websearch">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/pattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/imagePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/contributor"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

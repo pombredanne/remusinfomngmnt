@@ -79,6 +79,8 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 			case SearchPackage.SEARCH_RESULT: return createSearchResult();
 			case SearchPackage.SAVED_SEARCHES: return createSavedSearches();
 			case SearchPackage.LATEST_SEARCH_STRINGS: return createLatestSearchStrings();
+			case SearchPackage.WEBSEARCHES: return createWebsearches();
+			case SearchPackage.WEBSEARCH: return createWebsearch();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -152,6 +154,26 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	public LatestSearchStrings createLatestSearchStrings() {
 		LatestSearchStringsImpl latestSearchStrings = new LatestSearchStringsImpl();
 		return latestSearchStrings;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Websearches createWebsearches() {
+		WebsearchesImpl websearches = new WebsearchesImpl();
+		return websearches;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Websearch createWebsearch() {
+		WebsearchImpl websearch = new WebsearchImpl();
+		return websearch;
 	}
 
 	/**

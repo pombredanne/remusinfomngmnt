@@ -290,6 +290,98 @@ public interface SearchPackage extends EPackage {
 	int LATEST_SEARCH_STRINGS_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.WebsearchesImpl <em>Websearches</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.search.impl.WebsearchesImpl
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getWebsearches()
+	 * @generated
+	 */
+	int WEBSEARCHES = 4;
+
+	/**
+	 * The feature id for the '<em><b>Websearch</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCHES__WEBSEARCH = 0;
+
+	/**
+	 * The number of structural features of the '<em>Websearches</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCHES_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.WebsearchImpl <em>Websearch</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.search.impl.WebsearchImpl
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getWebsearch()
+	 * @generated
+	 */
+	int WEBSEARCH = 5;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCH__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCH__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Pattern</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCH__PATTERN = 2;
+
+	/**
+	 * The feature id for the '<em><b>Image Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCH__IMAGE_PATH = 3;
+
+	/**
+	 * The feature id for the '<em><b>Contributor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCH__CONTRIBUTOR = 4;
+
+	/**
+	 * The number of structural features of the '<em>Websearch</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCH_FEATURE_COUNT = 5;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -297,7 +389,7 @@ public interface SearchPackage extends EPackage {
 	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchScope()
 	 * @generated
 	 */
-	int SEARCH_SCOPE = 4;
+	int SEARCH_SCOPE = 6;
 
 
 	/**
@@ -517,6 +609,92 @@ public interface SearchPackage extends EPackage {
 	EAttribute getLatestSearchStrings_Strings();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.Websearches <em>Websearches</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Websearches</em>'.
+	 * @see org.remus.infomngmnt.search.Websearches
+	 * @generated
+	 */
+	EClass getWebsearches();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.search.Websearches#getWebsearch <em>Websearch</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Websearch</em>'.
+	 * @see org.remus.infomngmnt.search.Websearches#getWebsearch()
+	 * @see #getWebsearches()
+	 * @generated
+	 */
+	EReference getWebsearches_Websearch();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.Websearch <em>Websearch</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Websearch</em>'.
+	 * @see org.remus.infomngmnt.search.Websearch
+	 * @generated
+	 */
+	EClass getWebsearch();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Websearch#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.remus.infomngmnt.search.Websearch#getId()
+	 * @see #getWebsearch()
+	 * @generated
+	 */
+	EAttribute getWebsearch_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Websearch#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.remus.infomngmnt.search.Websearch#getName()
+	 * @see #getWebsearch()
+	 * @generated
+	 */
+	EAttribute getWebsearch_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Websearch#getPattern <em>Pattern</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Pattern</em>'.
+	 * @see org.remus.infomngmnt.search.Websearch#getPattern()
+	 * @see #getWebsearch()
+	 * @generated
+	 */
+	EAttribute getWebsearch_Pattern();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Websearch#getImagePath <em>Image Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Image Path</em>'.
+	 * @see org.remus.infomngmnt.search.Websearch#getImagePath()
+	 * @see #getWebsearch()
+	 * @generated
+	 */
+	EAttribute getWebsearch_ImagePath();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Websearch#getContributor <em>Contributor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Contributor</em>'.
+	 * @see org.remus.infomngmnt.search.Websearch#getContributor()
+	 * @see #getWebsearch()
+	 * @generated
+	 */
+	EAttribute getWebsearch_Contributor();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -715,6 +893,74 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute LATEST_SEARCH_STRINGS__STRINGS = eINSTANCE.getLatestSearchStrings_Strings();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.WebsearchesImpl <em>Websearches</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.search.impl.WebsearchesImpl
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getWebsearches()
+		 * @generated
+		 */
+		EClass WEBSEARCHES = eINSTANCE.getWebsearches();
+
+		/**
+		 * The meta object literal for the '<em><b>Websearch</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WEBSEARCHES__WEBSEARCH = eINSTANCE.getWebsearches_Websearch();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.WebsearchImpl <em>Websearch</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.search.impl.WebsearchImpl
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getWebsearch()
+		 * @generated
+		 */
+		EClass WEBSEARCH = eINSTANCE.getWebsearch();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WEBSEARCH__ID = eINSTANCE.getWebsearch_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WEBSEARCH__NAME = eINSTANCE.getWebsearch_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WEBSEARCH__PATTERN = eINSTANCE.getWebsearch_Pattern();
+
+		/**
+		 * The meta object literal for the '<em><b>Image Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WEBSEARCH__IMAGE_PATH = eINSTANCE.getWebsearch_ImagePath();
+
+		/**
+		 * The meta object literal for the '<em><b>Contributor</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WEBSEARCH__CONTRIBUTOR = eINSTANCE.getWebsearch_Contributor();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.

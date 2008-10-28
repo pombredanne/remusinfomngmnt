@@ -70,6 +70,24 @@ public interface SearchFactory extends EFactory {
 	LatestSearchStrings createLatestSearchStrings();
 
 	/**
+	 * Returns a new object of class '<em>Websearches</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Websearches</em>'.
+	 * @generated
+	 */
+	Websearches createWebsearches();
+
+	/**
+	 * Returns a new object of class '<em>Websearch</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Websearch</em>'.
+	 * @generated
+	 */
+	Websearch createWebsearch();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

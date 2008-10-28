@@ -124,6 +124,18 @@ public class SearchSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case SearchPackage.WEBSEARCHES: {
+				Websearches websearches = (Websearches)theEObject;
+				T result = caseWebsearches(websearches);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case SearchPackage.WEBSEARCH: {
+				Websearch websearch = (Websearch)theEObject;
+				T result = caseWebsearch(websearch);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -185,6 +197,36 @@ public class SearchSwitch<T> {
 	 * @generated
 	 */
 	public T caseLatestSearchStrings(LatestSearchStrings object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Websearches</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Websearches</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseWebsearches(Websearches object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Websearch</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Websearch</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseWebsearch(Websearch object) {
 		return null;
 	}
 

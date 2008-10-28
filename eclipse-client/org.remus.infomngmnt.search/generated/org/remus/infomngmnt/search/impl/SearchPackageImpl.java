@@ -30,6 +30,8 @@ import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.SearchResult;
 import org.remus.infomngmnt.search.SearchScope;
+import org.remus.infomngmnt.search.Websearch;
+import org.remus.infomngmnt.search.Websearches;
 
 /**
  * <!-- begin-user-doc -->
@@ -65,6 +67,20 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	private EClass latestSearchStringsEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass websearchesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass websearchEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -326,6 +342,78 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getWebsearches() {
+		return websearchesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWebsearches_Websearch() {
+		return (EReference)websearchesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getWebsearch() {
+		return websearchEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWebsearch_Id() {
+		return (EAttribute)websearchEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWebsearch_Name() {
+		return (EAttribute)websearchEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWebsearch_Pattern() {
+		return (EAttribute)websearchEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWebsearch_ImagePath() {
+		return (EAttribute)websearchEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWebsearch_Contributor() {
+		return (EAttribute)websearchEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSearchScope() {
 		return searchScopeEEnum;
 	}
@@ -381,6 +469,16 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 
 		latestSearchStringsEClass = createEClass(LATEST_SEARCH_STRINGS);
 		createEAttribute(latestSearchStringsEClass, LATEST_SEARCH_STRINGS__STRINGS);
+
+		websearchesEClass = createEClass(WEBSEARCHES);
+		createEReference(websearchesEClass, WEBSEARCHES__WEBSEARCH);
+
+		websearchEClass = createEClass(WEBSEARCH);
+		createEAttribute(websearchEClass, WEBSEARCH__ID);
+		createEAttribute(websearchEClass, WEBSEARCH__NAME);
+		createEAttribute(websearchEClass, WEBSEARCH__PATTERN);
+		createEAttribute(websearchEClass, WEBSEARCH__IMAGE_PATH);
+		createEAttribute(websearchEClass, WEBSEARCH__CONTRIBUTOR);
 
 		// Create enums
 		searchScopeEEnum = createEEnum(SEARCH_SCOPE);
@@ -439,6 +537,16 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 
 		initEClass(latestSearchStringsEClass, LatestSearchStrings.class, "LatestSearchStrings", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLatestSearchStrings_Strings(), ecorePackage.getEString(), "strings", null, 0, -1, LatestSearchStrings.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(websearchesEClass, Websearches.class, "Websearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getWebsearches_Websearch(), this.getWebsearch(), null, "websearch", null, 0, -1, Websearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(websearchEClass, Websearch.class, "Websearch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getWebsearch_Id(), ecorePackage.getEString(), "id", null, 1, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_Name(), ecorePackage.getEString(), "name", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_ImagePath(), ecorePackage.getEString(), "imagePath", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_Contributor(), ecorePackage.getEString(), "contributor", null, 1, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(searchScopeEEnum, SearchScope.class, "SearchScope");

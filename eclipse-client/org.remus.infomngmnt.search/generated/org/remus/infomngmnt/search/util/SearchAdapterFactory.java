@@ -99,6 +99,14 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 				return createLatestSearchStringsAdapter();
 			}
 			@Override
+			public Adapter caseWebsearches(Websearches object) {
+				return createWebsearchesAdapter();
+			}
+			@Override
+			public Adapter caseWebsearch(Websearch object) {
+				return createWebsearchAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -171,6 +179,34 @@ public class SearchAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLatestSearchStringsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.search.Websearches <em>Websearches</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.search.Websearches
+	 * @generated
+	 */
+	public Adapter createWebsearchesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.search.Websearch <em>Websearch</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.search.Websearch
+	 * @generated
+	 */
+	public Adapter createWebsearchAdapter() {
 		return null;
 	}
 

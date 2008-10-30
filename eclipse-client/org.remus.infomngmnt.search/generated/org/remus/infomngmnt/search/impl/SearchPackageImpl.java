@@ -14,7 +14,6 @@
  */
 package org.remus.infomngmnt.search.impl;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -22,6 +21,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.swt.graphics.Image;
 
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.SavedSearches;
@@ -88,6 +88,13 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	private EEnum searchScopeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType imageEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -163,7 +170,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EClass getSearch() {
-		return searchEClass;
+		return this.searchEClass;
 	}
 
 	/**
@@ -172,7 +179,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearch_SearchString() {
-		return (EAttribute)searchEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)this.searchEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -181,7 +188,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearch_DateStart() {
-		return (EAttribute)searchEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)this.searchEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -190,7 +197,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearch_EndDate() {
-		return (EAttribute)searchEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)this.searchEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -199,7 +206,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearch_InfoType() {
-		return (EAttribute)searchEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)this.searchEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -208,7 +215,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearch_Scope() {
-		return (EAttribute)searchEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)this.searchEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -217,7 +224,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EReference getSearch_Result() {
-		return (EReference)searchEClass.getEStructuralFeatures().get(5);
+		return (EReference)this.searchEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -226,7 +233,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearch_Id() {
-		return (EAttribute)searchEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)this.searchEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -235,7 +242,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EClass getSearchResult() {
-		return searchResultEClass;
+		return this.searchResultEClass;
 	}
 
 	/**
@@ -244,7 +251,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearchResult_InfoId() {
-		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)this.searchResultEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -253,7 +260,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearchResult_Title() {
-		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)this.searchResultEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -262,7 +269,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearchResult_Text() {
-		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)this.searchResultEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -271,7 +278,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearchResult_Path() {
-		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)this.searchResultEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -280,7 +287,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearchResult_InfoType() {
-		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)this.searchResultEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -289,7 +296,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearchResult_Date() {
-		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)this.searchResultEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -298,7 +305,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getSearchResult_Keywords() {
-		return (EAttribute)searchResultEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)this.searchResultEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -307,7 +314,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EClass getSavedSearches() {
-		return savedSearchesEClass;
+		return this.savedSearchesEClass;
 	}
 
 	/**
@@ -316,7 +323,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EReference getSavedSearches_Searches() {
-		return (EReference)savedSearchesEClass.getEStructuralFeatures().get(0);
+		return (EReference)this.savedSearchesEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -325,7 +332,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EClass getLatestSearchStrings() {
-		return latestSearchStringsEClass;
+		return this.latestSearchStringsEClass;
 	}
 
 	/**
@@ -334,7 +341,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getLatestSearchStrings_Strings() {
-		return (EAttribute)latestSearchStringsEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)this.latestSearchStringsEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -343,7 +350,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EClass getWebsearches() {
-		return websearchesEClass;
+		return this.websearchesEClass;
 	}
 
 	/**
@@ -352,7 +359,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EReference getWebsearches_Websearch() {
-		return (EReference)websearchesEClass.getEStructuralFeatures().get(0);
+		return (EReference)this.websearchesEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -361,7 +368,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EClass getWebsearch() {
-		return websearchEClass;
+		return this.websearchEClass;
 	}
 
 	/**
@@ -370,7 +377,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getWebsearch_Id() {
-		return (EAttribute)websearchEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)this.websearchEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -379,7 +386,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getWebsearch_Name() {
-		return (EAttribute)websearchEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)this.websearchEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -388,7 +395,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getWebsearch_Pattern() {
-		return (EAttribute)websearchEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)this.websearchEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -397,7 +404,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getWebsearch_ImagePath() {
-		return (EAttribute)websearchEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)this.websearchEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -406,7 +413,16 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EAttribute getWebsearch_Contributor() {
-		return (EAttribute)websearchEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)this.websearchEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWebsearch_Image() {
+		return (EAttribute)this.websearchEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -415,7 +431,16 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public EEnum getSearchScope() {
-		return searchScopeEEnum;
+		return this.searchScopeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getImage() {
+		return this.imageEDataType;
 	}
 
 	/**
@@ -442,46 +467,50 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) return;
-		isCreated = true;
+		if (this.isCreated) return;
+		this.isCreated = true;
 
 		// Create classes and their features
-		searchEClass = createEClass(SEARCH);
-		createEAttribute(searchEClass, SEARCH__SEARCH_STRING);
-		createEAttribute(searchEClass, SEARCH__DATE_START);
-		createEAttribute(searchEClass, SEARCH__END_DATE);
-		createEAttribute(searchEClass, SEARCH__INFO_TYPE);
-		createEAttribute(searchEClass, SEARCH__SCOPE);
-		createEReference(searchEClass, SEARCH__RESULT);
-		createEAttribute(searchEClass, SEARCH__ID);
+		this.searchEClass = createEClass(SEARCH);
+		createEAttribute(this.searchEClass, SEARCH__SEARCH_STRING);
+		createEAttribute(this.searchEClass, SEARCH__DATE_START);
+		createEAttribute(this.searchEClass, SEARCH__END_DATE);
+		createEAttribute(this.searchEClass, SEARCH__INFO_TYPE);
+		createEAttribute(this.searchEClass, SEARCH__SCOPE);
+		createEReference(this.searchEClass, SEARCH__RESULT);
+		createEAttribute(this.searchEClass, SEARCH__ID);
 
-		searchResultEClass = createEClass(SEARCH_RESULT);
-		createEAttribute(searchResultEClass, SEARCH_RESULT__INFO_ID);
-		createEAttribute(searchResultEClass, SEARCH_RESULT__TITLE);
-		createEAttribute(searchResultEClass, SEARCH_RESULT__TEXT);
-		createEAttribute(searchResultEClass, SEARCH_RESULT__PATH);
-		createEAttribute(searchResultEClass, SEARCH_RESULT__INFO_TYPE);
-		createEAttribute(searchResultEClass, SEARCH_RESULT__DATE);
-		createEAttribute(searchResultEClass, SEARCH_RESULT__KEYWORDS);
+		this.searchResultEClass = createEClass(SEARCH_RESULT);
+		createEAttribute(this.searchResultEClass, SEARCH_RESULT__INFO_ID);
+		createEAttribute(this.searchResultEClass, SEARCH_RESULT__TITLE);
+		createEAttribute(this.searchResultEClass, SEARCH_RESULT__TEXT);
+		createEAttribute(this.searchResultEClass, SEARCH_RESULT__PATH);
+		createEAttribute(this.searchResultEClass, SEARCH_RESULT__INFO_TYPE);
+		createEAttribute(this.searchResultEClass, SEARCH_RESULT__DATE);
+		createEAttribute(this.searchResultEClass, SEARCH_RESULT__KEYWORDS);
 
-		savedSearchesEClass = createEClass(SAVED_SEARCHES);
-		createEReference(savedSearchesEClass, SAVED_SEARCHES__SEARCHES);
+		this.savedSearchesEClass = createEClass(SAVED_SEARCHES);
+		createEReference(this.savedSearchesEClass, SAVED_SEARCHES__SEARCHES);
 
-		latestSearchStringsEClass = createEClass(LATEST_SEARCH_STRINGS);
-		createEAttribute(latestSearchStringsEClass, LATEST_SEARCH_STRINGS__STRINGS);
+		this.latestSearchStringsEClass = createEClass(LATEST_SEARCH_STRINGS);
+		createEAttribute(this.latestSearchStringsEClass, LATEST_SEARCH_STRINGS__STRINGS);
 
-		websearchesEClass = createEClass(WEBSEARCHES);
-		createEReference(websearchesEClass, WEBSEARCHES__WEBSEARCH);
+		this.websearchesEClass = createEClass(WEBSEARCHES);
+		createEReference(this.websearchesEClass, WEBSEARCHES__WEBSEARCH);
 
-		websearchEClass = createEClass(WEBSEARCH);
-		createEAttribute(websearchEClass, WEBSEARCH__ID);
-		createEAttribute(websearchEClass, WEBSEARCH__NAME);
-		createEAttribute(websearchEClass, WEBSEARCH__PATTERN);
-		createEAttribute(websearchEClass, WEBSEARCH__IMAGE_PATH);
-		createEAttribute(websearchEClass, WEBSEARCH__CONTRIBUTOR);
+		this.websearchEClass = createEClass(WEBSEARCH);
+		createEAttribute(this.websearchEClass, WEBSEARCH__ID);
+		createEAttribute(this.websearchEClass, WEBSEARCH__NAME);
+		createEAttribute(this.websearchEClass, WEBSEARCH__PATTERN);
+		createEAttribute(this.websearchEClass, WEBSEARCH__IMAGE_PATH);
+		createEAttribute(this.websearchEClass, WEBSEARCH__CONTRIBUTOR);
+		createEAttribute(this.websearchEClass, WEBSEARCH__IMAGE);
 
 		// Create enums
-		searchScopeEEnum = createEEnum(SEARCH_SCOPE);
+		this.searchScopeEEnum = createEEnum(SEARCH_SCOPE);
+
+		// Create data types
+		this.imageEDataType = createEDataType(IMAGE);
 	}
 
 	/**
@@ -499,8 +528,8 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) return;
-		isInitialized = true;
+		if (this.isInitialized) return;
+		this.isInitialized = true;
 
 		// Initialize package
 		setName(eNAME);
@@ -514,45 +543,49 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(searchEClass, Search.class, "Search", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSearch_SearchString(), ecorePackage.getEString(), "searchString", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearch_DateStart(), ecorePackage.getEDate(), "dateStart", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearch_EndDate(), ecorePackage.getEDate(), "endDate", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearch_InfoType(), ecorePackage.getEString(), "infoType", null, 0, -1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearch_Scope(), this.getSearchScope(), "scope", "0", 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSearch_Result(), this.getSearchResult(), null, "result", null, 0, -1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearch_Id(), ecorePackage.getEString(), "id", null, 1, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(this.searchEClass, Search.class, "Search", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSearch_SearchString(), this.ecorePackage.getEString(), "searchString", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearch_DateStart(), this.ecorePackage.getEDate(), "dateStart", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearch_EndDate(), this.ecorePackage.getEDate(), "endDate", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearch_InfoType(), this.ecorePackage.getEString(), "infoType", null, 0, -1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearch_Scope(), getSearchScope(), "scope", "0", 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSearch_Result(), getSearchResult(), null, "result", null, 0, -1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearch_Id(), this.ecorePackage.getEString(), "id", null, 1, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(searchResultEClass, SearchResult.class, "SearchResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSearchResult_InfoId(), ecorePackage.getEString(), "infoId", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearchResult_Title(), ecorePackage.getEString(), "title", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearchResult_Text(), ecorePackage.getEString(), "text", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearchResult_Path(), ecorePackage.getEString(), "path", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearchResult_InfoType(), ecorePackage.getEString(), "infoType", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearchResult_Date(), ecorePackage.getEDate(), "date", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSearchResult_Keywords(), ecorePackage.getEString(), "keywords", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(this.searchResultEClass, SearchResult.class, "SearchResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSearchResult_InfoId(), this.ecorePackage.getEString(), "infoId", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_Title(), this.ecorePackage.getEString(), "title", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_Text(), this.ecorePackage.getEString(), "text", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_Path(), this.ecorePackage.getEString(), "path", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_InfoType(), this.ecorePackage.getEString(), "infoType", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_Date(), this.ecorePackage.getEDate(), "date", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearchResult_Keywords(), this.ecorePackage.getEString(), "keywords", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(savedSearchesEClass, SavedSearches.class, "SavedSearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSavedSearches_Searches(), this.getSearch(), null, "searches", null, 0, -1, SavedSearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(this.savedSearchesEClass, SavedSearches.class, "SavedSearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSavedSearches_Searches(), getSearch(), null, "searches", null, 0, -1, SavedSearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(latestSearchStringsEClass, LatestSearchStrings.class, "LatestSearchStrings", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLatestSearchStrings_Strings(), ecorePackage.getEString(), "strings", null, 0, -1, LatestSearchStrings.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(this.latestSearchStringsEClass, LatestSearchStrings.class, "LatestSearchStrings", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLatestSearchStrings_Strings(), this.ecorePackage.getEString(), "strings", null, 0, -1, LatestSearchStrings.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(websearchesEClass, Websearches.class, "Websearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getWebsearches_Websearch(), this.getWebsearch(), null, "websearch", null, 0, -1, Websearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(this.websearchesEClass, Websearches.class, "Websearches", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getWebsearches_Websearch(), getWebsearch(), null, "websearch", null, 0, -1, Websearches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(websearchEClass, Websearch.class, "Websearch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getWebsearch_Id(), ecorePackage.getEString(), "id", null, 1, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWebsearch_Name(), ecorePackage.getEString(), "name", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWebsearch_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWebsearch_ImagePath(), ecorePackage.getEString(), "imagePath", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWebsearch_Contributor(), ecorePackage.getEString(), "contributor", null, 1, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(this.websearchEClass, Websearch.class, "Websearch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getWebsearch_Id(), this.ecorePackage.getEString(), "id", null, 1, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_Name(), this.ecorePackage.getEString(), "name", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_Pattern(), this.ecorePackage.getEString(), "pattern", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_ImagePath(), this.ecorePackage.getEString(), "imagePath", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_Contributor(), this.ecorePackage.getEString(), "contributor", null, 1, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWebsearch_Image(), getImage(), "image", null, 0, 1, Websearch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
-		initEEnum(searchScopeEEnum, SearchScope.class, "SearchScope");
-		addEEnumLiteral(searchScopeEEnum, SearchScope.ALL);
-		addEEnumLiteral(searchScopeEEnum, SearchScope.SELECTED_INFO_UNIT);
-		addEEnumLiteral(searchScopeEEnum, SearchScope.OPEN_EDITORS);
+		initEEnum(this.searchScopeEEnum, SearchScope.class, "SearchScope");
+		addEEnumLiteral(this.searchScopeEEnum, SearchScope.ALL);
+		addEEnumLiteral(this.searchScopeEEnum, SearchScope.SELECTED_INFO_UNIT);
+		addEEnumLiteral(this.searchScopeEEnum, SearchScope.OPEN_EDITORS);
+
+		// Initialize data types
+		initEDataType(this.imageEDataType, Image.class, "Image", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

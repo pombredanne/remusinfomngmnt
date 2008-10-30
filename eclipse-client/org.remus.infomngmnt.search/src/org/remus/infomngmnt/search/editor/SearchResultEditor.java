@@ -43,7 +43,7 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 	private Search model;
 	private SearchOutline contentOutlinePage;
 
-	final static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+	public final static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
 
 	/**

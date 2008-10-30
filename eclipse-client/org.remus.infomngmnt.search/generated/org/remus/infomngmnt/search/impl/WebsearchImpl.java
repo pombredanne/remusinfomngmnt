@@ -15,11 +15,10 @@
 package org.remus.infomngmnt.search.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.swt.graphics.Image;
 
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.Websearch;
@@ -36,6 +35,7 @@ import org.remus.infomngmnt.search.Websearch;
  *   <li>{@link org.remus.infomngmnt.search.impl.WebsearchImpl#getPattern <em>Pattern</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.WebsearchImpl#getImagePath <em>Image Path</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.WebsearchImpl#getContributor <em>Contributor</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.WebsearchImpl#getImage <em>Image</em>}</li>
  * </ul>
  * </p>
  *
@@ -143,6 +143,26 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	protected String contributor = CONTRIBUTOR_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getImage() <em>Image</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImage()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Image IMAGE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getImage() <em>Image</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImage()
+	 * @generated
+	 * @ordered
+	 */
+	protected Image image = IMAGE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -167,7 +187,7 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
@@ -176,10 +196,10 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+		String oldId = this.id;
+		this.id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__ID, oldId, this.id));
 	}
 
 	/**
@@ -188,7 +208,7 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	/**
@@ -197,10 +217,10 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
+		String oldName = this.name;
+		this.name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__NAME, oldName, this.name));
 	}
 
 	/**
@@ -209,7 +229,7 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public String getPattern() {
-		return pattern;
+		return this.pattern;
 	}
 
 	/**
@@ -218,10 +238,10 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public void setPattern(String newPattern) {
-		String oldPattern = pattern;
-		pattern = newPattern;
+		String oldPattern = this.pattern;
+		this.pattern = newPattern;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__PATTERN, oldPattern, pattern));
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__PATTERN, oldPattern, this.pattern));
 	}
 
 	/**
@@ -230,7 +250,7 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public String getImagePath() {
-		return imagePath;
+		return this.imagePath;
 	}
 
 	/**
@@ -239,10 +259,10 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public void setImagePath(String newImagePath) {
-		String oldImagePath = imagePath;
-		imagePath = newImagePath;
+		String oldImagePath = this.imagePath;
+		this.imagePath = newImagePath;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__IMAGE_PATH, oldImagePath, imagePath));
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__IMAGE_PATH, oldImagePath, this.imagePath));
 	}
 
 	/**
@@ -251,7 +271,7 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public String getContributor() {
-		return contributor;
+		return this.contributor;
 	}
 
 	/**
@@ -260,10 +280,31 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	 * @generated
 	 */
 	public void setContributor(String newContributor) {
-		String oldContributor = contributor;
-		contributor = newContributor;
+		String oldContributor = this.contributor;
+		this.contributor = newContributor;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__CONTRIBUTOR, oldContributor, contributor));
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__CONTRIBUTOR, oldContributor, this.contributor));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Image getImage() {
+		return this.image;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setImage(Image newImage) {
+		Image oldImage = this.image;
+		this.image = newImage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.WEBSEARCH__IMAGE, oldImage, this.image));
 	}
 
 	/**
@@ -274,16 +315,18 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case SearchPackage.WEBSEARCH__ID:
-				return getId();
-			case SearchPackage.WEBSEARCH__NAME:
-				return getName();
-			case SearchPackage.WEBSEARCH__PATTERN:
-				return getPattern();
-			case SearchPackage.WEBSEARCH__IMAGE_PATH:
-				return getImagePath();
-			case SearchPackage.WEBSEARCH__CONTRIBUTOR:
-				return getContributor();
+		case SearchPackage.WEBSEARCH__ID:
+			return getId();
+		case SearchPackage.WEBSEARCH__NAME:
+			return getName();
+		case SearchPackage.WEBSEARCH__PATTERN:
+			return getPattern();
+		case SearchPackage.WEBSEARCH__IMAGE_PATH:
+			return getImagePath();
+		case SearchPackage.WEBSEARCH__CONTRIBUTOR:
+			return getContributor();
+		case SearchPackage.WEBSEARCH__IMAGE:
+			return getImage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -296,21 +339,24 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case SearchPackage.WEBSEARCH__ID:
-				setId((String)newValue);
-				return;
-			case SearchPackage.WEBSEARCH__NAME:
-				setName((String)newValue);
-				return;
-			case SearchPackage.WEBSEARCH__PATTERN:
-				setPattern((String)newValue);
-				return;
-			case SearchPackage.WEBSEARCH__IMAGE_PATH:
-				setImagePath((String)newValue);
-				return;
-			case SearchPackage.WEBSEARCH__CONTRIBUTOR:
-				setContributor((String)newValue);
-				return;
+		case SearchPackage.WEBSEARCH__ID:
+			setId((String)newValue);
+			return;
+		case SearchPackage.WEBSEARCH__NAME:
+			setName((String)newValue);
+			return;
+		case SearchPackage.WEBSEARCH__PATTERN:
+			setPattern((String)newValue);
+			return;
+		case SearchPackage.WEBSEARCH__IMAGE_PATH:
+			setImagePath((String)newValue);
+			return;
+		case SearchPackage.WEBSEARCH__CONTRIBUTOR:
+			setContributor((String)newValue);
+			return;
+		case SearchPackage.WEBSEARCH__IMAGE:
+			setImage((Image)newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -323,21 +369,24 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case SearchPackage.WEBSEARCH__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case SearchPackage.WEBSEARCH__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case SearchPackage.WEBSEARCH__PATTERN:
-				setPattern(PATTERN_EDEFAULT);
-				return;
-			case SearchPackage.WEBSEARCH__IMAGE_PATH:
-				setImagePath(IMAGE_PATH_EDEFAULT);
-				return;
-			case SearchPackage.WEBSEARCH__CONTRIBUTOR:
-				setContributor(CONTRIBUTOR_EDEFAULT);
-				return;
+		case SearchPackage.WEBSEARCH__ID:
+			setId(ID_EDEFAULT);
+			return;
+		case SearchPackage.WEBSEARCH__NAME:
+			setName(NAME_EDEFAULT);
+			return;
+		case SearchPackage.WEBSEARCH__PATTERN:
+			setPattern(PATTERN_EDEFAULT);
+			return;
+		case SearchPackage.WEBSEARCH__IMAGE_PATH:
+			setImagePath(IMAGE_PATH_EDEFAULT);
+			return;
+		case SearchPackage.WEBSEARCH__CONTRIBUTOR:
+			setContributor(CONTRIBUTOR_EDEFAULT);
+			return;
+		case SearchPackage.WEBSEARCH__IMAGE:
+			setImage(IMAGE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -350,16 +399,18 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case SearchPackage.WEBSEARCH__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case SearchPackage.WEBSEARCH__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case SearchPackage.WEBSEARCH__PATTERN:
-				return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
-			case SearchPackage.WEBSEARCH__IMAGE_PATH:
-				return IMAGE_PATH_EDEFAULT == null ? imagePath != null : !IMAGE_PATH_EDEFAULT.equals(imagePath);
-			case SearchPackage.WEBSEARCH__CONTRIBUTOR:
-				return CONTRIBUTOR_EDEFAULT == null ? contributor != null : !CONTRIBUTOR_EDEFAULT.equals(contributor);
+		case SearchPackage.WEBSEARCH__ID:
+			return ID_EDEFAULT == null ? this.id != null : !ID_EDEFAULT.equals(this.id);
+		case SearchPackage.WEBSEARCH__NAME:
+			return NAME_EDEFAULT == null ? this.name != null : !NAME_EDEFAULT.equals(this.name);
+		case SearchPackage.WEBSEARCH__PATTERN:
+			return PATTERN_EDEFAULT == null ? this.pattern != null : !PATTERN_EDEFAULT.equals(this.pattern);
+		case SearchPackage.WEBSEARCH__IMAGE_PATH:
+			return IMAGE_PATH_EDEFAULT == null ? this.imagePath != null : !IMAGE_PATH_EDEFAULT.equals(this.imagePath);
+		case SearchPackage.WEBSEARCH__CONTRIBUTOR:
+			return CONTRIBUTOR_EDEFAULT == null ? this.contributor != null : !CONTRIBUTOR_EDEFAULT.equals(this.contributor);
+		case SearchPackage.WEBSEARCH__IMAGE:
+			return IMAGE_EDEFAULT == null ? this.image != null : !IMAGE_EDEFAULT.equals(this.image);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -375,15 +426,17 @@ public class WebsearchImpl extends EObjectImpl implements Websearch {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
-		result.append(id);
+		result.append(this.id);
 		result.append(", name: ");
-		result.append(name);
+		result.append(this.name);
 		result.append(", pattern: ");
-		result.append(pattern);
+		result.append(this.pattern);
 		result.append(", imagePath: ");
-		result.append(imagePath);
+		result.append(this.imagePath);
 		result.append(", contributor: ");
-		result.append(contributor);
+		result.append(this.contributor);
+		result.append(", image: ");
+		result.append(this.image);
 		result.append(')');
 		return result.toString();
 	}

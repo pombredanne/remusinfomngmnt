@@ -14,15 +14,14 @@
  */
 package org.remus.infomngmnt.search.impl;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.swt.graphics.Image;
 
-import org.remus.infomngmnt.search.*;
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.SavedSearches;
 import org.remus.infomngmnt.search.Search;
@@ -30,6 +29,8 @@ import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.SearchResult;
 import org.remus.infomngmnt.search.SearchScope;
+import org.remus.infomngmnt.search.Websearch;
+import org.remus.infomngmnt.search.Websearches;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +47,7 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	 */
 	public static SearchFactory init() {
 		try {
-			SearchFactory theSearchFactory = (SearchFactory)EPackage.Registry.INSTANCE.getEFactory("http://remus-software.org/search"); 
+			SearchFactory theSearchFactory = (SearchFactory)EPackage.Registry.INSTANCE.getEFactory("http://remus-software.org/search");
 			if (theSearchFactory != null) {
 				return theSearchFactory;
 			}
@@ -75,14 +76,14 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case SearchPackage.SEARCH: return createSearch();
-			case SearchPackage.SEARCH_RESULT: return createSearchResult();
-			case SearchPackage.SAVED_SEARCHES: return createSavedSearches();
-			case SearchPackage.LATEST_SEARCH_STRINGS: return createLatestSearchStrings();
-			case SearchPackage.WEBSEARCHES: return createWebsearches();
-			case SearchPackage.WEBSEARCH: return createWebsearch();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case SearchPackage.SEARCH: return createSearch();
+		case SearchPackage.SEARCH_RESULT: return createSearchResult();
+		case SearchPackage.SAVED_SEARCHES: return createSavedSearches();
+		case SearchPackage.LATEST_SEARCH_STRINGS: return createLatestSearchStrings();
+		case SearchPackage.WEBSEARCHES: return createWebsearches();
+		case SearchPackage.WEBSEARCH: return createWebsearch();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -94,10 +95,12 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case SearchPackage.SEARCH_SCOPE:
-				return createSearchScopeFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		case SearchPackage.SEARCH_SCOPE:
+			return createSearchScopeFromString(eDataType, initialValue);
+		case SearchPackage.IMAGE:
+			return createImageFromString(eDataType, initialValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -109,10 +112,12 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case SearchPackage.SEARCH_SCOPE:
-				return convertSearchScopeToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		case SearchPackage.SEARCH_SCOPE:
+			return convertSearchScopeToString(eDataType, instanceValue);
+		case SearchPackage.IMAGE:
+			return convertImageToString(eDataType, instanceValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -194,6 +199,24 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	 */
 	public String convertSearchScopeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Image createImageFromString(EDataType eDataType, String initialValue) {
+		return (Image)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertImageToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
 	}
 
 	/**

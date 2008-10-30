@@ -1,7 +1,10 @@
 package org.remus.infomngmnt.search.provider;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -82,6 +85,11 @@ public final class SearchPlugin extends EMFPlugin {
 
 		private ServiceTracker tracker;
 
+
+		/**
+		 * Storage for preferences.
+		 */
+		private ScopedPreferenceStore preferenceStore;
 		/**
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
@@ -112,6 +120,34 @@ public final class SearchPlugin extends EMFPlugin {
 		public ILuceneCustomizer getService() {
 			return (ILuceneCustomizer) this.tracker.getService();
 		}
+
+		/**
+		 * Returns the preference store for this UI plug-in.
+		 * This preference store is used to hold persistent settings for this plug-in in
+		 * the context of a workbench. Some of these settings will be user controlled,
+		 * whereas others may be internal setting that are never exposed to the user.
+		 * <p>
+		 * If an error occurs reading the preference store, an empty preference store is
+		 * quietly created, initialized with defaults, and returned.
+		 * </p>
+		 * <p>
+		 * <strong>NOTE:</strong> As of Eclipse 3.1 this method is
+		 * no longer referring to the core runtime compatibility layer and so
+		 * plug-ins relying on Plugin#initializeDefaultPreferences
+		 * will have to access the compatibility layer themselves.
+		 * </p>
+		 *
+		 * @return the preference store
+		 */
+		public IPreferenceStore getPreferenceStore() {
+			// Create the preference store lazily.
+			if (this.preferenceStore == null) {
+				this.preferenceStore = new ScopedPreferenceStore(new InstanceScope(),getBundle().getSymbolicName());
+
+			}
+			return this.preferenceStore;
+		}
+
 	}
 
 }

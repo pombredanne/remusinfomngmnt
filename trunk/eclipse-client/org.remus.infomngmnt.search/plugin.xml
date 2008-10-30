@@ -67,5 +67,32 @@
             name="SearchResult">
       </editor>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.search.websearch">
+      <websearch
+            icon="icons/websearch/google.png"
+            id="websearch.google"
+            name="Google"
+            urlpattern="http://www.google.de/search?q={0}&amp;ie=utf-8&amp;oe=utf-8&amp;aq=t&amp;client=remus">
+      </websearch>
+      <websearch
+            icon="icons/websearch/wikipedia.gif"
+            id="websearch.wikipedia"
+            name="Wikipedia"
+            urlpattern="http://en.wikipedia.org/wiki/Special:Search?search={0}&amp;go=Article&amp;sourceid=remus">
+      </websearch>
+      <websearch
+            icon="icons/websearch/yahoo.gif"
+            id="websearch.yahoo"
+            name="Yahoo"
+            urlpattern="http://search.yahoo.com/search?p={0}&amp;ei=UTF-8&amp;fr=remus">
+      </websearch>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer">
+      </initializer>
+   </extension>
 
 </plugin>

@@ -14,6 +14,7 @@
       <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/SELECTED_INFO_UNIT"/>
       <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/OPEN_EDITORS"/>
     </genEnums>
+    <genDataTypes ecoreDataType="search.ecore#//Image"/>
     <genClasses ecoreClass="search.ecore#//Search">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/searchString"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/dateStart"/>
@@ -47,6 +48,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/pattern"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/imagePath"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/contributor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/image"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

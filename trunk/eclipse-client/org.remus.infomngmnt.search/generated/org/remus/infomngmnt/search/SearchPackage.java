@@ -373,13 +373,22 @@ public interface SearchPackage extends EPackage {
 	int WEBSEARCH__CONTRIBUTOR = 4;
 
 	/**
+	 * The feature id for the '<em><b>Image</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WEBSEARCH__IMAGE = 5;
+
+	/**
 	 * The number of structural features of the '<em>Websearch</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WEBSEARCH_FEATURE_COUNT = 5;
+	int WEBSEARCH_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.
@@ -390,6 +399,17 @@ public interface SearchPackage extends EPackage {
 	 * @generated
 	 */
 	int SEARCH_SCOPE = 6;
+
+
+	/**
+	 * The meta object id for the '<em>Image</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.swt.graphics.Image
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getImage()
+	 * @generated
+	 */
+	int IMAGE = 7;
 
 
 	/**
@@ -695,6 +715,17 @@ public interface SearchPackage extends EPackage {
 	EAttribute getWebsearch_Contributor();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Websearch#getImage <em>Image</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Image</em>'.
+	 * @see org.remus.infomngmnt.search.Websearch#getImage()
+	 * @see #getWebsearch()
+	 * @generated
+	 */
+	EAttribute getWebsearch_Image();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -703,6 +734,17 @@ public interface SearchPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getSearchScope();
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.swt.graphics.Image <em>Image</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Image</em>'.
+	 * @see org.eclipse.swt.graphics.Image
+	 * @model instanceClass="org.eclipse.swt.graphics.Image"
+	 * @generated
+	 */
+	EDataType getImage();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -963,6 +1005,14 @@ public interface SearchPackage extends EPackage {
 		EAttribute WEBSEARCH__CONTRIBUTOR = eINSTANCE.getWebsearch_Contributor();
 
 		/**
+		 * The meta object literal for the '<em><b>Image</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WEBSEARCH__IMAGE = eINSTANCE.getWebsearch_Image();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -971,6 +1021,16 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum SEARCH_SCOPE = eINSTANCE.getSearchScope();
+
+		/**
+		 * The meta object literal for the '<em>Image</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.swt.graphics.Image
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getImage()
+		 * @generated
+		 */
+		EDataType IMAGE = eINSTANCE.getImage();
 
 	}
 

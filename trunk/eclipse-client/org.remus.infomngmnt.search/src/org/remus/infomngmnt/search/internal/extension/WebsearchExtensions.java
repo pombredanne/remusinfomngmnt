@@ -15,6 +15,8 @@ package org.remus.infomngmnt.search.internal.extension;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.Websearch;
@@ -67,9 +69,16 @@ public class WebsearchExtensions {
 				Websearch newWebsearch = SearchFactory.eINSTANCE.createWebsearch();
 				newWebsearch.setId(configurationElement.getAttribute(ID_ATT));
 				newWebsearch.setPattern(configurationElement.getAttribute(PATTERN_ATT));
-				newWebsearch.setName(configurationElement.getAttribute(PATTERN_ATT));
+				newWebsearch.setName(configurationElement.getAttribute(NAME_ATT));
 				newWebsearch.setContributor(configurationElement.getContributor().getName());
 				newWebsearch.setImagePath(configurationElement.getAttribute(ICON_ATT));
+				if (newWebsearch.getImagePath() != null && newWebsearch.getImagePath().length() > 0) {
+					ImageDescriptor imageDescriptorFromPlugin = AbstractUIPlugin.imageDescriptorFromPlugin(newWebsearch.getContributor(), newWebsearch.getImagePath());
+					if (imageDescriptorFromPlugin != null) {
+						newWebsearch.setImage(imageDescriptorFromPlugin.createImage());
+					}
+				}
+				this.searches.getWebsearch().add(newWebsearch);
 			}
 		}
 	}

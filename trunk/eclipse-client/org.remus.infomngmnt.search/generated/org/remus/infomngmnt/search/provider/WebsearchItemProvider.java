@@ -75,6 +75,7 @@ public class WebsearchItemProvider
 			addPatternPropertyDescriptor(object);
 			addImagePathPropertyDescriptor(object);
 			addContributorPropertyDescriptor(object);
+			addImagePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -190,6 +191,28 @@ public class WebsearchItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Image feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addImagePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Websearch_image_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Websearch_image_feature", "_UI_Websearch_type"),
+				 SearchPackage.Literals.WEBSEARCH__IMAGE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns Websearch.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -231,6 +254,7 @@ public class WebsearchItemProvider
 			case SearchPackage.WEBSEARCH__PATTERN:
 			case SearchPackage.WEBSEARCH__IMAGE_PATH:
 			case SearchPackage.WEBSEARCH__CONTRIBUTOR:
+			case SearchPackage.WEBSEARCH__IMAGE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

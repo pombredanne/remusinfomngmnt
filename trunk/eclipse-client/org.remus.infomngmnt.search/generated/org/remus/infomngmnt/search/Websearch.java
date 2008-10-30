@@ -15,6 +15,7 @@
 package org.remus.infomngmnt.search;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.search.Websearch#getPattern <em>Pattern</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.Websearch#getImagePath <em>Image Path</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.Websearch#getContributor <em>Contributor</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Websearch#getImage <em>Image</em>}</li>
  * </ul>
  * </p>
  *
@@ -166,5 +168,31 @@ public interface Websearch extends EObject {
 	 * @generated
 	 */
 	void setContributor(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Image</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Image</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Image</em>' attribute.
+	 * @see #setImage(Image)
+	 * @see org.remus.infomngmnt.search.SearchPackage#getWebsearch_Image()
+	 * @model dataType="org.remus.infomngmnt.search.Image"
+	 * @generated
+	 */
+	Image getImage();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.Websearch#getImage <em>Image</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Image</em>' attribute.
+	 * @see #getImage()
+	 * @generated
+	 */
+	void setImage(Image value);
 
 } // Websearch

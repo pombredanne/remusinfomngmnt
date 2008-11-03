@@ -23,6 +23,7 @@ import org.remus.infomngmnt.search.provider.SearchPlugin;
 public class SearchPreferenceInitializer extends AbstractPreferenceInitializer {
 
 	public static final String KEEP_X_SEARCHES_IN_HISTORY = "KEEP_X_SEARCHES_IN_HISTORY"; //$NON-NLS-1$
+	public static final String LOCAL_SEARCH_FOLDER = "LOCAL_SEARCH_FOLDER"; //$NON-NLS-1$#
 	private final IPreferenceStore store;
 
 	/**
@@ -38,6 +39,7 @@ public class SearchPreferenceInitializer extends AbstractPreferenceInitializer {
 	@Override
 	public void initializeDefaultPreferences() {
 		this.store.setDefault(KEEP_X_SEARCHES_IN_HISTORY, 20);
+		this.store.setDefault(LOCAL_SEARCH_FOLDER, "localsearches"); //$NON-NLS-1$
 
 	}
 

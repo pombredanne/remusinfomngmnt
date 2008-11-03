@@ -47,6 +47,7 @@ import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchResult;
 import org.remus.infomngmnt.search.editor.SearchResultEditor;
+import org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
 import org.remus.infomngmnt.search.save.SavedSearchesHandler;
 
@@ -354,7 +355,9 @@ public class LuceneSearchService {
 					// do nothign...we continue..
 				}
 			}
-			final IPath savePath = SearchPlugin.getPlugin().getStateLocation().append(this.currentSearch.getId());
+			final IPath savePath = SearchPlugin.getPlugin().getStateLocation()
+			.append(SearchPlugin.getPlugin().getPreferenceStore().getString(SearchPreferenceInitializer.LOCAL_SEARCH_FOLDER))
+			.append(this.currentSearch.getId());
 			new SavedSearchesHandler().saveObjectToResource(
 					savePath , this.currentSearch);
 			Display.getDefault().asyncExec(new Runnable() {

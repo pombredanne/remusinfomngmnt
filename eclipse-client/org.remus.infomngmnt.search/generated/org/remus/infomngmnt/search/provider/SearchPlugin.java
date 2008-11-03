@@ -8,6 +8,8 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
+import org.remus.infomngmnt.search.SearchFactory;
+import org.remus.infomngmnt.search.SearchHistory;
 import org.remus.infomngmnt.search.service.ILuceneCustomizer;
 import org.remus.infomngmnt.search.service.LuceneSearchCustomizeTracker;
 
@@ -86,6 +88,7 @@ public final class SearchPlugin extends EMFPlugin {
 		private ServiceTracker tracker;
 
 
+		private SearchHistory searchHistory;
 		/**
 		 * Storage for preferences.
 		 */
@@ -146,6 +149,13 @@ public final class SearchPlugin extends EMFPlugin {
 
 			}
 			return this.preferenceStore;
+		}
+
+		public SearchHistory getSearchHistory() {
+			if (this.searchHistory == null) {
+				this.searchHistory = SearchFactory.eINSTANCE.createSearchHistory();
+			}
+			return this.searchHistory;
 		}
 
 	}

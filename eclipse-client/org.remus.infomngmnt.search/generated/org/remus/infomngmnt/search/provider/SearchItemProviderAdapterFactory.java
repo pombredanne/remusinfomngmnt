@@ -221,6 +221,29 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.search.SearchHistory} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SearchHistoryItemProvider searchHistoryItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.search.SearchHistory}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSearchHistoryAdapter() {
+		if (searchHistoryItemProvider == null) {
+			searchHistoryItemProvider = new SearchHistoryItemProvider(this);
+		}
+
+		return searchHistoryItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -325,6 +348,7 @@ public class SearchItemProviderAdapterFactory extends SearchAdapterFactory imple
 		if (latestSearchStringsItemProvider != null) latestSearchStringsItemProvider.dispose();
 		if (websearchesItemProvider != null) websearchesItemProvider.dispose();
 		if (websearchItemProvider != null) websearchItemProvider.dispose();
+		if (searchHistoryItemProvider != null) searchHistoryItemProvider.dispose();
 	}
 
 }

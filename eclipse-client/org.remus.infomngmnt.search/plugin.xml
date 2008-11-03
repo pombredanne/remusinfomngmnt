@@ -36,6 +36,12 @@
             name="Search"
             restorable="true">
       </view>
+      <view
+            class="org.remus.infomngmnt.search.ui.view.SearchHistoryView"
+            id="org.remus.infomngmnt.search.ui.view.SearchHistoryView"
+            name="Search History"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -93,6 +99,12 @@
       <initializer
             class="org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.remus.infomngmnt.search.startup.SearchStartup">
+      </startup>
    </extension>
 
 </plugin>

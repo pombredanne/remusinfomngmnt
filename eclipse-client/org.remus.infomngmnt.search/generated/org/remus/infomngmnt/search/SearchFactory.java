@@ -88,6 +88,15 @@ public interface SearchFactory extends EFactory {
 	Websearch createWebsearch();
 
 	/**
+	 * Returns a new object of class '<em>History</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>History</em>'.
+	 * @generated
+	 */
+	SearchHistory createSearchHistory();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

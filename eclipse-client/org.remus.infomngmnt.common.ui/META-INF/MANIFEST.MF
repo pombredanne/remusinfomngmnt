@@ -20,4 +20,5 @@ Export-Package: org.eclipse.nebula.widgets.calendarcombo,
  org.remus.infomngmnt.common.ui,
  org.remus.infomngmnt.common.ui.databinding,
  org.remus.infomngmnt.common.ui.editor,
+ org.remus.infomngmnt.common.ui.image,
  org.remus.infomngmnt.common.ui.view

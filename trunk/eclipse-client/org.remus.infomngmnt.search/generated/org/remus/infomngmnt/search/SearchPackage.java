@@ -391,6 +391,34 @@ public interface SearchPackage extends EPackage {
 	int WEBSEARCH_FEATURE_COUNT = 6;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SearchHistoryImpl <em>History</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.search.impl.SearchHistoryImpl
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchHistory()
+	 * @generated
+	 */
+	int SEARCH_HISTORY = 6;
+
+	/**
+	 * The feature id for the '<em><b>Search</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEARCH_HISTORY__SEARCH = 0;
+
+	/**
+	 * The number of structural features of the '<em>History</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEARCH_HISTORY_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -398,7 +426,7 @@ public interface SearchPackage extends EPackage {
 	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchScope()
 	 * @generated
 	 */
-	int SEARCH_SCOPE = 6;
+	int SEARCH_SCOPE = 7;
 
 
 	/**
@@ -409,7 +437,7 @@ public interface SearchPackage extends EPackage {
 	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getImage()
 	 * @generated
 	 */
-	int IMAGE = 7;
+	int IMAGE = 8;
 
 
 	/**
@@ -726,6 +754,27 @@ public interface SearchPackage extends EPackage {
 	EAttribute getWebsearch_Image();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.SearchHistory <em>History</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>History</em>'.
+	 * @see org.remus.infomngmnt.search.SearchHistory
+	 * @generated
+	 */
+	EClass getSearchHistory();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.search.SearchHistory#getSearch <em>Search</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Search</em>'.
+	 * @see org.remus.infomngmnt.search.SearchHistory#getSearch()
+	 * @see #getSearchHistory()
+	 * @generated
+	 */
+	EReference getSearchHistory_Search();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1011,6 +1060,24 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute WEBSEARCH__IMAGE = eINSTANCE.getWebsearch_Image();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SearchHistoryImpl <em>History</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.search.impl.SearchHistoryImpl
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getSearchHistory()
+		 * @generated
+		 */
+		EClass SEARCH_HISTORY = eINSTANCE.getSearchHistory();
+
+		/**
+		 * The meta object literal for the '<em><b>Search</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SEARCH_HISTORY__SEARCH = eINSTANCE.getSearchHistory_Search();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.search.SearchScope <em>Scope</em>}' enum.

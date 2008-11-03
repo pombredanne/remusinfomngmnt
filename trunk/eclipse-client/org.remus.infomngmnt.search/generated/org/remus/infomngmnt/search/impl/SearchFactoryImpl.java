@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.search.*;
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.SavedSearches;
 import org.remus.infomngmnt.search.Search;
@@ -47,7 +48,7 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	 */
 	public static SearchFactory init() {
 		try {
-			SearchFactory theSearchFactory = (SearchFactory)EPackage.Registry.INSTANCE.getEFactory("http://remus-software.org/search");
+			SearchFactory theSearchFactory = (SearchFactory)EPackage.Registry.INSTANCE.getEFactory("http://remus-software.org/search"); 
 			if (theSearchFactory != null) {
 				return theSearchFactory;
 			}
@@ -76,14 +77,15 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case SearchPackage.SEARCH: return createSearch();
-		case SearchPackage.SEARCH_RESULT: return createSearchResult();
-		case SearchPackage.SAVED_SEARCHES: return createSavedSearches();
-		case SearchPackage.LATEST_SEARCH_STRINGS: return createLatestSearchStrings();
-		case SearchPackage.WEBSEARCHES: return createWebsearches();
-		case SearchPackage.WEBSEARCH: return createWebsearch();
-		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			case SearchPackage.SEARCH: return createSearch();
+			case SearchPackage.SEARCH_RESULT: return createSearchResult();
+			case SearchPackage.SAVED_SEARCHES: return createSavedSearches();
+			case SearchPackage.LATEST_SEARCH_STRINGS: return createLatestSearchStrings();
+			case SearchPackage.WEBSEARCHES: return createWebsearches();
+			case SearchPackage.WEBSEARCH: return createWebsearch();
+			case SearchPackage.SEARCH_HISTORY: return createSearchHistory();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -95,12 +97,12 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-		case SearchPackage.SEARCH_SCOPE:
-			return createSearchScopeFromString(eDataType, initialValue);
-		case SearchPackage.IMAGE:
-			return createImageFromString(eDataType, initialValue);
-		default:
-			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			case SearchPackage.SEARCH_SCOPE:
+				return createSearchScopeFromString(eDataType, initialValue);
+			case SearchPackage.IMAGE:
+				return createImageFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -112,12 +114,12 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-		case SearchPackage.SEARCH_SCOPE:
-			return convertSearchScopeToString(eDataType, instanceValue);
-		case SearchPackage.IMAGE:
-			return convertImageToString(eDataType, instanceValue);
-		default:
-			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			case SearchPackage.SEARCH_SCOPE:
+				return convertSearchScopeToString(eDataType, instanceValue);
+			case SearchPackage.IMAGE:
+				return convertImageToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -179,6 +181,16 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	public Websearch createWebsearch() {
 		WebsearchImpl websearch = new WebsearchImpl();
 		return websearch;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SearchHistory createSearchHistory() {
+		SearchHistoryImpl searchHistory = new SearchHistoryImpl();
+		return searchHistory;
 	}
 
 	/**

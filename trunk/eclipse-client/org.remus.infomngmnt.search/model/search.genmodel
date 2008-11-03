@@ -50,5 +50,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/contributor"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Websearch/image"/>
     </genClasses>
+    <genClasses ecoreClass="search.ecore#//SearchHistory">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference search.ecore#//SearchHistory/search"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

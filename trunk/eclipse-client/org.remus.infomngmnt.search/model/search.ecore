@@ -52,4 +52,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="image" eType="#//Image"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Image" instanceClassName="org.eclipse.swt.graphics.Image"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SearchHistory">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="search" upperBound="-1"
+        eType="#//Search"/>
+  </eClassifiers>
 </ecore:EPackage>

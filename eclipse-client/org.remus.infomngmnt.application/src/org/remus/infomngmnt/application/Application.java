@@ -50,6 +50,15 @@ public class Application implements IApplication {
 
 	private static final String PROP_EXIT_CODE = "eclipse.exitcode"; //$NON-NLS-1$
 
+	/** Constant for the application being run on Windows or not */
+	public static final boolean IS_WINDOWS = "win32".equals(SWT.getPlatform());
+
+	/** Constant for the application being run on Linux or not */
+	public static final boolean IS_LINUX = "gtk".equals(SWT.getPlatform());
+
+	/** Constant for the application being run on Mac or not */
+	public static final boolean IS_MAC = "carbon".equals(SWT.getPlatform());
+
 	/**
 	 * A special return code that will be recognized by the launcher and used to
 	 * restart the workbench.

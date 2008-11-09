@@ -62,6 +62,8 @@ import org.eclipse.ui.statushandlers.AbstractStatusHandler;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
+
+import org.remus.infomngmnt.ui.UIUtil;
 import org.remus.infomngmnt.ui.perspective.Perspective;
 
 
@@ -121,6 +123,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	 * The IDE workbench error handler.
 	 */
 	private AbstractStatusHandler ideWorkbenchErrorHandler;
+
 
 	/**
 	 * Creates a new workbench advisor instance.
@@ -323,7 +326,11 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	@Override
 	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(
 			final IWorkbenchWindowConfigurer configurer) {
-		return new ApplicationWorkbenchWindowAdvisor(this, configurer);
+		/* Store primary advisor if not yet done */
+		ApplicationWorkbenchWindowAdvisor windowAdvisor = new ApplicationWorkbenchWindowAdvisor(this, configurer);
+		if (UIUtil.fgPrimaryApplicationWorkbenchWindowAdvisor == null)
+			UIUtil.fgPrimaryApplicationWorkbenchWindowAdvisor = windowAdvisor;
+		return windowAdvisor;
 	}
 
 	/**

@@ -125,6 +125,14 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	/**
+	 * @param trayItem
+	 */
+	protected void fillTrayItem(IMenuManager trayItem) {
+		trayItem.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		trayItem.add(this.quitAction);
+	}
+
+	/**
 	 * Creates and returns the File menu.
 	 */
 	private MenuManager createFileMenu() {

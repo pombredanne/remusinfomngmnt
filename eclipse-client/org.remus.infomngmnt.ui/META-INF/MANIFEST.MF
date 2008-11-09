@@ -19,14 +19,17 @@ Require-Bundle: org.eclipse.ui,
  org.remus.infomngmnt.jslib;bundle-version="1.0.0",
  org.eclipse.emf.databinding;bundle-version="1.0.0",
  org.eclipse.emf.databinding.edit;bundle-version="1.0.0",
- org.eclipse.jface.databinding;bundle-version="1.2.0"
+ org.eclipse.jface.databinding;bundle-version="1.2.0",
+ org.remus.infomngmnt.common.ui;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.ui,
  org.remus.infomngmnt.ui.commands,
+ org.remus.infomngmnt.ui.desktop,
  org.remus.infomngmnt.ui.editors,
  org.remus.infomngmnt.ui.extension,
  org.remus.infomngmnt.ui.newwizards,
  org.remus.infomngmnt.ui.perspective,
+ org.remus.infomngmnt.ui.preference,
  org.remus.infomngmnt.ui.project,
  org.remus.infomngmnt.ui.views

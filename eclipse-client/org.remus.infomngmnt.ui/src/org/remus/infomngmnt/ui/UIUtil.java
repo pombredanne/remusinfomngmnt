@@ -22,12 +22,17 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class UIUtil {
+
+	public static WorkbenchWindowAdvisor fgPrimaryApplicationWorkbenchWindowAdvisor;
+
 
 	/**
 	 * Attempts to select and reveal the specified resource in all
@@ -94,6 +99,23 @@ public class UIUtil {
 				});
 			}
 		}
+	}
+
+	/**
+	 * Attempts to find the primary <code>IWorkbenchWindow</code> from the
+	 * PlatformUI facade. Otherwise, returns <code>NULL</code> if none.
+	 *
+	 * @return the primary <code>IWorkbenchWindow</code> from the PlatformUI
+	 * facade or <code>NULL</code> if none.
+	 */
+	public static IWorkbenchWindow getPrimaryWindow() {
+
+		/* Return the first Window of the Workbench */
+		IWorkbenchWindow windows[] = PlatformUI.getWorkbench().getWorkbenchWindows();
+		if (windows.length > 0)
+			return windows[0];
+
+		return null;
 	}
 
 }

@@ -8,9 +8,14 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProduct;
+import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -19,14 +24,26 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.Tray;
+import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
@@ -34,6 +51,7 @@ import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartConstants;
@@ -41,6 +59,7 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PerspectiveAdapter;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -59,6 +78,11 @@ import org.eclipse.update.configurator.IPlatformConfiguration;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 
+import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.UIUtil;
+import org.remus.infomngmnt.ui.desktop.DesktopWindow;
+import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
+
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
@@ -71,6 +95,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	private IWorkbenchPage lastActivePage;
 	private String lastEditorTitle = ""; //$NON-NLS-1$
+
+	private TrayItem fTrayItem;
+	private boolean fTrayEnabled;
+	private ShellListener fTrayShellListener;
+	private boolean fBlockIconifyEvent;
+	private boolean fMinimizedToTray;
+	private boolean fMinimizeFromClose;
+	private boolean fTrayTeasing;
 
 	private final IPropertyListener editorPropertyListener = new IPropertyListener() {
 		public void propertyChanged(final Object source, final int propId) {
@@ -91,6 +123,12 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	private IWorkbenchAction openPerspectiveAction;
 
+	private ApplicationActionBarAdvisor actionBarAdvisor;
+
+	private final IPreferenceStore preferenceStore;
+
+	private DesktopWindow window;
+
 	/**
 	 * Crates a new IDE workbench window advisor.
 	 * 
@@ -103,6 +141,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			final IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 		this.wbAdvisor = wbAdvisor;
+		this.preferenceStore = UIPlugin.getDefault().getPreferenceStore();
 
 	}
 
@@ -114,7 +153,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	@Override
 	public ActionBarAdvisor createActionBarAdvisor(
 			final IActionBarConfigurer configurer) {
-		return new ApplicationActionBarAdvisor(configurer);
+		this.actionBarAdvisor = new ApplicationActionBarAdvisor(configurer);
+		return this.actionBarAdvisor;
 	}
 
 	/**
@@ -133,6 +173,34 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	 */
 	@Override
 	public boolean preWindowShellClose() {
+		final boolean[] res = new boolean[] { true };
+		SafeRunner.run(new ISafeRunnable() {
+			public void run() throws Exception {
+
+				/* Check if Prefs tell to move to tray */
+				if (ApplicationWorkbenchWindowAdvisor.this.equals(UIUtil.fgPrimaryApplicationWorkbenchWindowAdvisor)
+						&& org.remus.infomngmnt.application.ApplicationWorkbenchWindowAdvisor.this.preferenceStore.getBoolean(UIPreferenceInitializer.TRAY_ON_CLOSE)) {
+					org.remus.infomngmnt.application.ApplicationWorkbenchWindowAdvisor.this.fMinimizeFromClose = true;
+					getWindowConfigurer().getWindow().getShell().notifyListeners(SWT.Iconify, new Event());
+					res[0] = false;
+					ApplicationWorkbenchWindowAdvisor.this.fMinimizeFromClose = false;
+				}
+
+				/* shutdown the normal way */
+				else {
+					onClose();
+				}
+			}
+
+			public void handleException(Throwable exception) {
+				// do nothign
+
+			}
+		});
+		return res[0];
+	}
+
+	public boolean onClose() {
 		if (getWorkbench().getWorkbenchWindowCount() > 1) {
 			return true;
 		}
@@ -200,6 +268,33 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		configurer.setShowMenuBar(true);
 		configurer.setShowProgressIndicator(true);
 		hookTitleUpdateListeners(configurer);
+	}
+
+	@Override
+	public void postWindowOpen() {
+		final Shell shell = getWindowConfigurer().getWindow().getShell();
+		/* System Tray */
+		SafeRunner.run(new ISafeRunnable() {
+			public void run() throws Exception {
+				boolean trayEnabled = false;
+
+				/* Hook TrayItem if supported on OS and 1st Window */
+				if (ApplicationWorkbenchWindowAdvisor.this.preferenceStore.getBoolean(UIPreferenceInitializer.TRAY_ON_MINIMIZE)
+						|| ApplicationWorkbenchWindowAdvisor.this.preferenceStore.getBoolean(UIPreferenceInitializer.TRAY_ON_CLOSE)
+						|| ApplicationWorkbenchWindowAdvisor.this.preferenceStore.getBoolean(UIPreferenceInitializer.TRAY_ON_START))
+					trayEnabled = enableTray();
+
+				/* Move to Tray if set */
+				if (trayEnabled
+						&& ApplicationWorkbenchWindowAdvisor.this.preferenceStore.getBoolean(UIPreferenceInitializer.TRAY_ON_START))
+					moveToTray(shell);
+			}
+
+			public void handleException(Throwable exception) {
+				ApplicationPlugin.getDefault().getLog().log(null);
+
+			}
+		});
 	}
 
 	/**
@@ -428,6 +523,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		}
 	}
 
+
+
 	/**
 	 * Tries to open the intro, if one exists and otherwise will open the legacy
 	 * Welcome pages.
@@ -530,6 +627,173 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		}
 	}
 
+	/* Enable System-Tray Support */
+	private boolean enableTray() {
+
+		/* Avoid that this is being called redundantly */
+		if (this.fTrayEnabled)
+			return true;
+
+		/* Only enable for Primary Window */
+		IWorkbenchWindow primaryWindow = UIUtil.getPrimaryWindow();
+		if (primaryWindow == null || !primaryWindow.equals(getWindowConfigurer().getWindow()))
+			return false;
+
+		final Shell shell = primaryWindow.getShell();
+		final Tray tray = shell.getDisplay().getSystemTray();
+
+		/* Tray not support on the OS */
+		if (tray == null)
+			return false;
+
+		/* Create Item in Tray */
+		this.fTrayItem = new TrayItem(tray, SWT.NONE);
+		this.fTrayItem.setToolTipText(Platform.getProduct().getName());
+		this.fTrayEnabled = true;
+
+		if (Application.IS_WINDOWS)
+			this.fTrayItem.setVisible(false);
+
+		/* Apply Image */
+		// TODO set correct image
+		this.fTrayItem.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
+
+		/* Minimize to Tray on Shell Iconify if set */
+		this.fTrayShellListener = new ShellAdapter() {
+
+			@Override
+			public void shellIconified(ShellEvent e) {
+				if (!ApplicationWorkbenchWindowAdvisor.this.fBlockIconifyEvent && (ApplicationWorkbenchWindowAdvisor.this.fMinimizeFromClose || ApplicationWorkbenchWindowAdvisor.this.preferenceStore.getBoolean(UIPreferenceInitializer.TRAY_ON_MINIMIZE)))
+					moveToTray(shell);
+			}
+		};
+		shell.addShellListener(this.fTrayShellListener);
+
+		/* Show Menu on Selection */
+		this.fTrayItem.addListener(SWT.MenuDetect, new Listener() {
+			public void handleEvent(Event event) {
+				MenuManager trayMenu = new MenuManager();
+
+				/* Restore */
+				trayMenu.add(new ContributionItem() {
+					@Override
+					public void fill(Menu menu, int index) {
+						MenuItem restoreItem = new MenuItem(menu, SWT.PUSH);
+						restoreItem.setText("Restore");
+						restoreItem.addSelectionListener(new SelectionAdapter() {
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								restoreFromTray(shell);
+							}
+						});
+						menu.setDefaultItem(restoreItem);
+					}
+				});
+
+				/* Separator */
+				trayMenu.add(new Separator());
+
+				/* Other Items */
+				ApplicationWorkbenchWindowAdvisor.this.actionBarAdvisor.fillTrayItem(trayMenu);
+
+				Menu menu = trayMenu.createContextMenu(shell);
+				menu.setVisible(true);
+			}
+		});
+		/* Handle DefaultSelection */
+		this.fTrayItem.addListener(SWT.DefaultSelection, new Listener() {
+			public void handleEvent(Event event) {
+
+				/* Restore from Tray */
+				if (!shell.isVisible())
+					restoreFromTray(shell);
+
+				/* Move to Tray */
+				else if (!Application.IS_WINDOWS)
+					moveToTray(shell);
+			}
+		});
+
+		return true;
+	}
+
+	/* Move to System Tray */
+	private void moveToTray(Shell shell) {
+		if (Application.IS_WINDOWS)
+			this.fTrayItem.setVisible(true);
+
+		/*
+		 * Bug in SWT: For some reason, calling setVisible(false) here will result
+		 * in a second Iconify Event. The fix is to disable processing of this event
+		 * meanwhile.
+		 */
+		this.fBlockIconifyEvent = true;
+		try {
+			shell.setVisible(false);
+		} finally {
+			this.fBlockIconifyEvent = false;
+		}
+
+		this.fMinimizedToTray = true;
+
+		openDesktopWindow(shell);
+	}
+
+	private void openDesktopWindow(Shell shell) {
+		this.window = new DesktopWindow(shell.getDisplay());
+		this.window.setBlockOnOpen(false);
+		this.window.open();
+	}
+
+	private void closeDesktopWindow() {
+		if (this.window != null) {
+			this.window.close();
+		}
+	}
+
+	/**
+	 * @param shell
+	 */
+	public void restoreFromTray(Shell shell) {
+
+		/* Restore Shell */
+		shell.setVisible(true);
+		shell.setActive();
+
+		/* Un-Minimize if minimized */
+		if (shell.getMinimized())
+			shell.setMinimized(false);
+
+		if (Application.IS_WINDOWS)
+			this.fTrayItem.setVisible(false);
+
+		if (this.fTrayTeasing)
+			// TODO Application Images
+			this.fTrayItem.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
+		closeDesktopWindow();
+		this.fTrayTeasing = false;
+		this.fMinimizedToTray = false;
+	}
+
+	/* Disable System-Tray Support */
+	private void disableTray() {
+
+		/* Avoid that this is being called redundantly */
+		if (!this.fTrayEnabled)
+			return;
+
+		/* First make sure to have the Window restored */
+		restoreFromTray(getWindowConfigurer().getWindow().getShell());
+
+		this.fTrayEnabled = false;
+		this.fMinimizedToTray = false;
+
+		if (this.fTrayItem != null)
+			this.fTrayItem.dispose();
+
+		if (this.fTrayShellListener != null)
+			getWindowConfigurer().getWindow().getShell().removeShellListener(this.fTrayShellListener);
+	}
 	/**
 	 * Open a welcome editor for the given input
 	 */

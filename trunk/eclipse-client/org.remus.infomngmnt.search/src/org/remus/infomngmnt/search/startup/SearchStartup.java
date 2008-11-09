@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IStartup;
 
 import org.remus.infomngmnt.search.Search;
@@ -45,8 +46,9 @@ public class SearchStartup implements IStartup {
 	 */
 	public void earlyStartup() {
 		SavedSearchesHandler handler = new SavedSearchesHandler();
-		int int1 = SearchPlugin.getPlugin().getPreferenceStore().getInt(SearchPreferenceInitializer.KEEP_X_SEARCHES_IN_HISTORY);
-		File file = SearchPlugin.getPlugin().getStateLocation().append(SearchPreferenceInitializer.LOCAL_SEARCH_FOLDER).toFile();
+		IPreferenceStore store = SearchPlugin.getPlugin().getPreferenceStore();
+		int int1 = store.getInt(SearchPreferenceInitializer.KEEP_X_SEARCHES_IN_HISTORY);
+		File file = SearchPlugin.getPlugin().getStateLocation().append(store.getString(SearchPreferenceInitializer.LOCAL_SEARCH_FOLDER)).toFile();
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -66,7 +68,7 @@ public class SearchStartup implements IStartup {
 		}
 		for (int i = 0; i < counter; i++) {
 			Search search = handler.getObjectFromUri(new Path(
-					listFilesCollection.get(i).toURI().toString()), SearchPackage.Literals.SEARCH);
+					listFilesCollection.get(i).getAbsolutePath()), SearchPackage.Literals.SEARCH);
 			SearchPlugin.getPlugin().getSearchHistory().getSearch().add(search);
 		}
 

@@ -66,7 +66,7 @@ public abstract class AbstractScrolledTitledView extends ViewPart
 		client.setLayout(new FillLayout()); // if layout changes here please update the javadoc of #createViewContents(Composite)
 
 		createViewContents(client);
-		this.form.reflow(true);
+		this.form.layout(true);
 		initializeToolBar();
 
 	}

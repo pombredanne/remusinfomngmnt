@@ -29,6 +29,8 @@ public class CommonImageRegistry extends ImageRegistry {
 
 	public static final String SECTION_HORIZONTAL = "SECTION_HORIZONTAL"; //$NON-NLS-1$
 	public static final String SECTION_VERTICAL = "SECTION_VERTICAL"; //$NON-NLS-1$
+	public static final String NOTIFICATION_CLOSE = "NOTIFICATION_CLOSE"; //$NON-NLS-1$
+	public static final String NOTIFICATION_CLOSE_HOVER = "NOTIFICATION_CLOSE_HOVER"; //$NON-NLS-1$
 
 	private static CommonImageRegistry INSTANCE;
 
@@ -50,6 +52,8 @@ public class CommonImageRegistry extends ImageRegistry {
 	private void initialize() {
 		registerImage(SECTION_HORIZONTAL, "images/th_horizontal.gif");
 		registerImage(SECTION_VERTICAL, "images/th_vertical.gif");
+		registerImage(NOTIFICATION_CLOSE_HOVER, "images/notification/notification-close-active.gif");
+		registerImage(NOTIFICATION_CLOSE, "images/notification/notification-close.gif");
 
 	}
 

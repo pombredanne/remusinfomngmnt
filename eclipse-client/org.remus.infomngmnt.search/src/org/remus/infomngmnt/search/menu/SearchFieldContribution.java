@@ -44,7 +44,7 @@ public class SearchFieldContribution extends WorkbenchWindowControlContribution 
 	 */
 	@Override
 	protected Control createControl(Composite parent) {
-		Text text = new Text(parent, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+		Text text = new Text(parent, SWT.SINGLE | SWT.LEAD | SWT.BORDER | SWT.SEARCH);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		text.setText("Search");
 

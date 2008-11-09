@@ -312,30 +312,49 @@ public class LuceneSearchService {
 
 	}
 	public String search(Search currentSearch, boolean openEditor) {
-		SearchJob newSearch = new SearchJob(currentSearch, openEditor);
+		return search(currentSearch, openEditor, true, null);
+	}
+
+	public String search(Search currentSearch, boolean openEditor, boolean saveAsFile) {
+		return search(currentSearch, openEditor, saveAsFile, null);
+	}
+
+	public String search(Search currentSearch, boolean openEditor, boolean save,
+			ISearchCallBack callback) {
+		SearchJob newSearch = new SearchJob(currentSearch, openEditor, save, callback);
 		newSearch.schedule();
 		return newSearch.getTicket();
 	}
-
 	private class SearchJob extends CancelableJob  {
-
 		private final Search currentSearch;
 		private final boolean openEditor;
+		private final boolean saveAsFile;
+		private final ISearchCallBack callback;
 
 		public String getTicket() {
 			return this.currentSearch.getId();
 		}
 
 		public SearchJob(Search currentSearch, boolean openEditor) {
+			this(currentSearch, openEditor, true, null);
+		}
+
+		public SearchJob(Search currentSearch, boolean openEditor,
+				boolean saveAsFile, ISearchCallBack callback) {
 			super(NLS.bind("Search \"{0}\"", currentSearch.getSearchString()));
+			this.callback = callback;
+			currentSearch.setId(String.valueOf(System.currentTimeMillis()));
 			this.currentSearch = currentSearch;
 			this.openEditor = openEditor;
-			currentSearch.setId(String.valueOf(System.currentTimeMillis()));
+			this.saveAsFile = saveAsFile;
 		}
 
 		@Override
 		protected IStatus runCancelable(IProgressMonitor monitor) {
 			BooleanQuery.setMaxClauseCount(4096);
+			if (this.callback != null) {
+				this.callback.beforeSearch(monitor, this.currentSearch);
+			}
 			if (this.currentSearch != null) {
 				this.currentSearch.getResult().clear();
 			}
@@ -355,23 +374,29 @@ public class LuceneSearchService {
 					// do nothign...we continue..
 				}
 			}
-			final IPath savePath = SearchPlugin.getPlugin().getStateLocation()
-			.append(SearchPlugin.getPlugin().getPreferenceStore().getString(SearchPreferenceInitializer.LOCAL_SEARCH_FOLDER))
-			.append(this.currentSearch.getId());
-			new SavedSearchesHandler().saveObjectToResource(
-					savePath , this.currentSearch);
-			Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
-					try {
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage().openEditor(new URIEditorInput(URI.createFileURI(savePath.toOSString())), SearchResultEditor.class.getName());
-					} catch (PartInitException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			if (this.callback != null) {
+				this.callback.afterSearch(monitor, this.currentSearch);
+			}
+			if (this.saveAsFile) {
+				final IPath savePath = SearchPlugin.getPlugin().getStateLocation()
+				.append(SearchPlugin.getPlugin().getPreferenceStore().getString(SearchPreferenceInitializer.LOCAL_SEARCH_FOLDER))
+				.append(this.currentSearch.getId());
+				new SavedSearchesHandler().saveObjectToResource(
+						savePath , this.currentSearch);
+				SearchPlugin.getPlugin().getSearchHistory().getSearch().add(this.currentSearch);
+				if (this.openEditor) {
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							try {
+								PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+								.getActivePage().openEditor(new URIEditorInput(URI.createFileURI(savePath.toOSString())), SearchResultEditor.class.getName());
+							} catch (PartInitException e) {
+								SearchPlugin.getPlugin().getLog().log(StatusCreator.newStatus("Error opening search-result", e));
+							}
+						}
+					});
 				}
-
-			});
+			}
 			return Status.OK_STATUS;
 		}
 

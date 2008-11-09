@@ -139,10 +139,20 @@ public class SearchView extends AbstractScrolledTitledView {
 
 		final Button button_1 = this.toolkit.createButton(composite, "Select All", SWT.NONE);
 		button_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		button_1.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				SearchView.this.viewer.setCheckedElements(InformationExtensionManager.getInstance().getTypes().toArray());
+			}
+		});
 
 		final Button deselectAllButton = this.toolkit.createButton(composite, "Deselect All", SWT.NONE);
 		final GridData gd_deselectAllButton = new GridData(SWT.FILL, SWT.TOP, false, false);
 		deselectAllButton.setLayoutData(gd_deselectAllButton);
+		deselectAllButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				SearchView.this.viewer.setCheckedElements(new Object[0]);
+			}
+		});
 
 		final Section dateSection = this.toolkit.createSection(container, SECTION_STYLE);
 		final GridData gd_informationTypeSection = new GridData(SWT.FILL, SWT.CENTER, false, false);

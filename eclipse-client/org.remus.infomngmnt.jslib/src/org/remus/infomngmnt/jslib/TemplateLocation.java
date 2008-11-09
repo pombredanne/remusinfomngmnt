@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.Platform;
  */
 public class TemplateLocation {
 
-	public static final String BUNDLE_ID = "org.remus.infomngmnt.jslib";
+	public static final String BUNDLE_ID = "org.remus.infomngmnt.jslib"; //$NON-NLS-1$
 
 	public static String getLoadingUrl() {
 		try {

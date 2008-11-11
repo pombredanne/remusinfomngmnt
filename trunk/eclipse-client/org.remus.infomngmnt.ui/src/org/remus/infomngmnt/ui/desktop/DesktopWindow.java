@@ -12,18 +12,32 @@
 
 package org.remus.infomngmnt.ui.desktop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Section;
 
+import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.swt.AbstractNotificationPopup;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.FadeJob;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.IFadeListener;
+import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
+import org.remus.infomngmt.common.ui.uimodel.TraySection;
+import org.remus.infomngmt.common.ui.uimodel.TraySectionCollection;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -32,6 +46,8 @@ import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.IFadeListener;
 public class DesktopWindow extends AbstractNotificationPopup {
 
 	private final Display display;
+
+	private List<AbstractTraySection> traySections;
 
 	public DesktopWindow(Display display) {
 		super(display);
@@ -70,10 +86,28 @@ public class DesktopWindow extends AbstractNotificationPopup {
 
 
 	private FadeJob transparancyJob;
-	@Override
-	protected void createContentArea(Composite parent) {
+	private FormToolkit toolkit;
 
-		super.createContentArea(parent);
+	@Override
+	protected void createContentArea(final Composite parent) {
+		this.toolkit = new FormToolkit(parent.getDisplay());
+		TraySectionCollection sections = TrayConfigurationManager.getInstance().getTraySections();
+		EList<TraySection> sections2 = sections.getSections();
+		this.traySections = new ArrayList<AbstractTraySection>();
+		for (TraySection traySection : sections2) {
+			Section createSection = this.toolkit.createSection(parent, SWT.NO_FOCUS);
+			this.toolkit.createCompositeSeparator(createSection);
+			createSection.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,false));
+			Composite composite = this.toolkit.createComposite(createSection,SWT.NO_FOCUS);
+			createSection.setClient(composite);
+			AbstractTraySection implementation = traySection.getImplementation();
+			implementation.init(this.toolkit, traySection.getName(), traySection.getImage());
+			createSection.setText(implementation.getTitle());
+			implementation.createDetailsPart(composite);
+			this.traySections.add(implementation);
+
+		}
+
 	}
 
 	@Override
@@ -91,6 +125,14 @@ public class DesktopWindow extends AbstractNotificationPopup {
 			return false;
 		}
 		return shell.getBounds().contains(this.display.getCursorLocation());
+	}
+
+	@Override
+	public boolean close() {
+		for (AbstractTraySection traySection : this.traySections) {
+			traySection.dispose();
+		}
+		return super.close();
 	}
 
 	@Override
@@ -130,13 +172,27 @@ public class DesktopWindow extends AbstractNotificationPopup {
 
 	@Override
 	public int open() {
-
 		return super.open();
+
+	}
+
+	@Override
+	protected void setLocation(Shell shell2) {
+		shell2.setLocation(PreferenceConverter.getPoint(
+				UIPlugin.getDefault().getPreferenceStore(), UIPreferenceInitializer.DESKTOP_LOCATION));
 	}
 
 	@Override
 	public void setBlockOnOpen(boolean shouldBlock) {
 		super.setBlockOnOpen(shouldBlock);
+	}
+
+	@Override
+	protected void saveLocation(Shell shell2) {
+		PreferenceConverter.setValue(
+				UIPlugin.getDefault().getPreferenceStore(),
+				UIPreferenceInitializer.DESKTOP_LOCATION,
+				shell2.getLocation());
 	}
 
 }

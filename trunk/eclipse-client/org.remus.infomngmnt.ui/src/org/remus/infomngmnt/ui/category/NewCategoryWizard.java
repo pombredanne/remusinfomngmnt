@@ -20,8 +20,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.ui.UIUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

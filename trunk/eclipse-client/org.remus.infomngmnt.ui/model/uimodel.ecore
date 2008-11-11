@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="uimodel"
+    nsURI="http://remus-software.org/uimodel" nsPrefix="uimodel">
+  <eClassifiers xsi:type="ecore:EClass" name="TraySection">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="image" eType="#//Image"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="#//AbstractTraySection"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Image" instanceClassName="org.eclipse.swt.graphics.Image"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="AbstractTraySection" instanceClassName="org.remus.infomngmnt.ui.extension.AbstractTraySection"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TraySectionCollection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sections" upperBound="-1"
+        eType="#//TraySection" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

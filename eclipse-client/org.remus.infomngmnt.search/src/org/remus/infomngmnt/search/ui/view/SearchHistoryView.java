@@ -153,6 +153,7 @@ public class SearchHistoryView extends AbstractScrolledTitledView {
 
 			section.setClient(client);
 			final SectionPart spart = new SectionPart(section);
+
 			this.managedForm.addPart(spart);
 			this.viewer = new TableViewer(t);
 			this.viewer.setContentProvider(ocp);

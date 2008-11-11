@@ -106,5 +106,14 @@
             class="org.remus.infomngmnt.search.startup.SearchStartup">
       </startup>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.common.ui.traySection">
+      <sectionBox
+            id="org.remus.infomngmnt.ui.searchBox"
+            multiple="false"
+            name="Search"
+            sectionControl="org.remus.infomngmnt.search.tray.SearchTray">
+      </sectionBox>
+   </extension>
 
 </plugin>

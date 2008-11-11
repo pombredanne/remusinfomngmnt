@@ -49,6 +49,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction importResourcesAction;
 	private IWorkbenchAction exportResourcesAction;
 	private IWorkbenchAction quitAction;
+	private IWorkbenchAction preferenceAction;
 
 	/**
 	 * Constructs a new action builder which contributes actions
@@ -100,6 +101,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		.create(window);
 		register(this.openWorkspaceAction);
 
+		this.preferenceAction = ActionFactory.PREFERENCES.create(window);
+		register(this.preferenceAction);
+
 		this.undoAction = ActionFactory.UNDO.create(window);
 		register(this.undoAction);
 
@@ -122,6 +126,15 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	protected void fillMenuBar(IMenuManager menuBar) {
 		menuBar.add(createFileMenu());
 		menuBar.add(createEditMenu());
+		menuBar.add(createExtraMenu());
+	}
+
+	private MenuManager createExtraMenu() {
+		MenuManager menu = new MenuManager("Extra", IWorkbenchActionConstants.M_WINDOW);
+		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		menu.add(new Separator());
+		menu.add(this.preferenceAction);
+		return menu;
 	}
 
 	/**
@@ -129,7 +142,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	 */
 	protected void fillTrayItem(IMenuManager trayItem) {
 		trayItem.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		trayItem.add(this.quitAction);
+		trayItem.add(getAction(ActionFactory.QUIT.getId()));
 	}
 
 	/**

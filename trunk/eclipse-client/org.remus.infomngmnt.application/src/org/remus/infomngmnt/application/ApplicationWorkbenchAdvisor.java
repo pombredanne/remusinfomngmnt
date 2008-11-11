@@ -63,7 +63,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
 
-import org.remus.infomngmnt.ui.UIUtil;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.ui.perspective.Perspective;
 
 

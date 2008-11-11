@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 import org.remus.infomngmnt.ui.extension.IEditPage;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
@@ -64,7 +65,6 @@ public class EditPage implements IEditPage {
 
 
 	public AbstractInformationFormPage getEditPage() {
-
 		try {
 			return (AbstractInformationFormPage) this.configurationElement
 			.createExecutableExtension(UIExtensionManager.EDIT_PAGE_ATT);

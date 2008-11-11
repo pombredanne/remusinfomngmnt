@@ -14,6 +14,8 @@ package org.remus.infomngmnt.ui.preference;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.swt.graphics.Point;
 
 import org.remus.infomngmnt.ui.UIPlugin;
 
@@ -26,6 +28,7 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 	public static final String TRAY_ON_MINIMIZE = "TRAY_ON_MINIMZIE"; //$NON-NLS-1$
 	public static final String TRAY_ON_CLOSE = "TRAY_ON_CLOSE"; //$NON-NLS-1$
 	public static final String TRAY_ON_START = "TRAY_ON_START"; //$NON-NLS-1$
+	public static final String DESKTOP_LOCATION = "DESKTOP_LOCATION"; //$NON-NLS-1$
 	/**
 	 * 
 	 */
@@ -41,7 +44,7 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 		this.store.setDefault(TRAY_ON_MINIMIZE, true);
 		this.store.setDefault(TRAY_ON_CLOSE, false);
 		this.store.setDefault(TRAY_ON_START, false);
-
+		PreferenceConverter.setDefault(this.store, DESKTOP_LOCATION, new Point(10000,10000));
 	}
 
 }

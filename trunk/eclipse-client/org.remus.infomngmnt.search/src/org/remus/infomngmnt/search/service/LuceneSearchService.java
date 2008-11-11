@@ -71,6 +71,8 @@ public class LuceneSearchService {
 
 	private static LuceneSearchService INSTANCE;
 
+	public static Object JOB_FAMILY = new Object();
+
 	public static final String SEARCHINDEX_ITEM_ID = "document_id"; //$NON-NLS-1$
 	public static final String SEARCHINDEX_INFOTYPE_ID = "document_infotype_id"; //$NON-NLS-1$
 	public static final String SEARCHINDEX_KEYWORDS = "document_keywords"; //$NON-NLS-1$
@@ -347,6 +349,11 @@ public class LuceneSearchService {
 			this.currentSearch = currentSearch;
 			this.openEditor = openEditor;
 			this.saveAsFile = saveAsFile;
+		}
+
+		@Override
+		public boolean belongsTo(Object family) {
+			return JOB_FAMILY == family;
 		}
 
 		@Override

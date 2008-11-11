@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ui Plug-in
-Bundle-SymbolicName: org.remus.infomngmnt.common.ui
+Bundle-SymbolicName: org.remus.infomngmnt.common.ui;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.remus.infomngmnt.common.ui.Activator
 Bundle-Vendor: Remus Software
@@ -20,6 +20,8 @@ Export-Package: org.eclipse.nebula.widgets.calendarcombo,
  org.remus.infomngmnt.common.ui,
  org.remus.infomngmnt.common.ui.databinding,
  org.remus.infomngmnt.common.ui.editor,
+ org.remus.infomngmnt.common.ui.extension,
  org.remus.infomngmnt.common.ui.image,
  org.remus.infomngmnt.common.ui.swt,
- org.remus.infomngmnt.common.ui.view
+ org.remus.infomngmnt.common.ui.view,
+ org.remus.infomngmt.common.ui.uimodel

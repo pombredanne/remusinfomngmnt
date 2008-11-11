@@ -38,7 +38,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -114,6 +116,27 @@ public abstract class AbstractNotificationPopup extends Window {
 			return Status.OK_STATUS;
 		}
 	};
+
+	private final Listener fadeInListener = new Listener() {
+
+		public void handleEvent(Event event) {
+			if (isMouseOver(getShell())) {
+				AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(AbstractNotificationPopup.this.shell, new IFadeListener() {
+					public void faded(Shell shell, int alpha) {
+						if (shell.isDisposed()) {
+							return;
+						}
+
+						if (alpha == 255) {
+							scheduleAutoClose();
+						}
+					}
+				});
+			}
+
+		}
+	};
+
 
 	private final boolean respectDisplayBounds = true;
 
@@ -248,6 +271,7 @@ public abstract class AbstractNotificationPopup extends Window {
 				if (AbstractNotificationPopup.this.moveMode) {
 					Point cursorLocation = AbstractNotificationPopup.this.display.getCursorLocation();
 					getShell().setLocation(cursorLocation.x - AbstractNotificationPopup.this.xOffset -20, cursorLocation.y - AbstractNotificationPopup.this.yOffset -5);
+					saveLocation(getShell());
 				}
 
 			}
@@ -275,6 +299,11 @@ public abstract class AbstractNotificationPopup extends Window {
 			}
 
 		});
+	}
+
+	protected void saveLocation(Shell shell2) {
+		// does nothing by default
+
 	}
 
 	private void initResources() {
@@ -358,6 +387,7 @@ public abstract class AbstractNotificationPopup extends Window {
 		}
 
 		constrainShellSize();
+		setLocation(this.shell);
 		this.shell.setLocation(fixupDisplayBounds(this.shell.getSize(), this.shell.getLocation()));
 
 		if (isFadingEnabled()) {
@@ -381,8 +411,13 @@ public abstract class AbstractNotificationPopup extends Window {
 		} else {
 			scheduleAutoClose();
 		}
-
+		this.display.addFilter(SWT.MouseMove, this.fadeInListener);
 		return Window.OK;
+	}
+
+	protected void setLocation(Shell shell2) {
+		// nothing by default.
+
 	}
 
 	protected void scheduleAutoClose() {
@@ -396,26 +431,6 @@ public abstract class AbstractNotificationPopup extends Window {
 		((GridLayout) parent.getLayout()).marginWidth = 1;
 		((GridLayout) parent.getLayout()).marginHeight = 1;
 
-		getShell().addMouseMoveListener(new MouseMoveListener() {
-
-			public void mouseMove(MouseEvent e) {
-				if (isMouseOver(getShell())) {
-					AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(AbstractNotificationPopup.this.shell, new IFadeListener() {
-						public void faded(Shell shell, int alpha) {
-							if (shell.isDisposed()) {
-								return;
-							}
-
-							if (alpha == 255) {
-								scheduleAutoClose();
-							}
-						}
-					});
-				}
-
-			}
-
-		});
 
 
 		/* Outer Composite holding the controls */
@@ -627,6 +642,7 @@ public abstract class AbstractNotificationPopup extends Window {
 
 	@Override
 	public boolean close() {
+		this.display.removeFilter(SWT.MouseMove, this.fadeInListener);
 		this.resources.dispose();
 		if (this.lastUsedRegion != null) {
 			this.lastUsedRegion.dispose();
@@ -645,7 +661,7 @@ public abstract class AbstractNotificationPopup extends Window {
 		this.delayClose = delayClose;
 	}
 
-	private Point fixupDisplayBounds(Point tipSize, Point location) {
+	protected Point fixupDisplayBounds(Point tipSize, Point location) {
 		if (this.respectDisplayBounds || this.respectMonitorBounds) {
 			Rectangle bounds;
 			Point rightBounds = new Point(tipSize.x + location.x, tipSize.y + location.y);

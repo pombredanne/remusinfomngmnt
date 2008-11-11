@@ -78,8 +78,8 @@ import org.eclipse.update.configurator.IPlatformConfiguration;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.UIUtil;
 import org.remus.infomngmnt.ui.desktop.DesktopWindow;
 import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
 
@@ -188,7 +188,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 				/* shutdown the normal way */
 				else {
-					onClose();
+					res[0] = onClose();
 				}
 			}
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            icon="icons/link.png"
+            presentation="org.remus.infomngmnt.link.LinkRepresentation"
+            type="LINK">
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.link.ui.EditLinkPage"
+            icon="icons/link_edit.png"
+            id="org.remus.infomngmnt.link.editPage"
+            label="Edit Link"
+            type="LINK">
+      </editPage>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="org.remus.infomngmnt.link.ui.NewLinkWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/link_new.png"
+            id="org.remus.infomngmnt.link.newLinkWizard"
+            name="Link">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>

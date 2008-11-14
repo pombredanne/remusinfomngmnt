@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.search.service;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +52,8 @@ import org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
 import org.remus.infomngmnt.search.save.SavedSearchesHandler;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
@@ -62,6 +65,9 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopFieldDocs;
+import org.apache.lucene.search.highlight.Highlighter;
+import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 
 
 /**
@@ -372,10 +378,13 @@ public class LuceneSearchService {
 				try {
 					TopFieldDocs search = acquireIndexSearcher(project).search(
 							queryStringFromSearchQuery,null,getSearchService().getMaxResults(),new Sort());
+					Highlighter highlighter = new Highlighter(
+							new SimpleHTMLFormatter(),
+							new QueryScorer(queryStringFromSearchQuery));
 					final ScoreDoc[] scoreDocs = search.scoreDocs;
 					for (ScoreDoc scoreDoc : scoreDocs) {
 						Document doc = acquireIndexSearcher(project).doc(scoreDoc.doc);
-						this.currentSearch.getResult().add(createSearchResult(doc));
+						this.currentSearch.getResult().add(createSearchResult(doc, highlighter));
 					}
 				} catch (Exception e) {
 					// do nothign...we continue..
@@ -409,11 +418,26 @@ public class LuceneSearchService {
 
 	}
 
-	public SearchResult createSearchResult(Document doc) {
+	public SearchResult createSearchResult(Document doc, Highlighter highlighter) {
 		SearchResult newSearchResult = SearchFactory.eINSTANCE.createSearchResult();
 		newSearchResult.setInfoId(doc.getField(SEARCHINDEX_ITEM_ID).stringValue());
 		newSearchResult.setInfoType(doc.getField(SEARCHINDEX_INFOTYPE_ID).stringValue());
-		newSearchResult.setText(doc.getField(SEARCHINDEX_CONTENT).stringValue());
+		String text = doc.get(SEARCHINDEX_CONTENT);
+		TokenStream tokenStream = getSearchService().getAnalyser().tokenStream(SEARCHINDEX_CONTENT, new StringReader(text));
+		try {
+			String bestFragments = highlighter.getBestFragments(tokenStream,text, 2, "...");
+			if (bestFragments.trim().length() != 0) {
+				newSearchResult.setText(bestFragments);
+			} else {
+				if (text.length() > 200) {
+					text = StringUtils.left(text, 200) + "...";
+				}
+				newSearchResult.setText(text);
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		newSearchResult.setTitle(doc.getField(SEARCHINDEX_LABEL).stringValue());
 		newSearchResult.setKeywords(doc.getField(SEARCHINDEX_KEYWORDS).stringValue());
 		newSearchResult.setPath(ResourcesPlugin.getWorkspace().getRoot().getProject(doc.getField(SEARCHINDEX_PROJECT).stringValue()).getFile(

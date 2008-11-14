@@ -81,4 +81,23 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keywords" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NewElementRules">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="infoTypeRules" upperBound="-1"
+        eType="#//InfoTypeElementRule"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InfoTypeElementRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="infoType" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transfer" upperBound="-1"
+        eType="#//TransferType" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TransferType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
+        eType="#//Rule"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//Rule" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -38,15 +38,15 @@ import org.remus.infomngmnt.core.model.StatusCreator;
  */
 public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 
-	private Text descriptionText;
-	private Text keywordsText;
-	private Text nameText;
+	protected Text descriptionText;
+	protected Text keywordsText;
+	protected Text nameText;
 	private Text parentCategoryText;
 	private Category category;
 	private Button browserButton;
 	private String categoryString;
-	private InformationUnit unit;
-	private final EMFDataBindingContext ctx;
+	protected InformationUnit unit;
+	protected final EMFDataBindingContext ctx;
 
 
 	public GeneralPage(InformationUnitListItem selection) {
@@ -67,6 +67,52 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
 
+		doCreateParentElementGroup(container);
+		doCreateNameElements(container);
+		doCreatePropertiesGroup(container);
+		initDatabinding();
+		presetValues();
+		setPageComplete(false);
+		setControl(container);
+	}
+
+	protected void doCreateNameElements(Composite container) {
+		final Label nameLabel = new Label(container, SWT.NONE);
+		nameLabel.setText("Name");
+
+		this.nameText = new Text(container, SWT.BORDER);
+		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.nameText.setLayoutData(gd_nameText);
+
+	}
+	protected void doCreatePropertiesGroup(Composite container) {
+		final Group propertiesGroup = new Group(container, SWT.NONE);
+		propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+		propertiesGroup.setText("Properties");
+		final GridLayout gridLayout_1 = new GridLayout();
+		gridLayout_1.numColumns = 2;
+		propertiesGroup.setLayout(gridLayout_1);
+
+
+
+
+		final Label keywordsLabel = new Label(propertiesGroup, SWT.NONE);
+		keywordsLabel.setText("Keywords");
+
+		this.keywordsText = new Text(propertiesGroup, SWT.BORDER);
+		final GridData gd_keywordsText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.keywordsText.setLayoutData(gd_keywordsText);
+
+
+		final Label descriptionLabel = new Label(propertiesGroup, SWT.NONE);
+		descriptionLabel.setText("Description");
+
+		this.descriptionText = new Text(propertiesGroup, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, true);
+		this.descriptionText.setLayoutData(gd_descriptionText);
+
+	}
+	protected void doCreateParentElementGroup(Composite container) {
 
 		final Group parentElementGroup = new Group(container, SWT.NONE);
 		parentElementGroup.setText("Parent Element");
@@ -112,49 +158,8 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 			}
 		});
 
-
-
-		final Group propertiesGroup = new Group(container, SWT.NONE);
-		propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
-		propertiesGroup.setText("Properties");
-		final GridLayout gridLayout_1 = new GridLayout();
-		gridLayout_1.numColumns = 2;
-		propertiesGroup.setLayout(gridLayout_1);
-
-		final Label nameLabel = new Label(propertiesGroup, SWT.NONE);
-		nameLabel.setText("Name");
-
-		this.nameText = new Text(propertiesGroup, SWT.BORDER);
-		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		this.nameText.setLayoutData(gd_nameText);
-		this.nameText.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(Event event) {
-				validatePage();
-			}
-		});
-
-
-		final Label keywordsLabel = new Label(propertiesGroup, SWT.NONE);
-		keywordsLabel.setText("Keywords");
-
-		this.keywordsText = new Text(propertiesGroup, SWT.BORDER);
-		final GridData gd_keywordsText = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		this.keywordsText.setLayoutData(gd_keywordsText);
-
-
-		final Label descriptionLabel = new Label(propertiesGroup, SWT.NONE);
-		descriptionLabel.setText("Description");
-
-		this.descriptionText = new Text(propertiesGroup, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
-		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, true);
-		this.descriptionText.setLayoutData(gd_descriptionText);
-		initDatabinding();
-		presetValues();
-		setPageComplete(false);
-		setControl(container);
 	}
-
-	void validatePage() {
+	protected void validatePage() {
 
 		this.categoryString = this.parentCategoryText.getText();
 		IStatus categoryPathStringValid = CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText());
@@ -175,7 +180,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 
 	}
 
-	private void presetValues() {
+	protected void presetValues() {
 		if (this.category != null) {
 			this.parentCategoryText.setText(CategoryUtil.categoryToString(this.category));
 		}
@@ -195,7 +200,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 			this.unit = unit;
 		}
 	}
-	private void initDatabinding() {
+	protected void initDatabinding() {
 		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
 		IObservableValue emfName = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
 		this.ctx.bindValue(swtName, emfName, new UpdateValueStrategy() {

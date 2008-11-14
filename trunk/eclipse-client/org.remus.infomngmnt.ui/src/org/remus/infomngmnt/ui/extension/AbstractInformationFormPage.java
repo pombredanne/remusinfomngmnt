@@ -21,8 +21,16 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.editor.FormPage;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Section;
+
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 
@@ -40,6 +48,8 @@ public abstract class AbstractInformationFormPage extends FormPage {
 	private boolean dirty = false;
 	protected AdapterFactoryEditingDomain editingDomain;
 	protected EMFDataBindingContext dataBindingContext;
+	private Text keyWordText;
+	private Text descriptionText;
 
 	@Override
 	public void setPartName(String partName) {
@@ -73,6 +83,35 @@ public abstract class AbstractInformationFormPage extends FormPage {
 		IObservableValue mObs = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), attribute);
 		ISWTObservableValue uObs = SWTObservables.observeDelayedValue(100, SWTObservables.observeText(control, SWT.Modify));
 		this.dataBindingContext.bindValue(uObs, mObs,null,null);
+	}
+
+	protected void doCreateSemanticSection(Composite parent, FormToolkit toolkit) {
+		final Section semanticsSection = toolkit.createSection(parent,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		semanticsSection.setLayoutData(gd_semanticsSection);
+		semanticsSection.setText("Semantics");
+
+		final Composite composite_2 = toolkit.createComposite(semanticsSection, SWT.NONE);
+		final GridLayout gridLayout_1 = new GridLayout();
+		gridLayout_1.numColumns = 2;
+		composite_2.setLayout(gridLayout_1);
+		toolkit.paintBordersFor(composite_2);
+		semanticsSection.setClient(composite_2);
+
+		toolkit.createLabel(composite_2, "Keywords:", SWT.NONE);
+
+		this.keyWordText = toolkit.createText(composite_2, null, SWT.NONE);
+		final GridData gd_keyWordText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.keyWordText.setLayoutData(gd_keyWordText);
+
+		toolkit.createLabel(composite_2, "Description:", SWT.NONE);
+
+		this.descriptionText = toolkit.createText(composite_2, null, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gd_descriptionText.heightHint = 70;
+		this.descriptionText.setLayoutData(gd_descriptionText);
+
 	}
 
 	protected InformationUnit getModelObject() {

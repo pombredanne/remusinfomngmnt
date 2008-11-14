@@ -22,6 +22,8 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchResult;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 public class SearchResultPage extends FormPage {
 
 
@@ -96,7 +98,7 @@ public class SearchResultPage extends FormPage {
 		.append(result.getTitle())
 		.append("</a>")
 		.append("</p><p>")
-		.append(result.getText())
+		.append(StringEscapeUtils.escapeXml(result.getText()))
 		.append("</p></form>");
 		return sb.toString();
 	}

@@ -35,6 +35,7 @@ import org.remus.infomngmt.common.ui.uimodel.UIModelPackage;
 public class TrayConfigurationManager {
 
 	public static final String SEARCH_BOX_ID = "org.remus.infomngmnt.ui.searchBox"; //$NON-NLS-1$
+	public static final String DROP_BOX_ID = "org.remus.infomngmnt.ui.dropBox"; //$NON-NLS-1$
 
 	public static final String PATH_TO_TRAY_CONFIG_FILE = "tray/trayconfig.xml"; //$NON-NLS-1$
 
@@ -85,6 +86,13 @@ public class TrayConfigurationManager {
 		searchTraySection.setImplementation(sectionDefinitionById.getImplementation());
 		searchTraySection.setName(sectionDefinitionById.getLabel());
 		returnValue.getSections().add(searchTraySection);
+		// Drop-Box
+		ITraySectionDefinition dropBoxDefinition = TraySectionManager.getInstance().getSectionDefinitionById(DROP_BOX_ID);
+		TraySection dropTraySection = UIModelFactory.eINSTANCE.createTraySection();
+		dropTraySection.setImage(dropBoxDefinition.getImage());
+		dropTraySection.setImplementation(dropBoxDefinition.getImplementation());
+		dropTraySection.setName(dropBoxDefinition.getLabel());
+		returnValue.getSections().add(dropTraySection);
 
 		return returnValue;
 	}

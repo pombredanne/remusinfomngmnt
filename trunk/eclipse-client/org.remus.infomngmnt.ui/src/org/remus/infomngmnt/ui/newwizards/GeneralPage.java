@@ -1,8 +1,14 @@
 package org.remus.infomngmnt.ui.newwizards;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -19,6 +25,8 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
@@ -28,39 +36,26 @@ import org.remus.infomngmnt.core.model.StatusCreator;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class GeneralPage extends WizardPage {
+public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 
 	private Text descriptionText;
 	private Text keywordsText;
 	private Text nameText;
-	private Text parentInformationUnitText;
 	private Text parentCategoryText;
-	private InformationUnitListItem selection;
 	private Category category;
 	private Button browserButton;
-	private Button browseButton;
-	private Button categoryButton;
-	private Button informationunitButton;
 	private String categoryString;
-	private String nameString;
-	private String keywordString;
-	private String descriptionString;
-	/**
-	 * Create the wizard
-	 */
-	public GeneralPage() {
-		super("wizardPage");
-		setTitle("Wizard Page title");
-		setDescription("Wizard Page description");
-	}
+	private InformationUnit unit;
+	private final EMFDataBindingContext ctx;
+
 
 	public GeneralPage(InformationUnitListItem selection) {
-		super("wizardPage");
-		this.selection = selection;
+		this((Category) selection.eContainer());
 	}
 	public GeneralPage(Category category) {
 		super("wizardPage");
 		this.category = category;
+		this.ctx = new EMFDataBindingContext();
 
 	}
 
@@ -80,14 +75,7 @@ public class GeneralPage extends WizardPage {
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
 		parentElementGroup.setLayout(gridLayout);
-		this.categoryButton = new Button(parentElementGroup, SWT.RADIO);
-		this.categoryButton.setText("Category");
-		this.categoryButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				GeneralPage.this.parentCategoryText.setEnabled(((Button) event.widget).getSelection());
-				GeneralPage.this.browserButton.setEnabled(((Button) event.widget).getSelection());
-			}
-		});
+
 
 		this.parentCategoryText = new Text(parentElementGroup, SWT.BORDER);
 		final GridData gd_parentCategoryText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -124,20 +112,7 @@ public class GeneralPage extends WizardPage {
 			}
 		});
 
-		this.informationunitButton = new Button(parentElementGroup, SWT.RADIO);
-		this.informationunitButton.setText("Information-Unit");
-		this.informationunitButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				GeneralPage.this.parentInformationUnitText.setEnabled(((Button) event.widget).getSelection());
-				GeneralPage.this.browseButton.setEnabled(((Button) event.widget).getSelection());
-			}
-		});
-		this.parentInformationUnitText = new Text(parentElementGroup, SWT.BORDER);
-		final GridData gd_parentInformationUnitText = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		this.parentInformationUnitText.setLayoutData(gd_parentInformationUnitText);
 
-		this.browseButton = new Button(parentElementGroup, SWT.NONE);
-		this.browseButton.setText("Br&owse...");
 
 		final Group propertiesGroup = new Group(container, SWT.NONE);
 		propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
@@ -173,30 +148,28 @@ public class GeneralPage extends WizardPage {
 		this.descriptionText = new Text(propertiesGroup, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
 		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, true);
 		this.descriptionText.setLayoutData(gd_descriptionText);
+		initDatabinding();
 		presetValues();
 		setPageComplete(false);
 		setControl(container);
 	}
 
 	void validatePage() {
-		if(this.categoryButton.getSelection()) {
-			this.categoryString = this.parentCategoryText.getText();
-			IStatus categoryPathStringValid = CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText());
-			if (categoryPathStringValid.getSeverity() != IStatus.OK) {
-				setErrorMessage(categoryPathStringValid.getMessage());
-				setPageComplete(false);
-				return;
-			}
+
+		this.categoryString = this.parentCategoryText.getText();
+		IStatus categoryPathStringValid = CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText());
+		if (categoryPathStringValid.getSeverity() != IStatus.OK) {
+			setErrorMessage(categoryPathStringValid.getMessage());
+			setPageComplete(false);
+			return;
 		}
+
 		IStatus categoryNameValid = CategoryUtil.isCategoryNameValid(this.nameText.getText());
-		this.nameString = this.nameText.getText();
 		if (categoryNameValid.getSeverity() != IStatus.OK) {
 			setErrorMessage(categoryNameValid.getMessage());
 			setPageComplete(false);
 			return;
 		}
-		this.descriptionString = this.descriptionText.getText();
-		this.keywordString = this.keywordsText.getText();
 		setErrorMessage(null);
 		setPageComplete(true);
 
@@ -204,30 +177,39 @@ public class GeneralPage extends WizardPage {
 
 	private void presetValues() {
 		if (this.category != null) {
-			this.categoryButton.setSelection(true);
 			this.parentCategoryText.setText(CategoryUtil.categoryToString(this.category));
-		} else if (this.selection != null) {
-			this.informationunitButton.setSelection(true);
-		} else {
-			this.categoryButton.setSelection(true);
 		}
-
 	}
 
 	public String getCategoryString() {
 		return this.categoryString;
 	}
 
-	public String getNameString() {
-		return this.nameString;
+	public InformationUnit getInformationUnit() {
+		return null;
 	}
 
-	public String getKeywordString() {
-		return this.keywordString;
+	public void setInformationUnit(InformationUnit unit) {
+		if (this.unit != unit) {
+			this.ctx.dispose();
+			this.unit = unit;
+		}
 	}
-
-	public String getDescriptionString() {
-		return this.descriptionString;
+	private void initDatabinding() {
+		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
+		IObservableValue emfName = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
+		this.ctx.bindValue(swtName, emfName, new UpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				validatePage();
+				return super.convert(value);
+			}
+		}, null);
+		ISWTObservableValue swtKeyWords = SWTObservables.observeText(this.keywordsText, SWT.Modify);
+		IObservableValue emfKeywords = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS);
+		this.ctx.bindValue(swtKeyWords, emfKeywords, null, null);
+		ISWTObservableValue swtDescription = SWTObservables.observeText(this.descriptionText, SWT.Modify);
+		IObservableValue emfDescription = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
+		this.ctx.bindValue(swtDescription, emfDescription, null, null);
 	}
-
 }

@@ -15,7 +15,9 @@ package org.remus.infomngmnt.ui.newwizards;
 import java.util.Date;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -34,11 +36,13 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 
 	protected GeneralPage page1;
 
+	protected InformationUnit newElement;
+
 	/**
 	 * 
 	 */
 	public NewInfoObjectWizard() {
-		// TODO Auto-generated constructor stub
+		this.newElement = createNewInformationUnit();
 	}
 
 	@Override
@@ -54,9 +58,6 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 	protected InformationUnit createNewInformationUnit() {
 		InformationUnit newInfoObject = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		newInfoObject.setCreationDate(new Date());
-		newInfoObject.setLabel(this.page1.getNameString());
-		newInfoObject.setDescription(this.page1.getDescriptionString());
-		newInfoObject.setKeywords(this.page1.getKeywordString());
 		return newInfoObject;
 	}
 
@@ -70,10 +71,25 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public boolean performFinish() {
-		InformationUnit createNewInformationUnit = createNewInformationUnit();
 		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
-		.execute(CommandFactory.CREATE_INFOTYPE(createNewInformationUnit, findCategory()));
+		.execute(CommandFactory.CREATE_INFOTYPE(this.newElement, findCategory()));
 		return true;
+	}
+	@Override
+	public IWizardPage getStartingPage() {
+		IWizardPage startingPage = super.getStartingPage();
+		if (startingPage instanceof IInfoObjectSetter) {
+			((IInfoObjectSetter) startingPage).setInformationUnit(this.newElement);
+		}
+		return startingPage;
+	}
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		IWizardPage nextPage = super.getNextPage(page);
+		if (nextPage instanceof IInfoObjectSetter) {
+			((IInfoObjectSetter) nextPage).setInformationUnit(this.newElement);
+		}
+		return nextPage;
 	}
 
 	/* (non-Javadoc)
@@ -85,9 +101,14 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 			this.page1 = new GeneralPage((Category) firstElement);
 		} else if (firstElement instanceof InformationUnitListItem) {
 			this.page1 = new GeneralPage((InformationUnitListItem) firstElement);
-		} else  {
-			this.page1 = new GeneralPage();
+		} else {
+			this.page1 = new GeneralPage((Category)null);
 		}
 
+	}
+
+	@Override
+	public void createPageControls(Composite pageContainer) {
+		// do nothing
 	}
 }

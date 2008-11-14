@@ -16,10 +16,9 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
-import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.forms.widgets.Section;
+
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.jslib.TemplateLocation;
 
@@ -84,21 +83,23 @@ public class ViewPage extends FormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR);
-		section_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
-		section_1.setText("Data");
+		//		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR);
+		//		section_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+		//		section_1.setText("Data");
 
-		this.browser = new Browser(section_1, SWT.NONE);
+		this.browser = new Browser(form.getBody(), SWT.NONE);
+		this.browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		toolkit.paintBordersFor(this.browser);
-		section_1.setClient(this.browser);
 
-		final Section section = toolkit.createSection(body, ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
-		section.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section.setText("Actions");
+		//		section_1.setClient(this.browser);
 
-		final Composite composite = toolkit.createComposite(section, SWT.NONE);
-		toolkit.paintBordersFor(composite);
-		section.setClient(composite);
+		//		final Section section = toolkit.createSection(body, ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
+		//		section.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		//		section.setText("Actions");
+		//
+		//		final Composite composite = toolkit.createComposite(section, SWT.NONE);
+		//		toolkit.paintBordersFor(composite);
+		//		section.setClient(composite);
 
 		if (this.binFile.exists()) {
 			this.browser.setUrl(EditorUtil.computeBinFileLocation((IFileEditorInput) getEditorInput()));

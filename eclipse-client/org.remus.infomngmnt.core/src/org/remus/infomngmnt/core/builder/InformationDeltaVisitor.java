@@ -73,7 +73,10 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 						IFileState[] history = ((IFile) resourceDelta.getResource()).getHistory(this.monitor);
 						if (history.length > 0) {
 							informationRepresentation.setPreviousVersion(history[0]);
+						} else {
+							informationRepresentation.setPreviousVersion(null);
 						}
+						informationRepresentation.handlePreBuild(this.monitor);
 						String handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
 						IFile writeContent = null;
 						try {

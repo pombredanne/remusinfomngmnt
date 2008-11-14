@@ -11,12 +11,22 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.extension;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFileState;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.compare.diff.metamodel.AttributeChange;
+import org.eclipse.emf.compare.diff.metamodel.DiffElement;
+import org.eclipse.emf.ecore.EAttribute;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.InformationUtil;
 
 
 /**
@@ -28,15 +38,23 @@ public abstract class AbstractInformationRepresentation {
 
 	private IFileState previousVersion;
 
+	private List<DiffElement> differences;
+
 	public AbstractInformationRepresentation() {
 		super();
+	}
+
+	public void handlePreBuild(IProgressMonitor monitor) {
+		// does nothing by default
 	}
 
 	/**
 	 * Executed after the serialization of the Info-Object. Useful
 	 * @param derivedFile
 	 */
-	public abstract void handlePostBuild(IFile derivedFile, IProgressMonitor monitor) throws CoreException;
+	public void handlePostBuild(IFile derivedFile, IProgressMonitor monitor) throws CoreException {
+		// does nothing by default.
+	}
 
 	public abstract String handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
 
@@ -52,6 +70,7 @@ public abstract class AbstractInformationRepresentation {
 
 	public final void setValue(final InformationUnit value) {
 		this.value = value;
+		unsetDifferences();
 	}
 
 	public IFileState getPreviousVersion() {
@@ -60,7 +79,33 @@ public abstract class AbstractInformationRepresentation {
 
 	public final void setPreviousVersion(IFileState previousVersion) {
 		this.previousVersion = previousVersion;
+		unsetDifferences();
 	}
+
+	private void unsetDifferences() {
+		this.differences = null;
+
+	}
+
+	protected IFile getFile() {
+		return ResourcesPlugin.getWorkspace().getRoot().getFile(
+				new Path(getValue().eResource().getURI().toPlatformString(true)));
+	}
+
+	protected List<DiffElement> getDifferences() {
+		if (getPreviousVersion() != null && this.differences == null) {
+			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromUri(
+					getPreviousVersion().getFullPath(), InfomngmntPackage.Literals.INFORMATION_UNIT, false);
+			this.differences = InformationUtil.computeDiffs(previousModel, getValue());
+		}
+		return this.differences;
+	}
+
+	protected boolean isChanged(EAttribute attribute) {
+		AttributeChange attributeChange = InformationUtil.getAttributeChange(this.differences, attribute);
+		return attributeChange != null;
+	}
+
 
 
 

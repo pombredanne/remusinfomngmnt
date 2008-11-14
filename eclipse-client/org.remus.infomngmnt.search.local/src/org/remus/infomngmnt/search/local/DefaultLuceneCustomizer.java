@@ -33,7 +33,7 @@ import org.remus.infomngmnt.search.service.ILuceneCustomizer;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
@@ -55,7 +55,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 	 * @see org.remus.infomngmnt.search.service.ILuceneCustomizer#getAnalyser()
 	 */
 	public Analyzer getAnalyser() {
-		return new StandardAnalyzer();
+		return new WhitespaceAnalyzer();
 	}
 
 	/* (non-Javadoc)
@@ -95,6 +95,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 			// no title will be added...
 		}
 		try {
+
 			Field contentField = new Field(
 					LuceneSearchService.SEARCHINDEX_CONTENT, checkNull(informationRepresentation.getBodyForIndexing(monitor)),Field.Store.YES, Field.Index.TOKENIZED);
 			contentField.setBoost(1.5f);

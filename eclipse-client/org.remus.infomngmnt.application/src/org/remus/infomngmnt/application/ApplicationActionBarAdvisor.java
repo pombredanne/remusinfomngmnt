@@ -50,6 +50,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction exportResourcesAction;
 	private IWorkbenchAction quitAction;
 	private IWorkbenchAction preferenceAction;
+	private IWorkbenchAction cleanAction;
 
 	/**
 	 * Constructs a new action builder which contributes actions
@@ -119,6 +120,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		this.quitAction = ActionFactory.QUIT.create(window);
 		register(this.quitAction);
 
+		this.cleanAction = IDEActionFactory.BUILD_CLEAN.create(window);
+		register(this.cleanAction);
+
 
 	}
 
@@ -133,6 +137,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		MenuManager menu = new MenuManager("Extra", IWorkbenchActionConstants.M_WINDOW);
 		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		menu.add(new Separator());
+		menu.add(this.cleanAction);
 		menu.add(this.preferenceAction);
 		return menu;
 	}

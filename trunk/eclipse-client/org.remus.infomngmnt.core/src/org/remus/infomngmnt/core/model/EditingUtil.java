@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.core.model;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -23,6 +24,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -35,6 +37,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.provider.InfomngmntItemProviderAdapterFactory;
@@ -71,6 +74,47 @@ public class EditingUtil {
 		this.editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put
 		(InfomngmntPackage.eNS_URI,
 				InfomngmntPackage.eINSTANCE);
+	}
+	/**
+	 * Returns a {@link Resource} object from the given uri
+	 * @param uri the uri
+	 * @param cache
+	 * @return the contents of the file
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends EObject> T getObjectFromFileUri(final URI uri, final EClass objectClas, final boolean cache) {
+		Resource resource = null;
+		ResourceSet resourceSet = null;
+		T returnValue;
+		File file = new File(uri.toFileString());
+		resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+				new XMLResourceFactoryImpl());
+		resourceSet.getPackageRegistry().put
+		(InfomngmntPackage.eNS_URI,
+				InfomngmntPackage.eINSTANCE);
+
+		if (file.exists()) {
+			try {
+				resource = resourceSet.getResource(uri, true);
+			} catch (final Exception e) {
+				resource = resourceSet.getResource(uri, false);
+			}
+			returnValue = (T) resource.getContents().get(0);
+		} else {
+			final EObject create = InfomngmntFactory.eINSTANCE.create(objectClas);
+			resource = resourceSet.createResource(uri);
+			resource.getContents().add(create);
+			try {
+				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			} catch (final IOException e) {
+				// FIXME What to do here?
+			}
+			returnValue = (T) create;
+		}
+		return returnValue;
+
 	}
 
 	/**

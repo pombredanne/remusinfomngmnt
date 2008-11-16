@@ -14,13 +14,22 @@ package org.remus.infomngmnt.core.builder;
 
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.osgi.util.NLS;
+
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.CorePlugin;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -53,6 +62,19 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 			if (!folder.exists()) {
 				folder.create(true, true, monitor);
 			}
+			IResource[] members = getProject().members();
+			monitor.beginTask(NLS.bind("Refreshing info-object on {0}", getProject().getName()), members.length);
+			for (IResource resource : members) {
+				if (resource.getType() == IResource.FILE
+						&& resource.getFileExtension().equals(ResourceUtil.FILE_EXTENSION)) {
+					InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile((IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
+					monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile.getLabel()));
+					IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(objectFromFile.getType());
+					this.visitor.setMonitor(monitor);
+					this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile)resource);
+					monitor.worked(1);
+				}
+			}
 			break;
 		default:
 			break;
@@ -72,6 +94,15 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 		} catch (CoreException e) {
 			InfomngmntEditPlugin.INSTANCE.log(e.getStatus());
 		}
+	}
+
+	@Override
+	protected void clean(IProgressMonitor monitor) throws CoreException {
+		IFolder folder = getProject().getFolder("bin");
+		if (folder.exists()) {
+			folder.delete(true, monitor);
+		}
+		super.clean(monitor);
 	}
 
 }

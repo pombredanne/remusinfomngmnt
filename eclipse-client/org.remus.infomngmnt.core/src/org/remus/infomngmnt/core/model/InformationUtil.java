@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.diff.metamodel.AttributeChange;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
+import org.eclipse.emf.compare.diff.metamodel.DiffGroup;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.compare.diff.service.DiffService;
 import org.eclipse.emf.compare.match.metamodel.MatchModel;
@@ -47,9 +48,10 @@ public class InformationUtil {
 	public static List<DiffElement> computeDiffs(InformationUnit obj1, InformationUnit obj2) {
 		// Matching model elements
 		try {
-			MatchModel match = MatchService.doMatch(obj1, obj2, Collections.<String, Object> emptyMap());
+			MatchModel match = MatchService.doMatch(obj1, obj2, Collections.<String, Object>  emptyMap());
 			// Computing differences
-			DiffModel diff = DiffService.doDiff(match, false);
+			DiffModel diff = DiffService.  doDiff(match, false);
+
 			// Merges all differences from model1 to model2
 			return new ArrayList<DiffElement>(diff.getOwnedElements());
 		} catch (InterruptedException e) {
@@ -64,6 +66,14 @@ public class InformationUtil {
 
 	public static AttributeChange getAttributeChange(List<DiffElement> elements, EAttribute attributeToCompare) {
 		for (DiffElement diffElement : elements) {
+			if (diffElement instanceof DiffGroup) {
+				EList<DiffElement> subDiffElements = diffElement.getSubDiffElements();
+				AttributeChange attributeChange = getAttributeChange(subDiffElements, attributeToCompare);
+				if (attributeChange != null) {
+					return attributeChange;
+				}
+
+			}
 			if (diffElement instanceof AttributeChange) {
 				EAttribute attribute = ((AttributeChange) diffElement).getAttribute();
 				if (attribute == attributeToCompare) {

@@ -13,6 +13,10 @@
 package org.remus.infomngmnt.core.builder;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFileState;
@@ -67,38 +71,76 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				case IResourceDelta.REPLACED:
 				case IResourceDelta.ADDED:
 				case IResourceDelta.CHANGED:
-					try {
-						AbstractInformationRepresentation informationRepresentation = infoTypeByType.getInformationRepresentation();
-						informationRepresentation.setValue(objectFromFile);
-						IFileState[] history = ((IFile) resourceDelta.getResource()).getHistory(this.monitor);
-						if (history.length > 0) {
-							informationRepresentation.setPreviousVersion(history[0]);
-						} else {
-							informationRepresentation.setPreviousVersion(null);
-						}
-						informationRepresentation.handlePreBuild(this.monitor);
-						String handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
-						IFile writeContent = null;
-						try {
-							writeContent = writeContent((IFile) resourceDelta.getResource(), handleHtmlGeneration, this.monitor);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						informationRepresentation.handlePostBuild(writeContent, this.monitor);
-
-					} catch (CoreException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta.getResource());
 					break;
-
 				case IResourceDelta.REMOVED:
 					break;
 				}
 			}
 			visitRecursively(resourceDelta);
 		}
+	}
+
+	void buildSingleInfoUnit(InformationUnit objectFromFile, IInfoType infoTypeByType, IFile resource) {
+		try {
+			File createTempFile = null;
+			AbstractInformationRepresentation informationRepresentation = infoTypeByType.getInformationRepresentation();
+			informationRepresentation.setValue(objectFromFile);
+			IFileState[] history = resource.getHistory(this.monitor);
+			if (history.length > 0) {
+				InputStream contents;
+				FileOutputStream fos = null;
+				contents = history[0].getContents();
+
+				try {
+					createTempFile = File.createTempFile(objectFromFile.getId(), ResourceUtil.FILE_EXTENSION);
+					fos = new FileOutputStream(createTempFile);
+					byte buf[]=new byte[1024];
+					int len;
+					while((len = contents.read(buf))>0)
+						fos.write(buf,0,len);
+
+				} catch (Exception e) {
+					informationRepresentation.setPreviousVersion(null);
+				} finally {
+					if (fos != null) {
+						try {
+							fos.close();
+						} catch (IOException e) {
+							// do nothing. we've done our best.
+						}
+					}
+					if (contents != null) {
+						try {
+							contents.close();
+						} catch (IOException e) {
+							// do nothing. we've done our best.
+						}
+					}
+				}
+				informationRepresentation.setPreviousVersion(createTempFile);
+			} else {
+				informationRepresentation.setPreviousVersion(null);
+			}
+			informationRepresentation.handlePreBuild(this.monitor);
+			String handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
+			IFile writeContent = null;
+			try {
+				writeContent = writeContent(resource, handleHtmlGeneration, this.monitor);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			informationRepresentation.handlePostBuild(writeContent, this.monitor);
+			if (createTempFile != null) {
+				createTempFile.delete();
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 	}
 
 	public void setMonitor(IProgressMonitor monitor) {

@@ -11,10 +11,10 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.extension;
 
+import java.io.File;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -36,7 +36,7 @@ public abstract class AbstractInformationRepresentation {
 
 	private InformationUnit value;
 
-	private IFileState previousVersion;
+	private File previousVersion;
 
 	private List<DiffElement> differences;
 
@@ -73,11 +73,11 @@ public abstract class AbstractInformationRepresentation {
 		unsetDifferences();
 	}
 
-	public IFileState getPreviousVersion() {
+	public File getPreviousVersion() {
 		return this.previousVersion;
 	}
 
-	public final void setPreviousVersion(IFileState previousVersion) {
+	public final void setPreviousVersion(File previousVersion) {
 		this.previousVersion = previousVersion;
 		unsetDifferences();
 	}
@@ -95,7 +95,7 @@ public abstract class AbstractInformationRepresentation {
 	protected List<DiffElement> getDifferences() {
 		if (getPreviousVersion() != null && this.differences == null) {
 			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromUri(
-					getPreviousVersion().getFullPath(), InfomngmntPackage.Literals.INFORMATION_UNIT, false);
+					new Path(this.previousVersion.getAbsolutePath()), InfomngmntPackage.Literals.INFORMATION_UNIT, false);
 			this.differences = InformationUtil.computeDiffs(previousModel, getValue());
 		}
 		return this.differences;

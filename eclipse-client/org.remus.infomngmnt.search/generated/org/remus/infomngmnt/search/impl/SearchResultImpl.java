@@ -14,14 +14,18 @@
  */
 package org.remus.infomngmnt.search.impl;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.SearchResult;
 
@@ -39,6 +43,7 @@ import org.remus.infomngmnt.search.SearchResult;
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getInfoType <em>Info Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getDate <em>Date</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getKeywords <em>Keywords</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchResultImpl#getHighlightAttributes <em>Highlight Attributes</em>}</li>
  * </ul>
  * </p>
  *
@@ -184,6 +189,16 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 	 * @ordered
 	 */
 	protected String keywords = KEYWORDS_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getHighlightAttributes() <em>Highlight Attributes</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHighlightAttributes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EAttribute> highlightAttributes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -356,6 +371,18 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<EAttribute> getHighlightAttributes() {
+		if (highlightAttributes == null) {
+			highlightAttributes = new EDataTypeUniqueEList<EAttribute>(EAttribute.class, this, SearchPackage.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES);
+		}
+		return highlightAttributes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -373,6 +400,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return getDate();
 			case SearchPackage.SEARCH_RESULT__KEYWORDS:
 				return getKeywords();
+			case SearchPackage.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES:
+				return getHighlightAttributes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -382,6 +411,7 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -405,6 +435,10 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return;
 			case SearchPackage.SEARCH_RESULT__KEYWORDS:
 				setKeywords((String)newValue);
+				return;
+			case SearchPackage.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES:
+				getHighlightAttributes().clear();
+				getHighlightAttributes().addAll((Collection<? extends EAttribute>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -439,6 +473,9 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 			case SearchPackage.SEARCH_RESULT__KEYWORDS:
 				setKeywords(KEYWORDS_EDEFAULT);
 				return;
+			case SearchPackage.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES:
+				getHighlightAttributes().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -465,6 +502,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 				return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
 			case SearchPackage.SEARCH_RESULT__KEYWORDS:
 				return KEYWORDS_EDEFAULT == null ? keywords != null : !KEYWORDS_EDEFAULT.equals(keywords);
+			case SearchPackage.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES:
+				return highlightAttributes != null && !highlightAttributes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -493,6 +532,8 @@ public class SearchResultImpl extends EObjectImpl implements SearchResult {
 		result.append(date);
 		result.append(", keywords: ");
 		result.append(keywords);
+		result.append(", highlightAttributes: ");
+		result.append(highlightAttributes);
 		result.append(')');
 		return result.toString();
 	}

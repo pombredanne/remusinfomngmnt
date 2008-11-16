@@ -15,6 +15,7 @@
       <genEnumLiterals ecoreEnumLiteral="search.ecore#//SearchScope/OPEN_EDITORS"/>
     </genEnums>
     <genDataTypes ecoreDataType="search.ecore#//Image"/>
+    <genDataTypes ecoreDataType="search.ecore#//EAttribute"/>
     <genClasses ecoreClass="search.ecore#//Search">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/searchString"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/dateStart"/>
@@ -32,6 +33,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/infoType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/date"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/keywords"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/highlightAttributes"/>
     </genClasses>
     <genClasses ecoreClass="search.ecore#//SavedSearches">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference search.ecore#//SavedSearches/searches"/>

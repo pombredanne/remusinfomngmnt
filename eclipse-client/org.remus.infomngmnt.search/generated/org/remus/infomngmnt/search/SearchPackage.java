@@ -225,13 +225,22 @@ public interface SearchPackage extends EPackage {
 	int SEARCH_RESULT__KEYWORDS = 6;
 
 	/**
+	 * The feature id for the '<em><b>Highlight Attributes</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES = 7;
+
+	/**
 	 * The number of structural features of the '<em>Result</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SEARCH_RESULT_FEATURE_COUNT = 7;
+	int SEARCH_RESULT_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
@@ -441,6 +450,17 @@ public interface SearchPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '<em>EAttribute</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecore.EAttribute
+	 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getEAttribute()
+	 * @generated
+	 */
+	int EATTRIBUTE = 9;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.Search <em>Search</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -613,6 +633,17 @@ public interface SearchPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSearchResult_Keywords();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.remus.infomngmnt.search.SearchResult#getHighlightAttributes <em>Highlight Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Highlight Attributes</em>'.
+	 * @see org.remus.infomngmnt.search.SearchResult#getHighlightAttributes()
+	 * @see #getSearchResult()
+	 * @generated
+	 */
+	EAttribute getSearchResult_HighlightAttributes();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.SavedSearches <em>Saved Searches</em>}'.
@@ -796,6 +827,17 @@ public interface SearchPackage extends EPackage {
 	EDataType getImage();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.emf.ecore.EAttribute <em>EAttribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>EAttribute</em>'.
+	 * @see org.eclipse.emf.ecore.EAttribute
+	 * @model instanceClass="org.eclipse.emf.ecore.EAttribute"
+	 * @generated
+	 */
+	EDataType getEAttribute();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -950,6 +992,14 @@ public interface SearchPackage extends EPackage {
 		EAttribute SEARCH_RESULT__KEYWORDS = eINSTANCE.getSearchResult_Keywords();
 
 		/**
+		 * The meta object literal for the '<em><b>Highlight Attributes</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES = eINSTANCE.getSearchResult_HighlightAttributes();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SavedSearchesImpl <em>Saved Searches</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1098,6 +1148,16 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType IMAGE = eINSTANCE.getImage();
+
+		/**
+		 * The meta object literal for the '<em>EAttribute</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecore.EAttribute
+		 * @see org.remus.infomngmnt.search.impl.SearchPackageImpl#getEAttribute()
+		 * @generated
+		 */
+		EDataType EATTRIBUTE = eINSTANCE.getEAttribute();
 
 	}
 

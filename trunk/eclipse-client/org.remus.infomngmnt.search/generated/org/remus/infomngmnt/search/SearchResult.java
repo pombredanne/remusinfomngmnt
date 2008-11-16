@@ -16,6 +16,8 @@ package org.remus.infomngmnt.search;
 
 import java.util.Date;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.ecore.EObject;
 
@@ -34,6 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.search.SearchResult#getInfoType <em>Info Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.SearchResult#getDate <em>Date</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.SearchResult#getKeywords <em>Keywords</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.SearchResult#getHighlightAttributes <em>Highlight Attributes</em>}</li>
  * </ul>
  * </p>
  *
@@ -223,5 +226,21 @@ public interface SearchResult extends EObject {
 	 * @generated
 	 */
 	void setKeywords(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Highlight Attributes</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EAttribute}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Highlight Attributes</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Highlight Attributes</em>' attribute list.
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearchResult_HighlightAttributes()
+	 * @model dataType="org.remus.infomngmnt.search.EAttribute"
+	 * @generated
+	 */
+	EList<EAttribute> getHighlightAttributes();
 
 } // SearchResult

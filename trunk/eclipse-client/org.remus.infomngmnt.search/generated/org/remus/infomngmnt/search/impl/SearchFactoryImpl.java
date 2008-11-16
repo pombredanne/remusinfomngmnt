@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmnt.search.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -101,6 +102,8 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 				return createSearchScopeFromString(eDataType, initialValue);
 			case SearchPackage.IMAGE:
 				return createImageFromString(eDataType, initialValue);
+			case SearchPackage.EATTRIBUTE:
+				return createEAttributeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -118,6 +121,8 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 				return convertSearchScopeToString(eDataType, instanceValue);
 			case SearchPackage.IMAGE:
 				return convertImageToString(eDataType, instanceValue);
+			case SearchPackage.EATTRIBUTE:
+				return convertEAttributeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -228,6 +233,24 @@ public class SearchFactoryImpl extends EFactoryImpl implements SearchFactory {
 	 * @generated
 	 */
 	public String convertImageToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute createEAttributeFromString(EDataType eDataType, String initialValue) {
+		return (EAttribute)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertEAttributeToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

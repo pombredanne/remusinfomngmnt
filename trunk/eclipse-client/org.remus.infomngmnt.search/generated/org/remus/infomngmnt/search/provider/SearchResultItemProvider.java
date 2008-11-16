@@ -77,6 +77,7 @@ IItemPropertySource {
 			addInfoTypePropertyDescriptor(object);
 			addDatePropertyDescriptor(object);
 			addKeywordsPropertyDescriptor(object);
+			addHighlightAttributesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -236,6 +237,28 @@ IItemPropertySource {
 	}
 
 	/**
+	 * This adds a property descriptor for the Highlight Attributes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addHighlightAttributesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SearchResult_highlightAttributes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SearchResult_highlightAttributes_feature", "_UI_SearchResult_type"),
+				 SearchPackage.Literals.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns SearchResult.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -279,6 +302,7 @@ IItemPropertySource {
 			case SearchPackage.SEARCH_RESULT__INFO_TYPE:
 			case SearchPackage.SEARCH_RESULT__DATE:
 			case SearchPackage.SEARCH_RESULT__KEYWORDS:
+			case SearchPackage.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

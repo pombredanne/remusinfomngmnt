@@ -98,7 +98,7 @@ public class SearchResultPage extends FormPage {
 		.append(result.getTitle())
 		.append("</a>")
 		.append("</p><p>")
-		.append(StringEscapeUtils.escapeXml(result.getText()))
+		.append(StringEscapeUtils.escapeXml(result.getText()).replaceAll("\\{highlight-start\\}", "<b>").replaceAll("\\{highlight-end\\}", "</b>"))
 		.append("</p></form>");
 		return sb.toString();
 	}

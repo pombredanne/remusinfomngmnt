@@ -46,6 +46,7 @@ import org.remus.infomngmnt.core.progress.CancelableJob;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
+import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.SearchResult;
 import org.remus.infomngmnt.search.editor.SearchResultEditor;
 import org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer;
@@ -379,7 +380,7 @@ public class LuceneSearchService {
 					TopFieldDocs search = acquireIndexSearcher(project).search(
 							queryStringFromSearchQuery,null,getSearchService().getMaxResults(),new Sort());
 					Highlighter highlighter = new Highlighter(
-							new SimpleHTMLFormatter(),
+							new SimpleHTMLFormatter("{highlight-start}","{highlight-end}"),
 							new QueryScorer(queryStringFromSearchQuery));
 					final ScoreDoc[] scoreDocs = search.scoreDocs;
 					for (ScoreDoc scoreDoc : scoreDocs) {
@@ -428,18 +429,30 @@ public class LuceneSearchService {
 			String bestFragments = highlighter.getBestFragments(tokenStream,text, 2, "...");
 			if (bestFragments.trim().length() != 0) {
 				newSearchResult.setText(bestFragments);
+				newSearchResult.getHighlightAttributes().add(SearchPackage.Literals.SEARCH_RESULT__TEXT);
 			} else {
-				if (text.length() > 200) {
-					text = StringUtils.left(text, 200) + "...";
+				String additionalString = doc.get(SEARCHINDEX_ADDITIONALS);
+				TokenStream additionTokenStream = getSearchService().getAnalyser().tokenStream(SEARCHINDEX_ADDITIONALS, new StringReader(additionalString));
+				String additionalBestFragments = highlighter.getBestFragments(additionTokenStream, additionalString, 2, "...");
+				if (additionalBestFragments.trim().length() != 0) {
+					newSearchResult.setText(additionalBestFragments);
+				} else {
+					if (text.length() > 200) {
+						text = StringUtils.left(text, 200) + "...";
+					}
+					newSearchResult.setText(text);
 				}
-				newSearchResult.setText(text);
+
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
+
 		newSearchResult.setTitle(doc.getField(SEARCHINDEX_LABEL).stringValue());
 		newSearchResult.setKeywords(doc.getField(SEARCHINDEX_KEYWORDS).stringValue());
+
 		newSearchResult.setPath(ResourcesPlugin.getWorkspace().getRoot().getProject(doc.getField(SEARCHINDEX_PROJECT).stringValue()).getFile(
 				new Path(doc.getField(SEARCHINDEX_ITEM_ID).stringValue()).addFileExtension(ResourceUtil.FILE_EXTENSION)).getFullPath().toString());
 		try {

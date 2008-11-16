@@ -31,6 +31,7 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 
@@ -111,6 +112,15 @@ public abstract class AbstractInformationFormPage extends FormPage {
 		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_descriptionText.heightHint = 70;
 		this.descriptionText.setLayoutData(gd_descriptionText);
+
+		// EMF Databinding
+		ISWTObservableValue swtKeyWords = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.keyWordText, SWT.Modify));
+		IObservableValue emfKeyWord = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS);
+		this.dataBindingContext.bindValue(swtKeyWords, emfKeyWord, null, null);
+
+		ISWTObservableValue swtDescription = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.descriptionText, SWT.Modify));
+		IObservableValue emfDescription = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
+		this.dataBindingContext.bindValue(swtDescription, emfDescription, null, null);
 
 	}
 

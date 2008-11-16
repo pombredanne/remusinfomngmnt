@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.diff.metamodel.AttributeChange;
 
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -30,7 +31,11 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.jslib.HtmlSnippets;
+import org.remus.infomngmnt.jslib.JavaScriptSnippets;
+import org.remus.infomngmnt.jslib.StyleProvider;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
+import org.remus.infomngmnt.ui.editors.LoadingBarMessageProvider;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -45,6 +50,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	public static final String SCREENSHOT_TYPE = "SCREENSHOT_TYPE"; //$NON-NLS-1$
 	public static final String INDEXWEBPAGE_TYPE = "INDEXWEBPAGE_TYPE"; //$NON-NLS-1$
 	public static final String INDEXWEBPAGECONTENT_TYPE = "INDEXWEBPAGECONTENT_TYPE"; //$NON-NLS-1$
+	public static final String WEBSHOT_SECTION_ID = "webShotSection"; //$NON-NLS-1$
 
 	/**
 	 * 
@@ -58,8 +64,8 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 		boolean makeNewScreenShot = true;
 		boolean indexNew = true;
 		if (getPreviousVersion() != null) {
-			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromUri(
-					getPreviousVersion().getFullPath(), InfomngmntPackage.Literals.INFORMATION_UNIT, false);
+			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromFileUri(
+					URI.createFileURI(getPreviousVersion().getAbsolutePath()), InfomngmntPackage.Literals.INFORMATION_UNIT, false);
 			InformationUnit indexWebPagePrevious = InformationUtil.getChildByType(previousModel, INDEXWEBPAGE_TYPE);
 			InformationUnit indexWebPageCurrent = InformationUtil.getChildByType(getValue(), INDEXWEBPAGE_TYPE);
 			AttributeChange change = InformationUtil.getAttributeChange(indexWebPagePrevious, indexWebPageCurrent, InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE);
@@ -68,12 +74,16 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 			InformationUnit screenShotPageCurrent = InformationUtil.getChildByType(getValue(), SCREENSHOT_TYPE);
 			AttributeChange makeScreenShotChange = InformationUtil.getAttributeChange(
 					screenShotPagePrevious, screenShotPageCurrent, InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE);
-			makeNewScreenShot = change != null;
-			indexNew = makeScreenShotChange != null;
+
+			AttributeChange urlChange = InformationUtil.getAttributeChange(getValue(), previousModel, InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+			makeNewScreenShot = change != null || urlChange != null;
+			indexNew = makeScreenShotChange != null || urlChange != null;
 		}
 
 		InformationUnit indexContentInfo = InformationUtil.getChildByType(getValue(), INDEXWEBPAGE_TYPE);
 		if (indexContentInfo.isBoolValue() && indexNew) {
+			LoadingBarMessageProvider.getInstance().firePropertyChange(getValue().getId(), "Indexing web-content");
 			HttpClient client = new HttpClient();
 			// Create a method instance.
 			GetMethod method = new GetMethod(getValue().getStringValue());
@@ -120,6 +130,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 					e.printStackTrace();
 				}
 			}
+			LoadingBarMessageProvider.getInstance().firePropertyChange(getValue().getId(), "Webshotting the link...");
 			WebshotUtil.performWebShot(getValue().getStringValue(),getWebShotFile().getLocation().toOSString());
 		} else {
 			try {
@@ -173,8 +184,36 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	@Override
 	public String handleHtmlGeneration(IProgressMonitor monitor)
 	throws CoreException {
-		return "<p>" + getValue().getStringValue() + "</p>" +
-		"<p><img width=\"100%\" src=\"" + getWebShotFile().getLocation().toOSString() + "\">";
+		boolean renderWebShot = InformationUtil.getChildByType(getValue(), SCREENSHOT_TYPE).isBoolValue();
+		StringWriter sw = new StringWriter();
+		sw.append(HtmlSnippets.HTML_HEAD)
+		.append(StyleProvider.STYLE_DEFINITION_START)
+		.append(StyleProvider.getSystemFontDefinition())
+		.append(StyleProvider.STYLE_DEFINITION_END)
+		.append(JavaScriptSnippets.SCRIPT_SRC_IMAGES_JS)
+		.append(JavaScriptSnippets.SCRIPT_SRC_ROUNDED_CORNERS_JS);
+		if (renderWebShot) {
+			sw.append(JavaScriptSnippets.SECTION_BOX_DEFINITION(WEBSHOT_SECTION_ID, 5));
+		}
+		sw.append(HtmlSnippets.HTML_HEAD_END_BODY_START)
+		.append("<p>\r\n")
+		.append(getValue().getStringValue())
+		.append("</p>\r\n");
+		if (renderWebShot) {
+			sw.append("<div>");
+			sw.append(HtmlSnippets.CREATE_SECTION_BOX("Webshot", WEBSHOT_SECTION_ID));
+			sw.append("<p>\r\n")
+			.append("<a href=\"javascript:fit2Page(\'")
+			.append(getValue().getId())
+			.append("\');\">Fit</a><br> <img name=\"")
+			.append(getValue().getId())
+			.append("\" src=\"")
+			.append(URI.createFileURI(getWebShotFile().getLocation().toOSString()).toString())
+			.append("\">")
+			.append("</div>");
+		}
+		sw.append(HtmlSnippets.HTML_BODY_END_HTML_END);
+		return sw.toString();
 	}
 
 }

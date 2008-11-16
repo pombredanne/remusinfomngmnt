@@ -1,5 +1,10 @@
 package org.remus.infomngmnt.link.ui;
 
+import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -13,6 +18,7 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 public class EditLinkPage extends AbstractInformationFormPage {
@@ -45,6 +51,10 @@ public class EditLinkPage extends AbstractInformationFormPage {
 		this.text = toolkit.createText(composite, null, SWT.NONE);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(composite, SWT.NONE);
+
+		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.text, SWT.Modify));
+		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		this.dataBindingContext.bindValue(swtLink, emfLink, null, null);
 
 		toolkit.createHyperlink(composite, "Open Url in System-Browser", SWT.NONE);
 		new Label(composite, SWT.NONE);

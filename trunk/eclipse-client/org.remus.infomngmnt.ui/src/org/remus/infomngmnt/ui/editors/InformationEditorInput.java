@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
+
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -73,6 +74,12 @@ public class InformationEditorInput extends FileEditorInput implements IFileEdit
 		return this.label;
 	}
 
+
+	@Override
+	public String getFactoryId() {
+		System.out.println("GET FACTORY");
+		return InformationEditorCreationFactory.FACTORY_ID;
+	}
 
 
 }

@@ -88,5 +88,20 @@
             sectionControl="org.remus.infomngmnt.ui.tray.DropSection">
       </sectionBox>
    </extension>
+   <extension
+         point="org.eclipse.ui.elementFactories">
+      <factory
+            class="org.remus.infomngmnt.ui.editors.InformationEditorCreationFactory"
+            id="org.remus.infomngmnt.infofilefactory">
+      </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.remus.infomngmnt.ui.rules.RulePreferencePage"
+            id="org.remus.infomngmnt.ui.rules"
+            name="Rules">
+      </page>
+   </extension>
 
 </plugin>

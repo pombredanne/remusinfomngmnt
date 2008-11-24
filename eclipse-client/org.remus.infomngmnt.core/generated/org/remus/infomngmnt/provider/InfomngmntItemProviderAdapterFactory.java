@@ -314,6 +314,167 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RecentlyUsedKeywords} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RecentlyUsedKeywordsItemProvider recentlyUsedKeywordsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RecentlyUsedKeywords}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRecentlyUsedKeywordsAdapter() {
+		if (recentlyUsedKeywordsItemProvider == null) {
+			recentlyUsedKeywordsItemProvider = new RecentlyUsedKeywordsItemProvider(this);
+		}
+
+		return recentlyUsedKeywordsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.NewElementRules} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NewElementRulesItemProvider newElementRulesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.NewElementRules}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNewElementRulesAdapter() {
+		if (newElementRulesItemProvider == null) {
+			newElementRulesItemProvider = new NewElementRulesItemProvider(this);
+		}
+
+		return newElementRulesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Rule} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RuleItemProvider ruleItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.Rule}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRuleAdapter() {
+		if (ruleItemProvider == null) {
+			ruleItemProvider = new RuleItemProvider(this);
+		}
+
+		return ruleItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RuleValue} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RuleValueItemProvider ruleValueItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RuleValue}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRuleValueAdapter() {
+		if (ruleValueItemProvider == null) {
+			ruleValueItemProvider = new RuleValueItemProvider(this);
+		}
+
+		return ruleValueItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.AvailableRuleDefinitions} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AvailableRuleDefinitionsItemProvider availableRuleDefinitionsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.AvailableRuleDefinitions}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAvailableRuleDefinitionsAdapter() {
+		if (availableRuleDefinitionsItemProvider == null) {
+			availableRuleDefinitionsItemProvider = new AvailableRuleDefinitionsItemProvider(this);
+		}
+
+		return availableRuleDefinitionsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RemusTransferType} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RemusTransferTypeItemProvider remusTransferTypeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RemusTransferType}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRemusTransferTypeAdapter() {
+		if (remusTransferTypeItemProvider == null) {
+			remusTransferTypeItemProvider = new RemusTransferTypeItemProvider(this);
+		}
+
+		return remusTransferTypeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RuleAction} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RuleActionItemProvider ruleActionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RuleAction}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRuleActionAdapter() {
+		if (ruleActionItemProvider == null) {
+			ruleActionItemProvider = new RuleActionItemProvider(this);
+		}
+
+		return ruleActionItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -422,6 +583,13 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (linkTypeItemProvider != null) linkTypeItemProvider.dispose();
 		if (linkTypeCollectionItemProvider != null) linkTypeCollectionItemProvider.dispose();
 		if (stringToLinkTypeMapItemProvider != null) stringToLinkTypeMapItemProvider.dispose();
+		if (recentlyUsedKeywordsItemProvider != null) recentlyUsedKeywordsItemProvider.dispose();
+		if (newElementRulesItemProvider != null) newElementRulesItemProvider.dispose();
+		if (ruleItemProvider != null) ruleItemProvider.dispose();
+		if (ruleValueItemProvider != null) ruleValueItemProvider.dispose();
+		if (availableRuleDefinitionsItemProvider != null) availableRuleDefinitionsItemProvider.dispose();
+		if (remusTransferTypeItemProvider != null) remusTransferTypeItemProvider.dispose();
+		if (ruleActionItemProvider != null) ruleActionItemProvider.dispose();
 	}
 
 }

@@ -196,8 +196,11 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 			sw.append(JavaScriptSnippets.SECTION_BOX_DEFINITION(WEBSHOT_SECTION_ID, 5));
 		}
 		sw.append(HtmlSnippets.HTML_HEAD_END_BODY_START)
-		.append("<p>\r\n")
+		.append("<p style=\"text-align:center;\">\r\n")
+		.append("<a href=\"").append(getValue().getStringValue())
+		.append("\" target=\"_blank\">")
 		.append(getValue().getStringValue())
+		.append("</a>")
 		.append("</p>\r\n");
 		if (renderWebShot) {
 			sw.append("<div>");

@@ -35,5 +35,13 @@
             class="org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer">
       </initializer>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.remus.infomngmnt.link.preferences.LinkEditorPreferencePage"
+            id="org.remus.infomngmnt.link.preferencePage"
+            name="Link">
+      </page>
+   </extension>
 
 </plugin>

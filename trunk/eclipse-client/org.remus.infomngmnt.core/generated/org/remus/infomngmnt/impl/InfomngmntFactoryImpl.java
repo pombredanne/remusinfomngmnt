@@ -79,6 +79,13 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.LINK_TYPE: return createLinkType();
 			case InfomngmntPackage.LINK_TYPE_COLLECTION: return createLinkTypeCollection();
 			case InfomngmntPackage.STRING_TO_LINK_TYPE_MAP: return (EObject)createStringToLinkTypeMap();
+			case InfomngmntPackage.RECENTLY_USED_KEYWORDS: return createRecentlyUsedKeywords();
+			case InfomngmntPackage.NEW_ELEMENT_RULES: return createNewElementRules();
+			case InfomngmntPackage.RULE: return createRule();
+			case InfomngmntPackage.RULE_VALUE: return createRuleValue();
+			case InfomngmntPackage.AVAILABLE_RULE_DEFINITIONS: return createAvailableRuleDefinitions();
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE: return createRemusTransferType();
+			case InfomngmntPackage.RULE_ACTION: return createRuleAction();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -182,6 +189,76 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public Map.Entry<String, LinkType> createStringToLinkTypeMap() {
 		StringToLinkTypeMapImpl stringToLinkTypeMap = new StringToLinkTypeMapImpl();
 		return stringToLinkTypeMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RecentlyUsedKeywords createRecentlyUsedKeywords() {
+		RecentlyUsedKeywordsImpl recentlyUsedKeywords = new RecentlyUsedKeywordsImpl();
+		return recentlyUsedKeywords;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NewElementRules createNewElementRules() {
+		NewElementRulesImpl newElementRules = new NewElementRulesImpl();
+		return newElementRules;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Rule createRule() {
+		RuleImpl rule = new RuleImpl();
+		return rule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RuleValue createRuleValue() {
+		RuleValueImpl ruleValue = new RuleValueImpl();
+		return ruleValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AvailableRuleDefinitions createAvailableRuleDefinitions() {
+		AvailableRuleDefinitionsImpl availableRuleDefinitions = new AvailableRuleDefinitionsImpl();
+		return availableRuleDefinitions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RemusTransferType createRemusTransferType() {
+		RemusTransferTypeImpl remusTransferType = new RemusTransferTypeImpl();
+		return remusTransferType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RuleAction createRuleAction() {
+		RuleActionImpl ruleAction = new RuleActionImpl();
+		return ruleAction;
 	}
 
 	/**

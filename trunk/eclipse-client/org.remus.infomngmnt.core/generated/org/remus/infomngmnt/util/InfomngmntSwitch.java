@@ -174,6 +174,51 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case InfomngmntPackage.RECENTLY_USED_KEYWORDS: {
+				RecentlyUsedKeywords recentlyUsedKeywords = (RecentlyUsedKeywords)theEObject;
+				T result = caseRecentlyUsedKeywords(recentlyUsedKeywords);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.NEW_ELEMENT_RULES: {
+				NewElementRules newElementRules = (NewElementRules)theEObject;
+				T result = caseNewElementRules(newElementRules);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.RULE: {
+				Rule rule = (Rule)theEObject;
+				T result = caseRule(rule);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.RULE_VALUE: {
+				RuleValue ruleValue = (RuleValue)theEObject;
+				T result = caseRuleValue(ruleValue);
+				if (result == null) result = caseInformationUnit(ruleValue);
+				if (result == null) result = caseAbstractInformationUnit(ruleValue);
+				if (result == null) result = caseAdapter(ruleValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.AVAILABLE_RULE_DEFINITIONS: {
+				AvailableRuleDefinitions availableRuleDefinitions = (AvailableRuleDefinitions)theEObject;
+				T result = caseAvailableRuleDefinitions(availableRuleDefinitions);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE: {
+				RemusTransferType remusTransferType = (RemusTransferType)theEObject;
+				T result = caseRemusTransferType(remusTransferType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.RULE_ACTION: {
+				RuleAction ruleAction = (RuleAction)theEObject;
+				T result = caseRuleAction(ruleAction);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -355,6 +400,111 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseStringToLinkTypeMap(Map.Entry<String, LinkType> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Recently Used Keywords</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Recently Used Keywords</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRecentlyUsedKeywords(RecentlyUsedKeywords object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>New Element Rules</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>New Element Rules</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNewElementRules(NewElementRules object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Rule</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRule(Rule object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Rule Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Rule Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRuleValue(RuleValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Available Rule Definitions</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Available Rule Definitions</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAvailableRuleDefinitions(AvailableRuleDefinitions object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Remus Transfer Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Remus Transfer Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRemusTransferType(RemusTransferType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Rule Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Rule Action</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRuleAction(RuleAction object) {
 		return null;
 	}
 

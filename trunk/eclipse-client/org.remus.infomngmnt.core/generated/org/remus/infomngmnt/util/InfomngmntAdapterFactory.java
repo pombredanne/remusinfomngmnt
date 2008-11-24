@@ -129,6 +129,34 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createStringToLinkTypeMapAdapter();
 			}
 			@Override
+			public Adapter caseRecentlyUsedKeywords(RecentlyUsedKeywords object) {
+				return createRecentlyUsedKeywordsAdapter();
+			}
+			@Override
+			public Adapter caseNewElementRules(NewElementRules object) {
+				return createNewElementRulesAdapter();
+			}
+			@Override
+			public Adapter caseRule(Rule object) {
+				return createRuleAdapter();
+			}
+			@Override
+			public Adapter caseRuleValue(RuleValue object) {
+				return createRuleValueAdapter();
+			}
+			@Override
+			public Adapter caseAvailableRuleDefinitions(AvailableRuleDefinitions object) {
+				return createAvailableRuleDefinitionsAdapter();
+			}
+			@Override
+			public Adapter caseRemusTransferType(RemusTransferType object) {
+				return createRemusTransferTypeAdapter();
+			}
+			@Override
+			public Adapter caseRuleAction(RuleAction object) {
+				return createRuleActionAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -313,6 +341,104 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToLinkTypeMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RecentlyUsedKeywords <em>Recently Used Keywords</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RecentlyUsedKeywords
+	 * @generated
+	 */
+	public Adapter createRecentlyUsedKeywordsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.NewElementRules <em>New Element Rules</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.NewElementRules
+	 * @generated
+	 */
+	public Adapter createNewElementRulesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Rule <em>Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.Rule
+	 * @generated
+	 */
+	public Adapter createRuleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RuleValue <em>Rule Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RuleValue
+	 * @generated
+	 */
+	public Adapter createRuleValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.AvailableRuleDefinitions <em>Available Rule Definitions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.AvailableRuleDefinitions
+	 * @generated
+	 */
+	public Adapter createAvailableRuleDefinitionsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemusTransferType <em>Remus Transfer Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RemusTransferType
+	 * @generated
+	 */
+	public Adapter createRemusTransferTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RuleAction <em>Rule Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RuleAction
+	 * @generated
+	 */
+	public Adapter createRuleActionAdapter() {
 		return null;
 	}
 

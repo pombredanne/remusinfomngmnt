@@ -82,22 +82,37 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NewElementRules">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="infoTypeRules" upperBound="-1"
-        eType="#//InfoTypeElementRule"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InfoTypeElementRule">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="infoType" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" iD="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="transfer" upperBound="-1"
-        eType="#//TransferType" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TransferType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
-        eType="#//Rule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transferTypes" upperBound="-1"
+        eType="#//RemusTransferType" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Rule">
-    <eStructuralFeatures xsi:type="ecore:EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringRepresentation" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ruleValue" eType="#//RuleValue"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//Rule" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//RuleAction"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RuleValue" eSuperTypes="#//InformationUnit"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AvailableRuleDefinitions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newElementRules" upperBound="-1"
+        eType="#//NewElementRules" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RemusTransferType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" upperBound="-1"
+        eType="#//Rule" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RuleAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

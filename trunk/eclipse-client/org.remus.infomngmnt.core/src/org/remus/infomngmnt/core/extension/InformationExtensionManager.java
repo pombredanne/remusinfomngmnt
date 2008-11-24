@@ -26,7 +26,7 @@ import org.remus.infomngmnt.core.internal.extension.InfoType;
  * @author Tom Seidel <toms@tomosch.de>
  * @noextend This class is not intended to be subclassed by clients.
  */
-public class InformationExtensionManager {
+public class InformationExtensionManager extends PluginRegistryDynamic{
 
 	public static final String EXTENSION_POINT = CorePlugin.PLUGIN_ID + ".informationType"; //$NON-NLS-1$
 
@@ -56,10 +56,11 @@ public class InformationExtensionManager {
 	}
 
 	private InformationExtensionManager() {
-		init();
+		super(EXTENSION_POINT);
 	}
 
-	private void init() {
+	@Override
+	protected void init() {
 		this.items = new HashMap<String,IInfoType>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
 		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();

@@ -427,6 +427,11 @@ IItemPropertySource {
 			(createChildParameter
 				(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
 				 InfomngmntFactory.eINSTANCE.createInformationUnit()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
+				 InfomngmntFactory.eINSTANCE.createRuleValue()));
 	}
 
 }

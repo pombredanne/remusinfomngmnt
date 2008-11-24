@@ -115,6 +115,69 @@ public interface InfomngmntFactory extends EFactory {
 	LinkTypeCollection createLinkTypeCollection();
 
 	/**
+	 * Returns a new object of class '<em>Recently Used Keywords</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Recently Used Keywords</em>'.
+	 * @generated
+	 */
+	RecentlyUsedKeywords createRecentlyUsedKeywords();
+
+	/**
+	 * Returns a new object of class '<em>New Element Rules</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>New Element Rules</em>'.
+	 * @generated
+	 */
+	NewElementRules createNewElementRules();
+
+	/**
+	 * Returns a new object of class '<em>Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Rule</em>'.
+	 * @generated
+	 */
+	Rule createRule();
+
+	/**
+	 * Returns a new object of class '<em>Rule Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Rule Value</em>'.
+	 * @generated
+	 */
+	RuleValue createRuleValue();
+
+	/**
+	 * Returns a new object of class '<em>Available Rule Definitions</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Available Rule Definitions</em>'.
+	 * @generated
+	 */
+	AvailableRuleDefinitions createAvailableRuleDefinitions();
+
+	/**
+	 * Returns a new object of class '<em>Remus Transfer Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Remus Transfer Type</em>'.
+	 * @generated
+	 */
+	RemusTransferType createRemusTransferType();
+
+	/**
+	 * Returns a new object of class '<em>Rule Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Rule Action</em>'.
+	 * @generated
+	 */
+	RuleAction createRuleAction();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

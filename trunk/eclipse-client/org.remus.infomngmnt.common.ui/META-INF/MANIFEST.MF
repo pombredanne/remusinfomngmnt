@@ -3,8 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Ui Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.common.ui;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.remus.infomngmnt.common.ui.Activator
+Bundle-Activator: org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin$Implementation
 Bundle-Vendor: Remus Software
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.forms;bundle-version="3.3.100",
@@ -13,7 +14,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.databinding;bundle-version="1.0.0",
  org.eclipse.jface.databinding;bundle-version="1.2.0",
  org.eclipse.core.resources;bundle-version="3.4.0",
- org.eclipse.ui.ide;bundle-version="3.4.0"
+ org.eclipse.ui.ide;bundle-version="3.4.0",
+ org.eclipse.emf.edit;bundle-version="2.4.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.4.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.nebula.widgets.calendarcombo,
@@ -22,6 +25,8 @@ Export-Package: org.eclipse.nebula.widgets.calendarcombo,
  org.remus.infomngmnt.common.ui.editor,
  org.remus.infomngmnt.common.ui.extension,
  org.remus.infomngmnt.common.ui.image,
+ org.remus.infomngmnt.common.ui.model,
  org.remus.infomngmnt.common.ui.swt,
  org.remus.infomngmnt.common.ui.view,
- org.remus.infomngmt.common.ui.uimodel
+ org.remus.infomngmt.common.ui.uimodel,
+ org.remus.infomngmt.common.ui.uimodel.provider

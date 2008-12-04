@@ -16,11 +16,17 @@ package org.remus.infomngmt.common.ui.uimodel.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.swt.graphics.Image;
 
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
@@ -39,6 +45,8 @@ import org.remus.infomngmt.common.ui.uimodel.UIModelPackage;
  *   <li>{@link org.remus.infomngmt.common.ui.uimodel.impl.TraySectionImpl#getImage <em>Image</em>}</li>
  *   <li>{@link org.remus.infomngmt.common.ui.uimodel.impl.TraySectionImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmt.common.ui.uimodel.impl.TraySectionImpl#getImplementation <em>Implementation</em>}</li>
+ *   <li>{@link org.remus.infomngmt.common.ui.uimodel.impl.TraySectionImpl#getTemplateId <em>Template Id</em>}</li>
+ *   <li>{@link org.remus.infomngmt.common.ui.uimodel.impl.TraySectionImpl#getPreferenceOptions <em>Preference Options</em>}</li>
  * </ul>
  * </p>
  *
@@ -124,6 +132,36 @@ public class TraySectionImpl extends EObjectImpl implements TraySection {
 	 * @ordered
 	 */
 	protected AbstractTraySection implementation = IMPLEMENTATION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getTemplateId() <em>Template Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTemplateId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TEMPLATE_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTemplateId() <em>Template Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTemplateId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String templateId = TEMPLATE_ID_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getPreferenceOptions() <em>Preference Options</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreferenceOptions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> preferenceOptions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -233,6 +271,53 @@ public class TraySectionImpl extends EObjectImpl implements TraySection {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getTemplateId() {
+		return templateId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTemplateId(String newTemplateId) {
+		String oldTemplateId = templateId;
+		templateId = newTemplateId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UIModelPackage.TRAY_SECTION__TEMPLATE_ID, oldTemplateId, templateId));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getPreferenceOptions() {
+		if (preferenceOptions == null) {
+			preferenceOptions = new EcoreEMap<String,String>(UIModelPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, UIModelPackage.TRAY_SECTION__PREFERENCE_OPTIONS);
+		}
+		return preferenceOptions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case UIModelPackage.TRAY_SECTION__PREFERENCE_OPTIONS:
+				return ((InternalEList<?>)getPreferenceOptions()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -244,6 +329,11 @@ public class TraySectionImpl extends EObjectImpl implements TraySection {
 				return getDescription();
 			case UIModelPackage.TRAY_SECTION__IMPLEMENTATION:
 				return getImplementation();
+			case UIModelPackage.TRAY_SECTION__TEMPLATE_ID:
+				return getTemplateId();
+			case UIModelPackage.TRAY_SECTION__PREFERENCE_OPTIONS:
+				if (coreType) return getPreferenceOptions();
+				else return getPreferenceOptions().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -267,6 +357,12 @@ public class TraySectionImpl extends EObjectImpl implements TraySection {
 				return;
 			case UIModelPackage.TRAY_SECTION__IMPLEMENTATION:
 				setImplementation((AbstractTraySection)newValue);
+				return;
+			case UIModelPackage.TRAY_SECTION__TEMPLATE_ID:
+				setTemplateId((String)newValue);
+				return;
+			case UIModelPackage.TRAY_SECTION__PREFERENCE_OPTIONS:
+				((EStructuralFeature.Setting)getPreferenceOptions()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -292,6 +388,12 @@ public class TraySectionImpl extends EObjectImpl implements TraySection {
 			case UIModelPackage.TRAY_SECTION__IMPLEMENTATION:
 				setImplementation(IMPLEMENTATION_EDEFAULT);
 				return;
+			case UIModelPackage.TRAY_SECTION__TEMPLATE_ID:
+				setTemplateId(TEMPLATE_ID_EDEFAULT);
+				return;
+			case UIModelPackage.TRAY_SECTION__PREFERENCE_OPTIONS:
+				getPreferenceOptions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -312,6 +414,10 @@ public class TraySectionImpl extends EObjectImpl implements TraySection {
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case UIModelPackage.TRAY_SECTION__IMPLEMENTATION:
 				return IMPLEMENTATION_EDEFAULT == null ? implementation != null : !IMPLEMENTATION_EDEFAULT.equals(implementation);
+			case UIModelPackage.TRAY_SECTION__TEMPLATE_ID:
+				return TEMPLATE_ID_EDEFAULT == null ? templateId != null : !TEMPLATE_ID_EDEFAULT.equals(templateId);
+			case UIModelPackage.TRAY_SECTION__PREFERENCE_OPTIONS:
+				return preferenceOptions != null && !preferenceOptions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -334,6 +440,8 @@ public class TraySectionImpl extends EObjectImpl implements TraySection {
 		result.append(description);
 		result.append(", implementation: ");
 		result.append(implementation);
+		result.append(", templateId: ");
+		result.append(templateId);
 		result.append(')');
 		return result.toString();
 	}

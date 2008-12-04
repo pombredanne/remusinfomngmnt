@@ -27,6 +27,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -120,7 +122,7 @@ public class UIUtil {
 	}
 
 	public static IDialogSettings getDialogSettings(String sectionName) {
-		IDialogSettings dialogSettings = Activator.getDefault().getDialogSettings();
+		IDialogSettings dialogSettings = UimodelEditPlugin.getPlugin().getDialogSettings();
 		IDialogSettings section = dialogSettings.getSection(sectionName);
 		if (section == null) {
 			dialogSettings.addNewSection(sectionName);

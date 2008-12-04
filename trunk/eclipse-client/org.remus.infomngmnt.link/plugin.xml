@@ -4,9 +4,17 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
+            creationFactory="org.remus.infomngmnt.link.LinkCreationFactory"
             icon="icons/link.png"
+            name="Link"
             presentation="org.remus.infomngmnt.link.LinkRepresentation"
             type="LINK">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.urlTransfer">
+         </validTransfers>
       </information>
    </extension>
    <extension
@@ -18,6 +26,16 @@
             label="Edit Link"
             type="LINK">
       </editPage>
+      <transferpreferences
+            implementation="org.remus.infomngmnt.link.LinkTextTransferPreferencePage"
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="LINK">
+      </transferpreferences>
+      <transferpreferences
+            implementation="org.remus.infomngmnt.link.LinkTextTransferPreferencePage"
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="LINK">
+      </transferpreferences>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

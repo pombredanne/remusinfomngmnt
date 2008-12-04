@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.common.ui.extension;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,14 +21,14 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 
 import org.remus.infomngmnt.common.internal.ui.TraySectionDefinition;
-import org.remus.infomngmnt.common.ui.Activator;
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class TraySectionManager {
 
-	public static final String EXTENSION_POINT = Activator.PLUGIN_ID + ".traySection"; //$NON-NLS-1$
+	public static final String EXTENSION_POINT = UimodelEditPlugin.Implementation.PLUGIN_ID + ".traySection"; //$NON-NLS-1$
 
 	public static final String TRAYSECTION_NODENAME = "sectionBox"; //$NON-NLS-1$
 
@@ -78,6 +79,10 @@ public class TraySectionManager {
 
 	public ITraySectionDefinition getSectionDefinitionById(final String id) {
 		return this.items.get(id);
+	}
+
+	public Collection<ITraySectionDefinition> getAllSections() {
+		return this.items.values();
 	}
 
 }

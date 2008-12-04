@@ -115,13 +115,31 @@ public interface UIModelPackage extends EPackage {
 	int TRAY_SECTION__IMPLEMENTATION = 3;
 
 	/**
+	 * The feature id for the '<em><b>Template Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAY_SECTION__TEMPLATE_ID = 4;
+
+	/**
+	 * The feature id for the '<em><b>Preference Options</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAY_SECTION__PREFERENCE_OPTIONS = 5;
+
+	/**
 	 * The number of structural features of the '<em>Tray Section</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAY_SECTION_FEATURE_COUNT = 4;
+	int TRAY_SECTION_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.TraySectionCollectionImpl <em>Tray Section Collection</em>}' class.
@@ -152,6 +170,43 @@ public interface UIModelPackage extends EPackage {
 	int TRAY_SECTION_COLLECTION_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.StringToStringMapImpl
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getStringToStringMap()
+	 * @generated
+	 */
+	int STRING_TO_STRING_MAP = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To String Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '<em>Image</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -159,7 +214,7 @@ public interface UIModelPackage extends EPackage {
 	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getImage()
 	 * @generated
 	 */
-	int IMAGE = 2;
+	int IMAGE = 3;
 
 	/**
 	 * The meta object id for the '<em>Abstract Tray Section</em>' data type.
@@ -169,7 +224,7 @@ public interface UIModelPackage extends EPackage {
 	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getAbstractTraySection()
 	 * @generated
 	 */
-	int ABSTRACT_TRAY_SECTION = 3;
+	int ABSTRACT_TRAY_SECTION = 4;
 
 
 	/**
@@ -227,6 +282,28 @@ public interface UIModelPackage extends EPackage {
 	EAttribute getTraySection_Implementation();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getTemplateId <em>Template Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Template Id</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.TraySection#getTemplateId()
+	 * @see #getTraySection()
+	 * @generated
+	 */
+	EAttribute getTraySection_TemplateId();
+
+	/**
+	 * Returns the meta object for the map '{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getPreferenceOptions <em>Preference Options</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Preference Options</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.TraySection#getPreferenceOptions()
+	 * @see #getTraySection()
+	 * @generated
+	 */
+	EReference getTraySection_PreferenceOptions();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmt.common.ui.uimodel.TraySectionCollection <em>Tray Section Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -248,6 +325,40 @@ public interface UIModelPackage extends EPackage {
 	EReference getTraySectionCollection_Sections();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To String Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="org.eclipse.emf.ecore.EString"
+	 * @generated
+	 */
+	EClass getStringToStringMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringMap_Value();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.swt.graphics.Image <em>Image</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -264,7 +375,7 @@ public interface UIModelPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Abstract Tray Section</em>'.
 	 * @see org.remus.infomngmnt.common.ui.extension.AbstractTraySection
-	 * @model instanceClass="org.remus.infomngmnt.common.ui.extension.AbstractTraySection"
+	 * @model instanceClass="org.remus.infomngmnt.common.ui.extension.AbstractTraySection" serializeable="false"
 	 * @generated
 	 */
 	EDataType getAbstractTraySection();
@@ -334,6 +445,22 @@ public interface UIModelPackage extends EPackage {
 		EAttribute TRAY_SECTION__IMPLEMENTATION = eINSTANCE.getTraySection_Implementation();
 
 		/**
+		 * The meta object literal for the '<em><b>Template Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRAY_SECTION__TEMPLATE_ID = eINSTANCE.getTraySection_TemplateId();
+
+		/**
+		 * The meta object literal for the '<em><b>Preference Options</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRAY_SECTION__PREFERENCE_OPTIONS = eINSTANCE.getTraySection_PreferenceOptions();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.TraySectionCollectionImpl <em>Tray Section Collection</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -350,6 +477,32 @@ public interface UIModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TRAY_SECTION_COLLECTION__SECTIONS = eINSTANCE.getTraySectionCollection_Sections();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.StringToStringMapImpl
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getStringToStringMap()
+		 * @generated
+		 */
+		EClass STRING_TO_STRING_MAP = eINSTANCE.getStringToStringMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_MAP__KEY = eINSTANCE.getStringToStringMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_MAP__VALUE = eINSTANCE.getStringToStringMap_Value();
 
 		/**
 		 * The meta object literal for the '<em>Image</em>' data type.

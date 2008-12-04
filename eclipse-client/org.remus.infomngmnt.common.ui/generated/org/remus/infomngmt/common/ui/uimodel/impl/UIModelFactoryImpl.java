@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmt.common.ui.uimodel.impl;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -75,6 +76,7 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 		switch (eClass.getClassifierID()) {
 			case UIModelPackage.TRAY_SECTION: return createTraySection();
 			case UIModelPackage.TRAY_SECTION_COLLECTION: return createTraySectionCollection();
+			case UIModelPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -90,8 +92,6 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 		switch (eDataType.getClassifierID()) {
 			case UIModelPackage.IMAGE:
 				return createImageFromString(eDataType, initialValue);
-			case UIModelPackage.ABSTRACT_TRAY_SECTION:
-				return createAbstractTraySectionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -107,8 +107,6 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 		switch (eDataType.getClassifierID()) {
 			case UIModelPackage.IMAGE:
 				return convertImageToString(eDataType, instanceValue);
-			case UIModelPackage.ABSTRACT_TRAY_SECTION:
-				return convertAbstractTraySectionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -139,6 +137,16 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Map.Entry<String, String> createStringToStringMap() {
+		StringToStringMapImpl stringToStringMap = new StringToStringMapImpl();
+		return stringToStringMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Image createImageFromString(EDataType eDataType, String initialValue) {
 		return (Image)super.createFromString(eDataType, initialValue);
 	}
@@ -149,24 +157,6 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 	 * @generated
 	 */
 	public String convertImageToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public AbstractTraySection createAbstractTraySectionFromString(EDataType eDataType, String initialValue) {
-		return (AbstractTraySection)super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertAbstractTraySectionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

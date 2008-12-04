@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmt.common.ui.uimodel;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.swt.graphics.Image;
@@ -32,6 +33,8 @@ import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
  *   <li>{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getImage <em>Image</em>}</li>
  *   <li>{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getImplementation <em>Implementation</em>}</li>
+ *   <li>{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getTemplateId <em>Template Id</em>}</li>
+ *   <li>{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getPreferenceOptions <em>Preference Options</em>}</li>
  * </ul>
  * </p>
  *
@@ -129,7 +132,7 @@ public interface TraySection extends EObject {
 	 * @return the value of the '<em>Implementation</em>' attribute.
 	 * @see #setImplementation(AbstractTraySection)
 	 * @see org.remus.infomngmt.common.ui.uimodel.UIModelPackage#getTraySection_Implementation()
-	 * @model dataType="org.remus.infomngmt.common.ui.uimodel.AbstractTraySection"
+	 * @model dataType="org.remus.infomngmt.common.ui.uimodel.AbstractTraySection" transient="true"
 	 * @generated
 	 */
 	AbstractTraySection getImplementation();
@@ -143,5 +146,48 @@ public interface TraySection extends EObject {
 	 * @generated
 	 */
 	void setImplementation(AbstractTraySection value);
+
+	/**
+	 * Returns the value of the '<em><b>Template Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Template Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Template Id</em>' attribute.
+	 * @see #setTemplateId(String)
+	 * @see org.remus.infomngmt.common.ui.uimodel.UIModelPackage#getTraySection_TemplateId()
+	 * @model
+	 * @generated
+	 */
+	String getTemplateId();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmt.common.ui.uimodel.TraySection#getTemplateId <em>Template Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Template Id</em>' attribute.
+	 * @see #getTemplateId()
+	 * @generated
+	 */
+	void setTemplateId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Preference Options</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Preference Options</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Preference Options</em>' map.
+	 * @see org.remus.infomngmt.common.ui.uimodel.UIModelPackage#getTraySection_PreferenceOptions()
+	 * @model mapType="org.remus.infomngmt.common.ui.uimodel.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getPreferenceOptions();
 
 } // TraySection

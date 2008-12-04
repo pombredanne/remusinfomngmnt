@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 
-import org.remus.infomngmnt.common.ui.Activator;
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -64,7 +64,7 @@ public class CommonImageRegistry extends ImageRegistry {
 	private void registerImage(String key, String fileName) {
 		try {
 			IPath path = new Path(fileName);
-			URL url = FileLocator.find(Activator.getDefault().getBundle(), path, null);
+			URL url = FileLocator.find(UimodelEditPlugin.getPlugin().getBundle(), path, null);
 			if (url!=null) {
 				ImageDescriptor desc = ImageDescriptor.createFromURL(url);
 				put(key, desc);

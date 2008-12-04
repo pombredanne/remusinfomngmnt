@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmt.common.ui.uimodel.impl;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -51,6 +52,13 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 	 * @generated
 	 */
 	private EClass traySectionCollectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToStringMapEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -184,6 +192,24 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTraySection_TemplateId() {
+		return (EAttribute)traySectionEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTraySection_PreferenceOptions() {
+		return (EReference)traySectionEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTraySectionCollection() {
 		return traySectionCollectionEClass;
 	}
@@ -195,6 +221,33 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 	 */
 	public EReference getTraySectionCollection_Sections() {
 		return (EReference)traySectionCollectionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToStringMap() {
+		return stringToStringMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToStringMap_Key() {
+		return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToStringMap_Value() {
+		return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -248,9 +301,15 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 		createEAttribute(traySectionEClass, TRAY_SECTION__IMAGE);
 		createEAttribute(traySectionEClass, TRAY_SECTION__DESCRIPTION);
 		createEAttribute(traySectionEClass, TRAY_SECTION__IMPLEMENTATION);
+		createEAttribute(traySectionEClass, TRAY_SECTION__TEMPLATE_ID);
+		createEReference(traySectionEClass, TRAY_SECTION__PREFERENCE_OPTIONS);
 
 		traySectionCollectionEClass = createEClass(TRAY_SECTION_COLLECTION);
 		createEReference(traySectionCollectionEClass, TRAY_SECTION_COLLECTION__SECTIONS);
+
+		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__VALUE);
 
 		// Create data types
 		imageEDataType = createEDataType(IMAGE);
@@ -291,14 +350,20 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 		initEAttribute(getTraySection_Name(), ecorePackage.getEString(), "name", null, 0, 1, TraySection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraySection_Image(), this.getImage(), "image", null, 0, 1, TraySection.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraySection_Description(), ecorePackage.getEString(), "description", null, 0, 1, TraySection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTraySection_Implementation(), this.getAbstractTraySection(), "implementation", null, 0, 1, TraySection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraySection_Implementation(), this.getAbstractTraySection(), "implementation", null, 0, 1, TraySection.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraySection_TemplateId(), ecorePackage.getEString(), "templateId", null, 0, 1, TraySection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTraySection_PreferenceOptions(), this.getStringToStringMap(), null, "preferenceOptions", null, 0, -1, TraySection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(traySectionCollectionEClass, TraySectionCollection.class, "TraySectionCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTraySectionCollection_Sections(), this.getTraySection(), null, "sections", null, 0, -1, TraySectionCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToStringMap_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize data types
 		initEDataType(imageEDataType, Image.class, "Image", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(abstractTraySectionEDataType, AbstractTraySection.class, "AbstractTraySection", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(abstractTraySectionEDataType, AbstractTraySection.class, "AbstractTraySection", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

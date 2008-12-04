@@ -8,12 +8,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="image" eType="#//Image"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="#//AbstractTraySection"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="#//AbstractTraySection"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="templateId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preferenceOptions" upperBound="-1"
+        eType="#//StringToStringMap" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Image" instanceClassName="org.eclipse.swt.graphics.Image"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="AbstractTraySection" instanceClassName="org.remus.infomngmnt.common.ui.extension.AbstractTraySection"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="AbstractTraySection" instanceClassName="org.remus.infomngmnt.common.ui.extension.AbstractTraySection"
+      serializable="false"/>
   <eClassifiers xsi:type="ecore:EClass" name="TraySectionCollection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sections" upperBound="-1"
         eType="#//TraySection" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToStringMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

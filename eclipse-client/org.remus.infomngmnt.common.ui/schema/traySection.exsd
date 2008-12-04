@@ -96,6 +96,16 @@
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="preferencesclass" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

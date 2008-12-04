@@ -83,7 +83,7 @@
          point="org.remus.infomngmnt.common.ui.traySection">
       <sectionBox
             id="org.remus.infomngmnt.ui.dropBox"
-            multiple="false"
+            multiple="true"
             name="Drop-Section"
             sectionControl="org.remus.infomngmnt.ui.tray.DropSection">
       </sectionBox>
@@ -101,6 +101,11 @@
             class="org.remus.infomngmnt.ui.rules.RulePreferencePage"
             id="org.remus.infomngmnt.ui.rules"
             name="Rules">
+      </page>
+      <page
+            class="org.remus.infomngmnt.ui.tray.DesktopPanelPreferencePage"
+            id="org.remus.infomngmnt.ui.desktop"
+            name="Desktop Panel">
       </page>
    </extension>
 

@@ -76,6 +76,7 @@ public class NewElementRulesItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
+			addDeletablePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -98,6 +99,28 @@ public class NewElementRulesItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Deletable feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDeletablePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NewElementRules_deletable_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NewElementRules_deletable_feature", "_UI_NewElementRules_type"),
+				 InfomngmntPackage.Literals.NEW_ELEMENT_RULES__DELETABLE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -170,6 +193,7 @@ public class NewElementRulesItemProvider
 
 		switch (notification.getFeatureID(NewElementRules.class)) {
 			case InfomngmntPackage.NEW_ELEMENT_RULES__NAME:
+			case InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case InfomngmntPackage.NEW_ELEMENT_RULES__TRANSFER_TYPES:

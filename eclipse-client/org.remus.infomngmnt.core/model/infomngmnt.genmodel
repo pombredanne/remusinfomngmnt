@@ -74,15 +74,7 @@
     <genClasses ecoreClass="infomngmnt.ecore#//NewElementRules">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//NewElementRules/transferTypes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//NewElementRules/name"/>
-    </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//Rule">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Rule/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Rule/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Rule/activated"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Rule/stringRepresentation"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Rule/ruleValue"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Rule/children"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Rule/action"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//NewElementRules/deletable"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RuleValue"/>
     <genClasses ecoreClass="infomngmnt.ecore#//AvailableRuleDefinitions">
@@ -91,11 +83,12 @@
     <genClasses ecoreClass="infomngmnt.ecore#//RemusTransferType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemusTransferType/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemusTransferType/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemusTransferType/activated"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemusTransferType/conditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemusTransferType/actions"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RuleAction">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/infoTypeId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RuleAction/ruleValue"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

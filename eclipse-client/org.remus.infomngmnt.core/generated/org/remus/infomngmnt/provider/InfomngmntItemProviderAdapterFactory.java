@@ -360,29 +360,6 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Rule} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected RuleItemProvider ruleItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.remus.infomngmnt.Rule}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createRuleAdapter() {
-		if (ruleItemProvider == null) {
-			ruleItemProvider = new RuleItemProvider(this);
-		}
-
-		return ruleItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RuleValue} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -585,7 +562,6 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (stringToLinkTypeMapItemProvider != null) stringToLinkTypeMapItemProvider.dispose();
 		if (recentlyUsedKeywordsItemProvider != null) recentlyUsedKeywordsItemProvider.dispose();
 		if (newElementRulesItemProvider != null) newElementRulesItemProvider.dispose();
-		if (ruleItemProvider != null) ruleItemProvider.dispose();
 		if (ruleValueItemProvider != null) ruleValueItemProvider.dispose();
 		if (availableRuleDefinitionsItemProvider != null) availableRuleDefinitionsItemProvider.dispose();
 		if (remusTransferTypeItemProvider != null) remusTransferTypeItemProvider.dispose();

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.NewElementRules#getTransferTypes <em>Transfer Types</em>}</li>
  *   <li>{@link org.remus.infomngmnt.NewElementRules#getName <em>Name</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.NewElementRules#isDeletable <em>Deletable</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,5 +78,31 @@ public interface NewElementRules extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Deletable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Deletable</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Deletable</em>' attribute.
+	 * @see #setDeletable(boolean)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getNewElementRules_Deletable()
+	 * @model
+	 * @generated
+	 */
+	boolean isDeletable();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.NewElementRules#isDeletable <em>Deletable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Deletable</em>' attribute.
+	 * @see #isDeletable()
+	 * @generated
+	 */
+	void setDeletable(boolean value);
 
 } // NewElementRules

@@ -38,7 +38,6 @@ import org.remus.infomngmnt.LinkTypeCollection;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RecentlyUsedKeywords;
 import org.remus.infomngmnt.RemusTransferType;
-import org.remus.infomngmnt.Rule;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.Usage;
@@ -147,13 +146,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass newElementRulesEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass ruleEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -724,71 +716,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getRule() {
-		return ruleEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRule_Id() {
-		return (EAttribute)ruleEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRule_Name() {
-		return (EAttribute)ruleEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRule_Activated() {
-		return (EAttribute)ruleEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRule_StringRepresentation() {
-		return (EAttribute)ruleEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRule_RuleValue() {
-		return (EReference)ruleEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRule_Children() {
-		return (EReference)ruleEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRule_Action() {
-		return (EReference)ruleEClass.getEStructuralFeatures().get(6);
+	public EAttribute getNewElementRules_Deletable() {
+		return (EAttribute)newElementRulesEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -850,17 +779,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRemusTransferType_Activated() {
-		return (EAttribute)remusTransferTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRemusTransferType_Conditions() {
-		return (EReference)remusTransferTypeEClass.getEStructuralFeatures().get(3);
+	public EReference getRemusTransferType_Actions() {
+		return (EReference)remusTransferTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -877,8 +797,26 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRuleAction_Id() {
+	public EAttribute getRuleAction_Name() {
 		return (EAttribute)ruleActionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRuleAction_InfoTypeId() {
+		return (EAttribute)ruleActionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRuleAction_RuleValue() {
+		return (EReference)ruleActionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -974,15 +912,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		newElementRulesEClass = createEClass(NEW_ELEMENT_RULES);
 		createEReference(newElementRulesEClass, NEW_ELEMENT_RULES__TRANSFER_TYPES);
 		createEAttribute(newElementRulesEClass, NEW_ELEMENT_RULES__NAME);
-
-		ruleEClass = createEClass(RULE);
-		createEAttribute(ruleEClass, RULE__ID);
-		createEAttribute(ruleEClass, RULE__NAME);
-		createEAttribute(ruleEClass, RULE__ACTIVATED);
-		createEAttribute(ruleEClass, RULE__STRING_REPRESENTATION);
-		createEReference(ruleEClass, RULE__RULE_VALUE);
-		createEReference(ruleEClass, RULE__CHILDREN);
-		createEReference(ruleEClass, RULE__ACTION);
+		createEAttribute(newElementRulesEClass, NEW_ELEMENT_RULES__DELETABLE);
 
 		ruleValueEClass = createEClass(RULE_VALUE);
 
@@ -992,11 +922,12 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		remusTransferTypeEClass = createEClass(REMUS_TRANSFER_TYPE);
 		createEAttribute(remusTransferTypeEClass, REMUS_TRANSFER_TYPE__NAME);
 		createEAttribute(remusTransferTypeEClass, REMUS_TRANSFER_TYPE__ID);
-		createEAttribute(remusTransferTypeEClass, REMUS_TRANSFER_TYPE__ACTIVATED);
-		createEReference(remusTransferTypeEClass, REMUS_TRANSFER_TYPE__CONDITIONS);
+		createEReference(remusTransferTypeEClass, REMUS_TRANSFER_TYPE__ACTIONS);
 
 		ruleActionEClass = createEClass(RULE_ACTION);
-		createEAttribute(ruleActionEClass, RULE_ACTION__ID);
+		createEAttribute(ruleActionEClass, RULE_ACTION__NAME);
+		createEAttribute(ruleActionEClass, RULE_ACTION__INFO_TYPE_ID);
+		createEReference(ruleActionEClass, RULE_ACTION__RULE_VALUE);
 	}
 
 	/**
@@ -1099,15 +1030,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(newElementRulesEClass, NewElementRules.class, "NewElementRules", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNewElementRules_TransferTypes(), this.getRemusTransferType(), null, "transferTypes", null, 0, -1, NewElementRules.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNewElementRules_Name(), ecorePackage.getEString(), "name", null, 1, 1, NewElementRules.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(ruleEClass, Rule.class, "Rule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRule_Id(), ecorePackage.getEString(), "id", null, 1, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRule_Name(), ecorePackage.getEString(), "name", null, 0, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRule_Activated(), ecorePackage.getEBoolean(), "activated", null, 0, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRule_StringRepresentation(), ecorePackage.getEString(), "stringRepresentation", null, 1, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRule_RuleValue(), this.getRuleValue(), null, "ruleValue", null, 0, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRule_Children(), this.getRule(), null, "children", null, 0, -1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRule_Action(), this.getRuleAction(), null, "action", null, 0, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNewElementRules_Deletable(), ecorePackage.getEBoolean(), "deletable", null, 0, 1, NewElementRules.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ruleValueEClass, RuleValue.class, "RuleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1117,11 +1040,12 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(remusTransferTypeEClass, RemusTransferType.class, "RemusTransferType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRemusTransferType_Name(), ecorePackage.getEString(), "name", null, 0, 1, RemusTransferType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRemusTransferType_Id(), ecorePackage.getEString(), "id", null, 1, 1, RemusTransferType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRemusTransferType_Activated(), ecorePackage.getEBoolean(), "activated", null, 0, 1, RemusTransferType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRemusTransferType_Conditions(), this.getRule(), null, "conditions", null, 0, -1, RemusTransferType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRemusTransferType_Actions(), this.getRuleAction(), null, "actions", null, 0, -1, RemusTransferType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ruleActionEClass, RuleAction.class, "RuleAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRuleAction_Id(), ecorePackage.getEString(), "id", null, 1, 1, RuleAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRuleAction_Name(), ecorePackage.getEString(), "name", null, 0, 1, RuleAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRuleAction_InfoTypeId(), ecorePackage.getEString(), "infoTypeId", null, 1, 1, RuleAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRuleAction_RuleValue(), this.getRuleValue(), null, "ruleValue", null, 0, 1, RuleAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

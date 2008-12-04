@@ -81,7 +81,6 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.STRING_TO_LINK_TYPE_MAP: return (EObject)createStringToLinkTypeMap();
 			case InfomngmntPackage.RECENTLY_USED_KEYWORDS: return createRecentlyUsedKeywords();
 			case InfomngmntPackage.NEW_ELEMENT_RULES: return createNewElementRules();
-			case InfomngmntPackage.RULE: return createRule();
 			case InfomngmntPackage.RULE_VALUE: return createRuleValue();
 			case InfomngmntPackage.AVAILABLE_RULE_DEFINITIONS: return createAvailableRuleDefinitions();
 			case InfomngmntPackage.REMUS_TRANSFER_TYPE: return createRemusTransferType();
@@ -209,16 +208,6 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public NewElementRules createNewElementRules() {
 		NewElementRulesImpl newElementRules = new NewElementRulesImpl();
 		return newElementRules;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Rule createRule() {
-		RuleImpl rule = new RuleImpl();
-		return rule;
 	}
 
 	/**

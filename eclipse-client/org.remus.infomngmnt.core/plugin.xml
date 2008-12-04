@@ -97,28 +97,6 @@
             implementation="org.remus.infomngmnt.core.transfertypes.ImageTransferWrapper"
             name="Dropped/Pasted Image or Image-Data">
       </transfertype>
-      <rule
-            id="org.remus.infomngmnt.core.analyzeStringRule"
-            implementation="org.remus.infomngmnt.core.ruledefinitions.DropFromTextTransfer"
-            name="String-Analyzer">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.rftTransfer">
-         </validTransfers>
-      </rule>
-      <rule
-            id="org.remus.infomngmnt.core.filextensionrule"
-            implementation="org.remus.infomngmnt.core.rules.FileExtensionRule"
-            name="File-Extension Check for dropped files">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-      </rule>
       
    </extension>
   

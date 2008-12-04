@@ -49,6 +49,19 @@
 
    <element name="information">
       <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="validTransfers"/>
+         </sequence>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
          <attribute name="type" type="string" use="required">
             <annotation>
                <documentation>
@@ -76,7 +89,7 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="creationFactory" type="string">
+         <attribute name="creationFactory" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -93,6 +106,21 @@
                </documentation>
                <appinfo>
                   <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="validTransfers">
+      <complexType>
+         <attribute name="transferId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.remus.infomngmnt.core.ruleDefinition/transfertype/@id"/>
                </appinfo>
             </annotation>
          </attribute>

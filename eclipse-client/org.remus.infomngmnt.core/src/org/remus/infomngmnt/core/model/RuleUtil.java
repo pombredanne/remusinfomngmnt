@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.core.model;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
@@ -22,6 +23,9 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RemusTransferType;
+import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.extension.RuleExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -57,13 +61,22 @@ public class RuleUtil {
 			if (createDefaultValues) {
 				NewElementRules createNewElementRules = InfomngmntFactory.eINSTANCE.createNewElementRules();
 				createNewElementRules.setName("Default Ruleset");
+				createNewElementRules.setDeletable(false);
 				this.rules.getNewElementRules().add(createNewElementRules);
 				Map<String, TransferWrapper> allTransferTypes = RuleExtensionManager.getInstance().getAllTransferTypes();
 				for (String transferWrapperIds : allTransferTypes.keySet()) {
 					RemusTransferType createRemusTransferType = InfomngmntFactory.eINSTANCE.createRemusTransferType();
-					createRemusTransferType.setActivated(true);
 					createRemusTransferType.setId(transferWrapperIds);
 					createRemusTransferType.setName(allTransferTypes.get(transferWrapperIds).getName());
+					// Default behavior: add all valid types
+					Collection<IInfoType> types = InformationExtensionManager.getInstance().getTypes();
+					for (IInfoType infoType : types) {
+						if (infoType.getValidTransferTypeIds().contains(transferWrapperIds)) {
+							RuleAction createRuleAction = InfomngmntFactory.eINSTANCE.createRuleAction();
+							createRuleAction.setInfoTypeId(infoType.getType());
+							createRemusTransferType.getActions().add(createRuleAction);
+						}
+					}
 					createNewElementRules.getTransferTypes().add(createRemusTransferType);
 				}
 

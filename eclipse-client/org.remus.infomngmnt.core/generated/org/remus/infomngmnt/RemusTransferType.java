@@ -28,8 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.RemusTransferType#getName <em>Name</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemusTransferType#getId <em>Id</em>}</li>
- *   <li>{@link org.remus.infomngmnt.RemusTransferType#isActivated <em>Activated</em>}</li>
- *   <li>{@link org.remus.infomngmnt.RemusTransferType#getConditions <em>Conditions</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemusTransferType#getActions <em>Actions</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,45 +90,19 @@ public interface RemusTransferType extends EObject {
 	void setId(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Activated</b></em>' attribute.
+	 * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
+	 * The list contents are of type {@link org.remus.infomngmnt.RuleAction}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Activated</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Actions</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Activated</em>' attribute.
-	 * @see #setActivated(boolean)
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemusTransferType_Activated()
-	 * @model
-	 * @generated
-	 */
-	boolean isActivated();
-
-	/**
-	 * Sets the value of the '{@link org.remus.infomngmnt.RemusTransferType#isActivated <em>Activated</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Activated</em>' attribute.
-	 * @see #isActivated()
-	 * @generated
-	 */
-	void setActivated(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Conditions</b></em>' containment reference list.
-	 * The list contents are of type {@link org.remus.infomngmnt.Rule}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Conditions</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Conditions</em>' containment reference list.
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemusTransferType_Conditions()
+	 * @return the value of the '<em>Actions</em>' containment reference list.
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemusTransferType_Actions()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Rule> getConditions();
+	EList<RuleAction> getActions();
 
 } // RemusTransferType

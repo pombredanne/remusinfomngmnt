@@ -12,11 +12,14 @@
 package org.remus.infomngmnt.core.internal.extension;
 
 
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
@@ -41,6 +44,8 @@ public class InfoType implements IInfoType{
 	private final String contributor;
 	private final String createFactoryClass;
 	private final String imageFilePath;
+	private List<String> validTransferTypeIds;
+	private final String name;
 
 	/**
 	 * Creates
@@ -52,11 +57,13 @@ public class InfoType implements IInfoType{
 	 */
 	public InfoType(final IConfigurationElement configurationElement,
 			final String contributor,
+			final String name,
 			final String type,
 			final String createFactoryClass,
 			final String imageFilePath) {
 		this.configurationElement = configurationElement;
 		this.contributor = contributor;
+		this.name = name;
 		this.type = type;
 		this.createFactoryClass = createFactoryClass;
 		this.imageFilePath = imageFilePath;
@@ -109,6 +116,18 @@ public class InfoType implements IInfoType{
 			this.image = getImageDescriptor().createImage();
 		}
 		return this.image;
+	}
+
+	public void setValidTransferTypeIds(List<String> validTransferTypeIds) {
+		this.validTransferTypeIds = validTransferTypeIds;
+	}
+
+	public List<String> getValidTransferTypeIds() {
+		return this.validTransferTypeIds;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 

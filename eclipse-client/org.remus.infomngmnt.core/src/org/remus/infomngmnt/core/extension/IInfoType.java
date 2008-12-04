@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.core.extension;
 
+import java.util.List;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
@@ -29,5 +31,9 @@ public interface IInfoType {
 	ImageDescriptor getImageDescriptor();
 
 	Image getImage();
+
+	List<String> getValidTransferTypeIds();
+
+	String getName();
 
 }

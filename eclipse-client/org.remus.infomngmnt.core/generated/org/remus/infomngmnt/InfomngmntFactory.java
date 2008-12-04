@@ -133,15 +133,6 @@ public interface InfomngmntFactory extends EFactory {
 	NewElementRules createNewElementRules();
 
 	/**
-	 * Returns a new object of class '<em>Rule</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Rule</em>'.
-	 * @generated
-	 */
-	Rule createRule();
-
-	/**
 	 * Returns a new object of class '<em>Rule Value</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

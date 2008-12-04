@@ -4,9 +4,20 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
+            creationFactory="org.remus.infomngmnt.plaintext.extension.UnformattedTextCreationFactory"
             icon="icons/text.png"
+            name="Unformatted Text"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
             type="PLAINTEXT">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.urlTransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
       </information>
    </extension>
    <extension

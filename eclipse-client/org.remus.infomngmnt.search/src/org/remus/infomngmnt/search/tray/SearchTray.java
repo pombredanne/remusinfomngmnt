@@ -27,13 +27,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.common.ui.Activator;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.swt.SearchText;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchScope;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -61,7 +61,7 @@ public class SearchTray extends AbstractTraySection {
 			@Override
 			protected Text doCreateFilterText(Composite parent) {
 				this.text = super.doCreateFilterText(parent);
-				String string = Activator.getDefault().getDialogSettings().get(DIALOG_SETTINGS_LAST_SEARCHTERM);
+				String string = UimodelEditPlugin.getPlugin().getDialogSettings().get(DIALOG_SETTINGS_LAST_SEARCHTERM);
 				if (string != null) {
 					this.text.setText(string);
 				}
@@ -72,7 +72,7 @@ public class SearchTray extends AbstractTraySection {
 				super.doAddListenerToTextField();
 				this.text.addListener(SWT.Modify, new Listener() {
 					public void handleEvent(Event event) {
-						Activator.getDefault().getDialogSettings().put(DIALOG_SETTINGS_LAST_SEARCHTERM, text.getText());
+						UimodelEditPlugin.getPlugin().getDialogSettings().put(DIALOG_SETTINGS_LAST_SEARCHTERM, text.getText());
 
 					}
 				});
@@ -101,11 +101,13 @@ public class SearchTray extends AbstractTraySection {
 		Job.getJobManager().addJobChangeListener(this.searchJobListener = new JobChangeAdapter() {
 			@Override
 			public void scheduled(IJobChangeEvent event) {
-				checkSearchBar(searchBar,parent.getDisplay());
+				if (!parent.getDisplay().isDisposed())
+					checkSearchBar(searchBar,parent.getDisplay());
 			}
 			@Override
 			public void done(IJobChangeEvent event) {
-				checkSearchBar(searchBar,parent.getDisplay());
+				if (!parent.getDisplay().isDisposed())
+					checkSearchBar(searchBar,parent.getDisplay());
 			}
 		});
 		checkSearchBar(searchBar, parent.getDisplay());

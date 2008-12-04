@@ -69,14 +69,13 @@ IItemPropertySource {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (this.itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
 			addIdPropertyDescriptor(object);
-			addActivatedPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -86,19 +85,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_RemusTransferType_name_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_RemusTransferType_name_feature", "_UI_RemusTransferType_type"),
-						InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__NAME,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemusTransferType_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemusTransferType_name_feature", "_UI_RemusTransferType_type"),
+				 InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -108,41 +107,19 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addIdPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_RemusTransferType_id_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_RemusTransferType_id_feature", "_UI_RemusTransferType_type"),
-						InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__ID,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null,
-						null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Activated feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addActivatedPropertyDescriptor(Object object) {
-		this.itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_RemusTransferType_activated_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_RemusTransferType_activated_feature", "_UI_RemusTransferType_type"),
-						InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__ACTIVATED,
-						true,
-						false,
-						false,
-						ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-						null,
-						null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemusTransferType_id_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemusTransferType_id_feature", "_UI_RemusTransferType_type"),
+				 InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -155,11 +132,11 @@ IItemPropertySource {
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (this.childrenFeatures == null) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__CONDITIONS);
+			childrenFeatures.add(InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__ACTIONS);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -212,14 +189,13 @@ IItemPropertySource {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(RemusTransferType.class)) {
-		case InfomngmntPackage.REMUS_TRANSFER_TYPE__NAME:
-		case InfomngmntPackage.REMUS_TRANSFER_TYPE__ID:
-		case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIVATED:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
-		case InfomngmntPackage.REMUS_TRANSFER_TYPE__CONDITIONS:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-			return;
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__NAME:
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ID:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIONS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -236,9 +212,9 @@ IItemPropertySource {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-		(createChildParameter
-				(InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__CONDITIONS,
-						InfomngmntFactory.eINSTANCE.createRule()));
+			(createChildParameter
+				(InfomngmntPackage.Literals.REMUS_TRANSFER_TYPE__ACTIONS,
+				 InfomngmntFactory.eINSTANCE.createRuleAction()));
 	}
 
 	/**

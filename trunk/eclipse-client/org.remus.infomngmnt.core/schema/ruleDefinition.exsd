@@ -19,8 +19,6 @@
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
             <choice>
-               <element ref="rule"/>
-               <element ref="action"/>
                <element ref="transfertype"/>
             </choice>
          </sequence>
@@ -51,65 +49,7 @@
       </complexType>
    </element>
 
-   <element name="rule">
-      <complexType>
-         <choice>
-            <element ref="description" minOccurs="0" maxOccurs="1"/>
-            <element ref="validTransfers" minOccurs="1" maxOccurs="unbounded"/>
-         </choice>
-         <attribute name="id" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="implementation" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.AbstractRuleDefinition:org.remus.infomngmnt.core.extension.ICondition"/>
-               </appinfo>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
    <element name="description" type="string">
-   </element>
-
-   <element name="action">
-      <complexType>
-         <sequence minOccurs="0" maxOccurs="1">
-            <element ref="description"/>
-         </sequence>
-         <attribute name="id" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="implementation" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.AbstractRuleDefinition:org.remus.infomngmnt.core.extension.IRuleAction"/>
-               </appinfo>
-            </annotation>
-         </attribute>
-      </complexType>
    </element>
 
    <element name="transfertype">
@@ -138,21 +78,6 @@
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.TransferWrapper:"/>
-               </appinfo>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="validTransfers">
-      <complexType>
-         <attribute name="transferId" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.remus.infomngmnt.core.ruleDefinition/transfertype/@id"/>
                </appinfo>
             </annotation>
          </attribute>

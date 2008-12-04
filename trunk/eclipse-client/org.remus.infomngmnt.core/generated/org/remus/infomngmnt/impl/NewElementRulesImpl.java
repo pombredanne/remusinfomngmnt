@@ -43,6 +43,7 @@ import org.remus.infomngmnt.RemusTransferType;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.NewElementRulesImpl#getTransferTypes <em>Transfer Types</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.NewElementRulesImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.NewElementRulesImpl#isDeletable <em>Deletable</em>}</li>
  * </ul>
  * </p>
  *
@@ -78,6 +79,26 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isDeletable() <em>Deletable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeletable()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DELETABLE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeletable() <em>Deletable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeletable()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean deletable = DELETABLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -136,6 +157,27 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeletable() {
+		return deletable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeletable(boolean newDeletable) {
+		boolean oldDeletable = deletable;
+		deletable = newDeletable;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE, oldDeletable, deletable));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -157,6 +199,8 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 				return getTransferTypes();
 			case InfomngmntPackage.NEW_ELEMENT_RULES__NAME:
 				return getName();
+			case InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE:
+				return isDeletable() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -177,6 +221,9 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 			case InfomngmntPackage.NEW_ELEMENT_RULES__NAME:
 				setName((String)newValue);
 				return;
+			case InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE:
+				setDeletable(((Boolean)newValue).booleanValue());
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -195,6 +242,9 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 			case InfomngmntPackage.NEW_ELEMENT_RULES__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE:
+				setDeletable(DELETABLE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -211,6 +261,8 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 				return transferTypes != null && !transferTypes.isEmpty();
 			case InfomngmntPackage.NEW_ELEMENT_RULES__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE:
+				return deletable != DELETABLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -227,6 +279,8 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", deletable: ");
+		result.append(deletable);
 		result.append(')');
 		return result.toString();
 	}

@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.extension;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,6 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 
 import org.remus.infomngmnt.core.CorePlugin;
-import org.remus.infomngmnt.core.internal.extension.Rule;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -30,12 +28,6 @@ import org.remus.infomngmnt.core.internal.extension.Rule;
 public class RuleExtensionManager extends PluginRegistryDynamic{
 
 	public static final String EXTENSION_POINT = CorePlugin.PLUGIN_ID + ".ruleDefinition"; //$NON-NLS-1$
-
-	public static final String RULE_NODENAME = "rule"; //$NON-NLS-1$
-
-	public static final String ACTION_NODENAME = "action"; //$NON-NLS-1$
-
-	public static final String EXCEPTION_NODENAME = "exception"; //$NON-NLS-1$
 
 	public static final String TRANSFERTYPE_NODENAME = "transfertype"; //$NON-NLS-1$
 
@@ -47,7 +39,7 @@ public class RuleExtensionManager extends PluginRegistryDynamic{
 
 	private static RuleExtensionManager INSTANCE;
 
-	private Map<String,IRule> items;
+
 
 	private Map<String, TransferWrapper> wrapperItems;
 
@@ -68,7 +60,6 @@ public class RuleExtensionManager extends PluginRegistryDynamic{
 
 	@Override
 	protected void init() {
-		this.items = new HashMap<String,IRule>();
 		this.wrapperItems = new HashMap<String, TransferWrapper>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
 		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
@@ -83,26 +74,9 @@ public class RuleExtensionManager extends PluginRegistryDynamic{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else if (configurationElement.getName().equals(RULE_NODENAME)) {
-				final IRule rule = new Rule(
-						configurationElement,
-						configurationElement.getAttribute(IMPLEMENTATION_ATT),
-						configurationElement.getAttribute(ID_ATT),
-						configurationElement.getAttribute(NAME_ATT));
-				this.items.put(rule.getId(),rule);
 			}
 		}
 	}
-
-	public IRule getRuleById(final String id) {
-		return this.items.get(id);
-
-	}
-
-	public Collection<IRule> getAllRules() {
-		return this.items.values();
-	}
-
 
 	public Map<String, TransferWrapper> getAllTransferTypes() {
 		return this.wrapperItems;

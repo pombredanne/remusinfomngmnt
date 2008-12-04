@@ -18,21 +18,17 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemusTransferType;
-import org.remus.infomngmnt.Rule;
+import org.remus.infomngmnt.RuleAction;
 
 /**
  * <!-- begin-user-doc -->
@@ -43,8 +39,7 @@ import org.remus.infomngmnt.Rule;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.RemusTransferTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RemusTransferTypeImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.RemusTransferTypeImpl#isActivated <em>Activated</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.RemusTransferTypeImpl#getConditions <em>Conditions</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RemusTransferTypeImpl#getActions <em>Actions</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,34 +87,14 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 	protected String id = ID_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isActivated() <em>Activated</em>}' attribute.
+	 * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isActivated()
+	 * @see #getActions()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean ACTIVATED_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isActivated() <em>Activated</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isActivated()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean activated = ACTIVATED_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getConditions() <em>Conditions</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getConditions()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Rule> conditions;
+	protected EList<RuleAction> actions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -187,32 +162,11 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isActivated() {
-		return activated;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setActivated(boolean newActivated) {
-		boolean oldActivated = activated;
-		activated = newActivated;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIVATED, oldActivated, activated));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Rule> getConditions() {
-		if (conditions == null) {
-			conditions = new EObjectContainmentEList<Rule>(Rule.class, this, InfomngmntPackage.REMUS_TRANSFER_TYPE__CONDITIONS);
+	public EList<RuleAction> getActions() {
+		if (actions == null) {
+			actions = new EObjectContainmentEList<RuleAction>(RuleAction.class, this, InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIONS);
 		}
-		return conditions;
+		return actions;
 	}
 
 	/**
@@ -223,8 +177,8 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__CONDITIONS:
-				return ((InternalEList<?>)getConditions()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIONS:
+				return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -241,10 +195,8 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 				return getName();
 			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ID:
 				return getId();
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIVATED:
-				return isActivated() ? Boolean.TRUE : Boolean.FALSE;
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__CONDITIONS:
-				return getConditions();
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIONS:
+				return getActions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -264,12 +216,9 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ID:
 				setId((String)newValue);
 				return;
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIVATED:
-				setActivated(((Boolean)newValue).booleanValue());
-				return;
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__CONDITIONS:
-				getConditions().clear();
-				getConditions().addAll((Collection<? extends Rule>)newValue);
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIONS:
+				getActions().clear();
+				getActions().addAll((Collection<? extends RuleAction>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -289,11 +238,8 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIVATED:
-				setActivated(ACTIVATED_EDEFAULT);
-				return;
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__CONDITIONS:
-				getConditions().clear();
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIONS:
+				getActions().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -311,10 +257,8 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIVATED:
-				return activated != ACTIVATED_EDEFAULT;
-			case InfomngmntPackage.REMUS_TRANSFER_TYPE__CONDITIONS:
-				return conditions != null && !conditions.isEmpty();
+			case InfomngmntPackage.REMUS_TRANSFER_TYPE__ACTIONS:
+				return actions != null && !actions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -333,8 +277,6 @@ public class RemusTransferTypeImpl extends EObjectImpl implements RemusTransferT
 		result.append(name);
 		result.append(", id: ");
 		result.append(id);
-		result.append(", activated: ");
-		result.append(activated);
 		result.append(')');
 		return result.toString();
 	}

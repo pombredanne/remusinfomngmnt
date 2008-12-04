@@ -16,13 +16,16 @@ package org.remus.infomngmnt.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.RuleValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +34,9 @@ import org.remus.infomngmnt.RuleAction;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getInfoTypeId <em>Info Type Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getRuleValue <em>Rule Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,24 +44,54 @@ import org.remus.infomngmnt.RuleAction;
  */
 public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getInfoTypeId() <em>Info Type Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInfoTypeId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String INFO_TYPE_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getInfoTypeId() <em>Info Type Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInfoTypeId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String infoTypeId = INFO_TYPE_ID_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getRuleValue() <em>Rule Value</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRuleValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected RuleValue ruleValue;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -82,8 +117,8 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -91,11 +126,89 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_ACTION__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_ACTION__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getInfoTypeId() {
+		return infoTypeId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInfoTypeId(String newInfoTypeId) {
+		String oldInfoTypeId = infoTypeId;
+		infoTypeId = newInfoTypeId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID, oldInfoTypeId, infoTypeId));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RuleValue getRuleValue() {
+		return ruleValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetRuleValue(RuleValue newRuleValue, NotificationChain msgs) {
+		RuleValue oldRuleValue = ruleValue;
+		ruleValue = newRuleValue;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_ACTION__RULE_VALUE, oldRuleValue, newRuleValue);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRuleValue(RuleValue newRuleValue) {
+		if (newRuleValue != ruleValue) {
+			NotificationChain msgs = null;
+			if (ruleValue != null)
+				msgs = ((InternalEObject)ruleValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.RULE_ACTION__RULE_VALUE, null, msgs);
+			if (newRuleValue != null)
+				msgs = ((InternalEObject)newRuleValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.RULE_ACTION__RULE_VALUE, null, msgs);
+			msgs = basicSetRuleValue(newRuleValue, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_ACTION__RULE_VALUE, newRuleValue, newRuleValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
+				return basicSetRuleValue(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -106,8 +219,12 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case InfomngmntPackage.RULE_ACTION__ID:
-				return getId();
+			case InfomngmntPackage.RULE_ACTION__NAME:
+				return getName();
+			case InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID:
+				return getInfoTypeId();
+			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
+				return getRuleValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -120,8 +237,14 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case InfomngmntPackage.RULE_ACTION__ID:
-				setId((String)newValue);
+			case InfomngmntPackage.RULE_ACTION__NAME:
+				setName((String)newValue);
+				return;
+			case InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID:
+				setInfoTypeId((String)newValue);
+				return;
+			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
+				setRuleValue((RuleValue)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -135,8 +258,14 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.RULE_ACTION__ID:
-				setId(ID_EDEFAULT);
+			case InfomngmntPackage.RULE_ACTION__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID:
+				setInfoTypeId(INFO_TYPE_ID_EDEFAULT);
+				return;
+			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
+				setRuleValue((RuleValue)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -150,8 +279,12 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.RULE_ACTION__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case InfomngmntPackage.RULE_ACTION__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID:
+				return INFO_TYPE_ID_EDEFAULT == null ? infoTypeId != null : !INFO_TYPE_ID_EDEFAULT.equals(infoTypeId);
+			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
+				return ruleValue != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -166,8 +299,10 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", infoTypeId: ");
+		result.append(infoTypeId);
 		result.append(')');
 		return result.toString();
 	}

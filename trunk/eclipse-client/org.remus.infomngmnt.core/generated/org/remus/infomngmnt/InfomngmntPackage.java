@@ -726,95 +726,22 @@ public interface InfomngmntPackage extends EPackage {
 	int NEW_ELEMENT_RULES__NAME = 1;
 
 	/**
+	 * The feature id for the '<em><b>Deletable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_ELEMENT_RULES__DELETABLE = 2;
+
+	/**
 	 * The number of structural features of the '<em>New Element Rules</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NEW_ELEMENT_RULES_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RuleImpl <em>Rule</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.remus.infomngmnt.impl.RuleImpl
-	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRule()
-	 * @generated
-	 */
-	int RULE = 14;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__ID = 0;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__NAME = 1;
-
-	/**
-	 * The feature id for the '<em><b>Activated</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__ACTIVATED = 2;
-
-	/**
-	 * The feature id for the '<em><b>String Representation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__STRING_REPRESENTATION = 3;
-
-	/**
-	 * The feature id for the '<em><b>Rule Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__RULE_VALUE = 4;
-
-	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__CHILDREN = 5;
-
-	/**
-	 * The feature id for the '<em><b>Action</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__ACTION = 6;
-
-	/**
-	 * The number of structural features of the '<em>Rule</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RULE_FEATURE_COUNT = 7;
+	int NEW_ELEMENT_RULES_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RuleValueImpl <em>Rule Value</em>}' class.
@@ -824,7 +751,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleValue()
 	 * @generated
 	 */
-	int RULE_VALUE = 15;
+	int RULE_VALUE = 14;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -979,7 +906,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAvailableRuleDefinitions()
 	 * @generated
 	 */
-	int AVAILABLE_RULE_DEFINITIONS = 16;
+	int AVAILABLE_RULE_DEFINITIONS = 15;
 
 	/**
 	 * The feature id for the '<em><b>New Element Rules</b></em>' containment reference list.
@@ -1008,7 +935,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemusTransferType()
 	 * @generated
 	 */
-	int REMUS_TRANSFER_TYPE = 17;
+	int REMUS_TRANSFER_TYPE = 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1029,22 +956,13 @@ public interface InfomngmntPackage extends EPackage {
 	int REMUS_TRANSFER_TYPE__ID = 1;
 
 	/**
-	 * The feature id for the '<em><b>Activated</b></em>' attribute.
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REMUS_TRANSFER_TYPE__ACTIVATED = 2;
-
-	/**
-	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REMUS_TRANSFER_TYPE__CONDITIONS = 3;
+	int REMUS_TRANSFER_TYPE__ACTIONS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Remus Transfer Type</em>' class.
@@ -1053,7 +971,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REMUS_TRANSFER_TYPE_FEATURE_COUNT = 4;
+	int REMUS_TRANSFER_TYPE_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RuleActionImpl <em>Rule Action</em>}' class.
@@ -1063,16 +981,34 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleAction()
 	 * @generated
 	 */
-	int RULE_ACTION = 18;
+	int RULE_ACTION = 17;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ACTION__ID = 0;
+	int RULE_ACTION__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Info Type Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_ACTION__INFO_TYPE_ID = 1;
+
+	/**
+	 * The feature id for the '<em><b>Rule Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_ACTION__RULE_VALUE = 2;
 
 	/**
 	 * The number of structural features of the '<em>Rule Action</em>' class.
@@ -1081,7 +1017,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ACTION_FEATURE_COUNT = 1;
+	int RULE_ACTION_FEATURE_COUNT = 3;
 
 
 	/**
@@ -1645,91 +1581,15 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getNewElementRules_Name();
 
 	/**
-	 * Returns the meta object for class '{@link org.remus.infomngmnt.Rule <em>Rule</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.NewElementRules#isDeletable <em>Deletable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Rule</em>'.
-	 * @see org.remus.infomngmnt.Rule
+	 * @return the meta object for the attribute '<em>Deletable</em>'.
+	 * @see org.remus.infomngmnt.NewElementRules#isDeletable()
+	 * @see #getNewElementRules()
 	 * @generated
 	 */
-	EClass getRule();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Rule#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.remus.infomngmnt.Rule#getId()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EAttribute getRule_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Rule#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.remus.infomngmnt.Rule#getName()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EAttribute getRule_Name();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Rule#isActivated <em>Activated</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Activated</em>'.
-	 * @see org.remus.infomngmnt.Rule#isActivated()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EAttribute getRule_Activated();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Rule#getStringRepresentation <em>String Representation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>String Representation</em>'.
-	 * @see org.remus.infomngmnt.Rule#getStringRepresentation()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EAttribute getRule_StringRepresentation();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.Rule#getRuleValue <em>Rule Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Rule Value</em>'.
-	 * @see org.remus.infomngmnt.Rule#getRuleValue()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_RuleValue();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.Rule#getChildren <em>Children</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Children</em>'.
-	 * @see org.remus.infomngmnt.Rule#getChildren()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_Children();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.Rule#getAction <em>Action</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Action</em>'.
-	 * @see org.remus.infomngmnt.Rule#getAction()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_Action();
+	EAttribute getNewElementRules_Deletable();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RuleValue <em>Rule Value</em>}'.
@@ -1795,26 +1655,15 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getRemusTransferType_Id();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RemusTransferType#isActivated <em>Activated</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.RemusTransferType#getActions <em>Actions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Activated</em>'.
-	 * @see org.remus.infomngmnt.RemusTransferType#isActivated()
+	 * @return the meta object for the containment reference list '<em>Actions</em>'.
+	 * @see org.remus.infomngmnt.RemusTransferType#getActions()
 	 * @see #getRemusTransferType()
 	 * @generated
 	 */
-	EAttribute getRemusTransferType_Activated();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.RemusTransferType#getConditions <em>Conditions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Conditions</em>'.
-	 * @see org.remus.infomngmnt.RemusTransferType#getConditions()
-	 * @see #getRemusTransferType()
-	 * @generated
-	 */
-	EReference getRemusTransferType_Conditions();
+	EReference getRemusTransferType_Actions();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RuleAction <em>Rule Action</em>}'.
@@ -1827,15 +1676,37 @@ public interface InfomngmntPackage extends EPackage {
 	EClass getRuleAction();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RuleAction#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RuleAction#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.remus.infomngmnt.RuleAction#getId()
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.remus.infomngmnt.RuleAction#getName()
 	 * @see #getRuleAction()
 	 * @generated
 	 */
-	EAttribute getRuleAction_Id();
+	EAttribute getRuleAction_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RuleAction#getInfoTypeId <em>Info Type Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Info Type Id</em>'.
+	 * @see org.remus.infomngmnt.RuleAction#getInfoTypeId()
+	 * @see #getRuleAction()
+	 * @generated
+	 */
+	EAttribute getRuleAction_InfoTypeId();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.RuleAction#getRuleValue <em>Rule Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Rule Value</em>'.
+	 * @see org.remus.infomngmnt.RuleAction#getRuleValue()
+	 * @see #getRuleAction()
+	 * @generated
+	 */
+	EReference getRuleAction_RuleValue();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2304,70 +2175,12 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute NEW_ELEMENT_RULES__NAME = eINSTANCE.getNewElementRules_Name();
 
 		/**
-		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RuleImpl <em>Rule</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.remus.infomngmnt.impl.RuleImpl
-		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRule()
-		 * @generated
-		 */
-		EClass RULE = eINSTANCE.getRule();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Deletable</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute RULE__ID = eINSTANCE.getRule_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute RULE__NAME = eINSTANCE.getRule_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Activated</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute RULE__ACTIVATED = eINSTANCE.getRule_Activated();
-
-		/**
-		 * The meta object literal for the '<em><b>String Representation</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute RULE__STRING_REPRESENTATION = eINSTANCE.getRule_StringRepresentation();
-
-		/**
-		 * The meta object literal for the '<em><b>Rule Value</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__RULE_VALUE = eINSTANCE.getRule_RuleValue();
-
-		/**
-		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__CHILDREN = eINSTANCE.getRule_Children();
-
-		/**
-		 * The meta object literal for the '<em><b>Action</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__ACTION = eINSTANCE.getRule_Action();
+		EAttribute NEW_ELEMENT_RULES__DELETABLE = eINSTANCE.getNewElementRules_Deletable();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RuleValueImpl <em>Rule Value</em>}' class.
@@ -2424,20 +2237,12 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute REMUS_TRANSFER_TYPE__ID = eINSTANCE.getRemusTransferType_Id();
 
 		/**
-		 * The meta object literal for the '<em><b>Activated</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute REMUS_TRANSFER_TYPE__ACTIVATED = eINSTANCE.getRemusTransferType_Activated();
-
-		/**
-		 * The meta object literal for the '<em><b>Conditions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference REMUS_TRANSFER_TYPE__CONDITIONS = eINSTANCE.getRemusTransferType_Conditions();
+		EReference REMUS_TRANSFER_TYPE__ACTIONS = eINSTANCE.getRemusTransferType_Actions();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RuleActionImpl <em>Rule Action</em>}' class.
@@ -2450,12 +2255,28 @@ public interface InfomngmntPackage extends EPackage {
 		EClass RULE_ACTION = eINSTANCE.getRuleAction();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute RULE_ACTION__ID = eINSTANCE.getRuleAction_Id();
+		EAttribute RULE_ACTION__NAME = eINSTANCE.getRuleAction_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Info Type Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE_ACTION__INFO_TYPE_ID = eINSTANCE.getRuleAction_InfoTypeId();
+
+		/**
+		 * The meta object literal for the '<em><b>Rule Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RULE_ACTION__RULE_VALUE = eINSTANCE.getRuleAction_RuleValue();
 
 	}
 

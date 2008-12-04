@@ -129,7 +129,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.viewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(Object element) {
-				return ((IInfoType) element).getType();
+				return ((IInfoType) element).getName();
 			}
 			@Override
 			public Image getImage(Object element) {

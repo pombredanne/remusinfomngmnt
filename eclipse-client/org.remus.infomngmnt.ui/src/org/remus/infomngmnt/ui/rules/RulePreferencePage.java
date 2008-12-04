@@ -12,37 +12,41 @@
 
 package org.remus.infomngmnt.ui.rules;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.edit.command.PasteFromClipboardCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.action.CutAction;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
 import org.eclipse.emf.edit.ui.action.PasteAction;
-import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
-import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.DragSourceListener;
-import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -58,23 +62,22 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
-import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RemusTransferType;
-import org.remus.infomngmnt.Rule;
-import org.remus.infomngmnt.core.extension.AbstractRuleDefinition;
-import org.remus.infomngmnt.core.extension.IRule;
-import org.remus.infomngmnt.core.extension.RuleExtensionManager;
+import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.RuleUtil;
+import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
+import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -87,16 +90,23 @@ IWorkbenchPreferencePage {
 	private AvailableRuleDefinitions model;
 	private EMFDataBindingContext ctx;
 	private NewElementRules selectedRuleSet;
-	private CheckboxTreeViewer checkboxTableViewer;
-	private TableViewer availableRulesTableViewer;
+	private TreeViewer treeViewer;
 	private EditingDomain editingDomain;
 
 	// action
 	private RuleCutAction cutAction;
 	private RuleCopyAction copyAction;
-	private PasteAction pasteAction;
+	private PasteRuleAction pasteAction;
 	private RuleDeleteAction deleteAction;
+
 	private EditRuleAction editRuleAction;
+	private IAction newAction;
+	private MenuManager newMenuManager;
+	private StackLayout stackLayout;
+	private List<AbstractCreationPreferencePage> knownPrefPages;
+	private Group availableRulesGroup;
+	private ToolItem deleteToolItem;
+	private ToolItem newToolItem;
 	/**
 	 * 
 	 */
@@ -148,29 +158,39 @@ IWorkbenchPreferencePage {
 
 		final ToolBar toolBar_1 = new ToolBar(composite, SWT.NONE);
 
-		final ToolItem newItemToolItem_2 = new ToolItem(toolBar_1, SWT.PUSH);
-		newItemToolItem_2.setText("New item");
+		this.newToolItem = new ToolItem(toolBar_1, SWT.PUSH);
+		this.newToolItem.setText("New");
+		this.newToolItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				NewRuleDialog diag = new NewRuleDialog(getShell(), RulePreferencePage.this.model);
+				if (diag.open() == IDialogConstants.OK_ID) {
+					RulePreferencePage.this.model.getNewElementRules().add(diag.getNewElement());
+					RulePreferencePage.this.combo.add(diag.getNewElement().getName());
+				}
+			}
+		});
 
-		final ToolItem newItemToolItem_3 = new ToolItem(toolBar_1, SWT.PUSH);
-		newItemToolItem_3.setText("New item");
-
-
-		final ToolBar toolBar = new ToolBar(composite, SWT.NONE | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-
-		final ToolItem newItemToolItem = new ToolItem(toolBar, SWT.PUSH);
-		newItemToolItem.setText("New item");
-		newItemToolItem.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_DEF_VIEW));
-
-		final ToolItem newItemToolItem_1 = new ToolItem(toolBar, SWT.PUSH);
-		newItemToolItem_1.setText("New item");
+		this.deleteToolItem = new ToolItem(toolBar_1, SWT.PUSH);
+		this.deleteToolItem.setText("Delete");
+		this.deleteToolItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (MessageDialog.openConfirm(
+						getShell(),
+						"Confirm delete",
+						NLS.bind("Are you sure to delete ruleset {0}?", RulePreferencePage.this.selectedRuleSet.getName()))) {
+					RulePreferencePage.this.model.getNewElementRules().remove(RulePreferencePage.this.selectedRuleSet);
+					String itemToRemove = RulePreferencePage.this.selectedRuleSet.getName();
+					RulePreferencePage.this.combo.select(0);
+					RulePreferencePage.this.combo.remove(itemToRemove);
+				}
+			}
+		});
+		new Label(composite, SWT.NONE);
 
 		final Link eclipseorgLink = new Link(composite, SWT.NONE);
-		eclipseorgLink.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+		eclipseorgLink.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
 		eclipseorgLink.setText("<a>Learn how to create rules...</a>");
 		AdapterFactoryContentProvider ocp = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
-		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-		Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
 
 		final SashForm sashForm = new SashForm(composite, SWT.VERTICAL);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
@@ -179,60 +199,62 @@ IWorkbenchPreferencePage {
 		currentRuleConfigurationGroup.setText("Current Rule configuration");
 		currentRuleConfigurationGroup.setLayout(new FillLayout());
 
-		this.checkboxTableViewer = new ContainerCheckedTreeViewer(currentRuleConfigurationGroup, SWT.BORDER);
-		this.tree = this.checkboxTableViewer.getTree();
+		this.treeViewer = new TreeViewer(currentRuleConfigurationGroup, SWT.BORDER);
+		this.tree = this.treeViewer.getTree();
 		this.tree.setLinesVisible(false);
 		this.tree.setHeaderVisible(false);
 
+		this.treeViewer.setContentProvider(ocp);
+		this.treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
+		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				handleSelectionChanged(event.getSelection());
 
-		this.checkboxTableViewer.setContentProvider(ocp);
-		this.checkboxTableViewer.setLabelProvider(new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
-		this.checkboxTableViewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(this.checkboxTableViewer));
-		this.checkboxTableViewer.addDropSupport(dndOperations, transfers, new RuleDropAdapter(this.editingDomain, this.checkboxTableViewer));
-
-		final Group availableRulesGroup = new Group(sashForm, SWT.NONE);
-		availableRulesGroup.setLayout(new FillLayout());
-		availableRulesGroup.setText("Available Rule-Templates");
-
-
-		this.availableRulesTableViewer = new TableViewer(availableRulesGroup, SWT.BORDER);
-		this.availableRulesTableViewer.setContentProvider(new ArrayContentProvider());
-		this.availableRulesTableViewer.setLabelProvider(new LabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((IRule)element).getName();
 			}
 		});
-		this.availableRulesTableViewer.setInput(RuleExtensionManager.getInstance().getAllRules());
-		this.availableRulesTableViewer.addDragSupport(dndOperations, transfers, new DragSourceListener() {
 
-			public void dragFinished(DragSourceEvent event) {
-				// do nothing
-			}
+		this.availableRulesGroup = new Group(sashForm, SWT.NONE);
+		this.stackLayout = new StackLayout();
+		this.availableRulesGroup.setLayout(this.stackLayout);
+		this.availableRulesGroup.setText("Preferences");
 
-			public void dragSetData(DragSourceEvent event) {
-				//List<IRule> list = ((IStructuredSelection) availableRulesTableViewer.getSelection()).toList();
-				IRule dragRule = (IRule) ((IStructuredSelection) RulePreferencePage.this.availableRulesTableViewer.getSelection()).getFirstElement();
-				Rule rule = InfomngmntFactory.eINSTANCE.createRule();
-				rule.setId(dragRule.getId());
-				event.data = new StructuredSelection(new Object[] {rule});
-			}
 
-			public void dragStart(DragSourceEvent event) {
-				// do nothing
-			}
 
-		});
 		this.combo.select(0);
 		hookContextMenu();
 		sashForm.setWeights(new int[] {1, 1 });
 		return composite;
 	}
 
+	protected void handleSelectionChanged(ISelection selection) {
+		Object element = ((IStructuredSelection) selection).getFirstElement();
+		if (element instanceof RuleAction) {
+			AbstractCreationPreferencePage preferencePage = UIExtensionManager.getInstance().getPreferencePageByTransferAndTypeId(
+					((RemusTransferType) ((RuleAction) element).eContainer()).getId(), ((RuleAction) element).getInfoTypeId());
+			if (preferencePage != null) {
+				RuleValue ruleValue = ((RuleAction) element).getRuleValue();
+				if (ruleValue == null) {
+					ruleValue = InfomngmntFactory.eINSTANCE.createRuleValue();
+					((RuleAction) element).setRuleValue(ruleValue);
+				}
+				preferencePage.setValues(ruleValue, this.editingDomain);
+				if (!this.knownPrefPages.contains(preferencePage)) {
+					this.knownPrefPages.add(preferencePage);
+					preferencePage.createPreferencePage(this.availableRulesGroup);
+				}
+				preferencePage.bindValuesToUi();
+				this.stackLayout.topControl = preferencePage.getControl();
+				this.availableRulesGroup.layout();
+			}
+		}
+
+	}
+
 	protected void handleRuleSetSelectionChange(Event event) {
 		this.selectedRuleSet = this.model.getNewElementRules().get(((Combo)event.widget).getSelectionIndex());
 		this.ctx.dispose();
-		this.checkboxTableViewer.setInput(this.selectedRuleSet);
+		this.treeViewer.setInput(this.selectedRuleSet);
+		this.deleteToolItem.setEnabled(this.selectedRuleSet.isDeletable());
 
 	}
 
@@ -242,30 +264,67 @@ IWorkbenchPreferencePage {
 	public void init(IWorkbench workbench) {
 		this.model = RuleUtil.getInstance().getElementRules();
 		this.ctx = new EMFDataBindingContext();
+		this.knownPrefPages = new ArrayList<AbstractCreationPreferencePage>();
 
 	}
 
 	private void hookContextMenu() {
+
 		this.cutAction = new RuleCutAction(this.editingDomain);
-		this.checkboxTableViewer.addSelectionChangedListener(this.cutAction);
+		this.treeViewer.addSelectionChangedListener(this.cutAction);
 		this.copyAction = new RuleCopyAction(this.editingDomain);
-		this.checkboxTableViewer.addSelectionChangedListener(this.copyAction);
-		this.pasteAction = new PasteAction(this.editingDomain);
-		this.checkboxTableViewer.addSelectionChangedListener(this.pasteAction);
+		this.treeViewer.addSelectionChangedListener(this.copyAction);
+		this.pasteAction = new PasteRuleAction(this.editingDomain);
+		this.treeViewer.addSelectionChangedListener(this.pasteAction);
 		this.deleteAction = new RuleDeleteAction(this.editingDomain);
-		this.checkboxTableViewer.addSelectionChangedListener(this.deleteAction);
+		this.treeViewer.addSelectionChangedListener(this.deleteAction);
+		this.newMenuManager = new MenuManager("New");
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
+		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				RulePreferencePage.this.newMenuManager.removeAll();
+				populateNewMenu(event.getSelection());
+			}
+		});
 		menuMgr.addMenuListener(new IMenuListener() {
 			public void menuAboutToShow(IMenuManager manager) {
 				fillContextMenu(manager);
 			}
 		});
-		Menu menu = menuMgr.createContextMenu(this.checkboxTableViewer.getControl());
-		this.checkboxTableViewer.getControl().setMenu(menu);
+		Menu menu = menuMgr.createContextMenu(this.treeViewer.getControl());
+		this.treeViewer.getControl().setMenu(menu);
+	}
+
+	protected void populateNewMenu(ISelection selection) {
+		if (((IStructuredSelection) selection).getFirstElement() instanceof RemusTransferType) {
+			RemusTransferType element = (RemusTransferType) ((IStructuredSelection) selection).getFirstElement();
+			Collection<IInfoType> types = InformationExtensionManager.getInstance().getTypes();
+			for (IInfoType infoType : types) {
+				if (infoType.getValidTransferTypeIds().contains(element.getId())) {
+					if (!itemAlreadyPresent(element,infoType)) {
+						this.newMenuManager.add(new NewItemAction(infoType,element));
+					}
+				}
+			}
+		}
+
+	}
+
+	boolean itemAlreadyPresent(RemusTransferType type, IInfoType infoType) {
+		EList<RuleAction> actions = type.getActions();
+		for (RuleAction foundAction : actions) {
+			if (foundAction.getInfoTypeId().equals(infoType.getType())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected void fillContextMenu(IMenuManager manager) {
+
+		manager.add(new Separator());
+		manager.add(this.newMenuManager);
 		manager.add(this.cutAction);
 		manager.add(this.copyAction);
 		manager.add(this.pasteAction);
@@ -333,17 +392,72 @@ IWorkbenchPreferencePage {
 		@Override
 		public void run() {
 			Object firstElement = getStructuredSelection().getFirstElement();
-			if (firstElement instanceof Rule) {
-				Rule element = (Rule) firstElement;
-				IRule ruleById = RuleExtensionManager.getInstance().getRuleById(element.getId());
-				AbstractRuleDefinition ruleDefinition = ruleById.getRuleDefinition();
-				ruleDefinition.initialize(element);
-			}
+
 		}
 
 		@Override
 		protected boolean updateSelection(IStructuredSelection selection) {
 			return !selection.isEmpty() && selection.size() == 1;
+		}
+
+	}
+
+	private class PasteRuleAction extends PasteAction {
+		public PasteRuleAction(EditingDomain editingDomain) {
+			super(editingDomain);
+		}
+
+		@Override
+		public Command createCommand(Collection<?> selection) {
+			Command createCommand = super.createCommand(selection);
+			if (createCommand.canExecute()) {
+				Collection<Object> clipboard = RulePreferencePage.this.editingDomain.getClipboard();
+				for (Object object : clipboard) {
+					if (object instanceof RuleAction && ((PasteFromClipboardCommand)createCommand).getOwner() instanceof RemusTransferType){
+						String infoTypeId = ((RuleAction) object).getInfoTypeId();
+						IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(infoTypeId);
+						if (infoTypeByType != null
+								&& infoTypeByType.getValidTransferTypeIds().contains(((RemusTransferType) ((PasteFromClipboardCommand)createCommand).getOwner()).getId())
+								&& !itemAlreadyPresent((RemusTransferType) ((PasteFromClipboardCommand)createCommand).getOwner(),infoTypeByType)) {
+							// can paste
+						} else {
+							return UnexecutableCommand.INSTANCE;
+						}
+					}
+				}
+			}
+			return createCommand;
+		}
+	}
+
+	@Override
+	protected void performDefaults() {
+		MessageDialog.openError(getShell(), "Error", "Restoring is currently not supported");
+	}
+
+	@Override
+	public void performApply() {
+		EditingUtil.getInstance().saveObjectToResource(this.model);
+	}
+
+	private static class NewItemAction extends Action {
+
+		private final IInfoType infoType;
+		private final RemusTransferType element;
+
+		public NewItemAction(IInfoType infoType, RemusTransferType element) {
+			this.infoType = infoType;
+			this.element = element;
+			setImageDescriptor(infoType.getImageDescriptor());
+			setText(infoType.getType());
+		}
+
+		@Override
+		public void run() {
+			RuleAction createRuleAction = InfomngmntFactory.eINSTANCE.createRuleAction();
+			createRuleAction.setInfoTypeId(this.infoType.getType());
+			this.element.getActions().add(createRuleAction);
+			super.run();
 		}
 
 	}

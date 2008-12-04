@@ -69,6 +69,10 @@ public class TrayConfigurationManager {
 		if (file.exists()) {
 			Resource resource = resourceSet.getResource(createURI,true);
 			this.traySections = (TraySectionCollection) resource.getContents().get(0);
+			for (TraySection traySection : this.traySections.getSections()) {
+				ITraySectionDefinition sectionDefinitionById = TraySectionManager.getInstance().getSectionDefinitionById(traySection.getTemplateId());
+				traySection.setImplementation(sectionDefinitionById.getImplementation());
+			}
 		} else {
 			Resource resource = resourceSet.createResource(createURI);
 			this.traySections = buildInitialSectionConfiguration();
@@ -85,6 +89,7 @@ public class TrayConfigurationManager {
 		searchTraySection.setImage(sectionDefinitionById.getImage());
 		searchTraySection.setImplementation(sectionDefinitionById.getImplementation());
 		searchTraySection.setName(sectionDefinitionById.getLabel());
+		searchTraySection.setTemplateId(sectionDefinitionById.getId());
 		returnValue.getSections().add(searchTraySection);
 		// Drop-Box
 		ITraySectionDefinition dropBoxDefinition = TraySectionManager.getInstance().getSectionDefinitionById(DROP_BOX_ID);
@@ -92,6 +97,7 @@ public class TrayConfigurationManager {
 		dropTraySection.setImage(dropBoxDefinition.getImage());
 		dropTraySection.setImplementation(dropBoxDefinition.getImplementation());
 		dropTraySection.setName(dropBoxDefinition.getLabel());
+		dropTraySection.setTemplateId(dropBoxDefinition.getId());
 		returnValue.getSections().add(dropTraySection);
 
 		return returnValue;

@@ -85,6 +85,7 @@
             id="org.remus.infomngmnt.ui.dropBox"
             multiple="true"
             name="Drop-Section"
+            preferencesclass="org.remus.infomngmnt.ui.tray.DropSectionPreferencePage"
             sectionControl="org.remus.infomngmnt.ui.tray.DropSection">
       </sectionBox>
    </extension>

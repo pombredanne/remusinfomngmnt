@@ -101,13 +101,11 @@ public class DesktopWindow extends AbstractNotificationPopup {
 			Composite composite = this.toolkit.createComposite(createSection,SWT.NO_FOCUS);
 			createSection.setClient(composite);
 			AbstractTraySection implementation = traySection.getImplementation();
-			implementation.init(this.toolkit, traySection.getName(), traySection.getImage());
+			implementation.init(this.toolkit, traySection);
 			createSection.setText(implementation.getTitle());
 			implementation.createDetailsPart(composite);
 			this.traySections.add(implementation);
-
 		}
-
 	}
 
 	@Override

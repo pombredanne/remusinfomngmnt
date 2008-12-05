@@ -16,6 +16,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
+import org.remus.infomngmt.common.ui.uimodel.TraySection;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -24,11 +26,13 @@ public abstract class AbstractTraySection {
 	protected FormToolkit toolkit;
 	private String title;
 	private Image image;
+	private TraySection section;
 
-	public void init(FormToolkit pToolkit, String title, Image image) {
+	public void init(FormToolkit pToolkit, TraySection section) {
 		this.toolkit = pToolkit;
-		this.title = title;
-		this.image = image;
+		this.section = section;
+		this.title = section.getName();
+		this.image = section.getImage();
 	}
 
 	public abstract void createDetailsPart(Composite parent);
@@ -40,6 +44,10 @@ public abstract class AbstractTraySection {
 
 	public Image getImage() {
 		return this.image;
+	}
+
+	protected TraySection getSectionDefinition() {
+		return this.section;
 	}
 
 	public void dispose() {

@@ -29,4 +29,6 @@ public interface ITraySectionDefinition {
 
 	AbstractTraySection getImplementation();
 
+	AbstractTrayPreferencePage getPreferencePage();
+
 }

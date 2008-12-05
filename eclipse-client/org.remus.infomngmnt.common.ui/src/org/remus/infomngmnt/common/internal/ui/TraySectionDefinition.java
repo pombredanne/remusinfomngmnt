@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.extension.ITraySectionDefinition;
 import org.remus.infomngmnt.common.ui.extension.TraySectionManager;
@@ -26,8 +27,6 @@ import org.remus.infomngmnt.common.ui.extension.TraySectionManager;
  */
 public class TraySectionDefinition implements ITraySectionDefinition{
 
-
-
 	private final String label;
 
 	private Image image;
@@ -35,6 +34,8 @@ public class TraySectionDefinition implements ITraySectionDefinition{
 	private final boolean multiple;
 
 	private AbstractTraySection implementation;
+
+	private AbstractTrayPreferencePage preferencePage;
 
 	private final IConfigurationElement configurationElement;
 
@@ -82,6 +83,17 @@ public class TraySectionDefinition implements ITraySectionDefinition{
 
 	public IConfigurationElement getConfigurationElement() {
 		return this.configurationElement;
+	}
+
+	public AbstractTrayPreferencePage getPreferencePage() {
+		if (this.preferencePage == null) {
+			try {
+				this.preferencePage = (AbstractTrayPreferencePage) this.configurationElement.createExecutableExtension(TraySectionManager.PREFERENCEPAGE_ATT);
+			} catch (CoreException e) {
+				// TODO ErrorHandling
+			}
+		}
+		return this.preferencePage;
 	}
 
 

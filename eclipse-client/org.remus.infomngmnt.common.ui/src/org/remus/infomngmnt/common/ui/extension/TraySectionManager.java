@@ -42,6 +42,8 @@ public class TraySectionManager {
 
 	public static final String IMPLEMENTATION_ATT = "sectionControl"; //$NON-NLS-1$
 
+	public static final String PREFERENCEPAGE_ATT = "preferencesclass"; //$NON-NLS-1$
+
 	private static TraySectionManager INSTANCE;
 
 	private Map<String, ITraySectionDefinition> items;

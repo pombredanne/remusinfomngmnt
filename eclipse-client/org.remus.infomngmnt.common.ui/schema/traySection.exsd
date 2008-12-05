@@ -102,7 +102,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java"/>
+                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage:"/>
                </appinfo>
             </annotation>
          </attribute>

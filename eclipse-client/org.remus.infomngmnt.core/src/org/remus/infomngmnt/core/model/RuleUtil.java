@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
 import org.remus.infomngmnt.AvailableRuleDefinitions;
@@ -84,6 +85,16 @@ public class RuleUtil {
 			}
 		}
 		return this.rules;
+	}
+
+	public NewElementRules getRuleByName(String name) {
+		EList<NewElementRules> newElementRules = this.rules.getNewElementRules();
+		for (NewElementRules newElementRules2 : newElementRules) {
+			if (newElementRules2.getName().equals(name)) {
+				return newElementRules2;
+			}
+		}
+		return null;
 	}
 
 }

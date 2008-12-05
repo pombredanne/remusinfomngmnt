@@ -12,6 +12,9 @@
 
 package org.remus.infomngmnt.ui.tray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
@@ -27,12 +30,16 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DragSourceListener;
@@ -43,12 +50,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
 import org.remus.infomngmnt.common.ui.extension.ITraySectionDefinition;
 import org.remus.infomngmnt.common.ui.extension.TraySectionManager;
 import org.remus.infomngmnt.common.ui.model.UIEditingUtil;
@@ -72,6 +81,10 @@ IWorkbenchPreferencePage {
 	private DeleteAction deleteAction;
 
 	public static final String DIALOG_SETTINGS_SECTION = "trayPrefDialogSetting"; //$NON-NLS-1$
+	private Group propertiesGroup;
+	private StackLayout stackLayout;
+	private List<AbstractTrayPreferencePage> knownPrefPages;
+	private Label fallbackText;
 	/**
 	 * 
 	 */
@@ -117,7 +130,12 @@ IWorkbenchPreferencePage {
 		this.tableViewer.setContentProvider(new AdapterFactoryContentProvider(UIEditingUtil.getInstance().getAdapterFactory()));
 		this.tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(UIEditingUtil.getInstance().getAdapterFactory()));
 		this.tableViewer.setInput(this.sections);
+		this.tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				handleSelectionChanged(event.getSelection());
 
+			}
+		});
 
 		final Group avaiableTemplatesGroup = new Group(sashForm_1, SWT.NONE);
 		avaiableTemplatesGroup.setText("Available Templates");
@@ -137,12 +155,47 @@ IWorkbenchPreferencePage {
 		this.avaialableTemplatesViewer.setInput(TraySectionManager.getInstance().getAllSections());
 
 
-		final Group propertiesGroup = new Group(sashForm, SWT.NONE);
-		propertiesGroup.setText("Properties");
+		this.propertiesGroup = new Group(sashForm, SWT.NONE);
+		this.propertiesGroup.setText("Properties");
+		this.stackLayout = new StackLayout();
+		this.propertiesGroup.setLayout(this.stackLayout);
 		sashForm.setWeights(new int[] {1, 1 });
 		initDnd();
 		hookContextMenu();
 		return composite;
+	}
+
+	protected void handleSelectionChanged(ISelection selection) {
+		TraySection element = (TraySection) ((IStructuredSelection) selection).getFirstElement();
+
+		ITraySectionDefinition trayDefinition = TraySectionManager.getInstance().getSectionDefinitionById(element.getTemplateId());
+		if (trayDefinition != null) {
+			//preferencePage.g
+			AbstractTrayPreferencePage preferencePage = trayDefinition.getPreferencePage();
+			if (preferencePage == null) {
+				createFallBack();
+				this.stackLayout.topControl = this.fallbackText;
+			} else {
+				preferencePage.initialize(element, this.editingDomain);
+				if (!this.knownPrefPages.contains(preferencePage)) {
+					this.knownPrefPages.add(preferencePage);
+					preferencePage.createControl(this.propertiesGroup);
+				}
+				preferencePage.bindValuesToUi();
+				this.stackLayout.topControl = preferencePage.getControl();
+			}
+			this.propertiesGroup.layout();
+		}
+
+
+	}
+
+	private void createFallBack() {
+		if (this.fallbackText == null) {
+			this.fallbackText = new Label(this.propertiesGroup, SWT.NONE);
+			this.fallbackText.setText("No preferences available.");
+		}
+
 	}
 
 	private void hookContextMenu() {
@@ -251,6 +304,7 @@ IWorkbenchPreferencePage {
 		this.sections = TrayConfigurationManager.getInstance().getTraySections();
 		this.editingDomain = UIEditingUtil.getInstance().createNewEditingDomain();
 		this.dialogSettings = UIUtil.getDialogSettings(DIALOG_SETTINGS_SECTION);
+		this.knownPrefPages = new ArrayList<AbstractTrayPreferencePage>();
 	}
 
 

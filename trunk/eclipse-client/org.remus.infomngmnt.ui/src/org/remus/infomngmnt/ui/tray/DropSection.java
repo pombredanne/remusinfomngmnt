@@ -12,6 +12,10 @@
 
 package org.remus.infomngmnt.ui.tray;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
@@ -33,16 +37,32 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.internal.WorkbenchImages;
 
+import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
+import org.remus.infomngmnt.core.extension.RuleExtensionManager;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
+import org.remus.infomngmnt.core.model.RuleUtil;
+import org.remus.infomngmt.common.ui.uimodel.TraySection;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
+@SuppressWarnings("restriction")
 public class DropSection extends AbstractTraySection {
 
 	private Clipboard clipboard;
+	private NewElementRules ruleByName;
+
+
+	@Override
+	public void init(FormToolkit toolkit, TraySection section) {
+		super.init(toolkit, section);
+		String string = section.getPreferenceOptions().get(DropSectionPreferencePage.RULESET_KEY);
+		this.ruleByName = RuleUtil.getInstance().getRuleByName(string);
+	}
 
 	@Override
 	public void createDetailsPart(Composite parent) {
@@ -138,15 +158,13 @@ public class DropSection extends AbstractTraySection {
 
 	}
 
-	private static Transfer[] getTransferTypes() {
-		return new Transfer[] {
-				TextTransfer.getInstance(),
-				HTMLTransfer.getInstance(),
-				RTFTransfer.getInstance(),
-				URLTransfer.getInstance(),
-				FileTransfer.getInstance(),
-				ImageTransfer.getInstance()
-		};
+	private Transfer[] getTransferTypes() {
+		List<Transfer> returnValue = new ArrayList<Transfer>();
+		Collection<TransferWrapper> values = RuleExtensionManager.getInstance().getAllTransferTypes().values();
+		for (TransferWrapper transferWrapper : values) {
+			returnValue.add(transferWrapper.getTransfer());
+		}
+		return returnValue.toArray(new Transfer[returnValue.size()]);
 	}
 
 	@Override

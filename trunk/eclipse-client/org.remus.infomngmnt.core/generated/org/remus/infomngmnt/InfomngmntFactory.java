@@ -169,6 +169,15 @@ public interface InfomngmntFactory extends EFactory {
 	RuleAction createRuleAction();
 
 	/**
+	 * Returns a new object of class '<em>Rule Result</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Rule Result</em>'.
+	 * @generated
+	 */
+	RuleResult createRuleResult();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

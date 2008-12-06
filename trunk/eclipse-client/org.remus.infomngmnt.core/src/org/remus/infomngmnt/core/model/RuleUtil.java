@@ -88,7 +88,7 @@ public class RuleUtil {
 	}
 
 	public NewElementRules getRuleByName(String name) {
-		EList<NewElementRules> newElementRules = this.rules.getNewElementRules();
+		EList<NewElementRules> newElementRules = getElementRules().getNewElementRules();
 		for (NewElementRules newElementRules2 : newElementRules) {
 			if (newElementRules2.getName().equals(name)) {
 				return newElementRules2;

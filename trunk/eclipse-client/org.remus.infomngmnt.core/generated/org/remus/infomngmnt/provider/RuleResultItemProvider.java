@@ -20,7 +20,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -32,32 +36,31 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.RuleAction;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.RuleResult;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.RuleAction} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.RuleResult} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RuleActionItemProvider
-extends ItemProviderAdapter
-implements
-IEditingDomainItemProvider,
-IStructuredItemContentProvider,
-ITreeItemContentProvider,
-IItemLabelProvider,
-IItemPropertySource {
+public class RuleResultItemProvider
+	extends ItemProviderAdapter
+	implements
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RuleActionItemProvider(AdapterFactory adapterFactory) {
+	public RuleResultItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -72,27 +75,26 @@ IItemPropertySource {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addInfoTypeIdPropertyDescriptor(object);
-			addRuleValuePropertyDescriptor(object);
+			addValuePropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addValuePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RuleAction_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_name_feature", "_UI_RuleAction_type"),
-				 InfomngmntPackage.Literals.RULE_ACTION__NAME,
+				 getString("_UI_RuleResult_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleResult_value_feature", "_UI_RuleResult_type"),
+				 InfomngmntPackage.Literals.RULE_RESULT__VALUE,
 				 true,
 				 false,
 				 false,
@@ -102,19 +104,19 @@ IItemPropertySource {
 	}
 
 	/**
-	 * This adds a property descriptor for the Info Type Id feature.
+	 * This adds a property descriptor for the Description feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addInfoTypeIdPropertyDescriptor(Object object) {
+	protected void addDescriptionPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RuleAction_infoTypeId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_infoTypeId_feature", "_UI_RuleAction_type"),
-				 InfomngmntPackage.Literals.RULE_ACTION__INFO_TYPE_ID,
+				 getString("_UI_RuleResult_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleResult_description_feature", "_UI_RuleResult_type"),
+				 InfomngmntPackage.Literals.RULE_RESULT__DESCRIPTION,
 				 true,
 				 false,
 				 false,
@@ -124,56 +126,59 @@ IItemPropertySource {
 	}
 
 	/**
-	 * This adds a property descriptor for the Rule Value feature.
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addRuleValuePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_RuleAction_ruleValue_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_ruleValue_feature", "_UI_RuleAction_type"),
-				 InfomngmntPackage.Literals.RULE_ACTION__RULE_VALUE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(InfomngmntPackage.Literals.RULE_RESULT__ACTIONS);
+		}
+		return childrenFeatures;
 	}
 
 	/**
-	 * This returns RuleAction.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+	/**
+	 * This returns RuleResult.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return InformationExtensionManager
-		.getInstance().getInfoTypeByType(((RuleAction) object).getInfoTypeId()).getImage();
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RuleResult"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		IInfoType infoTypeByType = InformationExtensionManager
-		.getInstance().getInfoTypeByType(((RuleAction) object).getInfoTypeId());
-		if (infoTypeByType != null) {
-			return infoTypeByType.getName();
-		}
-		String label = ((RuleAction)object).getName();
+		Object labelValue = ((RuleResult)object).getValue();
+		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
-				getString("_UI_RuleAction_type") :
-					getString("_UI_RuleAction_type") + " " + label;
+			getString("_UI_RuleResult_type") :
+			getString("_UI_RuleResult_type") + " " + label;
 	}
 
 	/**
@@ -187,10 +192,13 @@ IItemPropertySource {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(RuleAction.class)) {
-			case InfomngmntPackage.RULE_ACTION__NAME:
-			case InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID:
+		switch (notification.getFeatureID(RuleResult.class)) {
+			case InfomngmntPackage.RULE_RESULT__VALUE:
+			case InfomngmntPackage.RULE_RESULT__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case InfomngmntPackage.RULE_RESULT__ACTIONS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -206,6 +214,11 @@ IItemPropertySource {
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.RULE_RESULT__ACTIONS,
+				 InfomngmntFactory.eINSTANCE.createRuleAction()));
 	}
 
 	/**

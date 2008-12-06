@@ -22,13 +22,7 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.DropTargetListener;
-import org.eclipse.swt.dnd.FileTransfer;
-import org.eclipse.swt.dnd.HTMLTransfer;
-import org.eclipse.swt.dnd.ImageTransfer;
-import org.eclipse.swt.dnd.RTFTransfer;
-import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.dnd.URLTransfer;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -41,10 +35,16 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.internal.WorkbenchImages;
 
 import org.remus.infomngmnt.NewElementRules;
+import org.remus.infomngmnt.RuleResult;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
+import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessDialog;
+import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
 import org.remus.infomngmnt.core.extension.RuleExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.RuleUtil;
+import org.remus.infomngmnt.core.rules.RuleProcessor;
+import org.remus.infomngmnt.ui.desktop.NewElementQuickAccessProider;
 import org.remus.infomngmt.common.ui.uimodel.TraySection;
 
 /**
@@ -58,8 +58,8 @@ public class DropSection extends AbstractTraySection {
 
 
 	@Override
-	public void init(FormToolkit toolkit, TraySection section) {
-		super.init(toolkit, section);
+	public void init(FormToolkit pToolkit, TraySection section) {
+		super.init(pToolkit, section);
 		String string = section.getPreferenceOptions().get(DropSectionPreferencePage.RULESET_KEY);
 		this.ruleByName = RuleUtil.getInstance().getRuleByName(string);
 	}
@@ -72,6 +72,7 @@ public class DropSection extends AbstractTraySection {
 		gridLayout.marginWidth = 0;
 		parent.setLayout(gridLayout);
 		int dropOperations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK;
+		//int dropOperations = DND.DROP_DEFAULT | DND.DROP_MOVE ;
 		Composite dropComposite = this.toolkit.createComposite(parent, SWT.BORDER | SWT.BORDER_DOT | SWT.NO_FOCUS);
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.widthHint = SWT.DEFAULT;
@@ -84,8 +85,6 @@ public class DropSection extends AbstractTraySection {
 
 			public void dragEnter(DropTargetEvent event) {
 				System.out.println("DRAG ENTER");
-
-
 			}
 
 			public void dragLeave(DropTargetEvent event) {
@@ -103,31 +102,18 @@ public class DropSection extends AbstractTraySection {
 
 			}
 
-			public void drop(DropTargetEvent event) {
-				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object nativeToJava = TextTransfer.getInstance().nativeToJava(event.currentDataType);
-					System.out.println("TEXT--> " + nativeToJava);
-				}
-				if (HTMLTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object nativeToJava = HTMLTransfer.getInstance().nativeToJava(event.currentDataType);
-					System.out.println("HTML--> " + nativeToJava);
-				}
-				if (FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object nativeToJava = FileTransfer.getInstance().nativeToJava(event.currentDataType);
-					System.out.println("FILE--> " + nativeToJava);
-				}
-				if (RTFTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object nativeToJava = RTFTransfer.getInstance().nativeToJava(event.currentDataType);
-					System.out.println("RTF--> " + nativeToJava);
-				}
-				if (URLTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object nativeToJava = URLTransfer.getInstance().nativeToJava(event.currentDataType);
-					System.out.println("URL--> " + nativeToJava);
-				}
-				if (ImageTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object nativeToJava = ImageTransfer.getInstance().nativeToJava(event.currentDataType);
-					System.out.println("IMAGE--> " + nativeToJava);
-				}
+			public void drop(final DropTargetEvent event) {
+				event.widget.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						List<RuleResult> process = RuleProcessor.getInstance().process(
+								event, DropSection.this.ruleByName);
+						System.out.println(process.size());
+						showQuickAccess(process);
+
+					}
+
+
+				});
 
 			}
 
@@ -149,12 +135,31 @@ public class DropSection extends AbstractTraySection {
 		pasteItem.setImage(WorkbenchImages.getImage(ISharedImages.IMG_TOOL_PASTE));
 		pasteItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				Object contents = DropSection.this.clipboard.getContents(TextTransfer.getInstance());
-				System.out.println(contents);
-			}
+				event.widget.getDisplay().asyncExec(new Runnable() {
 
+					public void run() {
+						List<RuleResult> process = RuleProcessor.getInstance().process(
+								DropSection.this.clipboard, DropSection.this.ruleByName);
+						showQuickAccess(process);
+					}
+
+				});
+			}
 		});
 
+	}
+	void showQuickAccess(List<RuleResult> process) {
+		if (process.size() > 0) {
+			QuickAccessProvider[] provider = new NewElementQuickAccessProider[process.size()];
+			for (int i = 0, n = process.size(); i < n; i++) {
+				provider[i] = new NewElementQuickAccessProider(process.get(i));
+			}
+			new QuickAccessDialog(
+					UIUtil.getPrimaryWindow(),
+					null,provider).open();
+		} else {
+			// nothing
+		}
 
 	}
 

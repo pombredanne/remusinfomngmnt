@@ -61,5 +61,12 @@
             name="Link">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.remus.infomngmnt.link.newLinkCommand"
+            name="name">
+      </command>
+   </extension>
 
 </plugin>

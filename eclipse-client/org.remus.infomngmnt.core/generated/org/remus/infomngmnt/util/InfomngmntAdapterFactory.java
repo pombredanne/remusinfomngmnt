@@ -153,6 +153,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createRuleActionAdapter();
 			}
 			@Override
+			public Adapter caseRuleResult(RuleResult object) {
+				return createRuleResultAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -421,6 +425,20 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createRuleActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RuleResult <em>Rule Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RuleResult
+	 * @generated
+	 */
+	public Adapter createRuleResultAdapter() {
 		return null;
 	}
 

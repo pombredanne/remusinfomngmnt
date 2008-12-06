@@ -82,8 +82,8 @@ public class RuleExtensionManager extends PluginRegistryDynamic{
 		return this.wrapperItems;
 	}
 
-
-
-
+	public TransferWrapper getTransferTypeById(String transferId) {
+		return this.wrapperItems.get(transferId);
+	}
 
 }

@@ -452,6 +452,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RuleResult} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RuleResultItemProvider ruleResultItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RuleResult}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRuleResultAdapter() {
+		if (ruleResultItemProvider == null) {
+			ruleResultItemProvider = new RuleResultItemProvider(this);
+		}
+
+		return ruleResultItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -566,6 +589,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (availableRuleDefinitionsItemProvider != null) availableRuleDefinitionsItemProvider.dispose();
 		if (remusTransferTypeItemProvider != null) remusTransferTypeItemProvider.dispose();
 		if (ruleActionItemProvider != null) ruleActionItemProvider.dispose();
+		if (ruleResultItemProvider != null) ruleResultItemProvider.dispose();
 	}
 
 }

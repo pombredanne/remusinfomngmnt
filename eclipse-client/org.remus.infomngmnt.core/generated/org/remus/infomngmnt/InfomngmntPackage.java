@@ -16,6 +16,7 @@ package org.remus.infomngmnt;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -1021,6 +1022,63 @@ public interface InfomngmntPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RuleResultImpl <em>Rule Result</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.RuleResultImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleResult()
+	 * @generated
+	 */
+	int RULE_RESULT = 18;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_RESULT__VALUE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_RESULT__ACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_RESULT__DESCRIPTION = 2;
+
+	/**
+	 * The number of structural features of the '<em>Rule Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_RESULT_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '<em>Object</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.lang.Object
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
+	 * @generated
+	 */
+	int OBJECT = 19;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationUnit <em>Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1709,6 +1767,60 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getRuleAction_RuleValue();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.RuleResult <em>Rule Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Rule Result</em>'.
+	 * @see org.remus.infomngmnt.RuleResult
+	 * @generated
+	 */
+	EClass getRuleResult();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RuleResult#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see org.remus.infomngmnt.RuleResult#getValue()
+	 * @see #getRuleResult()
+	 * @generated
+	 */
+	EAttribute getRuleResult_Value();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.RuleResult#getActions <em>Actions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Actions</em>'.
+	 * @see org.remus.infomngmnt.RuleResult#getActions()
+	 * @see #getRuleResult()
+	 * @generated
+	 */
+	EReference getRuleResult_Actions();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RuleResult#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.remus.infomngmnt.RuleResult#getDescription()
+	 * @see #getRuleResult()
+	 * @generated
+	 */
+	EAttribute getRuleResult_Description();
+
+	/**
+	 * Returns the meta object for data type '{@link java.lang.Object <em>Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Object</em>'.
+	 * @see java.lang.Object
+	 * @model instanceClass="java.lang.Object"
+	 * @generated
+	 */
+	EDataType getObject();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2277,6 +2389,50 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RULE_ACTION__RULE_VALUE = eINSTANCE.getRuleAction_RuleValue();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RuleResultImpl <em>Rule Result</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.RuleResultImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleResult()
+		 * @generated
+		 */
+		EClass RULE_RESULT = eINSTANCE.getRuleResult();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE_RESULT__VALUE = eINSTANCE.getRuleResult_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RULE_RESULT__ACTIONS = eINSTANCE.getRuleResult_Actions();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE_RESULT__DESCRIPTION = eINSTANCE.getRuleResult_Description();
+
+		/**
+		 * The meta object literal for the '<em>Object</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Object
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
+		 * @generated
+		 */
+		EDataType OBJECT = eINSTANCE.getObject();
 
 	}
 

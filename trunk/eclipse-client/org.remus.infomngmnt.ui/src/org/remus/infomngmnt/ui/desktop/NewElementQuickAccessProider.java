@@ -43,7 +43,7 @@ public class NewElementQuickAccessProider extends QuickAccessProvider {
 			for (RuleAction ruleAction : actions) {
 				this.action2idMap.put(
 						ruleAction.getInfoTypeId(),
-						new NewElementQuickAccessElement(this,ruleAction));
+						new NewElementQuickAccessElement(this,ruleAction,this.result.getValue()));
 			}
 		}
 		return this.action2idMap;

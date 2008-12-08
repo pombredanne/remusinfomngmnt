@@ -109,7 +109,6 @@ public class DropSection extends AbstractTraySection {
 								event, DropSection.this.ruleByName);
 						System.out.println(process.size());
 						showQuickAccess(process);
-
 					}
 
 

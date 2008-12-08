@@ -20,9 +20,12 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.LinkRepresentation;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
+import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
@@ -75,6 +78,15 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 			this.page1 = new GeneralLinkPage((Category)null);
 		}
 
+	}
+
+	public void setDefaults(Object value, RuleValue ruleValue) {
+		this.newElement.setStringValue(String.valueOf(value));
+		InformationUnit childByType = InformationUtil.getChildByType(
+				ruleValue, AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+		if (childByType != null) {
+			this.page1.setCategoryString(childByType.getStringValue());
+		}
 	}
 
 

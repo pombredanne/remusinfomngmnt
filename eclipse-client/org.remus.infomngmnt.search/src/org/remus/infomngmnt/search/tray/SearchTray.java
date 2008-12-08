@@ -26,9 +26,14 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
+import org.remus.infomngmnt.common.service.ITrayService;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.swt.SearchText;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchScope;
@@ -43,6 +48,8 @@ public class SearchTray extends AbstractTraySection {
 	public static final String DIALOG_SETTINGS_LAST_SEARCHTERM = "DIALOG_SETTINGS_LAST_SEARCHTERM"; //$NON-NLS-1$
 
 	private IJobChangeListener searchJobListener;
+
+	protected boolean restoreScheduled;
 
 	@Override
 	public void createDetailsPart(final Composite parent) {
@@ -84,6 +91,8 @@ public class SearchTray extends AbstractTraySection {
 				createSearch.setSearchString(this.text.getText());
 				LuceneSearchService.getInstance().search(
 						createSearch, true, true, null);
+				SearchTray.this.restoreScheduled = true;
+
 			}
 
 		};
@@ -108,18 +117,32 @@ public class SearchTray extends AbstractTraySection {
 			public void done(IJobChangeEvent event) {
 				if (!parent.getDisplay().isDisposed())
 					checkSearchBar(searchBar,parent.getDisplay());
+
+
 			}
 		});
+
 		checkSearchBar(searchBar, parent.getDisplay());
+
 
 
 	}
 
 	protected void checkSearchBar(final ProgressBar progressBar, Display display) {
+
 		display.asyncExec(new Runnable() {
 			public void run() {
-				progressBar.setVisible(
-						Job.getJobManager().find(LuceneSearchService.JOB_FAMILY).length > 0);
+				if (!progressBar.isDisposed()) {
+					progressBar.setVisible(
+							Job.getJobManager().find(LuceneSearchService.JOB_FAMILY).length > 0);
+					if (getTrayService() != null
+							&& Job.getJobManager().find(LuceneSearchService.JOB_FAMILY).length == 0
+							&& SearchTray.this.restoreScheduled) {
+						System.out.println("RESTore");
+						getTrayService().restoreFromTray(UIUtil.getPrimaryWindow().getShell());
+						SearchTray.this.restoreScheduled = false;
+					}
+				}
 			}
 		});
 
@@ -130,6 +153,18 @@ public class SearchTray extends AbstractTraySection {
 		if (this.searchJobListener != null) {
 			Job.getJobManager().removeJobChangeListener(this.searchJobListener);
 		}
+	}
+
+	public ITrayService getTrayService() {
+		final BundleContext bundleContext = InfomngmntEditPlugin.getPlugin()
+		.getBundle().getBundleContext();
+		final ServiceReference serviceReference = bundleContext
+		.getServiceReference(ITrayService.class.getName());
+		if (serviceReference != null) {
+			return (ITrayService) bundleContext.getService(serviceReference);
+		}
+		return null;
+
 	}
 
 }

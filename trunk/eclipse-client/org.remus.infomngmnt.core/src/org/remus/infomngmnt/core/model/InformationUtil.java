@@ -35,11 +35,13 @@ public class InformationUtil {
 
 	public static InformationUnit getChildByType(InformationUnit unit, String type) {
 		InformationUnit returnValue = null;
-		EList<InformationUnit> childValues = unit.getChildValues();
-		for (InformationUnit informationUnit : childValues) {
-			if (informationUnit.getType().equals(type)) {
-				returnValue = informationUnit;
-				break;
+		if (unit != null) {
+			EList<InformationUnit> childValues = unit.getChildValues();
+			for (InformationUnit informationUnit : childValues) {
+				if (informationUnit.getType().equals(type)) {
+					returnValue = informationUnit;
+					break;
+				}
 			}
 		}
 		return returnValue;

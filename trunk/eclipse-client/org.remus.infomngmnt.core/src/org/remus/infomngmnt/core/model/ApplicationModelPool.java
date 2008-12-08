@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -52,6 +53,7 @@ public class ApplicationModelPool {
 			System.out.println(msg);
 			try {
 				this.category.eResource().save(null);
+				//if (msg.getEventType() == Notification.)
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

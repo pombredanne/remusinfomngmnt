@@ -24,6 +24,7 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
+
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -57,6 +58,11 @@ public class AvailableInformationCache {
 			}
 		}
 		return this.cachedItems;
+	}
+
+	public void clear() {
+		this.cachedItems.clear();
+		this.cachedItems = null;
 	}
 
 	public InformationUnitListItem getItemById(String id, IProgressMonitor monitor) {

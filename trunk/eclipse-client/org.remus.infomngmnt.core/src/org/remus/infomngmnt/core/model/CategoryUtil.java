@@ -13,6 +13,11 @@
 package org.remus.infomngmnt.core.model;
 
 import java.io.StringWriter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IProject;
@@ -22,8 +27,17 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
+import org.eclipse.emf.query.conditions.eobjects.EObjectTypeRelationCondition;
+import org.eclipse.emf.query.statements.FROM;
+import org.eclipse.emf.query.statements.IQueryResult;
+import org.eclipse.emf.query.statements.SELECT;
+import org.eclipse.emf.query.statements.WHERE;
+
+import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -154,6 +168,37 @@ public class CategoryUtil {
 
 	public static IProject getProjectByCategory(Category category) {
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(category.eResource().getURI().toPlatformString(true))).getProject();
+	}
+
+	public static Category[] findCatetegories(final String startString, final boolean caseSensitive) {
+		ApplicationRoot model = ApplicationModelPool.getInstance().getModel();
+		EObjectCondition condition = new EObjectTypeRelationCondition(InfomngmntPackage.Literals.CATEGORY);
+		EObjectCondition valueCondition = new EObjectCondition() {
+			@Override
+			public boolean isSatisfied(EObject object) {
+				if (caseSensitive) {
+					return categoryToString((Category) object).startsWith(startString);
+				}
+				return categoryToString((Category) object).toLowerCase().startsWith(startString.toLowerCase());
+
+			}
+		};
+		SELECT select = new SELECT(new FROM(model.getRootCategories()), new WHERE(condition.AND(valueCondition)));
+		IQueryResult execute = select.execute();
+		Set<? extends EObject> objects = execute.getEObjects();
+		List<Category> returnValue = new LinkedList<Category>();
+		for (EObject object : objects) {
+			returnValue.add((Category) object);
+		}
+		Collections.sort(returnValue, new Comparator<Category>() {
+			public int compare(Category arg0, Category arg1) {
+				if (caseSensitive) {
+					return  categoryToString(arg0).compareTo(categoryToString(arg1));
+				}
+				return categoryToString(arg0).compareToIgnoreCase(categoryToString(arg1));
+			}
+		});
+		return returnValue.toArray(new Category[returnValue.size()]);
 	}
 
 

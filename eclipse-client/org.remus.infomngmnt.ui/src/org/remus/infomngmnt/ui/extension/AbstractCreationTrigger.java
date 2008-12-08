@@ -12,24 +12,36 @@
 
 package org.remus.infomngmnt.ui.extension;
 
-import org.remus.infomngmnt.RuleResult;
+import org.remus.infomngmnt.RuleValue;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class AbstractCreationTrigger {
 
-	private RuleResult initializationData;
+	private Object value;
+
+	private RuleValue ruleValue;
 
 	public abstract void handleCreationRequest();
 
-	protected RuleResult getInitializationData() {
-		return this.initializationData;
+	protected Object getValue() {
+		return this.value;
 	}
 
-	public void setInitializationData(RuleResult initializationData) {
-		this.initializationData = initializationData;
+	public void setValue(Object value) {
+		this.value = value;
 	}
+
+	protected RuleValue getRuleValue() {
+		return this.ruleValue;
+	}
+
+	public void setRuleValue(RuleValue ruleValue) {
+		this.ruleValue = ruleValue;
+	}
+
+
 
 
 

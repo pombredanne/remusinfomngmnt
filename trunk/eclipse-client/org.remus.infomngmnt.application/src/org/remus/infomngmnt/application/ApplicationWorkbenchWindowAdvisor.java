@@ -78,13 +78,14 @@ import org.eclipse.update.configurator.IPlatformConfiguration;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 
+import org.remus.infomngmnt.common.service.ITrayService;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.desktop.DesktopWindow;
 import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
 
 
-public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
+public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor implements ITrayService{
 
 	private static final String WELCOME_EDITOR_ID = "org.eclipse.ui.internal.ide.dialogs.WelcomeEditor"; //$NON-NLS-1$
 
@@ -142,6 +143,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		super(configurer);
 		this.wbAdvisor = wbAdvisor;
 		this.preferenceStore = UIPlugin.getDefault().getPreferenceStore();
+		Platform.getBundle(
+				ApplicationPlugin.PLUGIN_ID).getBundleContext().registerService(ITrayService.class.getName(), this, null);
 
 	}
 
@@ -718,7 +721,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	}
 
 	/* Move to System Tray */
-	private void moveToTray(Shell shell) {
+	public void moveToTray(Shell shell) {
 		if (Application.IS_WINDOWS)
 			this.fTrayItem.setVisible(true);
 

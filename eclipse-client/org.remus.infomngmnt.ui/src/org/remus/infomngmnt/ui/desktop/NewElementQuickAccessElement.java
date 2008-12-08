@@ -15,10 +15,13 @@ package org.remus.infomngmnt.ui.desktop;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.ui.extension.AbstractCreationTrigger;
+import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -27,10 +30,12 @@ public class NewElementQuickAccessElement extends QuickAccessElement {
 
 	private final RuleAction action;
 	private final IInfoType infoTypeByType;
+	private final Object value;
 
-	public NewElementQuickAccessElement(QuickAccessProvider provider, RuleAction action) {
+	public NewElementQuickAccessElement(QuickAccessProvider provider, RuleAction action, Object value) {
 		super(provider);
 		this.action = action;
+		this.value = value;
 		this.infoTypeByType = InformationExtensionManager.getInstance()
 		.getInfoTypeByType(action.getInfoTypeId());
 	}
@@ -40,7 +45,15 @@ public class NewElementQuickAccessElement extends QuickAccessElement {
 	 */
 	@Override
 	public void execute() {
-		// do nothing
+		final AbstractCreationTrigger trigger = UIExtensionManager.getInstance().getCreationTriggerByTypeId(this.infoTypeByType.getType());
+		if (trigger != null) {
+			//trigger.setInitializationData(this.action.getRuleValue())
+			UIUtil.getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					trigger.handleCreationRequest();
+				}
+			});
+		}
 
 	}
 

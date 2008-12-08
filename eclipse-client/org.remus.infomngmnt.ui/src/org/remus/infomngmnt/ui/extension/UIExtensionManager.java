@@ -57,12 +57,17 @@ public class UIExtensionManager {
 	public static final String IMPLEMENTATION_ID_ATT = "implementation"; //$NON-NLS-1$
 
 	/////-----------------------
+	public static final String CREATIONTRIGGER_NODE_NAME = "creationUiTrigger"; //$NON-NLS-1$
+
+	public static final String CLASS_ATT = "class"; //$NON-NLS-1$
 
 	private static UIExtensionManager INSTANCE;
 
 	private Map<String,List<IEditPage>> items;
 
 	private Map<String, Map<String, AbstractCreationPreferencePage>> preferencePages;
+
+	private Map<String, AbstractCreationTrigger> creationTrigger;
 
 	public static UIExtensionManager getInstance() {
 		if (INSTANCE == null) {
@@ -82,6 +87,7 @@ public class UIExtensionManager {
 	private void init() {
 		this.items = new HashMap<String,List<IEditPage>>();
 		this.preferencePages = new HashMap<String, Map<String,AbstractCreationPreferencePage>>();
+		this.creationTrigger = new HashMap<String, AbstractCreationTrigger>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
 		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
@@ -111,6 +117,14 @@ public class UIExtensionManager {
 						// TODO: Error-Handling
 					}
 				}
+			} else if(configurationElement.getName().equals(CREATIONTRIGGER_NODE_NAME)) {
+				try {
+					this.creationTrigger.put(configurationElement.getAttribute(TYPE_ID_ATT),
+							(AbstractCreationTrigger) configurationElement.createExecutableExtension(CLASS_ATT));
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -129,6 +143,10 @@ public class UIExtensionManager {
 			return map.get(typeId);
 		}
 		return null;
+	}
+
+	public AbstractCreationTrigger getCreationTriggerByTypeId(String typeId) {
+		return this.creationTrigger.get(typeId);
 	}
 
 }

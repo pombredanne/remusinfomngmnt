@@ -21,6 +21,7 @@
             <choice>
                <element ref="editPage"/>
                <element ref="transferpreferences"/>
+               <element ref="creationUiTrigger"/>
             </choice>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -149,11 +150,14 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="class" type="string">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.ui.extension.AbstractCreationTrigger:"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>

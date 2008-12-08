@@ -33,6 +33,7 @@ public class LinkCreationTrigger extends AbstractCreationTrigger {
 	public void handleCreationRequest() {
 		NewLinkWizard newLinkWizard = new NewLinkWizard();
 		newLinkWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
+		newLinkWizard.setDefaults(getValue(), getRuleValue());
 		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),newLinkWizard);
 		wizard.open();
 	}

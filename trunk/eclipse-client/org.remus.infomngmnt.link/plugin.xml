@@ -36,6 +36,10 @@
             transferId="org.remus.infomngmnt.core.urlTransfer"
             typeId="LINK">
       </transferpreferences>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.link.LinkCreationTrigger"
+            typeId="LINK">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

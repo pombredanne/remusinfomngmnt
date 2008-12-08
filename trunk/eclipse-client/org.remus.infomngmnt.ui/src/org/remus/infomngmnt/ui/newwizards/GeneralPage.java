@@ -32,6 +32,7 @@ import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.ui.category.CategorySmartField;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -124,8 +125,12 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 
 
 		this.parentCategoryText = new Text(parentElementGroup, SWT.BORDER);
+		new CategorySmartField(this.parentCategoryText);
 		final GridData gd_parentCategoryText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		this.parentCategoryText.setLayoutData(gd_parentCategoryText);
+		if (this.categoryString != null) {
+			this.parentCategoryText.setText(this.categoryString);
+		}
 		this.parentCategoryText.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
 				validatePage();
@@ -216,5 +221,11 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		ISWTObservableValue swtDescription = SWTObservables.observeText(this.descriptionText, SWT.Modify);
 		IObservableValue emfDescription = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
 		this.ctx.bindValue(swtDescription, emfDescription, null, null);
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	public void setCategoryString(String categoryString) {
+		this.categoryString = categoryString;
 	}
 }

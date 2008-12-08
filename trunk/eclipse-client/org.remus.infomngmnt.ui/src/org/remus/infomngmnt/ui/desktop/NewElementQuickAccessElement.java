@@ -47,7 +47,8 @@ public class NewElementQuickAccessElement extends QuickAccessElement {
 	public void execute() {
 		final AbstractCreationTrigger trigger = UIExtensionManager.getInstance().getCreationTriggerByTypeId(this.infoTypeByType.getType());
 		if (trigger != null) {
-			//trigger.setInitializationData(this.action.getRuleValue())
+			trigger.setValue(this.value);
+			trigger.setRuleValue(this.action.getRuleValue());
 			UIUtil.getDisplay().asyncExec(new Runnable() {
 				public void run() {
 					trigger.handleCreationRequest();

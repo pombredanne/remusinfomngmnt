@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
@@ -76,6 +77,7 @@ public class NewCategoryWizardPage extends WizardPage {
 		parentCategoryLabel.setText("Parent Category");
 
 		this.parentCategoryText = new Text(container, SWT.BORDER);
+		new CategorySmartField(this.parentCategoryText);
 		this.parentCategoryText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		if (this.selection != null) {
 			this.parentCategoryText.setText(CategoryUtil.categoryToString(this.selection));

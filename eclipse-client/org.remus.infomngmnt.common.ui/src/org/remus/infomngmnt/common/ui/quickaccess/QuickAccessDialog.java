@@ -667,4 +667,15 @@ public class QuickAccessDialog extends PopupDialog {
 		}
 	}
 
+	@Override
+	public int open() {
+		setBlockOnOpen(true);
+		return super.open();
+	}
+
+	@Override
+	protected int getShellStyle() {
+		return super.getShellStyle() | SWT.ON_TOP;
+	}
+
 }

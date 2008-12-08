@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -132,4 +133,13 @@ public class UIUtil {
 
 	}
 
+	public static Display getDisplay() {
+		if (getPrimaryWindow() != null && getPrimaryWindow().getShell().getDisplay() != null) {
+			return getPrimaryWindow().getShell().getDisplay();
+		} else if (Display.getCurrent() != null) {
+			return Display.getCurrent();
+		}
+		return Display.getDefault();
+
+	}
 }

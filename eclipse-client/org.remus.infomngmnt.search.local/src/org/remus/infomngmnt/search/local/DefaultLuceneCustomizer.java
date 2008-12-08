@@ -33,7 +33,7 @@ import org.remus.infomngmnt.search.service.ILuceneCustomizer;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
@@ -55,7 +55,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 	 * @see org.remus.infomngmnt.search.service.ILuceneCustomizer#getAnalyser()
 	 */
 	public Analyzer getAnalyser() {
-		return new WhitespaceAnalyzer();
+		return new SimpleAnalyzer();
 	}
 
 	/* (non-Javadoc)

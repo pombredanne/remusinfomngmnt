@@ -57,6 +57,12 @@ public class InformationEditorInput extends FileEditorInput implements IFileEdit
 		this.label = unit.getLabel();
 	}
 
+	@Override
+	public Object getAdapter(Class adapter) {
+
+		return super.getAdapter(adapter);
+	}
+
 
 	@Override
 	public ImageDescriptor getImageDescriptor() {

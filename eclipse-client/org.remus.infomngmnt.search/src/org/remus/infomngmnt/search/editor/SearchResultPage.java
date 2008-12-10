@@ -21,6 +21,7 @@ import org.remus.infomngmnt.common.ui.editor.EditorUtil;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchResult;
+import org.remus.infomngmnt.search.provider.SearchPlugin;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -55,7 +56,9 @@ public class SearchResultPage extends FormPage {
 		IHyperlinkListener hyperLinkListener = new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
-				EditorUtil.openEditor(new Path((String) e.getHref()));
+				String[] split = ((String) e.getHref()).split("\\|"); //$NON-NLS-1$
+				SearchPlugin.getPlugin().getSearchContext().activate(SearchResultPage.this.model.getResult(), Integer.valueOf(split[0]));
+				EditorUtil.openEditor(new Path(split[1]));
 			}
 		};
 
@@ -93,6 +96,8 @@ public class SearchResultPage extends FormPage {
 		.append(result.getInfoType())
 		.append("\"/>")
 		.append(" <a href=\"")
+		.append(index)
+		.append("|")
 		.append(result.getPath().toString())
 		.append("\">")
 		.append(result.getTitle())

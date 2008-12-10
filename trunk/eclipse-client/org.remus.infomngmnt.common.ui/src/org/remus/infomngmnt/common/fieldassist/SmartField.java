@@ -54,6 +54,7 @@ public abstract class SmartField {
 		});
 		this.controlDecoration = getControlDecoration();
 		installContentProposalAdapter(this.control, new TextContentAdapter());
+		showContentAssistDecoration(hasContentAssist());
 	}
 
 	boolean isRequiredField() {
@@ -196,15 +197,12 @@ public abstract class SmartField {
 			if (isWarning()) {
 				//showWarning(smartField);
 			} else {
-				//hideWarning(smartField);
-				if (hasContentAssist()) {
-					showContentAssistDecoration(true);
-				} else {
-					showContentAssistDecoration(false);
-				}
+				showContentAssistDecoration(hasContentAssist());
 			}
 		}
 	}
+
+
 
 	void showContentAssistDecoration(boolean show) {
 		FieldDecoration dec = getCueDecoration();

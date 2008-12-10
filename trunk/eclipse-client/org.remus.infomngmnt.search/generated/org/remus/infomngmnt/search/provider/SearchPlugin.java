@@ -10,6 +10,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchHistory;
+import org.remus.infomngmnt.search.context.SearchContextProvider;
 import org.remus.infomngmnt.search.service.ILuceneCustomizer;
 import org.remus.infomngmnt.search.service.LuceneSearchCustomizeTracker;
 
@@ -107,11 +108,14 @@ public final class SearchPlugin extends EMFPlugin {
 			plugin = this;
 		}
 
+		private SearchContextProvider searchContext;
+
 		@Override
 		public void start(BundleContext context) throws Exception {
 			super.start(context);
 			this.tracker = new LuceneSearchCustomizeTracker(context);
 			this.tracker.open();
+			this.searchContext = new SearchContextProvider();
 		}
 
 		@Override
@@ -156,6 +160,14 @@ public final class SearchPlugin extends EMFPlugin {
 				this.searchHistory = SearchFactory.eINSTANCE.createSearchHistory();
 			}
 			return this.searchHistory;
+		}
+
+		public SearchContextProvider getSearchContext() {
+			return this.searchContext;
+		}
+
+		public void setSearchContext(SearchContextProvider searchContext) {
+			this.searchContext = searchContext;
 		}
 
 	}

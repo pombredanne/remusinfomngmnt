@@ -405,6 +405,7 @@ public class LuceneSearchService {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							try {
+								SearchPlugin.getPlugin().getSearchContext().deactivate();
 								PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 								.getActivePage().openEditor(new URIEditorInput(URI.createFileURI(savePath.toOSString())), SearchResultEditor.class.getName());
 							} catch (PartInitException e) {

@@ -207,6 +207,80 @@ public interface UIModelPackage extends EPackage {
 	int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemCollectionImpl <em>Desktop Tool Item Collection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemCollectionImpl
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getDesktopToolItemCollection()
+	 * @generated
+	 */
+	int DESKTOP_TOOL_ITEM_COLLECTION = 3;
+
+	/**
+	 * The feature id for the '<em><b>Items</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESKTOP_TOOL_ITEM_COLLECTION__ITEMS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Desktop Tool Item Collection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESKTOP_TOOL_ITEM_COLLECTION_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemImpl <em>Desktop Tool Item</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemImpl
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getDesktopToolItem()
+	 * @generated
+	 */
+	int DESKTOP_TOOL_ITEM = 4;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESKTOP_TOOL_ITEM__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESKTOP_TOOL_ITEM__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Image</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESKTOP_TOOL_ITEM__IMAGE = 2;
+
+	/**
+	 * The number of structural features of the '<em>Desktop Tool Item</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESKTOP_TOOL_ITEM_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '<em>Image</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -214,7 +288,7 @@ public interface UIModelPackage extends EPackage {
 	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getImage()
 	 * @generated
 	 */
-	int IMAGE = 3;
+	int IMAGE = 5;
 
 	/**
 	 * The meta object id for the '<em>Abstract Tray Section</em>' data type.
@@ -224,7 +298,28 @@ public interface UIModelPackage extends EPackage {
 	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getAbstractTraySection()
 	 * @generated
 	 */
-	int ABSTRACT_TRAY_SECTION = 4;
+	int ABSTRACT_TRAY_SECTION = 6;
+
+
+	/**
+	 * The meta object id for the '<em>Abstract Tray Preference Page</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getAbstractTrayPreferencePage()
+	 * @generated
+	 */
+	int ABSTRACT_TRAY_PREFERENCE_PAGE = 7;
+
+	/**
+	 * The meta object id for the '<em>IToolbar Item Provider</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider
+	 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getIToolbarItemProvider()
+	 * @generated
+	 */
+	int ITOOLBAR_ITEM_PROVIDER = 8;
 
 
 	/**
@@ -359,6 +454,70 @@ public interface UIModelPackage extends EPackage {
 	EAttribute getStringToStringMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection <em>Desktop Tool Item Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Desktop Tool Item Collection</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection
+	 * @generated
+	 */
+	EClass getDesktopToolItemCollection();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection#getItems <em>Items</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Items</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection#getItems()
+	 * @see #getDesktopToolItemCollection()
+	 * @generated
+	 */
+	EReference getDesktopToolItemCollection_Items();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItem <em>Desktop Tool Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Desktop Tool Item</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItem
+	 * @generated
+	 */
+	EClass getDesktopToolItem();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItem#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItem#getId()
+	 * @see #getDesktopToolItem()
+	 * @generated
+	 */
+	EAttribute getDesktopToolItem_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItem#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItem#getName()
+	 * @see #getDesktopToolItem()
+	 * @generated
+	 */
+	EAttribute getDesktopToolItem_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItem#getImage <em>Image</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Image</em>'.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItem#getImage()
+	 * @see #getDesktopToolItem()
+	 * @generated
+	 */
+	EAttribute getDesktopToolItem_Image();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.swt.graphics.Image <em>Image</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -379,6 +538,28 @@ public interface UIModelPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getAbstractTraySection();
+
+	/**
+	 * Returns the meta object for data type '{@link org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage <em>Abstract Tray Preference Page</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Abstract Tray Preference Page</em>'.
+	 * @see org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage
+	 * @model instanceClass="org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage" serializeable="false"
+	 * @generated
+	 */
+	EDataType getAbstractTrayPreferencePage();
+
+	/**
+	 * Returns the meta object for data type '{@link org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider <em>IToolbar Item Provider</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>IToolbar Item Provider</em>'.
+	 * @see org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider
+	 * @model instanceClass="org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider"
+	 * @generated
+	 */
+	EDataType getIToolbarItemProvider();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -505,6 +686,58 @@ public interface UIModelPackage extends EPackage {
 		EAttribute STRING_TO_STRING_MAP__VALUE = eINSTANCE.getStringToStringMap_Value();
 
 		/**
+		 * The meta object literal for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemCollectionImpl <em>Desktop Tool Item Collection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemCollectionImpl
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getDesktopToolItemCollection()
+		 * @generated
+		 */
+		EClass DESKTOP_TOOL_ITEM_COLLECTION = eINSTANCE.getDesktopToolItemCollection();
+
+		/**
+		 * The meta object literal for the '<em><b>Items</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DESKTOP_TOOL_ITEM_COLLECTION__ITEMS = eINSTANCE.getDesktopToolItemCollection_Items();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemImpl <em>Desktop Tool Item</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.DesktopToolItemImpl
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getDesktopToolItem()
+		 * @generated
+		 */
+		EClass DESKTOP_TOOL_ITEM = eINSTANCE.getDesktopToolItem();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DESKTOP_TOOL_ITEM__ID = eINSTANCE.getDesktopToolItem_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DESKTOP_TOOL_ITEM__NAME = eINSTANCE.getDesktopToolItem_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Image</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DESKTOP_TOOL_ITEM__IMAGE = eINSTANCE.getDesktopToolItem_Image();
+
+		/**
 		 * The meta object literal for the '<em>Image</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -523,6 +756,26 @@ public interface UIModelPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType ABSTRACT_TRAY_SECTION = eINSTANCE.getAbstractTraySection();
+
+		/**
+		 * The meta object literal for the '<em>Abstract Tray Preference Page</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getAbstractTrayPreferencePage()
+		 * @generated
+		 */
+		EDataType ABSTRACT_TRAY_PREFERENCE_PAGE = eINSTANCE.getAbstractTrayPreferencePage();
+
+		/**
+		 * The meta object literal for the '<em>IToolbar Item Provider</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider
+		 * @see org.remus.infomngmt.common.ui.uimodel.impl.UIModelPackageImpl#getIToolbarItemProvider()
+		 * @generated
+		 */
+		EDataType ITOOLBAR_ITEM_PROVIDER = eINSTANCE.getIToolbarItemProvider();
 
 	}
 

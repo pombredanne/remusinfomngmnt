@@ -25,8 +25,12 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 
+import org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider;
+import org.remus.infomngmt.common.ui.uimodel.DesktopToolItem;
+import org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection;
 import org.remus.infomngmt.common.ui.uimodel.TraySection;
 import org.remus.infomngmt.common.ui.uimodel.TraySectionCollection;
 import org.remus.infomngmt.common.ui.uimodel.UIModelFactory;
@@ -65,6 +69,20 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass desktopToolItemCollectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass desktopToolItemEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType imageEDataType = null;
 
 	/**
@@ -73,6 +91,20 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 	 * @generated
 	 */
 	private EDataType abstractTraySectionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType abstractTrayPreferencePageEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType iToolbarItemProviderEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -255,6 +287,60 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDesktopToolItemCollection() {
+		return desktopToolItemCollectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDesktopToolItemCollection_Items() {
+		return (EReference)desktopToolItemCollectionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDesktopToolItem() {
+		return desktopToolItemEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDesktopToolItem_Id() {
+		return (EAttribute)desktopToolItemEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDesktopToolItem_Name() {
+		return (EAttribute)desktopToolItemEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDesktopToolItem_Image() {
+		return (EAttribute)desktopToolItemEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getImage() {
 		return imageEDataType;
 	}
@@ -266,6 +352,24 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 	 */
 	public EDataType getAbstractTraySection() {
 		return abstractTraySectionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getAbstractTrayPreferencePage() {
+		return abstractTrayPreferencePageEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getIToolbarItemProvider() {
+		return iToolbarItemProviderEDataType;
 	}
 
 	/**
@@ -311,9 +415,19 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
 		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__VALUE);
 
+		desktopToolItemCollectionEClass = createEClass(DESKTOP_TOOL_ITEM_COLLECTION);
+		createEReference(desktopToolItemCollectionEClass, DESKTOP_TOOL_ITEM_COLLECTION__ITEMS);
+
+		desktopToolItemEClass = createEClass(DESKTOP_TOOL_ITEM);
+		createEAttribute(desktopToolItemEClass, DESKTOP_TOOL_ITEM__ID);
+		createEAttribute(desktopToolItemEClass, DESKTOP_TOOL_ITEM__NAME);
+		createEAttribute(desktopToolItemEClass, DESKTOP_TOOL_ITEM__IMAGE);
+
 		// Create data types
 		imageEDataType = createEDataType(IMAGE);
 		abstractTraySectionEDataType = createEDataType(ABSTRACT_TRAY_SECTION);
+		abstractTrayPreferencePageEDataType = createEDataType(ABSTRACT_TRAY_PREFERENCE_PAGE);
+		iToolbarItemProviderEDataType = createEDataType(ITOOLBAR_ITEM_PROVIDER);
 	}
 
 	/**
@@ -361,9 +475,19 @@ public class UIModelPackageImpl extends EPackageImpl implements UIModelPackage {
 		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStringToStringMap_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(desktopToolItemCollectionEClass, DesktopToolItemCollection.class, "DesktopToolItemCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDesktopToolItemCollection_Items(), this.getDesktopToolItem(), null, "items", null, 0, -1, DesktopToolItemCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(desktopToolItemEClass, DesktopToolItem.class, "DesktopToolItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDesktopToolItem_Id(), ecorePackage.getEString(), "id", null, 0, 1, DesktopToolItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDesktopToolItem_Name(), ecorePackage.getEString(), "name", null, 0, 1, DesktopToolItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDesktopToolItem_Image(), this.getImage(), "image", null, 0, 1, DesktopToolItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize data types
 		initEDataType(imageEDataType, Image.class, "Image", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(abstractTraySectionEDataType, AbstractTraySection.class, "AbstractTraySection", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(abstractTrayPreferencePageEDataType, AbstractTrayPreferencePage.class, "AbstractTrayPreferencePage", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(iToolbarItemProviderEDataType, IToolbarItemProvider.class, "IToolbarItemProvider", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

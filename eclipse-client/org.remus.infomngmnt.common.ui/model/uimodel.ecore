@@ -27,4 +27,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="AbstractTrayPreferencePage" instanceClassName="org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IToolbarItemProvider" instanceClassName="org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DesktopToolItemCollection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
+        eType="#//DesktopToolItem" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DesktopToolItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="image" eType="#//Image"/>
+  </eClassifiers>
 </ecore:EPackage>

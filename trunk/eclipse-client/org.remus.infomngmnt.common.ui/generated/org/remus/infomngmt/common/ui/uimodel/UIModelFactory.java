@@ -52,6 +52,24 @@ public interface UIModelFactory extends EFactory {
 	TraySectionCollection createTraySectionCollection();
 
 	/**
+	 * Returns a new object of class '<em>Desktop Tool Item Collection</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Desktop Tool Item Collection</em>'.
+	 * @generated
+	 */
+	DesktopToolItemCollection createDesktopToolItemCollection();
+
+	/**
+	 * Returns a new object of class '<em>Desktop Tool Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Desktop Tool Item</em>'.
+	 * @generated
+	 */
+	DesktopToolItem createDesktopToolItem();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

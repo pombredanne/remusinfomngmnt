@@ -114,6 +114,18 @@ public class UIModelSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case UIModelPackage.DESKTOP_TOOL_ITEM_COLLECTION: {
+				DesktopToolItemCollection desktopToolItemCollection = (DesktopToolItemCollection)theEObject;
+				T result = caseDesktopToolItemCollection(desktopToolItemCollection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case UIModelPackage.DESKTOP_TOOL_ITEM: {
+				DesktopToolItem desktopToolItem = (DesktopToolItem)theEObject;
+				T result = caseDesktopToolItem(desktopToolItem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -160,6 +172,36 @@ public class UIModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseStringToStringMap(Map.Entry<String, String> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Desktop Tool Item Collection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Desktop Tool Item Collection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDesktopToolItemCollection(DesktopToolItemCollection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Desktop Tool Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Desktop Tool Item</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDesktopToolItem(DesktopToolItem object) {
 		return null;
 	}
 

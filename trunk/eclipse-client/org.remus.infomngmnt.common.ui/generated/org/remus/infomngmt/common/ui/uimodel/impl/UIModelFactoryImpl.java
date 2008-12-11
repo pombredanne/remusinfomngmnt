@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 
 import org.remus.infomngmt.common.ui.uimodel.*;
@@ -77,6 +78,8 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 			case UIModelPackage.TRAY_SECTION: return createTraySection();
 			case UIModelPackage.TRAY_SECTION_COLLECTION: return createTraySectionCollection();
 			case UIModelPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
+			case UIModelPackage.DESKTOP_TOOL_ITEM_COLLECTION: return createDesktopToolItemCollection();
+			case UIModelPackage.DESKTOP_TOOL_ITEM: return createDesktopToolItem();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -92,6 +95,8 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 		switch (eDataType.getClassifierID()) {
 			case UIModelPackage.IMAGE:
 				return createImageFromString(eDataType, initialValue);
+			case UIModelPackage.ITOOLBAR_ITEM_PROVIDER:
+				return createIToolbarItemProviderFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -107,6 +112,8 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 		switch (eDataType.getClassifierID()) {
 			case UIModelPackage.IMAGE:
 				return convertImageToString(eDataType, instanceValue);
+			case UIModelPackage.ITOOLBAR_ITEM_PROVIDER:
+				return convertIToolbarItemProviderToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -147,6 +154,26 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public DesktopToolItemCollection createDesktopToolItemCollection() {
+		DesktopToolItemCollectionImpl desktopToolItemCollection = new DesktopToolItemCollectionImpl();
+		return desktopToolItemCollection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DesktopToolItem createDesktopToolItem() {
+		DesktopToolItemImpl desktopToolItem = new DesktopToolItemImpl();
+		return desktopToolItem;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Image createImageFromString(EDataType eDataType, String initialValue) {
 		return (Image)super.createFromString(eDataType, initialValue);
 	}
@@ -157,6 +184,24 @@ public class UIModelFactoryImpl extends EFactoryImpl implements UIModelFactory {
 	 * @generated
 	 */
 	public String convertImageToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IToolbarItemProvider createIToolbarItemProviderFromString(EDataType eDataType, String initialValue) {
+		return (IToolbarItemProvider)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertIToolbarItemProviderToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

@@ -10,6 +10,8 @@
       ecorePackage="uimodel.ecore#/">
     <genDataTypes ecoreDataType="uimodel.ecore#//Image"/>
     <genDataTypes ecoreDataType="uimodel.ecore#//AbstractTraySection"/>
+    <genDataTypes ecoreDataType="uimodel.ecore#//AbstractTrayPreferencePage"/>
+    <genDataTypes ecoreDataType="uimodel.ecore#//IToolbarItemProvider"/>
     <genClasses ecoreClass="uimodel.ecore#//TraySection">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute uimodel.ecore#//TraySection/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute uimodel.ecore#//TraySection/image"/>
@@ -24,6 +26,14 @@
     <genClasses ecoreClass="uimodel.ecore#//StringToStringMap">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute uimodel.ecore#//StringToStringMap/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute uimodel.ecore#//StringToStringMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="uimodel.ecore#//DesktopToolItemCollection">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference uimodel.ecore#//DesktopToolItemCollection/items"/>
+    </genClasses>
+    <genClasses ecoreClass="uimodel.ecore#//DesktopToolItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute uimodel.ecore#//DesktopToolItem/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute uimodel.ecore#//DesktopToolItem/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute uimodel.ecore#//DesktopToolItem/image"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

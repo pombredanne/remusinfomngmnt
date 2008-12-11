@@ -54,6 +54,11 @@ public abstract class AbstractTrayPreferencePage {
 
 	}
 
+	public void performApply() {
+		// does nothing by default.
+
+	}
+
 
 
 }

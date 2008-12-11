@@ -153,6 +153,52 @@ public class UIModelItemProviderAdapterFactory extends UIModelAdapterFactory imp
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DesktopToolItemCollectionItemProvider desktopToolItemCollectionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDesktopToolItemCollectionAdapter() {
+		if (desktopToolItemCollectionItemProvider == null) {
+			desktopToolItemCollectionItemProvider = new DesktopToolItemCollectionItemProvider(this);
+		}
+
+		return desktopToolItemCollectionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItem} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DesktopToolItemItemProvider desktopToolItemItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItem}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDesktopToolItemAdapter() {
+		if (desktopToolItemItemProvider == null) {
+			desktopToolItemItemProvider = new DesktopToolItemItemProvider(this);
+		}
+
+		return desktopToolItemItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -254,6 +300,8 @@ public class UIModelItemProviderAdapterFactory extends UIModelAdapterFactory imp
 		if (traySectionItemProvider != null) traySectionItemProvider.dispose();
 		if (traySectionCollectionItemProvider != null) traySectionCollectionItemProvider.dispose();
 		if (stringToStringMapItemProvider != null) stringToStringMapItemProvider.dispose();
+		if (desktopToolItemCollectionItemProvider != null) desktopToolItemCollectionItemProvider.dispose();
+		if (desktopToolItemItemProvider != null) desktopToolItemItemProvider.dispose();
 	}
 
 }

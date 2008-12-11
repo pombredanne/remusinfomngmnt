@@ -93,6 +93,14 @@ public class UIModelAdapterFactory extends AdapterFactoryImpl {
 				return createStringToStringMapAdapter();
 			}
 			@Override
+			public Adapter caseDesktopToolItemCollection(DesktopToolItemCollection object) {
+				return createDesktopToolItemCollectionAdapter();
+			}
+			@Override
+			public Adapter caseDesktopToolItem(DesktopToolItem object) {
+				return createDesktopToolItemAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -151,6 +159,34 @@ public class UIModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToStringMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection <em>Desktop Tool Item Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItemCollection
+	 * @generated
+	 */
+	public Adapter createDesktopToolItemCollectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmt.common.ui.uimodel.DesktopToolItem <em>Desktop Tool Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmt.common.ui.uimodel.DesktopToolItem
+	 * @generated
+	 */
+	public Adapter createDesktopToolItemAdapter() {
 		return null;
 	}
 

@@ -109,5 +109,20 @@
             name="Desktop Panel">
       </page>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.common.ui.trayAction">
+      <trayAction
+            class="org.remus.infomngmnt.ui.trayaction.OpenElementToolItem"
+            icon="icons/sample.gif"
+            id="org.remus.infomngmnt.ui.openElement"
+            name="Open Infotype">
+      </trayAction>
+      <trayAction
+            class="org.remus.infomngmnt.ui.trayaction.OpenElementToolItem"
+            icon="icons/sample.gif"
+            id="org.remus.infomngmnt.ui.openElement2"
+            name="Open Infotypeasdgasdgasdgasg">
+      </trayAction>
+   </extension>
 
 </plugin>

@@ -32,8 +32,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
-import org.remus.infomngmnt.core.model.ModelUtil;
 import org.remus.infomngmnt.core.model.RuleUtil;
 
 /**

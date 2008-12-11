@@ -217,6 +217,9 @@ IWorkbenchPreferencePage {
 	@Override
 	protected void performApply() {
 		UIEditingUtil.getInstance().saveObjectToResource(this.sections);
+		for (AbstractTrayPreferencePage page : this.knownPrefPages) {
+			page.performApply();
+		}
 		super.performApply();
 	}
 

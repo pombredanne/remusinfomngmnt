@@ -3,6 +3,8 @@ package org.remus.infomngmnt.ui.editors;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,13 +45,18 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
@@ -58,6 +65,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.IFormPage;
@@ -68,6 +76,7 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -207,6 +216,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			}
 		}
 	};
+
+	private Clipboard clipboard;
 
 	protected Adapter dirtyAdapter = new EContentAdapter() {
 		@Override
@@ -799,8 +810,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EditingDomainActionBarContributor getActionBarContributor() {
-		return (EditingDomainActionBarContributor)getEditorSite().getActionBarContributor();
+	public InfomngmntActionBarContributor getActionBarContributor() {
+		return (InfomngmntActionBarContributor)getEditorSite().getActionBarContributor();
 	}
 
 	/**
@@ -887,6 +898,108 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		}
 		return this.contentOutlinePage;
 	}
+
+	protected void performGlobalAction(String id) {
+		// preserve selection
+		ISelection selection = getSelection();
+		boolean handled = ((InformationFormPage) getActivePageInstance()).performGlobalAction(id);
+		if (!handled) {
+			IFormPage page = getActivePageInstance();
+			if (page instanceof InformationFormPage) {
+				if (id.equals(ActionFactory.CUT.getId()) || id.equals(ActionFactory.COPY.getId())) {
+					copyToClipboard(selection);
+					return;
+				}
+			}
+		}
+	}
+
+	public ISelection getSelection() {
+		return getSite().getSelectionProvider() != null ? getSite().getSelectionProvider().getSelection() : null;
+	}
+
+	/**
+	 * @param selection
+	 */
+	private void copyToClipboard(ISelection selection) {
+		Object[] objects = null;
+		String textVersion = null;
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection ssel = (IStructuredSelection) selection;
+			if (ssel == null || ssel.size() == 0)
+				return;
+			objects = ssel.toArray();
+			StringWriter writer = new StringWriter();
+			PrintWriter pwriter = new PrintWriter(writer);
+			Class objClass = null;
+			for (int i = 0; i < objects.length; i++) {
+				Object obj = objects[i];
+				if (objClass == null)
+					objClass = obj.getClass();
+				else if (objClass.equals(obj.getClass()) == false)
+					return;
+				else if (obj instanceof String) {
+					// Delimiter is always a newline
+					pwriter.println((String) obj);
+				}
+			}
+			pwriter.flush();
+			textVersion = writer.toString();
+			try {
+				pwriter.close();
+				writer.close();
+			} catch (IOException e) {
+			}
+		} else if (selection instanceof ITextSelection) {
+			textVersion = ((ITextSelection) selection).getText();
+		}
+		if ((textVersion == null || textVersion.length() == 0) && objects == null)
+			return;
+		// set the clipboard contents
+		Object[] o = null;
+		Transfer[] t = null;
+		if (objects == null) {
+			o = new Object[] {textVersion};
+			t = new Transfer[] {TextTransfer.getInstance()};
+		} else if (textVersion == null || textVersion.length() == 0) {
+			o = new Object[] {objects};
+			t = new Transfer[] {ModelDataTransfer.getInstance()};
+		} else {
+			o = new Object[] {objects, textVersion};
+			t = new Transfer[] {ModelDataTransfer.getInstance(), TextTransfer.getInstance()};
+		}
+		this.clipboard.setContents(o, t);
+	}
+
+	public boolean canPasteFromClipboard() {
+		IFormPage page = getActivePageInstance();
+		if (page instanceof InformationFormPage) {
+			return ((InformationFormPage) page).canPaste(getClipboard());
+		}
+		return false;
+	}
+
+	public boolean canCopy(ISelection selection) {
+		if (selection == null)
+			return false;
+		if (selection instanceof IStructuredSelection)
+			return !selection.isEmpty();
+		if (selection instanceof ITextSelection) {
+			ITextSelection textSelection = (ITextSelection) selection;
+			return textSelection.getLength() > 0;
+		}
+		return false;
+	}
+
+	public boolean canCut(ISelection selection) {
+		return canCopy(selection);
+	}
+
+	public Clipboard getClipboard() {
+		return this.clipboard;
+	}
+
+
 
 
 

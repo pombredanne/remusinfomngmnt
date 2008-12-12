@@ -18,7 +18,6 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
@@ -26,7 +25,7 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.jslib.JavaScriptSnippets;
 import org.remus.infomngmnt.jslib.TemplateLocation;
 
-public class ViewPage extends FormPage {
+public class ViewPage extends InformationFormPage {
 
 	private final InformationUnit infoUnit;
 

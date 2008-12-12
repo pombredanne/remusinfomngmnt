@@ -28,8 +28,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
-import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -122,16 +120,15 @@ public class UIUtil {
 		return null;
 	}
 
-	public static IDialogSettings getDialogSettings(String sectionName) {
-		IDialogSettings dialogSettings = UimodelEditPlugin.getPlugin().getDialogSettings();
-		IDialogSettings section = dialogSettings.getSection(sectionName);
+	public static IDialogSettings getDialogSettings(String sectionName, IDialogSettings settings) {
+		IDialogSettings section = settings.getSection(sectionName);
 		if (section == null) {
-			dialogSettings.addNewSection(sectionName);
-			section = dialogSettings.getSection(sectionName);
+			settings.addNewSection(sectionName);
+			section = settings.getSection(sectionName);
 		}
 		return section;
-
 	}
+
 
 	public static Display getDisplay() {
 		if (getPrimaryWindow() != null && getPrimaryWindow().getShell().getDisplay() != null) {

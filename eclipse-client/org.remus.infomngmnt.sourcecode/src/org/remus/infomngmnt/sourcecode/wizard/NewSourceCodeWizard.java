@@ -22,6 +22,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
+import org.remus.infomngmnt.sourcecode.prefs.SourceCodeRulePreferencePage;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
@@ -54,6 +55,12 @@ public class NewSourceCodeWizard extends NewInfoObjectWizard {
 				ruleValue, AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
 		if (childByType != null) {
 			this.page1.setCategoryString(childByType.getStringValue());
+		}
+		childByType = InformationUtil.getChildByType(
+				ruleValue, SourceCodeRulePreferencePage.NODENAME_PREDEFINED_SOURCETYPE);
+		if (childByType != null) {
+			InformationUtil.getChildByType(this.newElement, SourceCodePlugin.SRCTYPE_NAME)
+			.setStringValue(childByType.getStringValue());
 		}
 	}
 

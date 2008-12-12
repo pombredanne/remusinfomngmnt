@@ -8,6 +8,7 @@
    </configIni>
 
    <launcherArgs>
+      <programArgs>-consoleLog</programArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
@@ -25,6 +26,7 @@
 
    <plugins>
       <plugin id="com.ibm.icu"/>
+      <plugin id="net.sf.colorer"/>
       <plugin id="org.apache.commons.codec"/>
       <plugin id="org.apache.commons.httpclient"/>
       <plugin id="org.apache.commons.lang"/>
@@ -85,6 +87,7 @@
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
       <plugin id="org.eclipse.update.configurator"/>
       <plugin id="org.remus.infomngmnt.application"/>
+      <plugin id="org.remus.infomngmnt.common.core"/>
       <plugin id="org.remus.infomngmnt.common.ui"/>
       <plugin id="org.remus.infomngmnt.core"/>
       <plugin id="org.remus.infomngmnt.jslib"/>
@@ -93,6 +96,7 @@
       <plugin id="org.remus.infomngmnt.plaintext"/>
       <plugin id="org.remus.infomngmnt.search"/>
       <plugin id="org.remus.infomngmnt.search.local"/>
+      <plugin id="org.remus.infomngmnt.sourcecode"/>
       <plugin id="org.remus.infomngmnt.ui"/>
    </plugins>
 

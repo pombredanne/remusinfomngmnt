@@ -26,7 +26,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
@@ -34,11 +33,12 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
+import org.remus.infomngmnt.ui.editors.InformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public abstract class AbstractInformationFormPage extends FormPage {
+public abstract class AbstractInformationFormPage extends InformationFormPage {
 
 	private InformationUnit modelObject = null;
 
@@ -121,6 +121,9 @@ public abstract class AbstractInformationFormPage extends FormPage {
 		ISWTObservableValue swtDescription = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.descriptionText, SWT.Modify));
 		IObservableValue emfDescription = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
 		this.dataBindingContext.bindValue(swtDescription, emfDescription, null, null);
+
+		addControl(this.keyWordText);
+		addControl(this.descriptionText);
 
 	}
 

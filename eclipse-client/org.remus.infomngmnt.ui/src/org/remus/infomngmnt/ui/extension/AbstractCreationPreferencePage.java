@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.ui.category.CategorySmartField;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -61,6 +62,7 @@ public abstract class AbstractCreationPreferencePage {
 		Label label = new Label(composite, SWT.NONE);
 		label.setText("Predefined Category");
 		this.predefCategoryText = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+		new CategorySmartField(this.predefCategoryText);
 		this.predefCategoryText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Label nameLabel = new Label(composite, SWT.NONE);

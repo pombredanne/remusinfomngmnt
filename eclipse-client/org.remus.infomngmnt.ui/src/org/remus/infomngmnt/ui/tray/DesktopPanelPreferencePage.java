@@ -65,6 +65,7 @@ import org.remus.infomngmnt.ui.desktop.TrayConfigurationManager;
 import org.remus.infomngmt.common.ui.uimodel.TraySection;
 import org.remus.infomngmt.common.ui.uimodel.TraySectionCollection;
 import org.remus.infomngmt.common.ui.uimodel.UIModelFactory;
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -306,7 +307,7 @@ IWorkbenchPreferencePage {
 	public void init(IWorkbench workbench) {
 		this.sections = TrayConfigurationManager.getInstance().getTraySections();
 		this.editingDomain = UIEditingUtil.getInstance().createNewEditingDomain();
-		this.dialogSettings = UIUtil.getDialogSettings(DIALOG_SETTINGS_SECTION);
+		this.dialogSettings = UIUtil.getDialogSettings(DIALOG_SETTINGS_SECTION, UimodelEditPlugin.getPlugin().getDialogSettings());
 		this.knownPrefPages = new ArrayList<AbstractTrayPreferencePage>();
 	}
 

@@ -161,10 +161,10 @@ public class LuceneSearchService {
 									reader = IndexReader.open(getSearchService().getIndexDirectory(project));
 									final List<IFile> list = clonedDeleteMap.get(project);
 									for (final IFile path : list) {
-										final InformationUnit document = EditingUtil.getInstance().getObjectFromFile(path, InfomngmntPackage.Literals.INFORMATION_UNIT,false);
-										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"", document.getLabel()));
+										String id = path.getFullPath().removeFileExtension().lastSegment();
+										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"",id));
 										final Term term = new Term(SEARCHINDEX_ITEM_ID,
-												document.getId());
+												id);
 										reader.deleteDocuments(term);
 									}
 								}

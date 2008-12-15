@@ -30,38 +30,100 @@ import org.remus.infomngmnt.core.model.InformationUtil;
 
 
 /**
+ * <p>
+ * This class is the basic implementation for the
+ * integration of information-types. This class
+ * is normally called by the default builder for
+ * information types.
+ * </p>
+ * <p>
+ * The information object is stored as {@link IFile}
+ * within the workspace. After a write operation where
+ * the the information-object is affected, the specific
+ * builder for information units asks
+ * </p>
+ * <p>
+ * In addition the search engine asks the info-type
+ * specific implementation of this class for relevant
+ * informations, which become indexed.
+ * </p>
+ * <p>
+ * In every case you have to implement a subtype of
+ * this class, it is essential for the integration of
+ * a new info-type.
+ * </p>
  * @author Tom Seidel <tom.seidel@remus-software.org>
+ * @since 1.0
  */
 public abstract class AbstractInformationRepresentation {
 
+	/** The information unit to deal with **/
 	private InformationUnit value;
 
+	/** The previous version of the file, if present **/
 	private File previousVersion;
 
+	/** The calculated differences **/
 	private List<DiffElement> differences;
 
 	public AbstractInformationRepresentation() {
 		super();
 	}
 
+	/**
+	 * Executed before building the info-object. Useful
+	 * for executing operations which are required to
+	 * serialize information object
+	 * @param monitor The progressmonitor
+	 */
 	public void handlePreBuild(IProgressMonitor monitor) {
 		// does nothing by default
 	}
 
+
 	/**
-	 * Executed after the serialization of the Info-Object. Useful
-	 * @param derivedFile
+	 * Executed after the serialization of the info-object.
+	 * Uselful
+	 * @param derivedFile the file
+	 * @param monitor The progressmonitor
+	 * @throws CoreException if an exception occurs.
 	 */
 	public void handlePostBuild(IFile derivedFile, IProgressMonitor monitor) throws CoreException {
 		// does nothing by default.
 	}
 
+	/**
+	 * @param monitor
+	 * @return
+	 * @throws CoreException
+	 */
 	public abstract String handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
 
+	/**
+	 * Returns the string that is used for as title in the search-result.
+	 * Mostly it is the same the {@link InformationUnit#getLabel()} would return.
+	 * It is the highest ranked field in the search.
+	 * @param monitor the progressmonitor.
+	 * @return the String which is inexed
+	 * @throws CoreException if an exception occurs.
+	 */
 	public abstract String getTitleForIndexing(IProgressMonitor monitor) throws CoreException;
 
+	/**
+	 * Returns an "indexable representation" of the information object.
+	 * @param monitor the progressmonitor
+	 * @return the String which is indexed.
+	 * @throws CoreException if an exception occurs.
+	 */
 	public abstract String getBodyForIndexing(IProgressMonitor monitor) throws CoreException;
 
+	/**
+	 * Returns an additional String for indexing. Useful for instance
+	 * if you
+	 * @param monitor
+	 * @return
+	 * @throws CoreException
+	 */
 	public abstract String getAdditionalsForIndexing(IProgressMonitor monitor) throws CoreException;
 
 	public InformationUnit getValue() {
@@ -95,7 +157,7 @@ public abstract class AbstractInformationRepresentation {
 	protected List<DiffElement> getDifferences() {
 		if (getPreviousVersion() != null && this.differences == null) {
 			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromUri(
-					new Path(this.previousVersion.getAbsolutePath()), InfomngmntPackage.Literals.INFORMATION_UNIT, false);
+					new Path(this.previousVersion.getAbsolutePath()), InfomngmntPackage.Literals.INFORMATION_UNIT);
 			this.differences = InformationUtil.computeDiffs(previousModel, getValue());
 		}
 		return this.differences;

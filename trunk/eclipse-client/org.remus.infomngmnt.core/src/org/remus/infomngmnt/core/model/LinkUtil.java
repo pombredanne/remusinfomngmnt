@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.core.model;
 
 import org.eclipse.core.runtime.IPath;
+
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.LinkType;
@@ -53,7 +54,7 @@ public class LinkUtil {
 	 */
 	private LinkUtil() {
 		IPath stateLocation = InfomngmntEditPlugin.getPlugin().getStateLocation();
-		this.object = EditingUtil.getInstance().getObjectFromUri(stateLocation.append(LINK_TYPE_STORE_FILE_NAME),InfomngmntPackage.eINSTANCE.getLinkTypeCollection(),false);
+		this.object = EditingUtil.getInstance().getObjectFromUri(stateLocation.append(LINK_TYPE_STORE_FILE_NAME),InfomngmntPackage.eINSTANCE.getLinkTypeCollection());
 		// required is at leas one type. if there is no type we have to create one.
 		if (this.object.getAvailableLinkTypes().size() == 0) {
 			LinkType createLinkType = InfomngmntFactory.eINSTANCE.createLinkType();

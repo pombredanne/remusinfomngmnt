@@ -67,12 +67,14 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 			for (IResource resource : members) {
 				if (resource.getType() == IResource.FILE
 						&& resource.getFileExtension().equals(ResourceUtil.FILE_EXTENSION)) {
-					InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile((IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
-					monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile.getLabel()));
-					IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(objectFromFile.getType());
-					this.visitor.setMonitor(monitor);
-					this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile)resource);
-					monitor.worked(1);
+					InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile((IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit());
+					if (objectFromFile != null) {
+						monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile.getLabel()));
+						IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(objectFromFile.getType());
+						this.visitor.setMonitor(monitor);
+						this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile)resource);
+						monitor.worked(1);
+					}
 				}
 			}
 			break;

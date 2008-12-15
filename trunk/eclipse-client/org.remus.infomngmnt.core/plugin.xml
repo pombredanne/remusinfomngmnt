@@ -59,6 +59,13 @@
                type="org.remus.infomngmnt.InformationUnitListItem">
          </adapter>
       </factory>
+      <factory
+            adaptableType="org.remus.infomngmnt.InformationUnit"
+            class="org.remus.infomngmnt.core.adapters.InformationUnitAdapterFactory">
+         <adapter
+               type="org.remus.infomngmnt.InformationUnitListItem">
+         </adapter>
+      </factory>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">

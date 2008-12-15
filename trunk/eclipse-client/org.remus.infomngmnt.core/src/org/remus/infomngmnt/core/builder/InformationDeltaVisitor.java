@@ -63,7 +63,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 					&& resourceDelta.getResource().getType() == IResource.FILE
 					&& resourceDelta.getResource().getFileExtension().equals(ResourceUtil.FILE_EXTENSION)) {
 				if (resourceDelta.getResource().exists()) {
-					objectFromFile = EditingUtil.getInstance().getObjectFromFile((IFile) resourceDelta.getResource(), InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
+					objectFromFile = EditingUtil.getInstance().getObjectFromFile(
+							(IFile) resourceDelta.getResource(), InfomngmntPackage.eINSTANCE.getInformationUnit(),null,false);
 					infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(objectFromFile.getType());
 
 				}
@@ -71,7 +72,9 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				case IResourceDelta.REPLACED:
 				case IResourceDelta.ADDED:
 				case IResourceDelta.CHANGED:
-					buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta.getResource());
+					if (resourceDelta.getResource().exists() && objectFromFile != null && objectFromFile.getId() != null) {
+						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta.getResource());
+					}
 					break;
 				case IResourceDelta.REMOVED:
 					break;

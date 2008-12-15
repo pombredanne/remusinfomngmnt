@@ -8,6 +8,8 @@ import org.eclipse.emf.edit.ui.action.CutAction;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
 import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.PasteAction;
+import org.eclipse.emf.edit.ui.action.RedoAction;
+import org.eclipse.emf.edit.ui.action.UndoAction;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
@@ -54,6 +56,16 @@ IMenuListener,
 IPropertyListener,
 ISelectionChangedListener
 {
+
+	/**
+	 * This is the action used to implement undo.
+	 */
+	protected UndoAction undoAction;
+
+	/**
+	 * This is the action used to implement redo.
+	 */
+	protected RedoAction redoAction;
 	/**
 	 * This keeps track of the current editor part.
 	 */
@@ -134,6 +146,7 @@ ISelectionChangedListener
 	{
 		final ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
+
 		this.deleteAction = new DeleteAction(removeAllReferencesOnDelete());
 		this.deleteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
@@ -150,6 +163,16 @@ ISelectionChangedListener
 		this.pasteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
 		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), this.pasteAction);
 
+		this.undoAction = new UndoAction();
+		this.undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), this.undoAction);
+
+		this.redoAction = new RedoAction();
+		this.redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
+
+
+		actionBars.updateActionBars();
 	}
 
 	/**
@@ -174,6 +197,8 @@ ISelectionChangedListener
 			actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(), this.copyAction);
 			actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), this.pasteAction);
 		}
+		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), this.undoAction);
+		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
 
 	}
 
@@ -204,6 +229,8 @@ ISelectionChangedListener
 		this.cutAction.setActiveWorkbenchPart(null);
 		this.copyAction.setActiveWorkbenchPart(null);
 		this.pasteAction.setActiveWorkbenchPart(null);
+		this.undoAction.setActiveWorkbenchPart(null);
+		this.redoAction.setActiveWorkbenchPart(null);
 
 		if (this.loadResourceAction != null)
 		{
@@ -232,6 +259,7 @@ ISelectionChangedListener
 						selectionProvider.removeSelectionChangedListener(this.copyAction);
 						selectionProvider.removeSelectionChangedListener(this.pasteAction);
 
+
 						if (this.validateAction != null)
 						{
 							selectionProvider.removeSelectionChangedListener(this.validateAction);
@@ -250,6 +278,8 @@ ISelectionChangedListener
 		this.cutAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
 		this.copyAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
 		this.pasteAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
+		this.undoAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
+		this.redoAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
 
 		if (this.loadResourceAction != null)
 		{
@@ -310,6 +340,7 @@ ISelectionChangedListener
 							this.copyAction.updateSelection(structuredSelection);
 							this.pasteAction.updateSelection(structuredSelection);
 
+
 							if (this.validateAction != null)
 							{
 								this.validateAction.updateSelection(structuredSelection);
@@ -326,6 +357,8 @@ ISelectionChangedListener
 					{
 						this.loadResourceAction.update();
 					}
+					this.undoAction.update();
+					this.redoAction.update();
 	}
 
 	/**
@@ -333,6 +366,10 @@ ISelectionChangedListener
 	 */
 	public void menuAboutToShow(final IMenuManager menuManager)
 	{
+
+		// refresh undo/redo
+		this.undoAction.update();
+		this.redoAction.update();
 		// Add our standard marker.
 		//
 		if ((this.style & ADDITIONS_LAST_STYLE) == 0)
@@ -353,12 +390,14 @@ ISelectionChangedListener
 
 		// Add the edit menu actions.
 		//
-
-		menuManager.add(new ActionContributionItem(this.cutAction));
-		menuManager.add(new ActionContributionItem(this.copyAction));
-		menuManager.add(new ActionContributionItem(this.pasteAction));
+		menuManager.add(this.undoAction);
+		menuManager.add(this.redoAction);
 		menuManager.add(new Separator());
-		menuManager.add(new ActionContributionItem(this.deleteAction));
+		menuManager.add(this.cutAction);
+		menuManager.add(this.copyAction);
+		menuManager.add(this.pasteAction);
+		menuManager.add(new Separator());
+		menuManager.add(this.deleteAction);
 		menuManager.add(new Separator());
 
 		if ((this.style & ADDITIONS_LAST_STYLE) != 0)

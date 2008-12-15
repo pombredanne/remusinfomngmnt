@@ -12,18 +12,24 @@
 
 package org.remus.infomngmnt.ui.commands;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.CreateChildCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.osgi.util.NLS;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.LinkUtil;
-import org.remus.infomngmnt.ui.create.CreateInfoTypeCommand;
 
 /**
  * <p>
@@ -65,8 +71,36 @@ public class CommandFactory {
 		return createChildCommand;
 	}
 
+	public static Command CREATE_CATEGORY(Category parentCategory, Category newCategory, EditingDomain editingDomain) {
+		CreateChildCommand createChildCommand = new CreateChildCommand(
+				editingDomain, parentCategory, InfomngmntPackage.Literals.CATEGORY__CHILDREN,newCategory, Collections.EMPTY_LIST);
+		createChildCommand.setLabel(NLS.bind("Create category {0}", newCategory.getLabel()));
+		return createChildCommand;
+	}
+
+	public static Command CREATE_ROOTCATEGORY(Category newCategory, EditingDomain editingDomain) {
+		CreateChildCommand createChildCommand = new CreateChildCommand(
+				editingDomain, ApplicationModelPool.getInstance().getModel(), InfomngmntPackage.Literals.APPLICATION_ROOT__ROOT_CATEGORIES, newCategory, Collections.EMPTY_LIST);
+		CompoundCommand compoundCommand = new CompoundCommand(new ArrayList<Command>(Collections.singleton(createChildCommand))) {
+			@Override
+			public boolean canUndo() {
+				return false;
+			}
+		};
+		compoundCommand.setLabel(NLS.bind("Create category {0}", newCategory.getLabel()));
+		return compoundCommand;
+	}
+
 	public static Command CREATE_INFOTYPE(InformationUnit newItem, Category parentCategory) {
 		return new CreateInfoTypeCommand(newItem,parentCategory);
+	}
+
+	public static Command SET_WORKSPACEPATH(InformationUnitListItem item, String newPath, EditingDomain editingDomain) {
+		return new SetCommand(editingDomain,item,InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,newPath);
+	}
+
+	public static Command MOVE_INFOUNIT_COMMAND(InformationUnitListItem item, String targetPath) {
+		return new MoveInformationUnitCommand(item, targetPath);
 	}
 
 

@@ -13,15 +13,20 @@
 package org.remus.infomngmnt.ui.category;
 
 import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.CategoryUtil;
+import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.ui.commands.CommandFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -57,7 +62,10 @@ public class NewCategoryWizard extends Wizard implements INewWizard {
 		Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
 		createCategory.setId(new UniversalUniqueIdentifier().toString());
 		createCategory.setLabel(this.page1.getNewCategoryValue());
-		findCategory.getChildren().add(createCategory);
+		EditingDomain navigationEditingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
+		Command createCommand = CommandFactory.CREATE_CATEGORY(findCategory, createCategory, navigationEditingDomain);
+		navigationEditingDomain.getCommandStack().execute(createCommand);
+
 		UIUtil.selectAndReveal(createCategory, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
 		return true;
 	}

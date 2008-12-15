@@ -10,7 +10,7 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.ui.create;
+package org.remus.infomngmnt.ui.commands;
 
 import java.util.Collections;
 
@@ -23,6 +23,7 @@ import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -39,7 +40,7 @@ import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 @SuppressWarnings("restriction")
 public class CreateInfoTypeCommand extends CompoundCommand {
 
-	private final InformationUnit newInformationUnit;
+	private InformationUnit newInformationUnit;
 	private final Category parentCategory;
 	private final InformationUnitListItem createInformationUnitListItem;
 	private final IFile newFile;
@@ -101,6 +102,8 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 
 	private void postUndo() {
 		try {
+			// Save the current state.
+			this.newInformationUnit = EditingUtil.getInstance().getObjectFromFile(this.newFile, InfomngmntPackage.Literals.INFORMATION_UNIT);
 			this.newFile.delete(true, new NullProgressMonitor());
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block

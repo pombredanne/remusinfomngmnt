@@ -34,6 +34,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -73,6 +75,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.ui.commands.CommandFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -127,12 +130,16 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 				try {
 					folder.create(true, true, monitor);
 					IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
-					Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory());
+					Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(),true);
 					rootCategory.setLabel(NewProjectWizard.this.newProject.getName());
 					rootCategory.setId(new UniversalUniqueIdentifier().toString());
 					rootCategory.setDescription(NewProjectWizard.this.page1.getDescriptionText());
-					ApplicationModelPool.getInstance().addRootCategory(rootCategory);
 					EditingUtil.getInstance().saveObjectToResource(rootCategory);
+
+					EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
+					Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
+					editingDomain.getCommandStack().execute(createCommand);
+					ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				}

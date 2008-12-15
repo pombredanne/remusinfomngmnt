@@ -100,6 +100,10 @@ public class GeneralSourcePage extends GeneralPage {
 				return super.convert(value);
 			}
 		}, null);
-		this.typeCombo.select(UIUtil.getDialogSettings(SECTION_NAME, this.settings).getInt(SECTION_KEY));
+		try {
+			this.typeCombo.select(UIUtil.getDialogSettings(SECTION_NAME, this.settings).getInt(SECTION_KEY));
+		} catch (NumberFormatException e) {
+			this.typeCombo.select(0);
+		}
 	}
 }

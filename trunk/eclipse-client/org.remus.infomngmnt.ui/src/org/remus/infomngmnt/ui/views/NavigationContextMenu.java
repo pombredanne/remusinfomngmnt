@@ -35,6 +35,8 @@ import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
+import org.remus.infomngmnt.ui.views.action.RenameAction;
+
 
 /**
  * This is a contributor for an editor, multi-page or otherwise,
@@ -57,6 +59,7 @@ IPropertyListener,
 ISelectionChangedListener
 {
 
+	private RenameAction renameAction;
 	/**
 	 * This is the action used to implement undo.
 	 */
@@ -149,6 +152,7 @@ ISelectionChangedListener
 
 		this.deleteAction = new DeleteAction(removeAllReferencesOnDelete());
 		this.deleteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+		this.deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete");
 		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
 
 		this.cutAction = new CutAction();
@@ -170,6 +174,9 @@ ISelectionChangedListener
 		this.redoAction = new RedoAction();
 		this.redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
 		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
+
+		this.renameAction = new RenameAction();
+		actionBars.setGlobalActionHandler(ActionFactory.RENAME.getId(), this.renameAction);
 
 
 		actionBars.updateActionBars();
@@ -280,6 +287,7 @@ ISelectionChangedListener
 		this.pasteAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
 		this.undoAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
 		this.redoAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
+		this.renameAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
 
 		if (this.loadResourceAction != null)
 		{
@@ -307,6 +315,7 @@ ISelectionChangedListener
 						selectionProvider.addSelectionChangedListener(this.cutAction);
 						selectionProvider.addSelectionChangedListener(this.copyAction);
 						selectionProvider.addSelectionChangedListener(this.pasteAction);
+						selectionProvider.addSelectionChangedListener(this.renameAction);
 
 						if (this.validateAction != null)
 						{
@@ -339,6 +348,7 @@ ISelectionChangedListener
 							this.cutAction.updateSelection(structuredSelection);
 							this.copyAction.updateSelection(structuredSelection);
 							this.pasteAction.updateSelection(structuredSelection);
+							this.renameAction.updateSelection(structuredSelection);
 
 
 							if (this.validateAction != null)
@@ -392,6 +402,8 @@ ISelectionChangedListener
 		//
 		menuManager.add(this.undoAction);
 		menuManager.add(this.redoAction);
+		menuManager.add(new Separator());
+		menuManager.add(this.renameAction);
 		menuManager.add(new Separator());
 		menuManager.add(this.cutAction);
 		menuManager.add(this.copyAction);

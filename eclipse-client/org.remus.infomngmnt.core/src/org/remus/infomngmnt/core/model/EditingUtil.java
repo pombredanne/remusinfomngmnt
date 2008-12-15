@@ -78,7 +78,7 @@ public class EditingUtil {
 	/**
 	 * Returns a {@link Resource} object from the given uri
 	 * @param uri the uri
-	 * @param cache
+	 * @param cache see also bug 10
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")

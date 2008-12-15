@@ -1,11 +1,16 @@
 package org.remus.infomngmnt.ui.views;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -50,9 +55,12 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.core.extension.RuleExtensionManager;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.dnd.NavigationDropAdapter;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
@@ -72,6 +80,9 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 						setSelection(new StructuredSelection(adapter));
 					}
 				}
+			}
+			if (part == NavigationView.this) {
+				//NavigationView.this.actionBar.setActiveDomain(NavigationView.this);
 			}
 
 		}
@@ -101,6 +112,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	private Action linkEditorAction;
 	private boolean linkEditor;
 	private IDialogSettings settings;
+	private NavigationContextMenu actionBar;
 
 	/**
 	 * Create contents of the view part
@@ -123,6 +135,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		initializeToolBar();
 		initializeMenu();
 		initDrag();
+		initDrop();
 		hookContextMenu();
 	}
 
@@ -160,6 +173,12 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 	}
 
+	private void initDrop() {
+		final int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
+		this.viewer.addDropSupport(dndOperations, getTransferTypes(), new NavigationDropAdapter(getEditingDomain(),this.viewer));
+		//this.viewer.addDropSupport(dndOperations, getTransferTypes(), new EditingDomainViewerDropAdapter(getEditingDomain(),this.viewer));
+	}
+
 	private void initInput() {
 		this.viewer.setInput(ApplicationModelPool.getInstance().getModel());
 
@@ -168,9 +187,11 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	private void initProvider() {
 		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
 		this.labelProvider = new DelegatingStyledCellLabelProvider(new NavigationCellLabelProvider());
+
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);
-		getSite().setSelectionProvider(this.viewer);
+		getSite().setSelectionProvider(this);
+		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance().getAdapterFactory());
 
 
 	}
@@ -197,13 +218,13 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	private void hookContextMenu() {
 		final MenuManager contextMenu = new MenuManager("#PopUpMenu");
 		contextMenu.setRemoveAllWhenShown(true);
-		final NavigationContextMenu actionBar = new NavigationContextMenu();
-		actionBar.init(getViewSite().getActionBars());
-		actionBar.setActiveDomain(this);
-		contextMenu.addMenuListener(actionBar);
+		this.actionBar = new NavigationContextMenu();
+		this.actionBar.init(getViewSite().getActionBars());
+		this.actionBar.setActiveDomain(this);
+		contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu("de.spiritlink.facebook.ui.views.View.context",contextMenu, new UnwrappingSelectionProvider(this.viewer));
+		getSite().registerContextMenu("de.spiritlink.facebook.ui.views.View.context",contextMenu, new UnwrappingSelectionProvider(this));
 
 	}
 
@@ -227,13 +248,15 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	}
 
 	public EditingDomain getEditingDomain() {
-		return EditingUtil.getInstance().createNewEditingDomain();
+		return EditingUtil.getInstance().getNavigationEditingDomain();
 	}
 
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
 		this.viewer.addSelectionChangedListener(listener);
 
 	}
+
+
 
 	/**
 	 * 
@@ -315,6 +338,17 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 	public Viewer getViewer() {
 		return this.viewer;
+	}
+
+	private Transfer[] getTransferTypes() {
+		List<Transfer> returnValue = new ArrayList<Transfer>();
+		Collection<TransferWrapper> values = RuleExtensionManager.getInstance().getAllTransferTypes().values();
+		for (TransferWrapper transferWrapper : values) {
+			returnValue.add(transferWrapper.getTransfer());
+		}
+		// add local transfer
+		returnValue.add(LocalTransfer.getInstance());
+		return returnValue.toArray(new Transfer[returnValue.size()]);
 	}
 
 }

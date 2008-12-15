@@ -192,8 +192,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 						getSite().getShell().getDisplay().asyncExec
 						(new Runnable() {
 							public void run() {
+								//InformationEditor.this.dispose();
 								getSite().getPage().closeEditor(InformationEditor.this, false);
-								InformationEditor.this.dispose();
 							}
 						});
 					}
@@ -854,13 +854,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		return this.primaryModel;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void dispose() {
+	public void disposeModel() {
 		this.updateProblemIndication = false;
 
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this.resourceChangeListener);
@@ -874,7 +868,16 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		if (getActionBarContributor().getActiveEditor() == this) {
 			getActionBarContributor().setActiveEditor(null);
 		}
+	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void dispose() {
+		disposeModel();
 		super.dispose();
 	}
 

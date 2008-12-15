@@ -20,11 +20,13 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.commands.CommandFactory;
@@ -73,6 +75,9 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
 		.execute(CommandFactory.CREATE_INFOTYPE(this.newElement, findCategory()));
+		// we also reveal the created list-item, that can be found in the navigation
+		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
 		return true;
 	}
 	@Override

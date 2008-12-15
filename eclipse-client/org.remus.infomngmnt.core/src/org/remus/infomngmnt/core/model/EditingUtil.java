@@ -124,14 +124,14 @@ public class EditingUtil {
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas, final boolean cache) {
+	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas, final boolean cache, EditingDomain domain, final boolean createOnDemand) {
 		Resource resource = null;
 		ResourceSet resourceSet = null;
-		T returnValue;
+		T returnValue = null;
 		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(uri.toString(),false);
 		final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toString()));
 		if (cache) {
-			resourceSet = this.editingDomain.getResourceSet();
+			resourceSet = domain.getResourceSet();
 		} else {
 			resourceSet = new ResourceSetImpl();
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
@@ -149,19 +149,24 @@ public class EditingUtil {
 			}
 			returnValue = (T) resource.getContents().get(0);
 		} else {
-			final EObject create = InfomngmntFactory.eINSTANCE.create(objectClas);
-			resource = resourceSet.createResource(createURI);
-			resource.getContents().add(create);
-			try {
-				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
-			} catch (final IOException e) {
-				// FIXME What to do here?
+			if (createOnDemand) {
+				final EObject create = InfomngmntFactory.eINSTANCE.create(objectClas);
+				resource = resourceSet.createResource(createURI);
+				resource.getContents().add(create);
+				try {
+					resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+				} catch (final IOException e) {
+					// FIXME What to do here?
+				}
+				returnValue = (T) create;
 			}
-			returnValue = (T) create;
 		}
 		return returnValue;
 	}
 
+	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas) {
+		return getObjectFromUri(uri, objectClas, false, null, false);
+	}
 
 	/**
 	 * Returns a {@link Resource} object from the given uri
@@ -169,7 +174,7 @@ public class EditingUtil {
 	 * @return the contents of the file
 	 */
 	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas) {
-		return getObjectFromUri(uri.getFullPath(), objectClas, true);
+		return getObjectFromUri(uri.getFullPath(), objectClas, true, this.editingDomain, false);
 	}
 	/**
 	 * Returns a {@link Resource} object from the given uri
@@ -177,7 +182,23 @@ public class EditingUtil {
 	 * @return the contents of the file
 	 */
 	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, final boolean cacheInEditingDomain) {
-		return getObjectFromUri(uri.getFullPath(), objectClas, cacheInEditingDomain);
+		return getObjectFromUri(uri.getFullPath(), objectClas, cacheInEditingDomain, this.editingDomain, true);
+	}
+	/**
+	 * Returns a {@link Resource} object from the given uri
+	 * @param uri the uri
+	 * @return the contents of the file
+	 */
+	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, EditingDomain domain, boolean loadOnDemand) {
+		return getObjectFromUri(uri.getFullPath(), objectClas, domain != null ? true : false, this.editingDomain, loadOnDemand);
+	}
+	/**
+	 * Returns a {@link Resource} object from the given uri
+	 * @param uri the uri
+	 * @return the contents of the file
+	 */
+	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, final EditingDomain domain) {
+		return getObjectFromUri(uri.getFullPath(), objectClas, true, this.editingDomain, true);
 	}
 
 

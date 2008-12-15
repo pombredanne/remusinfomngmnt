@@ -82,9 +82,11 @@ public class ApplicationModelPool {
 		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
 		for (IProject project : relevantProjects) {
 			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator + ResourceUtil.PRIMARY_CONTENT_FILE));
-			final Category category = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(), true);
+			final Category category = EditingUtil.getInstance().getObjectFromFile(
+					file, InfomngmntPackage.eINSTANCE.getCategory(), EditingUtil.getInstance().getNavigationEditingDomain());
 			category.eResource().eAdapters().add(new AdapterImplExtension(category));
 			this.model.getRootCategories().add(category);
+			EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(category.eResource());
 		}
 		this.cache = new AvailableInformationCache();
 	}
@@ -93,8 +95,8 @@ public class ApplicationModelPool {
 		return this.model;
 	}
 
-	public void addRootCategory(Category category) {
-		this.model.getRootCategories().add(category);
+	public void addListenerToCategory(Category category) {
+		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(category.eResource());
 		category.eAdapters().add(new AdapterImplExtension(category));
 	}
 

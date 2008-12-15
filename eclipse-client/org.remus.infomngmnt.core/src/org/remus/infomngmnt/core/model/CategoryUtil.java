@@ -201,6 +201,16 @@ public class CategoryUtil {
 		return returnValue.toArray(new Category[returnValue.size()]);
 	}
 
+	public static boolean isItemParentOfCategory(EObject possibleChild, Category possibleParent) {
+		if (possibleChild == possibleParent) {
+			return true;
+		}
+		if (possibleChild.eContainer() != null) {
+			return isItemParentOfCategory(possibleChild.eContainer(), possibleParent);
+		}
+		return false;
+	}
+
 
 
 }

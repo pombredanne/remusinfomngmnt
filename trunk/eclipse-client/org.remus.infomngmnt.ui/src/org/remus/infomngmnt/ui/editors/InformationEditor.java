@@ -569,6 +569,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				if (resource.isLoaded()) {
 					resource.unload();
 					try {
+						close(true);
 						resource.load(Collections.EMPTY_MAP);
 					}
 					catch (final IOException exception) {

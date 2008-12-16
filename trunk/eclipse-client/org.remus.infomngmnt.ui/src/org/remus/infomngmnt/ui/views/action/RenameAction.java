@@ -101,13 +101,18 @@ public class RenameAction extends CommandActionHandler {
 		}
 
 		@Override
+		public boolean doCanUndo() {
+			return super.doCanUndo() && this.value != null;
+		}
+
+		@Override
 		public void doExecute() {
 			RenameDialog dialog = new RenameDialog((String)this.owner.eGet(this.feature));
 			if (dialog.open() == IDialogConstants.OK_ID) {
 				this.value = dialog.getNewName();
+				renameInfoUnit((String) this.value);
+				super.doExecute();
 			}
-			renameInfoUnit((String) this.value);
-			super.doExecute();
 		}
 
 		@Override

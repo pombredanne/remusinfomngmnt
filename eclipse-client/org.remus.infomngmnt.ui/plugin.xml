@@ -118,10 +118,10 @@
             name="Open Infotype">
       </trayAction>
       <trayAction
-            class="org.remus.infomngmnt.ui.trayaction.OpenElementToolItem"
+            class="org.remus.infomngmnt.ui.trayaction.RestoreFromTrayToolItem"
             icon="icons/sample.gif"
-            id="org.remus.infomngmnt.ui.openElement2"
-            name="Open Infotypeasdgasdgasdgasg">
+            id="org.remus.infomngmnt.ui.restoreFromTray"
+            name="Restore from Tray">
       </trayAction>
    </extension>
 

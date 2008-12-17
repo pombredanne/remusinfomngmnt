@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Core Plug-in
-Bundle-SymbolicName: org.remus.infomngmnt.common.core
+Bundle-SymbolicName: org.remus.infomngmnt.common.core; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.remus.infomngmnt.common.core.Activator
 Bundle-Vendor: Tom Seidel - Remus Software

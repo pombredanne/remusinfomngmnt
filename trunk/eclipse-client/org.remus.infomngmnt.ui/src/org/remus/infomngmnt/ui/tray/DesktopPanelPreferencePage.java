@@ -167,25 +167,31 @@ IWorkbenchPreferencePage {
 	}
 
 	protected void handleSelectionChanged(ISelection selection) {
-		TraySection element = (TraySection) ((IStructuredSelection) selection).getFirstElement();
+		if (!selection.isEmpty()) {
+			TraySection element = (TraySection) ((IStructuredSelection) selection).getFirstElement();
 
-		ITraySectionDefinition trayDefinition = TraySectionManager.getInstance().getSectionDefinitionById(element.getTemplateId());
-		if (trayDefinition != null) {
-			//preferencePage.g
-			AbstractTrayPreferencePage preferencePage = trayDefinition.getPreferencePage();
-			if (preferencePage == null) {
-				createFallBack();
-				this.stackLayout.topControl = this.fallbackText;
-			} else {
-				preferencePage.initialize(element, this.editingDomain);
-				if (!this.knownPrefPages.contains(preferencePage)) {
-					this.knownPrefPages.add(preferencePage);
-					preferencePage.createControl(this.propertiesGroup);
+			ITraySectionDefinition trayDefinition = TraySectionManager.getInstance().getSectionDefinitionById(element.getTemplateId());
+			if (trayDefinition != null) {
+				//preferencePage.g
+				AbstractTrayPreferencePage preferencePage = trayDefinition.getPreferencePage();
+				if (preferencePage == null) {
+					createFallBack();
+					this.stackLayout.topControl = this.fallbackText;
+				} else {
+					preferencePage.initialize(element, this.editingDomain);
+					if (!this.knownPrefPages.contains(preferencePage)) {
+						this.knownPrefPages.add(preferencePage);
+						preferencePage.createControl(this.propertiesGroup);
+					}
+					preferencePage.bindValuesToUi();
+					this.stackLayout.topControl = preferencePage.getControl();
 				}
-				preferencePage.bindValuesToUi();
-				this.stackLayout.topControl = preferencePage.getControl();
+				this.propertiesGroup.layout();
 			}
-			this.propertiesGroup.layout();
+
+		} else {
+			createFallBack();
+			this.stackLayout.topControl = this.fallbackText;
 		}
 
 

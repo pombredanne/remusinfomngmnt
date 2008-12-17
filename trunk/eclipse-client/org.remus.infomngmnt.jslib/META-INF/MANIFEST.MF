@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jslib Plug-in
-Bundle-SymbolicName: org.remus.infomngmnt.jslib
+Bundle-SymbolicName: org.remus.infomngmnt.jslib; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: Tom Seidel - Remus Software
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

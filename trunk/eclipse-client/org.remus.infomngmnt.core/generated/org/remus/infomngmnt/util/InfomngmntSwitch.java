@@ -219,6 +219,26 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case InfomngmntPackage.REMOTE_REPOSITORY: {
+				RemoteRepository remoteRepository = (RemoteRepository)theEObject;
+				T result = caseRemoteRepository(remoteRepository);
+				if (result == null) result = caseAdapter(remoteRepository);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.REMOTE_OBJECT: {
+				RemoteObject remoteObject = (RemoteObject)theEObject;
+				T result = caseRemoteObject(remoteObject);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.REMOTE_CONTAINER: {
+				RemoteContainer remoteContainer = (RemoteContainer)theEObject;
+				T result = caseRemoteContainer(remoteContainer);
+				if (result == null) result = caseRemoteObject(remoteContainer);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -505,6 +525,51 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseRuleResult(RuleResult object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Remote Repository</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Remote Repository</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRemoteRepository(RemoteRepository object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Remote Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Remote Object</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRemoteObject(RemoteObject object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Remote Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Remote Container</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRemoteContainer(RemoteContainer object) {
 		return null;
 	}
 

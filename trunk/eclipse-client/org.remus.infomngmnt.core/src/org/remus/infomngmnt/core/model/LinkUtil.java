@@ -54,7 +54,7 @@ public class LinkUtil {
 	 */
 	private LinkUtil() {
 		IPath stateLocation = InfomngmntEditPlugin.getPlugin().getStateLocation();
-		this.object = EditingUtil.getInstance().getObjectFromUri(stateLocation.append(LINK_TYPE_STORE_FILE_NAME),InfomngmntPackage.eINSTANCE.getLinkTypeCollection());
+		this.object = EditingUtil.getInstance().getObjectFromUri(stateLocation.append(LINK_TYPE_STORE_FILE_NAME),InfomngmntPackage.eINSTANCE.getLinkTypeCollection(), false, null, true);
 		// required is at leas one type. if there is no type we have to create one.
 		if (this.object.getAvailableLinkTypes().size() == 0) {
 			LinkType createLinkType = InfomngmntFactory.eINSTANCE.createLinkType();

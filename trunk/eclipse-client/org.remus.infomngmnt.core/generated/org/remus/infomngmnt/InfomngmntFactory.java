@@ -178,6 +178,24 @@ public interface InfomngmntFactory extends EFactory {
 	RuleResult createRuleResult();
 
 	/**
+	 * Returns a new object of class '<em>Remote Repository</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Remote Repository</em>'.
+	 * @generated
+	 */
+	RemoteRepository createRemoteRepository();
+
+	/**
+	 * Returns a new object of class '<em>Remote Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Remote Container</em>'.
+	 * @generated
+	 */
+	RemoteContainer createRemoteContainer();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

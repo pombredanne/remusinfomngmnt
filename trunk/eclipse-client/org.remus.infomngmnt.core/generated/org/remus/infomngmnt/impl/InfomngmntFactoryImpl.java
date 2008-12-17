@@ -87,6 +87,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.REMUS_TRANSFER_TYPE: return createRemusTransferType();
 			case InfomngmntPackage.RULE_ACTION: return createRuleAction();
 			case InfomngmntPackage.RULE_RESULT: return createRuleResult();
+			case InfomngmntPackage.REMOTE_REPOSITORY: return createRemoteRepository();
+			case InfomngmntPackage.REMOTE_CONTAINER: return createRemoteContainer();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -290,6 +292,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public RuleResult createRuleResult() {
 		RuleResultImpl ruleResult = new RuleResultImpl();
 		return ruleResult;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RemoteRepository createRemoteRepository() {
+		RemoteRepositoryImpl remoteRepository = new RemoteRepositoryImpl();
+		return remoteRepository;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RemoteContainer createRemoteContainer() {
+		RemoteContainerImpl remoteContainer = new RemoteContainerImpl();
+		return remoteContainer;
 	}
 
 	/**

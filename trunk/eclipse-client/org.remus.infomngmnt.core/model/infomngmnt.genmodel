@@ -96,5 +96,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RuleResult/actions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/description"/>
     </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RemoteRepository">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteRepository/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteRepository/typeId"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//RemoteObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/possibleInfoTypeId"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RemoteContainer"/>
   </genPackages>
 </genmodel:GenModel>

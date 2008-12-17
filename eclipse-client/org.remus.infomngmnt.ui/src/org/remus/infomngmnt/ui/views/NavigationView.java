@@ -2,11 +2,9 @@ package org.remus.infomngmnt.ui.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -22,7 +20,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -106,7 +105,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 	public static final String ID = "org.remus.infomngmnt.ui.views.NavigationView"; //$NON-NLS-1$
 	private AdapterFactoryContentProvider contentProvider;
-	private DelegatingStyledCellLabelProvider labelProvider;
+	private ILabelProvider labelProvider;
 	private TreeViewer viewer;
 	private TreeViewerColumn tvc1;
 	private Action linkEditorAction;
@@ -186,7 +185,9 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 	private void initProvider() {
 		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
-		this.labelProvider = new DelegatingStyledCellLabelProvider(new NavigationCellLabelProvider());
+		this.labelProvider = new DecoratingLabelProvider(
+				new NavigationCellLabelProvider(),
+				PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
 
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);

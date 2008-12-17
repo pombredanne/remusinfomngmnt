@@ -14,6 +14,7 @@ package org.remus.infomngmnt.ui.views.action;
 
 import java.util.Collection;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
@@ -29,6 +30,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.WorkbenchMessages;
 
+import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -98,6 +100,11 @@ public class RenameAction extends CommandActionHandler {
 				EStructuralFeature feature) {
 			super(domain, owner, feature, null);
 			setLabel("Rename");
+		}
+		@Override
+		public boolean doCanExecute() {
+			return super.doCanExecute()
+			&& ((Adapter)this.owner).getAdapter(IProject.class) == null;
 		}
 
 		@Override

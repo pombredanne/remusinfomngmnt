@@ -475,6 +475,52 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RemoteRepository} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RemoteRepositoryItemProvider remoteRepositoryItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RemoteRepository}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRemoteRepositoryAdapter() {
+		if (remoteRepositoryItemProvider == null) {
+			remoteRepositoryItemProvider = new RemoteRepositoryItemProvider(this);
+		}
+
+		return remoteRepositoryItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RemoteContainer} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RemoteContainerItemProvider remoteContainerItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RemoteContainer}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRemoteContainerAdapter() {
+		if (remoteContainerItemProvider == null) {
+			remoteContainerItemProvider = new RemoteContainerItemProvider(this);
+		}
+
+		return remoteContainerItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -590,6 +636,8 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (remusTransferTypeItemProvider != null) remusTransferTypeItemProvider.dispose();
 		if (ruleActionItemProvider != null) ruleActionItemProvider.dispose();
 		if (ruleResultItemProvider != null) ruleResultItemProvider.dispose();
+		if (remoteRepositoryItemProvider != null) remoteRepositoryItemProvider.dispose();
+		if (remoteContainerItemProvider != null) remoteContainerItemProvider.dispose();
 	}
 
 }

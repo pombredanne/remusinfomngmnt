@@ -1068,6 +1068,99 @@ public interface InfomngmntPackage extends EPackage {
 	int RULE_RESULT_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteRepositoryImpl <em>Remote Repository</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.RemoteRepositoryImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteRepository()
+	 * @generated
+	 */
+	int REMOTE_REPOSITORY = 19;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_REPOSITORY__ID = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_REPOSITORY__TYPE_ID = ADAPTER_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Remote Repository</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_REPOSITORY_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteObjectImpl <em>Remote Object</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.RemoteObjectImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteObject()
+	 * @generated
+	 */
+	int REMOTE_OBJECT = 20;
+
+	/**
+	 * The feature id for the '<em><b>Possible Info Type Id</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_OBJECT__POSSIBLE_INFO_TYPE_ID = 0;
+
+	/**
+	 * The number of structural features of the '<em>Remote Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_OBJECT_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteContainerImpl <em>Remote Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.RemoteContainerImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteContainer()
+	 * @generated
+	 */
+	int REMOTE_CONTAINER = 21;
+
+	/**
+	 * The feature id for the '<em><b>Possible Info Type Id</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_CONTAINER__POSSIBLE_INFO_TYPE_ID = REMOTE_OBJECT__POSSIBLE_INFO_TYPE_ID;
+
+	/**
+	 * The number of structural features of the '<em>Remote Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_CONTAINER_FEATURE_COUNT = REMOTE_OBJECT_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '<em>Object</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1075,7 +1168,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 19;
+	int OBJECT = 22;
 
 
 	/**
@@ -1810,6 +1903,69 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getRuleResult_Description();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.RemoteRepository <em>Remote Repository</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Remote Repository</em>'.
+	 * @see org.remus.infomngmnt.RemoteRepository
+	 * @generated
+	 */
+	EClass getRemoteRepository();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RemoteRepository#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.remus.infomngmnt.RemoteRepository#getId()
+	 * @see #getRemoteRepository()
+	 * @generated
+	 */
+	EAttribute getRemoteRepository_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RemoteRepository#getTypeId <em>Type Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Id</em>'.
+	 * @see org.remus.infomngmnt.RemoteRepository#getTypeId()
+	 * @see #getRemoteRepository()
+	 * @generated
+	 */
+	EAttribute getRemoteRepository_TypeId();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.RemoteObject <em>Remote Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Remote Object</em>'.
+	 * @see org.remus.infomngmnt.RemoteObject
+	 * @generated
+	 */
+	EClass getRemoteObject();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.remus.infomngmnt.RemoteObject#getPossibleInfoTypeId <em>Possible Info Type Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Possible Info Type Id</em>'.
+	 * @see org.remus.infomngmnt.RemoteObject#getPossibleInfoTypeId()
+	 * @see #getRemoteObject()
+	 * @generated
+	 */
+	EAttribute getRemoteObject_PossibleInfoTypeId();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.RemoteContainer <em>Remote Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Remote Container</em>'.
+	 * @see org.remus.infomngmnt.RemoteContainer
+	 * @generated
+	 */
+	EClass getRemoteContainer();
+
+	/**
 	 * Returns the meta object for data type '{@link java.lang.Object <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2423,6 +2579,60 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RULE_RESULT__DESCRIPTION = eINSTANCE.getRuleResult_Description();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RemoteRepositoryImpl <em>Remote Repository</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.RemoteRepositoryImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteRepository()
+		 * @generated
+		 */
+		EClass REMOTE_REPOSITORY = eINSTANCE.getRemoteRepository();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REMOTE_REPOSITORY__ID = eINSTANCE.getRemoteRepository_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REMOTE_REPOSITORY__TYPE_ID = eINSTANCE.getRemoteRepository_TypeId();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RemoteObjectImpl <em>Remote Object</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.RemoteObjectImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteObject()
+		 * @generated
+		 */
+		EClass REMOTE_OBJECT = eINSTANCE.getRemoteObject();
+
+		/**
+		 * The meta object literal for the '<em><b>Possible Info Type Id</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REMOTE_OBJECT__POSSIBLE_INFO_TYPE_ID = eINSTANCE.getRemoteObject_PossibleInfoTypeId();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RemoteContainerImpl <em>Remote Container</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.RemoteContainerImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteContainer()
+		 * @generated
+		 */
+		EClass REMOTE_CONTAINER = eINSTANCE.getRemoteContainer();
 
 		/**
 		 * The meta object literal for the '<em>Object</em>' data type.

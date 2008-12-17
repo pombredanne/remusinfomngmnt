@@ -157,6 +157,18 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createRuleResultAdapter();
 			}
 			@Override
+			public Adapter caseRemoteRepository(RemoteRepository object) {
+				return createRemoteRepositoryAdapter();
+			}
+			@Override
+			public Adapter caseRemoteObject(RemoteObject object) {
+				return createRemoteObjectAdapter();
+			}
+			@Override
+			public Adapter caseRemoteContainer(RemoteContainer object) {
+				return createRemoteContainerAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -439,6 +451,48 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createRuleResultAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemoteRepository <em>Remote Repository</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RemoteRepository
+	 * @generated
+	 */
+	public Adapter createRemoteRepositoryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemoteObject <em>Remote Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RemoteObject
+	 * @generated
+	 */
+	public Adapter createRemoteObjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemoteContainer <em>Remote Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.RemoteContainer
+	 * @generated
+	 */
+	public Adapter createRemoteContainerAdapter() {
 		return null;
 	}
 

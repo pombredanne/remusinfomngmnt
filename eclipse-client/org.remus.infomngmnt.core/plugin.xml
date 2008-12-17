@@ -4,6 +4,7 @@
 	<extension-point id="informationType" name="A pluggable Content-Type for Information" schema="schema/informationType.exsd"/>
  <extension-point id="postProjectHandle" name="postProjectHandle" schema="schema/postProjectHandle.exsd"/>
  <extension-point id="ruleDefinition" name="ruleDefinition" schema="schema/ruleDefinition.exsd"/>
+ <extension-point id="remoteRepository" name="remoteRepository" schema="schema/remoteRepository.exsd"/>
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package

@@ -16,6 +16,7 @@ package org.remus.infomngmnt.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.osgi.framework.ServiceReference;
 
 /**
  * This is the central singleton for the Infomngmnt edit plugin.
@@ -48,8 +49,8 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 	 */
 	public InfomngmntEditPlugin() {
 		super
-		  (new ResourceLocator [] {
-		   });
+		(new ResourceLocator [] {
+		});
 	}
 
 	/**
@@ -90,10 +91,18 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 		 */
 		public Implementation() {
 			super();
-
 			// Remember the static instance.
 			//
 			plugin = this;
+		}
+
+		public <T> T getService(Class<T> serviceClass) {
+			ServiceReference serviceReference = getBundle().getBundleContext().getServiceReference(serviceClass.getName());
+			if (serviceReference != null) {
+				Object service = getBundle().getBundleContext().getService(serviceReference);
+				return (T) service;
+			}
+			return null;
 		}
 	}
 

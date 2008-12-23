@@ -33,17 +33,17 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.internal.WorkbenchImages;
-
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RuleResult;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessDialog;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
-import org.remus.infomngmnt.core.extension.RuleExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.model.RuleUtil;
 import org.remus.infomngmnt.core.rules.RuleProcessor;
+import org.remus.infomngmnt.core.services.IRuleExtensionService;
+import org.remus.infomngmnt.core.services.IRuleService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.desktop.NewElementQuickAccessProider;
 import org.remus.infomngmt.common.ui.uimodel.TraySection;
 
@@ -58,14 +58,14 @@ public class DropSection extends AbstractTraySection {
 
 
 	@Override
-	public void init(FormToolkit pToolkit, TraySection section) {
+	public void init(final FormToolkit pToolkit, final TraySection section) {
 		super.init(pToolkit, section);
 		String string = section.getPreferenceOptions().get(DropSectionPreferencePage.RULESET_KEY);
-		this.ruleByName = RuleUtil.getInstance().getRuleByName(string);
+		this.ruleByName = InfomngmntEditPlugin.getPlugin().getService(IRuleService.class).getRuleByName(string);
 	}
 
 	@Override
-	public void createDetailsPart(Composite parent) {
+	public void createDetailsPart(final Composite parent) {
 
 		GridLayout gridLayout = new GridLayout(1,false);
 		gridLayout.marginTop = 0;
@@ -83,21 +83,21 @@ public class DropSection extends AbstractTraySection {
 		dropTarget.setTransfer(getTransferTypes());
 		dropTarget.addDropListener(new DropTargetListener() {
 
-			public void dragEnter(DropTargetEvent event) {
+			public void dragEnter(final DropTargetEvent event) {
 				System.out.println("DRAG ENTER");
 			}
 
-			public void dragLeave(DropTargetEvent event) {
+			public void dragLeave(final DropTargetEvent event) {
 				// TODO Auto-generated method stub
 
 			}
 
-			public void dragOperationChanged(DropTargetEvent event) {
+			public void dragOperationChanged(final DropTargetEvent event) {
 				// TODO Auto-generated method stub
 
 			}
 
-			public void dragOver(DropTargetEvent event) {
+			public void dragOver(final DropTargetEvent event) {
 				System.out.println("DRAG ENTER");
 
 			}
@@ -116,7 +116,7 @@ public class DropSection extends AbstractTraySection {
 
 			}
 
-			public void dropAccept(DropTargetEvent event) {
+			public void dropAccept(final DropTargetEvent event) {
 				// TODO Auto-generated method stub
 
 			}
@@ -133,7 +133,7 @@ public class DropSection extends AbstractTraySection {
 		pasteItem.setText("Paste from clipboard");
 		pasteItem.setImage(WorkbenchImages.getImage(ISharedImages.IMG_TOOL_PASTE));
 		pasteItem.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				event.widget.getDisplay().asyncExec(new Runnable() {
 
 					public void run() {
@@ -147,7 +147,7 @@ public class DropSection extends AbstractTraySection {
 		});
 
 	}
-	void showQuickAccess(List<RuleResult> process) {
+	void showQuickAccess(final List<RuleResult> process) {
 		if (process.size() > 0) {
 			QuickAccessProvider[] provider = new NewElementQuickAccessProider[process.size()];
 			for (int i = 0, n = process.size(); i < n; i++) {
@@ -164,7 +164,7 @@ public class DropSection extends AbstractTraySection {
 
 	private Transfer[] getTransferTypes() {
 		List<Transfer> returnValue = new ArrayList<Transfer>();
-		Collection<TransferWrapper> values = RuleExtensionManager.getInstance().getAllTransferTypes().values();
+		Collection<TransferWrapper> values = InfomngmntEditPlugin.getPlugin().getService(IRuleExtensionService.class).getAllTransferTypes().values();
 		for (TransferWrapper transferWrapper : values) {
 			returnValue.add(transferWrapper.getTransfer());
 		}

@@ -1,5 +1,13 @@
 package org.remus.infomngmnt.ui.remote;
 
+import java.util.Collections;
+
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -7,8 +15,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 
 public class RepositoryView extends ViewPart {
@@ -22,12 +35,12 @@ public class RepositoryView extends ViewPart {
 	 * @param parent
 	 */
 	@Override
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		final StackLayout stackLayout = new StackLayout();
 		container.setLayout(stackLayout);
 
-		this.treeViewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
+		this.treeViewer = new TreeViewer(container, SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
 		this.tree = this.treeViewer.getTree();
 
 		Link eclipseorgLink;
@@ -39,10 +52,33 @@ public class RepositoryView extends ViewPart {
 		fillLayout.marginHeight = 5;
 		composite.setLayout(fillLayout);
 		eclipseorgLink = new Link(composite, SWT.NONE);
+		
 		eclipseorgLink.setText("No repositories created. You can <a>add</a> a new Remote Repository.");
-		stackLayout.topControl = this.tree;
-		//
-		//		getSite().registerContextMenu(menuMgr, this.viewer);
+		eclipseorgLink.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				IHandlerService service = (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+				ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+				Command command = commandService.getCommand("Test");
+				try {
+					command.executeWithChecks(new ExecutionEvent(command,Collections.EMPTY_MAP,null, service.getCurrentState()));
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotDefinedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotEnabledException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotHandledException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		stackLayout.topControl = composite;
+
 		getSite().setSelectionProvider(this.treeViewer);
 
 

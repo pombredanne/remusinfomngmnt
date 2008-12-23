@@ -65,7 +65,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
-
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.NewElementRules;
@@ -75,7 +74,8 @@ import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.RuleUtil;
+import org.remus.infomngmnt.core.services.IRuleService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 
@@ -117,7 +117,7 @@ IWorkbenchPreferencePage {
 	/**
 	 * @param title
 	 */
-	public RulePreferencePage(String title) {
+	public RulePreferencePage(final String title) {
 		super(title);
 		// TODO Auto-generated constructor stub
 	}
@@ -126,7 +126,7 @@ IWorkbenchPreferencePage {
 	 * @param title
 	 * @param image
 	 */
-	public RulePreferencePage(String title, ImageDescriptor image) {
+	public RulePreferencePage(final String title, final ImageDescriptor image) {
 		super(title, image);
 		// TODO Auto-generated constructor stub
 	}
@@ -135,7 +135,7 @@ IWorkbenchPreferencePage {
 	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		composite.setLayout(new GridLayout(3, false));
@@ -150,7 +150,7 @@ IWorkbenchPreferencePage {
 			this.combo.add(infoTypeElementRule.getName());
 		}
 		this.combo.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				handleRuleSetSelectionChange(event);
 			}
 		});
@@ -161,7 +161,7 @@ IWorkbenchPreferencePage {
 		this.newToolItem = new ToolItem(toolBar_1, SWT.PUSH);
 		this.newToolItem.setText("New");
 		this.newToolItem.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				NewRuleDialog diag = new NewRuleDialog(getShell(), RulePreferencePage.this.model);
 				if (diag.open() == IDialogConstants.OK_ID) {
 					RulePreferencePage.this.model.getNewElementRules().add(diag.getNewElement());
@@ -173,7 +173,7 @@ IWorkbenchPreferencePage {
 		this.deleteToolItem = new ToolItem(toolBar_1, SWT.PUSH);
 		this.deleteToolItem.setText("Delete");
 		this.deleteToolItem.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				if (MessageDialog.openConfirm(
 						getShell(),
 						"Confirm delete",
@@ -207,7 +207,7 @@ IWorkbenchPreferencePage {
 		this.treeViewer.setContentProvider(ocp);
 		this.treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
 		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
+			public void selectionChanged(final SelectionChangedEvent event) {
 				handleSelectionChanged(event.getSelection());
 
 			}
@@ -226,7 +226,7 @@ IWorkbenchPreferencePage {
 		return composite;
 	}
 
-	protected void handleSelectionChanged(ISelection selection) {
+	protected void handleSelectionChanged(final ISelection selection) {
 		Object element = ((IStructuredSelection) selection).getFirstElement();
 		if (element instanceof RuleAction) {
 			AbstractCreationPreferencePage preferencePage = UIExtensionManager.getInstance().getPreferencePageByTransferAndTypeId(
@@ -250,7 +250,7 @@ IWorkbenchPreferencePage {
 
 	}
 
-	protected void handleRuleSetSelectionChange(Event event) {
+	protected void handleRuleSetSelectionChange(final Event event) {
 		this.selectedRuleSet = this.model.getNewElementRules().get(((Combo)event.widget).getSelectionIndex());
 		this.ctx.dispose();
 		this.treeViewer.setInput(this.selectedRuleSet);
@@ -261,8 +261,8 @@ IWorkbenchPreferencePage {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
-	public void init(IWorkbench workbench) {
-		this.model = RuleUtil.getInstance().getElementRules();
+	public void init(final IWorkbench workbench) {
+		this.model = InfomngmntEditPlugin.getPlugin().getService(IRuleService.class).getElementRules();
 		this.ctx = new EMFDataBindingContext();
 		this.knownPrefPages = new ArrayList<AbstractCreationPreferencePage>();
 
@@ -282,13 +282,13 @@ IWorkbenchPreferencePage {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
 		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
+			public void selectionChanged(final SelectionChangedEvent event) {
 				RulePreferencePage.this.newMenuManager.removeAll();
 				populateNewMenu(event.getSelection());
 			}
 		});
 		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
+			public void menuAboutToShow(final IMenuManager manager) {
 				fillContextMenu(manager);
 			}
 		});
@@ -296,7 +296,7 @@ IWorkbenchPreferencePage {
 		this.treeViewer.getControl().setMenu(menu);
 	}
 
-	protected void populateNewMenu(ISelection selection) {
+	protected void populateNewMenu(final ISelection selection) {
 		if (((IStructuredSelection) selection).getFirstElement() instanceof RemusTransferType) {
 			RemusTransferType element = (RemusTransferType) ((IStructuredSelection) selection).getFirstElement();
 			Collection<IInfoType> types = InformationExtensionManager.getInstance().getTypes();
@@ -311,7 +311,7 @@ IWorkbenchPreferencePage {
 
 	}
 
-	boolean itemAlreadyPresent(RemusTransferType type, IInfoType infoType) {
+	boolean itemAlreadyPresent(final RemusTransferType type, final IInfoType infoType) {
 		EList<RuleAction> actions = type.getActions();
 		for (RuleAction foundAction : actions) {
 			if (foundAction.getInfoTypeId().equals(infoType.getType())) {
@@ -321,7 +321,7 @@ IWorkbenchPreferencePage {
 		return false;
 	}
 
-	protected void fillContextMenu(IMenuManager manager) {
+	protected void fillContextMenu(final IMenuManager manager) {
 
 		manager.add(new Separator());
 		manager.add(this.newMenuManager);
@@ -334,12 +334,12 @@ IWorkbenchPreferencePage {
 	}
 
 	private static class RuleDeleteAction extends DeleteAction {
-		public RuleDeleteAction(EditingDomain domain) {
+		public RuleDeleteAction(final EditingDomain domain) {
 			super(domain);
 		}
 
 		@Override
-		public boolean updateSelection(IStructuredSelection selection) {
+		public boolean updateSelection(final IStructuredSelection selection) {
 			List list = selection.toList();
 			for (Object object : list) {
 				if (object instanceof RemusTransferType) {
@@ -350,12 +350,12 @@ IWorkbenchPreferencePage {
 		}
 	}
 	private static class RuleCopyAction extends CopyAction {
-		public RuleCopyAction(EditingDomain domain) {
+		public RuleCopyAction(final EditingDomain domain) {
 			super(domain);
 		}
 
 		@Override
-		public boolean updateSelection(IStructuredSelection selection) {
+		public boolean updateSelection(final IStructuredSelection selection) {
 			List list = selection.toList();
 			for (Object object : list) {
 				if (object instanceof RemusTransferType) {
@@ -366,12 +366,12 @@ IWorkbenchPreferencePage {
 		}
 	}
 	private static class RuleCutAction extends CutAction {
-		public RuleCutAction(EditingDomain domain) {
+		public RuleCutAction(final EditingDomain domain) {
 			super(domain);
 		}
 
 		@Override
-		public boolean updateSelection(IStructuredSelection selection) {
+		public boolean updateSelection(final IStructuredSelection selection) {
 			List list = selection.toList();
 			for (Object object : list) {
 				if (object instanceof RemusTransferType) {
@@ -385,7 +385,7 @@ IWorkbenchPreferencePage {
 	private static class EditRuleAction extends BaseSelectionListenerAction {
 
 		private final EditingDomain domain;
-		public EditRuleAction(EditingDomain domain) {
+		public EditRuleAction(final EditingDomain domain) {
 			super("Edit");
 			this.domain = domain;
 		}
@@ -396,19 +396,19 @@ IWorkbenchPreferencePage {
 		}
 
 		@Override
-		protected boolean updateSelection(IStructuredSelection selection) {
+		protected boolean updateSelection(final IStructuredSelection selection) {
 			return !selection.isEmpty() && selection.size() == 1;
 		}
 
 	}
 
 	private class PasteRuleAction extends PasteAction {
-		public PasteRuleAction(EditingDomain editingDomain) {
+		public PasteRuleAction(final EditingDomain editingDomain) {
 			super(editingDomain);
 		}
 
 		@Override
-		public Command createCommand(Collection<?> selection) {
+		public Command createCommand(final Collection<?> selection) {
 			Command createCommand = super.createCommand(selection);
 			if (createCommand.canExecute()) {
 				Collection<Object> clipboard = RulePreferencePage.this.editingDomain.getClipboard();
@@ -445,7 +445,7 @@ IWorkbenchPreferencePage {
 		private final IInfoType infoType;
 		private final RemusTransferType element;
 
-		public NewItemAction(IInfoType infoType, RemusTransferType element) {
+		public NewItemAction(final IInfoType infoType, final RemusTransferType element) {
 			this.infoType = infoType;
 			this.element = element;
 			setImageDescriptor(infoType.getImageDescriptor());

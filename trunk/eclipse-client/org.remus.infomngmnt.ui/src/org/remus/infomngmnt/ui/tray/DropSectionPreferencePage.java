@@ -30,11 +30,11 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
-import org.remus.infomngmnt.core.model.RuleUtil;
+import org.remus.infomngmnt.core.services.IRuleService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -46,7 +46,7 @@ public class DropSectionPreferencePage extends AbstractTrayPreferencePage {
 	private ComboViewer comboViewer;
 
 	@Override
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
 		comp.setLayout(new GridLayout(2,false));
 		Label label = new Label(comp, SWT.NONE);
@@ -75,12 +75,13 @@ public class DropSectionPreferencePage extends AbstractTrayPreferencePage {
 		// binds the name of the section to the text field...
 		this.nameText.setText(this.section.getName());
 		this.nameText.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				DropSectionPreferencePage.this.section.setName(DropSectionPreferencePage.this.nameText.getText());
 			}
 		});
 		List featureList = ModelUtil.getFeatureList(
-				RuleUtil.getInstance().getElementRules().getNewElementRules(),
+				InfomngmntEditPlugin.getPlugin().getService(IRuleService.class)
+				.getElementRules().getNewElementRules(),
 				InfomngmntPackage.Literals.NEW_ELEMENT_RULES__NAME);
 		this.comboViewer.setInput(featureList);
 		String string = this.section.getPreferenceOptions().get(RULESET_KEY);
@@ -88,7 +89,7 @@ public class DropSectionPreferencePage extends AbstractTrayPreferencePage {
 			this.comboViewer.setSelection(new StructuredSelection(string));
 		}
 		this.comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
+			public void selectionChanged(final SelectionChangedEvent event) {
 				DropSectionPreferencePage.this.section.getPreferenceOptions().put(RULESET_KEY,
 						(String) ((IStructuredSelection) event.getSelection()).getFirstElement());
 			}

@@ -25,7 +25,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
-
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -38,8 +37,9 @@ import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessDialog;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.RuleUtil;
 import org.remus.infomngmnt.core.rules.RuleProcessor;
+import org.remus.infomngmnt.core.services.IRuleService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.desktop.NewElementQuickAccessProider;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
 
@@ -50,17 +50,17 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 
 	private NewElementRules ruleByName;
 
-	public NavigationDropAdapter(EditingDomain domain, Viewer viewer) {
+	public NavigationDropAdapter(final EditingDomain domain, final Viewer viewer) {
 		super(domain, viewer);
 	}
 
 
 	@Override
-	public void drop(DropTargetEvent event) {
+	public void drop(final DropTargetEvent event) {
 		Collection<?> extractDragSource = extractDragSource(event.data);
 		Object target = extractDropTarget(event.item);
 		if (extractDragSource.size() == 0) {
-			this.ruleByName = (NewElementRules) EcoreUtil.copy(RuleUtil.getInstance().getRuleByName("Default Ruleset"));
+			this.ruleByName = (NewElementRules) EcoreUtil.copy(InfomngmntEditPlugin.getPlugin().getService(IRuleService.class).getRuleByName("Default Ruleset"));
 			List<RuleResult> process = RuleProcessor.getInstance().process(
 					event, this.ruleByName);
 			System.out.println(process.size());
@@ -151,7 +151,7 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 		}
 	}
 
-	void showQuickAccess(List<RuleResult> process) {
+	void showQuickAccess(final List<RuleResult> process) {
 		if (process.size() > 0) {
 			QuickAccessProvider[] provider = new NewElementQuickAccessProider[process.size()];
 			for (int i = 0, n = process.size(); i < n; i++) {
@@ -167,7 +167,7 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 	}
 
 	@Override
-	public void dragOver(DropTargetEvent event) {
+	public void dragOver(final DropTargetEvent event) {
 		Collection<?> dragSource = getDragSource(event);
 		Object target = extractDropTarget(event.item);
 		if (dragSource != null && dragSource.size() > 0) {

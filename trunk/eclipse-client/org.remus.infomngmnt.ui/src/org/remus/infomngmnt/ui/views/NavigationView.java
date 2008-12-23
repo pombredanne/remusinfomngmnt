@@ -52,12 +52,12 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.extension.RuleExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.services.IRuleExtensionService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.dnd.NavigationDropAdapter;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
@@ -70,7 +70,7 @@ import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 public class NavigationView extends ViewPart implements ISetSelectionTarget, IEditingDomainProvider, ISelectionProvider, IViewerProvider {
 
 	IPartListener partListener = new IPartListener() {
-		public void partActivated(IWorkbenchPart part) {
+		public void partActivated(final IWorkbenchPart part) {
 			if (part instanceof EditorPart) {
 				IEditorInput input = ((EditorPart) part).getEditorInput();
 				if (input instanceof FileEditorInput) {
@@ -86,19 +86,19 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 		}
 
-		public void partBroughtToTop(IWorkbenchPart part) {
+		public void partBroughtToTop(final IWorkbenchPart part) {
 
 		}
 
-		public void partClosed(IWorkbenchPart part) {
+		public void partClosed(final IWorkbenchPart part) {
 
 		}
 
-		public void partDeactivated(IWorkbenchPart part) {
+		public void partDeactivated(final IWorkbenchPart part) {
 
 		}
 
-		public void partOpened(IWorkbenchPart part) {
+		public void partOpened(final IWorkbenchPart part) {
 
 		}
 	};
@@ -118,7 +118,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	 * @param parent
 	 */
 	@Override
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 
 		//
 		Tree tree = new Tree(parent, SWT.MULTI);
@@ -140,7 +140,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 	private void initOpen() {
 		this.viewer.addOpenListener(new IOpenListener() {
-			public void open(OpenEvent event) {
+			public void open(final OpenEvent event) {
 				List list = ((IStructuredSelection) event.getSelection()).toList();
 				for (Object object : list) {
 					if (object instanceof InformationUnitListItem) {
@@ -160,7 +160,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	}
 
 	@Override
-	public void init(IViewSite site, IMemento memento) throws PartInitException {
+	public void init(final IViewSite site, final IMemento memento) throws PartInitException {
 		super.init(site, memento);
 		this.settings = UIPlugin.getDefault().getDialogSettings();
 	}
@@ -243,7 +243,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		// Set the focus
 	}
 
-	public void selectReveal(ISelection selection) {
+	public void selectReveal(final ISelection selection) {
 		this.viewer.setSelection(selection, true);
 
 	}
@@ -252,7 +252,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		return EditingUtil.getInstance().getNavigationEditingDomain();
 	}
 
-	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+	public void addSelectionChangedListener(final ISelectionChangedListener listener) {
 		this.viewer.addSelectionChangedListener(listener);
 
 	}
@@ -328,11 +328,11 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	}
 
 	public void removeSelectionChangedListener(
-			ISelectionChangedListener listener) {
+			final ISelectionChangedListener listener) {
 		this.viewer.removeSelectionChangedListener(listener);
 	}
 
-	public void setSelection(ISelection selection) {
+	public void setSelection(final ISelection selection) {
 		this.viewer.setSelection(selection);
 
 	}
@@ -343,7 +343,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 	private Transfer[] getTransferTypes() {
 		List<Transfer> returnValue = new ArrayList<Transfer>();
-		Collection<TransferWrapper> values = RuleExtensionManager.getInstance().getAllTransferTypes().values();
+		Collection<TransferWrapper> values = InfomngmntEditPlugin.getPlugin().getService(IRuleExtensionService.class).getAllTransferTypes().values();
 		for (TransferWrapper transferWrapper : values) {
 			returnValue.add(transferWrapper.getTransfer());
 		}

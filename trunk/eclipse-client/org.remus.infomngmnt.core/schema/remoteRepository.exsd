@@ -79,7 +79,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.remus.infomngmnt.core.remote.IRepository"/>
+                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.AbstractExtensionRepository:org.remus.infomngmnt.core.remote.IRepository"/>
                </appinfo>
             </annotation>
          </attribute>

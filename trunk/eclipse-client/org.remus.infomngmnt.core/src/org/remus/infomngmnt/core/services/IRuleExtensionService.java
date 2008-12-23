@@ -12,6 +12,10 @@
 
 package org.remus.infomngmnt.core.services;
 
+import java.util.Map;
+
+import org.remus.infomngmnt.core.extension.TransferWrapper;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  * @since 1.0
@@ -20,8 +24,16 @@ public interface IRuleExtensionService extends IExtensionService {
 
 
 	/**
-	 * 
+	 * @return
+	 * @since 1.0
 	 */
-	void init();
+	Map<String, TransferWrapper> getAllTransferTypes();
+
+	/**
+	 * @param transferId
+	 * @return
+	 * @since 1.0
+	 */
+	TransferWrapper getTransferTypeById(String transferId);
 
 }

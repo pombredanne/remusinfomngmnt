@@ -118,8 +118,9 @@
         iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeId" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RemoteObject" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="RemoteObject" abstract="true" eSuperTypes="#//Adapter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="possibleInfoTypeId" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

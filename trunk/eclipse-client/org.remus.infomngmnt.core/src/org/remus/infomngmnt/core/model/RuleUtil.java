@@ -18,7 +18,6 @@ import java.util.Map;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -27,31 +26,18 @@ import org.remus.infomngmnt.RemusTransferType;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.extension.RuleExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
+import org.remus.infomngmnt.core.services.IRuleExtensionService;
+import org.remus.infomngmnt.core.services.IRuleService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class RuleUtil {
-
-	private static RuleUtil INSTANCE;
-
+public class RuleUtil implements IRuleService {
 	public static final String RULE_PATH = "ruleengine/creationrules.xml"; //$NON-NLS-1$
 
 	private AvailableRuleDefinitions rules;
-
-	public static RuleUtil getInstance() {
-		if (RuleUtil.INSTANCE == null) {
-			synchronized (RuleUtil.class) {
-				if (RuleUtil.INSTANCE == null) {
-					RuleUtil.INSTANCE = new RuleUtil();
-				}
-			}
-		}
-		return RuleUtil.INSTANCE;
-	}
 
 	public AvailableRuleDefinitions getElementRules() {
 		if (this.rules == null) {
@@ -64,7 +50,7 @@ public class RuleUtil {
 				createNewElementRules.setName("Default Ruleset");
 				createNewElementRules.setDeletable(false);
 				this.rules.getNewElementRules().add(createNewElementRules);
-				Map<String, TransferWrapper> allTransferTypes = RuleExtensionManager.getInstance().getAllTransferTypes();
+				Map<String, TransferWrapper> allTransferTypes = InfomngmntEditPlugin.getPlugin().getService(IRuleExtensionService.class).getAllTransferTypes();
 				for (String transferWrapperIds : allTransferTypes.keySet()) {
 					RemusTransferType createRemusTransferType = InfomngmntFactory.eINSTANCE.createRemusTransferType();
 					createRemusTransferType.setId(transferWrapperIds);
@@ -87,7 +73,7 @@ public class RuleUtil {
 		return this.rules;
 	}
 
-	public NewElementRules getRuleByName(String name) {
+	public NewElementRules getRuleByName(final String name) {
 		EList<NewElementRules> newElementRules = getElementRules().getNewElementRules();
 		for (NewElementRules newElementRules2 : newElementRules) {
 			if (newElementRules2.getName().equals(name)) {

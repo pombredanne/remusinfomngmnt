@@ -24,18 +24,18 @@ public abstract class PluginRegistryDynamic implements IRegistryEventListener {
 
 	private final String extensionId;
 
-	protected PluginRegistryDynamic(String extensionId) {
+	public PluginRegistryDynamic(final String extensionId) {
 		this.extensionId = extensionId;
 		init();
 		Platform.getExtensionRegistry().addListener(this);
 	}
 
-	public void added(IExtension[] extensions) {
+	public void added(final IExtension[] extensions) {
 		// do nothing by default
 
 	}
 
-	public void added(IExtensionPoint[] extensionPoints) {
+	public void added(final IExtensionPoint[] extensionPoints) {
 		for (IExtensionPoint extensionPoint : extensionPoints) {
 			if (extensionPoint.getUniqueIdentifier().equals(this.extensionId)) {
 				init();
@@ -44,12 +44,12 @@ public abstract class PluginRegistryDynamic implements IRegistryEventListener {
 		}
 	}
 
-	public void removed(IExtension[] extensions) {
+	public void removed(final IExtension[] extensions) {
 		// do nothing by default
 
 	}
 
-	public void removed(IExtensionPoint[] extensionPoints) {
+	public void removed(final IExtensionPoint[] extensionPoints) {
 		for (IExtensionPoint extensionPoint : extensionPoints) {
 			if (extensionPoint.getUniqueIdentifier().equals(this.extensionId)) {
 				init();

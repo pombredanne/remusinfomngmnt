@@ -12,10 +12,13 @@
 
 package org.remus.infomngmnt.core.services;
 
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  * @since 1.0
  */
 public interface IInformationExtensionService extends IExtensionService {
+	
+	
 
 }

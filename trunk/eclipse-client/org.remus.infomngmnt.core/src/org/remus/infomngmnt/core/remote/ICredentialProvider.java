@@ -10,17 +10,11 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.core.services;
+package org.remus.infomngmnt.core.remote;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
- * @since 1.0
  */
-public interface IExtensionService {
-	
-	/**
-	 * @since 1.0
-	 */
-	void init();
+public interface ICredentialProvider {
 
 }

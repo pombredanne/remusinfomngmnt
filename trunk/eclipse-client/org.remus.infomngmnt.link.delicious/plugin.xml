@@ -4,10 +4,19 @@
    <extension
          point="org.remus.infomngmnt.core.remoteRepository">
       <repository-connector
+            class="org.remus.infomngmnt.link.delicious.DelicicousRepository"
             icon="icons/delicious.gif"
             id="org.remus.infomngmnt.link.delicious"
             name="Delicious">
       </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.link.delicious.ui"
+            newWizard="org.remus.infomngmnt.link.delicious.ui.NewDeliciousRepositoryWizard"
+            repository-id="org.remus.infomngmnt.link.delicious">
+      </respository>
    </extension>
 
 </plugin>

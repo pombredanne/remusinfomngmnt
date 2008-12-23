@@ -12,15 +12,16 @@
 
 package org.remus.infomngmnt.core.services;
 
+import org.remus.infomngmnt.AvailableRuleDefinitions;
+import org.remus.infomngmnt.NewElementRules;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
- * @since 1.0
  */
-public interface IExtensionService {
+public interface IRuleService {
 	
-	/**
-	 * @since 1.0
-	 */
-	void init();
+	AvailableRuleDefinitions getElementRules();
+	
+	NewElementRules getRuleByName(final String name);
 
 }

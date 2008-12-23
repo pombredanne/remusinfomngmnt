@@ -14,21 +14,58 @@ package org.remus.infomngmnt.core.remote;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-
-import org.remus.infomngmnt.RemoteObject;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public abstract class AbstractRepository {
+public abstract class AbstractRepository implements IRepository {
+	
+	private String label;
+	
+	private Image image;
+	
+	private String id;
+	
+	private ICredentialProvider credentialProvider;
+	
+	public IStatus validate(final IProgressMonitor monitor) {
+		return Status.OK_STATUS;
+		
+	}
 
-	private IStatus currentStatus;
+	public String getLabel() {
+		return this.label;
+	}
 
-	private String synchronizationTimeStamp;
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-	public abstract void login(ILoginCallBack callback, IProgressMonitor monitor);
+	public Image getImage() {
+		return this.image;
+	}
 
-	public abstract RemoteObject[] getChildren(IProgressMonitor monitor);
+	public void setImage(final Image image) {
+		this.image = image;
+	}
+
+	public ICredentialProvider getCredentialProvider() {
+		return this.credentialProvider;
+	}
+
+	public void setCredentialProvider(final ICredentialProvider credentialProvider) {
+		this.credentialProvider = credentialProvider;
+	}
+
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
 
 
 }

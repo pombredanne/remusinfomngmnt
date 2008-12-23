@@ -14,7 +14,9 @@ Export-Package: org.remus.infomngmnt,
  org.remus.infomngmnt.core.extension,
  org.remus.infomngmnt.core.model,
  org.remus.infomngmnt.core.progress,
+ org.remus.infomngmnt.core.remote,
  org.remus.infomngmnt.core.rules,
+ org.remus.infomngmnt.core.services,
  org.remus.infomngmnt.impl,
  org.remus.infomngmnt.provider,
  org.remus.infomngmnt.resources.util,
@@ -33,5 +35,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.compare.diff;bundle-version="0.8.1",
  org.eclipse.emf.compare.match;bundle-version="0.8.1"
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/services.xml
+Service-Component: OSGI-INF/ruleextensions.xml, OSGI-INF/rules.xml, OSGI-INF/repositoryextension.xml
+
 

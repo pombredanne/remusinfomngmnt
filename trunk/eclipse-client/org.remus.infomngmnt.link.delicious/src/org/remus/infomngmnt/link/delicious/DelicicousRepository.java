@@ -62,7 +62,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	
 	private Delicious getApi() {
 		if (this.api == null) {
-			this.api = new Delicious("tmseidel", "Hemmerlein66");
+			this.api = new Delicious("test", "test");
 		}
 		return this.api;
 	}

@@ -222,6 +222,8 @@ public class InfomngmntSwitch<T> {
 			case InfomngmntPackage.REMOTE_REPOSITORY: {
 				RemoteRepository remoteRepository = (RemoteRepository)theEObject;
 				T result = caseRemoteRepository(remoteRepository);
+				if (result == null) result = caseRemoteContainer(remoteRepository);
+				if (result == null) result = caseRemoteObject(remoteRepository);
 				if (result == null) result = caseAdapter(remoteRepository);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

@@ -37,6 +37,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.compare.match;bundle-version="0.8.1",
  org.eclipse.equinox.security;bundle-version="1.0.100"
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/ruleextensions.xml, OSGI-INF/rules.xml, OSGI-INF/repositoryextension.xml
+Service-Component: OSGI-INF/ruleextensions.xml, 
+ OSGI-INF/rules.xml,
+ OSGI-INF/repositoryextension.xml,
+ OSGI-INF/repositories.xml
 
 

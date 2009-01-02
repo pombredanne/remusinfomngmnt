@@ -73,6 +73,10 @@ public class RemoteObjectItemProvider
 			super.getPropertyDescriptors(object);
 
 			addPossibleInfoTypeIdPropertyDescriptor(object);
+			addIdPropertyDescriptor(object);
+			addUrlPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
+			addTypeIdPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -100,6 +104,94 @@ public class RemoteObjectItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Id feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteObject_id_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_id_feature", "_UI_RemoteObject_type"),
+				 InfomngmntPackage.Literals.REMOTE_OBJECT__ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Url feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUrlPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteObject_url_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_url_feature", "_UI_RemoteObject_type"),
+				 InfomngmntPackage.Literals.REMOTE_OBJECT__URL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteObject_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_name_feature", "_UI_RemoteObject_type"),
+				 InfomngmntPackage.Literals.REMOTE_OBJECT__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Type Id feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTypeIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteObject_typeId_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_typeId_feature", "_UI_RemoteObject_type"),
+				 InfomngmntPackage.Literals.REMOTE_OBJECT__TYPE_ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +199,10 @@ public class RemoteObjectItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_RemoteObject_type");
+		String label = ((RemoteObject)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_RemoteObject_type") :
+			getString("_UI_RemoteObject_type") + " " + label;
 	}
 
 	/**
@@ -123,6 +218,10 @@ public class RemoteObjectItemProvider
 
 		switch (notification.getFeatureID(RemoteObject.class)) {
 			case InfomngmntPackage.REMOTE_OBJECT__POSSIBLE_INFO_TYPE_ID:
+			case InfomngmntPackage.REMOTE_OBJECT__ID:
+			case InfomngmntPackage.REMOTE_OBJECT__URL:
+			case InfomngmntPackage.REMOTE_OBJECT__NAME:
+			case InfomngmntPackage.REMOTE_OBJECT__TYPE_ID:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

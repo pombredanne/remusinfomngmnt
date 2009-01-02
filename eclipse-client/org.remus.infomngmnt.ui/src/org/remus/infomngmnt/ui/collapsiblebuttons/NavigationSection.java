@@ -47,7 +47,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
@@ -136,8 +135,8 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	public void createControl(final Composite parent) {
 
 		//
-		Tree tree = new Tree(parent, SWT.MULTI);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		Tree tree = new Tree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		//tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		this.viewer = new TreeViewer(tree);
 

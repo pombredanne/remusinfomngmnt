@@ -201,5 +201,28 @@
             tooltip="Remote Repositories Tooltip">
       </collapsibleButton>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.remus.infomngmnt.RemoteRepository"
+            class="org.remus.infomngmnt.ui.adapter.RemoteRepositoryAdapterFactory">
+         <adapter
+               type="org.remus.infomngmnt.RemoteRepository">
+         </adapter>
+         <adapter
+               type="org.eclipse.ui.progress.IDeferredWorkbenchAdapter">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.remus.infomngmnt.RemoteContainer"
+            class="org.remus.infomngmnt.ui.adapter.RemoteRepositoryAdapterFactory">
+         <adapter
+               type="org.remus.infomngmnt.RemoteContainer">
+         </adapter>
+         <adapter
+               type="org.eclipse.ui.progress.IDeferredWorkbenchAdapter">
+         </adapter>
+      </factory>
+   </extension>
 
 </plugin>

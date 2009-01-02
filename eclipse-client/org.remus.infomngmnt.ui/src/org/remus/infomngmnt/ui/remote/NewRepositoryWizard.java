@@ -14,8 +14,13 @@ package org.remus.infomngmnt.ui.remote;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.RepositoryCollection;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 
 /**
@@ -34,8 +39,11 @@ public abstract class NewRepositoryWizard extends Wizard {
 	 */
 	@Override
 	public boolean performFinish() {
-		// TODO Auto-generated method stub
-		return false;
+		RepositoryCollection repositories = InfomngmntEditPlugin.getPlugin().getService(IRepositoryService.class).getRepositories();
+		repositories.getRepositories().add(this.repository);
+		this.repository.setTypeId(this.definingRepository.getId());
+		EditingUtil.getInstance().saveObjectToResource(repositories);
+		return true;
 	}
 	
 	public void init(final IStructuredSelection selection) {

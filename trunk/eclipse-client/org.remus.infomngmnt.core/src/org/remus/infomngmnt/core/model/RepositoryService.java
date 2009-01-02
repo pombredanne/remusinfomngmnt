@@ -13,7 +13,9 @@
 package org.remus.infomngmnt.core.model;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
@@ -45,7 +47,12 @@ public class RepositoryService implements IRepositoryService {
 	 * @see org.remus.infomngmnt.core.services.IRepositoryService#getRepositoryById(java.lang.String)
 	 */
 	public RemoteRepository getRepositoryById(final String id) {
-		// TODO Auto-generated method stub
+		EList<RemoteRepository> list = getRepositories().getRepositories();
+		for (RemoteRepository remoteRepository : list) {
+			if (remoteRepository.getId().equals(id)) {
+				return remoteRepository;
+			}
+		}
 		return null;
 	}
 

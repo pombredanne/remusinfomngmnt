@@ -15,6 +15,8 @@ package org.remus.infomngmnt.core.remote;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.graphics.Image;
+
+import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 
 /**
@@ -41,7 +43,7 @@ public interface IRepository {
 
 	String getRepositoryUrl();
 	
-	RemoteObject[] getChildren(IProgressMonitor monitor);
+	RemoteObject[] getChildren(IProgressMonitor monitor, RemoteContainer container);
 	
 	IStatus validate();
 	

@@ -917,51 +917,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRemoteRepository_Id() {
-		return (EAttribute)remoteRepositoryEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRemoteRepository_TypeId() {
-		return (EAttribute)remoteRepositoryEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRemoteRepository_Url() {
-		return (EAttribute)remoteRepositoryEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRemoteRepository_Name() {
-		return (EAttribute)remoteRepositoryEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRemoteRepository_Children() {
-		return (EReference)remoteRepositoryEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getRemoteObject() {
 		return remoteObjectEClass;
 	}
@@ -980,8 +935,53 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getRemoteObject_Id() {
+		return (EAttribute)remoteObjectEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRemoteObject_Url() {
+		return (EAttribute)remoteObjectEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRemoteObject_Name() {
+		return (EAttribute)remoteObjectEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRemoteObject_TypeId() {
+		return (EAttribute)remoteObjectEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getRemoteContainer() {
 		return remoteContainerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRemoteContainer_Children() {
+		return (EReference)remoteContainerEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1127,16 +1127,16 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(ruleResultEClass, RULE_RESULT__DESCRIPTION);
 
 		remoteRepositoryEClass = createEClass(REMOTE_REPOSITORY);
-		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__ID);
-		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__TYPE_ID);
-		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__URL);
-		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__NAME);
-		createEReference(remoteRepositoryEClass, REMOTE_REPOSITORY__CHILDREN);
 
 		remoteObjectEClass = createEClass(REMOTE_OBJECT);
 		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__POSSIBLE_INFO_TYPE_ID);
+		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__ID);
+		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__URL);
+		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__NAME);
+		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__TYPE_ID);
 
 		remoteContainerEClass = createEClass(REMOTE_CONTAINER);
+		createEReference(remoteContainerEClass, REMOTE_CONTAINER__CHILDREN);
 
 		repositoryCollectionEClass = createEClass(REPOSITORY_COLLECTION);
 		createEReference(repositoryCollectionEClass, REPOSITORY_COLLECTION__REPOSITORIES);
@@ -1178,7 +1178,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		abstractInformationUnitEClass.getESuperTypes().add(this.getAdapter());
 		informationUnitListItemEClass.getESuperTypes().add(this.getAbstractInformationUnit());
 		ruleValueEClass.getESuperTypes().add(this.getInformationUnit());
-		remoteRepositoryEClass.getESuperTypes().add(this.getAdapter());
+		remoteRepositoryEClass.getESuperTypes().add(this.getRemoteContainer());
 		remoteObjectEClass.getESuperTypes().add(this.getAdapter());
 		remoteContainerEClass.getESuperTypes().add(this.getRemoteObject());
 
@@ -1271,16 +1271,16 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getRuleResult_Description(), ecorePackage.getEString(), "description", null, 0, 1, RuleResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteRepositoryEClass, RemoteRepository.class, "RemoteRepository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRemoteRepository_Id(), ecorePackage.getEString(), "id", null, 1, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRemoteRepository_TypeId(), ecorePackage.getEString(), "typeId", null, 1, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRemoteRepository_Url(), ecorePackage.getEString(), "url", null, 1, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRemoteRepository_Name(), ecorePackage.getEString(), "name", null, 0, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRemoteRepository_Children(), this.getRemoteObject(), null, "children", null, 0, -1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteObjectEClass, RemoteObject.class, "RemoteObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRemoteObject_PossibleInfoTypeId(), ecorePackage.getEString(), "possibleInfoTypeId", null, 0, -1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRemoteObject_Id(), ecorePackage.getEString(), "id", null, 1, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRemoteObject_Url(), ecorePackage.getEString(), "url", null, 1, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRemoteObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRemoteObject_TypeId(), ecorePackage.getEString(), "typeId", null, 1, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteContainerEClass, RemoteContainer.class, "RemoteContainer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRemoteContainer_Children(), this.getRemoteObject(), null, "children", null, 0, -1, RemoteContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(repositoryCollectionEClass, RepositoryCollection.class, "RepositoryCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRepositoryCollection_Repositories(), this.getRemoteRepository(), null, "repositories", null, 0, -1, RepositoryCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

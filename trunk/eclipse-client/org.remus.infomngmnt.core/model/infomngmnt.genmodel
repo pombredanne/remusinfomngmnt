@@ -96,17 +96,17 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RuleResult/actions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/description"/>
     </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//RemoteRepository">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteRepository/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteRepository/typeId"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteRepository/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteRepository/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteRepository/children"/>
-    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RemoteRepository"/>
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//RemoteObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/possibleInfoTypeId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/typeId"/>
     </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//RemoteContainer"/>
+    <genClasses ecoreClass="infomngmnt.ecore#//RemoteContainer">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteContainer/children"/>
+    </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RepositoryCollection">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RepositoryCollection/repositories"/>
     </genClasses>

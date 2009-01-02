@@ -19,6 +19,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+
 import org.remus.infomngmnt.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.ui.internal.extension.RepositoryUI;
 import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
@@ -30,8 +31,6 @@ import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
  * @since 1.0
  */
 public class RepositoryExtensionService extends PluginRegistryDynamic implements IRepositoryExtensionService {
-	
-	
 	
 	private Map<String, IRepositoryUI> items;
 
@@ -45,7 +44,6 @@ public class RepositoryExtensionService extends PluginRegistryDynamic implements
 	 */
 	@Override
 	public void init() {
-		System.out.println("HALLO WELT");
 		if (this.items == null) {
 			this.items = new HashMap<String, IRepositoryUI>();
 		}

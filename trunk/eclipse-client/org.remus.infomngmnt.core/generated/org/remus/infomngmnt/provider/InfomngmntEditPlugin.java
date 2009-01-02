@@ -49,8 +49,8 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 	 */
 	public InfomngmntEditPlugin() {
 		super
-		(new ResourceLocator [] {
-		});
+		  (new ResourceLocator [] {
+		   });
 	}
 
 	/**
@@ -91,6 +91,7 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 		 */
 		public Implementation() {
 			super();
+
 			// Remember the static instance.
 			//
 			plugin = this;

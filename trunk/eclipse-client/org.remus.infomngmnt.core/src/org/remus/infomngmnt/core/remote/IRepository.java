@@ -45,6 +45,12 @@ public interface IRepository {
 	
 	IStatus validate();
 	
+	void setCredentialProvider(ICredentialProvider provider);
+	
+	ICredentialProvider getCredentialProvider();
+	
+	void reset();
+	
 	
 
 

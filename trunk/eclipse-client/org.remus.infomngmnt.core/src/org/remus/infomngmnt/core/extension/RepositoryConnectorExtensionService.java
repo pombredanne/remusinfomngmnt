@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.remus.infomngmnt.core.remote.ICredentialProvider;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 
 /**
@@ -49,6 +50,7 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 					repository.setLabel(configurationElement.getAttribute(NAME_ATT));
 					repository.setImagePath(configurationElement.getAttribute(ICON_ATT));
 					repository.setId(configurationElement.getAttribute(ID_ATT));
+					repository.setCredentialProvider((ICredentialProvider) configurationElement.createExecutableExtension(CREDENTIALPROVIDER_ATT));
 					this.items.put(configurationElement.getAttribute(ID_ATT), repository);
 				} catch (InvalidRegistryObjectException e) {
 					// TODO Auto-generated catch block

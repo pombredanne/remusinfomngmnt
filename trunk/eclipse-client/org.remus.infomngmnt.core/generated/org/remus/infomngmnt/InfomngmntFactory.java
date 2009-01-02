@@ -196,6 +196,15 @@ public interface InfomngmntFactory extends EFactory {
 	RemoteContainer createRemoteContainer();
 
 	/**
+	 * Returns a new object of class '<em>Repository Collection</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Repository Collection</em>'.
+	 * @generated
+	 */
+	RepositoryCollection createRepositoryCollection();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

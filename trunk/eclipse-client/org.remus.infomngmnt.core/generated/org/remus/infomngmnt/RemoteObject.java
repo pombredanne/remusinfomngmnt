@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model abstract="true"
  * @generated
  */
-public interface RemoteObject extends EObject {
+public interface RemoteObject extends Adapter {
 	/**
 	 * Returns the value of the '<em><b>Possible Info Type Id</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.String}.

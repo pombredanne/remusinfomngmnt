@@ -71,6 +71,9 @@ public class RemoteRepositoryItemProvider
 
 			addIdPropertyDescriptor(object);
 			addTypeIdPropertyDescriptor(object);
+			addUrlPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
+			addChildrenPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -120,6 +123,72 @@ public class RemoteRepositoryItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Url feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUrlPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteRepository_url_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteRepository_url_feature", "_UI_RemoteRepository_type"),
+				 InfomngmntPackage.Literals.REMOTE_REPOSITORY__URL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteRepository_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteRepository_name_feature", "_UI_RemoteRepository_type"),
+				 InfomngmntPackage.Literals.REMOTE_REPOSITORY__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Children feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addChildrenPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteRepository_children_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteRepository_children_feature", "_UI_RemoteRepository_type"),
+				 InfomngmntPackage.Literals.REMOTE_REPOSITORY__CHILDREN,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns RemoteRepository.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -138,7 +207,7 @@ public class RemoteRepositoryItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((RemoteRepository)object).getId();
+		String label = ((RemoteRepository)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_RemoteRepository_type") :
 			getString("_UI_RemoteRepository_type") + " " + label;
@@ -158,6 +227,8 @@ public class RemoteRepositoryItemProvider
 		switch (notification.getFeatureID(RemoteRepository.class)) {
 			case InfomngmntPackage.REMOTE_REPOSITORY__ID:
 			case InfomngmntPackage.REMOTE_REPOSITORY__TYPE_ID:
+			case InfomngmntPackage.REMOTE_REPOSITORY__URL:
+			case InfomngmntPackage.REMOTE_REPOSITORY__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

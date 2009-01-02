@@ -55,8 +55,9 @@ public abstract class AbstractScrolledTitledView extends ViewPart
 		this.form = this.toolkit.createScrolledForm(comp);
 		//this.form.setFont(UIUtil.getStandaloneViewHeaderFont(getSite().getShell().getDisplay()));
 		this.form.setText(getTitle());
-		if (getDefaultImage() != getTitleImage())
+		if (getDefaultImage() != getTitleImage()) {
 			this.form.setImage(getTitleImage());
+		}
 		this.toolkit.decorateFormHeading(this.form.getForm());
 		this.form.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.form.getBody().setLayout(createScrolledFormLayout());
@@ -66,7 +67,7 @@ public abstract class AbstractScrolledTitledView extends ViewPart
 		client.setLayout(new FillLayout()); // if layout changes here please update the javadoc of #createViewContents(Composite)
 
 		createViewContents(client);
-		this.form.layout(true);
+		//this.form.layout(true);
 		initializeToolBar();
 
 	}

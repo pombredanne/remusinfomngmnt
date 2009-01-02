@@ -12,16 +12,20 @@
 
 package org.remus.infomngmnt.link.delicious;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 
 import del.icio.us.Delicious;
@@ -34,6 +38,12 @@ import del.icio.us.beans.Bundle;
 public class DelicicousRepository extends AbstractExtensionRepository {
 	
 	private Delicious api;
+	
+	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
+		public void propertyChange(final PropertyChangeEvent evt) {
+			reset();
+		}
+	};
 
 	/* (non-Javadoc)
 	 * @see org.remus.infomngmnt.core.remote.IRepository#getChildren()
@@ -62,19 +72,31 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	
 	private Delicious getApi() {
 		if (this.api == null) {
-			this.api = new Delicious("test", "test");
+			this.api = new Delicious(
+					getCredentialProvider().getUserName(),
+					getCredentialProvider().getPassword());
+			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
 		return this.api;
 	}
 
 	public IStatus validate() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			getApi().getRecentPosts();
+			return Status.OK_STATUS;
+		} catch (Exception e) {
+			return StatusCreator.newStatus("Error connecting...",e);
+		}
 	}
 
 	public void login(final ILoginCallBack callback, final IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void reset() {
+		this.api = null;
+		getCredentialProvider().removePropertyChangeListener(this.credentialsMovedListener);
 	}
 
 }

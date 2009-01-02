@@ -14,6 +14,8 @@ package org.remus.infomngmnt.link.delicious;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,16 +23,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.RemoteContainer;
-import org.remus.infomngmnt.RemoteObject;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.model.StatusCreator;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
 
 import del.icio.us.Delicious;
 import del.icio.us.DeliciousConstants;
-import del.icio.us.beans.Bundle;
+import del.icio.us.beans.Post;
+import del.icio.us.beans.Tag;
+
+import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.RemoteContainer;
+import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.remote.ILoginCallBack;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -45,18 +50,31 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		}
 	};
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.remote.IRepository#getChildren()
-	 */
-	public RemoteObject[] getChildren(final IProgressMonitor monitor) {
-		IProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
-		List<Bundle> bundles = getApi().getBundles();
+	
+
+	public RemoteObject[] getChildren(final IProgressMonitor monitor,
+			final RemoteContainer container) {
 		List<RemoteObject> returnValue = new LinkedList<RemoteObject>();
-		for (Bundle bundle : bundles) {
-			RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
-			//remoteContainer.setId(bundle.getTags());
-			//remoteContainer.setTypeId("LINK");
-			returnValue.add(remoteContainer);
+		if (container instanceof RemoteRepository) {
+			IProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
+			List<Tag> tags = getApi().getTags();
+			for (Tag tag : tags) {
+				RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
+				remoteContainer.setId(tag.getTag());
+				remoteContainer.setName(tag.getTag());
+				remoteContainer.setUrl(getRepositoryUrl() + tag.getTag());
+				returnValue.add(remoteContainer);
+			}
+			
+		} else {
+			List<Post> posts = getApi().getAllPosts(container.getName());
+			for (Post post : posts) {
+				RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
+				remoteContainer.setId(post.getHash());
+				remoteContainer.setName(post.getDescription());
+				remoteContainer.setUrl(getRepositoryUrl() + post.getHash());
+				returnValue.add(remoteContainer);
+			}
 		}
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
 	}
@@ -67,11 +85,16 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	public String getRepositoryUrl() {
 		return DeliciousConstants.API_ENDPOINT;
 	}
-
 	
 	
 	private Delicious getApi() {
 		if (this.api == null) {
+			try {
+				getCredentialProvider().setIdentifier(new URL(getRepositoryUrl()).getHost());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.api = new Delicious(
 					getCredentialProvider().getUserName(),
 					getCredentialProvider().getPassword());
@@ -79,6 +102,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		}
 		return this.api;
 	}
+	
 
 	public IStatus validate() {
 		try {
@@ -98,5 +122,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		this.api = null;
 		getCredentialProvider().removePropertyChangeListener(this.credentialsMovedListener);
 	}
+
+
+	
 
 }

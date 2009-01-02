@@ -35,6 +35,7 @@
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
+      <plugin id="org.eclipse.core.databinding.beans"/>
       <plugin id="org.eclipse.core.expressions"/>
       <plugin id="org.eclipse.core.filebuffers"/>
       <plugin id="org.eclipse.core.filesystem"/>
@@ -82,6 +83,7 @@
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
       <plugin id="org.eclipse.jface.text"/>
+      <plugin id="org.eclipse.nebula.widgets.collapsiblebuttons"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
       <plugin id="org.eclipse.osgi.util"/>
@@ -104,6 +106,7 @@
       <plugin id="org.remus.infomngmnt.jslib"/>
       <plugin id="org.remus.infomngmnt.libs"/>
       <plugin id="org.remus.infomngmnt.link"/>
+      <plugin id="org.remus.infomngmnt.link.delicious"/>
       <plugin id="org.remus.infomngmnt.plaintext"/>
       <plugin id="org.remus.infomngmnt.search"/>
       <plugin id="org.remus.infomngmnt.search.local"/>
@@ -111,9 +114,5 @@
       <plugin id="org.remus.infomngmnt.ui"/>
    </plugins>
 
-   <configurations>
-      <plugin id="org.eclipse.equinox.ds" autoStart="false" startLevel="0" />
-      <plugin id="org.remus.infomngmnt.search.local" autoStart="false" startLevel="0" />
-   </configurations>
 
 </product>

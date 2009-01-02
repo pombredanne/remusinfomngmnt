@@ -39,9 +39,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.widgets.Form;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ISetSelectionTarget;
+import org.eclipse.ui.part.ViewPart;
 
-import org.remus.infomngmnt.common.ui.view.AbstractScrolledTitledView;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
@@ -51,7 +53,7 @@ import org.remus.infomngmnt.util.ValueObject;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class MainViewPart extends AbstractScrolledTitledView implements ISetSelectionTarget, IEditingDomainProvider, ISelectionProvider, IViewerProvider{
+public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEditingDomainProvider, ISelectionProvider, IViewerProvider{
 
 	private static final String VISIBLE_BUTTONS = "visibleButtons";
 	private static final String ACTIVE_BAR = "activeBar";
@@ -63,6 +65,8 @@ public class MainViewPart extends AbstractScrolledTitledView implements ISetSele
 	private CollapsibleButtons cb;
 	private String activeBarId;
 	private int visibleButtonCount;
+	private FormToolkit toolkit;
+	private Form form;
 	
 	public static final String VIEW_ID = "org.remus.infomngmnt.ui.main"; //$NON-NLS-1$
 	/**
@@ -75,14 +79,29 @@ public class MainViewPart extends AbstractScrolledTitledView implements ISetSele
 	}
 
 	@Override
-	public void createViewContents(final Composite parent) {
-		
+	public void createPartControl(final Composite parent) {
+
+		this.toolkit = new FormToolkit(parent.getDisplay());
+
+		final Composite comp = this.toolkit.createComposite(parent, SWT.NONE);
+		comp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		GridLayout gridLayout = new GridLayout(1,false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
 		parent.setLayout(gridLayout);
+		comp.setLayout(gridLayout);
 
-		this.upperComp = new Composite(parent, SWT.NONE);
+		this.form = this.toolkit.createForm(comp);
+		this.toolkit.decorateFormHeading(this.form);
+		//this.form.setFont(UIUtil.getStandaloneViewHeaderFont(getSite().getShell().getDisplay()));
+		this.form.setText(getTitle());
+		if (getDefaultImage() != getTitleImage()) {
+			this.form.setImage(getTitleImage());
+		}
+		this.form.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		this.form.getBody().setLayout(gridLayout);
+		this.upperComp = this.toolkit.createComposite(this.form.getBody(), SWT.NONE);
 		this.upperComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.upperComp.setLayout(this.stackLayout = new StackLayout());
 
@@ -123,7 +142,7 @@ public class MainViewPart extends AbstractScrolledTitledView implements ISetSele
 			}
 		});
 		//this.cb.setLayoutData(new GridData(GridData.GRAB_VERTICAL | GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
-		GridData gridData = new GridData(SWT.FILL, SWT.END, true, false);
+		GridData gridData = new GridData(SWT.FILL, SWT.END, false, false);
 		this.cb.setLayoutData(gridData);
 //		parent.layout(true);
 	}
@@ -151,6 +170,10 @@ public class MainViewPart extends AbstractScrolledTitledView implements ISetSele
 			this.activeBarId = memento.getString(ACTIVE_BAR);
 			if (memento.getInteger(VISIBLE_BUTTONS) != null) {
 				this.visibleButtonCount = memento.getInteger(VISIBLE_BUTTONS);
+			}
+		} else {
+			for (CollapsibleButtonBar item : this.items) {
+				item.init(site,null);
 			}
 		}
 	}
@@ -181,13 +204,17 @@ public class MainViewPart extends AbstractScrolledTitledView implements ISetSele
 		if (this.activeButtonBar != null) {
 			MainViewPart.this.activeButtonBar.handleDeselect();
 		}
-		getToolbarManager().removeAll();
+		this.form.getToolBarManager().removeAll();
 		MainViewPart.this.stackLayout.topControl = element.getControl();
 		MainViewPart.this.activeButtonBar = element;
 		MainViewPart.this.activeButtonBar.handleSelect();
-		this.activeButtonBar.initToolbar(getToolbarManager());
+		this.activeButtonBar.initToolbar(this.form.getToolBarManager());
 		setNewTitle(element.getTitle());
 		this.upperComp.layout();
+	}
+
+	private void setNewTitle(final String title) {
+		this.form.setText(title);
 	}
 
 	/* (non-Javadoc)

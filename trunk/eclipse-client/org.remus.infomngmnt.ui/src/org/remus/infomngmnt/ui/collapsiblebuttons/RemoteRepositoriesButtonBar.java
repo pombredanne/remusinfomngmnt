@@ -12,7 +12,6 @@
 
 package org.remus.infomngmnt.ui.collapsiblebuttons;
 
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -27,6 +26,7 @@ import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.deferred.DeferredContentProvider;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 
@@ -39,7 +39,7 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar {
 
 	@Override
 	public void createControl(final Composite parent) {
-		Tree tree = new Tree(parent, SWT.MULTI);
+		Tree tree = new Tree(parent, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.viewer = new TreeViewer(tree);
 		setControl(tree);
@@ -60,7 +60,7 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar {
 	}
 
 	private void initProvider() {
-		IStructuredContentProvider contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
+		IStructuredContentProvider contentProvider = new DeferredContentProvider(EditingUtil.getInstance().getAdapterFactory(),getViewSite());
 		LabelProvider labelProvider = new DecoratingLabelProvider(
 				new NavigationCellLabelProvider(),
 				PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());

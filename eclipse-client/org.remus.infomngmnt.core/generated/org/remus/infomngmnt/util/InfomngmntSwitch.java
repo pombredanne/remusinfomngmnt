@@ -229,6 +229,7 @@ public class InfomngmntSwitch<T> {
 			case InfomngmntPackage.REMOTE_OBJECT: {
 				RemoteObject remoteObject = (RemoteObject)theEObject;
 				T result = caseRemoteObject(remoteObject);
+				if (result == null) result = caseAdapter(remoteObject);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -236,6 +237,13 @@ public class InfomngmntSwitch<T> {
 				RemoteContainer remoteContainer = (RemoteContainer)theEObject;
 				T result = caseRemoteContainer(remoteContainer);
 				if (result == null) result = caseRemoteObject(remoteContainer);
+				if (result == null) result = caseAdapter(remoteContainer);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.REPOSITORY_COLLECTION: {
+				RepositoryCollection repositoryCollection = (RepositoryCollection)theEObject;
+				T result = caseRepositoryCollection(repositoryCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -570,6 +578,21 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseRemoteContainer(RemoteContainer object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Repository Collection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Repository Collection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRepositoryCollection(RepositoryCollection object) {
 		return null;
 	}
 

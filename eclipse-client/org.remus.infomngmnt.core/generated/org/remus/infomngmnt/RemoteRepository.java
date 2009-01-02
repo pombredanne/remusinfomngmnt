@@ -14,6 +14,8 @@
  */
 package org.remus.infomngmnt;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +27,9 @@ package org.remus.infomngmnt;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.RemoteRepository#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemoteRepository#getTypeId <em>Type Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteRepository#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteRepository#getName <em>Name</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteRepository#getChildren <em>Children</em>}</li>
  * </ul>
  * </p>
  *
@@ -84,5 +89,73 @@ public interface RemoteRepository extends Adapter {
 	 * @generated
 	 */
 	void setTypeId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Url</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Url</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Url</em>' attribute.
+	 * @see #setUrl(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteRepository_Url()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getUrl();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RemoteRepository#getUrl <em>Url</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Url</em>' attribute.
+	 * @see #getUrl()
+	 * @generated
+	 */
+	void setUrl(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteRepository_Name()
+	 * @model
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RemoteRepository#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Children</b></em>' reference list.
+	 * The list contents are of type {@link org.remus.infomngmnt.RemoteObject}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Children</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Children</em>' reference list.
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteRepository_Children()
+	 * @model
+	 * @generated
+	 */
+	EList<RemoteObject> getChildren();
 
 } // RemoteRepository

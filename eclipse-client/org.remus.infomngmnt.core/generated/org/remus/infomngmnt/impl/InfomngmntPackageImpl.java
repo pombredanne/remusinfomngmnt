@@ -42,6 +42,7 @@ import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RemusTransferType;
+import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleResult;
 import org.remus.infomngmnt.RuleValue;
@@ -207,6 +208,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass remoteContainerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass repositoryCollectionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -927,6 +935,33 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getRemoteRepository_Url() {
+		return (EAttribute)remoteRepositoryEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRemoteRepository_Name() {
+		return (EAttribute)remoteRepositoryEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRemoteRepository_Children() {
+		return (EReference)remoteRepositoryEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getRemoteObject() {
 		return remoteObjectEClass;
 	}
@@ -947,6 +982,24 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EClass getRemoteContainer() {
 		return remoteContainerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRepositoryCollection() {
+		return repositoryCollectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRepositoryCollection_Repositories() {
+		return (EReference)repositoryCollectionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1076,11 +1129,17 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		remoteRepositoryEClass = createEClass(REMOTE_REPOSITORY);
 		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__ID);
 		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__TYPE_ID);
+		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__URL);
+		createEAttribute(remoteRepositoryEClass, REMOTE_REPOSITORY__NAME);
+		createEReference(remoteRepositoryEClass, REMOTE_REPOSITORY__CHILDREN);
 
 		remoteObjectEClass = createEClass(REMOTE_OBJECT);
 		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__POSSIBLE_INFO_TYPE_ID);
 
 		remoteContainerEClass = createEClass(REMOTE_CONTAINER);
+
+		repositoryCollectionEClass = createEClass(REPOSITORY_COLLECTION);
+		createEReference(repositoryCollectionEClass, REPOSITORY_COLLECTION__REPOSITORIES);
 
 		// Create data types
 		objectEDataType = createEDataType(OBJECT);
@@ -1120,6 +1179,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		informationUnitListItemEClass.getESuperTypes().add(this.getAbstractInformationUnit());
 		ruleValueEClass.getESuperTypes().add(this.getInformationUnit());
 		remoteRepositoryEClass.getESuperTypes().add(this.getAdapter());
+		remoteObjectEClass.getESuperTypes().add(this.getAdapter());
 		remoteContainerEClass.getESuperTypes().add(this.getRemoteObject());
 
 		// Initialize classes and features; add operations and parameters
@@ -1213,11 +1273,17 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(remoteRepositoryEClass, RemoteRepository.class, "RemoteRepository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRemoteRepository_Id(), ecorePackage.getEString(), "id", null, 1, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRemoteRepository_TypeId(), ecorePackage.getEString(), "typeId", null, 1, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRemoteRepository_Url(), ecorePackage.getEString(), "url", null, 1, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRemoteRepository_Name(), ecorePackage.getEString(), "name", null, 0, 1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRemoteRepository_Children(), this.getRemoteObject(), null, "children", null, 0, -1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteObjectEClass, RemoteObject.class, "RemoteObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRemoteObject_PossibleInfoTypeId(), ecorePackage.getEString(), "possibleInfoTypeId", null, 0, -1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteContainerEClass, RemoteContainer.class, "RemoteContainer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(repositoryCollectionEClass, RepositoryCollection.class, "RepositoryCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRepositoryCollection_Repositories(), this.getRemoteRepository(), null, "repositories", null, 0, -1, RepositoryCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

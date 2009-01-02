@@ -89,6 +89,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.RULE_RESULT: return createRuleResult();
 			case InfomngmntPackage.REMOTE_REPOSITORY: return createRemoteRepository();
 			case InfomngmntPackage.REMOTE_CONTAINER: return createRemoteContainer();
+			case InfomngmntPackage.REPOSITORY_COLLECTION: return createRepositoryCollection();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -312,6 +313,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public RemoteContainer createRemoteContainer() {
 		RemoteContainerImpl remoteContainer = new RemoteContainerImpl();
 		return remoteContainer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RepositoryCollection createRepositoryCollection() {
+		RepositoryCollectionImpl repositoryCollection = new RepositoryCollectionImpl();
+		return repositoryCollection;
 	}
 
 	/**

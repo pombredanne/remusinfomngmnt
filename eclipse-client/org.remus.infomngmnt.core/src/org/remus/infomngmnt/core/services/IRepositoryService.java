@@ -10,27 +10,18 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.core.remote;
+package org.remus.infomngmnt.core.services;
 
-import java.beans.PropertyChangeListener;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.RepositoryCollection;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public interface ICredentialProvider {
+public interface IRepositoryService {
 	
-	String getUserName();
+	RepositoryCollection getRepositories();
 	
-	String getPassword();
-	
-	void setUserName(String username);
-	
-	void setPassword(String password);
-	
-	void setIdentifier(String identifier);
-	
-	void addPropertyChangeListener(PropertyChangeListener listener);
-	
-	void removePropertyChangeListener(PropertyChangeListener listener);
+	RemoteRepository getRepositoryById(String id);
 	
 }

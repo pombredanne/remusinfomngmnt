@@ -33,7 +33,6 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
-
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -50,6 +49,7 @@ import org.remus.infomngmnt.resources.util.ResourceUtil;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  * @noextend This class is not intended to be subclassed by clients.
  */
+@SuppressWarnings("restriction")
 public class CategoryUtil {
 
 	/**
@@ -68,7 +68,7 @@ public class CategoryUtil {
 	 * parent categories
 	 * @see EObject#eContainer()
 	 */
-	public static String categoryToString(Category category) {
+	public static String categoryToString(final Category category) {
 		StringWriter sw = new StringWriter();
 		if (category.eContainer() != null && category.eContainer() instanceof Category) {
 			sw.append(categoryToString((Category) category.eContainer()));
@@ -78,7 +78,7 @@ public class CategoryUtil {
 		return sw.toString();
 	}
 
-	public static IStatus isCategoryPathStringValid(String str) {
+	public static IStatus isCategoryPathStringValid(final String str) {
 		if (str.trim().length() == 0) {
 			return StatusCreator.newStatus("No parent category");
 		}
@@ -90,7 +90,7 @@ public class CategoryUtil {
 		return Status.OK_STATUS;
 	}
 
-	public static IStatus isCategoryNameValid(String str) {
+	public static IStatus isCategoryNameValid(final String str) {
 		if (str.trim().length() == 0) {
 			return StatusCreator.newStatus("At least 1 character is mandatory");
 		}
@@ -100,7 +100,7 @@ public class CategoryUtil {
 		return Status.OK_STATUS;
 	}
 
-	public static Category findCategory(String str, boolean createMissingFragments) {
+	public static Category findCategory(final String str, final boolean createMissingFragments) {
 		String[] split = str.split("/");
 		Category parentCategory = null;
 		for (int i = 0, n = split.length; i < n; i++) {
@@ -149,8 +149,8 @@ public class CategoryUtil {
 	 * @param newCategoryName the new category name
 	 * @return
 	 */
-	public static IStatus isCategoryStructureValid(String parentCategoryPath,
-			String newCategoryName) {
+	public static IStatus isCategoryStructureValid(final String parentCategoryPath,
+			final String newCategoryName) {
 		if (findCategory(parentCategoryPath + "/" + newCategoryName, false) != null) {
 			return StatusCreator.newStatus("Category already exisits");
 		}
@@ -166,7 +166,7 @@ public class CategoryUtil {
 		return Status.OK_STATUS;
 	}
 
-	public static IProject getProjectByCategory(Category category) {
+	public static IProject getProjectByCategory(final Category category) {
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(category.eResource().getURI().toPlatformString(true))).getProject();
 	}
 
@@ -175,7 +175,7 @@ public class CategoryUtil {
 		EObjectCondition condition = new EObjectTypeRelationCondition(InfomngmntPackage.Literals.CATEGORY);
 		EObjectCondition valueCondition = new EObjectCondition() {
 			@Override
-			public boolean isSatisfied(EObject object) {
+			public boolean isSatisfied(final EObject object) {
 				if (caseSensitive) {
 					return categoryToString((Category) object).startsWith(startString);
 				}
@@ -191,7 +191,7 @@ public class CategoryUtil {
 			returnValue.add((Category) object);
 		}
 		Collections.sort(returnValue, new Comparator<Category>() {
-			public int compare(Category arg0, Category arg1) {
+			public int compare(final Category arg0, final Category arg1) {
 				if (caseSensitive) {
 					return  categoryToString(arg0).compareTo(categoryToString(arg1));
 				}
@@ -201,7 +201,7 @@ public class CategoryUtil {
 		return returnValue.toArray(new Category[returnValue.size()]);
 	}
 
-	public static boolean isItemParentOfCategory(EObject possibleChild, Category possibleParent) {
+	public static boolean isItemParentOfCategory(final EObject possibleChild, final Category possibleParent) {
 		if (possibleChild == possibleParent) {
 			return true;
 		}

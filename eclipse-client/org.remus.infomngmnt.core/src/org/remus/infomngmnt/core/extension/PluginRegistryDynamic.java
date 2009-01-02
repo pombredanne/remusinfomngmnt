@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.Platform;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
+ * @since 1.0
  */
 public abstract class PluginRegistryDynamic implements IRegistryEventListener {
 

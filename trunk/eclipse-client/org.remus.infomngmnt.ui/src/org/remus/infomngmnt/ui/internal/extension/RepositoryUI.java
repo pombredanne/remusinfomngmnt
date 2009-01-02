@@ -28,7 +28,7 @@ import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
  * @since 1.0
  */
 public class RepositoryUI implements IRepositoryUI {
-	
+
 	public RepositoryUI(final IConfigurationElement configurationElement, final String id,
 			final String repositoryId) {
 		super();
@@ -40,11 +40,11 @@ public class RepositoryUI implements IRepositoryUI {
 
 	/** The configuration element which comes from the plugin-registry **/
 	private final IConfigurationElement configurationElement;
-	
+
 	private final String id;
-	
+
 	private final String repositoryId;
-	
+
 	private NewRepositoryWizard wizardClass;
 
 
@@ -57,14 +57,13 @@ public class RepositoryUI implements IRepositoryUI {
 	}
 
 	public NewRepositoryWizard getWizardClass() {
-		if (this.wizardClass == null) {
-			try {
-				this.wizardClass = (NewRepositoryWizard) this.configurationElement.createExecutableExtension(RepositoryExtensionService.WIZARD_CLASSID);
-			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			this.wizardClass = (NewRepositoryWizard) this.configurationElement.createExecutableExtension(RepositoryExtensionService.WIZARD_CLASSID);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		return this.wizardClass;
 	}
 
@@ -78,6 +77,6 @@ public class RepositoryUI implements IRepositoryUI {
 		}
 		return this.repositoryImpemenentation;
 	}
-	
+
 
 }

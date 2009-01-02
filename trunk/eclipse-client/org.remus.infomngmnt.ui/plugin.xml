@@ -3,6 +3,7 @@
 <plugin>
    <extension-point id="informationUi" name="informationUi" schema="schema/informationUi.exsd"/>
    <extension-point id="repositoryUI" name="repositoryUI" schema="schema/repositoryUI.exsd"/>
+   <extension-point id="collapsibleButtonBar" name="collapsibleButtonBar" schema="schema/collapsibleButtonBar.exsd"/>
    <extension
          point="org.eclipse.ui.newWizards">
       <primaryWizard
@@ -46,15 +47,12 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="org.remus.infomngmnt.ui.views.NavigationView"
-            id="org.remus.infomngmnt.ui.views.NavigationView"
-            name="Navigation">
-      </view>
-      <view
-            class="org.remus.infomngmnt.ui.remote.RepositoryView"
+            allowMultiple="false"
+            class="org.remus.infomngmnt.ui.views.MainViewPart"
             icon="icons/sample.gif"
-            id="org.remus.infomngmnt.ui.remote.RepositoryView"
-            name="Repository Exploring">
+            id="org.remus.infomngmnt.ui.main"
+            name="Main"
+            restorable="true">
       </view>
    </extension>
    <extension
@@ -94,6 +92,12 @@
             name="Drop-Section"
             preferencesclass="org.remus.infomngmnt.ui.tray.DropSectionPreferencePage"
             sectionControl="org.remus.infomngmnt.ui.tray.DropSection">
+      </sectionBox>
+      <sectionBox
+            id="org.remus.infomngmnt.ui.clock"
+            multiple="false"
+            name="Clock"
+            sectionControl="org.remus.infomngmnt.ui.tray.ClockTray">
       </sectionBox>
    </extension>
    <extension
@@ -167,6 +171,35 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+Y">
       </key>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.collapsibleButtonBar">
+      <collapsibleButton
+            bigImage="icons/sample.gif"
+            class="org.remus.infomngmnt.ui.collapsiblebuttons.NavigationSection"
+            icon="icons/sample.gif"
+            id="org.remus.infomngmnt.ui.navigation"
+            name="Navigation"
+            order="10"
+            tooltip="Navigation">
+      </collapsibleButton>
+      <collapsibleButton
+            bigImage="icons/sample.gif"
+            class="org.remus.infomngmnt.ui.collapsiblebuttons.TagSection"
+            icon="icons/sample.gif"
+            id="org.remus.infomngmnt.ui.tags"
+            name="Tags"
+            order="20"
+            tooltip="Tags">
+      </collapsibleButton>
+      <collapsibleButton
+            class="org.remus.infomngmnt.ui.collapsiblebuttons.RemoteRepositoriesButtonBar"
+            icon="icons/sample.gif"
+            id="org.remus.infomngmnt.ui.repositories"
+            name="Remote Repositories"
+            order="30"
+            tooltip="Remote Repositories Tooltip">
+      </collapsibleButton>
    </extension>
 
 </plugin>

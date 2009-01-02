@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.databinding;bundle-version="1.2.0",
  org.remus.infomngmnt.common.ui;bundle-version="1.0.0",
  org.remus.infomngmnt.common.core;bundle-version="1.0.0",
- org.eclipse.core.expressions;bundle-version="3.4.100"
+ org.eclipse.core.expressions;bundle-version="3.4.100",
+ org.eclipse.nebula.widgets.collapsiblebuttons;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.ui,
@@ -35,4 +36,4 @@ Export-Package: org.remus.infomngmnt.ui,
  org.remus.infomngmnt.ui.project,
  org.remus.infomngmnt.ui.remote,
  org.remus.infomngmnt.ui.views
-Service-Component: OSGI-INF/repositoryuiextension.xml
+Service-Component: OSGI-INF/repositoryuiextension.xml, OSGI-INF/collapsiblebuttonextension.xml

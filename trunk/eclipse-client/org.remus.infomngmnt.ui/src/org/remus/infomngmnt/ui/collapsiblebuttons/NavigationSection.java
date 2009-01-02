@@ -1,4 +1,16 @@
-package org.remus.infomngmnt.ui.views;
+/*******************************************************************************
+ * Copyright (c) 2008 Tom Seidel, Remus Software
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *
+ * Contributors:
+ *     Tom Seidel - initial API and implementation
+ *******************************************************************************/
+
+package org.remus.infomngmnt.ui.collapsiblebuttons;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,8 +62,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
@@ -62,12 +74,15 @@ import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.dnd.NavigationDropAdapter;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
+import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
+import org.remus.infomngmnt.ui.views.MainViewPart;
+import org.remus.infomngmnt.ui.views.NavigationContextMenu;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class NavigationView extends ViewPart implements ISetSelectionTarget, IEditingDomainProvider, ISelectionProvider, IViewerProvider {
+public class NavigationSection extends CollapsibleButtonBar implements ISelectionProvider, IEditingDomainProvider, ISetSelectionTarget, IViewerProvider {
 
 	IPartListener partListener = new IPartListener() {
 		public void partActivated(final IWorkbenchPart part) {
@@ -80,7 +95,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 					}
 				}
 			}
-			if (part == NavigationView.this) {
+			if (part instanceof MainViewPart) {
 				//NavigationView.this.actionBar.setActiveDomain(NavigationView.this);
 			}
 
@@ -118,7 +133,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	 * @param parent
 	 */
 	@Override
-	public void createPartControl(final Composite parent) {
+	public void createControl(final Composite parent) {
 
 		//
 		Tree tree = new Tree(parent, SWT.MULTI);
@@ -131,11 +146,11 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		initOpen();
 		initLinkWithEditor();
 		createActions();
-		initializeToolBar();
 		initializeMenu();
 		initDrag();
 		initDrop();
 		hookContextMenu();
+		setControl(tree);
 	}
 
 	private void initOpen() {
@@ -160,7 +175,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 	}
 
 	@Override
-	public void init(final IViewSite site, final IMemento memento) throws PartInitException {
+	public void init(final IViewSite site, final IMemento memento) {
 		super.init(site, memento);
 		this.settings = UIPlugin.getDefault().getDialogSettings();
 	}
@@ -191,7 +206,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);
-		getSite().setSelectionProvider(this);
+		getViewSite().setSelectionProvider(this);
 		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance().getAdapterFactory());
 
 
@@ -204,14 +219,12 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		// Create the actions
 	}
 
-	/**
-	 * Initialize the toolbar
-	 */
-	private void initializeToolBar() {
-		IToolBarManager toolbarManager = getViewSite().getActionBars()
-		.getToolBarManager();
+	@Override
+	public void initToolbar(final IToolBarManager toolbarManager) {
 		toolbarManager.add(this.linkEditorAction);
+		toolbarManager.update(true);
 	}
+	
 
 	/**
 	 * @param viewer2
@@ -225,7 +238,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu("de.spiritlink.facebook.ui.views.View.context",contextMenu, new UnwrappingSelectionProvider(this));
+		getViewSite().registerContextMenu("de.spiritlink.facebook.ui.views.View.context",contextMenu, new UnwrappingSelectionProvider(this));
 
 	}
 
@@ -298,6 +311,7 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 		};
 		this.linkEditorAction.setChecked(this.linkEditor);
+		//setLinkingEnabled(true);
 
 	}
 
@@ -310,11 +324,13 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 
 		// if turning linking on, update the selection to correspond to the active editor
 		if (enabled) {
-			IEditorInput editorInput = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
-			if (editorInput instanceof FileEditorInput) {
-				Object adapter = Platform.getAdapterManager().getAdapter(((FileEditorInput) editorInput).getFile(), InformationUnitListItem.class);
-				if (adapter != null) {
-					setSelection(new StructuredSelection(adapter));
+			if (PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage() != null) {
+				IEditorInput editorInput = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
+				if (editorInput instanceof FileEditorInput) {
+					Object adapter = Platform.getAdapterManager().getAdapter(((FileEditorInput) editorInput).getFile(), InformationUnitListItem.class);
+					if (adapter != null) {
+						setSelection(new StructuredSelection(adapter));
+					}
 				}
 			}
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(this.partListener);
@@ -351,5 +367,4 @@ public class NavigationView extends ViewPart implements ISetSelectionTarget, IEd
 		returnValue.add(LocalTransfer.getInstance());
 		return returnValue.toArray(new Transfer[returnValue.size()]);
 	}
-
 }

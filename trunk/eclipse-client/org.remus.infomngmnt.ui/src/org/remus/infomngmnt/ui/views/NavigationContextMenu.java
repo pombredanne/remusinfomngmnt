@@ -2,16 +2,12 @@ package org.remus.infomngmnt.ui.views;
 
 
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.emf.edit.ui.action.ControlAction;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.action.CutAction;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
-import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.PasteAction;
 import org.eclipse.emf.edit.ui.action.RedoAction;
 import org.eclipse.emf.edit.ui.action.UndoAction;
-import org.eclipse.emf.edit.ui.action.ValidateAction;
-import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -27,7 +23,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -94,21 +89,7 @@ ISelectionChangedListener
 	 */
 	protected PasteAction pasteAction;
 
-	/**
-	 * This is the action used to load a resource.
-	 */
-	protected LoadResourceAction loadResourceAction;
-
-	/**
-	 * This is the action used to control or uncontrol a contained object.
-	 */
-	protected ControlAction controlAction;
-
-	/**
-	 * This is the action used to perform validation.
-	 */
-	protected ValidateAction validateAction;
-
+	
 	/**
 	 * This style bit indicates that the "additions" separator should come after the "edit" separator.
 	 */
@@ -232,27 +213,14 @@ ISelectionChangedListener
 
 	public void deactivate()
 	{
-		this.deleteAction.setActiveWorkbenchPart(null);
-		this.cutAction.setActiveWorkbenchPart(null);
-		this.copyAction.setActiveWorkbenchPart(null);
-		this.pasteAction.setActiveWorkbenchPart(null);
-		this.undoAction.setActiveWorkbenchPart(null);
-		this.redoAction.setActiveWorkbenchPart(null);
+		this.deleteAction.setEditingDomain(null);
+		this.cutAction.setEditingDomain(null);
+		this.copyAction.setEditingDomain(null);
+		this.pasteAction.setEditingDomain(null);
+		this.undoAction.setEditingDomain(null);
+		this.redoAction.setEditingDomain(null);
 
-		if (this.loadResourceAction != null)
-		{
-			this.loadResourceAction.setActiveWorkbenchPart(null);
-		}
 
-		if (this.controlAction != null)
-		{
-			this.controlAction.setActiveWorkbenchPart(null);
-		}
-
-		if (this.validateAction != null)
-		{
-			this.validateAction.setActiveWorkbenchPart(null);
-		}
 
 		final ISelectionProvider selectionProvider =
 			this.activeEditor instanceof ISelectionProvider ?
@@ -266,43 +234,19 @@ ISelectionChangedListener
 						selectionProvider.removeSelectionChangedListener(this.copyAction);
 						selectionProvider.removeSelectionChangedListener(this.pasteAction);
 
-
-						if (this.validateAction != null)
-						{
-							selectionProvider.removeSelectionChangedListener(this.validateAction);
-						}
-
-						if (this.controlAction != null)
-						{
-							selectionProvider.removeSelectionChangedListener(this.controlAction);
-						}
 					}
 	}
 
 	public void activate()
 	{
-		this.deleteAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		this.cutAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		this.copyAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		this.pasteAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		this.undoAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		this.redoAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		this.renameAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-
-		if (this.loadResourceAction != null)
-		{
-			this.loadResourceAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		}
-
-		if (this.controlAction != null)
-		{
-			this.controlAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		}
-
-		if (this.validateAction != null)
-		{
-			this.validateAction.setActiveWorkbenchPart((IWorkbenchPart) this.activeEditor);
-		}
+		this.deleteAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		this.cutAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		this.copyAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		this.pasteAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		this.undoAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		this.redoAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		this.renameAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		
 
 		final ISelectionProvider selectionProvider =
 			this.activeEditor instanceof ISelectionProvider ?
@@ -316,16 +260,6 @@ ISelectionChangedListener
 						selectionProvider.addSelectionChangedListener(this.copyAction);
 						selectionProvider.addSelectionChangedListener(this.pasteAction);
 						selectionProvider.addSelectionChangedListener(this.renameAction);
-
-						if (this.validateAction != null)
-						{
-							selectionProvider.addSelectionChangedListener(this.validateAction);
-						}
-
-						if (this.controlAction != null)
-						{
-							selectionProvider.addSelectionChangedListener(this.controlAction);
-						}
 					}
 
 					update();
@@ -349,24 +283,9 @@ ISelectionChangedListener
 							this.copyAction.updateSelection(structuredSelection);
 							this.pasteAction.updateSelection(structuredSelection);
 							this.renameAction.updateSelection(structuredSelection);
-
-
-							if (this.validateAction != null)
-							{
-								this.validateAction.updateSelection(structuredSelection);
-							}
-
-							if (this.controlAction != null)
-							{
-								this.controlAction.updateSelection(structuredSelection);
-							}
 					}
 
 
-					if (this.loadResourceAction != null)
-					{
-						this.loadResourceAction.update();
-					}
 					this.undoAction.update();
 					this.redoAction.update();
 	}
@@ -430,26 +349,6 @@ ISelectionChangedListener
 	protected void addGlobalActions(final IMenuManager menuManager)
 	{
 		final String key = (this.style & ADDITIONS_LAST_STYLE) == 0 ? "additions-end" : "additions";
-		if (this.validateAction != null)
-		{
-			menuManager.insertBefore(key, new ActionContributionItem(this.validateAction));
-		}
-
-		if (this.controlAction != null)
-		{
-			menuManager.insertBefore(key, new ActionContributionItem(this.controlAction));
-		}
-
-		if (this.validateAction != null || this.controlAction != null)
-		{
-			menuManager.insertBefore(key, new Separator());
-		}
-
-		if (this.loadResourceAction != null)
-		{
-			menuManager.insertBefore("additions-end", new ActionContributionItem(this.loadResourceAction));
-			menuManager.insertBefore("additions-end", new Separator());
-		}
 	}
 
 	public void propertyChanged(final Object source, final int id)
@@ -464,4 +363,6 @@ ISelectionChangedListener
 		update();
 
 	}
+	
+
 }

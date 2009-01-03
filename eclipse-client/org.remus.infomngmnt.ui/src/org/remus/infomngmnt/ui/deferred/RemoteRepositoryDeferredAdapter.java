@@ -59,7 +59,7 @@ public class RemoteRepositoryDeferredAdapter implements
 	 * @see org.eclipse.ui.progress.IDeferredWorkbenchAdapter#getRule(java.lang.Object)
 	 */
 	public ISchedulingRule getRule(final Object object) {
-		return null;
+		return this.itemById.getRule();
 	}
 
 	/* (non-Javadoc)

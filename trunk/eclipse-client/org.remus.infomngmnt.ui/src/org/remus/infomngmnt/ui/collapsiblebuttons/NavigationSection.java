@@ -27,7 +27,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -76,7 +75,6 @@ import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 import org.remus.infomngmnt.ui.views.MainViewPart;
-import org.remus.infomngmnt.ui.views.NavigationContextMenu;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -145,7 +143,6 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		initOpen();
 		initLinkWithEditor();
 		createActions();
-		initializeMenu();
 		initDrag();
 		initDrop();
 		hookContextMenu();
@@ -237,23 +234,16 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
-		getViewSite().registerContextMenu("de.spiritlink.facebook.ui.views.View.context",contextMenu, new UnwrappingSelectionProvider(this));
+		getViewSite().registerContextMenu(getId(), contextMenu, new UnwrappingSelectionProvider(this));
 
 	}
 
-	/**
-	 * Initialize the menu
-	 */
-	private void initializeMenu() {
-		IMenuManager menuManager = getViewSite().getActionBars()
-		.getMenuManager();
-
-	}
 
 	@Override
 	public void setFocus() {
-		// Set the focus
+		this.viewer.getControl().setFocus();
 	}
+	
 
 	public void selectReveal(final ISelection selection) {
 		this.viewer.setSelection(selection, true);
@@ -337,6 +327,7 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().removePartListener(this.partListener);
 		}
 	}
+	
 
 	public ISelection getSelection() {
 		return this.viewer.getSelection();

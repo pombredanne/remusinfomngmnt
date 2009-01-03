@@ -14,11 +14,13 @@ package org.remus.infomngmnt.ui.internal.extension;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 import org.remus.infomngmnt.ui.extension.RepositoryExtensionService;
+import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 
 /**
@@ -46,6 +48,8 @@ public class RepositoryUI implements IRepositoryUI {
 	private final String repositoryId;
 
 	private NewRepositoryWizard wizardClass;
+	
+	private IRepositoryActionContributor actionContributor;
 
 
 	public String getId() {
@@ -65,6 +69,19 @@ public class RepositoryUI implements IRepositoryUI {
 		}
 
 		return this.wizardClass;
+	}
+	
+	public IRepositoryActionContributor getActionContributor() {
+		if (this.actionContributor == null) {
+			try {
+				this.actionContributor = (IRepositoryActionContributor) this.configurationElement.createExecutableExtension(RepositoryExtensionService.ACTIONCONTRIBUTOR_CLASSID);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return this.actionContributor;
 	}
 
 	public IRepository getRepository() {

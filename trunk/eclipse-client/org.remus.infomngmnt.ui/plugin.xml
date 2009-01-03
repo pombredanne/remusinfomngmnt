@@ -167,7 +167,7 @@
       </key>
       <key
             commandId="org.remus.infomngmnt.ui.newRepository"
-            contextId="org.eclipse.ui.contexts.window"
+            contextId="org.remus.infomngmnt.ui.repositories"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+Y">
       </key>
@@ -177,6 +177,7 @@
       <collapsibleButton
             bigImage="icons/sample.gif"
             class="org.remus.infomngmnt.ui.collapsiblebuttons.NavigationSection"
+            contextId="org.remus.infomngmnt.ui.navigationContext"
             icon="icons/sample.gif"
             id="org.remus.infomngmnt.ui.navigation"
             name="Navigation"
@@ -194,6 +195,7 @@
       </collapsibleButton>
       <collapsibleButton
             class="org.remus.infomngmnt.ui.collapsiblebuttons.RemoteRepositoriesButtonBar"
+            contextId="org.remus.infomngmnt.ui.repositories"
             icon="icons/sample.gif"
             id="org.remus.infomngmnt.ui.repositories"
             name="Remote Repositories"
@@ -223,6 +225,19 @@
                type="org.eclipse.ui.progress.IDeferredWorkbenchAdapter">
          </adapter>
       </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="org.remus.infomngmnt.ui.navigationContext"
+            name="Main View - Navigation Context"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
+      <context
+            id="org.remus.infomngmnt.ui.repositories"
+            name="Main View - Repository Context"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
    </extension>
 
 </plugin>

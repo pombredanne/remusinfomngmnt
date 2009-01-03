@@ -14,7 +14,9 @@ package org.remus.infomngmnt.ui.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -39,11 +41,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 
+import org.remus.infomngmnt.common.ui.view.SelectionProviderIntermediate;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
@@ -56,17 +62,79 @@ import org.remus.infomngmnt.util.ValueObject;
 public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEditingDomainProvider, ISelectionProvider, IViewerProvider{
 
 	private static final String VISIBLE_BUTTONS = "visibleButtons";
+	
 	private static final String ACTIVE_BAR = "activeBar";
+	
 	private final Collection<CollapsibleButtonBar> items;
+	
 	private StackLayout stackLayout;
+	
 	private CollapsibleButtonBar activeButtonBar;
+	
 	private final List<String> renderedItems;
+	
 	private Composite upperComp;
+	
 	private CollapsibleButtons cb;
+	
 	private String activeBarId;
+	
 	private int visibleButtonCount;
+	
 	private FormToolkit toolkit;
+	
 	private Form form;
+	
+	private final MainViewContextSwitcher contextSwitcher;
+	
+	private SelectionProviderIntermediate selectionDelegate;
+	
+	/**
+	 * @author Tom Seidel <tom.seidel@remus-software.org>
+	 */
+	private class MainViewContextSwitcher {
+
+		private IContextService contextService;
+		
+		private final Map<String, IContextActivation> contextActivationMap;
+		
+		public MainViewContextSwitcher() {
+			this.contextActivationMap = new HashMap<String, IContextActivation>();
+		}
+
+		public void activate(final String contextId) {
+			deactivate(contextId);
+			putContext(contextId, getContextService().activateContext(contextId));
+		}
+		
+		private void putContext(final String contextId, final IContextActivation activation) {
+			this.contextActivationMap.put(contextId, activation);
+		}
+		
+		private IContextActivation getContext(final String contextId) {
+			return this.contextActivationMap.get(contextId);
+		}
+
+		public boolean isActivated(final String contextId) {
+			return this.contextActivationMap.containsKey(contextId);
+		}
+
+		public void deactivate(final String contextId) {
+			if (isActivated(contextId)) {
+				getContextService().deactivateContext(getContext(contextId));
+				this.contextActivationMap.remove(contextId);
+			}
+		}
+
+		private IContextService getContextService() {
+			if (this.contextService == null) {
+				this.contextService = (IContextService) PlatformUI.getWorkbench().getService(IContextService.class);
+			}
+			return this.contextService;
+		}
+
+
+	}
 	
 	public static final String VIEW_ID = "org.remus.infomngmnt.ui.main"; //$NON-NLS-1$
 	/**
@@ -76,11 +144,12 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		this.renderedItems = new ArrayList<String>();
 		this.items = UIPlugin.getDefault().getService(ICollapsibleButtonExtensionService.class).getAllItems();
 		this.visibleButtonCount = 2;
+		this.contextSwitcher = new MainViewContextSwitcher();
 	}
 
 	@Override
 	public void createPartControl(final Composite parent) {
-
+		
 		this.toolkit = new FormToolkit(parent.getDisplay());
 
 		final Composite comp = this.toolkit.createComposite(parent, SWT.NONE);
@@ -144,6 +213,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		//this.cb.setLayoutData(new GridData(GridData.GRAB_VERTICAL | GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
 		GridData gridData = new GridData(SWT.FILL, SWT.END, false, false);
 		this.cb.setLayoutData(gridData);
+		getSite().setSelectionProvider(this.selectionDelegate = new SelectionProviderIntermediate());
 //		parent.layout(true);
 	}
 	
@@ -197,12 +267,21 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		if (element == this.activeButtonBar) {
 			return;
 		}
+		if (this.activeButtonBar != null && this.activeButtonBar.getContextId() != null) {
+			this.contextSwitcher.deactivate(this.activeButtonBar.getContextId());
+		}
+		if (element.getContextId() != null) {
+			this.contextSwitcher.activate(element.getContextId());
+		}
 		if (!MainViewPart.this.renderedItems.contains(element.getId())) {
 			element.createControl(this.upperComp);
 			MainViewPart.this.renderedItems.add(element.getId());
 		}
 		if (this.activeButtonBar != null) {
 			MainViewPart.this.activeButtonBar.handleDeselect();
+		}
+		if (element instanceof ISelectionProvider) {
+			this.selectionDelegate.setSelectionProviderDelegate((ISelectionProvider) element);
 		}
 		this.form.getToolBarManager().removeAll();
 		MainViewPart.this.stackLayout.topControl = element.getControl();

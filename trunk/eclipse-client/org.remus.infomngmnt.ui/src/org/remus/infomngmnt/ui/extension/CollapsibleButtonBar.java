@@ -36,6 +36,16 @@ public abstract class CollapsibleButtonBar {
 	
 	private Control control;
 	
+	private String contextId;
+	
+	public String getContextId() {
+		return this.contextId;
+	}
+
+	public void setContextId(final String contextId) {
+		this.contextId = contextId;
+	}
+
 	private int order = Integer.MAX_VALUE;
 
 	private IViewSite viewSite;

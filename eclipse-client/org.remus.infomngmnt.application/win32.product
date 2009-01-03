@@ -114,5 +114,9 @@
       <plugin id="org.remus.infomngmnt.ui"/>
    </plugins>
 
+   <configurations>
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="0" />
+      <plugin id="org.remus.infomngmnt.search.local" autoStart="true" startLevel="0" />
+   </configurations>
 
 </product>

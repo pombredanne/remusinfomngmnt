@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.remote;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
 import org.remus.infomngmnt.RemoteContainer;
@@ -53,8 +54,7 @@ public interface IRepository {
 	
 	void reset();
 	
+	ISchedulingRule getRule();
 	
-
-
 
 }

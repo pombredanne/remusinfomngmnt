@@ -38,6 +38,8 @@ public interface ICollapsibleButtonExtensionService {
 	
 	public static final String TOOLTIP_ATT = "tooltip"; //$NON-NLS-1$
 	
+	public static final String CONTEXT_ID_ATT = "contextId"; //$NON-NLS-1$
+	
 	Collection<CollapsibleButtonBar> getAllItems();
 
 }

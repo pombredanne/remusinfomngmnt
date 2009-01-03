@@ -113,6 +113,16 @@
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="contextId" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ui.contexts/context/@id"/>
+               </appinfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

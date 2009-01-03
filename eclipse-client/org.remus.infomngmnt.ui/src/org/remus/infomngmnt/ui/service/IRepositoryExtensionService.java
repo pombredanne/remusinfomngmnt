@@ -31,6 +31,8 @@ public interface IRepositoryExtensionService extends IExtensionService {
 	public static final String REPOSITORY_ID = "repository-id"; //$NON-NLS-1$
 
 	public static final String WIZARD_CLASSID = "newWizard"; //$NON-NLS-1$
+	
+	public static final String ACTIONCONTRIBUTOR_CLASSID = "actioncontributor"; //$NON-NLS-1$
 
 	/**
 	 * @return

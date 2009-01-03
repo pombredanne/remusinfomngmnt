@@ -54,6 +54,7 @@ public class CollapsibleButtonExtensionService extends PluginRegistryDynamic imp
 				item.setId(configurationElement.getAttribute(ID_ATT));
 				item.setTitle(configurationElement.getAttribute(NAME_ATT));
 				item.setTooltip(configurationElement.getAttribute(TOOLTIP_ATT));
+				item.setContextId(configurationElement.getAttribute(CONTEXT_ID_ATT));
 				ImageDescriptor iconDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(
 						configurationElement.getContributor().getName(), configurationElement.getAttribute(ICON_ATT));
 				if (iconDescriptor != null) {

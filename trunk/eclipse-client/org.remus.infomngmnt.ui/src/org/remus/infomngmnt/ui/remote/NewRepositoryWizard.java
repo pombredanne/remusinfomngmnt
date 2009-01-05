@@ -41,7 +41,7 @@ public abstract class NewRepositoryWizard extends Wizard {
 	public boolean performFinish() {
 		RepositoryCollection repositories = InfomngmntEditPlugin.getPlugin().getService(IRepositoryService.class).getRepositories();
 		repositories.getRepositories().add(this.repository);
-		this.repository.setTypeId(this.definingRepository.getId());
+		this.repository.setRepositoryTypeId(this.definingRepository.getId());
 		EditingUtil.getInstance().saveObjectToResource(repositories);
 		return true;
 	}

@@ -46,5 +46,8 @@ public interface IRepositoryExtensionService extends IExtensionService {
 	 * @since 1.0
 	 */
 	IRepositoryUI getItemById(final String id);
+	
+	
+	IRepositoryUI getItemByRepositoryId(String repositoryId);
 
 }

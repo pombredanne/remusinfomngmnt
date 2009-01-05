@@ -108,6 +108,7 @@ ISelectionChangedListener
 	protected int style;
 
 	private NewWizardMenu newWizardMenu;
+	private IActionBars actionBars;
 
 	/**
 	 * This creates an instance of the contributor.
@@ -129,25 +130,26 @@ ISelectionChangedListener
 
 	public void init(final IActionBars actionBars)
 	{
+		this.actionBars = actionBars;
 		final ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
 
 		this.deleteAction = new DeleteAction(removeAllReferencesOnDelete());
 		this.deleteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		this.deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete");
-		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
+		
 
 		this.cutAction = new CutAction();
 		this.cutAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
-		actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), this.cutAction);
+		
 
 		this.copyAction = new CopyAction();
 		this.copyAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
-		actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(), this.copyAction);
+
 
 		this.pasteAction = new PasteAction();
 		this.pasteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
-		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), this.pasteAction);
+		
 
 		this.undoAction = new UndoAction();
 		this.undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
@@ -158,10 +160,19 @@ ISelectionChangedListener
 		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
 
 		this.renameAction = new RenameAction();
-		actionBars.setGlobalActionHandler(ActionFactory.RENAME.getId(), this.renameAction);
+		setGlobalActionHandler();
 
 
-		actionBars.updateActionBars();
+		
+	}
+	
+	public void setGlobalActionHandler() {
+		this.actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
+		this.actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), this.cutAction);
+		this.actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(), this.copyAction);
+		this.actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), this.pasteAction);
+		this.actionBars.setGlobalActionHandler(ActionFactory.RENAME.getId(), this.renameAction);
+		this.actionBars.updateActionBars();
 	}
 
 	/**

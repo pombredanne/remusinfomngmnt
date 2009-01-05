@@ -238,6 +238,17 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	}
 
+	@Override
+	public void handleSelect() {
+		this.actionBar.setGlobalActionHandler();
+		super.handleSelect();
+	}
+	
+	@Override
+	public void handleDeselect() {
+		getViewSite().getActionBars().clearGlobalActionHandlers();
+		super.handleDeselect();
+	}
 
 	@Override
 	public void setFocus() {

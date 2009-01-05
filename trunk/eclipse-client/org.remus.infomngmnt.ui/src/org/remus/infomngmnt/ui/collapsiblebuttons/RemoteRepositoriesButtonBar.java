@@ -108,6 +108,7 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 		this.actionBar = new RemoteRepositoryContextMenu();
 		this.actionBar.init(getViewSite().getActionBars());
 		this.actionBar.setActiveDomain(this);
+		this.viewer.addSelectionChangedListener(this.actionBar);
 		contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
@@ -128,6 +129,12 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 			final ISelectionChangedListener listener) {
 		this.viewer.removeSelectionChangedListener(listener);
 		
+	}
+	
+	@Override
+	public void dispose() {
+		viewer.removeSelectionChangedListener(actionBar);
+		super.dispose();
 	}
 
 	public void setSelection(final ISelection selection) {

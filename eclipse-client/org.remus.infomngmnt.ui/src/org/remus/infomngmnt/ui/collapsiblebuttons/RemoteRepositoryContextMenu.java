@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
@@ -24,6 +25,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISharedImages;
@@ -61,7 +63,7 @@ IPropertyListener,
 ISelectionChangedListener
 {
 
-	
+
 	/**
 	 * This keeps track of the current editor part.
 	 */
@@ -72,23 +74,23 @@ ISelectionChangedListener
 	 */
 	protected DeleteAction deleteAction;
 
-	
 
-	
+
+
 	/**
 	 * This style bit indicates that the "additions" separator should come after the "edit" separator.
 	 */
 	public static final int ADDITIONS_LAST_STYLE = 0x1;
 
 
-	
+
 	/**
 	 * This is used to encode the style bits.
 	 */
 	protected int style;
-	
+
 	protected IMenuManager checkOutAsChildsMenuManager;
-	
+
 	/**
 	 * This will contain one {@link org.eclipse.emf.edit.ui.action.CreateChildAction} corresponding to each descriptor
 	 * generated for the current selection by the item provider.
@@ -97,6 +99,8 @@ ISelectionChangedListener
 	 * @generated
 	 */
 	protected Collection<IAction> checkOutAsActions;
+
+	private RefreshRemoteObjectAction refreshAction;
 
 
 
@@ -126,10 +130,11 @@ ISelectionChangedListener
 		this.deleteAction = new DeleteAction(removeAllReferencesOnDelete());
 		this.deleteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		this.deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete");
+		this.refreshAction = new RefreshRemoteObjectAction();
 		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
 
-		
-		
+
+
 
 		actionBars.updateActionBars();
 	}
@@ -152,7 +157,8 @@ ISelectionChangedListener
 		if (!(page instanceof IPropertySheetPage))
 		{
 			actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
-		
+			actionBars.setGlobalActionHandler(ActionFactory.REFRESH.getId(), this.refreshAction);
+			
 		}
 	}
 
@@ -180,7 +186,7 @@ ISelectionChangedListener
 	public void deactivate()
 	{
 		this.deleteAction.setEditingDomain(null);
-		
+
 		final ISelectionProvider selectionProvider =
 			this.activeEditor instanceof ISelectionProvider ?
 					(ISelectionProvider)this.activeEditor :
@@ -189,15 +195,15 @@ ISelectionChangedListener
 					if (selectionProvider != null)
 					{
 						selectionProvider.removeSelectionChangedListener(this.deleteAction);
-
+						selectionProvider.removeSelectionChangedListener(this.refreshAction);
 					}
 	}
 
 	public void activate()
 	{
 		this.deleteAction.setEditingDomain(this.activeEditor.getEditingDomain());
-		
-	
+		this.refreshAction.setViewer((StructuredViewer) ((IViewerProvider) this.activeEditor).getViewer());
+
 
 		final ISelectionProvider selectionProvider =
 			this.activeEditor instanceof ISelectionProvider ?
@@ -207,6 +213,7 @@ ISelectionChangedListener
 					if (selectionProvider != null)
 					{
 						selectionProvider.addSelectionChangedListener(this.deleteAction);
+						selectionProvider.addSelectionChangedListener(this.refreshAction);
 					}
 
 					update();
@@ -226,6 +233,7 @@ ISelectionChangedListener
 							selection instanceof IStructuredSelection ?  (IStructuredSelection)selection : StructuredSelection.EMPTY;
 
 							this.deleteAction.updateSelection(structuredSelection);
+							this.refreshAction.updateSelection(structuredSelection);
 					}
 	}
 
@@ -248,8 +256,8 @@ ISelectionChangedListener
 		this.checkOutAsChildsMenuManager = new MenuManager(newText, newId);
 		this.checkOutAsChildsMenuManager.add(new Separator(newId));
 		populateManager(this.checkOutAsChildsMenuManager, this.checkOutAsActions, null);
-		
-		
+
+
 		this.checkOutAsChildsMenuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		menuManager.add(this.checkOutAsChildsMenuManager);
 		//menuManager.add(new Separator(ActionFactory.NEW.getId()));
@@ -258,7 +266,7 @@ ISelectionChangedListener
 		// Add the edit menu actions.
 		//
 		menuManager.add(new Separator());
-		menuManager.add(new Separator());
+		menuManager.add(this.refreshAction);
 		menuManager.add(new Separator());
 		menuManager.add(this.deleteAction);
 		menuManager.add(new Separator());
@@ -302,7 +310,7 @@ ISelectionChangedListener
 			this.checkOutAsChildsMenuManager.update(true);
 		}
 	}
-	
+
 	private Collection<IAction> generateCheckoutActions(final IStructuredSelection selection) {
 		if (!selection.isEmpty() &&
 				ModelUtil.hasEqualAttribute(selection.toList(), InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_ID)) {
@@ -342,8 +350,8 @@ ISelectionChangedListener
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * This populates the specified <code>manager</code> with {@link org.eclipse.jface.action.ActionContributionItem}s
 	 * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection,
@@ -365,6 +373,6 @@ ISelectionChangedListener
 			}
 		}
 	}
-	
+
 
 }

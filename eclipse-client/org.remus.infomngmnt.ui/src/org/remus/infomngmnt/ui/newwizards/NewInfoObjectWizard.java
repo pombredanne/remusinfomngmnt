@@ -12,8 +12,6 @@
 
 package org.remus.infomngmnt.ui.newwizards;
 
-import java.util.Date;
-
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -23,10 +21,11 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.commands.CommandFactory;
@@ -34,7 +33,7 @@ import org.remus.infomngmnt.ui.commands.CommandFactory;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class NewInfoObjectWizard extends Wizard implements INewWizard {
+public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 
 	protected GeneralPage page1;
 
@@ -58,9 +57,11 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 	 * @return
 	 */
 	protected InformationUnit createNewInformationUnit() {
-		InformationUnit newInfoObject = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		newInfoObject.setCreationDate(new Date());
-		return newInfoObject;
+		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(getInfoTypeId());
+		if (infoTypeByType != null) {
+			return infoTypeByType.getCreationFactory().createNewObject();
+		}
+		return null;
 	}
 
 	protected Category findCategory() {
@@ -89,7 +90,7 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 		return startingPage;
 	}
 	@Override
-	public IWizardPage getNextPage(IWizardPage page) {
+	public IWizardPage getNextPage(final IWizardPage page) {
 		IWizardPage nextPage = super.getNextPage(page);
 		if (nextPage instanceof IInfoObjectSetter) {
 			((IInfoObjectSetter) nextPage).setInformationUnit(this.newElement);
@@ -100,7 +101,7 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
 	 */
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
+	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
 			this.page1 = new GeneralPage((Category) firstElement);
@@ -111,9 +112,11 @@ public class NewInfoObjectWizard extends Wizard implements INewWizard {
 		}
 
 	}
+	
+	protected abstract String getInfoTypeId();
 
 	@Override
-	public void createPageControls(Composite pageContainer) {
+	public void createPageControls(final Composite pageContainer) {
 		// do nothing
 	}
 }

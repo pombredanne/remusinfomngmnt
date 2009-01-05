@@ -31,12 +31,16 @@ import del.icio.us.beans.Post;
 import del.icio.us.beans.Tag;
 
 import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
+import org.remus.infomngmnt.link.LinkActivator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -48,6 +52,16 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	public static final String KEY_TAG = "KEY_TAG"; //$NON-NLS-1$
 	
 	public static final String KEY_LINK = "KEY_LINK"; //$NON-NLS-1$
+	
+	/**
+	 * By convention you have to wait between two requests to the
+	 * delicious platform at least 1 second, otherwise you get 
+	 * throttled automatically. So we have to use this intervall
+	 * between two requests.
+	 */
+	private static final long WAIT_INTERVALL = 1200;
+	
+	private long lastApiCall;
 	
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
@@ -63,6 +77,27 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			return rule == DelicicousRepository.this.mutexRule;
 		}
 	};
+	
+	public InformationUnit[] convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor) {
+		List<InformationUnit> returnValue = new LinkedList<InformationUnit>();
+		for (RemoteObject remoteObject : remoteObjects) {
+			if (KEY_TAG.equals(remoteObject.getRepositoryTypeObjectId())) {
+				
+			} else if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
+				IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(LinkActivator.LINK_INFO_ID);
+				if (infoTypeByType != null) {
+					InformationUnit newObject = infoTypeByType.getCreationFactory().createNewObject();
+					Post post = (Post) remoteObject.getWrappedObject();
+					newObject.setLabel(remoteObject.getName());
+					newObject.setStringValue(post.getHref());
+					newObject.setDescription(post.getExtended());
+					newObject.setKeywords(post.getTag());
+					returnValue.add(newObject);
+				}
+			}
+		}
+		return returnValue.toArray(new InformationUnit[returnValue.size()]);
+	}
 
 	
 
@@ -78,17 +113,19 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				remoteContainer.setRepositoryTypeObjectId(KEY_TAG);
 				remoteContainer.setName(tag.getTag());
 				remoteContainer.setUrl(getRepositoryUrl() + tag.getTag());
+				remoteContainer.setWrappedObject(tag);
 				returnValue.add(remoteContainer);
 			}
 			
 		} else {
 			List<Post> posts = getApi().getAllPosts(container.getName());
 			for (Post post : posts) {
-				RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
+				RemoteObject remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteObject();
 				remoteContainer.setId(post.getHash());
 				remoteContainer.setName(post.getDescription());
 				remoteContainer.setUrl(getRepositoryUrl() + post.getHash());
 				remoteContainer.setRepositoryTypeObjectId(KEY_LINK);
+				remoteContainer.setWrappedObject(post);
 				returnValue.add(remoteContainer);
 			}
 		}
@@ -104,6 +141,14 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	
 	
 	private Delicious getApi() {
+		while (System.currentTimeMillis() - this.lastApiCall < WAIT_INTERVALL) {
+			try {
+				System.out.println("WAITING");
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// does nothing.
+			}
+		}
 		if (this.api == null) {
 			try {
 				getCredentialProvider().setIdentifier(new URL(getRepositoryUrl()).getHost());
@@ -116,6 +161,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 					getCredentialProvider().getPassword());
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
+		this.lastApiCall = System.currentTimeMillis();
 		return this.api;
 	}
 	

@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.RemoteContainer;
+import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.link.delicious.DelicicousRepository;
 import org.remus.infomngmnt.link.delicious.actions.CheckoutLinkAction;
@@ -33,12 +33,21 @@ public class DeliciousActionContributor implements IRepositoryActionContributor 
 
 
 	private CheckoutTagAction tagAction;
+	
+	private CheckoutLinkAction linkAction;
 
 	private BaseSelectionListenerAction getCheckOutTagAction() {
 		if (this.tagAction == null) {
 			this.tagAction = new CheckoutTagAction();
 		}
 		return this.tagAction;
+	}
+	
+	private BaseSelectionListenerAction getCheckOutLinkAction() {
+		if (this.linkAction == null) {
+			this.linkAction = new CheckoutLinkAction();
+		}
+		return this.linkAction;
 	}
 
 	/* (non-Javadoc)
@@ -47,12 +56,12 @@ public class DeliciousActionContributor implements IRepositoryActionContributor 
 	public BaseSelectionListenerAction[] createCheckOutAsActions(final IStructuredSelection selection) {
 		List list = selection.toList();
 		for (Object object : list) {
-			if (object instanceof RemoteContainer) {
+			if (object instanceof RemoteObject) {
 				/*
 				 * if all selected elements are tag-items, we can perform a checkout
 				 * for creating new categories with the links wrapped.
 				 */
-				if (DelicicousRepository.KEY_TAG.equals(((RemoteContainer) object).getRepositoryTypeObjectId())
+				if (DelicicousRepository.KEY_TAG.equals(((RemoteObject) object).getRepositoryTypeObjectId())
 						&& ModelUtil.hasEqualAttribute(list, InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID)) {
 					BaseSelectionListenerAction checkOutTagAction = getCheckOutTagAction();
 					checkOutTagAction.selectionChanged(selection);
@@ -61,9 +70,11 @@ public class DeliciousActionContributor implements IRepositoryActionContributor 
 				 * another case is that the selection consists of several
 				 * delicious links. Every link is synced as single object
 				 */
-				} else if (DelicicousRepository.KEY_LINK.equals(((RemoteContainer) object).getRepositoryTypeObjectId())
+				} else if (DelicicousRepository.KEY_LINK.equals(((RemoteObject) object).getRepositoryTypeObjectId())
 						&& ModelUtil.hasEqualAttribute(list, InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID)) {
-					return new BaseSelectionListenerAction[] {new CheckoutLinkAction()};
+					BaseSelectionListenerAction checkOutLinkAction = getCheckOutLinkAction();
+					checkOutLinkAction.selectionChanged(selection);
+					return new BaseSelectionListenerAction[] {checkOutLinkAction};
 				}
 				/*
 				 * TODO implement the case where the user tries to checkout

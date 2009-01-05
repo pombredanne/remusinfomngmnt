@@ -94,7 +94,7 @@ public class SearchView extends AbstractScrolledTitledView {
 	 * @param parent
 	 */
 	@Override
-	public void createViewContents(Composite parent) {
+	public void createViewContents(final Composite parent) {
 		Composite container = this.toolkit.createComposite(parent, SWT.NONE);
 		container.setLayout(new GridLayout());
 		this.toolkit.paintBordersFor(container);
@@ -124,15 +124,15 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.table.setLayoutData(gd_table);
 
 		this.viewer = new CheckboxTableViewer(this.table);
-		this.viewer.setContentProvider(new ArrayContentProvider());
+		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.viewer.setInput(InformationExtensionManager.getInstance().getTypes());
 		this.viewer.setLabelProvider(new LabelProvider() {
 			@Override
-			public String getText(Object element) {
+			public String getText(final Object element) {
 				return ((IInfoType) element).getName();
 			}
 			@Override
-			public Image getImage(Object element) {
+			public Image getImage(final Object element) {
 				return ((IInfoType) element).getImage();
 			}
 		});
@@ -140,7 +140,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		final Button button_1 = this.toolkit.createButton(composite, "Select All", SWT.NONE);
 		button_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		button_1.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				SearchView.this.viewer.setCheckedElements(InformationExtensionManager.getInstance().getTypes().toArray());
 			}
 		});
@@ -149,7 +149,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		final GridData gd_deselectAllButton = new GridData(SWT.FILL, SWT.TOP, false, false);
 		deselectAllButton.setLayoutData(gd_deselectAllButton);
 		deselectAllButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				SearchView.this.viewer.setCheckedElements(new Object[0]);
 			}
 		});
@@ -206,7 +206,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		final Button button = this.toolkit.createButton(container, "Search", SWT.NONE);
 		button.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 		button.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				handleSearchButtonPressed();
 			}
 		});
@@ -276,7 +276,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		IViewerObservableSet elements = ViewersObservables.observeCheckedElements(this.viewer, new HashSet());
 		// we convert all changes from the set to the list
 		elements.addSetChangeListener(new ISetChangeListener() {
-			public void handleSetChange(SetChangeEvent event) {
+			public void handleSetChange(final SetChangeEvent event) {
 				SetDiff diff = event.diff;
 				list.removeAll(diff.getRemovals());
 				list.addAll(diff.getAdditions());
@@ -285,12 +285,12 @@ public class SearchView extends AbstractScrolledTitledView {
 		IObservableList observeList2 = EMFObservables.observeList(this.currentSearch, SearchPackage.Literals.SEARCH__INFO_TYPE);
 		this.ctx.bindList(observeList2, list,  new UpdateListStrategy() {
 			@Override
-			public Object convert(Object element) {
+			public Object convert(final Object element) {
 				return InformationExtensionManager.getInstance().getInfoTypeByType((String) element);
 			}
 		}, new UpdateListStrategy() {
 			@Override
-			public Object convert(Object element) {
+			public Object convert(final Object element) {
 				return ((IInfoType) element).getType();
 			}
 		});
@@ -301,7 +301,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		IObservableList observeItems = SWTObservables.observeItems(this.combo);
 		this.ctx.bindList(observeItems, observeList, new UpdateListStrategy() {
 			@Override
-			public Object convert(Object element) {
+			public Object convert(final Object element) {
 				// TODO Auto-generated method stub
 				return super.convert(element);
 			}
@@ -329,14 +329,14 @@ public class SearchView extends AbstractScrolledTitledView {
 	}
 
 	@Override
-	public void init(IViewSite site) throws PartInitException {
+	public void init(final IViewSite site) throws PartInitException {
 		this.currentSearch = getSavedSearchHandler().getLatestSearch();
 		this.latestSearchStrings = getSavedSearchHandler().getLatestSearchStrings();
 		super.init(site);
 	}
 
 	@Override
-	public void saveState(IMemento memento) {
+	public void saveState(final IMemento memento) {
 		getSavedSearchHandler().saveLatestSearch(this.currentSearch);
 		getSavedSearchHandler().saveSearchStrings(this.latestSearchStrings);
 		super.saveState(memento);

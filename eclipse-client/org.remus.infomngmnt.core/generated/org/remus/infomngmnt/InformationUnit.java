@@ -133,12 +133,12 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Binary Value</em>' attribute.
-	 * @see #setBinaryValue(byte)
+	 * @see #setBinaryValue(byte[])
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_BinaryValue()
 	 * @model
 	 * @generated
 	 */
-	byte getBinaryValue();
+	byte[] getBinaryValue();
 
 	/**
 	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getBinaryValue <em>Binary Value</em>}' attribute.
@@ -148,7 +148,7 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @see #getBinaryValue()
 	 * @generated
 	 */
-	void setBinaryValue(byte value);
+	void setBinaryValue(byte[] value);
 
 	/**
 	 * Returns the value of the '<em><b>Date Value</b></em>' attribute.

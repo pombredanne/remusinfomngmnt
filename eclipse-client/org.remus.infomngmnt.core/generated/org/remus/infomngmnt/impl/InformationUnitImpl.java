@@ -129,7 +129,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @generated
 	 * @ordered
 	 */
-	protected static final byte BINARY_VALUE_EDEFAULT = 0x00;
+	protected static final byte[] BINARY_VALUE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getBinaryValue() <em>Binary Value</em>}' attribute.
@@ -139,7 +139,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @generated
 	 * @ordered
 	 */
-	protected byte binaryValue = BINARY_VALUE_EDEFAULT;
+	protected byte[] binaryValue = BINARY_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDateValue() <em>Date Value</em>}' attribute.
@@ -348,7 +348,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public byte getBinaryValue() {
+	public byte[] getBinaryValue() {
 		return binaryValue;
 	}
 
@@ -357,8 +357,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setBinaryValue(byte newBinaryValue) {
-		byte oldBinaryValue = binaryValue;
+	public void setBinaryValue(byte[] newBinaryValue) {
+		byte[] oldBinaryValue = binaryValue;
 		binaryValue = newBinaryValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE, oldBinaryValue, binaryValue));
@@ -553,7 +553,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
 				return isBoolValue() ? Boolean.TRUE : Boolean.FALSE;
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
-				return new Byte(getBinaryValue());
+				return getBinaryValue();
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 				return getDateValue();
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
@@ -594,7 +594,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				setBoolValue(((Boolean)newValue).booleanValue());
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
-				setBinaryValue(((Byte)newValue).byteValue());
+				setBinaryValue((byte[])newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 				setDateValue((Date)newValue);
@@ -690,7 +690,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
 				return boolValue != BOOL_VALUE_EDEFAULT;
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
-				return binaryValue != BINARY_VALUE_EDEFAULT;
+				return BINARY_VALUE_EDEFAULT == null ? binaryValue != null : !BINARY_VALUE_EDEFAULT.equals(binaryValue);
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 				return DATE_VALUE_EDEFAULT == null ? dateValue != null : !DATE_VALUE_EDEFAULT.equals(dateValue);
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:

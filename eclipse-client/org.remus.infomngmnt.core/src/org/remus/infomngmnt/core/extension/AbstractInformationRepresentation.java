@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -66,17 +67,21 @@ public abstract class AbstractInformationRepresentation {
 	/** The calculated differences **/
 	private List<DiffElement> differences;
 
+	private IFolder folder;
+
 	public AbstractInformationRepresentation() {
 		super();
 	}
 
 	/**
+	 * <p>
 	 * Executed before building the info-object. Useful
 	 * for executing operations which are required to
 	 * serialize information object
+	 * </p>
 	 * @param monitor The progressmonitor
 	 */
-	public void handlePreBuild(IProgressMonitor monitor) {
+	public void handlePreBuild(final IProgressMonitor monitor) {
 		// does nothing by default
 	}
 
@@ -88,7 +93,7 @@ public abstract class AbstractInformationRepresentation {
 	 * @param monitor The progressmonitor
 	 * @throws CoreException if an exception occurs.
 	 */
-	public void handlePostBuild(IFile derivedFile, IProgressMonitor monitor) throws CoreException {
+	public void handlePostBuild(final IFile derivedFile, final IProgressMonitor monitor) throws CoreException {
 		// does nothing by default.
 	}
 
@@ -107,7 +112,9 @@ public abstract class AbstractInformationRepresentation {
 	 * @return the String which is inexed
 	 * @throws CoreException if an exception occurs.
 	 */
-	public abstract String getTitleForIndexing(IProgressMonitor monitor) throws CoreException;
+	public String getTitleForIndexing(final IProgressMonitor monitor) throws CoreException {
+		return getValue().getLabel();
+	}
 
 	/**
 	 * Returns an "indexable representation" of the information object.
@@ -124,7 +131,9 @@ public abstract class AbstractInformationRepresentation {
 	 * @return
 	 * @throws CoreException
 	 */
-	public abstract String getAdditionalsForIndexing(IProgressMonitor monitor) throws CoreException;
+	public String getAdditionalsForIndexing(final IProgressMonitor monitor) throws CoreException {
+		return "";
+	}
 
 	public InformationUnit getValue() {
 		return this.value;
@@ -139,7 +148,7 @@ public abstract class AbstractInformationRepresentation {
 		return this.previousVersion;
 	}
 
-	public final void setPreviousVersion(File previousVersion) {
+	public final void setPreviousVersion(final File previousVersion) {
 		this.previousVersion = previousVersion;
 		unsetDifferences();
 	}
@@ -148,6 +157,8 @@ public abstract class AbstractInformationRepresentation {
 		this.differences = null;
 
 	}
+	
+	
 
 	protected IFile getFile() {
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(
@@ -163,9 +174,21 @@ public abstract class AbstractInformationRepresentation {
 		return this.differences;
 	}
 
-	protected boolean isChanged(EAttribute attribute) {
+	protected boolean isChanged(final EAttribute attribute) {
 		AttributeChange attributeChange = InformationUtil.getAttributeChange(this.differences, attribute);
 		return attributeChange != null;
+	}
+	
+	public boolean createFolderOnBuild() {
+		return false;
+	}
+
+	public void setBuildFolder(final IFolder folder) {
+		this.folder = folder;
+	}
+
+	protected IFolder getBuildFolder() {
+		return this.folder;
 	}
 
 

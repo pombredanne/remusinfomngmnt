@@ -498,6 +498,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RemoteObject} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RemoteObjectItemProvider remoteObjectItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.RemoteObject}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRemoteObjectAdapter() {
+		if (remoteObjectItemProvider == null) {
+			remoteObjectItemProvider = new RemoteObjectItemProvider(this);
+		}
+
+		return remoteObjectItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RemoteContainer} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -660,6 +683,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (ruleActionItemProvider != null) ruleActionItemProvider.dispose();
 		if (ruleResultItemProvider != null) ruleResultItemProvider.dispose();
 		if (remoteRepositoryItemProvider != null) remoteRepositoryItemProvider.dispose();
+		if (remoteObjectItemProvider != null) remoteObjectItemProvider.dispose();
 		if (remoteContainerItemProvider != null) remoteContainerItemProvider.dispose();
 		if (repositoryCollectionItemProvider != null) repositoryCollectionItemProvider.dispose();
 	}

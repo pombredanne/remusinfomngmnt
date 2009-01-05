@@ -76,7 +76,8 @@ public class RemoteObjectItemProvider
 			addIdPropertyDescriptor(object);
 			addUrlPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
-			addTypeIdPropertyDescriptor(object);
+			addRepositoryTypeIdPropertyDescriptor(object);
+			addRepositoryTypeObjectIdPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -170,19 +171,41 @@ public class RemoteObjectItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Type Id feature.
+	 * This adds a property descriptor for the Repository Type Id feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTypeIdPropertyDescriptor(Object object) {
+	protected void addRepositoryTypeIdPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RemoteObject_typeId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_typeId_feature", "_UI_RemoteObject_type"),
-				 InfomngmntPackage.Literals.REMOTE_OBJECT__TYPE_ID,
+				 getString("_UI_RemoteObject_repositoryTypeId_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_repositoryTypeId_feature", "_UI_RemoteObject_type"),
+				 InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Repository Type Object Id feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRepositoryTypeObjectIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteObject_repositoryTypeObjectId_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_repositoryTypeObjectId_feature", "_UI_RemoteObject_type"),
+				 InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID,
 				 true,
 				 false,
 				 false,
@@ -221,7 +244,8 @@ public class RemoteObjectItemProvider
 			case InfomngmntPackage.REMOTE_OBJECT__ID:
 			case InfomngmntPackage.REMOTE_OBJECT__URL:
 			case InfomngmntPackage.REMOTE_OBJECT__NAME:
-			case InfomngmntPackage.REMOTE_OBJECT__TYPE_ID:
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_ID:
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

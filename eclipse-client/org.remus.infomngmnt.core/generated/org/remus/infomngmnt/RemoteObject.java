@@ -30,12 +30,13 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getUrl <em>Url</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getName <em>Name</em>}</li>
- *   <li>{@link org.remus.infomngmnt.RemoteObject#getTypeId <em>Type Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeId <em>Repository Type Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeObjectId <em>Repository Type Object Id</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteObject()
- * @model abstract="true"
+ * @model
  * @generated
  */
 public interface RemoteObject extends Adapter {
@@ -66,7 +67,7 @@ public interface RemoteObject extends Adapter {
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteObject_Id()
-	 * @model id="true" required="true"
+	 * @model id="true"
 	 * @generated
 	 */
 	String getId();
@@ -134,29 +135,55 @@ public interface RemoteObject extends Adapter {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Type Id</b></em>' attribute.
+	 * Returns the value of the '<em><b>Repository Type Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Type Id</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Repository Type Id</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type Id</em>' attribute.
-	 * @see #setTypeId(String)
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteObject_TypeId()
+	 * @return the value of the '<em>Repository Type Id</em>' attribute.
+	 * @see #setRepositoryTypeId(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteObject_RepositoryTypeId()
 	 * @model required="true"
 	 * @generated
 	 */
-	String getTypeId();
+	String getRepositoryTypeId();
 
 	/**
-	 * Sets the value of the '{@link org.remus.infomngmnt.RemoteObject#getTypeId <em>Type Id</em>}' attribute.
+	 * Sets the value of the '{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeId <em>Repository Type Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type Id</em>' attribute.
-	 * @see #getTypeId()
+	 * @param value the new value of the '<em>Repository Type Id</em>' attribute.
+	 * @see #getRepositoryTypeId()
 	 * @generated
 	 */
-	void setTypeId(String value);
+	void setRepositoryTypeId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Repository Type Object Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Repository Type Object Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Repository Type Object Id</em>' attribute.
+	 * @see #setRepositoryTypeObjectId(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteObject_RepositoryTypeObjectId()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getRepositoryTypeObjectId();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeObjectId <em>Repository Type Object Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Repository Type Object Id</em>' attribute.
+	 * @see #getRepositoryTypeObjectId()
+	 * @generated
+	 */
+	void setRepositoryTypeObjectId(String value);
 
 } // RemoteObject

@@ -40,13 +40,14 @@ import org.remus.infomngmnt.RemoteObject;
  *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getUrl <em>Url</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getTypeId <em>Type Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getRepositoryTypeId <em>Repository Type Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getRepositoryTypeObjectId <em>Repository Type Object Id</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
+public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 	/**
 	 * The cached value of the '{@link #getPossibleInfoTypeId() <em>Possible Info Type Id</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -113,24 +114,44 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getTypeId() <em>Type Id</em>}' attribute.
+	 * The default value of the '{@link #getRepositoryTypeId() <em>Repository Type Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTypeId()
+	 * @see #getRepositoryTypeId()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String TYPE_ID_EDEFAULT = null;
+	protected static final String REPOSITORY_TYPE_ID_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getTypeId() <em>Type Id</em>}' attribute.
+	 * The cached value of the '{@link #getRepositoryTypeId() <em>Repository Type Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTypeId()
+	 * @see #getRepositoryTypeId()
 	 * @generated
 	 * @ordered
 	 */
-	protected String typeId = TYPE_ID_EDEFAULT;
+	protected String repositoryTypeId = REPOSITORY_TYPE_ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getRepositoryTypeObjectId() <em>Repository Type Object Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRepositoryTypeObjectId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String REPOSITORY_TYPE_OBJECT_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getRepositoryTypeObjectId() <em>Repository Type Object Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRepositoryTypeObjectId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String repositoryTypeObjectId = REPOSITORY_TYPE_OBJECT_ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -231,8 +252,8 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getTypeId() {
-		return typeId;
+	public String getRepositoryTypeId() {
+		return repositoryTypeId;
 	}
 
 	/**
@@ -240,11 +261,32 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTypeId(String newTypeId) {
-		String oldTypeId = typeId;
-		typeId = newTypeId;
+	public void setRepositoryTypeId(String newRepositoryTypeId) {
+		String oldRepositoryTypeId = repositoryTypeId;
+		repositoryTypeId = newRepositoryTypeId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.REMOTE_OBJECT__TYPE_ID, oldTypeId, typeId));
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_ID, oldRepositoryTypeId, repositoryTypeId));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getRepositoryTypeObjectId() {
+		return repositoryTypeObjectId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRepositoryTypeObjectId(String newRepositoryTypeObjectId) {
+		String oldRepositoryTypeObjectId = repositoryTypeObjectId;
+		repositoryTypeObjectId = newRepositoryTypeObjectId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID, oldRepositoryTypeObjectId, repositoryTypeObjectId));
 	}
 
 	/**
@@ -263,8 +305,10 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 				return getUrl();
 			case InfomngmntPackage.REMOTE_OBJECT__NAME:
 				return getName();
-			case InfomngmntPackage.REMOTE_OBJECT__TYPE_ID:
-				return getTypeId();
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_ID:
+				return getRepositoryTypeId();
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
+				return getRepositoryTypeObjectId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -291,8 +335,11 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 			case InfomngmntPackage.REMOTE_OBJECT__NAME:
 				setName((String)newValue);
 				return;
-			case InfomngmntPackage.REMOTE_OBJECT__TYPE_ID:
-				setTypeId((String)newValue);
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_ID:
+				setRepositoryTypeId((String)newValue);
+				return;
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
+				setRepositoryTypeObjectId((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -318,8 +365,11 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 			case InfomngmntPackage.REMOTE_OBJECT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case InfomngmntPackage.REMOTE_OBJECT__TYPE_ID:
-				setTypeId(TYPE_ID_EDEFAULT);
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_ID:
+				setRepositoryTypeId(REPOSITORY_TYPE_ID_EDEFAULT);
+				return;
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
+				setRepositoryTypeObjectId(REPOSITORY_TYPE_OBJECT_ID_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -341,8 +391,10 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 				return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
 			case InfomngmntPackage.REMOTE_OBJECT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case InfomngmntPackage.REMOTE_OBJECT__TYPE_ID:
-				return TYPE_ID_EDEFAULT == null ? typeId != null : !TYPE_ID_EDEFAULT.equals(typeId);
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_ID:
+				return REPOSITORY_TYPE_ID_EDEFAULT == null ? repositoryTypeId != null : !REPOSITORY_TYPE_ID_EDEFAULT.equals(repositoryTypeId);
+			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
+				return REPOSITORY_TYPE_OBJECT_ID_EDEFAULT == null ? repositoryTypeObjectId != null : !REPOSITORY_TYPE_OBJECT_ID_EDEFAULT.equals(repositoryTypeObjectId);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -365,8 +417,10 @@ public abstract class RemoteObjectImpl extends AdapterImpl implements RemoteObje
 		result.append(url);
 		result.append(", name: ");
 		result.append(name);
-		result.append(", typeId: ");
-		result.append(typeId);
+		result.append(", repositoryTypeId: ");
+		result.append(repositoryTypeId);
+		result.append(", repositoryTypeObjectId: ");
+		result.append(repositoryTypeObjectId);
 		result.append(')');
 		return result.toString();
 	}

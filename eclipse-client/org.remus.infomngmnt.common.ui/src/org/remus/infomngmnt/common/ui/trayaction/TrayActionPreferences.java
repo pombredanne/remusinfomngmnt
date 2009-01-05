@@ -53,16 +53,16 @@ public class TrayActionPreferences extends AbstractTrayPreferencePage {
 	 * @see org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 		this.viewer = CheckboxTableViewer.newCheckList(parent, SWT.NONE);
-		this.viewer.setContentProvider(new ArrayContentProvider());
+		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.viewer.setLabelProvider(new LabelProvider() {
 			@Override
-			public Image getImage(Object element) {
+			public Image getImage(final Object element) {
 				return ((IToolbarContribution) element).getImage();
 			}
 			@Override
-			public String getText(Object element) {
+			public String getText(final Object element) {
 				return ((IToolbarContribution) element).getName();
 			}
 		});
@@ -83,7 +83,7 @@ public class TrayActionPreferences extends AbstractTrayPreferencePage {
 		}
 		this.viewer.setCheckedElements(checkedContribs.toArray());
 		this.viewer.addCheckStateListener(new ICheckStateListener() {
-			public void checkStateChanged(CheckStateChangedEvent event) {
+			public void checkStateChanged(final CheckStateChangedEvent event) {
 				IToolbarContribution element = (IToolbarContribution) event.getElement();
 				if (event.getChecked()) {
 					DesktopToolItem newItem = UIModelFactory.eINSTANCE.createDesktopToolItem();

@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
@@ -50,8 +51,8 @@ public class UIUtil {
 	 * 
 	 * @see ISetSelectionTarget
 	 */
-	public static void selectAndReveal(Object object,
-			IWorkbenchWindow window) {
+	public static void selectAndReveal(final Object object,
+			final IWorkbenchWindow window) {
 		// validate the input
 		if (window == null || object == null) {
 			return;
@@ -114,13 +115,14 @@ public class UIUtil {
 
 		/* Return the first Window of the Workbench */
 		IWorkbenchWindow windows[] = PlatformUI.getWorkbench().getWorkbenchWindows();
-		if (windows.length > 0)
+		if (windows.length > 0) {
 			return windows[0];
+		}
 
 		return null;
 	}
 
-	public static IDialogSettings getDialogSettings(String sectionName, IDialogSettings settings) {
+	public static IDialogSettings getDialogSettings(final String sectionName, final IDialogSettings settings) {
 		IDialogSettings section = settings.getSection(sectionName);
 		if (section == null) {
 			settings.addNewSection(sectionName);
@@ -138,5 +140,15 @@ public class UIUtil {
 		}
 		return Display.getDefault();
 
+	}
+	
+	public static boolean isSelectionInstanceOf(final IStructuredSelection selection, final Class<?> clazz) {
+		List list = selection.toList();
+		for (Object object : list) {
+			if (!clazz.isAssignableFrom(object.getClass())) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

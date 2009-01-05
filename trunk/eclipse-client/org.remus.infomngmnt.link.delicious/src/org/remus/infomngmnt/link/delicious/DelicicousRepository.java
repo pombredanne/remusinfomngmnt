@@ -45,6 +45,10 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	
 	private Delicious api;
 	
+	public static final String KEY_TAG = "KEY_TAG"; //$NON-NLS-1$
+	
+	public static final String KEY_LINK = "KEY_LINK"; //$NON-NLS-1$
+	
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
 			reset();
@@ -71,6 +75,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			for (Tag tag : tags) {
 				RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 				remoteContainer.setId(tag.getTag());
+				remoteContainer.setRepositoryTypeObjectId(KEY_TAG);
 				remoteContainer.setName(tag.getTag());
 				remoteContainer.setUrl(getRepositoryUrl() + tag.getTag());
 				returnValue.add(remoteContainer);
@@ -83,6 +88,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				remoteContainer.setId(post.getHash());
 				remoteContainer.setName(post.getDescription());
 				remoteContainer.setUrl(getRepositoryUrl() + post.getHash());
+				remoteContainer.setRepositoryTypeObjectId(KEY_LINK);
 				returnValue.add(remoteContainer);
 			}
 		}

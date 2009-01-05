@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ModelUtil {
-	public static List getFeatureList(EList<? extends EObject> list, EAttribute attribute) {
+	public static List getFeatureList(final EList<? extends EObject> list, final EAttribute attribute) {
 		List returnValue = new ArrayList();
 		for (EObject object : list) {
 			Object get = object.eGet(attribute);
@@ -36,7 +36,7 @@ public class ModelUtil {
 		return returnValue;
 	}
 
-	public static Map<String, ? extends EObject> buildMap(EList<? extends EObject> list, EAttribute decisionAtt) {
+	public static Map<String, ? extends EObject> buildMap(final EList<? extends EObject> list, final EAttribute decisionAtt) {
 		Map<String, EObject> returnValue = new HashMap<String, EObject>();
 		for (EObject object : list) {
 			Object get = object.eGet(decisionAtt);
@@ -45,5 +45,30 @@ public class ModelUtil {
 			}
 		}
 		return returnValue;
+	}
+	
+	public static boolean hasEqualAttribute(final List<EObject> list, final EAttribute attribute) {
+		if (list.size() <= 1) {
+			return true;
+		}
+		Object value2Compare = null;
+		for (int i = 0, n = list.size(); i < n; i++) {
+			EObject obj = list.get(i);
+			if (i == 0) {
+				value2Compare = obj.eGet(attribute);
+			} else {
+				if (value2Compare != null) {
+					if (!value2Compare.equals(obj.eGet(attribute))) {
+						return false;
+					}
+				} else {
+					if (obj.eGet(attribute) != null) {
+						return false;
+					}
+				}
+			}
+			
+		}
+		return true;
 	}
 }

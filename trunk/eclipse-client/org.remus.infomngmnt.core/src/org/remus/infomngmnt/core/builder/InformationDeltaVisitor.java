@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFileState;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
@@ -27,6 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -84,7 +86,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 		}
 	}
 
-	void buildSingleInfoUnit(InformationUnit objectFromFile, IInfoType infoTypeByType, IFile resource) {
+	void buildSingleInfoUnit(final InformationUnit objectFromFile, final IInfoType infoTypeByType, final IFile resource) {
 		try {
 			File createTempFile = null;
 			AbstractInformationRepresentation informationRepresentation = infoTypeByType.getInformationRepresentation();
@@ -100,8 +102,9 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 					fos = new FileOutputStream(createTempFile);
 					byte buf[]=new byte[1024];
 					int len;
-					while((len = contents.read(buf))>0)
+					while((len = contents.read(buf))>0) {
 						fos.write(buf,0,len);
+					}
 
 				} catch (Exception e) {
 					informationRepresentation.setPreviousVersion(null);
@@ -125,6 +128,17 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			} else {
 				informationRepresentation.setPreviousVersion(null);
 			}
+			
+			if (informationRepresentation.createFolderOnBuild()) {
+				String folderName = resource.getProjectRelativePath().removeFileExtension().lastSegment();
+				IFolder folder = resource.getParent().getFolder(new Path(folderName));
+				if (folder.exists()) {
+					folder.delete(true, this.monitor);
+				}
+				folder.create(true, true, this.monitor);
+				informationRepresentation.setBuildFolder(folder);
+			}
+			
 			informationRepresentation.handlePreBuild(this.monitor);
 			String handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
 			IFile writeContent = null;
@@ -134,6 +148,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			informationRepresentation.handlePostBuild(writeContent, this.monitor);
 			if (createTempFile != null) {
 				createTempFile.delete();
@@ -146,12 +161,12 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	}
 
-	public void setMonitor(IProgressMonitor monitor) {
+	public void setMonitor(final IProgressMonitor monitor) {
 		this.monitor = monitor;
 
 	}
 
-	private IFile writeContent(IFile origFile, String content, IProgressMonitor monitor) throws Exception {
+	private IFile writeContent(final IFile origFile, final String content, final IProgressMonitor monitor) throws Exception {
 		SubProgressMonitor progressMonitor = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
 		IPath computeBinFilePath = ResourceUtil.computeBinFileFulllPath(origFile);
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(computeBinFilePath);

@@ -12,43 +12,18 @@
 
 package org.remus.infomngmnt.plaintext.extension;
 
-import java.util.Map;
-
-import org.eclipse.core.commands.Category;
-
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 
 /**
+ * The PLAINTEXT information type has a really simple structure.
+ * There are no special sub nodes of information, so we have nothing
+ * to do in this creation factory. The super-type just creates a new
+ * InformationUnit Object and the client sets the type.
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class UnformattedTextCreationFactory extends AbstractCreationFactory {
 
-	/**
-	 * 
-	 */
-	public UnformattedTextCreationFactory() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractCreationFactory#createNewObject(org.remus.infomngmnt.InformationUnit, java.util.Map)
-	 */
-	@Override
-	public InformationUnit createNewObject(InformationUnit parentNode,
-			Map<Object, Object> options) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractCreationFactory#createNewObject(org.eclipse.core.commands.Category, java.util.Map)
-	 */
-	@Override
-	public InformationUnit createNewObject(Category parentNode,
-			Map<Object, Object> options) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	// nothing special here.
+	
 
 }

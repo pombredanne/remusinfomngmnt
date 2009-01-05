@@ -96,7 +96,7 @@ IWorkbenchPreferencePage {
 	/**
 	 * @param title
 	 */
-	public DesktopPanelPreferencePage(String title) {
+	public DesktopPanelPreferencePage(final String title) {
 		super(title);
 		// TODO Auto-generated constructor stub
 	}
@@ -105,7 +105,7 @@ IWorkbenchPreferencePage {
 	 * @param title
 	 * @param image
 	 */
-	public DesktopPanelPreferencePage(String title, ImageDescriptor image) {
+	public DesktopPanelPreferencePage(final String title, final ImageDescriptor image) {
 		super(title, image);
 		// TODO Auto-generated constructor stub
 	}
@@ -114,7 +114,7 @@ IWorkbenchPreferencePage {
 	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout());
 
@@ -132,7 +132,7 @@ IWorkbenchPreferencePage {
 		this.tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(UIEditingUtil.getInstance().getAdapterFactory()));
 		this.tableViewer.setInput(this.sections);
 		this.tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
+			public void selectionChanged(final SelectionChangedEvent event) {
 				handleSelectionChanged(event.getSelection());
 
 			}
@@ -146,10 +146,10 @@ IWorkbenchPreferencePage {
 		this.avaialableTemplatesViewer = new TableViewer(avaiableTemplatesGroup, SWT.BORDER);
 		this.avaialableTemplatesViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		sashForm_1.setWeights(new int[] {7, 3 });
-		this.avaialableTemplatesViewer.setContentProvider(new ArrayContentProvider());
+		this.avaialableTemplatesViewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.avaialableTemplatesViewer.setLabelProvider(new LabelProvider() {
 			@Override
-			public String getText(Object element) {
+			public String getText(final Object element) {
 				return ((ITraySectionDefinition) element).getLabel();
 			}
 		});
@@ -166,7 +166,7 @@ IWorkbenchPreferencePage {
 		return composite;
 	}
 
-	protected void handleSelectionChanged(ISelection selection) {
+	protected void handleSelectionChanged(final ISelection selection) {
 		if (!selection.isEmpty()) {
 			TraySection element = (TraySection) ((IStructuredSelection) selection).getFirstElement();
 
@@ -211,7 +211,7 @@ IWorkbenchPreferencePage {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
+			public void menuAboutToShow(final IMenuManager manager) {
 				manager.add(DesktopPanelPreferencePage.this.deleteAction);
 				manager.update(true);
 			}
@@ -246,7 +246,7 @@ IWorkbenchPreferencePage {
 		this.tableViewer.addDragSupport(DND.DROP_MOVE, transfers, new ViewerDragAdapter(this.tableViewer));
 		this.tableViewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(this.editingDomain, this.tableViewer) {
 			@Override
-			protected Object extractDropTarget(Widget item) {
+			protected Object extractDropTarget(final Widget item) {
 				/*
 				 * For allowing drag'n'drop also on
 				 * an empty viewer we have to return
@@ -262,14 +262,14 @@ IWorkbenchPreferencePage {
 
 		// Drag of the available viewer
 		this.avaialableTemplatesViewer.addDragSupport(dndOperations, transfers, new DragSourceListener() {
-			public void dragFinished(DragSourceEvent event) {
+			public void dragFinished(final DragSourceEvent event) {
 				// do nothing
 			}
 
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.dnd.DragSourceListener#dragSetData(org.eclipse.swt.dnd.DragSourceEvent)
 			 */
-			public void dragSetData(DragSourceEvent event) {
+			public void dragSetData(final DragSourceEvent event) {
 				/*
 				 *  by default we're creating a new object, that
 				 *  can be dropped as a new TraySection into the list
@@ -285,7 +285,7 @@ IWorkbenchPreferencePage {
 				}
 			}
 
-			public void dragStart(DragSourceEvent event) {
+			public void dragStart(final DragSourceEvent event) {
 				ITraySectionDefinition element = (ITraySectionDefinition) ((IStructuredSelection) DesktopPanelPreferencePage.this.avaialableTemplatesViewer
 						.getSelection()).getFirstElement();
 				if (!element.isMultiple()) {
@@ -310,7 +310,7 @@ IWorkbenchPreferencePage {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
-	public void init(IWorkbench workbench) {
+	public void init(final IWorkbench workbench) {
 		this.sections = TrayConfigurationManager.getInstance().getTraySections();
 		this.editingDomain = UIEditingUtil.getInstance().createNewEditingDomain();
 		this.dialogSettings = UIUtil.getDialogSettings(DIALOG_SETTINGS_SECTION, UimodelEditPlugin.getPlugin().getDialogSettings());

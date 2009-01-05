@@ -33,12 +33,12 @@ import org.remus.infomngmnt.ui.UIPlugin;
 public class RemoteRepositoryDeferredAdapter implements
 		IDeferredWorkbenchAdapter {
 	
-	private final RemoteContainer repository;
+	private final RemoteObject remoteObject;
 	private final AbstractExtensionRepository itemById;
 
-	public RemoteRepositoryDeferredAdapter(final RemoteContainer repository) {
-		this.repository = repository;
-		this.itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(repository.getRepositoryTypeId());
+	public RemoteRepositoryDeferredAdapter(final RemoteObject object) {
+		this.remoteObject = object;
+		this.itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(object.getRepositoryTypeId());
 	}
 
 	/* (non-Javadoc)
@@ -46,13 +46,15 @@ public class RemoteRepositoryDeferredAdapter implements
 	 */
 	public void fetchDeferredChildren(final Object object,
 			final IElementCollector collector, final IProgressMonitor monitor) {
-		RemoteObject[] children = this.itemById.getChildren(monitor, this.repository);
-		List<RemoteObject> asList = Arrays.asList(children);
-		for (RemoteObject remoteObject : asList) {
-			remoteObject.setRepositoryTypeId(this.repository.getRepositoryTypeId());
+		if (this.remoteObject instanceof RemoteContainer) {
+			RemoteObject[] children = this.itemById.getChildren(monitor, (RemoteContainer) this.remoteObject);
+			List<RemoteObject> asList = Arrays.asList(children);
+			for (RemoteObject remoteObject : asList) {
+				remoteObject.setRepositoryTypeId(this.remoteObject.getRepositoryTypeId());
+			}
+			((RemoteContainer) this.remoteObject).getChildren().addAll(asList);
+			collector.add(children,monitor);
 		}
-		this.repository.getChildren().addAll(asList);
-		collector.add(children,monitor);
 	}
 
 	/* (non-Javadoc)
@@ -66,14 +68,17 @@ public class RemoteRepositoryDeferredAdapter implements
 	 * @see org.eclipse.ui.progress.IDeferredWorkbenchAdapter#isContainer()
 	 */
 	public boolean isContainer() {
-		return true;
+		return this.remoteObject instanceof RemoteObject;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getChildren(java.lang.Object)
 	 */
 	public Object[] getChildren(final Object o) {
-		return this.repository.getChildren().toArray();
+		if (isContainer()) {
+			return ((RemoteContainer) this.remoteObject).getChildren().toArray();
+		}
+		return new Object[0];
 	}
 
 	/* (non-Javadoc)
@@ -87,14 +92,14 @@ public class RemoteRepositoryDeferredAdapter implements
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getLabel(java.lang.Object)
 	 */
 	public String getLabel(final Object o) {
-		return this.repository.getName();
+		return this.remoteObject.getName();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getParent(java.lang.Object)
 	 */
 	public Object getParent(final Object o) {
-		return this.repository.eContainer();
+		return this.remoteObject.eContainer();
 	}
 
 }

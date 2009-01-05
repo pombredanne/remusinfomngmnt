@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.progress.IDeferredWorkbenchAdapter;
 
-import org.remus.infomngmnt.RemoteContainer;
+import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.ui.deferred.RemoteRepositoryDeferredAdapter;
 
@@ -30,9 +30,9 @@ public class RemoteRepositoryAdapterFactory implements IAdapterFactory {
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
 	 */
 	public Object getAdapter(final Object object, final Class type) {
-		if(object instanceof RemoteContainer) {
-			if(type == RemoteRepository.class || type == IDeferredWorkbenchAdapter.class || type == IWorkbenchAdapter.class) {
-				return new RemoteRepositoryDeferredAdapter((RemoteContainer) object);
+		if(object instanceof RemoteObject) {
+			if(type == IDeferredWorkbenchAdapter.class || type == IWorkbenchAdapter.class) {
+				return new RemoteRepositoryDeferredAdapter((RemoteObject) object);
 			}
 		}
 		return null;

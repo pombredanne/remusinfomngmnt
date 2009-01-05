@@ -50,10 +50,10 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 	protected final EMFDataBindingContext ctx;
 
 
-	public GeneralPage(InformationUnitListItem selection) {
+	public GeneralPage(final InformationUnitListItem selection) {
 		this((Category) selection.eContainer());
 	}
-	public GeneralPage(Category category) {
+	public GeneralPage(final Category category) {
 		super("wizardPage");
 		this.category = category;
 		this.ctx = new EMFDataBindingContext();
@@ -64,7 +64,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 	 * Create contents of the wizard
 	 * @param parent
 	 */
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
 
@@ -77,7 +77,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		setControl(container);
 	}
 
-	protected void doCreateNameElements(Composite container) {
+	protected void doCreateNameElements(final Composite container) {
 		final Label nameLabel = new Label(container, SWT.NONE);
 		nameLabel.setText("Name");
 
@@ -86,7 +86,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		this.nameText.setLayoutData(gd_nameText);
 
 	}
-	protected void doCreatePropertiesGroup(Composite container) {
+	protected void doCreatePropertiesGroup(final Composite container) {
 		final Group propertiesGroup = new Group(container, SWT.NONE);
 		propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 		propertiesGroup.setText("Properties");
@@ -113,7 +113,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		this.descriptionText.setLayoutData(gd_descriptionText);
 
 	}
-	protected void doCreateParentElementGroup(Composite container) {
+	protected void doCreateParentElementGroup(final Composite container) {
 
 		final Group parentElementGroup = new Group(container, SWT.NONE);
 		parentElementGroup.setText("Parent Element");
@@ -132,21 +132,21 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 			this.parentCategoryText.setText(this.categoryString);
 		}
 		this.parentCategoryText.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				validatePage();
 			}
 		});
 		this.browserButton = new Button(parentElementGroup, SWT.NONE);
 		this.browserButton.setText("B&rowse...");
 		this.browserButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
 				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory());
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),adapterFactoryLabelProvider,adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
 				dialog.setDoubleClickSelects(true);
 				dialog.setValidator(new ISelectionStatusValidator() {
-					public IStatus validate(Object[] pselection) {
+					public IStatus validate(final Object[] pselection) {
 						if (pselection.length == 0) {
 							return StatusCreator.newStatus("No parent category selected...");
 						}
@@ -166,19 +166,22 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 	}
 	protected void validatePage() {
 
-		this.categoryString = this.parentCategoryText.getText();
-		IStatus categoryPathStringValid = CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText());
-		if (categoryPathStringValid.getSeverity() != IStatus.OK) {
-			setErrorMessage(categoryPathStringValid.getMessage());
-			setPageComplete(false);
-			return;
+		if (this.parentCategoryText != null) {
+			this.categoryString = this.parentCategoryText.getText();
+			IStatus categoryPathStringValid = CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText());
+			if (categoryPathStringValid.getSeverity() != IStatus.OK) {
+				setErrorMessage(categoryPathStringValid.getMessage());
+				setPageComplete(false);
+				return;
+			}
 		}
-
-		IStatus categoryNameValid = CategoryUtil.isCategoryNameValid(this.nameText.getText());
-		if (categoryNameValid.getSeverity() != IStatus.OK) {
-			setErrorMessage(categoryNameValid.getMessage());
-			setPageComplete(false);
-			return;
+		if (this.nameText != null) {
+			IStatus categoryNameValid = CategoryUtil.isCategoryNameValid(this.nameText.getText());
+			if (categoryNameValid.getSeverity() != IStatus.OK) {
+				setErrorMessage(categoryNameValid.getMessage());
+				setPageComplete(false);
+				return;
+			}
 		}
 		setErrorMessage(null);
 		setPageComplete(true);
@@ -199,7 +202,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		return null;
 	}
 
-	public void setInformationUnit(InformationUnit unit) {
+	public void setInformationUnit(final InformationUnit unit) {
 		if (this.unit != unit) {
 			this.ctx.dispose();
 			this.unit = unit;
@@ -210,7 +213,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		IObservableValue emfName = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
 		this.ctx.bindValue(swtName, emfName, new UpdateValueStrategy() {
 			@Override
-			public Object convert(Object value) {
+			public Object convert(final Object value) {
 				validatePage();
 				return super.convert(value);
 			}
@@ -222,10 +225,10 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		IObservableValue emfDescription = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
 		this.ctx.bindValue(swtDescription, emfDescription, null, null);
 	}
-	public void setCategory(Category category) {
+	public void setCategory(final Category category) {
 		this.category = category;
 	}
-	public void setCategoryString(String categoryString) {
+	public void setCategoryString(final String categoryString) {
 		this.categoryString = categoryString;
 	}
 }

@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
@@ -63,7 +64,7 @@ public class DropSectionPreferencePage extends AbstractTrayPreferencePage {
 		Combo combo = new Combo(comp, SWT.READ_ONLY);
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		this.comboViewer = new ComboViewer(combo);
-		this.comboViewer.setContentProvider(new ArrayContentProvider());
+		this.comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.comboViewer.setLabelProvider(new LabelProvider());
 		setControl(comp);
 

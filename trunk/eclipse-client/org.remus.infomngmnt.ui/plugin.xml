@@ -225,6 +225,16 @@
                type="org.eclipse.ui.progress.IDeferredWorkbenchAdapter">
          </adapter>
       </factory>
+      <factory
+            adaptableType="org.remus.infomngmnt.RemoteObject"
+            class="org.remus.infomngmnt.ui.adapter.RemoteRepositoryAdapterFactory">
+         <adapter
+               type="org.remus.infomngmnt.RemoteObject">
+         </adapter>
+         <adapter
+               type="org.eclipse.ui.progress.IDeferredWorkbenchAdapter">
+         </adapter>
+      </factory>
    </extension>
    <extension
          point="org.eclipse.ui.contexts">

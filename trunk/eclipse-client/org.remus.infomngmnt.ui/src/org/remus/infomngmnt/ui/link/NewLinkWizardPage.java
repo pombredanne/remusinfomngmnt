@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -49,7 +50,7 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 	/**
 	 * Create the wizard
 	 */
-	public NewLinkWizardPage(Shell parentShell, InformationUnit infoUnit) {
+	public NewLinkWizardPage(final Shell parentShell, final InformationUnit infoUnit) {
 		super(parentShell);
 		this.infoUnit = infoUnit;
 		setTitle("Wizard Page title");
@@ -57,7 +58,7 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 
 
 	@Override
-	protected Control createDialogArea(Composite parent) {
+	protected Control createDialogArea(final Composite parent) {
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -80,7 +81,7 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 		browseButton.setText("Browse...");
 		browseButton.addListener(SWT.Selection, new Listener() {
 
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				InfoUnitSelectionDialog diag = new InfoUnitSelectionDialog(getShell(),false);
 				diag.setListLabelProvider(new NavigationCellLabelProvider());
 				diag.open();
@@ -98,15 +99,15 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 		targetsGroup.setLayout(gridLayout_1);
 
 		this.tableViewer = new TableViewer(targetsGroup, SWT.FULL_SELECTION);
-		this.tableViewer.setContentProvider(new ArrayContentProvider());
+		this.tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.tableViewer.setLabelProvider(new ITableLabelProvider() {
 
-			public Image getColumnImage(Object element, int columnIndex) {
+			public Image getColumnImage(final Object element, final int columnIndex) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
-			public String getColumnText(Object element, int columnIndex) {
+			public String getColumnText(final Object element, final int columnIndex) {
 				switch (columnIndex) {
 				case 0:
 					return ((Link) element).getTarget().getLabel();
@@ -118,7 +119,7 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 				return null;
 			}
 
-			public void addListener(ILabelProviderListener listener) {
+			public void addListener(final ILabelProviderListener listener) {
 				// TODO Auto-generated method stub
 
 			}
@@ -128,12 +129,12 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 
 			}
 
-			public boolean isLabelProperty(Object element, String property) {
+			public boolean isLabelProperty(final Object element, final String property) {
 				// TODO Auto-generated method stub
 				return false;
 			}
 
-			public void removeListener(ILabelProviderListener listener) {
+			public void removeListener(final ILabelProviderListener listener) {
 				// TODO Auto-generated method stub
 
 			}
@@ -166,13 +167,13 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 
 	}
 	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
+	protected void createButtonsForButtonBar(final Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.CLOSE_LABEL,
 				true);
 	}
 
 
-	protected void setResult(AbstractInformationUnit result, boolean notify) {
+	protected void setResult(final AbstractInformationUnit result, final boolean notify) {
 		this.text.setText(result.getLabel());
 		Object image2 = ((IItemLabelProvider) EditingUtil.getInstance().getAdapterFactory().adapt(result,IItemLabelProvider.class)).getImage(result);
 		if (image2 instanceof Image) {
@@ -197,16 +198,16 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 		this.tableViewer.setColumnProperties(new String[] {"col1","col2"});
 		this.tableViewer.setCellModifier(new ICellModifier() {
 
-			public boolean canModify(Object element, String property) {
+			public boolean canModify(final Object element, final String property) {
 				return property.equals("col2");
 			}
 
-			public Object getValue(Object element, String property) {
+			public Object getValue(final Object element, final String property) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
-			public void modify(Object element, String property, Object value) {
+			public void modify(final Object element, final String property, final Object value) {
 				// TODO Auto-generated method stub
 
 			}

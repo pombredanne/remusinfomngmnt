@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 
@@ -55,6 +56,8 @@ public interface IRepository {
 	void reset();
 	
 	ISchedulingRule getRule();
+	
+	InformationUnit[] convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor);
 	
 
 }

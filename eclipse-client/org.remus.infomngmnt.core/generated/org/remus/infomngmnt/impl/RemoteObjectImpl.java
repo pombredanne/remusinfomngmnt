@@ -42,6 +42,7 @@ import org.remus.infomngmnt.RemoteObject;
  *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getRepositoryTypeId <em>Repository Type Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getRepositoryTypeObjectId <em>Repository Type Object Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RemoteObjectImpl#getWrappedObject <em>Wrapped Object</em>}</li>
  * </ul>
  * </p>
  *
@@ -152,6 +153,26 @@ public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 	 * @ordered
 	 */
 	protected String repositoryTypeObjectId = REPOSITORY_TYPE_OBJECT_ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWrappedObject()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Object WRAPPED_OBJECT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWrappedObject()
+	 * @generated
+	 * @ordered
+	 */
+	protected Object wrappedObject = WRAPPED_OBJECT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -294,6 +315,27 @@ public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Object getWrappedObject() {
+		return wrappedObject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWrappedObject(Object newWrappedObject) {
+		Object oldWrappedObject = wrappedObject;
+		wrappedObject = newWrappedObject;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.REMOTE_OBJECT__WRAPPED_OBJECT, oldWrappedObject, wrappedObject));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -309,6 +351,8 @@ public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 				return getRepositoryTypeId();
 			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
 				return getRepositoryTypeObjectId();
+			case InfomngmntPackage.REMOTE_OBJECT__WRAPPED_OBJECT:
+				return getWrappedObject();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -341,6 +385,9 @@ public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
 				setRepositoryTypeObjectId((String)newValue);
 				return;
+			case InfomngmntPackage.REMOTE_OBJECT__WRAPPED_OBJECT:
+				setWrappedObject(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -371,6 +418,9 @@ public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
 				setRepositoryTypeObjectId(REPOSITORY_TYPE_OBJECT_ID_EDEFAULT);
 				return;
+			case InfomngmntPackage.REMOTE_OBJECT__WRAPPED_OBJECT:
+				setWrappedObject(WRAPPED_OBJECT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -395,6 +445,8 @@ public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 				return REPOSITORY_TYPE_ID_EDEFAULT == null ? repositoryTypeId != null : !REPOSITORY_TYPE_ID_EDEFAULT.equals(repositoryTypeId);
 			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
 				return REPOSITORY_TYPE_OBJECT_ID_EDEFAULT == null ? repositoryTypeObjectId != null : !REPOSITORY_TYPE_OBJECT_ID_EDEFAULT.equals(repositoryTypeObjectId);
+			case InfomngmntPackage.REMOTE_OBJECT__WRAPPED_OBJECT:
+				return WRAPPED_OBJECT_EDEFAULT == null ? wrappedObject != null : !WRAPPED_OBJECT_EDEFAULT.equals(wrappedObject);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -421,6 +473,8 @@ public class RemoteObjectImpl extends AdapterImpl implements RemoteObject {
 		result.append(repositoryTypeId);
 		result.append(", repositoryTypeObjectId: ");
 		result.append(repositoryTypeObjectId);
+		result.append(", wrappedObject: ");
+		result.append(wrappedObject);
 		result.append(')');
 		return result.toString();
 	}

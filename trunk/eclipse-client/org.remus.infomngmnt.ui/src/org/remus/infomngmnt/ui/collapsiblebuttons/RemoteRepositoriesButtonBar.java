@@ -133,7 +133,7 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	
 	@Override
 	public void dispose() {
-		viewer.removeSelectionChangedListener(actionBar);
+		this.viewer.removeSelectionChangedListener(this.actionBar);
 		super.dispose();
 	}
 

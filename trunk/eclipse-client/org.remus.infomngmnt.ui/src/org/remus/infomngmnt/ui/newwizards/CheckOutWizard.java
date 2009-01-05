@@ -51,11 +51,11 @@ public abstract class CheckOutWizard extends MultipleNewObjectsWizard {
 						InformationUnit[] convertToLocalObjects = itemById.convertToLocalObjects(list.toArray(new RemoteObject[list.size()]), monitor);
 						setNewObjects(new BasicEList<InformationUnit>(Arrays.asList(convertToLocalObjects)));
 					}
-					CheckOutWizard.super.init(workbench, selection);
-					CheckOutWizard.this.page1 = new GeneralCheckoutPage();
+					
 					return Status.OK_STATUS;
 				}
 			});
+			CheckOutWizard.this.page1 = new GeneralCheckoutPage();
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

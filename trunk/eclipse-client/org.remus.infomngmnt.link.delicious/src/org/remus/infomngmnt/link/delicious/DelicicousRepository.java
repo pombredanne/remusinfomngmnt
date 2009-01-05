@@ -59,7 +59,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	 * throttled automatically. So we have to use this intervall
 	 * between two requests.
 	 */
-	private static final long WAIT_INTERVALL = 1200;
+	private static final long WAIT_INTERVALL = 3000;
 	
 	private long lastApiCall;
 	

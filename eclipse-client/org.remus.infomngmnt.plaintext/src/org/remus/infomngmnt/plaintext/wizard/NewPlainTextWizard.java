@@ -12,7 +12,7 @@
 
 package org.remus.infomngmnt.plaintext.wizard;
 
-import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.plaintext.Activator;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
@@ -20,19 +20,11 @@ import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
  */
 public class NewPlainTextWizard extends NewInfoObjectWizard {
 
-	/**
-	 * <p>
-	 * Nothing special. We're just reusing the functioality
-	 * from the {@link NewInfoObjectWizard} and setting the
-	 * specific information type.
-	 * </p>
-	 * @return the new info object
-	 */
 	@Override
-	protected InformationUnit createNewInformationUnit() {
-		InformationUnit newInfoObject = super.createNewInformationUnit();
-		newInfoObject.setType("PLAINTEXT");
-		return newInfoObject;
+	protected String getInfoTypeId() {
+		return Activator.INFO_TYPE_ID;
 	}
+
+	
 
 }

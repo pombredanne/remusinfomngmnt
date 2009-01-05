@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getName <em>Name</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeId <em>Repository Type Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeObjectId <em>Repository Type Object Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteObject#getWrappedObject <em>Wrapped Object</em>}</li>
  * </ul>
  * </p>
  *
@@ -185,5 +186,31 @@ public interface RemoteObject extends Adapter {
 	 * @generated
 	 */
 	void setRepositoryTypeObjectId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Wrapped Object</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Wrapped Object</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Wrapped Object</em>' attribute.
+	 * @see #setWrappedObject(Object)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteObject_WrappedObject()
+	 * @model dataType="org.remus.infomngmnt.Object"
+	 * @generated
+	 */
+	Object getWrappedObject();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RemoteObject#getWrappedObject <em>Wrapped Object</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Wrapped Object</em>' attribute.
+	 * @see #getWrappedObject()
+	 * @generated
+	 */
+	void setWrappedObject(Object value);
 
 } // RemoteObject

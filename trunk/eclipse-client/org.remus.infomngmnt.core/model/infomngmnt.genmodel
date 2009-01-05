@@ -104,6 +104,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/repositoryTypeId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/repositoryTypeObjectId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/wrappedObject"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RemoteContainer">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteContainer/children"/>

@@ -125,6 +125,7 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="repositoryTypeObjectId"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wrappedObject" eType="#//Object"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoteContainer" eSuperTypes="#//RemoteObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"

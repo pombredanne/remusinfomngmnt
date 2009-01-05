@@ -1142,13 +1142,22 @@ public interface InfomngmntPackage extends EPackage {
 	int REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID = ADAPTER_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_OBJECT__WRAPPED_OBJECT = ADAPTER_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Remote Object</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REMOTE_OBJECT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 6;
+	int REMOTE_OBJECT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteContainerImpl <em>Remote Container</em>}' class.
@@ -1213,6 +1222,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int REMOTE_CONTAINER__REPOSITORY_TYPE_OBJECT_ID = REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID;
+
+	/**
+	 * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_CONTAINER__WRAPPED_OBJECT = REMOTE_OBJECT__WRAPPED_OBJECT;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' reference list.
@@ -1285,6 +1303,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int REMOTE_REPOSITORY__REPOSITORY_TYPE_OBJECT_ID = REMOTE_CONTAINER__REPOSITORY_TYPE_OBJECT_ID;
+
+	/**
+	 * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_REPOSITORY__WRAPPED_OBJECT = REMOTE_CONTAINER__WRAPPED_OBJECT;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' reference list.
@@ -2161,6 +2188,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getRemoteObject_RepositoryTypeObjectId();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RemoteObject#getWrappedObject <em>Wrapped Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Wrapped Object</em>'.
+	 * @see org.remus.infomngmnt.RemoteObject#getWrappedObject()
+	 * @see #getRemoteObject()
+	 * @generated
+	 */
+	EAttribute getRemoteObject_WrappedObject();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RemoteContainer <em>Remote Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2884,6 +2922,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID = eINSTANCE.getRemoteObject_RepositoryTypeObjectId();
+
+		/**
+		 * The meta object literal for the '<em><b>Wrapped Object</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REMOTE_OBJECT__WRAPPED_OBJECT = eINSTANCE.getRemoteObject_WrappedObject();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RemoteContainerImpl <em>Remote Container</em>}' class.

@@ -88,6 +88,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.RULE_ACTION: return createRuleAction();
 			case InfomngmntPackage.RULE_RESULT: return createRuleResult();
 			case InfomngmntPackage.REMOTE_REPOSITORY: return createRemoteRepository();
+			case InfomngmntPackage.REMOTE_OBJECT: return createRemoteObject();
 			case InfomngmntPackage.REMOTE_CONTAINER: return createRemoteContainer();
 			case InfomngmntPackage.REPOSITORY_COLLECTION: return createRepositoryCollection();
 			default:
@@ -303,6 +304,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public RemoteRepository createRemoteRepository() {
 		RemoteRepositoryImpl remoteRepository = new RemoteRepositoryImpl();
 		return remoteRepository;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RemoteObject createRemoteObject() {
+		RemoteObjectImpl remoteObject = new RemoteObjectImpl();
+		return remoteObject;
 	}
 
 	/**

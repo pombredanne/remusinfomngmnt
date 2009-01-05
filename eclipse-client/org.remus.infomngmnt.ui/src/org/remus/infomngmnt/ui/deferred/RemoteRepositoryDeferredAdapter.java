@@ -38,7 +38,7 @@ public class RemoteRepositoryDeferredAdapter implements
 
 	public RemoteRepositoryDeferredAdapter(final RemoteContainer repository) {
 		this.repository = repository;
-		this.itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(repository.getTypeId());
+		this.itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(repository.getRepositoryTypeId());
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +49,7 @@ public class RemoteRepositoryDeferredAdapter implements
 		RemoteObject[] children = this.itemById.getChildren(monitor, this.repository);
 		List<RemoteObject> asList = Arrays.asList(children);
 		for (RemoteObject remoteObject : asList) {
-			remoteObject.setTypeId(this.repository.getTypeId());
+			remoteObject.setRepositoryTypeId(this.repository.getRepositoryTypeId());
 		}
 		this.repository.getChildren().addAll(asList);
 		collector.add(children,monitor);

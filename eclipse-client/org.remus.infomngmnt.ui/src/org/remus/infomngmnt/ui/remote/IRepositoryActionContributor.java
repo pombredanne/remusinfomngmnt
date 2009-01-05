@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.ui.remote;
 
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -20,7 +21,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  */
 public interface IRepositoryActionContributor {
 	
-	void contributeCheckOutAsActions(MenuManager menu, IStructuredSelection selection);
+	IAction[] createCheckOutAsActions(IStructuredSelection selection);
 	
 	void contributeShareActions(MenuManager menu, IStructuredSelection selection);
 	

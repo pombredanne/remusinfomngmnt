@@ -1,12 +1,13 @@
 package org.remus.infomngmnt.ui.collapsiblebuttons;
 
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
-import org.eclipse.emf.edit.ui.action.RedoAction;
-import org.eclipse.emf.edit.ui.action.UndoAction;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -32,7 +33,11 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
-import org.remus.infomngmnt.ui.views.action.RenameAction;
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
+import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
 
 
 /**
@@ -56,16 +61,7 @@ IPropertyListener,
 ISelectionChangedListener
 {
 
-	private RenameAction renameAction;
-	/**
-	 * This is the action used to implement undo.
-	 */
-	protected UndoAction undoAction;
-
-	/**
-	 * This is the action used to implement redo.
-	 */
-	protected RedoAction redoAction;
+	
 	/**
 	 * This keeps track of the current editor part.
 	 */
@@ -133,17 +129,7 @@ ISelectionChangedListener
 		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
 
 		
-		this.undoAction = new UndoAction();
-		this.undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), this.undoAction);
-
-		this.redoAction = new RedoAction();
-		this.redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
-		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
-
-		this.renameAction = new RenameAction();
-		actionBars.setGlobalActionHandler(ActionFactory.RENAME.getId(), this.renameAction);
-
+		
 
 		actionBars.updateActionBars();
 	}
@@ -168,9 +154,6 @@ ISelectionChangedListener
 			actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
 		
 		}
-		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), this.undoAction);
-		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
-
 	}
 
 
@@ -197,11 +180,7 @@ ISelectionChangedListener
 	public void deactivate()
 	{
 		this.deleteAction.setEditingDomain(null);
-		this.undoAction.setEditingDomain(null);
-		this.redoAction.setEditingDomain(null);
-
-
-
+		
 		final ISelectionProvider selectionProvider =
 			this.activeEditor instanceof ISelectionProvider ?
 					(ISelectionProvider)this.activeEditor :
@@ -218,10 +197,7 @@ ISelectionChangedListener
 	{
 		this.deleteAction.setEditingDomain(this.activeEditor.getEditingDomain());
 		
-		this.undoAction.setEditingDomain(this.activeEditor.getEditingDomain());
-		this.redoAction.setEditingDomain(this.activeEditor.getEditingDomain());
-		this.renameAction.setEditingDomain(this.activeEditor.getEditingDomain());
-		
+	
 
 		final ISelectionProvider selectionProvider =
 			this.activeEditor instanceof ISelectionProvider ?
@@ -231,7 +207,6 @@ ISelectionChangedListener
 					if (selectionProvider != null)
 					{
 						selectionProvider.addSelectionChangedListener(this.deleteAction);
-						selectionProvider.addSelectionChangedListener(this.renameAction);
 					}
 
 					update();
@@ -251,12 +226,7 @@ ISelectionChangedListener
 							selection instanceof IStructuredSelection ?  (IStructuredSelection)selection : StructuredSelection.EMPTY;
 
 							this.deleteAction.updateSelection(structuredSelection);
-							this.renameAction.updateSelection(structuredSelection);
 					}
-
-
-					this.undoAction.update();
-					this.redoAction.update();
 	}
 
 	/**
@@ -265,9 +235,7 @@ ISelectionChangedListener
 	public void menuAboutToShow(final IMenuManager menuManager)
 	{
 
-		// refresh undo/redo
-		this.undoAction.update();
-		this.redoAction.update();
+
 		// Add our standard marker.
 		//
 		if ((this.style & ADDITIONS_LAST_STYLE) == 0)
@@ -279,7 +247,7 @@ ISelectionChangedListener
 		String newId = "org.remus.infomngmnt.remote.checkout";
 		this.checkOutAsChildsMenuManager = new MenuManager(newText, newId);
 		this.checkOutAsChildsMenuManager.add(new Separator(newId));
-		
+		populateManager(this.checkOutAsChildsMenuManager, this.checkOutAsActions, null);
 		
 		
 		this.checkOutAsChildsMenuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -289,10 +257,7 @@ ISelectionChangedListener
 
 		// Add the edit menu actions.
 		//
-		menuManager.add(this.undoAction);
-		menuManager.add(this.redoAction);
 		menuManager.add(new Separator());
-		menuManager.add(this.renameAction);
 		menuManager.add(new Separator());
 		menuManager.add(new Separator());
 		menuManager.add(this.deleteAction);
@@ -328,9 +293,26 @@ ISelectionChangedListener
 	 */
 	public void selectionChanged(final SelectionChangedEvent event) {
 		update();
-
+		if (this.checkOutAsChildsMenuManager != null) {
+			depopulateManager(this.checkOutAsChildsMenuManager, this.checkOutAsActions);
+		}
+		this.checkOutAsActions = generateCheckoutActions((IStructuredSelection) event.getSelection());
+		if (this.checkOutAsChildsMenuManager != null) {
+			populateManager(this.checkOutAsChildsMenuManager, this.checkOutAsActions, null);
+			this.checkOutAsChildsMenuManager.update(true);
+		}
 	}
 	
+	private Collection<IAction> generateCheckoutActions(final IStructuredSelection selection) {
+		if (!selection.isEmpty() &&
+				ModelUtil.hasEqualAttribute(selection.toList(), InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_ID)) {
+			String repositoryId = (String) ((EObject) selection.toList().get(0)).eGet(InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_ID);
+			IRepositoryActionContributor actionContributor = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemByRepositoryId(repositoryId).getActionContributor();
+			return Arrays.asList(actionContributor.createCheckOutAsActions(selection));
+		}
+		return Collections.EMPTY_LIST;
+	}
+
 	/**
 	 * This removes from the specified <code>manager</code> all {@link org.eclipse.jface.action.ActionContributionItem}s
 	 * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection.

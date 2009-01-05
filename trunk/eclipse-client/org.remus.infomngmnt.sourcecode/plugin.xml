@@ -4,7 +4,7 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            creationFactory="org.remus.infomngmnt.sourcecode.AbstractCreationFactory:1"
+            creationFactory="org.remus.infomngmnt.sourcecode.core.SourceCodeCreationFactory"
             icon="icons/source.png"
             name="Source Code"
             presentation="org.remus.infomngmnt.sourcecode.core.SourceCodeInformationRepresentation"

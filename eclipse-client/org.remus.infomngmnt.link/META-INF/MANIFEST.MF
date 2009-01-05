@@ -27,3 +27,4 @@ Bundle-ClassPath: lib/nekohtml.jar,
  lib/serializer.jar,
  lib/xercesImpl.jar,
  lib/xml-apis.jar
+Export-Package: org.remus.infomngmnt.link

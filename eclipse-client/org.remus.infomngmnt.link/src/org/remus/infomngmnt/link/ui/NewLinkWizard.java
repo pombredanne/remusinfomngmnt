@@ -12,19 +12,15 @@
 
 package org.remus.infomngmnt.link.ui;
 
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.link.LinkActivator;
-import org.remus.infomngmnt.link.LinkRepresentation;
-import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
@@ -35,24 +31,7 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 
 	private LinkWizardPage page2;
 
-	@Override
-	protected InformationUnit createNewInformationUnit() {
-		IPreferenceStore store = LinkActivator.getDefault().getPreferenceStore();
-		InformationUnit returnValue = super.createNewInformationUnit();
-		returnValue.setType("LINK");
-		InformationUnit screenShot = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		screenShot.setType(LinkRepresentation.SCREENSHOT_TYPE);
-		screenShot.setBoolValue(store.getBoolean(LinkPreferenceInitializer.MAKE_SCREENSHOT));
-		InformationUnit indexTarget = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		indexTarget.setType(LinkRepresentation.INDEXWEBPAGE_TYPE);
-		indexTarget.setBoolValue(store.getBoolean(LinkPreferenceInitializer.INDEX_DOCUMENT));
-		InformationUnit linkContent = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		linkContent.setType(LinkRepresentation.INDEXWEBPAGECONTENT_TYPE);
-		returnValue.getChildValues().add(screenShot);
-		returnValue.getChildValues().add(indexTarget);
-		returnValue.getChildValues().add(linkContent);
-		return returnValue;
-	}
+	
 	@Override
 	public void addPages() {
 		super.addPages();
@@ -68,7 +47,7 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
+	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
 			this.page1 = new GeneralLinkPage((Category) firstElement);
@@ -80,7 +59,7 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 
 	}
 
-	public void setDefaults(Object value, RuleValue ruleValue) {
+	public void setDefaults(final Object value, final RuleValue ruleValue) {
 		this.newElement.setStringValue(String.valueOf(value));
 		InformationUnit childByType = InformationUtil.getChildByType(
 				ruleValue, AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
@@ -94,6 +73,11 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 	@Override
 	public boolean canFinish() {
 		return this.page1.isPageComplete();
+	}
+	
+	@Override
+	protected String getInfoTypeId() {
+		return LinkActivator.LINK_INFO_ID;
 	}
 
 }

@@ -10,6 +10,9 @@ public class LinkActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.link";
+	
+	
+	public static final String LINK_INFO_ID = "LINK"; //$NON-NLS-1$
 
 	// The shared instance
 	private static LinkActivator plugin;
@@ -24,7 +27,8 @@ public class LinkActivator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception {
+	@Override
+	public void start(final BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
@@ -33,7 +37,8 @@ public class LinkActivator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception {
+	@Override
+	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}

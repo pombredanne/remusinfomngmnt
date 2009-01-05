@@ -38,10 +38,6 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 		addPage(this.page2 = new LinkWizardPage(this.newElement));
 	}
 
-	@Override
-	public boolean performFinish() {
-		return super.performFinish();
-	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)

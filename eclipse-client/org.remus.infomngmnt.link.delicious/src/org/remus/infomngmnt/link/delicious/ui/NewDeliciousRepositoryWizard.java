@@ -12,9 +12,11 @@
 
 package org.remus.infomngmnt.link.delicious.ui;
 
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.widgets.Composite;
+
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.link.delicious.Activator;
@@ -71,10 +73,13 @@ public class NewDeliciousRepositoryWizard extends NewRepositoryWizard {
 	}
 	
 	
+	@SuppressWarnings("restriction")
 	private RemoteRepository getRepository() {
 		if (this.repository == null) {
 			this.repository = InfomngmntFactory.eINSTANCE.createRemoteRepository();
 			this.repository.setUrl(Activator.getDefault().getPreferenceStore().getString(PreferenceInitializer.API_URL));
+			this.repository.setId(new UniversalUniqueIdentifier().toString());
+
 		}
 		return this.repository;
 	}

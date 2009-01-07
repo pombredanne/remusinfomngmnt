@@ -214,6 +214,15 @@ public interface InfomngmntFactory extends EFactory {
 	RepositoryCollection createRepositoryCollection();
 
 	/**
+	 * Returns a new object of class '<em>Synchronization Metadata</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Synchronization Metadata</em>'.
+	 * @generated
+	 */
+	SynchronizationMetadata createSynchronizationMetadata();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

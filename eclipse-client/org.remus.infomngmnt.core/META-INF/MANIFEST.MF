@@ -21,6 +21,7 @@ Export-Package: org.remus.infomngmnt,
  org.remus.infomngmnt.impl,
  org.remus.infomngmnt.provider,
  org.remus.infomngmnt.resources.util,
+ org.remus.infomngmnt.ui.commands,
  org.remus.infomngmnt.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,

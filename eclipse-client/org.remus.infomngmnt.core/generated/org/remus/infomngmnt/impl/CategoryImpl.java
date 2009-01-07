@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationMetadata;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,6 +47,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
  *   <li>{@link org.remus.infomngmnt.impl.CategoryImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.CategoryImpl#getInformationUnit <em>Information Unit</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.CategoryImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.CategoryImpl#getSynchronizationMetaData <em>Synchronization Meta Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -131,6 +133,16 @@ public class CategoryImpl extends AdapterImpl implements Category {
 	 * @ordered
 	 */
 	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getSynchronizationMetaData() <em>Synchronization Meta Data</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSynchronizationMetaData()
+	 * @generated
+	 * @ordered
+	 */
+	protected SynchronizationMetadata synchronizationMetaData;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -243,6 +255,49 @@ public class CategoryImpl extends AdapterImpl implements Category {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public SynchronizationMetadata getSynchronizationMetaData() {
+		return synchronizationMetaData;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetSynchronizationMetaData(SynchronizationMetadata newSynchronizationMetaData, NotificationChain msgs) {
+		SynchronizationMetadata oldSynchronizationMetaData = synchronizationMetaData;
+		synchronizationMetaData = newSynchronizationMetaData;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA, oldSynchronizationMetaData, newSynchronizationMetaData);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSynchronizationMetaData(SynchronizationMetadata newSynchronizationMetaData) {
+		if (newSynchronizationMetaData != synchronizationMetaData) {
+			NotificationChain msgs = null;
+			if (synchronizationMetaData != null)
+				msgs = ((InternalEObject)synchronizationMetaData).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA, null, msgs);
+			if (newSynchronizationMetaData != null)
+				msgs = ((InternalEObject)newSynchronizationMetaData).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA, null, msgs);
+			msgs = basicSetSynchronizationMetaData(newSynchronizationMetaData, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA, newSynchronizationMetaData, newSynchronizationMetaData));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -250,6 +305,8 @@ public class CategoryImpl extends AdapterImpl implements Category {
 				return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
 			case InfomngmntPackage.CATEGORY__INFORMATION_UNIT:
 				return ((InternalEList<?>)getInformationUnit()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA:
+				return basicSetSynchronizationMetaData(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -272,6 +329,8 @@ public class CategoryImpl extends AdapterImpl implements Category {
 				return getInformationUnit();
 			case InfomngmntPackage.CATEGORY__DESCRIPTION:
 				return getDescription();
+			case InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA:
+				return getSynchronizationMetaData();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -302,6 +361,9 @@ public class CategoryImpl extends AdapterImpl implements Category {
 			case InfomngmntPackage.CATEGORY__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
+			case InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA:
+				setSynchronizationMetaData((SynchronizationMetadata)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -329,6 +391,9 @@ public class CategoryImpl extends AdapterImpl implements Category {
 			case InfomngmntPackage.CATEGORY__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
+			case InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA:
+				setSynchronizationMetaData((SynchronizationMetadata)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -351,6 +416,8 @@ public class CategoryImpl extends AdapterImpl implements Category {
 				return informationUnit != null && !informationUnit.isEmpty();
 			case InfomngmntPackage.CATEGORY__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA:
+				return synchronizationMetaData != null;
 		}
 		return super.eIsSet(featureID);
 	}

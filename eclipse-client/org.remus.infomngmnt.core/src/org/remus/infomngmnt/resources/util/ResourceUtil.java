@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -14,11 +16,19 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.builder.InformationBuilder;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.ui.commands.CommandFactory;
 
 public class ResourceUtil {
 
@@ -137,18 +147,18 @@ public class ResourceUtil {
 
 	}
 
-	public static String computeBinFileLocation(IFile originalFile) {
+	public static String computeBinFileLocation(final IFile originalFile) {
 		IPath binPath = originalFile.getProject().getLocation().append(new Path(ResourceUtil.BIN_FOLDER + File.separator + originalFile.getProjectRelativePath()));
 		return Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(binPath.toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
 	}
 
-	public static IPath computeBinFileFulllPath(IFile originalFile) {
+	public static IPath computeBinFileFulllPath(final IFile originalFile) {
 		String replacedProjectRelativePath = Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(originalFile.getProjectRelativePath().toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
 		IPath binPath = originalFile.getProject().getFullPath().append(new Path(ResourceUtil.BIN_FOLDER)).append(replacedProjectRelativePath);
 		return binPath;
 	}
 
-	public static void postProjectCreation(IProjectDescription description) {
+	public static void postProjectCreation(final IProjectDescription description) {
 		PostProjectHandleExtensionManager manager = new PostProjectHandleExtensionManager(description);
 		manager.executeProxyImplementations();
 	}
@@ -167,7 +177,7 @@ public class ResourceUtil {
 		public static final String HANDLE_IMPL_NODE_NAME = "handle"; //$NON-NLS-1$
 		private final IProjectDescription description;
 
-		public PostProjectHandleExtensionManager(IProjectDescription description) {
+		public PostProjectHandleExtensionManager(final IProjectDescription description) {
 			this.description = description;
 		}
 
@@ -185,6 +195,23 @@ public class ResourceUtil {
 				}
 			}
 		}
+	}
+
+	public static void createNewProject(final IProject newProject, final IProgressMonitor monitor, final String description) throws CoreException{
+		IFolder folder = newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
+		folder.create(true, true, monitor);
+		IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
+		Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(),true);
+		rootCategory.setLabel(newProject.getName());
+		rootCategory.setId(new UniversalUniqueIdentifier().toString());
+		rootCategory.setDescription(description);
+		EditingUtil.getInstance().saveObjectToResource(rootCategory);
+
+		EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
+		Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
+		editingDomain.getCommandStack().execute(createCommand);
+		ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
+
 	}
 
 }

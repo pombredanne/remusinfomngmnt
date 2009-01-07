@@ -27,6 +27,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
@@ -81,6 +82,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		supportedTypes.add(ITreeItemContentProvider.class);
 		supportedTypes.add(IItemLabelProvider.class);
 		supportedTypes.add(IItemPropertySource.class);
+		supportedTypes.add(IItemColorProvider.class);
 	}
 
 	/**
@@ -567,6 +569,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.SynchronizationMetadata} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SynchronizationMetadataItemProvider synchronizationMetadataItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.SynchronizationMetadata}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSynchronizationMetadataAdapter() {
+		if (synchronizationMetadataItemProvider == null) {
+			synchronizationMetadataItemProvider = new SynchronizationMetadataItemProvider(this);
+		}
+
+		return synchronizationMetadataItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -686,6 +711,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (remoteObjectItemProvider != null) remoteObjectItemProvider.dispose();
 		if (remoteContainerItemProvider != null) remoteContainerItemProvider.dispose();
 		if (repositoryCollectionItemProvider != null) repositoryCollectionItemProvider.dispose();
+		if (synchronizationMetadataItemProvider != null) synchronizationMetadataItemProvider.dispose();
 	}
 
 }

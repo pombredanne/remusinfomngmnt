@@ -19,6 +19,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -46,6 +47,8 @@ import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleResult;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.Usage;
 
 /**
@@ -215,6 +218,20 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass repositoryCollectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass synchronizationMetadataEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum synchronizationStateEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -494,6 +511,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getCategory_SynchronizationMetaData() {
+		return (EReference)categoryEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAbstractInformationUnit() {
 		return abstractInformationUnitEClass;
 	}
@@ -541,6 +567,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EAttribute getInformationUnitListItem_WorkspacePath() {
 		return (EAttribute)informationUnitListItemEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInformationUnitListItem_SynchronizationMetaData() {
+		return (EReference)informationUnitListItemEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1025,6 +1060,78 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSynchronizationMetadata() {
+		return synchronizationMetadataEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_RepositoryId() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_Url() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_Readonly() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_LastSynchronisation() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_Hash() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_SyncState() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getSynchronizationState() {
+		return synchronizationStateEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getObject() {
 		return objectEDataType;
 	}
@@ -1081,6 +1188,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(categoryEClass, CATEGORY__CHILDREN);
 		createEReference(categoryEClass, CATEGORY__INFORMATION_UNIT);
 		createEAttribute(categoryEClass, CATEGORY__DESCRIPTION);
+		createEReference(categoryEClass, CATEGORY__SYNCHRONIZATION_META_DATA);
 
 		abstractInformationUnitEClass = createEClass(ABSTRACT_INFORMATION_UNIT);
 		createEAttribute(abstractInformationUnitEClass, ABSTRACT_INFORMATION_UNIT__ID);
@@ -1089,6 +1197,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		informationUnitListItemEClass = createEClass(INFORMATION_UNIT_LIST_ITEM);
 		createEAttribute(informationUnitListItemEClass, INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
+		createEReference(informationUnitListItemEClass, INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA);
 
 		applicationRootEClass = createEClass(APPLICATION_ROOT);
 		createEReference(applicationRootEClass, APPLICATION_ROOT__ROOT_CATEGORIES);
@@ -1161,6 +1270,17 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		repositoryCollectionEClass = createEClass(REPOSITORY_COLLECTION);
 		createEReference(repositoryCollectionEClass, REPOSITORY_COLLECTION__REPOSITORIES);
 
+		synchronizationMetadataEClass = createEClass(SYNCHRONIZATION_METADATA);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__REPOSITORY_ID);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__URL);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__READONLY);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__HASH);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__SYNC_STATE);
+
+		// Create enums
+		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
+
 		// Create data types
 		objectEDataType = createEDataType(OBJECT);
 	}
@@ -1201,6 +1321,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		remoteRepositoryEClass.getESuperTypes().add(this.getRemoteContainer());
 		remoteObjectEClass.getESuperTypes().add(this.getAdapter());
 		remoteContainerEClass.getESuperTypes().add(this.getRemoteObject());
+		synchronizationMetadataEClass.getESuperTypes().add(this.getAdapter());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(informationUnitEClass, InformationUnit.class, "InformationUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1227,6 +1348,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEReference(getCategory_Children(), this.getCategory(), null, "children", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCategory_InformationUnit(), this.getInformationUnitListItem(), null, "informationUnit", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCategory_Description(), ecorePackage.getEString(), "description", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCategory_SynchronizationMetaData(), this.getSynchronizationMetadata(), null, "synchronizationMetaData", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(abstractInformationUnitEClass, AbstractInformationUnit.class, "AbstractInformationUnit", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAbstractInformationUnit_Id(), ecorePackage.getEString(), "id", null, 1, 1, AbstractInformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1235,6 +1357,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(informationUnitListItemEClass, InformationUnitListItem.class, "InformationUnitListItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInformationUnitListItem_WorkspacePath(), ecorePackage.getEString(), "workspacePath", null, 0, 1, InformationUnitListItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInformationUnitListItem_SynchronizationMetaData(), this.getSynchronizationMetadata(), null, "synchronizationMetaData", null, 0, 1, InformationUnitListItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(applicationRootEClass, ApplicationRoot.class, "ApplicationRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getApplicationRoot_RootCategories(), this.getCategory(), null, "rootCategories", null, 0, -1, ApplicationRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1306,6 +1429,23 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(repositoryCollectionEClass, RepositoryCollection.class, "RepositoryCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRepositoryCollection_Repositories(), this.getRemoteRepository(), null, "repositories", null, 0, -1, RepositoryCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(synchronizationMetadataEClass, SynchronizationMetadata.class, "SynchronizationMetadata", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSynchronizationMetadata_RepositoryId(), ecorePackage.getEString(), "repositoryId", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizationMetadata_Url(), ecorePackage.getEString(), "url", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizationMetadata_Readonly(), ecorePackage.getEBoolean(), "readonly", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizationMetadata_LastSynchronisation(), ecorePackage.getEDate(), "lastSynchronisation", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizationMetadata_Hash(), ecorePackage.getEString(), "hash", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizationMetadata_SyncState(), this.getSynchronizationState(), "syncState", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");
+		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.LOCAL_DELETED);
+		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.TARGET_DELETED);
+		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.NOT_ADDED);
+		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.LOCAL_EDITED);
+		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.TARGET_EDITED);
+		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.IN_SYNC);
 
 		// Initialize data types
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

@@ -173,6 +173,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createRepositoryCollectionAdapter();
 			}
 			@Override
+			public Adapter caseSynchronizationMetadata(SynchronizationMetadata object) {
+				return createSynchronizationMetadataAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -511,6 +515,20 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createRepositoryCollectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.SynchronizationMetadata <em>Synchronization Metadata</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata
+	 * @generated
+	 */
+	public Adapter createSynchronizationMetadataAdapter() {
 		return null;
 	}
 

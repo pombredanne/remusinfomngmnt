@@ -91,6 +91,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.REMOTE_OBJECT: return createRemoteObject();
 			case InfomngmntPackage.REMOTE_CONTAINER: return createRemoteContainer();
 			case InfomngmntPackage.REPOSITORY_COLLECTION: return createRepositoryCollection();
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA: return createSynchronizationMetadata();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -104,6 +105,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
+			case InfomngmntPackage.SYNCHRONIZATION_STATE:
+				return createSynchronizationStateFromString(eDataType, initialValue);
 			case InfomngmntPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			default:
@@ -119,6 +122,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
+			case InfomngmntPackage.SYNCHRONIZATION_STATE:
+				return convertSynchronizationStateToString(eDataType, instanceValue);
 			case InfomngmntPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			default:
@@ -334,6 +339,36 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public RepositoryCollection createRepositoryCollection() {
 		RepositoryCollectionImpl repositoryCollection = new RepositoryCollectionImpl();
 		return repositoryCollection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SynchronizationMetadata createSynchronizationMetadata() {
+		SynchronizationMetadataImpl synchronizationMetadata = new SynchronizationMetadataImpl();
+		return synchronizationMetadata;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SynchronizationState createSynchronizationStateFromString(EDataType eDataType, String initialValue) {
+		SynchronizationState result = SynchronizationState.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertSynchronizationStateToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

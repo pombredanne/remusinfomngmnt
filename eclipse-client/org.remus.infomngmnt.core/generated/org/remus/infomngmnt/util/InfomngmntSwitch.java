@@ -249,6 +249,13 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA: {
+				SynchronizationMetadata synchronizationMetadata = (SynchronizationMetadata)theEObject;
+				T result = caseSynchronizationMetadata(synchronizationMetadata);
+				if (result == null) result = caseAdapter(synchronizationMetadata);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -595,6 +602,21 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseRepositoryCollection(RepositoryCollection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Synchronization Metadata</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Synchronization Metadata</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSynchronizationMetadata(SynchronizationMetadata object) {
 		return null;
 	}
 

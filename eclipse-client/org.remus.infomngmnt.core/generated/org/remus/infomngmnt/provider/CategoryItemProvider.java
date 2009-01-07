@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
@@ -45,11 +46,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 public class CategoryItemProvider
 extends AdapterItemProvider
 implements
-IEditingDomainItemProvider,
-IStructuredItemContentProvider,
-ITreeItemContentProvider,
-IItemLabelProvider,
-IItemPropertySource {
+IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -158,6 +155,7 @@ IItemPropertySource {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__CHILDREN);
 			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT);
+			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA);
 		}
 		return childrenFeatures;
 	}
@@ -219,6 +217,7 @@ IItemPropertySource {
 				return;
 			case InfomngmntPackage.CATEGORY__CHILDREN:
 			case InfomngmntPackage.CATEGORY__INFORMATION_UNIT:
+			case InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -245,6 +244,11 @@ IItemPropertySource {
 			(createChildParameter
 				(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
 				 InfomngmntFactory.eINSTANCE.createInformationUnitListItem()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA,
+				 InfomngmntFactory.eINSTANCE.createSynchronizationMetadata()));
 	}
 
 }

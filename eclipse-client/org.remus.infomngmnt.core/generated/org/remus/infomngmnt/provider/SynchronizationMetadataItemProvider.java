@@ -20,9 +20,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -36,16 +35,16 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.LinkType;
+import org.remus.infomngmnt.SynchronizationMetadata;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.LinkType} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.SynchronizationMetadata} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class LinkTypeItemProvider
-	extends ItemProviderAdapter
+public class SynchronizationMetadataItemProvider
+	extends AdapterItemProvider
 	implements
 		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
 	/**
@@ -54,7 +53,7 @@ public class LinkTypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public LinkTypeItemProvider(AdapterFactory adapterFactory) {
+	public SynchronizationMetadataItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -69,28 +68,30 @@ public class LinkTypeItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addDescriptionPropertyDescriptor(object);
-			addIdPropertyDescriptor(object);
-			addImagePathPropertyDescriptor(object);
-			addEditablePropertyDescriptor(object);
+			addRepositoryIdPropertyDescriptor(object);
+			addUrlPropertyDescriptor(object);
+			addReadonlyPropertyDescriptor(object);
+			addLastSynchronisationPropertyDescriptor(object);
+			addHashPropertyDescriptor(object);
+			addSyncStatePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Description feature.
+	 * This adds a property descriptor for the Repository Id feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addDescriptionPropertyDescriptor(Object object) {
+	protected void addRepositoryIdPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_LinkType_description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_LinkType_description_feature", "_UI_LinkType_type"),
-				 InfomngmntPackage.Literals.LINK_TYPE__DESCRIPTION,
+				 getString("_UI_SynchronizationMetadata_repositoryId_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_repositoryId_feature", "_UI_SynchronizationMetadata_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID,
 				 true,
 				 false,
 				 false,
@@ -100,19 +101,19 @@ public class LinkTypeItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Url feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addUrlPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_LinkType_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_LinkType_id_feature", "_UI_LinkType_type"),
-				 InfomngmntPackage.Literals.LINK_TYPE__ID,
+				 getString("_UI_SynchronizationMetadata_url_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_url_feature", "_UI_SynchronizationMetadata_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__URL,
 				 true,
 				 false,
 				 false,
@@ -122,41 +123,19 @@ public class LinkTypeItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Image Path feature.
+	 * This adds a property descriptor for the Readonly feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addImagePathPropertyDescriptor(Object object) {
+	protected void addReadonlyPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_LinkType_imagePath_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_LinkType_imagePath_feature", "_UI_LinkType_type"),
-				 InfomngmntPackage.Literals.LINK_TYPE__IMAGE_PATH,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Editable feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addEditablePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_LinkType_editable_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_LinkType_editable_feature", "_UI_LinkType_type"),
-				 InfomngmntPackage.Literals.LINK_TYPE__EDITABLE,
+				 getString("_UI_SynchronizationMetadata_readonly_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_readonly_feature", "_UI_SynchronizationMetadata_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__READONLY,
 				 true,
 				 false,
 				 false,
@@ -166,14 +145,80 @@ public class LinkTypeItemProvider
 	}
 
 	/**
-	 * This returns LinkType.gif.
+	 * This adds a property descriptor for the Last Synchronisation feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addLastSynchronisationPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SynchronizationMetadata_lastSynchronisation_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_lastSynchronisation_feature", "_UI_SynchronizationMetadata_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Hash feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addHashPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SynchronizationMetadata_hash_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_hash_feature", "_UI_SynchronizationMetadata_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Sync State feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSyncStatePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SynchronizationMetadata_syncState_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_syncState_feature", "_UI_SynchronizationMetadata_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This returns SynchronizationMetadata.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/LinkType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SynchronizationMetadata"));
 	}
 
 	/**
@@ -184,10 +229,10 @@ public class LinkTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((LinkType)object).getId();
+		String label = ((SynchronizationMetadata)object).getRepositoryId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_LinkType_type") :
-			getString("_UI_LinkType_type") + " " + label;
+			getString("_UI_SynchronizationMetadata_type") :
+			getString("_UI_SynchronizationMetadata_type") + " " + label;
 	}
 
 	/**
@@ -195,17 +240,21 @@ public class LinkTypeItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(final Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(LinkType.class)) {
-			case InfomngmntPackage.LINK_TYPE__DESCRIPTION:
-			case InfomngmntPackage.LINK_TYPE__ID:
-			case InfomngmntPackage.LINK_TYPE__IMAGE_PATH:
-			case InfomngmntPackage.LINK_TYPE__EDITABLE:
+		switch (notification.getFeatureID(SynchronizationMetadata.class)) {
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__REPOSITORY_ID:
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__URL:
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__READONLY:
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION:
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__HASH:
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
+				// We also have to update the parent item.
+				fireNotifyChanged(new ViewerNotification(notification, ((EObject) notification.getNotifier()).eContainer(), false, true));
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
@@ -222,17 +271,6 @@ public class LinkTypeItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return InfomngmntEditPlugin.INSTANCE;
 	}
 
 }

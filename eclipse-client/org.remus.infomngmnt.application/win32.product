@@ -4,6 +4,7 @@
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
    <configIni use="default">
+      <win32>/org.remus.infomngmnt.application/config.ini</win32>
    </configIni>
 
    <launcherArgs>
@@ -103,6 +104,7 @@
       <plugin id="org.remus.infomngmnt.common.core"/>
       <plugin id="org.remus.infomngmnt.common.ui"/>
       <plugin id="org.remus.infomngmnt.core"/>
+      <plugin id="org.remus.infomngmnt.image"/>
       <plugin id="org.remus.infomngmnt.jslib"/>
       <plugin id="org.remus.infomngmnt.libs"/>
       <plugin id="org.remus.infomngmnt.link"/>
@@ -114,9 +116,5 @@
       <plugin id="org.remus.infomngmnt.ui"/>
    </plugins>
 
-   <configurations>
-      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="0" />
-      <plugin id="org.remus.infomngmnt.search.local" autoStart="true" startLevel="0" />
-   </configurations>
 
 </product>

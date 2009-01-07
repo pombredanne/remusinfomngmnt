@@ -16,8 +16,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -35,6 +37,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
@@ -78,8 +82,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		}
 	};
 	
-	public InformationUnit[] convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor) {
-		List<InformationUnit> returnValue = new LinkedList<InformationUnit>();
+	public Map<InformationUnit, SynchronizationMetadata> convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor) {
+		Map<InformationUnit,SynchronizationMetadata> returnValue = new LinkedHashMap<InformationUnit, SynchronizationMetadata>();
 		for (RemoteObject remoteObject : remoteObjects) {
 			if (KEY_TAG.equals(remoteObject.getRepositoryTypeObjectId())) {
 				
@@ -92,11 +96,18 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 					newObject.setStringValue(post.getHref());
 					newObject.setDescription(post.getExtended());
 					newObject.setKeywords(post.getTag());
-					returnValue.add(newObject);
+					
+					SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
+					metadata.setHash(post.getHash());
+					metadata.setReadonly(false);
+					metadata.setRepositoryId(remoteObject.getRepositoryTypeId());
+					metadata.setSyncState(SynchronizationState.IN_SYNC);
+					metadata.setUrl("http://test");
+					returnValue.put(newObject,metadata);
 				}
 			}
 		}
-		return returnValue.toArray(new InformationUnit[returnValue.size()]);
+		return returnValue;
 	}
 
 	

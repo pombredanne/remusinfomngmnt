@@ -4,10 +4,19 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2008 Tom Seidel, Remus Software&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;     Tom Seidel - initial API and implementation&#xD;&#xA;"
     modelDirectory="/org.remus.infomngmnt.core/generated" editDirectory="/org.remus.infomngmnt.core/generated"
     modelPluginID="org.remus.infomngmnt.core" modelName="Infomngmnt" richClientPlatform="true"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false">
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    colorProviders="true">
   <foreignModel>infomngmnt.ecore</foreignModel>
   <genPackages prefix="Infomngmnt" basePackage="org.remus" disposableProviderFactory="true"
       ecorePackage="infomngmnt.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//SynchronizationState">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/LOCAL_DELETED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/TARGET_DELETED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/NOT_ADDED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/LOCAL_EDITED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/TARGET_EDITED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/IN_SYNC"/>
+    </genEnums>
     <genDataTypes ecoreDataType="infomngmnt.ecore#//Object"/>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnit" labelFeature="#//infomngmnt/AbstractInformationUnit/label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/stringValue"/>
@@ -33,6 +42,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/children"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/informationUnit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/synchronizationMetaData"/>
     </genClasses>
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//AbstractInformationUnit"
         labelFeature="#//infomngmnt/AbstractInformationUnit/label">
@@ -42,6 +52,7 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItem/workspacePath"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItem/synchronizationMetaData"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//ApplicationRoot">
       <genFeatures children="true" createChild="true" propertyCategory="" propertySortChoices="true"
@@ -111,6 +122,14 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RepositoryCollection">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RepositoryCollection/repositories"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//SynchronizationMetadata">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/repositoryId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/readonly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/lastSynchronisation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/hash"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/syncState"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

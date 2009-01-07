@@ -114,6 +114,12 @@
       </transfertype>
       
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.remus.infomngmnt.core.startup.InboxProjectStartup">
+      </startup>
+   </extension>
   
 
 </plugin>

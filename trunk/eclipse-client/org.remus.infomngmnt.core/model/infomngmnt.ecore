@@ -33,6 +33,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="informationUnit" upperBound="-1"
         eType="#//InformationUnitListItem" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="synchronizationMetaData"
+        eType="#//SynchronizationMetadata" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractInformationUnit" abstract="true"
       eSuperTypes="#//Adapter">
@@ -43,6 +45,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InformationUnitListItem" eSuperTypes="#//AbstractInformationUnit">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="workspacePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="synchronizationMetaData"
+        eType="#//SynchronizationMetadata" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ApplicationRoot">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rootCategories" upperBound="-1"
@@ -134,5 +138,21 @@
   <eClassifiers xsi:type="ecore:EClass" name="RepositoryCollection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="repositories" upperBound="-1"
         eType="#//RemoteRepository" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SynchronizationMetadata" eSuperTypes="#//Adapter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="repositoryId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="readonly" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastSynchronisation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hash" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="syncState" eType="#//SynchronizationState"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SynchronizationState">
+    <eLiterals name="LOCAL_DELETED"/>
+    <eLiterals name="TARGET_DELETED" value="1"/>
+    <eLiterals name="NOT_ADDED" value="2"/>
+    <eLiterals name="LOCAL_EDITED" value="3"/>
+    <eLiterals name="TARGET_EDITED" value="4"/>
+    <eLiterals name="IN_SYNC" value="5"/>
   </eClassifiers>
 </ecore:EPackage>

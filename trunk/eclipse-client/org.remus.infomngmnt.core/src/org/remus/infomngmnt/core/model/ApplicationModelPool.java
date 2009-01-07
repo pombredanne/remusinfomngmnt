@@ -41,16 +41,15 @@ public class ApplicationModelPool {
 	private final class AdapterImplExtension extends EContentAdapter {
 		private final Category category;
 
-		AdapterImplExtension(Category category) {
+		AdapterImplExtension(final Category category) {
 			this.category = category;
 		}
 
 		@Override
-		public void notifyChanged(Notification msg) {
+		public void notifyChanged(final Notification msg) {
 			if (msg.getNotifier() instanceof ResourceImpl) {
 				return;
 			}
-			System.out.println(msg);
 			try {
 				this.category.eResource().save(null);
 				//if (msg.getEventType() == Notification.)
@@ -95,18 +94,18 @@ public class ApplicationModelPool {
 		return this.model;
 	}
 
-	public void addListenerToCategory(Category category) {
+	public void addListenerToCategory(final Category category) {
 		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(category.eResource());
 		category.eAdapters().add(new AdapterImplExtension(category));
 	}
 
 	public Map<String, InformationUnitListItem> getAllItems(
-			IProgressMonitor monitor) {
+			final IProgressMonitor monitor) {
 		return this.cache.getAllItems(monitor);
 	}
 
-	public InformationUnitListItem getItemById(String id,
-			IProgressMonitor monitor) {
+	public InformationUnitListItem getItemById(final String id,
+			final IProgressMonitor monitor) {
 		return this.cache.getItemById(id, monitor);
 	}
 

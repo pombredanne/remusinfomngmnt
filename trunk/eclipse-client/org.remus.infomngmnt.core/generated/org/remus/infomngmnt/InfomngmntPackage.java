@@ -17,6 +17,7 @@ package org.remus.infomngmnt;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -380,13 +381,22 @@ public interface InfomngmntPackage extends EPackage {
 	int CATEGORY__DESCRIPTION = ADAPTER_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__SYNCHRONIZATION_META_DATA = ADAPTER_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Category</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 5;
+	int CATEGORY_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl <em>Information Unit List Item</em>}' class.
@@ -435,13 +445,22 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Information Unit List Item</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 1;
+	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 2;
 
 
 	/**
@@ -1360,6 +1379,89 @@ public interface InfomngmntPackage extends EPackage {
 	int REPOSITORY_COLLECTION_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl <em>Synchronization Metadata</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.SynchronizationMetadataImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationMetadata()
+	 * @generated
+	 */
+	int SYNCHRONIZATION_METADATA = 23;
+
+	/**
+	 * The feature id for the '<em><b>Repository Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__REPOSITORY_ID = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Url</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__URL = ADAPTER_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__READONLY = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Last Synchronisation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION = ADAPTER_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Hash</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__HASH = ADAPTER_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Sync State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__SYNC_STATE = ADAPTER_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of structural features of the '<em>Synchronization Metadata</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 6;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.SynchronizationState
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
+	 * @generated
+	 */
+	int SYNCHRONIZATION_STATE = 24;
+
+	/**
 	 * The meta object id for the '<em>Object</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1367,7 +1469,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 23;
+	int OBJECT = 25;
 
 
 	/**
@@ -1610,6 +1712,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getCategory_Description();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.Category#getSynchronizationMetaData <em>Synchronization Meta Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Synchronization Meta Data</em>'.
+	 * @see org.remus.infomngmnt.Category#getSynchronizationMetaData()
+	 * @see #getCategory()
+	 * @generated
+	 */
+	EReference getCategory_SynchronizationMetaData();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.AbstractInformationUnit <em>Abstract Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1672,6 +1785,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInformationUnitListItem_WorkspacePath();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.InformationUnitListItem#getSynchronizationMetaData <em>Synchronization Meta Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Synchronization Meta Data</em>'.
+	 * @see org.remus.infomngmnt.InformationUnitListItem#getSynchronizationMetaData()
+	 * @see #getInformationUnitListItem()
+	 * @generated
+	 */
+	EReference getInformationUnitListItem_SynchronizationMetaData();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.ApplicationRoot <em>Application Root</em>}'.
@@ -2241,6 +2365,92 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getRepositoryCollection_Repositories();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.SynchronizationMetadata <em>Synchronization Metadata</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Synchronization Metadata</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata
+	 * @generated
+	 */
+	EClass getSynchronizationMetadata();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#getRepositoryId <em>Repository Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Repository Id</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#getRepositoryId()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_RepositoryId();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#getUrl <em>Url</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Url</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#getUrl()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_Url();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#isReadonly <em>Readonly</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Readonly</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#isReadonly()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_Readonly();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#getLastSynchronisation <em>Last Synchronisation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Last Synchronisation</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#getLastSynchronisation()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_LastSynchronisation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#getHash <em>Hash</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Hash</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#getHash()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_Hash();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#getSyncState <em>Sync State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sync State</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#getSyncState()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_SyncState();
+
+	/**
+	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Synchronization State</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationState
+	 * @generated
+	 */
+	EEnum getSynchronizationState();
+
+	/**
 	 * Returns the meta object for data type '{@link java.lang.Object <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2456,6 +2666,14 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute CATEGORY__DESCRIPTION = eINSTANCE.getCategory_Description();
 
 		/**
+		 * The meta object literal for the '<em><b>Synchronization Meta Data</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORY__SYNCHRONIZATION_META_DATA = eINSTANCE.getCategory_SynchronizationMetaData();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl <em>Abstract Information Unit</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2506,6 +2724,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = eINSTANCE.getInformationUnitListItem_WorkspacePath();
+
+		/**
+		 * The meta object literal for the '<em><b>Synchronization Meta Data</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA = eINSTANCE.getInformationUnitListItem_SynchronizationMetaData();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ApplicationRootImpl <em>Application Root</em>}' class.
@@ -2966,6 +3192,74 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference REPOSITORY_COLLECTION__REPOSITORIES = eINSTANCE.getRepositoryCollection_Repositories();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl <em>Synchronization Metadata</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.SynchronizationMetadataImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationMetadata()
+		 * @generated
+		 */
+		EClass SYNCHRONIZATION_METADATA = eINSTANCE.getSynchronizationMetadata();
+
+		/**
+		 * The meta object literal for the '<em><b>Repository Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__REPOSITORY_ID = eINSTANCE.getSynchronizationMetadata_RepositoryId();
+
+		/**
+		 * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__URL = eINSTANCE.getSynchronizationMetadata_Url();
+
+		/**
+		 * The meta object literal for the '<em><b>Readonly</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__READONLY = eINSTANCE.getSynchronizationMetadata_Readonly();
+
+		/**
+		 * The meta object literal for the '<em><b>Last Synchronisation</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION = eINSTANCE.getSynchronizationMetadata_LastSynchronisation();
+
+		/**
+		 * The meta object literal for the '<em><b>Hash</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__HASH = eINSTANCE.getSynchronizationMetadata_Hash();
+
+		/**
+		 * The meta object literal for the '<em><b>Sync State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__SYNC_STATE = eINSTANCE.getSynchronizationMetadata_SyncState();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.SynchronizationState
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
+		 * @generated
+		 */
+		EEnum SYNCHRONIZATION_STATE = eINSTANCE.getSynchronizationState();
 
 		/**
 		 * The meta object literal for the '<em>Object</em>' data type.

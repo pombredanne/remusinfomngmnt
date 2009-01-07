@@ -16,12 +16,15 @@ package org.remus.infomngmnt.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationMetadata;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,6 +34,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getWorkspacePath <em>Workspace Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getSynchronizationMetaData <em>Synchronization Meta Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,6 +60,16 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	 * @ordered
 	 */
 	protected String workspacePath = WORKSPACE_PATH_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getSynchronizationMetaData() <em>Synchronization Meta Data</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSynchronizationMetaData()
+	 * @generated
+	 * @ordered
+	 */
+	protected SynchronizationMetadata synchronizationMetaData;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -102,11 +116,70 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public SynchronizationMetadata getSynchronizationMetaData() {
+		return synchronizationMetaData;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetSynchronizationMetaData(SynchronizationMetadata newSynchronizationMetaData, NotificationChain msgs) {
+		SynchronizationMetadata oldSynchronizationMetaData = synchronizationMetaData;
+		synchronizationMetaData = newSynchronizationMetaData;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA, oldSynchronizationMetaData, newSynchronizationMetaData);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSynchronizationMetaData(SynchronizationMetadata newSynchronizationMetaData) {
+		if (newSynchronizationMetaData != synchronizationMetaData) {
+			NotificationChain msgs = null;
+			if (synchronizationMetaData != null)
+				msgs = ((InternalEObject)synchronizationMetaData).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA, null, msgs);
+			if (newSynchronizationMetaData != null)
+				msgs = ((InternalEObject)newSynchronizationMetaData).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA, null, msgs);
+			msgs = basicSetSynchronizationMetaData(newSynchronizationMetaData, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA, newSynchronizationMetaData, newSynchronizationMetaData));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
+				return basicSetSynchronizationMetaData(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				return getWorkspacePath();
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
+				return getSynchronizationMetaData();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -121,6 +194,9 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 		switch (featureID) {
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				setWorkspacePath((String)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
+				setSynchronizationMetaData((SynchronizationMetadata)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -137,6 +213,9 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				setWorkspacePath(WORKSPACE_PATH_EDEFAULT);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
+				setSynchronizationMetaData((SynchronizationMetadata)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -151,6 +230,8 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 		switch (featureID) {
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				return WORKSPACE_PATH_EDEFAULT == null ? workspacePath != null : !WORKSPACE_PATH_EDEFAULT.equals(workspacePath);
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
+				return synchronizationMetaData != null;
 		}
 		return super.eIsSet(featureID);
 	}

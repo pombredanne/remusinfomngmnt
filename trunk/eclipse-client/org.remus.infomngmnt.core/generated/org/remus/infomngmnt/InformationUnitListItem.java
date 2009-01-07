@@ -24,6 +24,7 @@ package org.remus.infomngmnt;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.InformationUnitListItem#getWorkspacePath <em>Workspace Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnitListItem#getSynchronizationMetaData <em>Synchronization Meta Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,5 +58,31 @@ public interface InformationUnitListItem extends AbstractInformationUnit {
 	 * @generated
 	 */
 	void setWorkspacePath(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Synchronization Meta Data</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Synchronization Meta Data</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Synchronization Meta Data</em>' containment reference.
+	 * @see #setSynchronizationMetaData(SynchronizationMetadata)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnitListItem_SynchronizationMetaData()
+	 * @model containment="true"
+	 * @generated
+	 */
+	SynchronizationMetadata getSynchronizationMetaData();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnitListItem#getSynchronizationMetaData <em>Synchronization Meta Data</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Synchronization Meta Data</em>' containment reference.
+	 * @see #getSynchronizationMetaData()
+	 * @generated
+	 */
+	void setSynchronizationMetaData(SynchronizationMetadata value);
 
 } // InformationUnitListItem

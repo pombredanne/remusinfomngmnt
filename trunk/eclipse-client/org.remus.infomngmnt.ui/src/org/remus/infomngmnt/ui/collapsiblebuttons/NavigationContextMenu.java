@@ -183,7 +183,7 @@ ISelectionChangedListener
 	 */
 	protected boolean removeAllReferencesOnDelete()
 	{
-		return true;
+		return false;
 	}
 
 

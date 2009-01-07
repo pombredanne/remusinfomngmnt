@@ -12,13 +12,14 @@
 
 package org.remus.infomngmnt.ui.newwizards;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.commands.CommandFactory;
 
@@ -55,13 +56,22 @@ public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
 	 */
 	@Override
 	public boolean performFinish() {
-		for (InformationUnit newElement : this.newObjects) {
-			EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
-			.execute(CommandFactory.CREATE_INFOTYPE(newElement, findCategory()));
-			// we also reveal the created list-item, that can be found in the navigation
-			UIUtil.selectAndReveal(newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-			UIUtil.selectAndReveal(newElement, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-		}
+		Job job = new Job("Creating new items") {
+			@Override
+			protected IStatus run(final IProgressMonitor monitor) {
+				monitor.beginTask("Creating new items", MultipleNewObjectsWizard.this.newObjects.size());
+				for (InformationUnit newElement : MultipleNewObjectsWizard.this.newObjects) {
+					EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
+					.execute(CommandFactory.CREATE_INFOTYPE(newElement, findCategory()));
+					// we also reveal the created list-item, that can be found in the navigation
+//					UIUtil.selectAndReveal(newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+//					UIUtil.selectAndReveal(newElement, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+					monitor.worked(1);
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.schedule();
 		return true;
 	}
 

@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.ui.newwizards;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -29,6 +30,8 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.commands.CommandFactory;
+import org.remus.infomngmnt.ui.editors.InformationEditor;
+import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -76,6 +79,11 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
 		.execute(CommandFactory.CREATE_INFOTYPE(this.newElement, findCategory()));
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)), InformationEditor.ID);
+		} catch (Exception e) {
+			// will come soon.
+		}
 		// we also reveal the created list-item, that can be found in the navigation
 		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());
 		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
@@ -112,7 +120,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		}
 
 	}
-	
+
 	protected abstract String getInfoTypeId();
 
 	@Override

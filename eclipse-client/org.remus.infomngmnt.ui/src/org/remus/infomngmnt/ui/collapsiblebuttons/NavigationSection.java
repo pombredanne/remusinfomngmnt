@@ -24,6 +24,7 @@ import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -31,7 +32,6 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -73,7 +73,7 @@ import org.remus.infomngmnt.ui.dnd.NavigationDropAdapter;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
-import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
+import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.ui.views.MainViewPart;
 
 /**
@@ -137,7 +137,6 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		//tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		this.viewer = new TreeViewer(tree);
-
 		initProvider();
 		initInput();
 		initOpen();
@@ -195,10 +194,20 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	}
 
 	private void initProvider() {
-		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
-		this.labelProvider = new DecoratingLabelProvider(
-				new NavigationCellLabelProvider(),
-				PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
+		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory()) {
+			@Override
+			public boolean hasChildren(final Object object) {
+				if (object instanceof InformationUnitListItem) {
+					return false;
+				}
+				return super.hasChildren(object);
+			}
+		};
+		
+		
+		this.labelProvider = new NavigatorDecoratingLabelProvider(
+				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
+				
 
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);
@@ -368,4 +377,6 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		returnValue.add(LocalTransfer.getInstance());
 		return returnValue.toArray(new Transfer[returnValue.size()]);
 	}
+	
+	
 }

@@ -15,6 +15,7 @@ package org.remus.infomngmnt.ui.collapsiblebuttons;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
@@ -42,7 +43,6 @@ import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.deferred.DeferredContentProvider;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
-import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -92,7 +92,7 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	private void initProvider() {
 		IStructuredContentProvider contentProvider = new DeferredContentProvider(EditingUtil.getInstance().getAdapterFactory(),getViewSite());
 		LabelProvider labelProvider = new DecoratingLabelProvider(
-				new NavigationCellLabelProvider(),
+				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()),
 				PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
 		this.viewer.setContentProvider(contentProvider);
 		this.viewer.setLabelProvider(labelProvider);

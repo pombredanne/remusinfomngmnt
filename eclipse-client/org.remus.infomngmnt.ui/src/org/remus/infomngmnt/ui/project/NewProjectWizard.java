@@ -21,9 +21,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResourceStatus;
@@ -34,8 +31,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -70,12 +65,7 @@ import org.eclipse.ui.internal.wizards.newresource.ResourceMessages;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.ui.commands.CommandFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -124,22 +114,12 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	private void createDescriptor() {
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
-			public void run(IProgressMonitor monitor)
+			public void run(final IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
-				IFolder folder = NewProjectWizard.this.newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
 				try {
-					folder.create(true, true, monitor);
-					IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
-					Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(),true);
-					rootCategory.setLabel(NewProjectWizard.this.newProject.getName());
-					rootCategory.setId(new UniversalUniqueIdentifier().toString());
-					rootCategory.setDescription(NewProjectWizard.this.page1.getDescriptionText());
-					EditingUtil.getInstance().saveObjectToResource(rootCategory);
-
-					EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
-					Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
-					editingDomain.getCommandStack().execute(createCommand);
-					ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
+					ResourceUtil.createNewProject(
+							NewProjectWizard.this.newProject,
+							monitor, NewProjectWizard.this.page1.getDescriptionText());
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				}
@@ -161,8 +141,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 * Stores the configuration element for the wizard. The config element will
 	 * be used in <code>performFinish</code> to set the result perspective.
 	 */
-	public void setInitializationData(IConfigurationElement cfig,
-			String propertyName, Object data) {
+	public void setInitializationData(final IConfigurationElement cfig,
+			final String propertyName, final Object data) {
 		this.configElement = cfig;
 	}
 
@@ -182,7 +162,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
 	 */
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
+	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		// TODO Auto-generated method stub
 
 	}
@@ -227,7 +207,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		// create the new project operation
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
-			public void run(IProgressMonitor monitor)
+			public void run(final IProgressMonitor monitor)
 			throws InvocationTargetException {
 				CreateProjectOperation op = new CreateProjectOperation(
 						description, ResourceMessages.NewProject_windowTitle);
@@ -291,7 +271,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		return this.newProject;
 	}
 
-	private void postProjectCreation(IProjectDescription description) {
+	private void postProjectCreation(final IProjectDescription description) {
 		ResourceUtil.postProjectCreation(description);
 	}
 	/**
@@ -314,7 +294,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 * @see IPreferenceConstants#OPM_ACTIVE_PAGE
 	 * @see IWorkbenchPreferenceConstants#NO_NEW_PERSPECTIVE
 	 */
-	public static void updatePerspective(IConfigurationElement configElement) {
+	public static void updatePerspective(final IConfigurationElement configElement) {
 		// Do not change perspective if the configuration element is
 		// not specified.
 		if (configElement == null) {
@@ -425,7 +405,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	/*
 	 * (non-Javadoc) Replaces the current perspective with the new one.
 	 */
-	private static void replaceCurrentPerspective(IPerspectiveDescriptor persp) {
+	private static void replaceCurrentPerspective(final IPerspectiveDescriptor persp) {
 
 		// Get the active page.
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
@@ -454,8 +434,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 * @return <code>true</code> if it's OK to switch, <code>false</code>
 	 *         otherwise
 	 */
-	private static boolean confirmPerspectiveSwitch(IWorkbenchWindow window,
-			IPerspectiveDescriptor finalPersp) {
+	private static boolean confirmPerspectiveSwitch(final IWorkbenchWindow window,
+			final IPerspectiveDescriptor finalPersp) {
 		IPreferenceStore store = IDEWorkbenchPlugin.getDefault()
 		.getPreferenceStore();
 		String pspm = store
@@ -466,13 +446,14 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		}
 		String desc = finalPersp.getDescription();
 		String message;
-		if (desc == null || desc.length() == 0)
+		if (desc == null || desc.length() == 0) {
 			message = NLS.bind(ResourceMessages.NewProject_perspSwitchMessage,
 					finalPersp.getLabel());
-		else
+		} else {
 			message = NLS.bind(
 					ResourceMessages.NewProject_perspSwitchMessageWithDesc,
 					new String[] { finalPersp.getLabel(), desc });
+		}
 
 		MessageDialogWithToggle dialog = MessageDialogWithToggle
 		.openYesNoQuestion(window.getShell(),
@@ -511,8 +492,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 *            the id to query.
 	 * @since 3.0
 	 */
-	private static void addPerspectiveAndDescendants(List perspectiveIds,
-			String id) {
+	private static void addPerspectiveAndDescendants(final List perspectiveIds,
+			final String id) {
 		IPerspectiveRegistry registry = PlatformUI.getWorkbench()
 		.getPerspectiveRegistry();
 		IPerspectiveDescriptor[] perspectives = registry.getPerspectives();

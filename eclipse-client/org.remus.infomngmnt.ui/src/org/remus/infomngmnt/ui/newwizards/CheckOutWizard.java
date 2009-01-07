@@ -13,43 +13,50 @@
 package org.remus.infomngmnt.ui.newwizards;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.commands.CommandFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class CheckOutWizard extends MultipleNewObjectsWizard {
 
+	private Map<InformationUnit, SynchronizationMetadata> convertedObjects;
 	
 	@Override
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		ProgressMonitorDialog pmd = new ProgressMonitorDialog(workbench.getActiveWorkbenchWindow().getShell());
 		try {
 			pmd.run(true, true, new CancelableRunnable() {
+
 				@Override
 				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 					if (UIUtil.isSelectionInstanceOf(selection, RemoteObject.class)) {
 						List<RemoteObject> list = selection.toList();
 						IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(list.get(0).getRepositoryTypeId());
-						InformationUnit[] convertToLocalObjects = itemById.convertToLocalObjects(list.toArray(new RemoteObject[list.size()]), monitor);
-						setNewObjects(new BasicEList<InformationUnit>(Arrays.asList(convertToLocalObjects)));
+						CheckOutWizard.this.convertedObjects = itemById.convertToLocalObjects(list.toArray(new RemoteObject[list.size()]), monitor);
+						setNewObjects(new BasicEList<InformationUnit>(CheckOutWizard.this.convertedObjects.keySet()));
 					}
 					
 					return Status.OK_STATUS;
@@ -62,7 +69,32 @@ public abstract class CheckOutWizard extends MultipleNewObjectsWizard {
 		} catch (InterruptedException e) {
 			
 		}
-		
+	}
+	
+	@Override
+	public boolean performFinish() {
+		Job job = new Job("Creating new items") {
+			@Override
+			protected IStatus run(final IProgressMonitor monitor) {
+				monitor.beginTask("Creating new items", CheckOutWizard.this.convertedObjects.size());
+				for (InformationUnit newElement : CheckOutWizard.this.convertedObjects.keySet()) {
+					EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
+					.execute(CommandFactory.CREATE_INFOTYPE(newElement, findCategory()));
+					
+					InformationUnitListItem adapter = (InformationUnitListItem) newElement.getAdapter(InformationUnitListItem.class);
+					if (adapter != null) {
+						adapter.setSynchronizationMetaData(CheckOutWizard.this.convertedObjects.get(newElement));
+					}
+					// we also reveal the created list-item, that can be found in the navigation
+//					UIUtil.selectAndReveal(newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+//					UIUtil.selectAndReveal(newElement, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+					monitor.worked(1);
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.schedule();
+		return true;
 	}
 
 }

@@ -249,5 +249,17 @@
             parentId="org.eclipse.ui.contexts.window">
       </context>
    </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="org.remus.infomngmnt.ui.remote.decorator.SynchronizationDecorator"
+            id="org.remus.infomngmnt.ui.syncDecorator"
+            label="SynchronizationLabelDecorator"
+            lightweight="true"
+            location="BOTTOM_LEFT"
+            state="true">
+      </decorator>
+   </extension>
 
 </plugin>

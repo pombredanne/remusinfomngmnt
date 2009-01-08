@@ -86,7 +86,7 @@ ILightweightLabelDecorator {
 			IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(repositoryId);
 			if (itemById != null) {
 				ImageData image = itemById.getImage().getImageData();
-				ImageData scaledTo = image.scaledTo(7,7);
+				ImageData scaledTo = image.scaledTo(9,9);
 				this.scaledImageMap.put(repositoryId,ImageDescriptor.createFromImageData(scaledTo));;
 			} else {
 				return null;

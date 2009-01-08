@@ -22,7 +22,11 @@ Require-Bundle: org.eclipse.ui,
  org.remus.infomngmnt.common.ui;bundle-version="1.0.0",
  org.remus.infomngmnt.common.core;bundle-version="1.0.0",
  org.eclipse.core.expressions;bundle-version="3.4.100",
- org.eclipse.nebula.widgets.collapsiblebuttons;bundle-version="1.0.0"
+ org.eclipse.nebula.widgets.collapsiblebuttons;bundle-version="1.0.0",
+ org.eclipse.emf.compare.diff;bundle-version="0.8.1",
+ org.eclipse.emf.compare.match;bundle-version="0.8.1",
+ org.eclipse.emf.compare.diff.edit;bundle-version="0.8.1",
+ org.eclipse.emf.compare;bundle-version="0.8.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.ui,

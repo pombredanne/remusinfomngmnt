@@ -1,6 +1,8 @@
 package org.remus.infomngmnt.ui.remote;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.compare.diff.metamodel.DiffModel;
+import org.eclipse.emf.compare.util.AdapterUtils;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -38,13 +40,15 @@ public class GeneralChangeSetProcessingDialog extends TitleAreaDialog {
 	private final Category selection;
 	private final ChangeSet changeSet;
 	private String categoryString;
+	private final DiffModel diffModel;
 	/**
 	 * Create the dialog
 	 * @param parentShell
 	 */
-	public GeneralChangeSetProcessingDialog(final Shell parentShell, final ChangeSet changeSet) {
+	public GeneralChangeSetProcessingDialog(final Shell parentShell, final ChangeSet changeSet, final DiffModel diffModel) {
 		super(parentShell);
 		this.changeSet = changeSet;
+		this.diffModel = diffModel;
 		this.selection = changeSet.getTargetCategory();
 	}
 
@@ -112,12 +116,14 @@ public class GeneralChangeSetProcessingDialog extends TitleAreaDialog {
 		changesetLabel.setText("Change-Set");
 
 		final TreeViewer treeViewer = new TreeViewer(container, SWT.BORDER);
+		
 		this.tree = treeViewer.getTree();
 		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
-		treeViewer.setContentProvider(new GeneralChangeSetContentProvider());
 		
-		treeViewer.setInput(this.changeSet.getChangeSetItems());
+		treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(AdapterUtils.getAdapterFactory()));
+		treeViewer.setContentProvider(new AdapterFactoryContentProvider(AdapterUtils.getAdapterFactory()));
+		
+		treeViewer.setInput(this.diffModel);
 		//
 		return area;
 	}

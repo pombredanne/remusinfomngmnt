@@ -20,6 +20,8 @@ import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -45,6 +47,21 @@ public class ModelUtil {
 			}
 		}
 		return returnValue;
+	}
+	
+	public static void copyObject(final EObject src, final EObject target, final EStructuralFeature[] featuresToSet, final EStructuralFeature[] featuresToCopy) {
+		if (src.getClass() == target.getClass()) {
+			for (EStructuralFeature eStructuralFeature : featuresToSet) {
+				Object eGet = src.eGet(eStructuralFeature);
+				target.eSet(eStructuralFeature, eGet);
+			}
+			for (EStructuralFeature eStructuralFeature : featuresToCopy) {
+				Object eGet = src.eGet(eStructuralFeature);
+				if (eGet instanceof EObject) {
+					target.eSet(eStructuralFeature, EcoreUtil.copy((EObject) eGet));
+				}
+			}
+		}
 	}
 	
 	public static boolean hasEqualAttribute(final List<EObject> list, final EAttribute attribute) {

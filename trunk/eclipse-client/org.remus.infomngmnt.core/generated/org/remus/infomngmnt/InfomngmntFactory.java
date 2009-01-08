@@ -223,6 +223,24 @@ public interface InfomngmntFactory extends EFactory {
 	SynchronizationMetadata createSynchronizationMetadata();
 
 	/**
+	 * Returns a new object of class '<em>Change Set</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Change Set</em>'.
+	 * @generated
+	 */
+	ChangeSet createChangeSet();
+
+	/**
+	 * Returns a new object of class '<em>Change Set Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Change Set Item</em>'.
+	 * @generated
+	 */
+	ChangeSetItem createChangeSetItem();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

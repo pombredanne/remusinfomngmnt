@@ -27,6 +27,8 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 
@@ -49,6 +51,16 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 		this.createInformationUnitListItem = InfomngmntFactory.eINSTANCE.createInformationUnitListItem();
 		this.newFile = CategoryUtil.getProjectByCategory(parentCategory).getFile(newInformationUnit.getId() + ".info");
 
+		/*
+		 * if the parent category is under remote control, we
+		 * have to prepare this item for adding to the repository.
+		 */
+		if (parentCategory.getSynchronizationMetaData() != null) {
+			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
+			metadata.setRepositoryId(parentCategory.getSynchronizationMetaData().getRepositoryId());
+			metadata.setSyncState(SynchronizationState.NOT_ADDED);
+			this.createInformationUnitListItem.setSynchronizationMetaData(metadata);
+		}
 		// transfer the needed information
 		this.createInformationUnitListItem.setId(newInformationUnit.getId());
 		this.createInformationUnitListItem.setLabel(newInformationUnit.getLabel());

@@ -256,6 +256,32 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case InfomngmntPackage.CHANGE_SET: {
+				ChangeSet changeSet = (ChangeSet)theEObject;
+				T result = caseChangeSet(changeSet);
+				if (result == null) result = caseAdapter(changeSet);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.CHANGE_SET_ITEM: {
+				ChangeSetItem changeSetItem = (ChangeSetItem)theEObject;
+				T result = caseChangeSetItem(changeSetItem);
+				if (result == null) result = caseAdapter(changeSetItem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<Category, SynchronizationAction> categoryToSynchronizationActionMap = (Map.Entry<Category, SynchronizationAction>)theEObject;
+				T result = caseCategoryToSynchronizationActionMap(categoryToSynchronizationActionMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<InformationUnitListItem, InformationUnit> informationUnitListItemToInformationUnitMap = (Map.Entry<InformationUnitListItem, InformationUnit>)theEObject;
+				T result = caseInformationUnitListItemToInformationUnitMap(informationUnitListItemToInformationUnitMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -617,6 +643,66 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseSynchronizationMetadata(SynchronizationMetadata object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Change Set</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Change Set</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseChangeSet(ChangeSet object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Change Set Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Change Set Item</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseChangeSetItem(ChangeSetItem object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Category To Synchronization Action Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Category To Synchronization Action Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCategoryToSynchronizationActionMap(Map.Entry<Category, SynchronizationAction> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Information Unit List Item To Information Unit Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Information Unit List Item To Information Unit Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInformationUnitListItemToInformationUnitMap(Map.Entry<InformationUnitListItem, InformationUnit> object) {
 		return null;
 	}
 

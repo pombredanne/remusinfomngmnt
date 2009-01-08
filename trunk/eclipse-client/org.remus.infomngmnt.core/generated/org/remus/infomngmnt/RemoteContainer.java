@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.RemoteContainer#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteContainer#getExclusionChildren <em>Exclusion Children</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,7 +37,7 @@ import org.eclipse.emf.common.util.EList;
 public interface RemoteContainer extends RemoteObject {
 
 	/**
-	 * Returns the value of the '<em><b>Children</b></em>' reference list.
+	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.remus.infomngmnt.RemoteObject}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -44,10 +45,26 @@ public interface RemoteContainer extends RemoteObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Children</em>' reference list.
+	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteContainer_Children()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<RemoteObject> getChildren();
+
+	/**
+	 * Returns the value of the '<em><b>Exclusion Children</b></em>' reference list.
+	 * The list contents are of type {@link org.remus.infomngmnt.RemoteObject}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Exclusion Children</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Exclusion Children</em>' reference list.
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteContainer_ExclusionChildren()
+	 * @model
+	 * @generated
+	 */
+	EList<RemoteObject> getExclusionChildren();
 } // RemoteContainer

@@ -17,6 +17,15 @@
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/TARGET_EDITED"/>
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/IN_SYNC"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//SynchronizationAction">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/REPLACE_LOCAL"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/REPLACE_REMOTE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/DELETE_LOCAL"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/DELETE_REMOTE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/ADD_LOCAL"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/ADD_REMOTE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/RESOLVE_CONFLICT"/>
+    </genEnums>
     <genDataTypes ecoreDataType="infomngmnt.ecore#//Object"/>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnit" labelFeature="#//infomngmnt/AbstractInformationUnit/label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/stringValue"/>
@@ -119,6 +128,7 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RemoteContainer">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteContainer/children"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteContainer/exclusionChildren"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RepositoryCollection">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RepositoryCollection/repositories"/>
@@ -130,6 +140,25 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/lastSynchronisation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/hash"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/syncState"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//ChangeSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/targetCategory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/changeSetItems"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//ChangeSetItem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteConvertedContainer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteOriginalObject"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/localContainer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/syncActionMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteFullObjectMap"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//CategoryToSynchronizationActionMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//CategoryToSynchronizationActionMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CategoryToSynchronizationActionMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

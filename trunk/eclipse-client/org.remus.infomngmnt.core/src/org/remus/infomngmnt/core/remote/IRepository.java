@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
@@ -28,6 +29,10 @@ import org.remus.infomngmnt.SynchronizationMetadata;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface IRepository {
+	
+	public static final int OPERATION_GET = 0; 
+	
+	public static final int OPERATION_COMMIT = 1; 
 	
 	/**
 	 * Returns an image (typically 16x16) which represents
@@ -61,6 +66,9 @@ public interface IRepository {
 	ISchedulingRule getRule();
 	
 	Map<InformationUnit, SynchronizationMetadata> convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor);
+	
+	void applyChangeSet(ChangeSet changeSet);
+	
 	
 
 }

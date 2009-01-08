@@ -17,9 +17,12 @@ package org.remus.infomngmnt.provider;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -29,26 +32,34 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.RemoteContainer;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.RemoteContainer} object.
+ * This is the item provider adapter for a {@link java.util.Map.Entry} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RemoteContainerItemProvider
-	extends RemoteObjectItemProvider
+public class CategoryToSynchronizationActionMapItemProvider
+	extends ItemProviderAdapter
 	implements
-		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource,
+		IItemColorProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RemoteContainerItemProvider(AdapterFactory adapterFactory) {
+	public CategoryToSynchronizationActionMapItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,26 +74,26 @@ public class RemoteContainerItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addChildrenPropertyDescriptor(object);
-			addExclusionChildrenPropertyDescriptor(object);
+			addKeyPropertyDescriptor(object);
+			addValuePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Children feature.
+	 * This adds a property descriptor for the Key feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addChildrenPropertyDescriptor(Object object) {
+	protected void addKeyPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RemoteContainer_children_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteContainer_children_feature", "_UI_RemoteContainer_type"),
-				 InfomngmntPackage.Literals.REMOTE_CONTAINER__CHILDREN,
+				 getString("_UI_CategoryToSynchronizationActionMap_key_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CategoryToSynchronizationActionMap_key_feature", "_UI_CategoryToSynchronizationActionMap_type"),
+				 InfomngmntPackage.Literals.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP__KEY,
 				 true,
 				 false,
 				 true,
@@ -92,36 +103,36 @@ public class RemoteContainerItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Exclusion Children feature.
+	 * This adds a property descriptor for the Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addExclusionChildrenPropertyDescriptor(Object object) {
+	protected void addValuePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RemoteContainer_exclusionChildren_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteContainer_exclusionChildren_feature", "_UI_RemoteContainer_type"),
-				 InfomngmntPackage.Literals.REMOTE_CONTAINER__EXCLUSION_CHILDREN,
+				 getString("_UI_CategoryToSynchronizationActionMap_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CategoryToSynchronizationActionMap_value_feature", "_UI_CategoryToSynchronizationActionMap_type"),
+				 InfomngmntPackage.Literals.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP__VALUE,
 				 true,
 				 false,
-				 true,
-				 null,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This returns RemoteContainer.gif.
+	 * This returns CategoryToSynchronizationActionMap.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RemoteContainer"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CategoryToSynchronizationActionMap"));
 	}
 
 	/**
@@ -132,10 +143,8 @@ public class RemoteContainerItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((RemoteContainer)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_RemoteContainer_type") :
-			getString("_UI_RemoteContainer_type") + " " + label;
+		Map.Entry<?, ?> categoryToSynchronizationActionMap = (Map.Entry<?, ?>)object;
+		return "" + categoryToSynchronizationActionMap.getKey() + " -> " + categoryToSynchronizationActionMap.getValue();
 	}
 
 	/**
@@ -148,6 +157,12 @@ public class RemoteContainerItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(Map.Entry.class)) {
+			case InfomngmntPackage.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 
@@ -161,6 +176,17 @@ public class RemoteContainerItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return InfomngmntEditPlugin.INSTANCE;
 	}
 
 }

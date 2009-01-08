@@ -92,6 +92,10 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.REMOTE_CONTAINER: return createRemoteContainer();
 			case InfomngmntPackage.REPOSITORY_COLLECTION: return createRepositoryCollection();
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA: return createSynchronizationMetadata();
+			case InfomngmntPackage.CHANGE_SET: return createChangeSet();
+			case InfomngmntPackage.CHANGE_SET_ITEM: return createChangeSetItem();
+			case InfomngmntPackage.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createCategoryToSynchronizationActionMap();
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP: return (EObject)createInformationUnitListItemToInformationUnitMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -107,6 +111,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 		switch (eDataType.getClassifierID()) {
 			case InfomngmntPackage.SYNCHRONIZATION_STATE:
 				return createSynchronizationStateFromString(eDataType, initialValue);
+			case InfomngmntPackage.SYNCHRONIZATION_ACTION:
+				return createSynchronizationActionFromString(eDataType, initialValue);
 			case InfomngmntPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			default:
@@ -124,6 +130,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 		switch (eDataType.getClassifierID()) {
 			case InfomngmntPackage.SYNCHRONIZATION_STATE:
 				return convertSynchronizationStateToString(eDataType, instanceValue);
+			case InfomngmntPackage.SYNCHRONIZATION_ACTION:
+				return convertSynchronizationActionToString(eDataType, instanceValue);
 			case InfomngmntPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			default:
@@ -356,6 +364,46 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ChangeSet createChangeSet() {
+		ChangeSetImpl changeSet = new ChangeSetImpl();
+		return changeSet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ChangeSetItem createChangeSetItem() {
+		ChangeSetItemImpl changeSetItem = new ChangeSetItemImpl();
+		return changeSetItem;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<Category, SynchronizationAction> createCategoryToSynchronizationActionMap() {
+		CategoryToSynchronizationActionMapImpl categoryToSynchronizationActionMap = new CategoryToSynchronizationActionMapImpl();
+		return categoryToSynchronizationActionMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<InformationUnitListItem, InformationUnit> createInformationUnitListItemToInformationUnitMap() {
+		InformationUnitListItemToInformationUnitMapImpl informationUnitListItemToInformationUnitMap = new InformationUnitListItemToInformationUnitMapImpl();
+		return informationUnitListItemToInformationUnitMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public SynchronizationState createSynchronizationStateFromString(EDataType eDataType, String initialValue) {
 		SynchronizationState result = SynchronizationState.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -368,6 +416,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * @generated
 	 */
 	public String convertSynchronizationStateToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SynchronizationAction createSynchronizationActionFromString(EDataType eDataType, String initialValue) {
+		SynchronizationAction result = SynchronizationAction.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertSynchronizationActionToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

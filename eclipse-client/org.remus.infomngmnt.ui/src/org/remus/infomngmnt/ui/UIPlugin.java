@@ -4,6 +4,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
+import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -28,6 +31,20 @@ public class UIPlugin extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
+		/*
+		 * This is a bit ugly. Problem is
+		 * that if the first access on the image-registry
+		 * comes from a non-ui thread the initialization fails.
+		 * 
+		 * This is not good, especially because in this image-registry
+		 * there are decorator-icons which are loaded very early and
+		 * in a non-ui thread.
+		 */
+		UIUtil.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				CommonImageRegistry.getInstance();
+			}
+		});
 		plugin = this;
 	}
 

@@ -114,7 +114,8 @@ public class ChangeSetItemItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(InfomngmntPackage.Literals.CHANGE_SET_ITEM__REMOTE_CONVERTED_CONTAINER);
 			childrenFeatures.add(InfomngmntPackage.Literals.CHANGE_SET_ITEM__REMOTE_ORIGINAL_OBJECT);
-			childrenFeatures.add(InfomngmntPackage.Literals.CHANGE_SET_ITEM__SYNC_ACTION_MAP);
+			childrenFeatures.add(InfomngmntPackage.Literals.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP);
+			childrenFeatures.add(InfomngmntPackage.Literals.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP);
 			childrenFeatures.add(InfomngmntPackage.Literals.CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP);
 		}
 		return childrenFeatures;
@@ -169,7 +170,8 @@ public class ChangeSetItemItemProvider
 		switch (notification.getFeatureID(ChangeSetItem.class)) {
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_CONVERTED_CONTAINER:
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_ORIGINAL_OBJECT:
-			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_ACTION_MAP:
+			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP:
+			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP:
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -205,8 +207,13 @@ public class ChangeSetItemItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(InfomngmntPackage.Literals.CHANGE_SET_ITEM__SYNC_ACTION_MAP,
+				(InfomngmntPackage.Literals.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP,
 				 InfomngmntFactory.eINSTANCE.create(InfomngmntPackage.Literals.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP)));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP,
+				 InfomngmntFactory.eINSTANCE.create(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP)));
 
 		newChildDescriptors.add
 			(createChildParameter

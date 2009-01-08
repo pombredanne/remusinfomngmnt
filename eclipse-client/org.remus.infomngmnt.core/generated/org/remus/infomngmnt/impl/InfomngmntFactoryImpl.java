@@ -96,6 +96,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.CHANGE_SET_ITEM: return createChangeSetItem();
 			case InfomngmntPackage.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createCategoryToSynchronizationActionMap();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP: return (EObject)createInformationUnitListItemToInformationUnitMap();
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createInformationUnitListItemToSynchronizationActionMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -397,6 +398,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public Map.Entry<InformationUnitListItem, InformationUnit> createInformationUnitListItemToInformationUnitMap() {
 		InformationUnitListItemToInformationUnitMapImpl informationUnitListItemToInformationUnitMap = new InformationUnitListItemToInformationUnitMapImpl();
 		return informationUnitListItemToInformationUnitMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<InformationUnitListItem, SynchronizationAction> createInformationUnitListItemToSynchronizationActionMap() {
+		InformationUnitListItemToSynchronizationActionMapImpl informationUnitListItemToSynchronizationActionMap = new InformationUnitListItemToSynchronizationActionMapImpl();
+		return informationUnitListItemToSynchronizationActionMap;
 	}
 
 	/**

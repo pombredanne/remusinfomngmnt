@@ -169,8 +169,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="remoteOriginalObject" eType="#//RemoteContainer"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="localContainer" eType="#//Category"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="syncActionMap" upperBound="-1"
-        eType="#//CategoryToSynchronizationActionMap" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="syncCategoryActionMap"
+        upperBound="-1" eType="#//CategoryToSynchronizationActionMap" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="syncInformationUnitActionMap"
+        upperBound="-1" eType="#//InformationUnitListItemToSynchronizationActionMap"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="remoteFullObjectMap" upperBound="-1"
         eType="#//InformationUnitListItemToInformationUnitMap" containment="true"/>
   </eClassifiers>
@@ -193,5 +196,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//InformationUnitListItem"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//InformationUnit"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InformationUnitListItemToSynchronizationActionMap"
+      instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//InformationUnitListItem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//SynchronizationAction"/>
   </eClassifiers>
 </ecore:EPackage>

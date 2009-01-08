@@ -27,17 +27,20 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectTypeRelationCondition;
 import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
+
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -209,6 +212,17 @@ public class CategoryUtil {
 			return isItemParentOfCategory(possibleChild.eContainer(), possibleParent);
 		}
 		return false;
+	}
+	
+	public static Category copyBlankObject(final Category cat) {
+		Category newCategory = InfomngmntFactory.eINSTANCE.createCategory();
+		ModelUtil.copyObject(cat, newCategory, 
+				new EStructuralFeature[] {
+				InfomngmntPackage.Literals.CATEGORY__ID,
+				InfomngmntPackage.Literals.CATEGORY__DESCRIPTION,
+				InfomngmntPackage.Literals.CATEGORY__LABEL	
+		}, new EStructuralFeature[0]);
+		return newCategory;
 	}
 
 

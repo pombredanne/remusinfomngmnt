@@ -257,7 +257,7 @@
             id="org.remus.infomngmnt.ui.syncDecorator"
             label="SynchronizationLabelDecorator"
             lightweight="true"
-            location="BOTTOM_LEFT"
+            location="BOTTOM_RIGHT"
             state="true">
       </decorator>
    </extension>

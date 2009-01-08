@@ -40,7 +40,7 @@ import org.remus.infomngmnt.ui.commands.CommandFactory;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public abstract class CheckOutWizard extends MultipleNewObjectsWizard {
+public abstract class CheckOutMultipeContainerWizard extends MultipleNewObjectsWizard {
 
 	private Map<InformationUnit, SynchronizationMetadata> convertedObjects;
 	
@@ -55,14 +55,14 @@ public abstract class CheckOutWizard extends MultipleNewObjectsWizard {
 					if (UIUtil.isSelectionInstanceOf(selection, RemoteObject.class)) {
 						List<RemoteObject> list = selection.toList();
 						IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(list.get(0).getRepositoryTypeId());
-						CheckOutWizard.this.convertedObjects = itemById.convertToLocalObjects(list.toArray(new RemoteObject[list.size()]), monitor);
-						setNewObjects(new BasicEList<InformationUnit>(CheckOutWizard.this.convertedObjects.keySet()));
+						CheckOutMultipeContainerWizard.this.convertedObjects = itemById.convertToLocalObjects(list.toArray(new RemoteObject[list.size()]), monitor);
+						setNewObjects(new BasicEList<InformationUnit>(CheckOutMultipeContainerWizard.this.convertedObjects.keySet()));
 					}
 					
 					return Status.OK_STATUS;
 				}
 			});
-			CheckOutWizard.this.page1 = new GeneralCheckoutPage();
+			CheckOutMultipeContainerWizard.this.page1 = new GeneralCheckoutPage();
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,14 +76,14 @@ public abstract class CheckOutWizard extends MultipleNewObjectsWizard {
 		Job job = new Job("Creating new items") {
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
-				monitor.beginTask("Creating new items", CheckOutWizard.this.convertedObjects.size());
-				for (InformationUnit newElement : CheckOutWizard.this.convertedObjects.keySet()) {
+				monitor.beginTask("Creating new items", CheckOutMultipeContainerWizard.this.convertedObjects.size());
+				for (InformationUnit newElement : CheckOutMultipeContainerWizard.this.convertedObjects.keySet()) {
 					EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
 					.execute(CommandFactory.CREATE_INFOTYPE(newElement, findCategory()));
 					
 					InformationUnitListItem adapter = (InformationUnitListItem) newElement.getAdapter(InformationUnitListItem.class);
 					if (adapter != null) {
-						adapter.setSynchronizationMetaData(CheckOutWizard.this.convertedObjects.get(newElement));
+						adapter.setSynchronizationMetaData(CheckOutMultipeContainerWizard.this.convertedObjects.get(newElement));
 					}
 					// we also reveal the created list-item, that can be found in the navigation
 //					UIUtil.selectAndReveal(newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());

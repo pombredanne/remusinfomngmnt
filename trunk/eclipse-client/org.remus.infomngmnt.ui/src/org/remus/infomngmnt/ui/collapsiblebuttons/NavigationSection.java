@@ -43,6 +43,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
@@ -63,6 +64,7 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -211,6 +213,13 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);
+		this.viewer.addFilter(new ViewerFilter() {
+			@Override
+			public boolean select(final Viewer viewer, final Object parentElement,
+					final Object element) {
+				return !(element instanceof SynchronizationMetadata);
+			}
+		});
 		getViewSite().setSelectionProvider(this);
 		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance().getAdapterFactory());
 

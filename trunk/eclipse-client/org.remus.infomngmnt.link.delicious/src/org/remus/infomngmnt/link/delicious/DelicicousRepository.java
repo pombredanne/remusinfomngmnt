@@ -21,22 +21,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.emf.common.util.EList;
 
 import del.icio.us.Delicious;
 import del.icio.us.DeliciousConstants;
 import del.icio.us.beans.Post;
 import del.icio.us.beans.Tag;
 
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.ChangeSet;
+import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
@@ -50,13 +58,13 @@ import org.remus.infomngmnt.link.LinkActivator;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class DelicicousRepository extends AbstractExtensionRepository {
-	
+
 	private Delicious api;
-	
+
 	public static final String KEY_TAG = "KEY_TAG"; //$NON-NLS-1$
-	
+
 	public static final String KEY_LINK = "KEY_LINK"; //$NON-NLS-1$
-	
+
 	/**
 	 * By convention you have to wait between two requests to the
 	 * delicious platform at least 1 second, otherwise you get 
@@ -64,15 +72,15 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	 * between two requests.
 	 */
 	private static final long WAIT_INTERVALL = 3000;
-	
+
 	private long lastApiCall;
-	
+
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
 			reset();
 		}
 	};
-	
+
 	final ISchedulingRule mutexRule = new ISchedulingRule() {
 		public boolean isConflicting(final ISchedulingRule rule) {
 			return rule == DelicicousRepository.this.mutexRule;
@@ -82,11 +90,97 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		}
 	};
 	
+	
+	public void applyChangeSet(final ChangeSet changeSet) {
+		EList<ChangeSetItem> changeSetItems = changeSet.getChangeSetItems();
+		for (ChangeSetItem changeSetItem : changeSetItems) {
+			proceedChangeSetItem(changeSetItem);
+		}
+		
+	}
+	
+	private void proceedChangeSetItem(final ChangeSetItem changeSetItem) {
+		/*
+		 * if the local container is not set, we have a "checkout"
+		 */
+		if (changeSetItem.getLocalContainer() == null) {
+			proceedCheckout(changeSetItem, null, changeSetItem.getRemoteOriginalObject());
+		}
+		
+	}
+
+	private void proceedCheckout(final ChangeSetItem changeSetItem, final Category parentRemoteCategory, final RemoteObject remoteObject) {
+		if (KEY_TAG.equals(remoteObject.getRepositoryTypeObjectId())) {
+			Tag wrappedObject = (Tag) remoteObject.getWrappedObject();
+			Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
+			createCategory.setId(new UniversalUniqueIdentifier().toString());
+			createCategory.setLabel(wrappedObject.getTag());
+			
+			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
+			metadata.setHash(wrappedObject.getTag());
+			metadata.setReadonly(false);
+			metadata.setSyncState(SynchronizationState.IN_SYNC);
+			metadata.setRepositoryId(remoteObject.getRepositoryTypeId());
+			metadata.setUrl("TEST");
+			createCategory.setSynchronizationMetaData(metadata);
+			if (parentRemoteCategory != null) {
+				parentRemoteCategory.getChildren().add(createCategory);
+			} else {
+				changeSetItem.setRemoteConvertedContainer(createCategory);
+			}
+			changeSetItem.getSyncActionMap().put(createCategory, SynchronizationAction.ADD_LOCAL);
+			if (remoteObject instanceof RemoteContainer) {
+				RemoteObject[] children = getChildren(new NullProgressMonitor(), (RemoteContainer) remoteObject);
+				for (RemoteObject remoteObject2 : children) {
+					proceedCheckout(changeSetItem, createCategory, remoteObject2);
+				}
+			}
+			
+			
+		} else if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
+			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(LinkActivator.LINK_INFO_ID);
+			if (infoTypeByType != null) {
+				InformationUnit newObject = infoTypeByType.getCreationFactory().createNewObject();
+				Post post = (Post) remoteObject.getWrappedObject();
+				newObject.setLabel(remoteObject.getName());
+				newObject.setStringValue(post.getHref());
+				newObject.setDescription(post.getExtended());
+				newObject.setKeywords(post.getTag());
+				
+				InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE.createInformationUnitListItem();
+
+				// transfer the needed information
+				createInformationUnitListItem.setId(newObject.getId());
+				createInformationUnitListItem.setLabel(newObject.getLabel());
+				createInformationUnitListItem.setType(newObject.getType());
+
+				SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
+				metadata.setHash(post.getHash());
+				metadata.setReadonly(false);
+				metadata.setRepositoryId(remoteObject.getRepositoryTypeId());
+				metadata.setSyncState(SynchronizationState.IN_SYNC);
+				metadata.setUrl("http://test");
+				createInformationUnitListItem.setSynchronizationMetaData(metadata);
+				
+				if (parentRemoteCategory != null) {
+					parentRemoteCategory.getInformationUnit().add(createInformationUnitListItem);
+				} else {
+					changeSetItem.getRemoteConvertedContainer().getInformationUnit().add(createInformationUnitListItem);
+				}
+				changeSetItem.getRemoteFullObjectMap().put(createInformationUnitListItem, newObject);
+			}
+		}
+		
+	}
+
+
+
+
 	public Map<InformationUnit, SynchronizationMetadata> convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor) {
 		Map<InformationUnit,SynchronizationMetadata> returnValue = new LinkedHashMap<InformationUnit, SynchronizationMetadata>();
 		for (RemoteObject remoteObject : remoteObjects) {
 			if (KEY_TAG.equals(remoteObject.getRepositoryTypeObjectId())) {
-				
+
 			} else if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
 				IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(LinkActivator.LINK_INFO_ID);
 				if (infoTypeByType != null) {
@@ -96,7 +190,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 					newObject.setStringValue(post.getHref());
 					newObject.setDescription(post.getExtended());
 					newObject.setKeywords(post.getTag());
-					
+
 					SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
 					metadata.setHash(post.getHash());
 					metadata.setReadonly(false);
@@ -110,7 +204,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		return returnValue;
 	}
 
-	
+
 
 	public RemoteObject[] getChildren(final IProgressMonitor monitor,
 			final RemoteContainer container) {
@@ -125,9 +219,10 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				remoteContainer.setName(tag.getTag());
 				remoteContainer.setUrl(getRepositoryUrl() + tag.getTag());
 				remoteContainer.setWrappedObject(tag);
+				remoteContainer.setRepositoryTypeId(container.getRepositoryTypeId());
 				returnValue.add(remoteContainer);
 			}
-			
+
 		} else {
 			List<Post> posts = getApi().getAllPosts(container.getName());
 			for (Post post : posts) {
@@ -137,6 +232,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				remoteContainer.setUrl(getRepositoryUrl() + post.getHash());
 				remoteContainer.setRepositoryTypeObjectId(KEY_LINK);
 				remoteContainer.setWrappedObject(post);
+				remoteContainer.setRepositoryTypeId(container.getRepositoryTypeId());
 				returnValue.add(remoteContainer);
 			}
 		}
@@ -149,8 +245,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	public String getRepositoryUrl() {
 		return DeliciousConstants.API_ENDPOINT;
 	}
-	
-	
+
+
 	private Delicious getApi() {
 		while (System.currentTimeMillis() - this.lastApiCall < WAIT_INTERVALL) {
 			try {
@@ -175,7 +271,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		this.lastApiCall = System.currentTimeMillis();
 		return this.api;
 	}
-	
+
 
 	public IStatus validate() {
 		try {
@@ -188,7 +284,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	public void login(final ILoginCallBack callback, final IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void reset() {
@@ -196,13 +292,13 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		getCredentialProvider().removePropertyChangeListener(this.credentialsMovedListener);
 	}
 
-	
+
 
 	public ISchedulingRule getRule() {
 		return this.mutexRule;
 	}
 
 
-	
+
 
 }

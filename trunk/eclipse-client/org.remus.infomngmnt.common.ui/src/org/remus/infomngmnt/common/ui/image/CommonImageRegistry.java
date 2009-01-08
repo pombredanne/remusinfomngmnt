@@ -33,6 +33,7 @@ public class CommonImageRegistry extends ImageRegistry {
 	public static final String NOTIFICATION_CLOSE_HOVER = "NOTIFICATION_CLOSE_HOVER"; //$NON-NLS-1$
 	public static final String CLEAR_FILTER = "CLEAR_FILTER"; //$NON-NLS-1$
 	public static final String START_TASK = "START_TASK"; //$NON-NLS-1$
+	public static final String INFORMATION_DECORATION = "INFORMATION_DECORATION"; //$NON-NLS-1$
 
 	private static CommonImageRegistry INSTANCE;
 
@@ -58,10 +59,11 @@ public class CommonImageRegistry extends ImageRegistry {
 		registerImage(NOTIFICATION_CLOSE, "images/notification/notification-close.gif");
 		registerImage(CLEAR_FILTER, "images/clear_co.gif");
 		registerImage(START_TASK, "images/start_task.gif");
+		registerImage(INFORMATION_DECORATION, "images/information_decorator.png");
 
 	}
 
-	private void registerImage(String key, String fileName) {
+	private void registerImage(final String key, final String fileName) {
 		try {
 			IPath path = new Path(fileName);
 			URL url = FileLocator.find(UimodelEditPlugin.getPlugin().getBundle(), path, null);

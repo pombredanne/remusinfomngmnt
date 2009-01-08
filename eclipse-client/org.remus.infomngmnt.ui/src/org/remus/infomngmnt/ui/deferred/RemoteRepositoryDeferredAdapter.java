@@ -47,7 +47,7 @@ public class RemoteRepositoryDeferredAdapter implements
 	public void fetchDeferredChildren(final Object object,
 			final IElementCollector collector, final IProgressMonitor monitor) {
 		if (this.remoteObject instanceof RemoteContainer) {
-			RemoteObject[] children = this.itemById.getChildren(monitor, (RemoteContainer) this.remoteObject);
+			RemoteObject[] children = this.itemById.getChildren(monitor, (RemoteContainer) this.remoteObject, true);
 			List<RemoteObject> asList = Arrays.asList(children);
 			for (RemoteObject remoteObject : asList) {
 				remoteObject.setRepositoryTypeId(this.remoteObject.getRepositoryTypeId());

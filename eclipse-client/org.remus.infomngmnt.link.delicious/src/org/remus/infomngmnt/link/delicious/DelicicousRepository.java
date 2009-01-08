@@ -71,7 +71,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	 * throttled automatically. So we have to use this intervall
 	 * between two requests.
 	 */
-	private static final long WAIT_INTERVALL = 3000;
+	private static final long WAIT_INTERVALL = 5000;
 
 	private long lastApiCall;
 
@@ -128,9 +128,9 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			} else {
 				changeSetItem.setRemoteConvertedContainer(createCategory);
 			}
-			changeSetItem.getSyncActionMap().put(createCategory, SynchronizationAction.ADD_LOCAL);
+			changeSetItem.getSyncCategoryActionMap().put(createCategory, SynchronizationAction.ADD_LOCAL);
 			if (remoteObject instanceof RemoteContainer) {
-				RemoteObject[] children = getChildren(new NullProgressMonitor(), (RemoteContainer) remoteObject);
+				RemoteObject[] children = getChildren(new NullProgressMonitor(), (RemoteContainer) remoteObject, false);
 				for (RemoteObject remoteObject2 : children) {
 					proceedCheckout(changeSetItem, createCategory, remoteObject2);
 				}
@@ -168,6 +168,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 					changeSetItem.getRemoteConvertedContainer().getInformationUnit().add(createInformationUnitListItem);
 				}
 				changeSetItem.getRemoteFullObjectMap().put(createInformationUnitListItem, newObject);
+				changeSetItem.getSyncInformationUnitActionMap().put(createInformationUnitListItem, SynchronizationAction.ADD_LOCAL);
 			}
 		}
 		
@@ -207,7 +208,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 
 	public RemoteObject[] getChildren(final IProgressMonitor monitor,
-			final RemoteContainer container) {
+			final RemoteContainer container, final boolean showOnlyContainer) {
 		List<RemoteObject> returnValue = new LinkedList<RemoteObject>();
 		if (container instanceof RemoteRepository) {
 			IProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
@@ -223,7 +224,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				returnValue.add(remoteContainer);
 			}
 
-		} else {
+		} else if (!showOnlyContainer){
 			List<Post> posts = getApi().getAllPosts(container.getName());
 			for (Post post : posts) {
 				RemoteObject remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteObject();
@@ -248,7 +249,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 
 	private Delicious getApi() {
-		while (System.currentTimeMillis() - this.lastApiCall < WAIT_INTERVALL) {
+		System.out.println("CONTACTING API");
+		while ((System.currentTimeMillis() - this.lastApiCall) < WAIT_INTERVALL) {
 			try {
 				System.out.println("WAITING");
 				Thread.sleep(200);

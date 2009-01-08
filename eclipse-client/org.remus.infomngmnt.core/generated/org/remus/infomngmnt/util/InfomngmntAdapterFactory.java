@@ -177,6 +177,22 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createSynchronizationMetadataAdapter();
 			}
 			@Override
+			public Adapter caseChangeSet(ChangeSet object) {
+				return createChangeSetAdapter();
+			}
+			@Override
+			public Adapter caseChangeSetItem(ChangeSetItem object) {
+				return createChangeSetItemAdapter();
+			}
+			@Override
+			public Adapter caseCategoryToSynchronizationActionMap(Map.Entry<Category, SynchronizationAction> object) {
+				return createCategoryToSynchronizationActionMapAdapter();
+			}
+			@Override
+			public Adapter caseInformationUnitListItemToInformationUnitMap(Map.Entry<InformationUnitListItem, InformationUnit> object) {
+				return createInformationUnitListItemToInformationUnitMapAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -529,6 +545,62 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSynchronizationMetadataAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.ChangeSet <em>Change Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.ChangeSet
+	 * @generated
+	 */
+	public Adapter createChangeSetAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.ChangeSetItem <em>Change Set Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.ChangeSetItem
+	 * @generated
+	 */
+	public Adapter createChangeSetItemAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Category To Synchronization Action Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createCategoryToSynchronizationActionMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Information Unit List Item To Information Unit Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createInformationUnitListItemToInformationUnitMapAdapter() {
 		return null;
 	}
 

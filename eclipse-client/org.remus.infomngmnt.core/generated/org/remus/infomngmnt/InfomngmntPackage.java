@@ -1252,7 +1252,7 @@ public interface InfomngmntPackage extends EPackage {
 	int REMOTE_CONTAINER__WRAPPED_OBJECT = REMOTE_OBJECT__WRAPPED_OBJECT;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1261,13 +1261,22 @@ public interface InfomngmntPackage extends EPackage {
 	int REMOTE_CONTAINER__CHILDREN = REMOTE_OBJECT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Exclusion Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_CONTAINER__EXCLUSION_CHILDREN = REMOTE_OBJECT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Remote Container</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REMOTE_CONTAINER_FEATURE_COUNT = REMOTE_OBJECT_FEATURE_COUNT + 1;
+	int REMOTE_CONTAINER_FEATURE_COUNT = REMOTE_OBJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Possible Info Type Id</b></em>' attribute list.
@@ -1333,13 +1342,22 @@ public interface InfomngmntPackage extends EPackage {
 	int REMOTE_REPOSITORY__WRAPPED_OBJECT = REMOTE_CONTAINER__WRAPPED_OBJECT;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REMOTE_REPOSITORY__CHILDREN = REMOTE_CONTAINER__CHILDREN;
+
+	/**
+	 * The feature id for the '<em><b>Exclusion Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_REPOSITORY__EXCLUSION_CHILDREN = REMOTE_CONTAINER__EXCLUSION_CHILDREN;
 
 	/**
 	 * The number of structural features of the '<em>Remote Repository</em>' class.
@@ -1452,6 +1470,181 @@ public interface InfomngmntPackage extends EPackage {
 	int SYNCHRONIZATION_METADATA_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 6;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.ChangeSetImpl <em>Change Set</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.ChangeSetImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSet()
+	 * @generated
+	 */
+	int CHANGE_SET = 24;
+
+	/**
+	 * The feature id for the '<em><b>Target Category</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET__TARGET_CATEGORY = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Change Set Items</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET__CHANGE_SET_ITEMS = ADAPTER_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Change Set</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.ChangeSetItemImpl <em>Change Set Item</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.ChangeSetItemImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSetItem()
+	 * @generated
+	 */
+	int CHANGE_SET_ITEM = 25;
+
+	/**
+	 * The feature id for the '<em><b>Remote Converted Container</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_ITEM__REMOTE_CONVERTED_CONTAINER = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Remote Original Object</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_ITEM__REMOTE_ORIGINAL_OBJECT = ADAPTER_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Local Container</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_ITEM__LOCAL_CONTAINER = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Sync Action Map</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_ITEM__SYNC_ACTION_MAP = ADAPTER_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Remote Full Object Map</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP = ADAPTER_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Change Set Item</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_ITEM_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 5;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CategoryToSynchronizationActionMapImpl <em>Category To Synchronization Action Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.CategoryToSynchronizationActionMapImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCategoryToSynchronizationActionMap()
+	 * @generated
+	 */
+	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP = 26;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Category To Synchronization Action Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemToInformationUnitMapImpl <em>Information Unit List Item To Information Unit Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.InformationUnitListItemToInformationUnitMapImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToInformationUnitMap()
+	 * @generated
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP = 27;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Information Unit List Item To Information Unit Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1459,7 +1652,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 24;
+	int SYNCHRONIZATION_STATE = 28;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.SynchronizationAction
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
+	 * @generated
+	 */
+	int SYNCHRONIZATION_ACTION = 29;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -1469,7 +1672,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 25;
+	int OBJECT = 30;
 
 
 	/**
@@ -2333,15 +2536,26 @@ public interface InfomngmntPackage extends EPackage {
 	EClass getRemoteContainer();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.RemoteContainer#getChildren <em>Children</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.RemoteContainer#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Children</em>'.
+	 * @return the meta object for the containment reference list '<em>Children</em>'.
 	 * @see org.remus.infomngmnt.RemoteContainer#getChildren()
 	 * @see #getRemoteContainer()
 	 * @generated
 	 */
 	EReference getRemoteContainer_Children();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.RemoteContainer#getExclusionChildren <em>Exclusion Children</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Exclusion Children</em>'.
+	 * @see org.remus.infomngmnt.RemoteContainer#getExclusionChildren()
+	 * @see #getRemoteContainer()
+	 * @generated
+	 */
+	EReference getRemoteContainer_ExclusionChildren();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RepositoryCollection <em>Repository Collection</em>}'.
@@ -2441,6 +2655,171 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getSynchronizationMetadata_SyncState();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.ChangeSet <em>Change Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Change Set</em>'.
+	 * @see org.remus.infomngmnt.ChangeSet
+	 * @generated
+	 */
+	EClass getChangeSet();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.ChangeSet#getTargetCategory <em>Target Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target Category</em>'.
+	 * @see org.remus.infomngmnt.ChangeSet#getTargetCategory()
+	 * @see #getChangeSet()
+	 * @generated
+	 */
+	EReference getChangeSet_TargetCategory();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.ChangeSet#getChangeSetItems <em>Change Set Items</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Change Set Items</em>'.
+	 * @see org.remus.infomngmnt.ChangeSet#getChangeSetItems()
+	 * @see #getChangeSet()
+	 * @generated
+	 */
+	EReference getChangeSet_ChangeSetItems();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.ChangeSetItem <em>Change Set Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Change Set Item</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem
+	 * @generated
+	 */
+	EClass getChangeSetItem();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.ChangeSetItem#getRemoteConvertedContainer <em>Remote Converted Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Remote Converted Container</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getRemoteConvertedContainer()
+	 * @see #getChangeSetItem()
+	 * @generated
+	 */
+	EReference getChangeSetItem_RemoteConvertedContainer();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.ChangeSetItem#getRemoteOriginalObject <em>Remote Original Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Remote Original Object</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getRemoteOriginalObject()
+	 * @see #getChangeSetItem()
+	 * @generated
+	 */
+	EReference getChangeSetItem_RemoteOriginalObject();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.ChangeSetItem#getLocalContainer <em>Local Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Local Container</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getLocalContainer()
+	 * @see #getChangeSetItem()
+	 * @generated
+	 */
+	EReference getChangeSetItem_LocalContainer();
+
+	/**
+	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getSyncActionMap <em>Sync Action Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Sync Action Map</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getSyncActionMap()
+	 * @see #getChangeSetItem()
+	 * @generated
+	 */
+	EReference getChangeSetItem_SyncActionMap();
+
+	/**
+	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getRemoteFullObjectMap <em>Remote Full Object Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Remote Full Object Map</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getRemoteFullObjectMap()
+	 * @see #getChangeSetItem()
+	 * @generated
+	 */
+	EReference getChangeSetItem_RemoteFullObjectMap();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Category To Synchronization Action Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Category To Synchronization Action Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyType="org.remus.infomngmnt.Category"
+	 *        valueDataType="org.remus.infomngmnt.SynchronizationAction"
+	 * @generated
+	 */
+	EClass getCategoryToSynchronizationActionMap();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getCategoryToSynchronizationActionMap()
+	 * @generated
+	 */
+	EReference getCategoryToSynchronizationActionMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getCategoryToSynchronizationActionMap()
+	 * @generated
+	 */
+	EAttribute getCategoryToSynchronizationActionMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Information Unit List Item To Information Unit Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Information Unit List Item To Information Unit Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyType="org.remus.infomngmnt.InformationUnitListItem"
+	 *        valueType="org.remus.infomngmnt.InformationUnit" valueContainment="true"
+	 * @generated
+	 */
+	EClass getInformationUnitListItemToInformationUnitMap();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getInformationUnitListItemToInformationUnitMap()
+	 * @generated
+	 */
+	EReference getInformationUnitListItemToInformationUnitMap_Key();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getInformationUnitListItemToInformationUnitMap()
+	 * @generated
+	 */
+	EReference getInformationUnitListItemToInformationUnitMap_Value();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2449,6 +2828,16 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getSynchronizationState();
+
+	/**
+	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Synchronization Action</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationAction
+	 * @generated
+	 */
+	EEnum getSynchronizationAction();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Object <em>Object</em>}'.
@@ -3168,12 +3557,20 @@ public interface InfomngmntPackage extends EPackage {
 		EClass REMOTE_CONTAINER = eINSTANCE.getRemoteContainer();
 
 		/**
-		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference REMOTE_CONTAINER__CHILDREN = eINSTANCE.getRemoteContainer_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Exclusion Children</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference REMOTE_CONTAINER__EXCLUSION_CHILDREN = eINSTANCE.getRemoteContainer_ExclusionChildren();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RepositoryCollectionImpl <em>Repository Collection</em>}' class.
@@ -3252,6 +3649,134 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute SYNCHRONIZATION_METADATA__SYNC_STATE = eINSTANCE.getSynchronizationMetadata_SyncState();
 
 		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ChangeSetImpl <em>Change Set</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.ChangeSetImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSet()
+		 * @generated
+		 */
+		EClass CHANGE_SET = eINSTANCE.getChangeSet();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Category</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET__TARGET_CATEGORY = eINSTANCE.getChangeSet_TargetCategory();
+
+		/**
+		 * The meta object literal for the '<em><b>Change Set Items</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET__CHANGE_SET_ITEMS = eINSTANCE.getChangeSet_ChangeSetItems();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ChangeSetItemImpl <em>Change Set Item</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.ChangeSetItemImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSetItem()
+		 * @generated
+		 */
+		EClass CHANGE_SET_ITEM = eINSTANCE.getChangeSetItem();
+
+		/**
+		 * The meta object literal for the '<em><b>Remote Converted Container</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET_ITEM__REMOTE_CONVERTED_CONTAINER = eINSTANCE.getChangeSetItem_RemoteConvertedContainer();
+
+		/**
+		 * The meta object literal for the '<em><b>Remote Original Object</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET_ITEM__REMOTE_ORIGINAL_OBJECT = eINSTANCE.getChangeSetItem_RemoteOriginalObject();
+
+		/**
+		 * The meta object literal for the '<em><b>Local Container</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET_ITEM__LOCAL_CONTAINER = eINSTANCE.getChangeSetItem_LocalContainer();
+
+		/**
+		 * The meta object literal for the '<em><b>Sync Action Map</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET_ITEM__SYNC_ACTION_MAP = eINSTANCE.getChangeSetItem_SyncActionMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Remote Full Object Map</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP = eINSTANCE.getChangeSetItem_RemoteFullObjectMap();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.CategoryToSynchronizationActionMapImpl <em>Category To Synchronization Action Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.CategoryToSynchronizationActionMapImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCategoryToSynchronizationActionMap()
+		 * @generated
+		 */
+		EClass CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP = eINSTANCE.getCategoryToSynchronizationActionMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP__KEY = eINSTANCE.getCategoryToSynchronizationActionMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = eINSTANCE.getCategoryToSynchronizationActionMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemToInformationUnitMapImpl <em>Information Unit List Item To Information Unit Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.InformationUnitListItemToInformationUnitMapImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToInformationUnitMap()
+		 * @generated
+		 */
+		EClass INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP = eINSTANCE.getInformationUnitListItemToInformationUnitMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__KEY = eINSTANCE.getInformationUnitListItemToInformationUnitMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__VALUE = eINSTANCE.getInformationUnitListItemToInformationUnitMap_Value();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3260,6 +3785,16 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum SYNCHRONIZATION_STATE = eINSTANCE.getSynchronizationState();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.SynchronizationAction
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
+		 * @generated
+		 */
+		EEnum SYNCHRONIZATION_ACTION = eINSTANCE.getSynchronizationAction();
 
 		/**
 		 * The meta object literal for the '<em>Object</em>' data type.

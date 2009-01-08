@@ -592,6 +592,98 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.ChangeSet} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ChangeSetItemProvider changeSetItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.ChangeSet}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createChangeSetAdapter() {
+		if (changeSetItemProvider == null) {
+			changeSetItemProvider = new ChangeSetItemProvider(this);
+		}
+
+		return changeSetItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.ChangeSetItem} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ChangeSetItemItemProvider changeSetItemItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.ChangeSetItem}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createChangeSetItemAdapter() {
+		if (changeSetItemItemProvider == null) {
+			changeSetItemItemProvider = new ChangeSetItemItemProvider(this);
+		}
+
+		return changeSetItemItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CategoryToSynchronizationActionMapItemProvider categoryToSynchronizationActionMapItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link java.util.Map.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCategoryToSynchronizationActionMapAdapter() {
+		if (categoryToSynchronizationActionMapItemProvider == null) {
+			categoryToSynchronizationActionMapItemProvider = new CategoryToSynchronizationActionMapItemProvider(this);
+		}
+
+		return categoryToSynchronizationActionMapItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InformationUnitListItemToInformationUnitMapItemProvider informationUnitListItemToInformationUnitMapItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link java.util.Map.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInformationUnitListItemToInformationUnitMapAdapter() {
+		if (informationUnitListItemToInformationUnitMapItemProvider == null) {
+			informationUnitListItemToInformationUnitMapItemProvider = new InformationUnitListItemToInformationUnitMapItemProvider(this);
+		}
+
+		return informationUnitListItemToInformationUnitMapItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -712,6 +804,10 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (remoteContainerItemProvider != null) remoteContainerItemProvider.dispose();
 		if (repositoryCollectionItemProvider != null) repositoryCollectionItemProvider.dispose();
 		if (synchronizationMetadataItemProvider != null) synchronizationMetadataItemProvider.dispose();
+		if (changeSetItemProvider != null) changeSetItemProvider.dispose();
+		if (changeSetItemItemProvider != null) changeSetItemItemProvider.dispose();
+		if (categoryToSynchronizationActionMapItemProvider != null) categoryToSynchronizationActionMapItemProvider.dispose();
+		if (informationUnitListItemToInformationUnitMapItemProvider != null) informationUnitListItemToInformationUnitMapItemProvider.dispose();
 	}
 
 }

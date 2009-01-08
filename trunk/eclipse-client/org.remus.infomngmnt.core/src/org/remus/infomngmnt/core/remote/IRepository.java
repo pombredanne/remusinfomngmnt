@@ -53,7 +53,7 @@ public interface IRepository {
 
 	String getRepositoryUrl();
 	
-	RemoteObject[] getChildren(IProgressMonitor monitor, RemoteContainer container);
+	RemoteObject[] getChildren(IProgressMonitor monitor, RemoteContainer container, boolean showOnlyContainers);
 	
 	IStatus validate();
 	

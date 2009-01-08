@@ -262,6 +262,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass informationUnitListItemToSynchronizationActionMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum synchronizationStateEEnum = null;
 
 	/**
@@ -1233,7 +1240,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getChangeSetItem_SyncActionMap() {
+	public EReference getChangeSetItem_SyncCategoryActionMap() {
 		return (EReference)changeSetItemEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -1242,8 +1249,17 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getChangeSetItem_RemoteFullObjectMap() {
+	public EReference getChangeSetItem_SyncInformationUnitActionMap() {
 		return (EReference)changeSetItemEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getChangeSetItem_RemoteFullObjectMap() {
+		return (EReference)changeSetItemEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -1298,6 +1314,33 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EReference getInformationUnitListItemToInformationUnitMap_Value() {
 		return (EReference)informationUnitListItemToInformationUnitMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getInformationUnitListItemToSynchronizationActionMap() {
+		return informationUnitListItemToSynchronizationActionMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInformationUnitListItemToSynchronizationActionMap_Key() {
+		return (EReference)informationUnitListItemToSynchronizationActionMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInformationUnitListItemToSynchronizationActionMap_Value() {
+		return (EAttribute)informationUnitListItemToSynchronizationActionMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1478,7 +1521,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__REMOTE_CONVERTED_CONTAINER);
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__REMOTE_ORIGINAL_OBJECT);
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__LOCAL_CONTAINER);
-		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__SYNC_ACTION_MAP);
+		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP);
+		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP);
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP);
 
 		categoryToSynchronizationActionMapEClass = createEClass(CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP);
@@ -1488,6 +1532,10 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		informationUnitListItemToInformationUnitMapEClass = createEClass(INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP);
 		createEReference(informationUnitListItemToInformationUnitMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__KEY);
 		createEReference(informationUnitListItemToInformationUnitMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__VALUE);
+
+		informationUnitListItemToSynchronizationActionMapEClass = createEClass(INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP);
+		createEReference(informationUnitListItemToSynchronizationActionMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY);
+		createEAttribute(informationUnitListItemToSynchronizationActionMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE);
 
 		// Create enums
 		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
@@ -1661,7 +1709,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEReference(getChangeSetItem_RemoteConvertedContainer(), this.getCategory(), null, "remoteConvertedContainer", null, 0, 1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangeSetItem_RemoteOriginalObject(), this.getRemoteContainer(), null, "remoteOriginalObject", null, 0, 1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangeSetItem_LocalContainer(), this.getCategory(), null, "localContainer", null, 0, 1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getChangeSetItem_SyncActionMap(), this.getCategoryToSynchronizationActionMap(), null, "syncActionMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getChangeSetItem_SyncCategoryActionMap(), this.getCategoryToSynchronizationActionMap(), null, "syncCategoryActionMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getChangeSetItem_SyncInformationUnitActionMap(), this.getInformationUnitListItemToSynchronizationActionMap(), null, "syncInformationUnitActionMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangeSetItem_RemoteFullObjectMap(), this.getInformationUnitListItemToInformationUnitMap(), null, "remoteFullObjectMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(categoryToSynchronizationActionMapEClass, Map.Entry.class, "CategoryToSynchronizationActionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
@@ -1671,6 +1720,10 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(informationUnitListItemToInformationUnitMapEClass, Map.Entry.class, "InformationUnitListItemToInformationUnitMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInformationUnitListItemToInformationUnitMap_Key(), this.getInformationUnitListItem(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnitListItemToInformationUnitMap_Value(), this.getInformationUnit(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(informationUnitListItemToSynchronizationActionMapEClass, Map.Entry.class, "InformationUnitListItemToSynchronizationActionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getInformationUnitListItemToSynchronizationActionMap_Key(), this.getInformationUnitListItem(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInformationUnitListItemToSynchronizationActionMap_Value(), this.getSynchronizationAction(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");

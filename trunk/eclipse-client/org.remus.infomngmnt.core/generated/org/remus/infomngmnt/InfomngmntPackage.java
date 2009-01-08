@@ -1544,13 +1544,22 @@ public interface InfomngmntPackage extends EPackage {
 	int CHANGE_SET_ITEM__LOCAL_CONTAINER = ADAPTER_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Sync Action Map</b></em>' map.
+	 * The feature id for the '<em><b>Sync Category Action Map</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CHANGE_SET_ITEM__SYNC_ACTION_MAP = ADAPTER_FEATURE_COUNT + 3;
+	int CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP = ADAPTER_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Sync Information Unit Action Map</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP = ADAPTER_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Remote Full Object Map</b></em>' map.
@@ -1559,7 +1568,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP = ADAPTER_FEATURE_COUNT + 4;
+	int CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP = ADAPTER_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Change Set Item</em>' class.
@@ -1568,7 +1577,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CHANGE_SET_ITEM_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 5;
+	int CHANGE_SET_ITEM_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CategoryToSynchronizationActionMapImpl <em>Category To Synchronization Action Map</em>}' class.
@@ -1645,6 +1654,43 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl <em>Information Unit List Item To Synchronization Action Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToSynchronizationActionMap()
+	 * @generated
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP = 28;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Information Unit List Item To Synchronization Action Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1652,7 +1698,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 28;
+	int SYNCHRONIZATION_STATE = 29;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -1662,7 +1708,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 29;
+	int SYNCHRONIZATION_ACTION = 30;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -1672,7 +1718,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 30;
+	int OBJECT = 31;
 
 
 	/**
@@ -2730,15 +2776,26 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getChangeSetItem_LocalContainer();
 
 	/**
-	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getSyncActionMap <em>Sync Action Map</em>}'.
+	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getSyncCategoryActionMap <em>Sync Category Action Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Sync Action Map</em>'.
-	 * @see org.remus.infomngmnt.ChangeSetItem#getSyncActionMap()
+	 * @return the meta object for the map '<em>Sync Category Action Map</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getSyncCategoryActionMap()
 	 * @see #getChangeSetItem()
 	 * @generated
 	 */
-	EReference getChangeSetItem_SyncActionMap();
+	EReference getChangeSetItem_SyncCategoryActionMap();
+
+	/**
+	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getSyncInformationUnitActionMap <em>Sync Information Unit Action Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Sync Information Unit Action Map</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getSyncInformationUnitActionMap()
+	 * @see #getChangeSetItem()
+	 * @generated
+	 */
+	EReference getChangeSetItem_SyncInformationUnitActionMap();
 
 	/**
 	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getRemoteFullObjectMap <em>Remote Full Object Map</em>}'.
@@ -2818,6 +2875,40 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getInformationUnitListItemToInformationUnitMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Information Unit List Item To Synchronization Action Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Information Unit List Item To Synchronization Action Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyType="org.remus.infomngmnt.InformationUnitListItem"
+	 *        valueDataType="org.remus.infomngmnt.SynchronizationAction"
+	 * @generated
+	 */
+	EClass getInformationUnitListItemToSynchronizationActionMap();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getInformationUnitListItemToSynchronizationActionMap()
+	 * @generated
+	 */
+	EReference getInformationUnitListItemToSynchronizationActionMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getInformationUnitListItemToSynchronizationActionMap()
+	 * @generated
+	 */
+	EAttribute getInformationUnitListItemToSynchronizationActionMap_Value();
 
 	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
@@ -3709,12 +3800,20 @@ public interface InfomngmntPackage extends EPackage {
 		EReference CHANGE_SET_ITEM__LOCAL_CONTAINER = eINSTANCE.getChangeSetItem_LocalContainer();
 
 		/**
-		 * The meta object literal for the '<em><b>Sync Action Map</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Sync Category Action Map</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CHANGE_SET_ITEM__SYNC_ACTION_MAP = eINSTANCE.getChangeSetItem_SyncActionMap();
+		EReference CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP = eINSTANCE.getChangeSetItem_SyncCategoryActionMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Sync Information Unit Action Map</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP = eINSTANCE.getChangeSetItem_SyncInformationUnitActionMap();
 
 		/**
 		 * The meta object literal for the '<em><b>Remote Full Object Map</b></em>' map feature.
@@ -3775,6 +3874,32 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__VALUE = eINSTANCE.getInformationUnitListItemToInformationUnitMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl <em>Information Unit List Item To Synchronization Action Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToSynchronizationActionMap()
+		 * @generated
+		 */
+		EClass INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP = eINSTANCE.getInformationUnitListItemToSynchronizationActionMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY = eINSTANCE.getInformationUnitListItemToSynchronizationActionMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = eINSTANCE.getInformationUnitListItemToSynchronizationActionMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.

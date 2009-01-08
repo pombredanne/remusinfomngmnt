@@ -124,7 +124,7 @@ public class EditingUtil {
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas, final boolean cache, EditingDomain domain, final boolean createOnDemand) {
+	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas, final boolean cache, final EditingDomain domain, final boolean createOnDemand) {
 		Resource resource = null;
 		ResourceSet resourceSet = null;
 		T returnValue = null;
@@ -189,7 +189,7 @@ public class EditingUtil {
 	 * @param uri the uri
 	 * @return the contents of the file
 	 */
-	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, EditingDomain domain, boolean loadOnDemand) {
+	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, final EditingDomain domain, final boolean loadOnDemand) {
 		return getObjectFromUri(uri.getFullPath(), objectClas, domain != null ? true : false, this.editingDomain, loadOnDemand);
 	}
 	/**
@@ -210,6 +210,30 @@ public class EditingUtil {
 			e.printStackTrace();
 		}
 	}
+
+	public void saveObjectToResource(final EObject object, final String fileName) {
+		File file = new File(fileName);
+		ResourceSetImpl resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+				new XMLResourceFactoryImpl());
+		resourceSet.getPackageRegistry().put
+		(InfomngmntPackage.eNS_URI,
+				InfomngmntPackage.eINSTANCE);
+		Resource resource;
+		if (file.exists()) {
+			file.delete();
+		} else {
+			resource = resourceSet.createResource(URI.createFileURI(fileName));
+			resource.getContents().add(object);
+			try {
+				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			} catch (final IOException e) {
+				// FIXME What to do here?
+			}	
+		}
+	}
+
 	public void saveObjectToResource(final IFile target, final EObject object) {
 		try {
 			final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(target.getFullPath().toString(),false);

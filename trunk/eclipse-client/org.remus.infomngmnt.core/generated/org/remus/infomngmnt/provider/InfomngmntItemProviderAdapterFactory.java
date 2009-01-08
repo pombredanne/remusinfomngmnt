@@ -684,6 +684,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InformationUnitListItemToSynchronizationActionMapItemProvider informationUnitListItemToSynchronizationActionMapItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link java.util.Map.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInformationUnitListItemToSynchronizationActionMapAdapter() {
+		if (informationUnitListItemToSynchronizationActionMapItemProvider == null) {
+			informationUnitListItemToSynchronizationActionMapItemProvider = new InformationUnitListItemToSynchronizationActionMapItemProvider(this);
+		}
+
+		return informationUnitListItemToSynchronizationActionMapItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -808,6 +831,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (changeSetItemItemProvider != null) changeSetItemItemProvider.dispose();
 		if (categoryToSynchronizationActionMapItemProvider != null) categoryToSynchronizationActionMapItemProvider.dispose();
 		if (informationUnitListItemToInformationUnitMapItemProvider != null) informationUnitListItemToInformationUnitMapItemProvider.dispose();
+		if (informationUnitListItemToSynchronizationActionMapItemProvider != null) informationUnitListItemToSynchronizationActionMapItemProvider.dispose();
 	}
 
 }

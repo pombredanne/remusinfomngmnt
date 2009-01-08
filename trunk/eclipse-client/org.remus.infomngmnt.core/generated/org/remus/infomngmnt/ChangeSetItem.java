@@ -27,7 +27,8 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link org.remus.infomngmnt.ChangeSetItem#getRemoteConvertedContainer <em>Remote Converted Container</em>}</li>
  *   <li>{@link org.remus.infomngmnt.ChangeSetItem#getRemoteOriginalObject <em>Remote Original Object</em>}</li>
  *   <li>{@link org.remus.infomngmnt.ChangeSetItem#getLocalContainer <em>Local Container</em>}</li>
- *   <li>{@link org.remus.infomngmnt.ChangeSetItem#getSyncActionMap <em>Sync Action Map</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.ChangeSetItem#getSyncCategoryActionMap <em>Sync Category Action Map</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.ChangeSetItem#getSyncInformationUnitActionMap <em>Sync Information Unit Action Map</em>}</li>
  *   <li>{@link org.remus.infomngmnt.ChangeSetItem#getRemoteFullObjectMap <em>Remote Full Object Map</em>}</li>
  * </ul>
  * </p>
@@ -116,21 +117,38 @@ public interface ChangeSetItem extends Adapter {
 	void setLocalContainer(Category value);
 
 	/**
-	 * Returns the value of the '<em><b>Sync Action Map</b></em>' map.
+	 * Returns the value of the '<em><b>Sync Category Action Map</b></em>' map.
 	 * The key is of type {@link org.remus.infomngmnt.Category},
 	 * and the value is of type {@link org.remus.infomngmnt.SynchronizationAction},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Sync Action Map</em>' map isn't clear,
+	 * If the meaning of the '<em>Sync Category Action Map</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Sync Action Map</em>' map.
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getChangeSetItem_SyncActionMap()
+	 * @return the value of the '<em>Sync Category Action Map</em>' map.
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getChangeSetItem_SyncCategoryActionMap()
 	 * @model mapType="org.remus.infomngmnt.CategoryToSynchronizationActionMap<org.remus.infomngmnt.Category, org.remus.infomngmnt.SynchronizationAction>"
 	 * @generated
 	 */
-	EMap<Category, SynchronizationAction> getSyncActionMap();
+	EMap<Category, SynchronizationAction> getSyncCategoryActionMap();
+
+	/**
+	 * Returns the value of the '<em><b>Sync Information Unit Action Map</b></em>' map.
+	 * The key is of type {@link org.remus.infomngmnt.InformationUnitListItem},
+	 * and the value is of type {@link org.remus.infomngmnt.SynchronizationAction},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sync Information Unit Action Map</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Sync Information Unit Action Map</em>' map.
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getChangeSetItem_SyncInformationUnitActionMap()
+	 * @model mapType="org.remus.infomngmnt.InformationUnitListItemToSynchronizationActionMap<org.remus.infomngmnt.InformationUnitListItem, org.remus.infomngmnt.SynchronizationAction>"
+	 * @generated
+	 */
+	EMap<InformationUnitListItem, SynchronizationAction> getSyncInformationUnitActionMap();
 
 	/**
 	 * Returns the value of the '<em><b>Remote Full Object Map</b></em>' map.

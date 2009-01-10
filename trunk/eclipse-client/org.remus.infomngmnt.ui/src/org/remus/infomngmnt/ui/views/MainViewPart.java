@@ -35,6 +35,7 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -151,7 +152,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 	public void createPartControl(final Composite parent) {
 		
 		this.toolkit = new FormToolkit(parent.getDisplay());
-
+		getSite().setSelectionProvider(this.selectionDelegate = new SelectionProviderIntermediate());
 		final Composite comp = this.toolkit.createComposite(parent, SWT.NONE);
 		comp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		GridLayout gridLayout = new GridLayout(1,false);
@@ -182,6 +183,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		int counter = 1;
 		for (final CollapsibleButtonBar element : this.items) {
 			CustomButton button = this.cb.addButton(element.getTitle(), element.getTooltip(), element.getBigIcon(), element.getIcon());
+			//handleSelection(element);
 			if (counter++ <= this.visibleButtonCount) {
 			} else {
 				this.cb.hideButton(button);
@@ -213,7 +215,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		//this.cb.setLayoutData(new GridData(GridData.GRAB_VERTICAL | GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
 		GridData gridData = new GridData(SWT.FILL, SWT.END, false, false);
 		this.cb.setLayoutData(gridData);
-		getSite().setSelectionProvider(this.selectionDelegate = new SelectionProviderIntermediate());
+		
 //		parent.layout(true);
 	}
 	
@@ -289,7 +291,14 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		MainViewPart.this.activeButtonBar.handleSelect();
 		this.activeButtonBar.initToolbar(this.form.getToolBarManager());
 		setNewTitle(element.getTitle());
+		setNewImage(element.getIcon());
 		this.upperComp.layout();
+	}
+
+	private void setNewImage(final Image icon) {
+		this.form.setImage(icon);
+		setTitleImage(icon);
+		
 	}
 
 	private void setNewTitle(final String title) {

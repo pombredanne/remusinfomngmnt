@@ -17,6 +17,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -35,6 +37,7 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -55,9 +58,9 @@ public class ChangeSetWizardPage extends WizardPage {
 	 * Create the wizard
 	 * @param changeSet2 
 	 */
-	public ChangeSetWizardPage(final ChangeSet changeSet2) {
+	public ChangeSetWizardPage(final ChangeSet changeSet) {
 		super("wizardPage");
-		this.changeSet = changeSet2;
+		this.changeSet = changeSet;
 		setTitle("Wizard Page title");
 		setDescription("Wizard Page description");
 	}
@@ -142,15 +145,22 @@ public class ChangeSetWizardPage extends WizardPage {
 		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(AdapterUtils.getAdapterFactory()));
 		
 		this.treeViewer.setInput(this.diffModel);
+		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(final SelectionChangedEvent event) {
+				System.out.println(event.getSelection());
+				
+			}
+		});
 		
 		setControl(container);
 	}
 
 	protected void handleCategoryStringChanged(final String newText) {
 		
-		Category localTargetCategory = CategoryUtil.copyBlankObject(CategoryUtil.findCategory(newText,true));
+		
+		Category localTargetCategory = InfomngmntFactory.eINSTANCE.createCategory();
 		Category tmpRemoteRootCategory = CategoryUtil.copyBlankObject(localTargetCategory);
-		this.changeSet.setTargetCategory(localTargetCategory);
+		this.changeSet.setTargetCategory(CategoryUtil.findCategory(newText, false));
 		
 		EList<ChangeSetItem> changeSetItems = this.changeSet.getChangeSetItems();
 		for (ChangeSetItem changeSetItem2 : changeSetItems) {
@@ -163,6 +173,7 @@ public class ChangeSetWizardPage extends WizardPage {
 		EditingUtil.getInstance().saveObjectToResource(
 				localTargetCategory, 
 				UIPlugin.getDefault().getStateLocation().append("compare").append("local.xml").toOSString());
+		
 		MatchModel match;
 		try {
 			match = MatchService.doMatch(localTargetCategory
@@ -185,6 +196,10 @@ public class ChangeSetWizardPage extends WizardPage {
 
 	public void setChangeSet(final ChangeSet changeSet) {
 		this.changeSet = changeSet;
+	}
+
+	public DiffModel getDiffModel() {
+		return this.diffModel;
 	}
 
 }

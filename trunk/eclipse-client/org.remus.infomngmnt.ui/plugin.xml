@@ -16,6 +16,7 @@
             category="org.remus.infomngmnt.ui.general"
             class="org.remus.infomngmnt.ui.project.NewProjectWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/16/folder_green_new.png"
             id="org.remus.infomngmnt.ui.newInfoProjectWizard"
             name="Information Project"
             project="true">
@@ -24,6 +25,7 @@
             category="org.remus.infomngmnt.ui.general"
             class="org.remus.infomngmnt.ui.category.NewCategoryWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/16/folder_blue_new.png"
             id="org.remus.infomngmnt.ui.newCategoryWizard"
             name="Category">
       </wizard>
@@ -142,9 +144,29 @@
             name="Open Information-Type">
       </command>
       <command
+            categoryId="org.remus.infomngmnt.ui.remusRemoteAction"
             id="org.remus.infomngmnt.ui.newRepository"
             name="Add new Repository">
       </command>
+      <command
+            categoryId="org.remus.infomngmnt.ui.remusRemoteAction"
+            id="org.remus.infomngmnt.ui.shareCategory"
+            name="Share Category">
+      </command>
+      <command
+            categoryId="org.remus.infomngmnt.ui.remusRemoteAction"
+            id="org.remus.infomngmnt.ui.syncCategory"
+            name="Synchronize">
+      </command>
+      <command
+            categoryId="org.remus.infomngmnt.ui.remusRemoteAction"
+            id="org.remus.infomngmnt.ui.disconnect"
+            name="Disconnect from Repository">
+      </command>
+      <category
+            id="org.remus.infomngmnt.ui.remusRemoteAction"
+            name="Synchronization Commands for Information Types">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -155,6 +177,33 @@
       <handler
             class="org.remus.infomngmnt.ui.handler.NewRepositoryHandler"
             commandId="org.remus.infomngmnt.ui.newRepository">
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.ShareCategoryHandler"
+            commandId="org.remus.infomngmnt.ui.shareCategory">
+         <activeWhen>
+            <reference
+                  definitionId="selectionAreLocalCategories">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.SynchronizeCategoryHandler"
+            commandId="org.remus.infomngmnt.ui.syncCategory">
+         <activeWhen>
+            <reference
+                  definitionId="selectionAreRemoteCategories">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.DisonnectRespositoryHandler"
+            commandId="org.remus.infomngmnt.ui.disconnect">
+         <activeWhen>
+            <reference
+                  definitionId="selectionAreRemoteCategories">
+            </reference>
+         </activeWhen>
       </handler>
    </extension>
    <extension
@@ -171,14 +220,26 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+Y">
       </key>
+      <key
+            commandId="org.remus.infomngmnt.ui.shareCategory"
+            contextId="org.remus.infomngmnt.ui.navigationContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+M3+R">
+      </key>
+      <key
+            commandId="org.remus.infomngmnt.ui.syncCategory"
+            contextId="org.remus.infomngmnt.ui.navigationContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+M3+T">
+      </key>
    </extension>
    <extension
          point="org.remus.infomngmnt.ui.collapsibleButtonBar">
       <collapsibleButton
-            bigImage="icons/sample.gif"
+            bigImage="icons/iconexperience/24/workplace.png"
             class="org.remus.infomngmnt.ui.collapsiblebuttons.NavigationSection"
             contextId="org.remus.infomngmnt.ui.navigationContext"
-            icon="icons/sample.gif"
+            icon="icons/iconexperience/16/workplace.png"
             id="org.remus.infomngmnt.ui.navigation"
             name="Navigation"
             order="10"
@@ -194,9 +255,10 @@
             tooltip="Tags">
       </collapsibleButton>
       <collapsibleButton
+            bigImage="icons/iconexperience/24/server_network.png"
             class="org.remus.infomngmnt.ui.collapsiblebuttons.RemoteRepositoriesButtonBar"
             contextId="org.remus.infomngmnt.ui.repositories"
-            icon="icons/sample.gif"
+            icon="icons/iconexperience/16/server_network.png"
             id="org.remus.infomngmnt.ui.repositories"
             name="Remote Repositories"
             order="30"
@@ -260,6 +322,86 @@
             location="BOTTOM_RIGHT"
             state="true">
       </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=sync">
+         <menu
+               label="Remote Synchronization"
+               mnemonic="e">
+            <command
+                  commandId="org.remus.infomngmnt.ui.syncCategory"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.ui.shareCategory"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+            <separator
+                  name="org.remus.infomngmnt.ui.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.remus.infomngmnt.ui.disconnect"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="selectionAreCategories">
+         <iterate
+               ifEmpty="false"
+               operator="and">
+            <instanceof
+                  value="org.remus.infomngmnt.Category">
+            </instanceof>
+         </iterate>
+      </definition>
+      <definition
+            id="selectionAreRemoteCategories">
+         <and>
+            <reference
+                  definitionId="selectionAreCategories">
+            </reference>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <adapt
+                     type="org.remus.infomngmnt.SynchronizationMetadata">
+               </adapt>
+            </iterate>
+         </and>
+      </definition>
+      <definition
+            id="selectionAreLocalCategories">
+         <and>
+            <reference
+                  definitionId="selectionAreCategories">
+            </reference>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <not>
+                  <adapt
+                        type="org.remus.infomngmnt.SynchronizationMetadata">
+                  </adapt>
+               </not>
+            </iterate>
+         </and>
+      </definition>
    </extension>
 
 </plugin>

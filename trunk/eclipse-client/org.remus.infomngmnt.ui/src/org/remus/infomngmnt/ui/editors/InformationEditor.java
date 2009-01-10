@@ -221,7 +221,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 	protected Adapter dirtyAdapter = new EContentAdapter() {
 		@Override
-		public void notifyChanged(Notification notification) {
+		public void notifyChanged(final Notification notification) {
 			super.notifyChanged(notification);
 			if (notification.getEventType() != Notification.RESOLVE
 					&& notification.getEventType() != Notification.REMOVING_ADAPTER) {
@@ -289,6 +289,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this.resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
 		createModel();
 		setPartName(getPrimaryModel().getLabel());
+		setTitleImage(InformationExtensionManager.getInstance().getInfoTypeByType(getPrimaryModel().getType()).getImage());
 
 	}
 
@@ -450,7 +451,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		getPrimaryModel().eAdapters().add(this.dirtyAdapter);
 	}
 
-	public void setDirty(boolean dirty) {
+	public void setDirty(final boolean dirty) {
 		if (dirty != this.dirty) {
 			this.dirty = dirty;
 			firePropertyChange(PROP_DIRTY);
@@ -883,7 +884,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public Object getAdapter(final Class adapter) {
 		if (adapter.equals(IContentOutlinePage.class)) {
 			return getContentOutline();
 		}
@@ -894,7 +895,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		if (this.contentOutlinePage == null) {
 			this.contentOutlinePage = new LinkOutline(getPrimaryModel(), this.editingDomain) {
 				@Override
-				public void setActionBars(IActionBars actionBars) {
+				public void setActionBars(final IActionBars actionBars) {
 					super.setActionBars(actionBars);
 					getActionBarContributor().shareGlobalActions(this, actionBars);
 				}
@@ -903,7 +904,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		return this.contentOutlinePage;
 	}
 
-	protected void performGlobalAction(String id) {
+	protected void performGlobalAction(final String id) {
 		// preserve selection
 		ISelection selection = getSelection();
 		boolean handled = ((InformationFormPage) getActivePageInstance()).performGlobalAction(id);
@@ -925,24 +926,25 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	/**
 	 * @param selection
 	 */
-	private void copyToClipboard(ISelection selection) {
+	private void copyToClipboard(final ISelection selection) {
 		Object[] objects = null;
 		String textVersion = null;
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection ssel = (IStructuredSelection) selection;
-			if (ssel == null || ssel.size() == 0)
+			if (ssel == null || ssel.size() == 0) {
 				return;
+			}
 			objects = ssel.toArray();
 			StringWriter writer = new StringWriter();
 			PrintWriter pwriter = new PrintWriter(writer);
 			Class objClass = null;
 			for (int i = 0; i < objects.length; i++) {
 				Object obj = objects[i];
-				if (objClass == null)
+				if (objClass == null) {
 					objClass = obj.getClass();
-				else if (objClass.equals(obj.getClass()) == false)
+				} else if (objClass.equals(obj.getClass()) == false) {
 					return;
-				else if (obj instanceof String) {
+				} else if (obj instanceof String) {
 					// Delimiter is always a newline
 					pwriter.println((String) obj);
 				}
@@ -957,8 +959,9 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		} else if (selection instanceof ITextSelection) {
 			textVersion = ((ITextSelection) selection).getText();
 		}
-		if ((textVersion == null || textVersion.length() == 0) && objects == null)
+		if ((textVersion == null || textVersion.length() == 0) && objects == null) {
 			return;
+		}
 		// set the clipboard contents
 		Object[] o = null;
 		Transfer[] t = null;
@@ -983,11 +986,13 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		return false;
 	}
 
-	public boolean canCopy(ISelection selection) {
-		if (selection == null)
+	public boolean canCopy(final ISelection selection) {
+		if (selection == null) {
 			return false;
-		if (selection instanceof IStructuredSelection)
+		}
+		if (selection instanceof IStructuredSelection) {
 			return !selection.isEmpty();
+		}
 		if (selection instanceof ITextSelection) {
 			ITextSelection textSelection = (ITextSelection) selection;
 			return textSelection.getLength() > 0;
@@ -995,7 +1000,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		return false;
 	}
 
-	public boolean canCut(ISelection selection) {
+	public boolean canCut(final ISelection selection) {
 		return canCopy(selection);
 	}
 

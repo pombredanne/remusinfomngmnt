@@ -127,6 +127,8 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	private IDialogSettings settings;
 	private NavigationContextMenu actionBar;
 
+	private MenuManager contextMenu;
+
 	/**
 	 * Create contents of the view part
 	 * @param parent
@@ -244,16 +246,15 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	 * @param viewer2
 	 */
 	private void hookContextMenu() {
-		final MenuManager contextMenu = new MenuManager("#PopUpMenu");
-		contextMenu.setRemoveAllWhenShown(true);
+		this.contextMenu = new MenuManager("#PopUpMenu");
+		this.contextMenu.setRemoveAllWhenShown(true);
 		this.actionBar = new NavigationContextMenu();
 		this.actionBar.init(getViewSite().getActionBars());
 		this.actionBar.setActiveDomain(this);
-		contextMenu.addMenuListener(this.actionBar);
-		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
+		this.contextMenu.addMenuListener(this.actionBar);
+		final Menu menu = this.contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
-		getViewSite().registerContextMenu(getId(), contextMenu, new UnwrappingSelectionProvider(this));
-
+		getViewSite().registerContextMenu(getId(), this.contextMenu, new UnwrappingSelectionProvider(this));
 	}
 
 	@Override
@@ -264,7 +265,6 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	
 	@Override
 	public void handleDeselect() {
-		getViewSite().getActionBars().clearGlobalActionHandlers();
 		super.handleDeselect();
 	}
 

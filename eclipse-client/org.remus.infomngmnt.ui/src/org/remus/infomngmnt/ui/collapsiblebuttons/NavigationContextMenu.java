@@ -340,8 +340,9 @@ ISelectionChangedListener
 		menuManager.add(this.copyAction);
 		menuManager.add(this.pasteAction);
 		menuManager.add(new Separator());
-		menuManager.add(this.deleteAction);
+		menuManager.add(new GroupMarker("sync"));
 		menuManager.add(new Separator());
+		menuManager.add(this.deleteAction);
 
 		if ((this.style & ADDITIONS_LAST_STYLE) != 0)
 		{

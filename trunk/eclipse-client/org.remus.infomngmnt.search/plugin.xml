@@ -31,13 +31,14 @@
          point="org.eclipse.ui.views">
       <view
             class="org.remus.infomngmnt.search.ui.view.SearchView"
-            icon="images/search.gif"
+            icon="icons/iconexperience/flashlight.png"
             id="org.remus.infomngmnt.search.ui.view.SearchView"
             name="Search"
             restorable="true">
       </view>
       <view
             class="org.remus.infomngmnt.search.ui.view.SearchHistoryView"
+            icon="icons/iconexperience/history.png"
             id="org.remus.infomngmnt.search.ui.view.SearchHistoryView"
             name="Search History"
             restorable="true">
@@ -58,12 +59,12 @@
                id="org.remus.infomngmnt.search.contextBar">
             <command
                   commandId="org.remus.infomngmnt.search.previousResultItem"
-                  icon="icons/arrow_left_blue.png"
+                  icon="icons/iconexperience/arrow_left_blue.png"
                   style="push">
             </command>
             <command
                   commandId="org.remus.infomngmnt.search.nextResultItem"
-                  icon="icons/arrow_right_blue.png"
+                  icon="icons/iconexperience/arrow_right_blue.png"
                   style="push">
             </command>
             <visibleWhen

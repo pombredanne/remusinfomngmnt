@@ -57,6 +57,7 @@
       <plugin id="org.eclipse.emf.common.ui"/>
       <plugin id="org.eclipse.emf.compare"/>
       <plugin id="org.eclipse.emf.compare.diff"/>
+      <plugin id="org.eclipse.emf.compare.diff.edit"/>
       <plugin id="org.eclipse.emf.compare.match"/>
       <plugin id="org.eclipse.emf.databinding"/>
       <plugin id="org.eclipse.emf.databinding.edit"/>

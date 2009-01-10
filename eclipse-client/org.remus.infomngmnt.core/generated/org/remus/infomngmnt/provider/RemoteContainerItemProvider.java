@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -29,6 +28,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteContainer;
 
@@ -48,7 +48,7 @@ public class RemoteContainerItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RemoteContainerItemProvider(AdapterFactory adapterFactory) {
+	public RemoteContainerItemProvider(final AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,14 +59,14 @@ public class RemoteContainerItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addChildrenPropertyDescriptor(object);
 			addExclusionChildrenPropertyDescriptor(object);
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -75,10 +75,10 @@ public class RemoteContainerItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addChildrenPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addChildrenPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_RemoteContainer_children_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteContainer_children_feature", "_UI_RemoteContainer_type"),
@@ -97,10 +97,10 @@ public class RemoteContainerItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addExclusionChildrenPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addExclusionChildrenPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_RemoteContainer_exclusionChildren_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteContainer_exclusionChildren_feature", "_UI_RemoteContainer_type"),
@@ -117,25 +117,25 @@ public class RemoteContainerItemProvider
 	 * This returns RemoteContainer.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RemoteContainer"));
+	public Object getImage(final Object object) {
+		return overlayImage(object, getResourceLocator().getImage("iconexperience/folder_green_network.png"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
-	public String getText(Object object) {
+	public String getText(final Object object) {
 		String label = ((RemoteContainer)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_RemoteContainer_type") :
-			getString("_UI_RemoteContainer_type") + " " + label;
+			label;
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class RemoteContainerItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(final Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -159,7 +159,7 @@ public class RemoteContainerItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

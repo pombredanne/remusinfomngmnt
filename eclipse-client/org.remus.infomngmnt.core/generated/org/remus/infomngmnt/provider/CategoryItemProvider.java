@@ -18,9 +18,10 @@ package org.remus.infomngmnt.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -31,8 +32,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -53,7 +54,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CategoryItemProvider(AdapterFactory adapterFactory) {
+	public CategoryItemProvider(final AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -64,15 +65,15 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -81,10 +82,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addIdPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Category_id_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Category_id_feature", "_UI_Category_type"),
@@ -103,10 +104,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addLabelPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Category_label_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Category_label_feature", "_UI_Category_type"),
@@ -125,10 +126,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addDescriptionPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Category_description_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Category_description_feature", "_UI_Category_type"),
@@ -150,14 +151,14 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
+		if (this.childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__CHILDREN);
-			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT);
-			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA);
+			this.childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__CHILDREN);
+			this.childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT);
+			this.childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA);
 		}
-		return childrenFeatures;
+		return this.childrenFeatures;
 	}
 
 	/**
@@ -166,7 +167,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -177,11 +178,14 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * This returns Category.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Category"));
+	public Object getImage(final Object object) {
+		if (((IAdaptable) object).getAdapter(IProject.class) != null) {
+			return overlayImage(object, getResourceLocator().getImage("iconexperience/folder_green.png"));
+		}
+		return overlayImage(object, getResourceLocator().getImage("iconexperience/folder_blue.png"));
 	}
 
 	/**
@@ -191,7 +195,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated not
 	 */
 	@Override
-	public String getText(Object object) {
+	public String getText(final Object object) {
 		String label = ((Category)object).getLabel();
 		return label == null || label.length() == 0 ?
 				getString("_UI_Category_type") :
@@ -203,10 +207,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(final Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Category.class)) {
@@ -218,7 +222,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 			case InfomngmntPackage.CATEGORY__CHILDREN:
 			case InfomngmntPackage.CATEGORY__INFORMATION_UNIT:
 			case InfomngmntPackage.CATEGORY__SYNCHRONIZATION_META_DATA:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, true));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -232,7 +236,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add

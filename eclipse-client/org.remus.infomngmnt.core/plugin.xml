@@ -45,6 +45,9 @@
          <adapter
                type="org.eclipse.core.resources.IResource">
          </adapter>
+         <adapter
+               type="org.remus.infomngmnt.SynchronizationMetadata">
+         </adapter>
       </factory>
       <factory
             adaptableType="org.remus.infomngmnt.InformationUnitListItem"

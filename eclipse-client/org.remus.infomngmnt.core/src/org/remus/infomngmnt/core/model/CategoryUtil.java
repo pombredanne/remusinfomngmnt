@@ -22,10 +22,12 @@ import java.util.Set;
 import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
@@ -213,7 +215,7 @@ public class CategoryUtil {
 		}
 		return false;
 	}
-	
+
 	public static Category copyBlankObject(final Category cat) {
 		Category newCategory = InfomngmntFactory.eINSTANCE.createCategory();
 		ModelUtil.copyObject(cat, newCategory, 
@@ -225,6 +227,61 @@ public class CategoryUtil {
 		return newCategory;
 	}
 
+	public static InformationUnitListItem[] getAllInfoUnitItems(final Category cat) {
+
+		SELECT select = new SELECT(new FROM(cat), new WHERE(new EObjectCondition() {
+			@Override
+			public boolean isSatisfied(final EObject eObject) {
+				return eObject instanceof InformationUnitListItem;
+			}
+		}));
+		IQueryResult execute = select.execute();
+		Set<? extends EObject> eObjects = execute.getEObjects();
+		InformationUnitListItem[] returnValue = new InformationUnitListItem[eObjects.size()];
+		int i = 0;
+		for (EObject informationUnitListItem : eObjects) {
+			returnValue[i++] = (InformationUnitListItem) eObjects;
+		}
+		return returnValue;
+	}
+
+	public static EObject[] getAllChildren(final EObject parent, final EClass clazz) {
+
+		SELECT select = new SELECT(new FROM(parent), new WHERE(new EObjectCondition() {
+			@Override
+			public boolean isSatisfied(final EObject eObject) {
+				return eObject.eClass() == clazz;
+			}
+		}));
+		IQueryResult execute = select.execute();
+		Set<? extends EObject> eObjects = execute.getEObjects();
+		EObject[] returnValue = new EObject[eObjects.size()];
+		int i = 0;
+		for (EObject informationUnitListItem : eObjects) {
+			returnValue[i++] = informationUnitListItem;
+		}
+		return returnValue;
+	}
+	
+	
+	public static EObject[] getAllAdpatableChildren(final EObject parent, final Class adaptable) {
+
+		SELECT select = new SELECT(new FROM(parent), new WHERE(new EObjectCondition() {
+			@Override
+			public boolean isSatisfied(final EObject eObject) {
+				return eObject instanceof IAdaptable 
+					&& ((IAdaptable) eObject).getAdapter(adaptable) != null;
+			}
+		}));
+		IQueryResult execute = select.execute();
+		Set<? extends EObject> eObjects = execute.getEObjects();
+		EObject[] returnValue = new EObject[eObjects.size()];
+		int i = 0;
+		for (EObject informationUnitListItem : eObjects) {
+			returnValue[i++] = informationUnitListItem;
+		}
+		return returnValue;
+	}
 
 
 }

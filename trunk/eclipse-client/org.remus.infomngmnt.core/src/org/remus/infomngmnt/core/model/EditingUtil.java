@@ -222,16 +222,50 @@ public class EditingUtil {
 				InfomngmntPackage.eINSTANCE);
 		Resource resource;
 		if (file.exists()) {
-			file.delete();
+			try {
+				resource = resourceSet.getResource(URI.createFileURI(fileName), true);
+			} catch (Exception e) {
+				resource = resourceSet.createResource(URI.createFileURI(fileName));
+				e.printStackTrace();
+			}
+			resource.getContents().clear();
 		} else {
 			resource = resourceSet.createResource(URI.createFileURI(fileName));
-			resource.getContents().add(object);
-			try {
-				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
-			} catch (final IOException e) {
-				// FIXME What to do here?
-			}	
 		}
+		resource.getContents().add(object);
+		try {
+			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+		} catch (final IOException e) {
+			// FIXME What to do here?
+		}	
+	}
+	
+	public Resource createRessource(final String fileName) {
+		File file = new File(fileName);
+		ResourceSetImpl resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+				new XMLResourceFactoryImpl());
+		resourceSet.getPackageRegistry().put
+		(InfomngmntPackage.eNS_URI,
+				InfomngmntPackage.eINSTANCE);
+		Resource resource = null;
+		if (file.exists()) {
+			resource = resourceSet.getResource(URI.createFileURI(fileName), true);
+			resource.getContents().clear();
+			
+		} else {
+			resource = resourceSet.createResource(URI.createFileURI(fileName));
+			resource.getContents();
+		}
+		try {
+			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+		} catch (final IOException e) {
+			// FIXME What to do here?
+		}
+		
+		return resource;
+		
 	}
 
 	public void saveObjectToResource(final IFile target, final EObject object) {

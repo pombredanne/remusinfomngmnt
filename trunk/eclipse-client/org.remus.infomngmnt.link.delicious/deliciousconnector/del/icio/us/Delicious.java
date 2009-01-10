@@ -29,23 +29,6 @@
  */
 package del.icio.us;
 
-import del.icio.us.beans.*;
-import org.apache.commons.httpclient.*;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -54,6 +37,34 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import del.icio.us.beans.Bundle;
+import del.icio.us.beans.DeliciousDate;
+import del.icio.us.beans.Post;
+import del.icio.us.beans.Subscription;
+import del.icio.us.beans.Tag;
 
 /**
  * Delicious is a class for accessing the <a href="http://del.icio.us/doc/api">del.icio.us API</a>.
@@ -64,9 +75,9 @@ import java.util.List;
  */
 public class Delicious {
 
-    private Log logger = LogFactory.getLog(Delicious.class);
+    private final Log logger = LogFactory.getLog(Delicious.class);
 
-    private HttpClient httpClient;
+    private final HttpClient httpClient;
     private DocumentBuilder documentBuilder;
     private String apiEndpoint;
     private int httpResult;
@@ -78,7 +89,7 @@ public class Delicious {
      * @param username del.icio.us username
      * @param password del.icio.us password
      */
-    public Delicious(String username, String password) {
+    public Delicious(final String username, final String password) {
         this(username, password, DeliciousConstants.API_ENDPOINT);
     }
 
@@ -89,15 +100,15 @@ public class Delicious {
      * @param password    del.icio.us password
      * @param apiEndpoint del.icio.us API endpoint
      */
-    public Delicious(String username, String password, String apiEndpoint) {
+    public Delicious(final String username, final String password, final String apiEndpoint) {
         this.apiEndpoint = apiEndpoint;
-        httpClient = new HttpClient();
+        this.httpClient = new HttpClient();
         HttpClientParams httpClientParams = new HttpClientParams();
         DefaultHttpMethodRetryHandler defaultHttpMethodRetryHandler = new DefaultHttpMethodRetryHandler(0, false);
-        httpClientParams.setParameter(DeliciousConstants.USER_AGENT_HEADER, DeliciousConstants.USER_AGENT_VALUE);
+        httpClientParams.setParameter(HttpMethodParams.USER_AGENT, DeliciousConstants.USER_AGENT_VALUE);
         httpClientParams.setParameter(HttpClientParams.RETRY_HANDLER, defaultHttpMethodRetryHandler);
-        httpClient.setParams(httpClientParams);
-        httpClient.getState().setCredentials(AuthScope.ANY,
+        this.httpClient.setParams(httpClientParams);
+        this.httpClient.getState().setCredentials(AuthScope.ANY,
                 new UsernamePasswordCredentials(username, password));
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -107,9 +118,9 @@ public class Delicious {
         documentBuilderFactory.setCoalescing(true);
         documentBuilderFactory.setNamespaceAware(false);
         try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            this.documentBuilder = documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            logger.error(e);
+            this.logger.error(e);
         }
     }
 
@@ -123,8 +134,8 @@ public class Delicious {
      * @param proxyPort   Proxy port
      * @since 1.1
      */
-    public Delicious(String username, String password, String apiEndpoint,
-                     String proxyHost, int proxyPort) {
+    public Delicious(final String username, final String password, final String apiEndpoint,
+                     final String proxyHost, final int proxyPort) {
         this(username, password, apiEndpoint);
 
         setProxyConfiguration(proxyHost, proxyPort);
@@ -138,11 +149,11 @@ public class Delicious {
      * @param proxyPort Proxy port
      * @since 1.1
      */
-    public void setProxyConfiguration(String proxyHost, int proxyPort) {
+    public void setProxyConfiguration(final String proxyHost, final int proxyPort) {
         HostConfiguration hostConfiguration = new HostConfiguration();
         hostConfiguration.setProxy(proxyHost, proxyPort);
 
-        httpClient.setHostConfiguration(hostConfiguration);
+        this.httpClient.setHostConfiguration(hostConfiguration);
     }
 
     /**
@@ -153,8 +164,8 @@ public class Delicious {
      * @param proxyPassword Password to access proxy
      * @since 1.8
      */
-    public void setProxyAuthenticationConfiguration(String proxyUsername, String proxyPassword) {
-        httpClient.getState().setProxyCredentials(AuthScope.ANY, new UsernamePasswordCredentials(proxyUsername, proxyPassword));
+    public void setProxyAuthenticationConfiguration(final String proxyUsername, final String proxyPassword) {
+        this.httpClient.getState().setProxyCredentials(AuthScope.ANY, new UsernamePasswordCredentials(proxyUsername, proxyPassword));
     }
 
     /**
@@ -163,7 +174,7 @@ public class Delicious {
      * @param apiEndpoint New API endpoint
      * @since 2.0
      */
-    public void setApiEndpoint(String apiEndpoint) {
+    public void setApiEndpoint(final String apiEndpoint) {
         this.apiEndpoint = apiEndpoint;
     }
 
@@ -173,7 +184,7 @@ public class Delicious {
      * @return HTTP status code
      */
     public int getHttpResult() {
-        return httpResult;
+        return this.httpResult;
     }
 
     /**
@@ -182,12 +193,12 @@ public class Delicious {
      * @param tag Filter by this tag (optional)
      * @return List of {@link DeliciousDate} objects
      */
-    public List getDatesWithPost(String tag) {
+    public List getDatesWithPost(final String tag) {
         clearResultMetaInformation();
         List dates = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.POSTS_DATES);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_DATES);
         get.setDoAuthentication(true);
 
         if (!DeliciousUtils.checkNullOrBlank(tag)) {
@@ -196,9 +207,9 @@ public class Delicious {
         }
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -208,7 +219,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList dateItems = document.getElementsByTagName(DeliciousConstants.DATE_TAG);
                 if (dateItems != null && dateItems.getLength() > 0) {
                     for (int i = 0; i < dateItems.getLength(); i++) {
@@ -223,9 +234,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parsing error", e);
         }
 
@@ -252,13 +263,13 @@ public class Delicious {
         List tags = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.TAGS_GET);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.TAGS_GET);
         get.setDoAuthentication(true);
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -268,7 +279,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList tagItems = document.getElementsByTagName(DeliciousConstants.TAG_TAG);
                 if (tagItems != null && tagItems.getLength() > 0) {
                     for (int i = 0; i < tagItems.getLength(); i++) {
@@ -282,9 +293,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parsing error", e);
         }
 
@@ -300,12 +311,12 @@ public class Delicious {
      * @return List of {@link Post} objects
      * @since 1.8
      */
-    public List getPosts(String filterTag, Date date, String url) {
+    public List getPosts(final String filterTag, final Date date, final String url) {
         clearResultMetaInformation();
         List posts = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.POSTS_GET);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_GET);
         get.setDoAuthentication(true);
 
         List params = new ArrayList();
@@ -329,9 +340,9 @@ public class Delicious {
         }
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -341,7 +352,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList postItems = document.getElementsByTagName(DeliciousConstants.POST_TAG);
                 if (postItems != null && postItems.getLength() > 0) {
                     for (int i = 0; i < postItems.getLength(); i++) {
@@ -367,9 +378,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parsing error", e);
         }
 
@@ -383,7 +394,7 @@ public class Delicious {
      * @param date      Filter by this date
      * @return List of {@link Post} objects
      */
-    public List getPostsForDate(String filterTag, Date date) {
+    public List getPostsForDate(final String filterTag, final Date date) {
         return getPosts(filterTag, date, null);
     }
 
@@ -404,7 +415,7 @@ public class Delicious {
      * @return List of {@link Post} objects for a given URL
      * @since 1.8
      */
-    public List getPostForURL(String url) {
+    public List getPostForURL(final String url) {
         return getPosts(null, null, url);
     }
 
@@ -415,7 +426,7 @@ public class Delicious {
      * @return List of {@link Post} objects for a given tag
      * @since 1.8
      */
-    public List getPostsForTag(String tag) {
+    public List getPostsForTag(final String tag) {
         return getPosts(tag, null, null);
     }
 
@@ -426,7 +437,7 @@ public class Delicious {
      * @return List of {@link Post} objects for the given set of tags
      * @since 1.8
      */
-    public List getPostsForTags(String[] tags) {
+    public List getPostsForTags(final String[] tags) {
         if (tags == null) {
             return new ArrayList();
         }
@@ -452,7 +463,7 @@ public class Delicious {
      * @param count     Must be &gt; 0 and &lt; 100
      * @return List of {@link Post} objects
      */
-    public List getRecentPosts(String filterTag, int count) {
+    public List getRecentPosts(final String filterTag, int count) {
         clearResultMetaInformation();
         List posts = new ArrayList();
         StringBuffer result = new StringBuffer();
@@ -465,7 +476,7 @@ public class Delicious {
             count = DeliciousConstants.MAXIMUM_POST_COUNT;
         }
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.POSTS_RECENT);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_RECENT);
         get.setDoAuthentication(true);
 
         List params = new ArrayList();
@@ -483,9 +494,9 @@ public class Delicious {
         }
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -495,7 +506,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList postItems = document.getElementsByTagName(DeliciousConstants.POST_TAG);
                 if (postItems != null && postItems.getLength() > 0) {
                     for (int i = 0; i < postItems.getLength(); i++) {
@@ -521,9 +532,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parsing error", e);
         }
 
@@ -536,7 +547,7 @@ public class Delicious {
      * @param filterTag filter by this tag (optional)
      * @return List of {@link Post} objects
      */
-    public List getRecentPosts(String filterTag) {
+    public List getRecentPosts(final String filterTag) {
         return getRecentPosts(filterTag, DeliciousConstants.DEFAULT_POST_COUNT);
     }
 
@@ -557,12 +568,12 @@ public class Delicious {
      * @param filterTag Filter by this tag
      * @return List of all {@link Post} objects
      */
-    public List getAllPosts(String filterTag) {
+    public List getAllPosts(final String filterTag) {
         clearResultMetaInformation();
         List posts = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.POSTS_ALL);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_ALL);
         if (!DeliciousUtils.checkNullOrBlank(filterTag)) {
             get.setQueryString(new NameValuePair[] {new NameValuePair(DeliciousConstants.TAG_PARAMETER, filterTag)});
         }
@@ -570,9 +581,9 @@ public class Delicious {
         get.setDoAuthentication(true);
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -582,7 +593,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
 
                 // Parse the <posts .../> item for meta information (update attribute)
                 NodeList postsTag = document.getElementsByTagName(DeliciousConstants.POSTS_TAG);
@@ -590,7 +601,7 @@ public class Delicious {
                     Node postsItem = postsTag.item(0);
                     String updateTime = postsItem.getAttributes().getNamedItem(DeliciousConstants.UPDATE_ATTRIBUTE).getNodeValue();
 
-                    resultMetaInformation = DeliciousUtils.getDateFromUTCString(updateTime);
+                    this.resultMetaInformation = DeliciousUtils.getDateFromUTCString(updateTime);
                 }
 
                 // Parse the <post .../> items
@@ -619,9 +630,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parsing error", e);
         }
 
@@ -652,14 +663,14 @@ public class Delicious {
      * @return <code>true</code> if posted, <code>false</code> otherwise
      * @since 1.8
      */
-    public boolean addPost(String url, String description, String extended,
-                           String tags, Date date, boolean replace, boolean shared) {
+    public boolean addPost(final String url, final String description, final String extended,
+                           final String tags, final Date date, final boolean replace, final boolean shared) {
 
         clearResultMetaInformation();
         boolean addPostResult = false;
         StringBuffer result = new StringBuffer();
 
-        PostMethod post = new PostMethod(apiEndpoint + DeliciousConstants.POSTS_ADD);
+        PostMethod post = new PostMethod(this.apiEndpoint + DeliciousConstants.POSTS_ADD);
         post.setDoAuthentication(true);
 
         if (DeliciousUtils.checkNullOrBlank(url)) {
@@ -708,9 +719,9 @@ public class Delicious {
 
         try {
             post.addRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-            httpResult = httpClient.executeMethod(post);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(post);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (post.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -725,7 +736,7 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         }
 
         return addPostResult;
@@ -741,8 +752,8 @@ public class Delicious {
      * @param date        Date for post
      * @return <code>true</code> if posted, <code>false</code> otherwise
      */
-    public boolean addPost(String url, String description, String extended,
-                           String tags, Date date) {
+    public boolean addPost(final String url, final String description, final String extended,
+                           final String tags, final Date date) {
         return addPost(url, description, extended, tags, date, false, true);
     }
 
@@ -754,7 +765,7 @@ public class Delicious {
      * @return <code>true</code> if posted, <code>false</code> otherwise
      * @since 2.0
      */
-    public boolean addPost(String url, String description) {
+    public boolean addPost(final String url, final String description) {
         return addPost(url, description, null, null, null, false, true);
     }
 
@@ -764,21 +775,21 @@ public class Delicious {
      * @param url URL for post
      * @return <code>true</code> if post deleted, <code>false</code> otherwise
      */
-    public boolean deletePost(String url) {
+    public boolean deletePost(final String url) {
         clearResultMetaInformation();
         boolean deletePostResult = false;
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.POSTS_DELETE);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_DELETE);
         get.setDoAuthentication(true);
 
         NameValuePair urlParam = new NameValuePair(DeliciousConstants.URL_PARAMETER, url);
         get.setQueryString(new NameValuePair[]{urlParam});
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -793,7 +804,7 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         }
 
         return deletePostResult;
@@ -806,12 +817,12 @@ public class Delicious {
      * @param newTag New tag
      * @return <code>true</code> if tag renamed, <code>false</code> otherwise
      */
-    public boolean renameTag(String oldTag, String newTag) {
+    public boolean renameTag(final String oldTag, final String newTag) {
         clearResultMetaInformation();
         boolean renameTagResult = false;
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.TAGS_RENAME);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.TAGS_RENAME);
         get.setDoAuthentication(true);
 
         NameValuePair oldParam = new NameValuePair(DeliciousConstants.OLD_PARAMETER, oldTag);
@@ -820,9 +831,9 @@ public class Delicious {
 
         try {
             get.addRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");            
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -837,7 +848,7 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         }
 
         return renameTagResult;
@@ -849,12 +860,12 @@ public class Delicious {
      * @param date Filter by this date
      * @return List of {@link Post} items in your inbox
      */
-    public List getInboxEntries(Date date) {
+    public List getInboxEntries(final Date date) {
         clearResultMetaInformation();
         List posts = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.INBOX_GET);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.INBOX_GET);
         get.setDoAuthentication(true);
 
         if (date != null) {
@@ -863,9 +874,9 @@ public class Delicious {
         }
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -875,7 +886,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList postItems = document.getElementsByTagName(DeliciousConstants.POST_TAG);
                 if (postItems != null && postItems.getLength() > 0) {
                     for (int i = 0; i < postItems.getLength(); i++) {
@@ -901,9 +912,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parse error", e);
         }
 
@@ -920,13 +931,13 @@ public class Delicious {
         List dates = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.INBOX_DATES);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.INBOX_DATES);
         get.setDoAuthentication(true);
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -936,7 +947,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList dateItems = document.getElementsByTagName(DeliciousConstants.DATE_TAG);
                 if (dateItems != null && dateItems.getLength() > 0) {
                     for (int i = 0; i < dateItems.getLength(); i++) {
@@ -951,9 +962,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parse error", e);
         }
 
@@ -970,13 +981,13 @@ public class Delicious {
         List subscriptions = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.INBOX_SUBS);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.INBOX_SUBS);
         get.setDoAuthentication(true);
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -986,7 +997,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList subItems = document.getElementsByTagName(DeliciousConstants.SUB_TAG);
                 if (subItems != null && subItems.getLength() > 0) {
                     for (int i = 0; i < subItems.getLength(); i++) {
@@ -1002,9 +1013,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parse error", e);
         }
 
@@ -1022,13 +1033,13 @@ public class Delicious {
         List bundles = new ArrayList();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.BUNDLES_ALL);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.BUNDLES_ALL);
         get.setDoAuthentication(true);
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -1038,7 +1049,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList bundleItems = document.getElementsByTagName(DeliciousConstants.BUNDLE_TAG);
                 if (bundleItems != null && bundleItems.getLength() > 0) {
                     for (int i = 0; i < bundleItems.getLength(); i++) {
@@ -1054,9 +1065,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parse error", e);
         }
 
@@ -1071,12 +1082,12 @@ public class Delicious {
      * @return <code>true</code> if the bundle was created, <code>false</code> otherwise
      * @since 1.9
      */
-    public boolean addBundle(String bundleName, String tags) {
+    public boolean addBundle(final String bundleName, final String tags) {
         clearResultMetaInformation();
         boolean addBundleResult = false;
         StringBuffer result = new StringBuffer();
 
-        PostMethod post = new PostMethod(apiEndpoint + DeliciousConstants.BUNDLES_SET);
+        PostMethod post = new PostMethod(this.apiEndpoint + DeliciousConstants.BUNDLES_SET);
         post.setDoAuthentication(true);
 
         if (DeliciousUtils.checkNullOrBlank(bundleName)) {
@@ -1094,9 +1105,9 @@ public class Delicious {
 
         try {
             post.addRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-            httpResult = httpClient.executeMethod(post);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(post);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (post.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -1111,7 +1122,7 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         }
 
         return addBundleResult;
@@ -1124,21 +1135,21 @@ public class Delicious {
      * @return <code>true</code> if the bundle was deleted, false otherwise
      * @since 1.9
      */
-    public boolean deleteBundle(String bundleName) {
+    public boolean deleteBundle(final String bundleName) {
         clearResultMetaInformation();
         boolean deleteBundleResult = false;
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.BUNDLES_DELETE);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.BUNDLES_DELETE);
         get.setDoAuthentication(true);
 
         NameValuePair bundleNameParam = new NameValuePair(DeliciousConstants.BUNDLE_PARAMETER, bundleName);
         get.setQueryString(new NameValuePair[]{bundleNameParam});
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -1153,7 +1164,7 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         }
 
         return deleteBundleResult;
@@ -1167,16 +1178,16 @@ public class Delicious {
      * @param unsubscribe If you want to unsubscribe
      * @return <code>true</code> if add/remove subscription successful, <code>false</code> otherwise
      */
-    public boolean subs(String user, String tag, boolean unsubscribe) {
+    public boolean subs(final String user, final String tag, final boolean unsubscribe) {
         clearResultMetaInformation();
         boolean subscribeResult = false;
         StringBuffer result = new StringBuffer();
 
         GetMethod get;
         if (!unsubscribe) {
-            get = new GetMethod(apiEndpoint + DeliciousConstants.INBOX_SUB);
+            get = new GetMethod(this.apiEndpoint + DeliciousConstants.INBOX_SUB);
         } else {
-            get = new GetMethod(apiEndpoint + DeliciousConstants.INBOX_UNSUB);
+            get = new GetMethod(this.apiEndpoint + DeliciousConstants.INBOX_UNSUB);
         }
         get.setDoAuthentication(true);
 
@@ -1194,9 +1205,9 @@ public class Delicious {
         }
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -1211,7 +1222,7 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         }
 
         return subscribeResult;
@@ -1227,13 +1238,13 @@ public class Delicious {
         clearResultMetaInformation();
         StringBuffer result = new StringBuffer();
 
-        GetMethod get = new GetMethod(apiEndpoint + DeliciousConstants.POSTS_UPDATE);
+        GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_UPDATE);
         get.setDoAuthentication(true);
 
         try {
-            httpResult = httpClient.executeMethod(get);
-            checkNotAuthorized(httpResult);
-            logger.debug("Result: " + httpResult);
+            this.httpResult = this.httpClient.executeMethod(get);
+            checkNotAuthorized(this.httpResult);
+            this.logger.debug("Result: " + this.httpResult);
             if (get.getResponseBodyAsStream() != null) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
                 String input;
@@ -1243,7 +1254,7 @@ public class Delicious {
 
                 get.releaseConnection();
 
-                Document document = documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+                Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
                 NodeList updateItems = document.getElementsByTagName(DeliciousConstants.UPDATE_TAG);
                 if (updateItems != null && updateItems.getLength() > 0) {
                     Node updateItem = updateItems.item(0);
@@ -1253,9 +1264,9 @@ public class Delicious {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            this.logger.error(e);
         } catch (SAXException e) {
-            logger.error(e);
+            this.logger.error(e);
             throw new DeliciousException("Response parse error", e);
         }
 
@@ -1269,7 +1280,7 @@ public class Delicious {
      * @param result Result code from executing HTTP method
      * @since 1.4
      */
-    protected void checkNotAuthorized(int result) {
+    protected void checkNotAuthorized(final int result) {
         if (result == HttpURLConnection.HTTP_UNAUTHORIZED) {
             throw new DeliciousNotAuthorizedException();
         }
@@ -1281,7 +1292,7 @@ public class Delicious {
      * @since 1.3
      */
     protected void clearResultMetaInformation() {
-        resultMetaInformation = null;
+        this.resultMetaInformation = null;
     }
 
     /**
@@ -1292,6 +1303,6 @@ public class Delicious {
      * @since 1.3
      */
     public Object getResultMetaInformation() {
-        return resultMetaInformation;
+        return this.resultMetaInformation;
     }
 }

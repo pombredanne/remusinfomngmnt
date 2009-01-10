@@ -146,7 +146,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				newObject.setStringValue(post.getHref());
 				newObject.setDescription(post.getExtended());
 				newObject.setKeywords(post.getTag());
-				
+				newObject.setCreationDate(post.getTimeAsDate());
+				newObject.setId(new UniversalUniqueIdentifier().toString());
 				InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE.createInformationUnitListItem();
 
 				// transfer the needed information

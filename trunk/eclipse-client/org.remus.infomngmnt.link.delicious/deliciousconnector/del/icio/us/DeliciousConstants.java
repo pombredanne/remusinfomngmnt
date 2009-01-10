@@ -41,8 +41,8 @@ public class DeliciousConstants {
     // Default del.icio.us API endpoint
     public static final String API_ENDPOINT = "https://api.del.icio.us/v1/";
 
-    public static final String USER_AGENT_HEADER = "User-Agent";
-    public static final String USER_AGENT_VALUE = "del.icio.us Java/1.14";
+    public static final String USER_AGENT_HEADER = "HTTP_USER_AGENT";
+    public static final String USER_AGENT_VALUE = "Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5";
 
     // API service endpoints
     public static final String TAGS_GET = "tags/get?";

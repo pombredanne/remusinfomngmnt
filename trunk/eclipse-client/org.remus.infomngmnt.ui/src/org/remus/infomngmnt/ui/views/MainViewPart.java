@@ -177,20 +177,23 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 
 		final ValueObject<Boolean> created = new ValueObject<Boolean>();
 		created.setObject(Boolean.FALSE);
-		final ValueObject<CustomButton> firstSelection = new ValueObject<CustomButton>();
+		final ValueObject<CollapsibleButtonBar> firstSelection = new ValueObject<CollapsibleButtonBar>();
 		
 		this.cb = new CollapsibleButtons(parent, SWT.NONE, IColorManager.SKIN_OFFICE_2007);
 		int counter = 1;
 		for (final CollapsibleButtonBar element : this.items) {
 			CustomButton button = this.cb.addButton(element.getTitle(), element.getTooltip(), element.getBigIcon(), element.getIcon());
-			//handleSelection(element);
+
+//			element.createControl(this.upperComp);
+//			MainViewPart.this.renderedItems.add(element.getId());
+			
 			if (counter++ <= this.visibleButtonCount) {
 			} else {
 				this.cb.hideButton(button);
 			}
 			button.setData(element);
 			if (element.getId().equals(this.activeBarId)) {
-				firstSelection.setObject(button);
+				firstSelection.setObject(element);
 			}
 			
 		}
@@ -200,7 +203,8 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 					MainViewPart.this.cb.layout(true);
 					created.setObject(true);
 					if (firstSelection.getObject() != null) {
-						MainViewPart.this.cb.selectItem(firstSelection.getObject());
+						handleSelection(firstSelection.getObject());
+						//MainViewPart.this.cb.selectItem(firstSelection.getObject());
 					}
 				}
 				

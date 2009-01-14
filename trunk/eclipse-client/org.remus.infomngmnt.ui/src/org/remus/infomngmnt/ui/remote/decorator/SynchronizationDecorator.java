@@ -15,6 +15,7 @@ package org.remus.infomngmnt.ui.remote.decorator;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
@@ -25,6 +26,7 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -36,7 +38,7 @@ public class SynchronizationDecorator extends LabelProvider implements
 ILightweightLabelDecorator {
 
 	private final Map<String, ImageDescriptor> scaledImageMap;
-
+	
 	public SynchronizationDecorator() {
 		this.scaledImageMap = new HashMap<String, ImageDescriptor>();
 	}
@@ -50,6 +52,16 @@ ILightweightLabelDecorator {
 			synchronizationMetaData = ((Category) element).getSynchronizationMetaData();
 		}
 		if (synchronizationMetaData != null) {
+			/**
+			 * We have to adapt the SynchronizationMetaData that the
+			 * adapter is registered as Notification to the data object.
+			 * If we don't do that, the viewer which shows no MetaData
+			 * as real TreeItems is not notified about a change in this
+			 * object, doesn't call a refresh on the shown object and this
+			 * decorator will not be refreshed. 
+			 */
+			EditingUtil.getInstance().getAdapterFactory().adapt(synchronizationMetaData, ITreeItemContentProvider.class);
+			
 			switch (synchronizationMetaData.getSyncState()) {
 			case LOCAL_EDITED:
 			case NOT_ADDED:
@@ -77,7 +89,7 @@ ILightweightLabelDecorator {
 			}
 		}
 
-
+  
 	}
 
 

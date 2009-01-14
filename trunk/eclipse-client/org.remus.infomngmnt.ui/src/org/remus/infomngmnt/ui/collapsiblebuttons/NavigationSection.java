@@ -148,6 +148,7 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		createActions();
 		initDrag();
 		initDrop();
+		hookActionBars();
 		hookContextMenu();
 		setControl(tree);
 	}
@@ -208,7 +209,6 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 			}
 		};
 		
-		
 		this.labelProvider = new NavigatorDecoratingLabelProvider(
 				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
 				
@@ -222,7 +222,7 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 				return !(element instanceof SynchronizationMetadata);
 			}
 		});
-		getViewSite().setSelectionProvider(this);
+		
 		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance().getAdapterFactory());
 
 
@@ -242,30 +242,37 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	}
 	
 
+	private void hookActionBars() {
+		this.actionBar = new NavigationContextMenu();
+		this.actionBar.init(getViewSite().getActionBars());
+		this.actionBar.setActiveDomain(this);
+	}
 	/**
 	 * @param viewer2
 	 */
 	private void hookContextMenu() {
 		this.contextMenu = new MenuManager("#PopUpMenu");
 		this.contextMenu.setRemoveAllWhenShown(true);
-		this.actionBar = new NavigationContextMenu();
-		this.actionBar.init(getViewSite().getActionBars());
-		this.actionBar.setActiveDomain(this);
 		this.contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = this.contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
 		getViewSite().registerContextMenu(getId(), this.contextMenu, new UnwrappingSelectionProvider(this));
+		
+		
 	}
 
 	@Override
 	public void handleSelect() {
 		this.actionBar.setGlobalActionHandler();
+		getViewSite().setSelectionProvider(this);
 		super.handleSelect();
 	}
 	
 	@Override
 	public void handleDeselect() {
 		super.handleDeselect();
+		
+		
 	}
 
 	@Override

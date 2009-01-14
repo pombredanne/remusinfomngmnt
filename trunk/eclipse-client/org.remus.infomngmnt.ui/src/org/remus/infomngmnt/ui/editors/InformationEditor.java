@@ -77,9 +77,12 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
+import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 import org.remus.infomngmnt.ui.extension.IEditPage;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
@@ -472,6 +475,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	 */
 	@Override
 	public void doSave(final IProgressMonitor progressMonitor) {
+		UIPlugin.getDefault().getService(ISaveParticipantExtensionService.class)
+			.fireEvent(ISaveParticipant.BEFORE_SAVE, this.primaryModel);
 		for (int i=0; i<this.pages.size(); i++) {
 			if (this.pages.get(i) != null && ((IFormPage)this.pages.get(i)).isDirty()) {
 				((IFormPage)this.pages.get(i)).doSave(progressMonitor);
@@ -528,6 +533,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		this.updateProblemIndication = true;
 		updateProblemIndication();
 		setDirty(false);
+		UIPlugin.getDefault().getService(ISaveParticipantExtensionService.class)
+		.fireEvent(ISaveParticipant.SAVED, this.primaryModel);
 	}
 
 	/**

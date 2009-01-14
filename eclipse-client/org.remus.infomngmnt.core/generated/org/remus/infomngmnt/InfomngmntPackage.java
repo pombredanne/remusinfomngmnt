@@ -483,13 +483,22 @@ public interface InfomngmntPackage extends EPackage {
 	int APPLICATION_ROOT__ROOT_CATEGORIES = 0;
 
 	/**
+	 * The feature id for the '<em><b>Available Tags</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICATION_ROOT__AVAILABLE_TAGS = 1;
+
+	/**
 	 * The number of structural features of the '<em>Application Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int APPLICATION_ROOT_FEATURE_COUNT = 1;
+	int APPLICATION_ROOT_FEATURE_COUNT = 2;
 
 
 	/**
@@ -1691,6 +1700,71 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.TagImpl <em>Tag</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.TagImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTag()
+	 * @generated
+	 */
+	int TAG = 29;
+
+	/**
+	 * The feature id for the '<em><b>Info Units</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TAG__INFO_UNITS = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TAG__NAME = ADAPTER_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Tag</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TAG_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.AvailableTagsImpl <em>Available Tags</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.AvailableTagsImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAvailableTags()
+	 * @generated
+	 */
+	int AVAILABLE_TAGS = 30;
+
+	/**
+	 * The feature id for the '<em><b>Tags</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABLE_TAGS__TAGS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Available Tags</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABLE_TAGS_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1698,7 +1772,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 29;
+	int SYNCHRONIZATION_STATE = 31;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -1708,7 +1782,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 30;
+	int SYNCHRONIZATION_ACTION = 32;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -1718,7 +1792,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 31;
+	int OBJECT = 33;
 
 
 	/**
@@ -2066,6 +2140,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getApplicationRoot_RootCategories();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.ApplicationRoot#getAvailableTags <em>Available Tags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Available Tags</em>'.
+	 * @see org.remus.infomngmnt.ApplicationRoot#getAvailableTags()
+	 * @see #getApplicationRoot()
+	 * @generated
+	 */
+	EReference getApplicationRoot_AvailableTags();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.Annotation <em>Annotation</em>}'.
@@ -2911,6 +2996,59 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getInformationUnitListItemToSynchronizationActionMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.Tag <em>Tag</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Tag</em>'.
+	 * @see org.remus.infomngmnt.Tag
+	 * @generated
+	 */
+	EClass getTag();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.Tag#getInfoUnits <em>Info Units</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Info Units</em>'.
+	 * @see org.remus.infomngmnt.Tag#getInfoUnits()
+	 * @see #getTag()
+	 * @generated
+	 */
+	EReference getTag_InfoUnits();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Tag#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.remus.infomngmnt.Tag#getName()
+	 * @see #getTag()
+	 * @generated
+	 */
+	EAttribute getTag_Name();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.AvailableTags <em>Available Tags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Available Tags</em>'.
+	 * @see org.remus.infomngmnt.AvailableTags
+	 * @generated
+	 */
+	EClass getAvailableTags();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.AvailableTags#getTags <em>Tags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Tags</em>'.
+	 * @see org.remus.infomngmnt.AvailableTags#getTags()
+	 * @see #getAvailableTags()
+	 * @generated
+	 */
+	EReference getAvailableTags_Tags();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3230,6 +3368,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference APPLICATION_ROOT__ROOT_CATEGORIES = eINSTANCE.getApplicationRoot_RootCategories();
+
+		/**
+		 * The meta object literal for the '<em><b>Available Tags</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference APPLICATION_ROOT__AVAILABLE_TAGS = eINSTANCE.getApplicationRoot_AvailableTags();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AnnotationImpl <em>Annotation</em>}' class.
@@ -3900,6 +4046,50 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = eINSTANCE.getInformationUnitListItemToSynchronizationActionMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.TagImpl <em>Tag</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.TagImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTag()
+		 * @generated
+		 */
+		EClass TAG = eINSTANCE.getTag();
+
+		/**
+		 * The meta object literal for the '<em><b>Info Units</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TAG__INFO_UNITS = eINSTANCE.getTag_InfoUnits();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TAG__NAME = eINSTANCE.getTag_Name();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AvailableTagsImpl <em>Available Tags</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.AvailableTagsImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAvailableTags()
+		 * @generated
+		 */
+		EClass AVAILABLE_TAGS = eINSTANCE.getAvailableTags();
+
+		/**
+		 * The meta object literal for the '<em><b>Tags</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference AVAILABLE_TAGS__TAGS = eINSTANCE.getAvailableTags_Tags();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.

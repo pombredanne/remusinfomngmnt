@@ -36,12 +36,12 @@ public class FileAdapterFactory implements IAdapterFactory {
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
 	 */
-	public Object getAdapter(final Object adaptableObject, Class adapterType) {
+	public Object getAdapter(final Object adaptableObject, final Class adapterType) {
 		if (adaptableObject instanceof IFile) {
 			EObjectAttributeValueCondition condition = new EObjectAttributeValueCondition(
 					InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,new Condition() {
 						@Override
-						public boolean isSatisfied(Object object) {
+						public boolean isSatisfied(final Object object) {
 							return ((IFile) adaptableObject).getFullPath().toOSString().equals(object);
 						}
 					});

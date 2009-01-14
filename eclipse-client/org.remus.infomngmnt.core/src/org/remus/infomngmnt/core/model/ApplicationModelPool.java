@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -21,14 +22,17 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 
 import org.remus.infomngmnt.ApplicationRoot;
+import org.remus.infomngmnt.AvailableTags;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -52,10 +56,30 @@ public class ApplicationModelPool {
 			}
 			try {
 				this.category.eResource().save(null);
-				//if (msg.getEventType() == Notification.)
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// do nothing
+			}
+			super.notifyChanged(msg);
+		}
+	}
+	private final class AdapterTagImplExtension extends EContentAdapter {
+		
+		
+		AdapterTagImplExtension() {
+			
+		}
+		
+		@Override
+		public void notifyChanged(final Notification msg) {
+			if (msg.getNotifier() instanceof ResourceImpl) {
+				return;
+			}
+			try {
+				ApplicationModelPool
+					.getInstance().getModel()
+					.getAvailableTags().eResource().save(Collections.EMPTY_MAP);
+			} catch (IOException e) {
+				// do nothing
 			}
 			super.notifyChanged(msg);
 		}
@@ -88,6 +112,11 @@ public class ApplicationModelPool {
 			EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(category.eResource());
 		}
 		this.cache = new AvailableInformationCache();
+		AvailableTags objectFromUri = EditingUtil.getInstance().getObjectFromFileUri(URI.createFileURI(InfomngmntEditPlugin.getPlugin().getStateLocation().append("tags.xml").toOSString()),
+				InfomngmntPackage.Literals.AVAILABLE_TAGS, EditingUtil.getInstance().getNavigationEditingDomain());
+		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(objectFromUri.eResource());
+		this.model.setAvailableTags(objectFromUri);
+		this.model.getAvailableTags().eAdapters().add(new AdapterTagImplExtension());
 	}
 
 	public ApplicationRoot getModel() {

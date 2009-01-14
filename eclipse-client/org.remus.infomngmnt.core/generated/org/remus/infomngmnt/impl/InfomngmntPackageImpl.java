@@ -29,6 +29,7 @@ import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableRuleDefinitions;
+import org.remus.infomngmnt.AvailableTags;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -52,6 +53,7 @@ import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.Tag;
 import org.remus.infomngmnt.Usage;
 
 /**
@@ -263,6 +265,20 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass informationUnitListItemToSynchronizationActionMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass tagEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass availableTagsEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -639,6 +655,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EReference getApplicationRoot_RootCategories() {
 		return (EReference)applicationRootEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getApplicationRoot_AvailableTags() {
+		return (EReference)applicationRootEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1348,6 +1373,51 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTag() {
+		return tagEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTag_InfoUnits() {
+		return (EReference)tagEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTag_Name() {
+		return (EAttribute)tagEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAvailableTags() {
+		return availableTagsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAvailableTags_Tags() {
+		return (EReference)availableTagsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSynchronizationState() {
 		return synchronizationStateEEnum;
 	}
@@ -1435,6 +1505,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		applicationRootEClass = createEClass(APPLICATION_ROOT);
 		createEReference(applicationRootEClass, APPLICATION_ROOT__ROOT_CATEGORIES);
+		createEReference(applicationRootEClass, APPLICATION_ROOT__AVAILABLE_TAGS);
 
 		annotationEClass = createEClass(ANNOTATION);
 		createEAttribute(annotationEClass, ANNOTATION__DESCRIPTION);
@@ -1537,6 +1608,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(informationUnitListItemToSynchronizationActionMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY);
 		createEAttribute(informationUnitListItemToSynchronizationActionMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE);
 
+		tagEClass = createEClass(TAG);
+		createEReference(tagEClass, TAG__INFO_UNITS);
+		createEAttribute(tagEClass, TAG__NAME);
+
+		availableTagsEClass = createEClass(AVAILABLE_TAGS);
+		createEReference(availableTagsEClass, AVAILABLE_TAGS__TAGS);
+
 		// Create enums
 		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
 		synchronizationActionEEnum = createEEnum(SYNCHRONIZATION_ACTION);
@@ -1584,6 +1662,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		synchronizationMetadataEClass.getESuperTypes().add(this.getAdapter());
 		changeSetEClass.getESuperTypes().add(this.getAdapter());
 		changeSetItemEClass.getESuperTypes().add(this.getAdapter());
+		tagEClass.getESuperTypes().add(this.getAdapter());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(informationUnitEClass, InformationUnit.class, "InformationUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1623,6 +1702,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(applicationRootEClass, ApplicationRoot.class, "ApplicationRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getApplicationRoot_RootCategories(), this.getCategory(), null, "rootCategories", null, 0, -1, ApplicationRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getApplicationRoot_AvailableTags(), this.getAvailableTags(), null, "availableTags", null, 1, 1, ApplicationRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAnnotation_Description(), ecorePackage.getEString(), "description", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1724,6 +1804,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(informationUnitListItemToSynchronizationActionMapEClass, Map.Entry.class, "InformationUnitListItemToSynchronizationActionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInformationUnitListItemToSynchronizationActionMap_Key(), this.getInformationUnitListItem(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnitListItemToSynchronizationActionMap_Value(), this.getSynchronizationAction(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(tagEClass, Tag.class, "Tag", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTag_InfoUnits(), this.getInformationUnitListItem(), null, "infoUnits", null, 0, -1, Tag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getTag_Name(), ecorePackage.getEString(), "name", null, 0, 1, Tag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(availableTagsEClass, AvailableTags.class, "AvailableTags", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAvailableTags_Tags(), this.getTag(), null, "tags", null, 0, -1, AvailableTags.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");

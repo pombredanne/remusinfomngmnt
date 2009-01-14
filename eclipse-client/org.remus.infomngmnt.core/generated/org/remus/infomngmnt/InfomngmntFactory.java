@@ -241,6 +241,24 @@ public interface InfomngmntFactory extends EFactory {
 	ChangeSetItem createChangeSetItem();
 
 	/**
+	 * Returns a new object of class '<em>Tag</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Tag</em>'.
+	 * @generated
+	 */
+	Tag createTag();
+
+	/**
+	 * Returns a new object of class '<em>Available Tags</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Available Tags</em>'.
+	 * @generated
+	 */
+	AvailableTags createAvailableTags();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

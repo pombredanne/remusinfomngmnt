@@ -38,7 +38,7 @@ public class RepositoryService implements IRepositoryService {
 		if (this.repositories == null) {
 			IPath append = InfomngmntEditPlugin.getPlugin().getStateLocation().append(REPOSITORY_PATH);
 			this.repositories = EditingUtil.getInstance().getObjectFromFileUri(
-					URI.createFileURI(append.toOSString()), InfomngmntPackage.Literals.REPOSITORY_COLLECTION,false);
+					URI.createFileURI(append.toOSString()), InfomngmntPackage.Literals.REPOSITORY_COLLECTION,null);
 		}
 		return this.repositories;
 	}

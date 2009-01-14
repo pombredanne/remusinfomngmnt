@@ -65,6 +65,7 @@
     <genClasses ecoreClass="infomngmnt.ecore#//ApplicationRoot">
       <genFeatures children="true" createChild="true" propertyCategory="" propertySortChoices="true"
           ecoreFeature="ecore:EReference infomngmnt.ecore#//ApplicationRoot/rootCategories"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ApplicationRoot/availableTags"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//Annotation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Annotation/description"/>
@@ -163,6 +164,13 @@
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItemToSynchronizationActionMap">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToSynchronizationActionMap/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItemToSynchronizationActionMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Tag">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Tag/infoUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Tag/name"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//AvailableTags">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//AvailableTags/tags"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

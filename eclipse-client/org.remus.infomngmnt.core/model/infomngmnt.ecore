@@ -51,6 +51,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ApplicationRoot">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rootCategories" upperBound="-1"
         eType="#//Category"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="availableTags" lowerBound="1"
+        eType="#//AvailableTags"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Annotation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -201,5 +203,15 @@
       instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//InformationUnitListItem"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//SynchronizationAction"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Tag" eSuperTypes="#//Adapter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="infoUnits" ordered="false"
+        upperBound="-1" eType="#//InformationUnitListItem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AvailableTags">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" ordered="false" upperBound="-1"
+        eType="#//Tag" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

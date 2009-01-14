@@ -707,6 +707,52 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Tag} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TagItemProvider tagItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.Tag}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTagAdapter() {
+		if (tagItemProvider == null) {
+			tagItemProvider = new TagItemProvider(this);
+		}
+
+		return tagItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.AvailableTags} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AvailableTagsItemProvider availableTagsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.AvailableTags}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAvailableTagsAdapter() {
+		if (availableTagsItemProvider == null) {
+			availableTagsItemProvider = new AvailableTagsItemProvider(this);
+		}
+
+		return availableTagsItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -832,6 +878,8 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (categoryToSynchronizationActionMapItemProvider != null) categoryToSynchronizationActionMapItemProvider.dispose();
 		if (informationUnitListItemToInformationUnitMapItemProvider != null) informationUnitListItemToInformationUnitMapItemProvider.dispose();
 		if (informationUnitListItemToSynchronizationActionMapItemProvider != null) informationUnitListItemToSynchronizationActionMapItemProvider.dispose();
+		if (tagItemProvider != null) tagItemProvider.dispose();
+		if (availableTagsItemProvider != null) availableTagsItemProvider.dispose();
 	}
 
 }

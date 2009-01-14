@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.ApplicationRoot#getRootCategories <em>Root Categories</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.ApplicationRoot#getAvailableTags <em>Available Tags</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,5 +51,31 @@ public interface ApplicationRoot extends EObject {
 	 * @generated
 	 */
 	EList<Category> getRootCategories();
+
+	/**
+	 * Returns the value of the '<em><b>Available Tags</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Available Tags</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Available Tags</em>' reference.
+	 * @see #setAvailableTags(AvailableTags)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getApplicationRoot_AvailableTags()
+	 * @model required="true"
+	 * @generated
+	 */
+	AvailableTags getAvailableTags();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.ApplicationRoot#getAvailableTags <em>Available Tags</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Available Tags</em>' reference.
+	 * @see #getAvailableTags()
+	 * @generated
+	 */
+	void setAvailableTags(AvailableTags value);
 
 } // ApplicationRoot

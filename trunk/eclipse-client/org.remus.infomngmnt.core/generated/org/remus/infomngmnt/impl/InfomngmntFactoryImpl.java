@@ -97,6 +97,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createCategoryToSynchronizationActionMap();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP: return (EObject)createInformationUnitListItemToInformationUnitMap();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createInformationUnitListItemToSynchronizationActionMap();
+			case InfomngmntPackage.TAG: return createTag();
+			case InfomngmntPackage.AVAILABLE_TAGS: return createAvailableTags();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -408,6 +410,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public Map.Entry<InformationUnitListItem, SynchronizationAction> createInformationUnitListItemToSynchronizationActionMap() {
 		InformationUnitListItemToSynchronizationActionMapImpl informationUnitListItemToSynchronizationActionMap = new InformationUnitListItemToSynchronizationActionMapImpl();
 		return informationUnitListItemToSynchronizationActionMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Tag createTag() {
+		TagImpl tag = new TagImpl();
+		return tag;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AvailableTags createAvailableTags() {
+		AvailableTagsImpl availableTags = new AvailableTagsImpl();
+		return availableTags;
 	}
 
 	/**

@@ -18,6 +18,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -44,7 +45,7 @@ public class RuleUtil implements IRuleService {
 			IPath append = InfomngmntEditPlugin.getPlugin().getStateLocation().append(RULE_PATH);
 			boolean createDefaultValues = !append.toFile().exists();
 			this.rules = EditingUtil.getInstance().getObjectFromFileUri(
-					URI.createFileURI(append.toOSString()), InfomngmntPackage.Literals.AVAILABLE_RULE_DEFINITIONS,false);
+					URI.createFileURI(append.toOSString()), InfomngmntPackage.Literals.AVAILABLE_RULE_DEFINITIONS,null);
 			if (createDefaultValues) {
 				NewElementRules createNewElementRules = InfomngmntFactory.eINSTANCE.createNewElementRules();
 				createNewElementRules.setName("Default Ruleset");

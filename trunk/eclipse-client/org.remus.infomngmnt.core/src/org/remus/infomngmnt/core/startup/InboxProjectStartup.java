@@ -34,7 +34,7 @@ public class InboxProjectStartup implements IStartup {
 			try {
 				 IProjectDescription newProjectDescription = ResourcesPlugin.getWorkspace()
 					.newProjectDescription(project.getName());
-				ResourceUtil.postProjectCreation(newProjectDescription);
+				 ResourceUtil.postProjectCreation(newProjectDescription);
 				project.create(null);
 				project.open(null);
 				project.setDescription(newProjectDescription, null);

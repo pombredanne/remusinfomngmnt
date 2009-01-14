@@ -5,6 +5,7 @@
  <extension-point id="postProjectHandle" name="postProjectHandle" schema="schema/postProjectHandle.exsd"/>
  <extension-point id="ruleDefinition" name="ruleDefinition" schema="schema/ruleDefinition.exsd"/>
  <extension-point id="remoteRepository" name="remoteRepository" schema="schema/remoteRepository.exsd"/>
+ <extension-point id="saveParticipant" name="saveParticipant" schema="schema/saveParticipant.exsd"/>
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
@@ -122,6 +123,15 @@
       <startup
             class="org.remus.infomngmnt.core.startup.InboxProjectStartup">
       </startup>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.saveParticipant">
+      <participant
+            class="org.remus.infomngmnt.core.remote.SyncStateParticipant">
+      </participant>
+      <participant
+            class="org.remus.infomngmnt.core.ref.tags.TagSaveParticipant">
+      </participant>
    </extension>
   
 

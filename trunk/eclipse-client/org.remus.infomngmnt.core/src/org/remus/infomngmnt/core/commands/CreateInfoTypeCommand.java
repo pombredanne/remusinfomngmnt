@@ -10,7 +10,7 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.ui.commands;
+package org.remus.infomngmnt.core.commands;
 
 import java.util.Collections;
 

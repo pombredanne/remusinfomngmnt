@@ -26,9 +26,9 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.builder.InformationBuilder;
+import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.ui.commands.CommandFactory;
 
 public class ResourceUtil {
 
@@ -197,21 +197,23 @@ public class ResourceUtil {
 		}
 	}
 
-	public static void createNewProject(final IProject newProject, final IProgressMonitor monitor, final String description) throws CoreException{
-		IFolder folder = newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
+public static void createNewProject(final IProject newProject, final IProgressMonitor monitor, final String description) throws CoreException{
+	IFolder folder = newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
+	if (!folder.exists()) {
 		folder.create(true, true, monitor);
-		IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
-		Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(),true);
-		rootCategory.setLabel(newProject.getName());
-		rootCategory.setId(new UniversalUniqueIdentifier().toString());
-		rootCategory.setDescription(description);
-		EditingUtil.getInstance().saveObjectToResource(rootCategory);
-
-		EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
-		Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
-		editingDomain.getCommandStack().execute(createCommand);
-		ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
-
 	}
+	IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
+	Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(),true);
+	rootCategory.setLabel(newProject.getName());
+	rootCategory.setId(new UniversalUniqueIdentifier().toString());
+	rootCategory.setDescription(description);
+	EditingUtil.getInstance().saveObjectToResource(rootCategory);
+
+	EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
+	Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
+	editingDomain.getCommandStack().execute(createCommand);
+	ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
+
+}
 
 }

@@ -71,6 +71,7 @@ public class ApplicationRootItemProvider
 			super.getPropertyDescriptors(object);
 
 			addRootCategoriesPropertyDescriptor(object);
+			addAvailableTagsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -89,6 +90,28 @@ public class ApplicationRootItemProvider
 				 getString("_UI_ApplicationRoot_rootCategories_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ApplicationRoot_rootCategories_feature", "_UI_ApplicationRoot_type"),
 				 InfomngmntPackage.Literals.APPLICATION_ROOT__ROOT_CATEGORIES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Available Tags feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addAvailableTagsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ApplicationRoot_availableTags_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ApplicationRoot_availableTags_feature", "_UI_ApplicationRoot_type"),
+				 InfomngmntPackage.Literals.APPLICATION_ROOT__AVAILABLE_TAGS,
 				 true,
 				 false,
 				 true,

@@ -82,18 +82,22 @@ public class EditingUtil {
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends EObject> T getObjectFromFileUri(final URI uri, final EClass objectClas, final boolean cache) {
+	public <T extends EObject> T getObjectFromFileUri(final URI uri, final EClass objectClas, final EditingDomain editingDomain) {
 		Resource resource = null;
 		ResourceSet resourceSet = null;
 		T returnValue;
 		File file = new File(uri.toFileString());
-		resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
-				new XMLResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put
-		(InfomngmntPackage.eNS_URI,
-				InfomngmntPackage.eINSTANCE);
+		if (editingDomain != null) {
+			resourceSet = editingDomain.getResourceSet();
+		} else {
+			resourceSet = new ResourceSetImpl();
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+			(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+					new XMLResourceFactoryImpl());
+			resourceSet.getPackageRegistry().put
+			(InfomngmntPackage.eNS_URI,
+					InfomngmntPackage.eINSTANCE);
+		}
 
 		if (file.exists()) {
 			try {

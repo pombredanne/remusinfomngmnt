@@ -18,6 +18,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
@@ -37,11 +41,6 @@ import org.remus.infomngmnt.jslib.StyleProvider;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.ui.editors.LoadingBarMessageProvider;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -60,12 +59,12 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	}
 
 	@Override
-	public void handlePreBuild(IProgressMonitor monitor) {
+	public void handlePreBuild(final IProgressMonitor monitor) {
 		boolean makeNewScreenShot = true;
 		boolean indexNew = true;
 		if (getPreviousVersion() != null) {
 			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromFileUri(
-					URI.createFileURI(getPreviousVersion().getAbsolutePath()), InfomngmntPackage.Literals.INFORMATION_UNIT, false);
+					URI.createFileURI(getPreviousVersion().getAbsolutePath()), InfomngmntPackage.Literals.INFORMATION_UNIT, null);
 			InformationUnit indexWebPagePrevious = InformationUtil.getChildByType(previousModel, INDEXWEBPAGE_TYPE);
 			InformationUnit indexWebPageCurrent = InformationUtil.getChildByType(getValue(), INDEXWEBPAGE_TYPE);
 			AttributeChange change = InformationUtil.getAttributeChange(indexWebPagePrevious, indexWebPageCurrent, InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE);
@@ -151,7 +150,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getAdditionalsForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getAdditionalsForIndexing(IProgressMonitor monitor)
+	public String getAdditionalsForIndexing(final IProgressMonitor monitor)
 	throws CoreException {
 		InformationUnit childByType = InformationUtil.getChildByType(getValue(), INDEXWEBPAGECONTENT_TYPE);
 		if (childByType.eIsSet(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE)) {
@@ -164,7 +163,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getBodyForIndexing(IProgressMonitor monitor)
+	public String getBodyForIndexing(final IProgressMonitor monitor)
 	throws CoreException {
 		return getValue().getStringValue();
 	}
@@ -173,7 +172,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getTitleForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getTitleForIndexing(IProgressMonitor monitor)
+	public String getTitleForIndexing(final IProgressMonitor monitor)
 	throws CoreException {
 		return getValue().getLabel();
 	}
@@ -182,7 +181,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String handleHtmlGeneration(IProgressMonitor monitor)
+	public String handleHtmlGeneration(final IProgressMonitor monitor)
 	throws CoreException {
 		boolean renderWebShot = InformationUtil.getChildByType(getValue(), SCREENSHOT_TYPE).isBoolValue();
 		StringWriter sw = new StringWriter();

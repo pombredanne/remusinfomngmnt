@@ -38,8 +38,14 @@ public class SynchronizationWizard extends Wizard {
 	
 	private ChangeSetWizardPage page1;
 	private ChangeSet changeSet;
+	
+	public static final int CHECKOUTMODE = 1; 
+	public static final int SHAREMODE = 2; 
+	public static final int SYNCMODE = 3; 
+	private final int mode;
 
-	public SynchronizationWizard() {
+	public SynchronizationWizard(final int mode) {
+		this.mode = mode;
 		setNeedsProgressMonitor(true);
 	}
 	

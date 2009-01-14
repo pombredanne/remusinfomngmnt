@@ -167,6 +167,10 @@
             id="org.remus.infomngmnt.ui.remusRemoteAction"
             name="Synchronization Commands for Information Types">
       </category>
+      <command
+            id="org.remus.infomngmnt.ui.testCommand"
+            name="Test">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -203,6 +207,19 @@
             <reference
                   definitionId="selectionAreRemoteCategories">
             </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.ShareCategoryHandler"
+            commandId="org.remus.infomngmnt.ui.testCommand">
+         <activeWhen>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <instanceof
+                     value="org.remus.infomngmnt.Category">
+               </instanceof>
+            </iterate>
          </activeWhen>
       </handler>
    </extension>
@@ -348,6 +365,10 @@
                   name="org.remus.infomngmnt.ui.separator1"
                   visible="true">
             </separator>
+            <command
+                  commandId="org.remus.infomngmnt.ui.testCommand"
+                  style="push">
+            </command>
             <command
                   commandId="org.remus.infomngmnt.ui.disconnect"
                   style="push">

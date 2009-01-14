@@ -25,11 +25,11 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.ui.commands.CommandFactory;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 

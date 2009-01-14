@@ -74,7 +74,7 @@ public class CheckoutTagAction extends BaseSelectionListenerAction {
 		IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(repositoryId);
 		itemById.applyChangeSet(createChangeSet);
 
-		SynchronizationWizard synchronizationWizard = new SynchronizationWizard();
+		SynchronizationWizard synchronizationWizard = new SynchronizationWizard(SynchronizationWizard.CHECKOUTMODE);
 		synchronizationWizard.init(createChangeSet);
 		WizardDialog wz = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), synchronizationWizard);
 		wz.open();

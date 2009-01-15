@@ -25,10 +25,10 @@ import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
-import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.remote.RemoteUtil;
 import org.remus.infomngmnt.ui.remote.SynchronizationWizard;
 
 /**
@@ -47,12 +47,12 @@ public class CheckoutTagAction extends BaseSelectionListenerAction {
 	public void run() {
 		ChangeSet createChangeSet = InfomngmntFactory.eINSTANCE.createChangeSet();
 		List list = getStructuredSelection().toList();
-		String repositoryId = null;
+		RemoteRepository repository = null;
 		List<RemoteContainer> remoteContainers = new ArrayList<RemoteContainer>();
 		for (Object object : list) {
 			RemoteContainer remoteContainer = null;
-			if (repositoryId == null) {
-				repositoryId = ((RemoteObject) object).getRepositoryTypeId();
+			if (repository == null) {
+				repository = RemoteUtil.getRemoteRepository((RemoteObject) object);
 			}
 			if (object instanceof RemoteContainer) {
 				remoteContainer = (RemoteContainer) object;
@@ -71,7 +71,8 @@ public class CheckoutTagAction extends BaseSelectionListenerAction {
 			createChangeSet.getChangeSetItems().add(createChangeSetItem);
 		}
 
-		IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(repositoryId);
+		
+		IRepository itemById = repository.getRepositoryImplementation();
 		itemById.applyChangeSet(createChangeSet);
 
 		SynchronizationWizard synchronizationWizard = new SynchronizationWizard(SynchronizationWizard.CHECKOUTMODE);

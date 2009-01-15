@@ -14,8 +14,6 @@ package org.remus.infomngmnt.link.delicious;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,6 +51,7 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.ui.remote.RemoteUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -158,7 +157,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
 				metadata.setHash(post.getHash());
 				metadata.setReadonly(false);
-				metadata.setRepositoryId(remoteObject.getRepositoryTypeId());
+				metadata.setRepositoryId(RemoteUtil.getRemoteRepository(remoteObject).getId());
 				metadata.setSyncState(SynchronizationState.IN_SYNC);
 				metadata.setUrl("http://test");
 				createInformationUnitListItem.setSynchronizationMetaData(metadata);
@@ -260,12 +259,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			}
 		}
 		if (this.api == null) {
-			try {
-				getCredentialProvider().setIdentifier(new URL(getRepositoryUrl()).getHost());
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			getCredentialProvider().setIdentifier(getLocalRepositoryId());
 			this.api = new Delicious(
 					getCredentialProvider().getUserName(),
 					getCredentialProvider().getPassword());
@@ -299,6 +293,26 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	public ISchedulingRule getRule() {
 		return this.mutexRule;
+	}
+
+	public void commit(final InformationUnitListItem[] items, final IProgressMonitor monitor) {
+		for (InformationUnitListItem infoUnit : items) {
+			SynchronizationMetadata synchronizationMetaData = infoUnit.getSynchronizationMetaData();
+			if (LinkActivator.LINK_INFO_ID.equals(infoUnit.getType())) {
+				InformationUnit adapter = (InformationUnit) infoUnit.getAdapter(InformationUnit.class);
+				if (adapter != null) {
+					getApi().addPost(
+							adapter.getStringValue(), 
+							adapter.getDescription(),
+							null, 
+							adapter.getKeywords(), 
+							adapter.getCreationDate(), 
+							true, true);
+				}
+			}
+			synchronizationMetaData.setSyncState(SynchronizationState.IN_SYNC);
+		}
+		
 	}
 
 

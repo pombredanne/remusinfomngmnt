@@ -12,8 +12,6 @@
 package org.remus.infomngmnt.link.delicious.ui;
 
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeansObservables;
@@ -152,18 +150,14 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
+		this.repositoryDefinition = repository.getRepositoryImplementation();
 	}
 
 	public void bindValuesToUi() {
 		this.apiUrlText.setText(this.repository.getUrl());
 		DataBindingContext ctx = new DataBindingContext();
 		EMFDataBindingContext ectx = new EMFDataBindingContext();
-		try {
-			this.repositoryDefinition.getCredentialProvider().setIdentifier(new URL(this.repository.getUrl()).getHost());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
 		IObservableValue beanUserName = BeansObservables.observeValue(this.repositoryDefinition.getCredentialProvider(), CredentialProvider.USER_NAME);
 		ISWTObservableValue swtUserName = SWTObservables.observeText(this.userNameText, SWT.Modify);
 		ctx.bindValue(swtUserName, beanUserName, null, null);
@@ -184,12 +178,5 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 				}	
 			}
 		});
-
 	}
-
-	public void setDefiningRepository(final IRepository definingRepository) {
-		this.repositoryDefinition = definingRepository;
-
-	}
-
 }

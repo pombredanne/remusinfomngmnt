@@ -168,8 +168,12 @@
             name="Synchronization Commands for Information Types">
       </category>
       <command
-            id="org.remus.infomngmnt.ui.testCommand"
-            name="Test">
+            id="org.remus.infomngmnt.ui.commitCommand"
+            name="Commit">
+      </command>
+      <command
+            id="org.remus.infomngmnt.ui.addToRepository"
+            name="Add to Remote Repository">
       </command>
    </extension>
    <extension
@@ -210,16 +214,40 @@
          </activeWhen>
       </handler>
       <handler
-            class="org.remus.infomngmnt.ui.handler.ShareCategoryHandler"
-            commandId="org.remus.infomngmnt.ui.testCommand">
+            class="org.remus.infomngmnt.ui.handler.CommitHandler"
+            commandId="org.remus.infomngmnt.ui.commitCommand">
          <activeWhen>
-            <iterate
-                  ifEmpty="false"
-                  operator="and">
-               <instanceof
-                     value="org.remus.infomngmnt.Category">
-               </instanceof>
-            </iterate>
+            <with
+                  variable="selection">
+               <iterate
+                     operator="and">
+                  <instanceof
+                        value="org.remus.infomngmnt.InformationUnitListItem">
+                  </instanceof>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.remus.infomngmnt.ui.canCommitOrReplace">
+                  </test>
+               </iterate>
+            </with></activeWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.ShareItemHandler"
+            commandId="org.remus.infomngmnt.ui.addToRepository">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     operator="and">
+                  <instanceof
+                        value="org.remus.infomngmnt.InformationUnitListItem">
+                  </instanceof>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.remus.infomngmnt.ui.canAdd">
+                  </test>
+               </iterate>
+            </with>
          </activeWhen>
       </handler>
    </extension>
@@ -263,9 +291,9 @@
             tooltip="Navigation">
       </collapsibleButton>
       <collapsibleButton
-            bigImage="icons/sample.gif"
+            bigImage="icons/iconexperience/24/bookmark_silver.png"
             class="org.remus.infomngmnt.ui.collapsiblebuttons.TagSection"
-            icon="icons/sample.gif"
+            icon="icons/iconexperience/16/bookmark_silver.png"
             id="org.remus.infomngmnt.ui.tags"
             name="Tags"
             order="20"
@@ -362,13 +390,27 @@
                </visibleWhen>
             </command>
             <separator
-                  name="org.remus.infomngmnt.ui.separator1"
+                  name="org.remus.infomngmnt.ui.separator2"
                   visible="true">
             </separator>
             <command
-                  commandId="org.remus.infomngmnt.ui.testCommand"
+                  commandId="org.remus.infomngmnt.ui.commitCommand"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+               </visibleWhen>
             </command>
+            <command
+                  commandId="org.remus.infomngmnt.ui.addToRepository"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+               </visibleWhen>
+            </command>
+            <separator
+                  name="org.remus.infomngmnt.ui.separator1"
+                  visible="true">
+            </separator>
             <command
                   commandId="org.remus.infomngmnt.ui.disconnect"
                   style="push">
@@ -423,6 +465,16 @@
             </iterate>
          </and>
       </definition>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.remus.infomngmnt.ui.propertytester.InformationUnitListItemTester"
+            id="org.remus.infomngmnt.ui.IInfoItemTest"
+            namespace="org.remus.infomngmnt.ui"
+            properties="canCommitOrReplace, canAdd"
+            type="org.remus.infomngmnt.InformationUnitListItem">
+      </propertyTester>
    </extension>
 
 </plugin>

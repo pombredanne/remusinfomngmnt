@@ -23,9 +23,8 @@ import org.eclipse.ui.progress.IElementCollector;
 
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
-import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.core.remote.IRepository;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -34,11 +33,24 @@ public class RemoteRepositoryDeferredAdapter implements
 		IDeferredWorkbenchAdapter {
 	
 	private final RemoteObject remoteObject;
-	private final AbstractExtensionRepository itemById;
+	private final IRepository itemById;
 
 	public RemoteRepositoryDeferredAdapter(final RemoteObject object) {
 		this.remoteObject = object;
-		this.itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(object.getRepositoryTypeId());
+		
+		this.itemById = getRepository(this.remoteObject).getRepositoryImplementation();
+	}
+
+	private RemoteRepository getRepository(final RemoteObject obj) {
+		if (obj instanceof RemoteRepository) {
+			return (RemoteRepository) obj;
+		} else {
+			if (obj.eContainer() != null && obj.eContainer() instanceof RemoteObject) {
+				return getRepository((RemoteObject) obj.eContainer());
+			}
+		}
+		return null;
+		
 	}
 
 	/* (non-Javadoc)

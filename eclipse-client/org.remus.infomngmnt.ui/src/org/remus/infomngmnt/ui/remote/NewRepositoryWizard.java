@@ -12,13 +12,14 @@
 
 package org.remus.infomngmnt.ui.remote;
 
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
@@ -29,7 +30,7 @@ import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 public abstract class NewRepositoryWizard extends Wizard {
 	
 	protected RemoteRepository repository;
-	protected IRepository definingRepository;
+	private String repositoryId;
 
 	public NewRepositoryWizard() {
 		setNeedsProgressMonitor(true);
@@ -41,15 +42,27 @@ public abstract class NewRepositoryWizard extends Wizard {
 	public boolean performFinish() {
 		RepositoryCollection repositories = InfomngmntEditPlugin.getPlugin().getService(IRepositoryService.class).getRepositories();
 		repositories.getRepositories().add(this.repository);
-		this.repository.setRepositoryTypeId(this.definingRepository.getId());
 		EditingUtil.getInstance().saveObjectToResource(repositories);
 		return true;
 	}
 	
 	public void init(final IStructuredSelection selection) {
 		if (!selection.isEmpty() && selection.getFirstElement() instanceof IRepositoryUI) {
-			this.definingRepository = ((IRepositoryUI) selection.getFirstElement()).getRepository();
+			this.repositoryId = ((IRepositoryUI) selection.getFirstElement()).getRepositoryId();
 		}
 	}
+	
+	@SuppressWarnings("restriction")
+	protected RemoteRepository getRepository() {
+		if (this.repository == null) {
+			this.repository = InfomngmntFactory.eINSTANCE.createRemoteRepository();
+			this.repository.setId(new UniversalUniqueIdentifier().toString());
+			this.repository.setRepositoryTypeId(this.repositoryId);
+			configureRepository(this.repository);
+		}
+		return this.repository;
+	}
+	
+	protected abstract void configureRepository(RemoteRepository newRemoteRepositry);
 
 }

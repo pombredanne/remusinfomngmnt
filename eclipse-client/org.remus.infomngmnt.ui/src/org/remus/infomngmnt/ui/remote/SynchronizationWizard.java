@@ -28,8 +28,11 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
+import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -92,6 +95,8 @@ public class SynchronizationWizard extends Wizard {
 						IFile newFile = CategoryUtil.getProjectByCategory(remoteConvertedContainer).getFile(informationUnitListItem.getId() + ".info");
 						EditingUtil.getInstance().saveObjectToResource(newFile, informationUnit2);
 						informationUnitListItem.setWorkspacePath(newFile.getFullPath().toOSString());
+						UIPlugin.getDefault().getService(ISaveParticipantExtensionService.class)
+						.fireEvent(ISaveParticipant.CREATED, informationUnit2);
 						
 					}
 				}

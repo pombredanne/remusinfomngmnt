@@ -24,11 +24,12 @@ import org.eclipse.swt.graphics.ImageData;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
@@ -83,9 +84,9 @@ ILightweightLabelDecorator {
 				break;
 
 			}
-			IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(synchronizationMetaData.getRepositoryId());
+			RemoteRepository itemById = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(synchronizationMetaData.getRepositoryId());
 			if (element instanceof Category) {
-				decoration.addSuffix(String.format(" [%s]", itemById.getLabel()));
+				decoration.addSuffix(String.format(" [%s]", itemById.getName()));
 			}
 		}
 
@@ -95,9 +96,9 @@ ILightweightLabelDecorator {
 
 	private ImageDescriptor getScaledImage(final String repositoryId) {
 		if (this.scaledImageMap.get(repositoryId) == null) {
-			IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(repositoryId);
+			ImageDescriptor itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getImageByRepositoryId(repositoryId);
 			if (itemById != null) {
-				ImageData image = itemById.getImage().getImageData();
+				ImageData image = itemById.getImageData();
 				ImageData scaledTo = image.scaledTo(9,9);
 				this.scaledImageMap.put(repositoryId,ImageDescriptor.createFromImageData(scaledTo));;
 			} else {

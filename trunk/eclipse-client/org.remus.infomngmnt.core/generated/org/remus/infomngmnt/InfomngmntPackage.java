@@ -1796,6 +1796,17 @@ public interface InfomngmntPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '<em>IRepository</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.core.remote.IRepository
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
+	 * @generated
+	 */
+	int IREPOSITORY = 34;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationUnit <em>Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3080,6 +3091,17 @@ public interface InfomngmntPackage extends EPackage {
 	EDataType getObject();
 
 	/**
+	 * Returns the meta object for data type '{@link org.remus.infomngmnt.core.remote.IRepository <em>IRepository</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>IRepository</em>'.
+	 * @see org.remus.infomngmnt.core.remote.IRepository
+	 * @model instanceClass="org.remus.infomngmnt.core.remote.IRepository" serializeable="false"
+	 * @generated
+	 */
+	EDataType getIRepository();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4120,6 +4142,16 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType OBJECT = eINSTANCE.getObject();
+
+		/**
+		 * The meta object literal for the '<em>IRepository</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.core.remote.IRepository
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
+		 * @generated
+		 */
+		EDataType IREPOSITORY = eINSTANCE.getIRepository();
 
 	}
 

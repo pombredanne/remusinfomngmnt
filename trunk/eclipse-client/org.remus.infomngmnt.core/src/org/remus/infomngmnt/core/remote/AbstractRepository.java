@@ -28,6 +28,8 @@ public abstract class AbstractRepository implements IRepository {
 	
 	private String id;
 	
+	private String localRepositoryId;
+	
 	private ICredentialProvider credentialProvider;
 	
 	public IStatus validate(final IProgressMonitor monitor) {
@@ -65,6 +67,14 @@ public abstract class AbstractRepository implements IRepository {
 
 	public void setId(final String id) {
 		this.id = id;
+	}
+
+	public String getLocalRepositoryId() {
+		return this.localRepositoryId;
+	}
+
+	public void setLocalRepositoryId(final String localRepositoryId) {
+		this.localRepositoryId = localRepositoryId;
 	}
 
 

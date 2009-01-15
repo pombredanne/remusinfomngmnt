@@ -14,18 +14,14 @@
  */
 package org.remus.infomngmnt.impl;
 
-import java.util.Collection;
-import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.osgi.util.NLS;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,6 +33,14 @@ import org.remus.infomngmnt.RemoteRepository;
  * @generated
  */
 public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteRepository {
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	private IRepository implementation;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -54,6 +58,25 @@ public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteR
 	@Override
 	protected EClass eStaticClass() {
 		return InfomngmntPackage.Literals.REMOTE_REPOSITORY;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public IRepository getRepositoryImplementation() {
+		if (getRepositoryTypeId() != null && this.implementation == null) {
+			try {
+				this.implementation = InfomngmntEditPlugin.getPlugin().getService(IRepositoryExtensionService.class).getItemByRepository(this);
+			} catch (Exception e) {
+				throw new IllegalStateException(NLS.bind("Repsoitory connector with id {0} was not found", getRepositoryTypeId()));
+			}
+			if (this.implementation == null) {
+				throw new IllegalStateException(NLS.bind("Repsoitory connector with id {0} was not found", getRepositoryTypeId()));
+			}
+		}
+		return this.implementation;
 	}
 
 } //RemoteRepositoryImpl

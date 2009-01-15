@@ -47,7 +47,7 @@ public class RemoteRepositoryItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RemoteRepositoryItemProvider(AdapterFactory adapterFactory) {
+	public RemoteRepositoryItemProvider(final AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -58,12 +58,12 @@ public class RemoteRepositoryItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class RemoteRepositoryItemProvider
 	public Object getImage(final Object object) {
 		String repositoryTypeId = ((RemoteRepository)object).getRepositoryTypeId();
 		try {
-			return InfomngmntEditPlugin.getPlugin().getService(IRepositoryExtensionService.class).getItemById(repositoryTypeId).getImage();
+			return InfomngmntEditPlugin.getPlugin().getService(IRepositoryExtensionService.class).getImageByRepositoryId(repositoryTypeId);
 		} catch (Exception e) {
 			return overlayImage(object, getResourceLocator().getImage("full/obj16/RemoteRepository"));
 		}
@@ -104,7 +104,7 @@ public class RemoteRepositoryItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(final Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -117,7 +117,7 @@ public class RemoteRepositoryItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

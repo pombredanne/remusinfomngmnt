@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.remote;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 
@@ -26,8 +27,10 @@ public class SyncStateParticipant implements ISaveParticipant {
 		if (eventId == SAVED) {
 			Object adapter = unit.getAdapter(InformationUnitListItem.class);
 			if (adapter != null && ((InformationUnitListItem) adapter).getSynchronizationMetaData() != null) {
-				((InformationUnitListItem) adapter).getSynchronizationMetaData()
-					.setSyncState(SynchronizationState.LOCAL_EDITED);
+				SynchronizationMetadata synchronizationMetadata = ((InformationUnitListItem) adapter).getSynchronizationMetaData();
+				if (synchronizationMetadata.getSyncState() != SynchronizationState.NOT_ADDED) {
+					synchronizationMetadata.setSyncState(SynchronizationState.LOCAL_EDITED);
+				}
 			}
 		}
 		

@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
@@ -33,9 +32,6 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
-import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -54,9 +50,9 @@ public abstract class CheckOutMultipeContainerWizard extends MultipleNewObjectsW
 				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 					if (UIUtil.isSelectionInstanceOf(selection, RemoteObject.class)) {
 						List<RemoteObject> list = selection.toList();
-						IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(list.get(0).getRepositoryTypeId());
-						CheckOutMultipeContainerWizard.this.convertedObjects = itemById.convertToLocalObjects(list.toArray(new RemoteObject[list.size()]), monitor);
-						setNewObjects(new BasicEList<InformationUnit>(CheckOutMultipeContainerWizard.this.convertedObjects.keySet()));
+//						IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(list.get(0).getRepositoryTypeId());
+//						CheckOutMultipeContainerWizard.this.convertedObjects = itemById.convertToLocalObjects(list.toArray(new RemoteObject[list.size()]), monitor);
+//						setNewObjects(new BasicEList<InformationUnit>(CheckOutMultipeContainerWizard.this.convertedObjects.keySet()));
 					}
 					
 					return Status.OK_STATUS;

@@ -73,11 +73,12 @@ public class RepositoryDialog extends TitleAreaDialog {
 		tableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
-				return ((IRepositoryUI) element).getRepository().getLabel();
+				return UIPlugin.getDefault().getService(org.remus.infomngmnt.core.services.IRepositoryExtensionService.class).getNameByRepositoryId(((IRepositoryUI) element).getRepositoryId());
 			}
 			@Override
 			public Image getImage(final Object element) {
-				return ((IRepositoryUI) element).getRepository().getImage();
+				return UIPlugin.getDefault().getService(org.remus.infomngmnt.core.services.IRepositoryExtensionService.class).getImageByRepositoryId(((IRepositoryUI) element).getRepositoryId()).createImage();
+				
 			}
 		});
 		tableViewer.setInput(UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getAllItems());

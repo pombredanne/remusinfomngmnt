@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Tom Seidel, Remus Software
+ * Copyright (c) 2009 Tom Seidel, Remus Software
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,22 +10,24 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.ui.extension;
+package org.remus.infomngmnt.ui.remote;
 
-import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
-import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
+import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public interface IRepositoryUI {
+public class RemoteUtil {
 	
-	String getId();
-	
-	String getRepositoryId();
-	
-	NewRepositoryWizard getWizardClass();
-	
-	IRepositoryActionContributor getActionContributor();
+	public static RemoteRepository getRemoteRepository(final RemoteObject object) {
+		if (object instanceof RemoteRepository) {
+			return (RemoteRepository) object;
+		} else if (object.eContainer() != null
+				&& object.eContainer() instanceof RemoteObject) {
+			return getRemoteRepository((RemoteObject) object.eContainer());
+		}
+		return null;
+	}
 
 }

@@ -16,8 +16,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 
 import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
-import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 import org.remus.infomngmnt.ui.extension.RepositoryExtensionService;
 import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
@@ -84,16 +82,9 @@ public class RepositoryUI implements IRepositoryUI {
 		return this.actionContributor;
 	}
 
-	public IRepository getRepository() {
-		if (this.repositoryImpemenentation == null) {
-			IRepository itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getItemById(this.repositoryId);
-			if (itemById == null) {
-				throw new IllegalStateException("No repository implementation found.");
-			}
-			this.repositoryImpemenentation = itemById;
-		}
-		return this.repositoryImpemenentation;
-	}
+	
+	
+	
 
 
 }

@@ -72,7 +72,7 @@ public class RepositoryExtensionService extends PluginRegistryDynamic implements
 	public IRepositoryUI getItemByRepositoryId(final String repositoryId) {
 		Collection<IRepositoryUI> allItems = getAllItems();
 		for (IRepositoryUI iRepositoryUi : allItems) {
-			if (iRepositoryUi.getRepository().getId().equals(repositoryId)) {
+			if (iRepositoryUi.getRepositoryId().equals(repositoryId)) {
 				return iRepositoryUi;
 			}
 		}

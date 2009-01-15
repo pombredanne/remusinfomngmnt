@@ -14,7 +14,6 @@ package org.remus.infomngmnt.ui.collapsiblebuttons;
 
 import java.util.List;
 
-import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -94,10 +93,6 @@ public class TagSection extends CollapsibleButtonBar {
 				return !(element instanceof SynchronizationMetadata);
 			}
 		});
-		
-		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance().getAdapterFactory());
-
-
 	}
 	
 	private void initInput() {

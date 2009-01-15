@@ -55,6 +55,7 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.Tag;
 import org.remus.infomngmnt.Usage;
+import org.remus.infomngmnt.core.remote.IRepository;
 
 /**
  * <!-- begin-user-doc -->
@@ -300,6 +301,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EDataType objectEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType iRepositoryEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -1445,6 +1453,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getIRepository() {
+		return iRepositoryEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public InfomngmntFactory getInfomngmntFactory() {
 		return (InfomngmntFactory)getEFactoryInstance();
 	}
@@ -1621,6 +1638,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		// Create data types
 		objectEDataType = createEDataType(OBJECT);
+		iRepositoryEDataType = createEDataType(IREPOSITORY);
 	}
 
 	/**
@@ -1757,6 +1775,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(remoteRepositoryEClass, RemoteRepository.class, "RemoteRepository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		addEOperation(remoteRepositoryEClass, this.getIRepository(), "getRepositoryImplementation", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(remoteObjectEClass, RemoteObject.class, "RemoteObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRemoteObject_PossibleInfoTypeId(), ecorePackage.getEString(), "possibleInfoTypeId", null, 0, -1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRemoteObject_Id(), ecorePackage.getEString(), "id", null, 0, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1832,6 +1852,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		// Initialize data types
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(iRepositoryEDataType, IRepository.class, "IRepository", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

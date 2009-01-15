@@ -14,7 +14,8 @@
  */
 package org.remus.infomngmnt;
 
-import org.eclipse.emf.common.util.EList;
+import org.remus.infomngmnt.core.remote.IRepository;
+
 
 
 /**
@@ -28,5 +29,13 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface RemoteRepository extends RemoteContainer {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" dataType="org.remus.infomngmnt.IRepository"
+	 * @generated
+	 */
+	IRepository getRepositoryImplementation();
 
 } // RemoteRepository

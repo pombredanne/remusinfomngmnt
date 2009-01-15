@@ -119,7 +119,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
-  <eClassifiers xsi:type="ecore:EClass" name="RemoteRepository" eSuperTypes="#//RemoteContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RemoteRepository" eSuperTypes="#//RemoteContainer">
+    <eOperations name="getRepositoryImplementation" eType="#//IRepository"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoteObject" eSuperTypes="#//Adapter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="possibleInfoTypeId" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -214,4 +216,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" ordered="false" upperBound="-1"
         eType="#//Tag" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="IRepository" instanceClassName="org.remus.infomngmnt.core.remote.IRepository"
+      serializable="false"/>
 </ecore:EPackage>

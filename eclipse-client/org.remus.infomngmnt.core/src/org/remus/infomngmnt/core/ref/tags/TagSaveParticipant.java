@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.remus.infomngmnt.AvailableTags;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -75,12 +76,16 @@ public class TagSaveParticipant implements ISaveParticipant {
 		}
 		handleNewTags(splitCopy, unit);
 		handleOldTags(tagsByInfoUnitCopy, unit);
+		for (Tag tag : tagsByInfoUnitCopy) {
+			handleEmptyTag(tag);
+		}
 	}
 	
 	private void handleOldTags(final List<Tag> tagsByInfoUnitCopy,
 			final InformationUnit unit) {
 		for (Tag tag : tagsByInfoUnitCopy) {
 			tag.getInfoUnits().remove(unit.getAdapter(InformationUnitListItem.class));
+			handleEmptyTag(tag);
 		}
 	}
 
@@ -96,6 +101,15 @@ public class TagSaveParticipant implements ISaveParticipant {
 			tagByName.getInfoUnits().add((InformationUnitListItem) unit.getAdapter(InformationUnitListItem.class));
 		}
 		
+	}
+	
+	void handleEmptyTag(final Tag tag) {
+		if (tag.getInfoUnits().size() == 0) {
+			AvailableTags eContainer = (AvailableTags) tag.eContainer();
+			if (eContainer != null) {
+				eContainer.getTags().remove(tag);
+			}
+		}
 	}
 
 	private List<Tag> getTagsByInfoUnit(final InformationUnit unit) {

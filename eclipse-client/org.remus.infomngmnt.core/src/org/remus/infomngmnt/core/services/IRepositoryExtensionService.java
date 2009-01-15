@@ -12,8 +12,10 @@
 
 package org.remus.infomngmnt.core.services;
 
-import java.util.Collection;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.resource.ImageDescriptor;
 
+import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 
@@ -37,9 +39,10 @@ public static final String EXTENSION_POINT = CorePlugin.PLUGIN_ID + ".remoteRepo
 	
 	public static final String CREDENTIALPROVIDER_ATT = "credentialprovider"; //$NON-NLS-1$
 	
+	AbstractExtensionRepository getItemByRepository(RemoteRepository repository) throws CoreException;
 	
-	Collection<AbstractExtensionRepository> getItems();
+	ImageDescriptor getImageByRepositoryId(String id);
 	
-	AbstractExtensionRepository getItemById(String id);
+	String getNameByRepositoryId(String id);
 
 }

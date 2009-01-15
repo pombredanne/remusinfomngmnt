@@ -21,6 +21,7 @@ import org.eclipse.swt.graphics.Image;
 
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
@@ -69,6 +70,10 @@ public interface IRepository {
 	
 	void applyChangeSet(ChangeSet changeSet);
 	
+	void commit(InformationUnitListItem[] items, IProgressMonitor monitor);
 	
+	String getLocalRepositoryId();
+
+	void setLocalRepositoryId(final String localRepositoryId);
 
 }

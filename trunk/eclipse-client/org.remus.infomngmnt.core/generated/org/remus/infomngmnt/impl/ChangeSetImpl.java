@@ -34,6 +34,7 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteObject;
@@ -47,6 +48,7 @@ import org.remus.infomngmnt.RemoteObject;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.ChangeSetImpl#getTargetCategory <em>Target Category</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.ChangeSetImpl#getChangeSetItems <em>Change Set Items</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.ChangeSetImpl#getRepository <em>Repository</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,6 +74,16 @@ public class ChangeSetImpl extends AdapterImpl implements ChangeSet {
 	 * @ordered
 	 */
 	protected EList<ChangeSetItem> changeSetItems;
+
+	/**
+	 * The cached value of the '{@link #getRepository() <em>Repository</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRepository()
+	 * @generated
+	 * @ordered
+	 */
+	protected RemoteRepository repository;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -147,6 +159,44 @@ public class ChangeSetImpl extends AdapterImpl implements ChangeSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public RemoteRepository getRepository() {
+		if (repository != null && repository.eIsProxy()) {
+			InternalEObject oldRepository = (InternalEObject)repository;
+			repository = (RemoteRepository)eResolveProxy(oldRepository);
+			if (repository != oldRepository) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, InfomngmntPackage.CHANGE_SET__REPOSITORY, oldRepository, repository));
+			}
+		}
+		return repository;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RemoteRepository basicGetRepository() {
+		return repository;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRepository(RemoteRepository newRepository) {
+		RemoteRepository oldRepository = repository;
+		repository = newRepository;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.CHANGE_SET__REPOSITORY, oldRepository, repository));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -169,6 +219,9 @@ public class ChangeSetImpl extends AdapterImpl implements ChangeSet {
 				return basicGetTargetCategory();
 			case InfomngmntPackage.CHANGE_SET__CHANGE_SET_ITEMS:
 				return getChangeSetItems();
+			case InfomngmntPackage.CHANGE_SET__REPOSITORY:
+				if (resolve) return getRepository();
+				return basicGetRepository();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -189,6 +242,9 @@ public class ChangeSetImpl extends AdapterImpl implements ChangeSet {
 				getChangeSetItems().clear();
 				getChangeSetItems().addAll((Collection<? extends ChangeSetItem>)newValue);
 				return;
+			case InfomngmntPackage.CHANGE_SET__REPOSITORY:
+				setRepository((RemoteRepository)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -207,6 +263,9 @@ public class ChangeSetImpl extends AdapterImpl implements ChangeSet {
 			case InfomngmntPackage.CHANGE_SET__CHANGE_SET_ITEMS:
 				getChangeSetItems().clear();
 				return;
+			case InfomngmntPackage.CHANGE_SET__REPOSITORY:
+				setRepository((RemoteRepository)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -223,6 +282,8 @@ public class ChangeSetImpl extends AdapterImpl implements ChangeSet {
 				return targetCategory != null;
 			case InfomngmntPackage.CHANGE_SET__CHANGE_SET_ITEMS:
 				return changeSetItems != null && !changeSetItems.isEmpty();
+			case InfomngmntPackage.CHANGE_SET__REPOSITORY:
+				return repository != null;
 		}
 		return super.eIsSet(featureID);
 	}

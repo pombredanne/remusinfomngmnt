@@ -166,6 +166,8 @@
         eType="#//Category"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="changeSetItems" upperBound="-1"
         eType="#//ChangeSetItem" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="repository" lowerBound="1"
+        eType="#//RemoteRepository"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChangeSetItem" eSuperTypes="#//Adapter">
     <eStructuralFeatures xsi:type="ecore:EReference" name="remoteConvertedContainer"

@@ -12,8 +12,6 @@
 
 package org.remus.infomngmnt.core.remote;
 
-import java.util.Map;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -24,7 +22,6 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
-import org.remus.infomngmnt.SynchronizationMetadata;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -66,8 +63,6 @@ public interface IRepository {
 	
 	ISchedulingRule getRule();
 	
-	Map<InformationUnit, SynchronizationMetadata> convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor);
-	
 	void applyChangeSet(ChangeSet changeSet);
 	
 	void commit(InformationUnitListItem[] items, IProgressMonitor monitor);
@@ -75,5 +70,9 @@ public interface IRepository {
 	String getLocalRepositoryId();
 
 	void setLocalRepositoryId(final String localRepositoryId);
+	
+	String getTypeIdByObject(RemoteObject remoteObject);
+	
+	InformationUnit getPrefetchedInformationUnit(RemoteObject remoteObject);
 
 }

@@ -147,6 +147,7 @@
     <genClasses ecoreClass="infomngmnt.ecore#//ChangeSet">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/targetCategory"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/changeSetItems"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/repository"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//ChangeSetItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteConvertedContainer"/>

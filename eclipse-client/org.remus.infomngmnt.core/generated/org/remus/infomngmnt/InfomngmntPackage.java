@@ -1507,13 +1507,22 @@ public interface InfomngmntPackage extends EPackage {
 	int CHANGE_SET__CHANGE_SET_ITEMS = ADAPTER_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Repository</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET__REPOSITORY = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Change Set</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CHANGE_SET_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 2;
+	int CHANGE_SET_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.ChangeSetItemImpl <em>Change Set Item</em>}' class.
@@ -2829,6 +2838,17 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getChangeSet_ChangeSetItems();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.ChangeSet#getRepository <em>Repository</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Repository</em>'.
+	 * @see org.remus.infomngmnt.ChangeSet#getRepository()
+	 * @see #getChangeSet()
+	 * @generated
+	 */
+	EReference getChangeSet_Repository();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.ChangeSetItem <em>Change Set Item</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3932,6 +3952,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CHANGE_SET__CHANGE_SET_ITEMS = eINSTANCE.getChangeSet_ChangeSetItems();
+
+		/**
+		 * The meta object literal for the '<em><b>Repository</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHANGE_SET__REPOSITORY = eINSTANCE.getChangeSet_Repository();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ChangeSetItemImpl <em>Change Set Item</em>}' class.

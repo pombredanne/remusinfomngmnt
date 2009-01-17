@@ -74,6 +74,7 @@ public class ChangeSetItemProvider
 			super.getPropertyDescriptors(object);
 
 			addTargetCategoryPropertyDescriptor(object);
+			addRepositoryPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -92,6 +93,28 @@ public class ChangeSetItemProvider
 				 getString("_UI_ChangeSet_targetCategory_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ChangeSet_targetCategory_feature", "_UI_ChangeSet_type"),
 				 InfomngmntPackage.Literals.CHANGE_SET__TARGET_CATEGORY,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Repository feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRepositoryPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ChangeSet_repository_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ChangeSet_repository_feature", "_UI_ChangeSet_type"),
+				 InfomngmntPackage.Literals.CHANGE_SET__REPOSITORY,
 				 true,
 				 false,
 				 true,

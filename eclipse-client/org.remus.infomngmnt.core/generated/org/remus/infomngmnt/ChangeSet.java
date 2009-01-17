@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.ChangeSet#getTargetCategory <em>Target Category</em>}</li>
  *   <li>{@link org.remus.infomngmnt.ChangeSet#getChangeSetItems <em>Change Set Items</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.ChangeSet#getRepository <em>Repository</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,5 +76,31 @@ public interface ChangeSet extends Adapter {
 	 * @generated
 	 */
 	EList<ChangeSetItem> getChangeSetItems();
+
+	/**
+	 * Returns the value of the '<em><b>Repository</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Repository</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Repository</em>' reference.
+	 * @see #setRepository(RemoteRepository)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getChangeSet_Repository()
+	 * @model required="true"
+	 * @generated
+	 */
+	RemoteRepository getRepository();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.ChangeSet#getRepository <em>Repository</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Repository</em>' reference.
+	 * @see #getRepository()
+	 * @generated
+	 */
+	void setRepository(RemoteRepository value);
 
 } // ChangeSet

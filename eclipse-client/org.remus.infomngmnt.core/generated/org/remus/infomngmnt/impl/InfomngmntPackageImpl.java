@@ -1237,6 +1237,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getChangeSet_Repository() {
+		return (EReference)changeSetEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getChangeSetItem() {
 		return changeSetItemEClass;
 	}
@@ -1604,6 +1613,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		changeSetEClass = createEClass(CHANGE_SET);
 		createEReference(changeSetEClass, CHANGE_SET__TARGET_CATEGORY);
 		createEReference(changeSetEClass, CHANGE_SET__CHANGE_SET_ITEMS);
+		createEReference(changeSetEClass, CHANGE_SET__REPOSITORY);
 
 		changeSetItemEClass = createEClass(CHANGE_SET_ITEM);
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__REMOTE_CONVERTED_CONTAINER);
@@ -1804,6 +1814,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getChangeSet_TargetCategory(), this.getCategory(), null, "targetCategory", null, 1, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangeSet_ChangeSetItems(), this.getChangeSetItem(), null, "changeSetItems", null, 0, -1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getChangeSet_Repository(), this.getRemoteRepository(), null, "repository", null, 1, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(changeSetItemEClass, ChangeSetItem.class, "ChangeSetItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getChangeSetItem_RemoteConvertedContainer(), this.getCategory(), null, "remoteConvertedContainer", null, 0, 1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

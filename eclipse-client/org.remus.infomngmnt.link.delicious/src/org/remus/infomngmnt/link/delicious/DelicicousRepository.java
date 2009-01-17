@@ -14,10 +14,8 @@ package org.remus.infomngmnt.link.delicious;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -51,7 +49,6 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.link.LinkActivator;
-import org.remus.infomngmnt.ui.remote.RemoteUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -72,7 +69,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	 */
 	private static final long WAIT_INTERVALL = 5000;
 
-	private long lastApiCall;
+	public static long lastApiCall;
 
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
@@ -119,7 +116,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			metadata.setHash(wrappedObject.getTag());
 			metadata.setReadonly(false);
 			metadata.setSyncState(SynchronizationState.IN_SYNC);
-			metadata.setRepositoryId(remoteObject.getRepositoryTypeId());
+			metadata.setRepositoryId(((ChangeSet) changeSetItem.eContainer()).getRepository().getId());
 			metadata.setUrl("TEST");
 			createCategory.setSynchronizationMetaData(metadata);
 			if (parentRemoteCategory != null) {
@@ -157,7 +154,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
 				metadata.setHash(post.getHash());
 				metadata.setReadonly(false);
-				metadata.setRepositoryId(RemoteUtil.getRemoteRepository(remoteObject).getId());
+				metadata.setRepositoryId(((ChangeSet) changeSetItem.eContainer()).getRepository().getId());
 				metadata.setSyncState(SynchronizationState.IN_SYNC);
 				metadata.setUrl("http://test");
 				createInformationUnitListItem.setSynchronizationMetaData(metadata);
@@ -174,36 +171,6 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		
 	}
 
-
-
-
-	public Map<InformationUnit, SynchronizationMetadata> convertToLocalObjects(final RemoteObject[] remoteObjects, final IProgressMonitor monitor) {
-		Map<InformationUnit,SynchronizationMetadata> returnValue = new LinkedHashMap<InformationUnit, SynchronizationMetadata>();
-		for (RemoteObject remoteObject : remoteObjects) {
-			if (KEY_TAG.equals(remoteObject.getRepositoryTypeObjectId())) {
-
-			} else if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
-				IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(LinkActivator.LINK_INFO_ID);
-				if (infoTypeByType != null) {
-					InformationUnit newObject = infoTypeByType.getCreationFactory().createNewObject();
-					Post post = (Post) remoteObject.getWrappedObject();
-					newObject.setLabel(remoteObject.getName());
-					newObject.setStringValue(post.getHref());
-					newObject.setDescription(post.getExtended());
-					newObject.setKeywords(post.getTag());
-
-					SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
-					metadata.setHash(post.getHash());
-					metadata.setReadonly(false);
-					metadata.setRepositoryId(remoteObject.getRepositoryTypeId());
-					metadata.setSyncState(SynchronizationState.IN_SYNC);
-					metadata.setUrl("http://test");
-					returnValue.put(newObject,metadata);
-				}
-			}
-		}
-		return returnValue;
-	}
 
 
 
@@ -250,7 +217,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	private Delicious getApi() {
 		System.out.println("CONTACTING API");
-		while ((System.currentTimeMillis() - this.lastApiCall) < WAIT_INTERVALL) {
+		while ((System.currentTimeMillis() - DelicicousRepository.lastApiCall) < WAIT_INTERVALL) {
 			try {
 				System.out.println("WAITING");
 				Thread.sleep(200);
@@ -312,6 +279,26 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			}
 			synchronizationMetaData.setSyncState(SynchronizationState.IN_SYNC);
 		}
+		
+	}
+
+	public String getTypeIdByObject(final RemoteObject remoteObject) {
+		return LinkActivator.LINK_INFO_ID;
+	}
+
+	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
+		if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
+			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(LinkActivator.LINK_INFO_ID);
+			InformationUnit newObject = infoTypeByType.getCreationFactory().createNewObject();
+			Post post = (Post) remoteObject.getWrappedObject();
+			newObject.setLabel(remoteObject.getName());
+			newObject.setStringValue(post.getHref());
+			newObject.setDescription(post.getExtended());
+			newObject.setKeywords(post.getTag());
+			newObject.setCreationDate(post.getTimeAsDate());
+			return newObject;
+		}
+		return null;
 		
 	}
 

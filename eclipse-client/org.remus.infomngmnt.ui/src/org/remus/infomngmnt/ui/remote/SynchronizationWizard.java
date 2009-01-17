@@ -77,7 +77,7 @@ public class SynchronizationWizard extends Wizard {
 		DiffModel diffModel = this.page1.getDiffModel();
 		EList<DiffElement> ownedElements = diffModel.getOwnedElements();
 		performDiff(ownedElements);
-		return false;
+		return true;
 	}
 
 	private void performDiff(final EList<DiffElement> ownedElements) {

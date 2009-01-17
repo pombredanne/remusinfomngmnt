@@ -62,6 +62,7 @@ ILightweightLabelDecorator {
 			 * decorator will not be refreshed. 
 			 */
 			EditingUtil.getInstance().getAdapterFactory().adapt(synchronizationMetaData, ITreeItemContentProvider.class);
+			RemoteRepository itemById = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(synchronizationMetaData.getRepositoryId());
 			
 			switch (synchronizationMetaData.getSyncState()) {
 			case LOCAL_EDITED:
@@ -75,7 +76,7 @@ ILightweightLabelDecorator {
 			case IN_SYNC:
 			case LOCAL_EDITED:
 			case TARGET_EDITED:
-				decoration.addOverlay(getScaledImage(synchronizationMetaData.getRepositoryId()));
+				decoration.addOverlay(getScaledImage(itemById.getRepositoryTypeId()));
 				break;
 			case NOT_ADDED:
 				decoration.addOverlay(CommonImageRegistry.getInstance().getDescriptor(CommonImageRegistry.INFORMATION_DECORATION));
@@ -84,7 +85,6 @@ ILightweightLabelDecorator {
 				break;
 
 			}
-			RemoteRepository itemById = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(synchronizationMetaData.getRepositoryId());
 			if (element instanceof Category) {
 				decoration.addSuffix(String.format(" [%s]", itemById.getName()));
 			}

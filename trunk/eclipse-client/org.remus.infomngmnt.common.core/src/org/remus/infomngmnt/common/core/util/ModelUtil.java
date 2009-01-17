@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ModelUtil {
+	
+	
 	public static List getFeatureList(final EList<? extends EObject> list, final EAttribute attribute) {
 		List returnValue = new ArrayList();
 		for (EObject object : list) {
@@ -88,4 +90,18 @@ public class ModelUtil {
 		}
 		return true;
 	}
+	
+	public static boolean containsParent(final List<EObject> elements2check, final EObject element) {
+		EObject element2resolve = element;
+		while (element2resolve.eContainer() != null) {
+			if (elements2check.contains(element2resolve.eContainer())) {
+				return true;
+			} else {
+				element2resolve = element2resolve.eContainer();
+			}
+		}
+		return false;
+	}
+
+	
 }

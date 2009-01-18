@@ -65,6 +65,8 @@ public class DeliciousConstants {
 
     // Various URL parameters for sending data to del.icio.us
     public static final String TAG_PARAMETER = "tag";
+    public static final String HASH_PARAMETER = "hash";
+    public static final String HASHES_PARAMETER = "hashes";
     public static final String COUNT_PARAMETER = "count";
     public static final String DT_PARAMETER = "dt";
     public static final String URL_PARAMETER = "url";
@@ -90,6 +92,7 @@ public class DeliciousConstants {
     public static final String HREF_ATTRIBUTE = "href";
     public static final String DESCRIPTION_ATTRIBUTE = "description";
     public static final String HASH_ATTRIBUTE = "hash";
+    public static final String META_ATTRIBUTE = "meta";
     public static final String TAG_ATTRIBUTE = "tag";
     public static final String TIME_ATTRIBUTE = "time";
     public static final String EXTENDED_ATTRIBUTE = "extended";

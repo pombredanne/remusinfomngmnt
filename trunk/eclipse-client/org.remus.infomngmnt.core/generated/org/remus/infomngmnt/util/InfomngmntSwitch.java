@@ -113,6 +113,7 @@ public class InfomngmntSwitch<T> {
 			case InfomngmntPackage.CATEGORY: {
 				Category category = (Category)theEObject;
 				T result = caseCategory(category);
+				if (result == null) result = caseSynchronizableObject(category);
 				if (result == null) result = caseAdapter(category);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -128,6 +129,7 @@ public class InfomngmntSwitch<T> {
 				InformationUnitListItem informationUnitListItem = (InformationUnitListItem)theEObject;
 				T result = caseInformationUnitListItem(informationUnitListItem);
 				if (result == null) result = caseAbstractInformationUnit(informationUnitListItem);
+				if (result == null) result = caseSynchronizableObject(informationUnitListItem);
 				if (result == null) result = caseAdapter(informationUnitListItem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -298,6 +300,13 @@ public class InfomngmntSwitch<T> {
 			case InfomngmntPackage.AVAILABLE_TAGS: {
 				AvailableTags availableTags = (AvailableTags)theEObject;
 				T result = caseAvailableTags(availableTags);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT: {
+				SynchronizableObject synchronizableObject = (SynchronizableObject)theEObject;
+				T result = caseSynchronizableObject(synchronizableObject);
+				if (result == null) result = caseAdapter(synchronizableObject);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -767,6 +776,21 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseAvailableTags(AvailableTags object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Synchronizable Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Synchronizable Object</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSynchronizableObject(SynchronizableObject object) {
 		return null;
 	}
 

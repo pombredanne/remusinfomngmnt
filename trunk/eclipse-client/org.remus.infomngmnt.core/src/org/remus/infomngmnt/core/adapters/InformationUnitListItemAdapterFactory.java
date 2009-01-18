@@ -16,9 +16,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.Path;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -30,7 +32,7 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
 	 */
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
+	public Object getAdapter(final Object adaptableObject, final Class adapterType) {
 		if (adapterType.equals(InformationUnit.class)
 				&& adaptableObject instanceof InformationUnitListItem) {
 			InformationUnitListItem item = (InformationUnitListItem) adaptableObject;
@@ -38,7 +40,11 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 					new Path(item.eResource().getURI().toPlatformString(true)));
 			return EditingUtil.getInstance().getObjectFromFile(
-					file.getProject().getFile(new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION)), InfomngmntPackage.eINSTANCE.getInformationUnit(), true);
+					file.getProject().getFile(new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION)), InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
+		}
+		if (adapterType.equals(SynchronizationMetadata.class)
+				&& adaptableObject instanceof InformationUnitListItem) {
+			return ((InformationUnitListItem) adaptableObject).getSynchronizationMetaData();
 		}
 		return null;
 	}
@@ -47,7 +53,7 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
 	 */
 	public Class[] getAdapterList() {
-		return new Class[] {InformationUnit.class};
+		return new Class[] {InformationUnit.class, SynchronizationMetadata.class};
 	}
 
 }

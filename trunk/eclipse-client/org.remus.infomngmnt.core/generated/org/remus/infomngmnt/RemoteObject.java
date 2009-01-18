@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeId <em>Repository Type Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getRepositoryTypeObjectId <em>Repository Type Object Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RemoteObject#getWrappedObject <em>Wrapped Object</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RemoteObject#getHash <em>Hash</em>}</li>
  * </ul>
  * </p>
  *
@@ -212,5 +213,31 @@ public interface RemoteObject extends Adapter {
 	 * @generated
 	 */
 	void setWrappedObject(Object value);
+
+	/**
+	 * Returns the value of the '<em><b>Hash</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Hash</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Hash</em>' attribute.
+	 * @see #setHash(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteObject_Hash()
+	 * @model
+	 * @generated
+	 */
+	String getHash();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RemoteObject#getHash <em>Hash</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Hash</em>' attribute.
+	 * @see #getHash()
+	 * @generated
+	 */
+	void setHash(String value);
 
 } // RemoteObject

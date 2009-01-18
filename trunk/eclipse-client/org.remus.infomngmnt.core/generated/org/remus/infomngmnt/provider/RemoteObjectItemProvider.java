@@ -76,6 +76,7 @@ public class RemoteObjectItemProvider
 			addRepositoryTypeIdPropertyDescriptor(object);
 			addRepositoryTypeObjectIdPropertyDescriptor(object);
 			addWrappedObjectPropertyDescriptor(object);
+			addHashPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -235,6 +236,28 @@ public class RemoteObjectItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Hash feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addHashPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RemoteObject_hash_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteObject_hash_feature", "_UI_RemoteObject_type"),
+				 InfomngmntPackage.Literals.REMOTE_OBJECT__HASH,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -267,6 +290,7 @@ public class RemoteObjectItemProvider
 			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_ID:
 			case InfomngmntPackage.REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID:
 			case InfomngmntPackage.REMOTE_OBJECT__WRAPPED_OBJECT:
+			case InfomngmntPackage.REMOTE_OBJECT__HASH:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

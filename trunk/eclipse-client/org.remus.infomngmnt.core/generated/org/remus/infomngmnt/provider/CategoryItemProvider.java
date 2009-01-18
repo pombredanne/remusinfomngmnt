@@ -37,6 +37,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnitListItem;
 
 /**
  * This is the item provider adapter for a {@link org.remus.infomngmnt.Category} object.
@@ -45,7 +46,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
  * @generated
  */
 public class CategoryItemProvider
-extends AdapterItemProvider
+extends SynchronizableObjectItemProvider
 implements
 IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
 	/**
@@ -54,7 +55,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CategoryItemProvider(AdapterFactory adapterFactory) {
+	public CategoryItemProvider(final AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -65,15 +66,15 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -82,10 +83,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addIdPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Category_id_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Category_id_feature", "_UI_Category_type"),
@@ -104,10 +105,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addLabelPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Category_label_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Category_label_feature", "_UI_Category_type"),
@@ -126,10 +127,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+	protected void addDescriptionPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Category_description_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Category_description_feature", "_UI_Category_type"),
@@ -151,27 +152,31 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
+		if (this.childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__CHILDREN);
-			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT);
-			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA);
+			this.childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__CHILDREN);
+			this.childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT);
 		}
-		return childrenFeatures;
+		return this.childrenFeatures;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
+		if (child instanceof Category) {
+			return InfomngmntPackage.Literals.CATEGORY__CHILDREN;
+		} else if (child instanceof InformationUnitListItem) {
+			return InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT;
+		} else {
+			return super.getChildFeature(object, child);
+		}
 	}
 
 	/**
@@ -236,7 +241,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
@@ -248,11 +253,30 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 			(createChildParameter
 				(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
 				 InfomngmntFactory.eINSTANCE.createInformationUnitListItem()));
+	}
 
-		newChildDescriptors.add
-			(createChildParameter
-				(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA,
-				 InfomngmntFactory.eINSTANCE.createSynchronizationMetadata()));
+	/**
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getCreateChildText(final Object owner, final Object feature, final Object child, final Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
+
+		boolean qualify =
+			childFeature == InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS ||
+			childFeature == InfomngmntPackage.Literals.CATEGORY__CHILDREN ||
+			childFeature == InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT;
+
+		if (qualify) {
+			return getString
+				("_UI_CreateChild_text2",
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
 	}
 
 }

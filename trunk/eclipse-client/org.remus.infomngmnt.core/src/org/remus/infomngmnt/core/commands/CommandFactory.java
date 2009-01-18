@@ -28,6 +28,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.LinkUtil;
 
@@ -59,26 +60,26 @@ public class CommandFactory {
 	 * @deprecated use {@link #CREATE_LINK(InformationUnit, Link, EditingDomain)} instead.
 	 */
 	@Deprecated
-	public static CreateChildCommand CREATE_LINK(InformationUnit source, InformationUnit target, EditingDomain domain) {
+	public static CreateChildCommand CREATE_LINK(final InformationUnit source, final InformationUnit target, final EditingDomain domain) {
 		Link createLink = InfomngmntFactory.eINSTANCE.createLink();
 		createLink.setLinktype(LinkUtil.getInstance().getLinkTypes().getAvailableLinkTypes().get(0).getValue());
 		createLink.setTarget(target);
 		return new CreateChildCommand(domain, source,InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS,createLink, Collections.EMPTY_LIST);
 	}
-	public static CreateChildCommand CREATE_LINK(InformationUnit source, Link link, EditingDomain domain) {
+	public static CreateChildCommand CREATE_LINK(final InformationUnit source, final Link link, final EditingDomain domain) {
 		CreateChildCommand createChildCommand = new CreateChildCommand(domain, source,InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS, link, Collections.EMPTY_LIST);
 		createChildCommand.setLabel("Create link");
 		return createChildCommand;
 	}
 
-	public static Command CREATE_CATEGORY(Category parentCategory, Category newCategory, EditingDomain editingDomain) {
+	public static Command CREATE_CATEGORY(final Category parentCategory, final Category newCategory, final EditingDomain editingDomain) {
 		CreateChildCommand createChildCommand = new CreateChildCommand(
 				editingDomain, parentCategory, InfomngmntPackage.Literals.CATEGORY__CHILDREN,newCategory, Collections.EMPTY_LIST);
 		createChildCommand.setLabel(NLS.bind("Create category {0}", newCategory.getLabel()));
 		return createChildCommand;
 	}
 
-	public static Command CREATE_ROOTCATEGORY(Category newCategory, EditingDomain editingDomain) {
+	public static Command CREATE_ROOTCATEGORY(final Category newCategory, final EditingDomain editingDomain) {
 		CreateChildCommand createChildCommand = new CreateChildCommand(
 				editingDomain, ApplicationModelPool.getInstance().getModel(), InfomngmntPackage.Literals.APPLICATION_ROOT__ROOT_CATEGORIES, newCategory, Collections.EMPTY_LIST);
 		CompoundCommand compoundCommand = new CompoundCommand(new ArrayList<Command>(Collections.singleton(createChildCommand))) {
@@ -91,16 +92,21 @@ public class CommandFactory {
 		return compoundCommand;
 	}
 
-	public static Command CREATE_INFOTYPE(InformationUnit newItem, Category parentCategory) {
+	public static Command CREATE_INFOTYPE(final InformationUnit newItem, final Category parentCategory) {
 		return new CreateInfoTypeCommand(newItem,parentCategory);
 	}
 
-	public static Command SET_WORKSPACEPATH(InformationUnitListItem item, String newPath, EditingDomain editingDomain) {
+	public static Command SET_WORKSPACEPATH(final InformationUnitListItem item, final String newPath, final EditingDomain editingDomain) {
 		return new SetCommand(editingDomain,item,InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,newPath);
 	}
 
-	public static Command MOVE_INFOUNIT_COMMAND(InformationUnitListItem item, String targetPath) {
+	public static Command MOVE_INFOUNIT_COMMAND(final InformationUnitListItem item, final String targetPath) {
 		return new MoveInformationUnitCommand(item, targetPath);
+	}
+	
+	public static Command REMOVE_SYNCDATACOMMAND(final SynchronizableObject synchronizableObject, final EditingDomain domain) {
+		return new SetCommand(domain, synchronizableObject,InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,null);
+
 	}
 
 

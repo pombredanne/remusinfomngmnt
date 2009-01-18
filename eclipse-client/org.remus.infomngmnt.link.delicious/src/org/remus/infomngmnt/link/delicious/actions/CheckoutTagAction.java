@@ -109,11 +109,11 @@ public class CheckoutTagAction extends BaseSelectionListenerAction {
 				createCategory.setLabel(remoteObject.getName());
 				
 				SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
-				metadata.setHash(/* TODO implement */ "");
+				metadata.setHash(remoteObject.getHash());
 				metadata.setReadonly(/* TODO implement */ false);
 				metadata.setSyncState(SynchronizationState.IN_SYNC);
 				metadata.setRepositoryId(repository.getId());
-				metadata.setUrl(/* TODO implement */ "TEST");
+				metadata.setUrl(remoteObject.getUrl());
 				createCategory.setSynchronizationMetaData(metadata);
 				createChangeSetItem.setRemoteOriginalObject(copiedItem);
 				createChangeSetItem.setRemoteConvertedContainer(createCategory);
@@ -149,11 +149,11 @@ public class CheckoutTagAction extends BaseSelectionListenerAction {
 			createCategory.setId(new UniversalUniqueIdentifier().toString());
 			
 			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
-			metadata.setHash(/* TODO implement */ "");
+			metadata.setHash(remoteObject2.getHash());
 			metadata.setReadonly(/* TODO implement */  false);
 			metadata.setSyncState(SynchronizationState.IN_SYNC);
 			metadata.setRepositoryId(remoteRepository.getId());
-			metadata.setUrl(/* TODO implement */ "TEST");
+			metadata.setUrl(remoteObject2.getUrl());
 			createCategory.setSynchronizationMetaData(metadata);
 			if (parentCategory != null) {
 				parentCategory.getChildren().add(createCategory);
@@ -175,11 +175,11 @@ public class CheckoutTagAction extends BaseSelectionListenerAction {
 			createInformationUnitListItem.setType(remoteRepository.getRepositoryImplementation().getTypeIdByObject(remoteObject2));
 
 			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
-			metadata.setHash(/* TODO implement */ "TEST");
+			metadata.setHash(remoteObject2.getHash());
 			metadata.setReadonly(/* TODO implement */  false);
 			metadata.setRepositoryId(remoteRepository.getId());
 			metadata.setSyncState(SynchronizationState.IN_SYNC);
-			metadata.setUrl("http://test");
+			metadata.setUrl(remoteObject2.getUrl());
 			createInformationUnitListItem.setSynchronizationMetaData(metadata);
 			if (parentCategory != null) {
 				parentCategory.getInformationUnit().add(createInformationUnitListItem);

@@ -205,6 +205,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createAvailableTagsAdapter();
 			}
 			@Override
+			public Adapter caseSynchronizableObject(SynchronizableObject object) {
+				return createSynchronizableObjectAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -655,6 +659,20 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAvailableTagsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.SynchronizableObject <em>Synchronizable Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.SynchronizableObject
+	 * @generated
+	 */
+	public Adapter createSynchronizableObjectAdapter() {
 		return null;
 	}
 

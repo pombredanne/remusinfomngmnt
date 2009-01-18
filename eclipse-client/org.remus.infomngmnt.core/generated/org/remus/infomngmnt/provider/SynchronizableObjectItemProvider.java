@@ -20,8 +20,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,32 +30,34 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.SynchronizableObject;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.InformationUnitListItem} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.SynchronizableObject} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class InformationUnitListItemItemProvider
-extends AbstractInformationUnitItemProvider
-implements
-IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
+public class SynchronizableObjectItemProvider
+	extends AdapterItemProvider
+	implements
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource,
+		IItemColorProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InformationUnitListItemItemProvider(AdapterFactory adapterFactory) {
+	public SynchronizableObjectItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -69,31 +72,8 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addWorkspacePathPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Workspace Path feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addWorkspacePathPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_InformationUnitListItem_workspacePath_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItem_workspacePath_feature", "_UI_InformationUnitListItem_type"),
-				 InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -128,28 +108,14 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	}
 
 	/**
-	 * This returns InformationUnitListItem.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	@Override
-	public Object getImage(final Object object) {
-		return InformationExtensionManager.getInstance().getInfoTypeByType(((AbstractInformationUnit) object).getType()).getImage();
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		String label = ((InformationUnitListItem)object).getLabel();
-		return label == null || label.length() == 0 ?
-				getString("_UI_InformationUnitListItem_type") :
-					label;
+	public String getText(Object object) {
+		return getString("_UI_SynchronizableObject_type");
 	}
 
 	/**
@@ -157,18 +123,16 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(InformationUnitListItem.class)) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, true));
+		switch (notification.getFeatureID(SynchronizableObject.class)) {
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);

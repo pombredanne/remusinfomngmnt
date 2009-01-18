@@ -50,6 +50,7 @@ import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleResult;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
@@ -280,6 +281,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass availableTagsEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass synchronizableObjectEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -580,15 +588,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCategory_SynchronizationMetaData() {
-		return (EReference)categoryEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getAbstractInformationUnit() {
 		return abstractInformationUnitEClass;
 	}
@@ -636,15 +635,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EAttribute getInformationUnitListItem_WorkspacePath() {
 		return (EAttribute)informationUnitListItemEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getInformationUnitListItem_SynchronizationMetaData() {
-		return (EReference)informationUnitListItemEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1102,6 +1092,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getRemoteObject_Hash() {
+		return (EAttribute)remoteObjectEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getRemoteContainer() {
 		return remoteContainerEClass;
 	}
@@ -1435,6 +1434,33 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSynchronizableObject() {
+		return synchronizableObjectEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSynchronizableObject_SynchronizationMetaData() {
+		return (EReference)synchronizableObjectEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSynchronizableObject_MarkedAsDeleteItems() {
+		return (EReference)synchronizableObjectEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSynchronizationState() {
 		return synchronizationStateEEnum;
 	}
@@ -1518,7 +1544,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(categoryEClass, CATEGORY__CHILDREN);
 		createEReference(categoryEClass, CATEGORY__INFORMATION_UNIT);
 		createEAttribute(categoryEClass, CATEGORY__DESCRIPTION);
-		createEReference(categoryEClass, CATEGORY__SYNCHRONIZATION_META_DATA);
 
 		abstractInformationUnitEClass = createEClass(ABSTRACT_INFORMATION_UNIT);
 		createEAttribute(abstractInformationUnitEClass, ABSTRACT_INFORMATION_UNIT__ID);
@@ -1527,7 +1552,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		informationUnitListItemEClass = createEClass(INFORMATION_UNIT_LIST_ITEM);
 		createEAttribute(informationUnitListItemEClass, INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
-		createEReference(informationUnitListItemEClass, INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA);
 
 		applicationRootEClass = createEClass(APPLICATION_ROOT);
 		createEReference(applicationRootEClass, APPLICATION_ROOT__ROOT_CATEGORIES);
@@ -1594,6 +1618,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__REPOSITORY_TYPE_ID);
 		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__REPOSITORY_TYPE_OBJECT_ID);
 		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__WRAPPED_OBJECT);
+		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__HASH);
 
 		remoteContainerEClass = createEClass(REMOTE_CONTAINER);
 		createEReference(remoteContainerEClass, REMOTE_CONTAINER__CHILDREN);
@@ -1642,6 +1667,10 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		availableTagsEClass = createEClass(AVAILABLE_TAGS);
 		createEReference(availableTagsEClass, AVAILABLE_TAGS__TAGS);
 
+		synchronizableObjectEClass = createEClass(SYNCHRONIZABLE_OBJECT);
+		createEReference(synchronizableObjectEClass, SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
+		createEReference(synchronizableObjectEClass, SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS);
+
 		// Create enums
 		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
 		synchronizationActionEEnum = createEEnum(SYNCHRONIZATION_ACTION);
@@ -1680,9 +1709,10 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		// Add supertypes to classes
 		informationUnitEClass.getESuperTypes().add(this.getAbstractInformationUnit());
-		categoryEClass.getESuperTypes().add(this.getAdapter());
+		categoryEClass.getESuperTypes().add(this.getSynchronizableObject());
 		abstractInformationUnitEClass.getESuperTypes().add(this.getAdapter());
 		informationUnitListItemEClass.getESuperTypes().add(this.getAbstractInformationUnit());
+		informationUnitListItemEClass.getESuperTypes().add(this.getSynchronizableObject());
 		ruleValueEClass.getESuperTypes().add(this.getInformationUnit());
 		remoteRepositoryEClass.getESuperTypes().add(this.getRemoteContainer());
 		remoteObjectEClass.getESuperTypes().add(this.getAdapter());
@@ -1691,6 +1721,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		changeSetEClass.getESuperTypes().add(this.getAdapter());
 		changeSetItemEClass.getESuperTypes().add(this.getAdapter());
 		tagEClass.getESuperTypes().add(this.getAdapter());
+		synchronizableObjectEClass.getESuperTypes().add(this.getAdapter());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(informationUnitEClass, InformationUnit.class, "InformationUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1717,7 +1748,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEReference(getCategory_Children(), this.getCategory(), null, "children", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCategory_InformationUnit(), this.getInformationUnitListItem(), null, "informationUnit", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCategory_Description(), ecorePackage.getEString(), "description", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCategory_SynchronizationMetaData(), this.getSynchronizationMetadata(), null, "synchronizationMetaData", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(abstractInformationUnitEClass, AbstractInformationUnit.class, "AbstractInformationUnit", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAbstractInformationUnit_Id(), ecorePackage.getEString(), "id", null, 1, 1, AbstractInformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1726,7 +1756,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(informationUnitListItemEClass, InformationUnitListItem.class, "InformationUnitListItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInformationUnitListItem_WorkspacePath(), ecorePackage.getEString(), "workspacePath", null, 0, 1, InformationUnitListItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInformationUnitListItem_SynchronizationMetaData(), this.getSynchronizationMetadata(), null, "synchronizationMetaData", null, 0, 1, InformationUnitListItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(applicationRootEClass, ApplicationRoot.class, "ApplicationRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getApplicationRoot_RootCategories(), this.getCategory(), null, "rootCategories", null, 0, -1, ApplicationRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1795,6 +1824,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getRemoteObject_RepositoryTypeId(), ecorePackage.getEString(), "repositoryTypeId", null, 1, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRemoteObject_RepositoryTypeObjectId(), ecorePackage.getEString(), "repositoryTypeObjectId", null, 1, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRemoteObject_WrappedObject(), this.getObject(), "wrappedObject", null, 0, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRemoteObject_Hash(), ecorePackage.getEString(), "hash", null, 0, 1, RemoteObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteContainerEClass, RemoteContainer.class, "RemoteContainer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRemoteContainer_Children(), this.getRemoteObject(), null, "children", null, 0, -1, RemoteContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1842,6 +1872,10 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(availableTagsEClass, AvailableTags.class, "AvailableTags", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAvailableTags_Tags(), this.getTag(), null, "tags", null, 0, -1, AvailableTags.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(synchronizableObjectEClass, SynchronizableObject.class, "SynchronizableObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSynchronizableObject_SynchronizationMetaData(), this.getSynchronizationMetadata(), null, "synchronizationMetaData", null, 0, 1, SynchronizableObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSynchronizableObject_MarkedAsDeleteItems(), this.getSynchronizableObject(), null, "markedAsDeleteItems", null, 0, -1, SynchronizableObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");

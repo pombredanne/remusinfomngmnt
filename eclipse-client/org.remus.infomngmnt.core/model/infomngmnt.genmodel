@@ -51,7 +51,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/children"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/informationUnit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/description"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/synchronizationMetaData"/>
     </genClasses>
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//AbstractInformationUnit"
         labelFeature="#//infomngmnt/AbstractInformationUnit/label">
@@ -61,7 +60,6 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItem/workspacePath"/>
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItem/synchronizationMetaData"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//ApplicationRoot">
       <genFeatures children="true" createChild="true" propertyCategory="" propertySortChoices="true"
@@ -128,6 +126,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/repositoryTypeId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/repositoryTypeObjectId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/wrappedObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/hash"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RemoteContainer">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteContainer/children"/>
@@ -175,6 +174,10 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//AvailableTags">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//AvailableTags/tags"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//SynchronizableObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/synchronizationMetaData"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/markedAsDeleteItems"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

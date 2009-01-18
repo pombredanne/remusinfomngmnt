@@ -17,20 +17,16 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
-import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.SynchronizableObject;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface IRepository {
-	
-	public static final int OPERATION_GET = 0; 
-	
-	public static final int OPERATION_COMMIT = 1; 
 	
 	/**
 	 * Returns an image (typically 16x16) which represents
@@ -62,11 +58,7 @@ public interface IRepository {
 	void reset();
 	
 	ISchedulingRule getRule();
-	
-	void applyChangeSet(ChangeSet changeSet);
-	
-	void commit(InformationUnitListItem[] items, IProgressMonitor monitor);
-	
+
 	String getLocalRepositoryId();
 
 	void setLocalRepositoryId(final String localRepositoryId);
@@ -74,5 +66,18 @@ public interface IRepository {
 	String getTypeIdByObject(RemoteObject remoteObject);
 	
 	InformationUnit getPrefetchedInformationUnit(RemoteObject remoteObject);
+
+	InformationUnit getFullObject(InformationUnitListItem informationUnitListItem);
+
+	/**
+	 * Commits a {@link SynchronizableObject}.
+	 * @param item2commit
+	 * @param monitor
+	 */
+	void commit(SynchronizableObject item2commit, IProgressMonitor monitor);
+	
+	RemoteObject addToRepository(SynchronizableObject item, IProgressMonitor monitor);
+	
+	RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object);
 
 }

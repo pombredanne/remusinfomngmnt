@@ -326,6 +326,43 @@ public interface InfomngmntPackage extends EPackage {
 	int USAGE_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.SynchronizableObjectImpl <em>Synchronizable Object</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.SynchronizableObjectImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObject()
+	 * @generated
+	 */
+	int SYNCHRONIZABLE_OBJECT = 31;
+
+	/**
+	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marked As Delete Items</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS = ADAPTER_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Synchronizable Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZABLE_OBJECT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CategoryImpl <em>Category</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -336,13 +373,31 @@ public interface InfomngmntPackage extends EPackage {
 	int CATEGORY = 2;
 
 	/**
+	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__SYNCHRONIZATION_META_DATA = SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA;
+
+	/**
+	 * The feature id for the '<em><b>Marked As Delete Items</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__MARKED_AS_DELETE_ITEMS = SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS;
+
+	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__ID = ADAPTER_FEATURE_COUNT + 0;
+	int CATEGORY__ID = SYNCHRONIZABLE_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -351,7 +406,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__LABEL = ADAPTER_FEATURE_COUNT + 1;
+	int CATEGORY__LABEL = SYNCHRONIZABLE_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -360,7 +415,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__CHILDREN = ADAPTER_FEATURE_COUNT + 2;
+	int CATEGORY__CHILDREN = SYNCHRONIZABLE_OBJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Information Unit</b></em>' containment reference list.
@@ -369,7 +424,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__INFORMATION_UNIT = ADAPTER_FEATURE_COUNT + 3;
+	int CATEGORY__INFORMATION_UNIT = SYNCHRONIZABLE_OBJECT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -378,16 +433,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__DESCRIPTION = ADAPTER_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__SYNCHRONIZATION_META_DATA = ADAPTER_FEATURE_COUNT + 5;
+	int CATEGORY__DESCRIPTION = SYNCHRONIZABLE_OBJECT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Category</em>' class.
@@ -396,7 +442,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 6;
+	int CATEGORY_FEATURE_COUNT = SYNCHRONIZABLE_OBJECT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl <em>Information Unit List Item</em>}' class.
@@ -436,22 +482,31 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM__TYPE = ABSTRACT_INFORMATION_UNIT__TYPE;
 
 	/**
-	 * The feature id for the '<em><b>Workspace Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 1;
+	int INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marked As Delete Items</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Workspace Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Information Unit List Item</em>' class.
@@ -460,7 +515,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 2;
+	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 3;
 
 
 	/**
@@ -1179,13 +1234,22 @@ public interface InfomngmntPackage extends EPackage {
 	int REMOTE_OBJECT__WRAPPED_OBJECT = ADAPTER_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Hash</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_OBJECT__HASH = ADAPTER_FEATURE_COUNT + 7;
+
+	/**
 	 * The number of structural features of the '<em>Remote Object</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REMOTE_OBJECT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 7;
+	int REMOTE_OBJECT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteContainerImpl <em>Remote Container</em>}' class.
@@ -1259,6 +1323,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int REMOTE_CONTAINER__WRAPPED_OBJECT = REMOTE_OBJECT__WRAPPED_OBJECT;
+
+	/**
+	 * The feature id for the '<em><b>Hash</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_CONTAINER__HASH = REMOTE_OBJECT__HASH;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1349,6 +1422,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int REMOTE_REPOSITORY__WRAPPED_OBJECT = REMOTE_CONTAINER__WRAPPED_OBJECT;
+
+	/**
+	 * The feature id for the '<em><b>Hash</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_REPOSITORY__HASH = REMOTE_CONTAINER__HASH;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1781,7 +1863,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 31;
+	int SYNCHRONIZATION_STATE = 32;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -1791,7 +1873,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 32;
+	int SYNCHRONIZATION_ACTION = 33;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -1801,7 +1883,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 33;
+	int OBJECT = 34;
 
 
 	/**
@@ -1812,7 +1894,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
 	 * @generated
 	 */
-	int IREPOSITORY = 34;
+	int IREPOSITORY = 35;
 
 
 	/**
@@ -2055,17 +2137,6 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getCategory_Description();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.Category#getSynchronizationMetaData <em>Synchronization Meta Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Synchronization Meta Data</em>'.
-	 * @see org.remus.infomngmnt.Category#getSynchronizationMetaData()
-	 * @see #getCategory()
-	 * @generated
-	 */
-	EReference getCategory_SynchronizationMetaData();
-
-	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.AbstractInformationUnit <em>Abstract Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2128,17 +2199,6 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInformationUnitListItem_WorkspacePath();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.InformationUnitListItem#getSynchronizationMetaData <em>Synchronization Meta Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Synchronization Meta Data</em>'.
-	 * @see org.remus.infomngmnt.InformationUnitListItem#getSynchronizationMetaData()
-	 * @see #getInformationUnitListItem()
-	 * @generated
-	 */
-	EReference getInformationUnitListItem_SynchronizationMetaData();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.ApplicationRoot <em>Application Root</em>}'.
@@ -2677,6 +2737,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getRemoteObject_WrappedObject();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RemoteObject#getHash <em>Hash</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Hash</em>'.
+	 * @see org.remus.infomngmnt.RemoteObject#getHash()
+	 * @see #getRemoteObject()
+	 * @generated
+	 */
+	EAttribute getRemoteObject_Hash();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RemoteContainer <em>Remote Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3080,6 +3151,38 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getAvailableTags_Tags();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.SynchronizableObject <em>Synchronizable Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Synchronizable Object</em>'.
+	 * @see org.remus.infomngmnt.SynchronizableObject
+	 * @generated
+	 */
+	EClass getSynchronizableObject();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.SynchronizableObject#getSynchronizationMetaData <em>Synchronization Meta Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Synchronization Meta Data</em>'.
+	 * @see org.remus.infomngmnt.SynchronizableObject#getSynchronizationMetaData()
+	 * @see #getSynchronizableObject()
+	 * @generated
+	 */
+	EReference getSynchronizableObject_SynchronizationMetaData();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.SynchronizableObject#getMarkedAsDeleteItems <em>Marked As Delete Items</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Marked As Delete Items</em>'.
+	 * @see org.remus.infomngmnt.SynchronizableObject#getMarkedAsDeleteItems()
+	 * @see #getSynchronizableObject()
+	 * @generated
+	 */
+	EReference getSynchronizableObject_MarkedAsDeleteItems();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3326,14 +3429,6 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute CATEGORY__DESCRIPTION = eINSTANCE.getCategory_Description();
 
 		/**
-		 * The meta object literal for the '<em><b>Synchronization Meta Data</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CATEGORY__SYNCHRONIZATION_META_DATA = eINSTANCE.getCategory_SynchronizationMetaData();
-
-		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AbstractInformationUnitImpl <em>Abstract Information Unit</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3384,14 +3479,6 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = eINSTANCE.getInformationUnitListItem_WorkspacePath();
-
-		/**
-		 * The meta object literal for the '<em><b>Synchronization Meta Data</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA = eINSTANCE.getInformationUnitListItem_SynchronizationMetaData();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ApplicationRootImpl <em>Application Root</em>}' class.
@@ -3826,6 +3913,14 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute REMOTE_OBJECT__WRAPPED_OBJECT = eINSTANCE.getRemoteObject_WrappedObject();
 
 		/**
+		 * The meta object literal for the '<em><b>Hash</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REMOTE_OBJECT__HASH = eINSTANCE.getRemoteObject_Hash();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RemoteContainerImpl <em>Remote Container</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4140,6 +4235,32 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference AVAILABLE_TAGS__TAGS = eINSTANCE.getAvailableTags_Tags();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.SynchronizableObjectImpl <em>Synchronizable Object</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.SynchronizableObjectImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObject()
+		 * @generated
+		 */
+		EClass SYNCHRONIZABLE_OBJECT = eINSTANCE.getSynchronizableObject();
+
+		/**
+		 * The meta object literal for the '<em><b>Synchronization Meta Data</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA = eINSTANCE.getSynchronizableObject_SynchronizationMetaData();
+
+		/**
+		 * The meta object literal for the '<em><b>Marked As Delete Items</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS = eINSTANCE.getSynchronizableObject_MarkedAsDeleteItems();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.

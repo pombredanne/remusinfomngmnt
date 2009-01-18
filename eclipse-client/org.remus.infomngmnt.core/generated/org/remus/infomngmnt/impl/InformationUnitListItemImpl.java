@@ -14,16 +14,21 @@
  */
 package org.remus.infomngmnt.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 
 /**
@@ -33,14 +38,35 @@ import org.remus.infomngmnt.SynchronizationMetadata;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getWorkspacePath <em>Workspace Path</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getSynchronizationMetaData <em>Synchronization Meta Data</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getMarkedAsDeleteItems <em>Marked As Delete Items</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getWorkspacePath <em>Workspace Path</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class InformationUnitListItemImpl extends AbstractInformationUnitImpl implements InformationUnitListItem {
+	/**
+	 * The cached value of the '{@link #getSynchronizationMetaData() <em>Synchronization Meta Data</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSynchronizationMetaData()
+	 * @generated
+	 * @ordered
+	 */
+	protected SynchronizationMetadata synchronizationMetaData;
+
+	/**
+	 * The cached value of the '{@link #getMarkedAsDeleteItems() <em>Marked As Delete Items</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMarkedAsDeleteItems()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SynchronizableObject> markedAsDeleteItems;
+
 	/**
 	 * The default value of the '{@link #getWorkspacePath() <em>Workspace Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -60,16 +86,6 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	 * @ordered
 	 */
 	protected String workspacePath = WORKSPACE_PATH_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getSynchronizationMetaData() <em>Synchronization Meta Data</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSynchronizationMetaData()
-	 * @generated
-	 * @ordered
-	 */
-	protected SynchronizationMetadata synchronizationMetaData;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -159,11 +175,25 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<SynchronizableObject> getMarkedAsDeleteItems() {
+		if (markedAsDeleteItems == null) {
+			markedAsDeleteItems = new EObjectContainmentEList<SynchronizableObject>(SynchronizableObject.class, this, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS);
+		}
+		return markedAsDeleteItems;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
 				return basicSetSynchronizationMetaData(null, msgs);
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS:
+				return ((InternalEList<?>)getMarkedAsDeleteItems()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -176,10 +206,12 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
-				return getWorkspacePath();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
 				return getSynchronizationMetaData();
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS:
+				return getMarkedAsDeleteItems();
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
+				return getWorkspacePath();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -189,14 +221,19 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
-				setWorkspacePath((String)newValue);
-				return;
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
 				setSynchronizationMetaData((SynchronizationMetadata)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS:
+				getMarkedAsDeleteItems().clear();
+				getMarkedAsDeleteItems().addAll((Collection<? extends SynchronizableObject>)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
+				setWorkspacePath((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -210,11 +247,14 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
-				setWorkspacePath(WORKSPACE_PATH_EDEFAULT);
-				return;
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
 				setSynchronizationMetaData((SynchronizationMetadata)null);
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS:
+				getMarkedAsDeleteItems().clear();
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
+				setWorkspacePath(WORKSPACE_PATH_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -228,12 +268,48 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
-				return WORKSPACE_PATH_EDEFAULT == null ? workspacePath != null : !WORKSPACE_PATH_EDEFAULT.equals(workspacePath);
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA:
 				return synchronizationMetaData != null;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS:
+				return markedAsDeleteItems != null && !markedAsDeleteItems.isEmpty();
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
+				return WORKSPACE_PATH_EDEFAULT == null ? workspacePath != null : !WORKSPACE_PATH_EDEFAULT.equals(workspacePath);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == SynchronizableObject.class) {
+			switch (derivedFeatureID) {
+				case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA: return InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA;
+				case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS: return InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == SynchronizableObject.class) {
+			switch (baseFeatureID) {
+				case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA: return InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA;
+				case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS: return InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

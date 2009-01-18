@@ -12,20 +12,47 @@
 
 package org.remus.infomngmnt.ui.handler;
 
-import org.eclipse.core.commands.AbstractHandler;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.handlers.HandlerUtil;
+
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class ShareItemHandler extends AbstractHandler {
+public class ShareItemHandler extends AbstractRemoteHandler {
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// TODO Auto-generated method stub
+	@Override
+	public Object doExecute(final ExecutionEvent event) throws ExecutionException {
+		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
+		if (currentSelection instanceof IStructuredSelection) {
+			List list = ((IStructuredSelection) currentSelection).toList();
+			for (Object object : list) {
+				if (object instanceof InformationUnitListItem) {
+					SynchronizationMetadata adapter = (SynchronizationMetadata) ((InformationUnitListItem) object).getAdapter(SynchronizationMetadata.class);
+					RemoteRepository repositoryById = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(adapter.getRepositoryId());
+					RemoteObject addToRepository = repositoryById.getRepositoryImplementation().addToRepository((InformationUnitListItem) object, null);
+					adapter.setHash(addToRepository.getHash());
+					adapter.setReadonly(/* TODO implement */ false);
+					adapter.setSyncState(SynchronizationState.IN_SYNC);
+					adapter.setUrl(addToRepository.getUrl());
+				}
+			}
+		}
 		return null;
 	}
 

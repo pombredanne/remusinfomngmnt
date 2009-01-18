@@ -13,39 +13,70 @@
 package org.remus.infomngmnt.ui.handler;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import org.remus.infomngmnt.Adapter;
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.ui.remote.RemoteUtil;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class CommitHandler extends AbstractHandler {
+public class CommitHandler extends AbstractRemoteHandler {
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
-	public Object execute(final ExecutionEvent event) throws ExecutionException {
+	@Override
+	public Object doExecute(final ExecutionEvent event) throws ExecutionException {
 		final ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 		Job job = new Job("Comitting") {
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				if (currentSelection instanceof IStructuredSelection) {
 					List list = ((IStructuredSelection) currentSelection).toList();
-					
+					Map<RemoteRepository, List<Adapter>> groupedRemoteRepository = RemoteUtil.groupByRemoteRepsoitory(list);
+					Set<RemoteRepository> keySet = groupedRemoteRepository.keySet();
+					for (RemoteRepository remoteRepository : keySet) {
+						List<Adapter> items2commit = groupedRemoteRepository.get(remoteRepository);
+						for (Adapter item2commit : items2commit) {
+							if (item2commit instanceof Category) {
+								remoteRepository.getRepositoryImplementation().commit((Category)item2commit, monitor);
+								List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(item2commit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT);
+								for (InformationUnitListItem informationUnitListItem : allChildren) {
+									remoteRepository.getRepositoryImplementation().commit(informationUnitListItem, monitor);
+									
+								}
+							} else if (item2commit instanceof InformationUnitListItem) {
+								remoteRepository.getRepositoryImplementation().commit((InformationUnitListItem)item2commit, monitor);
+							}
+							SynchronizationMetadata adapter = (SynchronizationMetadata) item2commit.getAdapter(SynchronizationMetadata.class);
+							adapter.setSyncState(SynchronizationState.IN_SYNC);
+						}
+					}
 				}
-				//currentSelection.
-				return null;
+				return Status.OK_STATUS;
 			}
 		};
-	
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 

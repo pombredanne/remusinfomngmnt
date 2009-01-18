@@ -13,16 +13,27 @@
 package org.remus.infomngmnt.ui.dnd;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.CreateChildCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 
+import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -32,7 +43,7 @@ import org.remus.infomngmnt.core.model.EditingUtil;
  */
 public class NavigationDropHelper {
 
-	public static boolean canDrop(Collection<?> source, Object target) {
+	public static boolean canDrop(final Collection<?> source, final Object target) {
 
 		/*
 		 * first condition: source & target must not be the same
@@ -69,7 +80,7 @@ public class NavigationDropHelper {
 		return true;
 	}
 
-	public static Command checkProjectRelevance(Collection<?> source, Object target, Command originCommand) {
+	public static Command checkProjectRelevance(final Collection<?> source, final Object target, final Command originCommand) {
 		List<InformationUnitListItem> relevantItems = new LinkedList<InformationUnitListItem>();
 		for (Object object : source) {
 			if (object instanceof InformationUnitListItem &&
@@ -100,10 +111,140 @@ public class NavigationDropHelper {
 
 	}
 
-	private static String calculateNewWorkspacePath(InformationUnitListItem source, EObject target) {
+	private static String calculateNewWorkspacePath(final InformationUnitListItem source, final EObject target) {
 		Path targetPath = new Path(target.eResource().getURI().toPlatformString(true));
 		Path sourcePath = new Path(source.getWorkspacePath());
 		return new Path(targetPath.segment(0)).append(sourcePath.removeFirstSegments(1)).toOSString();
+	}
+
+	/**
+	 * This helper method checks if the sources or targets
+	 * are under sync-control. The following things have to be
+	 * applied. If the source is under source control we have
+	 * to mark the objects as deleted. If the target is under
+	 * sync-control we have to set the items as new sync-objects
+	 * that needs to be added to the target remote-repository. 
+	 * @param source
+	 * @param target
+	 * @param command
+	 * @return
+	 */
+	public static Command checkSyncStates(final Collection<?> source, final Object target,
+			final Command command) {
+		SynchronizationMetadata targetSyncData = null;
+		if (target instanceof SynchronizableObject) {
+			targetSyncData = (SynchronizationMetadata) ((Adapter) target).getAdapter(SynchronizationMetadata.class);
+		}
+		CompoundCommand compoundCommand = new CompoundCommand();
+		compoundCommand.append(command);
+		for (Object object : source) {
+			if (object instanceof SynchronizableObject) {
+				SynchronizationMetadata syncMetaData = (SynchronizationMetadata) ((Adapter) object).getAdapter(SynchronizationMetadata.class);
+				if (syncMetaData != null) {
+					
+					/*
+					 * if the source is under sync-control and
+					 * is already in the repository, we have to
+					 * mark it as deleted.
+					 */
+					if (syncMetaData.getSyncState() != SynchronizationState.NOT_ADDED 
+							&& ((IAdaptable) ((EObject) object).eContainer()).getAdapter(SynchronizationMetadata.class) != null) {
+						compoundCommand.append(
+								new CreateChildCommand(EditingUtil.getInstance().getNavigationEditingDomain(),
+										((EObject) object).eContainer(),
+										InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS,
+										EcoreUtil.copy((EObject) object), Collections.EMPTY_LIST));
+					}
+					/*
+					 * The target is not under
+					 * sync-control remove the synchronization metadata from
+					 * source and all children that are synchronizable objects.
+					 */
+					if (targetSyncData == null) {
+						/*
+						 * if the sync-metadata of the parent object is not present
+						 * the dragged object is a complete repository. In this case
+						 * we have to move everything.
+						 */
+						if (((IAdaptable) ((EObject) object).eContainer()).getAdapter(SynchronizationMetadata.class) != null) {
+							compoundCommand.append(CommandFactory.REMOVE_SYNCDATACOMMAND((SynchronizableObject) object, 
+									EditingUtil.getInstance().getNavigationEditingDomain()));	
+							TreeIterator<EObject> eAllContents = ((EObject)object).eAllContents();
+							while (eAllContents.hasNext()) {
+								EObject eObject = eAllContents.next();
+								if (eObject instanceof SynchronizableObject) {
+									compoundCommand.append(CommandFactory.REMOVE_SYNCDATACOMMAND((SynchronizableObject) eObject, 
+											EditingUtil.getInstance().getNavigationEditingDomain()));	
+								}
+							}
+						}
+						
+					} else {
+						/*
+						 * transfer the repository-id for the dragged object and its children.
+						 */
+						String repositoryId = targetSyncData.getRepositoryId();
+						/*
+						 * Transfer the new repository-id
+						 */
+						compoundCommand.append(new SetCommand(
+								EditingUtil.getInstance().getNavigationEditingDomain(),
+								((SynchronizableObject) object).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID,repositoryId));
+						/*
+						 * Set the state to "not added"
+						 */
+						compoundCommand.append(new SetCommand(
+								EditingUtil.getInstance().getNavigationEditingDomain(),
+								((SynchronizableObject) object).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,SynchronizationState.NOT_ADDED));
+						/*
+						 * Remove the Hash
+						 */
+						compoundCommand.append(new SetCommand(
+								EditingUtil.getInstance().getNavigationEditingDomain(),
+								((SynchronizableObject) object).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH,null));
+						/*
+						 * Remove the url
+						 */
+						compoundCommand.append(new SetCommand(
+								EditingUtil.getInstance().getNavigationEditingDomain(),
+								((SynchronizableObject) object).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__URL,null));
+						
+						TreeIterator<EObject> eAllContents = ((EObject)object).eAllContents();
+						while (eAllContents.hasNext()) {
+							EObject eObject = eAllContents.next();
+							if (eObject instanceof SynchronizableObject) {
+								/*
+								 * Transfer the new repository-id
+								 */
+								compoundCommand.append(new SetCommand(
+										EditingUtil.getInstance().getNavigationEditingDomain(),
+										((SynchronizableObject) eObject).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID,repositoryId));
+								/*
+								 * Set the state to "not added"
+								 */
+								compoundCommand.append(new SetCommand(
+										EditingUtil.getInstance().getNavigationEditingDomain(),
+										((SynchronizableObject) eObject).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,SynchronizationState.NOT_ADDED));
+								/*
+								 * Remove the Hash
+								 */
+								compoundCommand.append(new SetCommand(
+										EditingUtil.getInstance().getNavigationEditingDomain(),
+										((SynchronizableObject) eObject).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH,null));
+								/*
+								 * Remove the url
+								 */
+								compoundCommand.append(new SetCommand(
+										EditingUtil.getInstance().getNavigationEditingDomain(),
+										((SynchronizableObject) eObject).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__URL,null));
+							}
+						}						
+					}
+				}
+			}
+		}
+		compoundCommand.setLabel("Drag && Drop");
+		return compoundCommand;
 	}
 
 }

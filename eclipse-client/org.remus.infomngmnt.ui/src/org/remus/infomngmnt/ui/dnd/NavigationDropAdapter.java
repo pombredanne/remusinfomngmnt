@@ -25,6 +25,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -63,8 +64,6 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 			this.ruleByName = (NewElementRules) EcoreUtil.copy(InfomngmntEditPlugin.getPlugin().getService(IRuleService.class).getRuleByName("Default Ruleset"));
 			List<RuleResult> process = RuleProcessor.getInstance().process(
 					event, this.ruleByName);
-			System.out.println(process.size());
-			System.out.println(target);
 			if (process.size() == 0) {
 				MessageDialog.openInformation(
 						this.viewer.getControl().getShell(), "drop", "Cannot drop");
@@ -130,6 +129,12 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 				 * the workspace.
 				 */
 				this.command = NavigationDropHelper.checkProjectRelevance(this.source,target,this.command);
+				
+				/*
+				 * The next step is to check the integration of 
+				 * the synchronization state.
+				 */
+				this.command = NavigationDropHelper.checkSyncStates(this.source,target,this.command);
 
 				// Execute it.
 				//

@@ -14,14 +14,14 @@ package org.remus.infomngmnt.ui.propertytester;
 
 import org.eclipse.core.expressions.PropertyTester;
 
-import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class InformationUnitListItemTester extends PropertyTester {
+public class SynchronizableObjectItemTester extends PropertyTester {
 
 
 	
@@ -34,8 +34,8 @@ public class InformationUnitListItemTester extends PropertyTester {
 	 */
 	public boolean test(final Object receiver, final String property, final Object[] args,
 			final Object expectedValue) {
-		if (receiver instanceof InformationUnitListItem) {
-			SynchronizationMetadata metaData = ((InformationUnitListItem) receiver).getSynchronizationMetaData();
+		if (receiver instanceof SynchronizableObject) {
+			SynchronizationMetadata metaData = ((SynchronizableObject) receiver).getSynchronizationMetaData();
 			if (PROPERTY_REPLACECOMMIT.equals(property)) {
 				return metaData != null && metaData.getSyncState() != SynchronizationState.NOT_ADDED;
 			}

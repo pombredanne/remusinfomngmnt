@@ -14,7 +14,6 @@ package org.remus.infomngmnt.ui.handler;
 
 import java.util.List;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
@@ -29,26 +28,26 @@ import org.remus.infomngmnt.core.model.CategoryUtil;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class DisonnectRespositoryHandler extends AbstractHandler {
+public class DisonnectRespositoryHandler extends AbstractRemoteHandler {
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
-	public Object execute(final ExecutionEvent event) throws ExecutionException {
+	@Override
+	public Object doExecute(final ExecutionEvent event) throws ExecutionException {
 		ISelection currentSelectionChecked = HandlerUtil.getCurrentSelectionChecked(event);
 		if (currentSelectionChecked instanceof IStructuredSelection) {
 			List<Category> list = ((IStructuredSelection) currentSelectionChecked).toList();
 			for (Category object : list) {
 				EObject[] children = CategoryUtil.getAllChildren(object, InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 				for (EObject informationUnitListItem : children) {
-					informationUnitListItem.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA);
+					informationUnitListItem.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
 				}
 				EObject[] catChildren = CategoryUtil.getAllChildren(object, InfomngmntPackage.Literals.CATEGORY);
 				for (EObject category : catChildren) {
-					category.eUnset(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA);
+					category.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
 				}
-				object.eUnset(InfomngmntPackage.Literals.CATEGORY__SYNCHRONIZATION_META_DATA);
-				//object.setSynchronizationMetaData(null);
+				object.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
 			}
 		}
 		return null;

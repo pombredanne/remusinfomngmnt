@@ -15,6 +15,8 @@ package org.remus.infomngmnt.ui.remote.decorator;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
@@ -23,8 +25,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.ImageData;
 
 import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -47,10 +49,8 @@ ILightweightLabelDecorator {
 
 	public void decorate(final Object element, final IDecoration decoration) {
 		SynchronizationMetadata synchronizationMetaData = null;
-		if (element instanceof InformationUnitListItem) {
-			synchronizationMetaData = ((InformationUnitListItem) element).getSynchronizationMetaData();
-		} else if (element instanceof Category) {
-			synchronizationMetaData = ((Category) element).getSynchronizationMetaData();
+		if (element instanceof SynchronizableObject) {
+			synchronizationMetaData = ((SynchronizableObject) element).getSynchronizationMetaData();
 		}
 		if (synchronizationMetaData != null) {
 			/**
@@ -85,7 +85,8 @@ ILightweightLabelDecorator {
 				break;
 
 			}
-			if (element instanceof Category) {
+			if (element instanceof Category && 
+					((IAdaptable) ((EObject) element).eContainer()).getAdapter(SynchronizationMetadata.class) == null) {
 				decoration.addSuffix(String.format(" [%s]", itemById.getName()));
 			}
 		}

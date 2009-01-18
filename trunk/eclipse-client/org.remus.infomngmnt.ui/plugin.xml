@@ -175,6 +175,10 @@
             id="org.remus.infomngmnt.ui.addToRepository"
             name="Add to Remote Repository">
       </command>
+      <command
+            id="org.remus.infomngmnt.ui.replaceCommand"
+            name="Replace with Repository Content">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -222,7 +226,7 @@
                <iterate
                      operator="and">
                   <instanceof
-                        value="org.remus.infomngmnt.InformationUnitListItem">
+                        value="org.remus.infomngmnt.SynchronizableObject">
                   </instanceof>
                   <test
                         forcePluginActivation="true"
@@ -240,11 +244,30 @@
                <iterate
                      operator="and">
                   <instanceof
-                        value="org.remus.infomngmnt.InformationUnitListItem">
+                        value="org.remus.infomngmnt.SynchronizableObject">
                   </instanceof>
                   <test
                         forcePluginActivation="true"
                         property="org.remus.infomngmnt.ui.canAdd">
+                  </test>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.ReplaceHandler"
+            commandId="org.remus.infomngmnt.ui.replaceCommand">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     operator="and">
+                  <instanceof
+                        value="org.remus.infomngmnt.SynchronizableObject">
+                  </instanceof>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.remus.infomngmnt.ui.canCommitOrReplace">
                   </test>
                </iterate>
             </with>
@@ -377,6 +400,7 @@
                mnemonic="e">
             <command
                   commandId="org.remus.infomngmnt.ui.syncCategory"
+                  icon="icons/iconexperience/16/server_client_exchange.png"
                   style="push">
                <visibleWhen
                      checkEnabled="true">
@@ -384,6 +408,7 @@
             </command>
             <command
                   commandId="org.remus.infomngmnt.ui.shareCategory"
+                  icon="icons/iconexperience/16/server_into.png"
                   style="push">
                <visibleWhen
                      checkEnabled="true">
@@ -406,6 +431,10 @@
                <visibleWhen
                      checkEnabled="false">
                </visibleWhen>
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.ui.replaceCommand"
+                  style="push">
             </command>
             <separator
                   name="org.remus.infomngmnt.ui.separator1"
@@ -469,11 +498,11 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="org.remus.infomngmnt.ui.propertytester.InformationUnitListItemTester"
-            id="org.remus.infomngmnt.ui.IInfoItemTest"
+            class="org.remus.infomngmnt.ui.propertytester.SynchronizableObjectItemTester"
+            id="org.remus.infomngmnt.ui.ISynchronizableObjectTest"
             namespace="org.remus.infomngmnt.ui"
             properties="canCommitOrReplace, canAdd"
-            type="org.remus.infomngmnt.InformationUnitListItem">
+            type="org.remus.infomngmnt.SynchronizableObject">
       </propertyTester>
    </extension>
 

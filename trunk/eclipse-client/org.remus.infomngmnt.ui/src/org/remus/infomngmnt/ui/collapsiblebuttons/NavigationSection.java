@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
@@ -63,6 +64,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
@@ -207,6 +209,10 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 				}
 				return super.hasChildren(object);
 			}
+			@Override
+			public Object[] getChildren(final Object object) {
+				return super.getChildren(object);
+			}
 		};
 		
 		this.labelProvider = new NavigatorDecoratingLabelProvider(
@@ -221,6 +227,16 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 					final Object element) {
 				return !(element instanceof SynchronizationMetadata);
 			}
+		});
+		this.viewer.addFilter(new ViewerFilter() {
+
+			@Override
+			public boolean select(final Viewer viewer, final Object parentElement,
+					final Object element) {
+				return ((EObject)element).eContainingFeature() != InfomngmntPackage
+					.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS;
+			}
+			
 		});
 		
 		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance().getAdapterFactory());

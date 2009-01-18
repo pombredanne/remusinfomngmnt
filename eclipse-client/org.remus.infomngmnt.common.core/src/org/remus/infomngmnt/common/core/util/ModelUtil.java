@@ -14,11 +14,14 @@ package org.remus.infomngmnt.common.core.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -27,8 +30,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ModelUtil {
-	
-	
+
+
 	public static List getFeatureList(final EList<? extends EObject> list, final EAttribute attribute) {
 		List returnValue = new ArrayList();
 		for (EObject object : list) {
@@ -50,7 +53,7 @@ public class ModelUtil {
 		}
 		return returnValue;
 	}
-	
+
 	public static void copyObject(final EObject src, final EObject target, final EStructuralFeature[] featuresToSet, final EStructuralFeature[] featuresToCopy) {
 		if (src.getClass() == target.getClass()) {
 			for (EStructuralFeature eStructuralFeature : featuresToSet) {
@@ -65,7 +68,7 @@ public class ModelUtil {
 			}
 		}
 	}
-	
+
 	public static boolean hasEqualAttribute(final List<EObject> list, final EAttribute attribute) {
 		if (list.size() <= 1) {
 			return true;
@@ -86,12 +89,12 @@ public class ModelUtil {
 					}
 				}
 			}
-			
+
 		}
 		return true;
 	}
-	
-	public static boolean containsParent(final List<EObject> elements2check, final EObject element) {
+
+	public static boolean containsParent(final List<? extends EObject> elements2check, final EObject element) {
 		EObject element2resolve = element;
 		while (element2resolve.eContainer() != null) {
 			if (elements2check.contains(element2resolve.eContainer())) {
@@ -103,5 +106,17 @@ public class ModelUtil {
 		return false;
 	}
 
-	
+	public static <T> List<T> getAllChildren(final EObject object, final EClass clazz) {
+		List<T> returnValue = new LinkedList<T>();
+		TreeIterator<EObject> eAllContents = object.eAllContents();
+		while (eAllContents.hasNext()) {
+			EObject eObject = eAllContents.next();
+			if (eObject.eClass() == clazz) {
+				returnValue.add((T) eObject);
+			}
+		}
+		return returnValue;
+	}
+
+
 }

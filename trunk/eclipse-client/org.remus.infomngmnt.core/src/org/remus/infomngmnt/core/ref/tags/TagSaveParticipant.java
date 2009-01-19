@@ -42,23 +42,27 @@ public class TagSaveParticipant implements ISaveParticipant {
 	 * @see org.remus.infomngmnt.core.extension.ISaveParticipant#handleEvent(int, org.remus.infomngmnt.InformationUnit)
 	 */
 	public void handleEvent(final int eventId, final InformationUnit unit) {
-		
-		switch (eventId) {
-		case SAVED:
-			handleSaved(unit);
-			break;
-		case BEFORE_DELETE:
-			String[] split = unit.getKeywords().split("\\W+");
-			List<Tag> tags2Delete = new ArrayList<Tag>();
-			for (String string : split) {
-				Tag tagByName = getTagByName(string);
-				tags2Delete.add(tagByName);
+		if (unit.getKeywords() != null) {
+			switch (eventId) {
+			case SAVED:
+				handleSaved(unit);
+				break;
+			case BEFORE_DELETE:
+				String[] split = unit.getKeywords().split("\\W+");
+				List<Tag> tags2Delete = new ArrayList<Tag>();
+				for (String string : split) {
+					Tag tagByName = getTagByName(string);
+					tags2Delete.add(tagByName);
+				}
+				handleOldTags(tags2Delete, unit);
+				break;
+			case CREATED:
+				handleNewTags(Arrays.asList(unit.getKeywords().split("\\W+")), unit);
+			default:
+				break;
 			}
-			handleOldTags(tags2Delete, unit);
-		case CREATED:
-			handleNewTags(Arrays.asList(unit.getKeywords().split("\\W+")), unit);
-		default:
-			break;
+		} else {
+			
 		}
 	}
 	

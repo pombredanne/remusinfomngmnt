@@ -12,17 +12,27 @@
 
 package org.remus.infomngmnt.core.sync;
 
+import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.diff.metamodel.AddModelElement;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
+import org.eclipse.emf.compare.diff.metamodel.DiffModel;
+import org.eclipse.emf.compare.diff.service.DiffService;
+import org.eclipse.emf.compare.match.metamodel.MatchModel;
+import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -37,9 +47,13 @@ import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ChangeSetExecutor {
-	
+
+	private static final String COMPARE_FOLDER = "compare";
 	private ChangeSet changeSet;
-	
+	private IPath remotePath;
+	private IPath localPath;
+	private DiffModel diffModel;
+
 	/**
 	 * Performs a checkout.
 	 * @param ownedElements
@@ -82,5 +96,44 @@ public class ChangeSetExecutor {
 		this.changeSet = changeSet;
 	}
 
+
+	public void prepareDiff(final Category pLocalTargetCateogory) {
+		Category localTargetCategory = InfomngmntFactory.eINSTANCE.createCategory();
+		Category tmpRemoteRootCategory = CategoryUtil.copyBlankObject(localTargetCategory);
+		this.changeSet.setTargetCategory(pLocalTargetCateogory);
+
+		EList<ChangeSetItem> changeSetItems = this.changeSet.getChangeSetItems();
+		for (ChangeSetItem changeSetItem2 : changeSetItems) {
+			tmpRemoteRootCategory.getChildren().add((Category) EcoreUtil.copy(changeSetItem2.getRemoteConvertedContainer()));
+		}
+
+		this.remotePath = InfomngmntEditPlugin.getPlugin().getStateLocation()
+		.append(COMPARE_FOLDER).append(new UniversalUniqueIdentifier().toString()).addFileExtension("xml");
+
+		this.localPath = InfomngmntEditPlugin.getPlugin().getStateLocation()
+		.append(COMPARE_FOLDER).append(new UniversalUniqueIdentifier().toString()).addFileExtension("xml");
+
+		EditingUtil.getInstance().saveObjectToResource(
+				tmpRemoteRootCategory, 
+				this.remotePath.toOSString());
+
+		EditingUtil.getInstance().saveObjectToResource(
+				localTargetCategory, 
+				this.localPath.toOSString());
+	}
+
+	public DiffModel makeDiff() {
+		MatchModel match;
+		try {
+			EObject localObject = EditingUtil.getInstance().getObjectFromFileUri(URI.createFileURI(this.localPath.toOSString()), InfomngmntPackage.Literals.CATEGORY, null);
+			EObject remoteObject = EditingUtil.getInstance().getObjectFromFileUri(URI.createFileURI(this.remotePath.toOSString()), InfomngmntPackage.Literals.CATEGORY, null);
+			match = MatchService.doMatch(localObject ,remoteObject, Collections.<String, Object> emptyMap());
+			this.diffModel = DiffService.doDiff(match, false);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this.diffModel;
+	}
 
 }

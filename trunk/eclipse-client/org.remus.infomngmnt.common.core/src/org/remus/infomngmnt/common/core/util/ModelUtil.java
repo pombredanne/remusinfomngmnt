@@ -69,7 +69,7 @@ public class ModelUtil {
 		}
 	}
 
-	public static boolean hasEqualAttribute(final List<EObject> list, final EAttribute attribute) {
+	public static boolean hasEqualAttribute(final List<? extends EObject> list, final EAttribute attribute) {
 		if (list.size() <= 1) {
 			return true;
 		}

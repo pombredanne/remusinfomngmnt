@@ -42,7 +42,7 @@ import org.remus.infomngmnt.core.remote.RemoteUtil;
  */
 public class ChangeSetManager {
 	
-	public ChangeSet createCheckOutChangeSet(final List<RemoteContainer> remoteContainers) {
+	public ChangeSet createCheckOutChangeSet(final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository) {
 		
 		/*
 		 * At first we make sure that all elements are located within
@@ -54,9 +54,13 @@ public class ChangeSetManager {
 			 */
 			RemoteRepository repository = null;
 			
-			for (RemoteContainer object : remoteContainers) {
-				repository = RemoteUtil.getRemoteRepository(object);
-				break;
+			if (localRepository == null) {
+				for (RemoteContainer object : remoteContainers) {
+					repository = RemoteUtil.getRemoteRepository(object);
+					break;
+				}
+			} else {
+				repository = localRepository;
 			}
 			/*
 			 * Now it's time to create a changeset
@@ -179,5 +183,8 @@ public class ChangeSetManager {
 		
 		
 	}
+	
+	
+	
 
 }

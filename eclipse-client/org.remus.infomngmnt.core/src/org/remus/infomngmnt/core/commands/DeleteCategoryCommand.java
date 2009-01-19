@@ -42,7 +42,7 @@ public class DeleteCategoryCommand implements Command {
 		this.domain = domain;
 		Command deleteCommand = new DeleteCommand(domain,Collections.singleton(category));
 		this.affectedChildren = ModelUtil.getAllChildren(
-				category, InfomngmntPackage.Literals.INFORMATION_UNIT);
+				category, InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 		this.cc = new CompoundCommand();
 		this.cc.append(new DeleteInformationUnitCommand(this.affectedChildren,domain));
 		this.cc.append(deleteCommand);

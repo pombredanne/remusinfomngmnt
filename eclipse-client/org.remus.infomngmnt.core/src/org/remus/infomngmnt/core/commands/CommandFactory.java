@@ -106,8 +106,13 @@ public class CommandFactory {
 	
 	public static Command REMOVE_SYNCDATACOMMAND(final SynchronizableObject synchronizableObject, final EditingDomain domain) {
 		return new SetCommand(domain, synchronizableObject,InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,null);
-
 	}
+	
+	public static Command DELETE_CATEGORY(final Category category, final EditingDomain domain) {
+		return new DeleteCategoryCommand(category, domain);
+	}
+	
+	
 
 
 }

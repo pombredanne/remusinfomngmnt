@@ -140,10 +140,6 @@ public class GeneralImagePage extends GeneralPage {
 			}
 
 		});
-		
-		
-		
-		
 		this.ctx.bindValue(swtUrl, emfUrl, null, null);
 
 	}

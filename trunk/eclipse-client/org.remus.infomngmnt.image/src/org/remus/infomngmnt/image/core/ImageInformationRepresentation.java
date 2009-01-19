@@ -113,6 +113,8 @@ public class ImageInformationRepresentation extends
 	@Override
 	public String handleHtmlGeneration(final IProgressMonitor monitor)
 			throws CoreException {
+		long width = InformationUtil.getChildByType(getValue(), ImagePlugin.WIDHT).getLongValue();
+		long height = InformationUtil.getChildByType(getValue(), ImagePlugin.HEIGHT).getLongValue();
 		StringWriter sw = new StringWriter();
 		sw.append(HtmlSnippets.HTML_HEAD)
 		.append(StyleProvider.STYLE_DEFINITION_START)
@@ -131,13 +133,16 @@ public class ImageInformationRepresentation extends
 		.append("</p>\r\n");
 			sw.append("<div>");
 			sw.append(HtmlSnippets.CREATE_SECTION_BOX("Image", IMAGE_SECTION_NAME));
-			sw.append("<p>\r\n")
-			.append("<a href=\"javascript:fit2Page(\'")
-			.append(getValue().getId())
-			.append("\');\">Fit</a><br> <img name=\"")
+			sw.append("<p style=\"text-align:center;\">\r\n")
+			.append("<img name=\"")
 			.append(getValue().getId())
 			.append("\" src=\"")
 			.append(URI.createFileURI(this.imageHref).toString())
+			.append("\"")
+			.append(" width=\"")
+			.append(String.valueOf(width))
+			.append("\" height=\"")
+			.append(String.valueOf(height))
 			.append("\">")
 			.append("</div>");
 		sw.append(HtmlSnippets.HTML_BODY_END_HTML_END);

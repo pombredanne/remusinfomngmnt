@@ -24,6 +24,9 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.ui.internal.util.BundleUtility;
+import org.osgi.framework.BundleContext;
+
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 
 /**
  * This is the central singleton for the Uimodel edit plugin.
@@ -115,6 +118,12 @@ public final class UimodelEditPlugin extends EMFPlugin {
 			// Remember the static instance.
 			//
 			plugin = this;
+		}
+		
+		@Override
+		public void stop(final BundleContext context) throws Exception {
+			ResourceManager.dispose();
+			super.stop(context);
 		}
 
 		/**

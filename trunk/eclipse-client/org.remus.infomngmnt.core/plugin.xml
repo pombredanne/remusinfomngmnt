@@ -73,6 +73,9 @@
          <adapter
                type="org.remus.infomngmnt.InformationUnitListItem">
          </adapter>
+         <adapter
+               type="org.eclipse.core.resources.IFile">
+         </adapter>
       </factory>
    </extension>
    <extension

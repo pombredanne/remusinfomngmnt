@@ -28,11 +28,15 @@ public class InformationUnitAdapterFactory implements IAdapterFactory {
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
 	 */
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
-		if (adapterType == InformationUnitListItem.class) {
+	public Object getAdapter(final Object adaptableObject, final Class adapterType) {
+		if (adapterType == InformationUnitListItem.class ||
+				adapterType == IFile.class) {
 			if (adaptableObject instanceof InformationUnit) {
 				String platformString = ((InformationUnit) adaptableObject).eResource().getURI().toPlatformString(true);
 				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(platformString));
+				if (adapterType == IFile.class) {
+					return file;
+				}
 				if (file.exists()) {
 					return file.getAdapter(InformationUnitListItem.class);
 				}
@@ -45,7 +49,7 @@ public class InformationUnitAdapterFactory implements IAdapterFactory {
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
 	 */
 	public Class[] getAdapterList() {
-		return new Class[] {InformationUnitListItem.class};
+		return new Class[] {InformationUnitListItem.class, IFile.class};
 	}
 
 }

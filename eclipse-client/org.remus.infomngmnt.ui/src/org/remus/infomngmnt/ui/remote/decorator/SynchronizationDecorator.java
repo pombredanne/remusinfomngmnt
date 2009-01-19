@@ -86,6 +86,7 @@ ILightweightLabelDecorator {
 
 			}
 			if (element instanceof Category && 
+					((EObject) element).eContainer() != null &&
 					((IAdaptable) ((EObject) element).eContainer()).getAdapter(SynchronizationMetadata.class) == null) {
 				decoration.addSuffix(String.format(" [%s]", itemById.getName()));
 			}

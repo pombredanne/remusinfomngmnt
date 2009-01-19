@@ -408,7 +408,7 @@
             </command>
             <command
                   commandId="org.remus.infomngmnt.ui.shareCategory"
-                  icon="icons/iconexperience/16/server_into.png"
+                  icon="icons/iconexperience/16/server_from_client.png"
                   style="push">
                <visibleWhen
                      checkEnabled="true">
@@ -420,6 +420,7 @@
             </separator>
             <command
                   commandId="org.remus.infomngmnt.ui.commitCommand"
+                  icon="icons/iconexperience/16/arrow2_right_green.png"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -427,6 +428,7 @@
             </command>
             <command
                   commandId="org.remus.infomngmnt.ui.addToRepository"
+                  icon="icons/iconexperience/16/server_from_client.png"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -434,6 +436,7 @@
             </command>
             <command
                   commandId="org.remus.infomngmnt.ui.replaceCommand"
+                  icon="icons/iconexperience/16/arrow2_left_red.png"
                   style="push">
             </command>
             <separator
@@ -442,6 +445,7 @@
             </separator>
             <command
                   commandId="org.remus.infomngmnt.ui.disconnect"
+                  icon="icons/iconexperience/16/server_delete.png"
                   style="push">
                <visibleWhen
                      checkEnabled="true">

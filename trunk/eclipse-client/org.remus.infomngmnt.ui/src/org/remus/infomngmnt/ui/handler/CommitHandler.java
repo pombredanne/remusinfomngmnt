@@ -34,7 +34,7 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.ui.remote.RemoteUtil;
+import org.remus.infomngmnt.core.remote.RemoteUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -37,7 +37,7 @@ public class CheckoutTagAction extends BaseSelectionListenerAction {
 	@Override
 	public void run() {
 		ChangeSetManager manager = new ChangeSetManager();
-		ChangeSet changeSet = manager.createCheckOutChangeSet(getStructuredSelection().toList());
+		ChangeSet changeSet = manager.createCheckOutChangeSet(getStructuredSelection().toList(), null);
 		if (changeSet != null) {
 			SynchronizationWizard synchronizationWizard = new SynchronizationWizard(SynchronizationWizard.CHECKOUTMODE);
 			synchronizationWizard.init(changeSet);

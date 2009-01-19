@@ -20,6 +20,10 @@ public class ImagePlugin extends AbstractUIPlugin {
 	
 	public static final String ORIGINAL_FILEPATH = "originFilePath"; //$NON-NLS-1$
 	
+	public static final String WIDHT = "widht"; //$NON-NLS-1$
+	
+	public static final String HEIGHT = "height"; //$NON-NLS-1$
+	
 	
 	
 	/**

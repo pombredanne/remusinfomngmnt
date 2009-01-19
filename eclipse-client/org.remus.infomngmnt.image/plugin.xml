@@ -19,6 +19,9 @@
             icon="icons/palette.png"
             id="org.remus.infomngmnt.image.newImageWizard"
             name="Photo/Graphics">
+         <description>
+            This information type enables the handling of an image or a graphic.
+         </description>
       </wizard>
    </extension>
    <extension

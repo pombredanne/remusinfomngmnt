@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.graphics.ImageData;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.StatusCreator;
@@ -33,6 +34,8 @@ public class LoadImageRunnable extends CancelableRunnable {
 	
 	private String imagePath;
 	private InformationUnit rawImageDataNode;
+	private InformationUnit widhtImageNode;
+	private InformationUnit heightImageNode;
 	private File file;
 
 	public File getFile() {
@@ -51,6 +54,13 @@ public class LoadImageRunnable extends CancelableRunnable {
 			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file.length());
 			try {
 				this.rawImageDataNode.setBinaryValue(getBytesFromFile(this.file, monitor));
+				
+				InputStream is = new FileInputStream(this.file);
+				// Reading src & height of the image:
+				ImageData imageData = new ImageData(is);
+				this.widhtImageNode.setLongValue(imageData.width);
+				this.heightImageNode.setLongValue(imageData.height);
+				is.close();
 				return Status.OK_STATUS;
 			} catch (IOException e) {
 				return StatusCreator.newStatus("File not exisits or is not accessible");
@@ -101,6 +111,22 @@ public class LoadImageRunnable extends CancelableRunnable {
         is.close();
         return bytes;
     }
+
+	public void setRawImageDataNode(final InformationUnit rawImageDataNode) {
+		this.rawImageDataNode = rawImageDataNode;
+	}
+
+	public void setWidhtImageNode(final InformationUnit widhtImageNode) {
+		this.widhtImageNode = widhtImageNode;
+	}
+
+	public void setHeightImageNode(final InformationUnit heightImageNode) {
+		this.heightImageNode = heightImageNode;
+	}
+
+	public void setFile(final File file) {
+		this.file = file;
+	}
 
 
 }

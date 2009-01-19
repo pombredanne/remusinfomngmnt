@@ -20,10 +20,16 @@ import java.io.InputStream;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.ImageData;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 
@@ -36,6 +42,11 @@ public class LoadImageRunnable extends CancelableRunnable {
 	private InformationUnit rawImageDataNode;
 	private InformationUnit widhtImageNode;
 	private InformationUnit heightImageNode;
+	private EditingDomain domain;
+	public void setDomain(final EditingDomain domain) {
+		this.domain = domain;
+	}
+
 	private File file;
 
 	public File getFile() {
@@ -53,13 +64,39 @@ public class LoadImageRunnable extends CancelableRunnable {
 		if (this.file.exists() && this.file.isFile()) {
 			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file.length());
 			try {
-				this.rawImageDataNode.setBinaryValue(getBytesFromFile(this.file, monitor));
+				if (this.domain == null) {
+					this.domain = EditingUtil.getInstance().createNewEditingDomain();
+				}
+				
+				final CompoundCommand cc = new CompoundCommand();
+				cc.append(new SetCommand(
+						this.domain,
+						this.rawImageDataNode,
+						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE,
+						getBytesFromFile(this.file, monitor)));
+				
 				
 				InputStream is = new FileInputStream(this.file);
 				// Reading src & height of the image:
 				ImageData imageData = new ImageData(is);
-				this.widhtImageNode.setLongValue(imageData.width);
-				this.heightImageNode.setLongValue(imageData.height);
+				cc.append(new SetCommand(
+						this.domain,
+						this.widhtImageNode,
+						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
+						Long.valueOf(imageData.width)));
+				
+				cc.append(new SetCommand(
+						this.domain,
+						this.heightImageNode,
+						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
+						Long.valueOf(imageData.height)));
+//				
+				cc.setLabel("Set new image");
+				UIUtil.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						LoadImageRunnable.this.domain.getCommandStack().execute(cc);
+					}
+				});
 				is.close();
 				return Status.OK_STATUS;
 			} catch (IOException e) {

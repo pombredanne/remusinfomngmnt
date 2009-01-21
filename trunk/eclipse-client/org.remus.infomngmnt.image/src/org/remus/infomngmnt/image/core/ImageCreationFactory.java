@@ -32,9 +32,9 @@ public class ImageCreationFactory extends AbstractCreationFactory {
 		InformationUnit origFilePath = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		origFilePath.setType(ImagePlugin.ORIGINAL_FILEPATH);
 		InformationUnit width = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		width.setType(ImagePlugin.WIDHT);
+		width.setType(ImagePlugin.NODE_NAME_WIDTH);
 		InformationUnit height = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		height.setType(ImagePlugin.HEIGHT);
+		height.setType(ImagePlugin.NODE_NAME_HEIGHT);
 		returnValue.getChildValues().add(rawData);
 		returnValue.getChildValues().add(origFilePath);
 		returnValue.getChildValues().add(width);

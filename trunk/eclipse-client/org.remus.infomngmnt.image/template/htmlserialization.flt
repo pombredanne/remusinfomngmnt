@@ -1,0 +1,98 @@
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt"}>
+<#setting url_escaping_charset="UTF-8">  
+<#assign infoUnit = doc.InformationUnit>
+<#assign width = infoUnit["childValues[@type='width']/@longValue"]>
+<#assign height = infoUnit["childValues[@type='height']/@longValue"]>
+<#assign exif = infoUnit["childValues[@type='exifdata']/childValues"]>
+
+<!-- if the image has some exif data we have to show a second box -->
+<#assign exifCount = infoUnit["count(childValues[@type='exifdata'])"]>
+<#assign hasKeywords = infoUnit["count(/@keywords)"] != 0 >
+<#assign hasDescription = infoUnit["count(/@description)"] != 0 >
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="${.globals.jslibDir}/templates/images.js"></script>
+  <script src="${.globals.jslibDir}/js/curvycorners.js"></script>
+  <script type="text/JavaScript">
+	  window.onload = function()
+	  {
+	          settings = {
+	          tl: { radius: 5 },
+	          tr: { radius: 5 },
+	          bl: { radius: 0 },
+	          br: { radius: 0 },
+	          antiAlias: true,
+	          autoPad: true
+	      }
+	
+	      var myBoxObject = new curvyCorners(settings,"image");
+	      
+	      myBoxObject.applyCornersToAll();
+	      
+	  }
+</script>
+  <title>${infoUnit.@label}</title>
+  <style type="text/css">
+  	.systemfont,body,td {
+		font-family: Segoe UI;
+		font-size: 9pt;
+	}
+	
+  </style>
+</head>
+<body>
+	<div>
+		<p>
+		<table>
+			<tr>
+				<td>Image Name:</td>
+				<td>${infoUnit.@label?html}</td>
+			</tr>
+			<#if hasKeywords >
+			<tr>
+				<td>Keywords:</td>
+				<td>${infoUnit.@keywords?html}</td>
+			</tr>
+			</#if>
+			<#if hasDescription >
+			<tr>
+				<td>Description:</td>
+				<td>${infoUnit.@description?html}</td>
+			</tr>
+			</#if>
+			
+		</table>
+		</p>
+	</div>
+  	<div>
+  		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  			<span class="systemfont" style="font-weight:bold;">Image</span>
+  		</div>
+  		<p style="text-align:center;">
+  			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}" alt="${infoUnit.@label?html}" width="${width}" height="${height}">
+  		</p>
+  	</div>
+  	<#if exifCount != 0>
+  	<div>
+  		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  			<span class="systemfont" style="font-weight:bold;">Exif Data</span>
+  		</div>
+  		<table>
+  			<#list exif as exifItem >
+  			<tr>
+  				<td>
+  					${exifItem.@type?html}
+  				</td>
+  				<td>
+  					${exifItem.@stringValue?html}
+  				</td>
+  			</tr>
+  			</#list>
+  		</table>
+  	</div>
+  	</#if>
+</body>
+</html>

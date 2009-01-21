@@ -18,11 +18,13 @@ public class ImagePlugin extends AbstractUIPlugin {
 	
 	public static final String NODE_NAME_RAWDATA = "imageData"; //$NON-NLS-1$
 	
+	public static final String NODE_NAME_EXIF = "exifdata"; //$NON-NLS-1$
+	
 	public static final String ORIGINAL_FILEPATH = "originFilePath"; //$NON-NLS-1$
 	
-	public static final String WIDHT = "widht"; //$NON-NLS-1$
+	public static final String NODE_NAME_WIDTH = "width"; //$NON-NLS-1$
 	
-	public static final String HEIGHT = "height"; //$NON-NLS-1$
+	public static final String NODE_NAME_HEIGHT = "height"; //$NON-NLS-1$
 	
 	
 	

@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             creationFactory="org.remus.infomngmnt.image.core.ImageCreationFactory"
-            icon="icons/palette.png"
+            icon="icons/iconexperience/photo_landscape.png"
             name="Photo/Graphics"
             presentation="org.remus.infomngmnt.image.core.ImageInformationRepresentation"
             type="IMAGE">
@@ -16,7 +16,7 @@
       <wizard
             class="org.remus.infomngmnt.image.ui.NewImageWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
-            icon="icons/palette.png"
+            icon="icons/iconexperience/photo_landscape_new.png"
             id="org.remus.infomngmnt.image.newImageWizard"
             name="Photo/Graphics">
          <description>
@@ -28,7 +28,7 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.image.ui.ImageEditPage"
-            icon="icons/palette.png"
+            icon="icons/iconexperience/photo_landscape_edit.png"
             id="org.remus.infomngmnt.image.imageEditPage"
             label="Edit Photo/Graphics"
             type="IMAGE">
@@ -38,6 +38,15 @@
             transferId="org.remus.infomngmnt.core.imagetransfer"
             typeId="IMAGE">
       </transferpreferences>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.image.newImageWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

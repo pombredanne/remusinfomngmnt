@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.forms.FormColors;
@@ -52,6 +53,14 @@ public class TemplateLocation {
 			return null;
 		}
 	}
+	
+	public static String getBasePath() {
+		try {
+			return FileLocator.toFileURL(FileLocator.find(Platform.getBundle(BUNDLE_ID), new Path(""), null)).toExternalForm();
+		} catch (IOException e) {
+			return null;
+		}
+	}
 	public static String getGradientSectionImageLocation() {
 		IPath folderPath = Platform.getStateLocation(Platform.getBundle(BUNDLE_ID)).append("images");
 		File imageFolder = folderPath.toFile();
@@ -71,7 +80,7 @@ public class TemplateLocation {
 				}
 			});
 		}
-		return file.getAbsolutePath();
+		return URI.createFileURI(Platform.getStateLocation(Platform.getBundle(BUNDLE_ID)).toFile().getAbsolutePath()).toString();
 	}
 
 }

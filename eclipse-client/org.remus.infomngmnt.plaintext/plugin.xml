@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             creationFactory="org.remus.infomngmnt.plaintext.extension.UnformattedTextCreationFactory"
-            icon="icons/text.png"
+            icon="icons/iconexperience/text.png"
             name="Unformatted Text"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
             type="PLAINTEXT">
@@ -26,6 +26,7 @@
             category="org.remus.infomngmnt.ui.simple"
             class="org.remus.infomngmnt.plaintext.wizard.NewPlainTextWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/text_new.png"
             id="org.remus.infomngmnt.plaintext.wizard"
             name="Plain Text">
       </wizard>
@@ -34,7 +35,7 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.plaintext.ui.FormPage"
-            icon="icons/text.png"
+            icon="icons/iconexperience/text_edit.png"
             id="editPage1"
             label="Edit"
             type="PLAINTEXT">

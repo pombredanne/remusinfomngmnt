@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.plaintext.extension;
 
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 
 /**
@@ -23,7 +24,12 @@ import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
  */
 public class UnformattedTextCreationFactory extends AbstractCreationFactory {
 
-	// nothing special here.
+	@Override
+	public InformationUnit createNewObject() {
+		InformationUnit returnValue = super.createNewObject();
+		returnValue.setType("PLAINTEXT");
+		return returnValue;
+	}
 	
 
 }

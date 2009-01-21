@@ -12,12 +12,16 @@
 
 package org.remus.infomngmnt.sourcecode.core;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sf.colorer.ParserFactory;
 import net.sf.colorer.eclipse.ColorerPlugin;
@@ -25,16 +29,18 @@ import net.sf.colorer.impl.ReaderLineSource;
 import net.sf.colorer.viewer.HTMLGenerator;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.streams.StringOutputStream;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.jslib.HtmlSnippets;
-import org.remus.infomngmnt.jslib.JavaScriptSnippets;
-import org.remus.infomngmnt.jslib.StyleProvider;
+import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.sourcecode.PreferenceInitializer;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 
@@ -58,13 +64,13 @@ AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getAdditionalsForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getAdditionalsForIndexing(IProgressMonitor monitor)
+	public String getAdditionalsForIndexing(final IProgressMonitor monitor)
 	throws CoreException {
 		return null;
 	}
 
 	@Override
-	public void handlePreBuild(IProgressMonitor monitor) {
+	public void handlePreBuild(final IProgressMonitor monitor) {
 
 	}
 
@@ -72,7 +78,7 @@ AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getBodyForIndexing(IProgressMonitor monitor)
+	public String getBodyForIndexing(final IProgressMonitor monitor)
 	throws CoreException {
 		return getValue().getStringValue();
 	}
@@ -81,7 +87,7 @@ AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getTitleForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getTitleForIndexing(IProgressMonitor monitor)
+	public String getTitleForIndexing(final IProgressMonitor monitor)
 	throws CoreException {
 		return getValue().getLabel();
 	}
@@ -90,47 +96,40 @@ AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String handleHtmlGeneration(IProgressMonitor monitor)
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
 	throws CoreException {
-		StringWriter sw = new StringWriter();
-		sw.append(HtmlSnippets.HTML_HEAD)
-		.append(StyleProvider.STYLE_DEFINITION_START)
-		.append(StyleProvider.getSystemFontDefinition())
-		.append(StyleProvider.STYLE_DEFINITION_END)
-		.append(JavaScriptSnippets.SCRIPT_SRC_IMAGES_JS)
-		.append(JavaScriptSnippets.SCRIPT_SRC_ROUNDED_CORNERS_JS)
-		.append(JavaScriptSnippets.SECTION_BOX_DEFINITION(SRCCODE_SECTION_ID, 5));
-
-		sw.append(HtmlSnippets.HTML_HEAD_END_BODY_START)
-		//		.append("<p style=\"text-align:center;\">\r\n")
-		//		.append("<a href=\"").append(getValue().getStringValue())
-		//		.append("\" target=\"_blank\">")
-		//		.append(getValue().getStringValue())
-		//		.append("</a>")
-		//		.append("</p>\r\n")
-		.append("<div>");
-		sw.append(HtmlSnippets.CREATE_SECTION_BOX("Source", SRCCODE_SECTION_ID));
-		sw.append("<p><pre>\r\n")
-		.append(getHtmlSource())
-		.append("</pre></div>");
-
-		sw.append(HtmlSnippets.HTML_BODY_END_HTML_END);
-		return sw.toString();
-
+		Map<String, String> additionals = new HashMap<String, String>();
+		additionals.put("formattedSrc", new String(getHtmlSource().toByteArray()));
+		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
+		InputStream contentsIs = getFile().getContents();
+		InputStream templateIs = null;
+		try {
+			templateIs = FileLocator.openStream(
+					Platform.getBundle(SourceCodePlugin.PLUGIN_ID), 
+					new Path("template/htmlserialization.flt"), false);
+			FreemarkerRenderer.getInstance().process(
+					SourceCodePlugin.PLUGIN_ID,
+					templateIs,
+					contentsIs,
+					returnValue, additionals);
+					contentsIs.close();
+					templateIs.close();
+		} catch (IOException e) {
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations",e));
+		} finally {
+			StreamCloser.closeStreams(templateIs, contentsIs);
+		}
+		return new ByteArrayInputStream(returnValue.toByteArray());
 	}
 
-	private String getHtmlSource() {
+	private ByteArrayOutputStream getHtmlSource() {
+		ByteArrayOutputStream targetStream = new ByteArrayOutputStream();
 		if (getValue().getStringValue() != null && getValue().getStringValue().length() > 0) {
 			InformationUnit childByType = InformationUtil.getChildByType(getValue(), SourceCodePlugin.SRCTYPE_NAME);
 			String type = SourceCodePlugin.getDefault().getSourceTypes().get(childByType.getStringValue());
 			ReaderLineSource rls = new ReaderLineSource(
 					new StringReader(getValue().getStringValue() == null ? "" : getValue().getStringValue()));
-			StringOutputStream targetStream = new StringOutputStream() {
-				@Override
-				public void close() {
-					// no close
-				}
-			};
 			Writer commonWriter = null;
 			commonWriter = new OutputStreamWriter(
 					targetStream, Charset.forName("UTF-8"));
@@ -147,9 +146,8 @@ AbstractInformationRepresentation {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return targetStream.toString();
 		}
-		return "";
+		return targetStream;
 	}
 
 }

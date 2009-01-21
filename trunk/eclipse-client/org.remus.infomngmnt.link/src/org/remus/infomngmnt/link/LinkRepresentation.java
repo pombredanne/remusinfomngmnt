@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.link;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -181,7 +182,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String handleHtmlGeneration(final IProgressMonitor monitor)
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
 	throws CoreException {
 		boolean renderWebShot = InformationUtil.getChildByType(getValue(), SCREENSHOT_TYPE).isBoolValue();
 		StringWriter sw = new StringWriter();
@@ -215,7 +216,7 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 			.append("</div>");
 		}
 		sw.append(HtmlSnippets.HTML_BODY_END_HTML_END);
-		return sw.toString();
+		return new ByteArrayInputStream(sw.toString().getBytes());
 	}
 
 }

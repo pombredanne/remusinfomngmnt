@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="infomngmnt"
-    nsURI="http://remus-software.org/infomngmnt" nsPrefix="infomngmnt">
+    nsURI="http://remus-software.org/infomngmnt/1.0" nsPrefix="infomngmnt">
   <eClassifiers xsi:type="ecore:EClass" name="InformationUnit" eSuperTypes="#//AbstractInformationUnit">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="longValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>

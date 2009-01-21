@@ -47,12 +47,12 @@ public class ViewPage extends InformationFormPage {
 
 	private final IResourceChangeListener binFileListener = new IResourceChangeListener() {
 
-		public void resourceChanged(IResourceChangeEvent event) {
+		public void resourceChanged(final IResourceChangeEvent event) {
 			IResourceDelta[] affectedChildren = event.getDelta().getAffectedChildren();
 			visit(affectedChildren);
 		}
 
-		private void visit(IResourceDelta[] affectedChildren) {
+		private void visit(final IResourceDelta[] affectedChildren) {
 			for (IResourceDelta resourceDelta : affectedChildren) {
 				if (resourceDelta.getResource().equals(ViewPage.this.binFile)) {
 					getSite().getShell().getDisplay().asyncExec(new Runnable() {
@@ -82,13 +82,13 @@ public class ViewPage extends InformationFormPage {
 	 * @param id
 	 * @param title
 	 */
-	public ViewPage(FormEditor editor, InformationUnit infoUnit) {
-		super(editor, "view","TEST");
+	public ViewPage(final FormEditor editor, final InformationUnit infoUnit) {
+		super(editor, "view","Viewer");
 		this.infoUnit = infoUnit;
 	}
 
 	@Override
-	public void init(IEditorSite site, IEditorInput input) {
+	public void init(final IEditorSite site, final IEditorInput input) {
 		super.init(site, input);
 		this.binFile = EditorUtil.getBinFile((IFileEditorInput) getEditorInput());
 	}
@@ -98,7 +98,7 @@ public class ViewPage extends InformationFormPage {
 	 * @param managedForm
 	 */
 	@Override
-	protected void createFormContent(IManagedForm managedForm) {
+	protected void createFormContent(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();

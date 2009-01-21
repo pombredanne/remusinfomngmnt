@@ -76,6 +76,7 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
@@ -314,6 +315,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				setPageImage(i + 1, editPageByType.get(i).getImage().createImage());
 				setPageText(i + 1, editPageByType.get(i).getLabel());
 			}
+			setPageImage(0, ResourceManager.getPluginImage(
+					UIPlugin.getDefault(), "icons/iconexperience/16/eyeglasses.png"));
 
 		}
 		catch ( final PartInitException e )

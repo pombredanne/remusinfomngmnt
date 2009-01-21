@@ -12,6 +12,7 @@
 package org.remus.infomngmnt.core.extension;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -102,7 +103,7 @@ public abstract class AbstractInformationRepresentation {
 	 * @return
 	 * @throws CoreException
 	 */
-	public abstract String handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
+	public abstract InputStream handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
 
 	/**
 	 * Returns the string that is used for as title in the search-result.

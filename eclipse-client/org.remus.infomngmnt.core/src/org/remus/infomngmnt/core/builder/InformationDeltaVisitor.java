@@ -12,7 +12,6 @@
 
 package org.remus.infomngmnt.core.builder;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -140,7 +139,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			}
 			
 			informationRepresentation.handlePreBuild(this.monitor);
-			String handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
+			InputStream handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
 			IFile writeContent = null;
 			try {
 				writeContent = writeContent(resource, handleHtmlGeneration, this.monitor);
@@ -166,27 +165,24 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	}
 
-	private IFile writeContent(final IFile origFile, final String content, final IProgressMonitor monitor) throws Exception {
+	private IFile writeContent(final IFile origFile, final InputStream handleHtmlGeneration, final IProgressMonitor monitor) throws Exception {
 		SubProgressMonitor progressMonitor = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
 		IPath computeBinFilePath = ResourceUtil.computeBinFileFulllPath(origFile);
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(computeBinFilePath);
-		ByteArrayInputStream byteArrayInputStream = null;
 		try {
-			byteArrayInputStream = new ByteArrayInputStream(content == null ? new byte[0] :content.getBytes(origFile.getCharset()));
 			if (file.exists()) {
-				file.setContents(byteArrayInputStream, true,true, progressMonitor);
+				file.setContents(handleHtmlGeneration, true,true, progressMonitor);
 			} else {
-				file.create(byteArrayInputStream, true, progressMonitor);
+				file.create(handleHtmlGeneration, true, progressMonitor);
 			}
 			file.setDerived(true);
 			return file;
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			if (byteArrayInputStream != null) {
+			if (handleHtmlGeneration != null) {
 				try {
-					byteArrayInputStream.close();
-					byteArrayInputStream = null;
+					handleHtmlGeneration.close();
 				} catch (Exception e) {
 					// do nothing.. we've done our best.
 				}

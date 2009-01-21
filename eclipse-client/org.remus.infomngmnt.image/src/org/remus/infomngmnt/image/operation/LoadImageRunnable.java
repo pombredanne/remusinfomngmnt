@@ -16,22 +16,40 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.ImageData;
 
+import com.drew.imaging.jpeg.JpegMetadataReader;
+import com.drew.imaging.jpeg.JpegProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.Tag;
+import com.drew.metadata.exif.ExifDirectory;
+
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.image.ImagePlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -48,6 +66,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 	}
 
 	private File file;
+	private InformationUnit infoUnit;
 
 	public File getFile() {
 		return this.file;
@@ -74,7 +93,61 @@ public class LoadImageRunnable extends CancelableRunnable {
 						this.rawImageDataNode,
 						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE,
 						getBytesFromFile(this.file, monitor)));
-				
+				boolean isJpgeg = Pattern.compile("^.*\\.jpe?g$", Pattern.CASE_INSENSITIVE).matcher(this.imagePath).matches();
+				Metadata metadata = null;
+				List<InformationUnit> exifData = new ArrayList<InformationUnit>();
+				if (isJpgeg) {
+					try {
+						metadata = JpegMetadataReader.readMetadata(this.file);
+						Directory exifDirectory = metadata.getDirectory(ExifDirectory.class);
+						Iterator tagIterator = exifDirectory.getTagIterator();
+						while (tagIterator.hasNext()) {
+							Tag object = (Tag) tagIterator.next();
+							try {
+								InformationUnit createInformationUnit = InfomngmntFactory.eINSTANCE.createInformationUnit();
+								createInformationUnit.setType(object.getTagName());
+								createInformationUnit.setStringValue(object.getDescription());
+								exifData.add(createInformationUnit);
+							} catch (MetadataException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					} catch (JpegProcessingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				InformationUnit childByType = InformationUtil.getChildByType(this.infoUnit, ImagePlugin.NODE_NAME_EXIF);
+				if (isJpgeg && metadata != null) {
+					if (childByType != null) {
+						cc.append(new RemoveCommand(
+								this.domain,
+								childByType,
+								InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
+								childByType.getChildValues()));
+					} else {
+						childByType = InfomngmntFactory.eINSTANCE.createInformationUnit();
+						childByType.setType(ImagePlugin.NODE_NAME_EXIF);
+						cc.append(new AddCommand(
+								this.domain,
+								this.infoUnit.getChildValues(),
+								Collections.singleton(childByType)));
+					}
+					cc.append(new AddCommand(
+							this.domain,
+							childByType.getChildValues(),
+							exifData));
+				} else {
+					if (childByType != null) {
+						cc.append(new RemoveCommand(
+								this.domain,
+								this.infoUnit,
+								InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
+								Collections.singleton(childByType)));
+						
+					}
+				}
 				
 				InputStream is = new FileInputStream(this.file);
 				// Reading src & height of the image:
@@ -90,6 +163,12 @@ public class LoadImageRunnable extends CancelableRunnable {
 						this.heightImageNode,
 						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
 						Long.valueOf(imageData.height)));
+				
+				cc.append(new SetCommand(
+						this.domain,
+						InformationUtil.getChildByType(this.infoUnit, ImagePlugin.ORIGINAL_FILEPATH),
+						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+						this.imagePath));
 //				
 				cc.setLabel("Set new image");
 				UIUtil.getDisplay().asyncExec(new Runnable() {
@@ -106,11 +185,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 		return StatusCreator.newStatus("File not exisits or is not accessible");
 	}
 
-	public void setRawDataNode(final InformationUnit rawImageDataNode) {
-		this.rawImageDataNode = rawImageDataNode;
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	 // Returns the contents of the file in a byte array.
     public static byte[] getBytesFromFile(final File file, final IProgressMonitor monitor) throws IOException {
@@ -149,17 +224,13 @@ public class LoadImageRunnable extends CancelableRunnable {
         return bytes;
     }
 
-	public void setRawImageDataNode(final InformationUnit rawImageDataNode) {
-		this.rawImageDataNode = rawImageDataNode;
+	public void setImageNode(final InformationUnit infoUnit) {
+		this.infoUnit = infoUnit;
+		this.rawImageDataNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_RAWDATA);
+		this.widhtImageNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_WIDTH);
+		this.heightImageNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_HEIGHT);
 	}
 
-	public void setWidhtImageNode(final InformationUnit widhtImageNode) {
-		this.widhtImageNode = widhtImageNode;
-	}
-
-	public void setHeightImageNode(final InformationUnit heightImageNode) {
-		this.heightImageNode = heightImageNode;
-	}
 
 	public void setFile(final File file) {
 		this.file = file;

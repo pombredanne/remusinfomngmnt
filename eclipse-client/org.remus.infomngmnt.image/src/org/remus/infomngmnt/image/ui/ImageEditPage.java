@@ -154,9 +154,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 				if (open != null) {
 					LoadImageRunnable loadImage = new LoadImageRunnable();
 					loadImage.setImagePath(open);
-					loadImage.setRawDataNode(InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_RAWDATA));
-					loadImage.setHeightImageNode(InformationUtil.getChildByType(getModelObject(), ImagePlugin.HEIGHT));
-					loadImage.setWidhtImageNode(InformationUtil.getChildByType(getModelObject(), ImagePlugin.WIDHT));
+					loadImage.setImageNode(getModelObject());
 					loadImage.setDomain(ImageEditPage.this.editingDomain);
 					ProgressMonitorDialog pmd = new ProgressMonitorDialog(getSite().getShell());
 					try {
@@ -172,7 +170,17 @@ public class ImageEditPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-
+		
+//		final ImageHyperlink editExifDataLink = toolkit.createImageHyperlink(composite, SWT.NONE);
+//		editExifDataLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
+//		editExifDataLink.setText("Change image");
+//		editExifDataLink.addHyperlinkListener(new HyperlinkAdapter() {
+//			@Override
+//			public void linkActivated(final HyperlinkEvent e) {
+//				
+//			}
+//		});
+		
 		toolkit.createLabel(composite, "Width", SWT.NONE);
 
 		this.widthText = toolkit.createText(composite, null, SWT.NONE);
@@ -229,8 +237,8 @@ public class ImageEditPage extends AbstractInformationFormPage {
 
 	
 	protected void setCurrentRatio() {
-		long width = InformationUtil.getChildByType(getModelObject(), ImagePlugin.WIDHT).getLongValue();
-		long height = InformationUtil.getChildByType(getModelObject(), ImagePlugin.HEIGHT).getLongValue();
+		long width = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_WIDTH).getLongValue();
+		long height = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_HEIGHT).getLongValue();
 		this.ratio = (float)width / (float)height;
 	}
 
@@ -240,7 +248,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
 		this.dataBindingContext.bindValue(swtLink, emfLink, null, null);
 		
-		InformationUnit widthNode = InformationUtil.getChildByType(getModelObject(), ImagePlugin.WIDHT);
+		InformationUnit widthNode = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_WIDTH);
 		ISWTObservableValue swtWidth = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.widthText, SWT.Modify));
 		swtWidth.addValueChangeListener(new IValueChangeListener() {
 			public void handleValueChange(final ValueChangeEvent event) {
@@ -252,7 +260,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		IObservableValue emfWidth = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, widthNode, InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
 		this.dataBindingContext.bindValue(swtWidth, emfWidth, null, null);
 		
-		InformationUnit heightNode = InformationUtil.getChildByType(getModelObject(), ImagePlugin.HEIGHT);
+		InformationUnit heightNode = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_HEIGHT);
 		ISWTObservableValue swtHeight = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.heightText, SWT.Modify));
 		IObservableValue emfHeight = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, heightNode, InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
 		this.dataBindingContext.bindValue(swtHeight, emfHeight, null, null);

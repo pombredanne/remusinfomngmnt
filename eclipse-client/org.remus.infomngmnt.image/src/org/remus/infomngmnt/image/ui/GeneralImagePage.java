@@ -116,9 +116,6 @@ public class GeneralImagePage extends GeneralPage {
 	protected void initDatabinding() {
 		super.initDatabinding();
 		InformationUnit origFilePathNode = InformationUtil.getChildByType(this.unit, ImagePlugin.ORIGINAL_FILEPATH);
-		final InformationUnit rawImageDataNode = InformationUtil.getChildByType(this.unit, ImagePlugin.NODE_NAME_RAWDATA);
-		final InformationUnit heightDataNode = InformationUtil.getChildByType(this.unit, ImagePlugin.HEIGHT);
-		final InformationUnit widthDataNode = InformationUtil.getChildByType(this.unit, ImagePlugin.WIDHT);
 		ISWTObservableValue swtUrl = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.fileNameText, SWT.Modify));
 		IObservableValue emfUrl = EMFObservables.observeValue(origFilePathNode, InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		swtUrl.addValueChangeListener(new IValueChangeListener() {
@@ -126,9 +123,7 @@ public class GeneralImagePage extends GeneralPage {
 				String newValue = (String) event.getObservableValue().getValue();
 				try {
 					GeneralImagePage.this.loadImageJob.setImagePath(newValue);
-					GeneralImagePage.this.loadImageJob.setRawDataNode(rawImageDataNode);
-					GeneralImagePage.this.loadImageJob.setHeightImageNode(heightDataNode);
-					GeneralImagePage.this.loadImageJob.setWidhtImageNode(widthDataNode);
+					GeneralImagePage.this.loadImageJob.setImageNode(GeneralImagePage.this.unit);
 					getContainer().run(true, true, GeneralImagePage.this.loadImageJob);
 					GeneralImagePage.this.nameText.setText(new Path(GeneralImagePage.this.loadImageJob.getFile().getAbsolutePath()).removeFileExtension().lastSegment());
 				} catch (InvocationTargetException e) {

@@ -1,13 +1,14 @@
-<#ftl ns_prefixes={"e":"http://remus-software.org/infomngmnt"}>
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt"}>
 <#setting url_escaping_charset="UTF-8">  
-<#assign infoUnit = doc["e:InformationUnit"]>
-<#assign text = infoUnit.@stringValue?html?replace("\n","<br>")>
+<#assign infoUnit = doc.InformationUnit>
+<#assign hasText= infoUnit["count(@stringValue)"] != 0>
+<#assign text = infoUnit["@stringValue"] >
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">   
-  <title>${infoUnit.@label}</title>
+  <title>${infoUnit.@label?html}</title>
   <style type="text/css">
   	.systemfont,body {
 		font-family: Segoe UI;
@@ -17,6 +18,9 @@
   </style>
 </head>
 <body>
-  	${text}
+	
+	<#if hasText >
+  	${text?html?replace("\n","<br>")}
+  	</#if>
 </body>
 </html>

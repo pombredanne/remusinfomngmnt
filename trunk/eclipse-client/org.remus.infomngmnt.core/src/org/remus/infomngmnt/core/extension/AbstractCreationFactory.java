@@ -13,6 +13,7 @@ package org.remus.infomngmnt.core.extension;
 
 import java.util.Date;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -32,6 +33,10 @@ public abstract class AbstractCreationFactory {
 		InformationUnit newInfoObject = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		newInfoObject.setCreationDate(new Date());
 		return newInfoObject;
+	}
+	
+	public void handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
+		// does nothing by default.
 	}
 
 

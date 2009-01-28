@@ -13,6 +13,8 @@ public class LinkActivator extends AbstractUIPlugin {
 	
 	
 	public static final String LINK_INFO_ID = "LINK"; //$NON-NLS-1$
+	public static final String NODE_INDEX = "index"; //$NON-NLS-1$
+	public static final String NODE_WEBSHOTIMAGE_DATA = "webshot"; //$NON-NLS-1$
 
 	// The shared instance
 	private static LinkActivator plugin;

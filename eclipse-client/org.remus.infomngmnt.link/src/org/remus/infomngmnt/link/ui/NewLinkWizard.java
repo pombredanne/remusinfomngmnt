@@ -31,13 +31,14 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 
 	private LinkWizardPage page2;
 
-	
+
 	@Override
 	public void addPages() {
 		super.addPages();
 		addPage(this.page2 = new LinkWizardPage(this.newElement));
 	}
 
+	
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
@@ -70,7 +71,7 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 	public boolean canFinish() {
 		return this.page1.isPageComplete();
 	}
-	
+
 	@Override
 	protected String getInfoTypeId() {
 		return LinkActivator.LINK_INFO_ID;

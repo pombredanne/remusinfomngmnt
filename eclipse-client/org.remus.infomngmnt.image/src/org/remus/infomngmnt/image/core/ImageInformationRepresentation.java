@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
 import org.remus.infomngmnt.InformationUnit;
@@ -32,6 +33,7 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.gef.ShapableInfoDelegate;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 
 /**
@@ -92,7 +94,15 @@ public class ImageInformationRepresentation extends
 	@Override
 	public String getAdditionalsForIndexing(final IProgressMonitor monitor)
 			throws CoreException {
-		return null;
+		StringBuilder sb = new StringBuilder();
+		InformationUnit childByType = InformationUtil.getChildByType(getValue(),ImagePlugin.NODE_NAME_EXIF);
+		EList<InformationUnit> exifData = childByType.getChildValues();
+		for (InformationUnit informationUnit : exifData) {
+			if (informationUnit.getStringValue() != null && informationUnit.getStringValue().length() > 0) {
+				sb.append(informationUnit.getStringValue()).append(" ");
+			}
+		}
+		return sb.toString();
 	}
 
 	/* (non-Javadoc)
@@ -101,7 +111,16 @@ public class ImageInformationRepresentation extends
 	@Override
 	public String getBodyForIndexing(final IProgressMonitor monitor)
 			throws CoreException {
-		return null;
+		StringBuilder sb = new StringBuilder();
+		InformationUnit childByType = InformationUtil.getChildByType(getValue(),ImagePlugin.NODE_NAME_LINKS);
+		EList<InformationUnit> comments = childByType.getChildValues();
+		for (InformationUnit informationUnit : comments) {
+			InformationUnit commentTextUnit = InformationUtil.getChildByType(informationUnit, ShapableInfoDelegate.TEXT);
+			if (commentTextUnit.getStringValue() != null && commentTextUnit.getStringValue().length() > 0 ) {
+				sb.append(commentTextUnit.getStringValue()).append(" ");
+			}
+		}
+		return sb.toString();
 	}
 	
 	@Override

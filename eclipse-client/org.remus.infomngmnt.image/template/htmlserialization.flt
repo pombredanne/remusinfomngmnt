@@ -1,14 +1,17 @@
 <#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt"}>
 <#setting url_escaping_charset="UTF-8">  
+<#setting number_format="0">
 <#assign infoUnit = doc.InformationUnit>
 <#assign width = infoUnit["childValues[@type='width']/@longValue"]>
 <#assign height = infoUnit["childValues[@type='height']/@longValue"]>
 <#assign exif = infoUnit["childValues[@type='exifdata']/childValues"]>
+<#assign links = infoUnit["childValues[@type='links']/childValues"]>
 
 <!-- if the image has some exif data we have to show a second box -->
 <#assign exifCount = infoUnit["count(childValues[@type='exifdata'])"]>
-<#assign hasKeywords = infoUnit["count(/@keywords)"] != 0 >
-<#assign hasDescription = infoUnit["count(/@description)"] != 0 >
+<#assign linkCount = infoUnit["count(childValues[@type='links']/childValues)"]>
+<#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
+<#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,7 +19,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <script src="${.globals.jslibDir}/templates/images.js"></script>
   <script src="${.globals.jslibDir}/js/curvycorners.js"></script>
+  <script src="${.globals.jslibDir}/js/overlib.js"></script>
   <script type="text/JavaScript">
+      var countLayers = ${linkCount};
+      var overlaysShown = false;
 	  window.onload = function()
 	  {
 	          settings = {
@@ -33,37 +39,64 @@
 	      myBoxObject.applyCornersToAll();
 	      
 	  }
+	  function showOverlays() {
+		if (overlaysShown) {
+			for (var i = 0; i < countLayers; i++) {
+				var currentElement = document.getElementById('overlay' + i);
+				currentElement.style.visibility = "visible";
+			}
+		} else {
+			hideOverlays();
+		}
+		overlaysShown = !overlaysShown;
+	  }
+   	  function hideOverlays() {
+		for (var i = 0; i < countLayers; i++) {
+		    var currentElement = document.getElementById('overlay' + i);
+			currentElement.style.visibility = "hidden";
+		}
+	  }
 </script>
   <title>${infoUnit.@label}</title>
   <style type="text/css">
   	.systemfont,body,td {
-		font-family: Segoe UI;
-		font-size: 9pt;
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
 	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	
+}
+	
 	
   </style>
 </head>
 <body>
+	<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 	<div>
 		<p>
 		<table>
 			<tr>
-				<td>Image Name:</td>
+				<td class="bold">Image Name:</td>
 				<td>${infoUnit.@label?html}</td>
 			</tr>
 			<#if hasKeywords >
 			<tr>
-				<td>Keywords:</td>
+				<td class="bold">Keywords:</td>
 				<td>${infoUnit.@keywords?html}</td>
 			</tr>
 			</#if>
 			<#if hasDescription >
 			<tr>
-				<td>Description:</td>
+				<td class="bold">Description:</td>
 				<td>${infoUnit.@description?html}</td>
 			</tr>
 			</#if>
-			
 		</table>
 		</p>
 	</div>
@@ -71,9 +104,28 @@
   		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
   			<span class="systemfont" style="font-weight:bold;">Image</span>
   		</div>
-  		<p style="text-align:center;">
-  			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}" alt="${infoUnit.@label?html}" width="${width}" height="${height}">
-  		</p>
+  		<div style="position:relative;margin:10px;">
+  			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}" width="${width}" height="${height}">
+  			<#if linkCount != 0>
+	  			<#assign count = 0 >
+	  			<#list links as link >
+		  			<#assign locationX = link["childValues[@type='loc_x']"].@longValue?number * (width?number/1000) >
+		  			<#assign locationY = link["childValues[@type='loc_y']"].@longValue?number * (height?number/1000) >
+		  			<#assign linkWidth = link["childValues[@type='dim_width']"].@longValue?number * (width?number/1000) >
+		  			<#assign linkHeight = link["childValues[@type='dim_height']"].@longValue?number * (height?number/1000) >
+		  			<#if link["count(childValues[@type='text']/@stringValue)"] != 0 >
+		  				<#assign commentText = link["childValues[@type='text']"].@stringValue?js_string>
+		  			<#else>
+		  				<#assign commentText = "n.a.">
+		  			</#if>
+		  			<div id="overlay${count}" style="left: ${locationX}px; width: ${linkWidth}px; position: absolute; top: ${locationY}px;height:${linkHeight}px; border:2px solid white;visibility:show"><a "href="#" onmouseover="return overlib('${commentText}');" onmouseout="return nd();"><img width="${linkWidth}" height="${linkHeight}" border="0" src="${.globals.jslibDir}/gif/transparent.gif"></a></div>
+	  				<#assign count = count + 1 >
+  				</#list>
+  				<p>
+					<a href="#" onClick="showOverlays();">Show/Hide comments</a>
+				</p>
+  			</#if>
+  		</div>
   	</div>
   	<#if exifCount != 0>
   	<div>
@@ -83,7 +135,7 @@
   		<table>
   			<#list exif as exifItem >
   			<tr>
-  				<td>
+  				<td class="bold">
   					${exifItem.@type?html}
   				</td>
   				<td>

@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             creationFactory="org.remus.infomngmnt.sourcecode.core.SourceCodeCreationFactory"
-            icon="icons/iconexperience/code.png"
+            icon="icons/iconexperience/code_colored.png"
             name="Source Code"
             presentation="org.remus.infomngmnt.sourcecode.core.SourceCodeInformationRepresentation"
             type="SOURCE">
@@ -19,7 +19,7 @@
       <wizard
             class="org.remus.infomngmnt.sourcecode.wizard.NewSourceCodeWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
-            icon="icons/iconexperience/code_add.png"
+            icon="icons/iconexperience/code_colored_new.png"
             id="org.remus.infomngmnt.sourcecode.newWizard"
             name="Source Code">
       </wizard>
@@ -42,7 +42,7 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.sourcecode.editor.EditSourcePage"
-            icon="icons/iconexperience/code_edit.png"
+            icon="icons/iconexperience/code_colored_edit.png"
             id="org.remus.infomngmnt.sourcecode.editPage"
             label="Edit Source"
             type="SOURCE">
@@ -56,6 +56,15 @@
             transferId="org.remus.infomngmnt.core.texttransfer"
             typeId="SOURCE">
       </transferpreferences>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.sourcecode.newWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

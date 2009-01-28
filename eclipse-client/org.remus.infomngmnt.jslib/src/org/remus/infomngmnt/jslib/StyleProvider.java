@@ -33,6 +33,52 @@ public class StyleProvider {
 	public static final String STYLE_DEFINITION_START = "<style type=\"text/css\">"; //$NON-NLS-1$
 	public static final String STYLE_DEFINITION_END = "</style>"; //$NON-NLS-1$
 
+	public static String getSystemFont() {
+		final String[] returnValue = new String[1];
+		getDisplay().syncExec(new Runnable() {
+			public void run() {
+				Font systemFont = StyleProvider.getDisplay().getSystemFont();
+				FontData[] fontData = systemFont.getFontData();
+				if (fontData.length > 0) {
+					returnValue[0] = fontData[0].getName();
+				}
+			}
+		});
+		return returnValue[0];
+	}
+	public static String getSystemFontStyle() {
+		final String[] returnValue = new String[1];
+		getDisplay().syncExec(new Runnable() {
+			public void run() {
+				Font systemFont = StyleProvider.getDisplay().getSystemFont();
+				FontData[] fontData = systemFont.getFontData();
+				if (fontData.length > 0) {
+					int style = fontData[0].getStyle();
+					if ((style & SWT.BOLD) != 0) {
+						returnValue[0] = "bold";
+					} else if ((style & SWT.ITALIC) != 0) {
+						returnValue[0] = "italic";
+					} else {
+						returnValue[0] = "normal";
+					}
+				}
+			}
+		});
+		return returnValue[0];
+	}
+	public static int getSystemFontSize() {
+		final int[] returnValue = new int[1];
+		getDisplay().syncExec(new Runnable() {
+			public void run() {
+				Font systemFont = StyleProvider.getDisplay().getSystemFont();
+				FontData[] fontData = systemFont.getFontData();
+				if (fontData.length > 0) {
+					returnValue[0] = fontData[0].getHeight();
+				}
+			}
+		});
+		return returnValue[0];
+	}
 
 	public static String getSystemFontDefinition() {
 		final StringWriter sw = new StringWriter();
@@ -105,7 +151,7 @@ public class StyleProvider {
 		return Display.getDefault();
 	}
 
-	public static String convertColor(int r, int g, int b) {
+	public static String convertColor(final int r, final int g, final int b) {
 		java.awt.Color color = new java.awt.Color(r,g,b);
 		return Integer.toHexString(color.getRGB() & 0x00ffffff);
 	}

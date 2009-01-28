@@ -1,5 +1,6 @@
 package org.remus.infomngmnt.application;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IContributionItem;
@@ -23,6 +24,7 @@ import org.eclipse.ui.internal.handlers.IActionCommandMappingService;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
+import org.osgi.framework.Bundle;
 
 /**
  * An action bar advisor is responsible for creating, adding, and disposing of
@@ -58,7 +60,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	 * 
 	 * @param configurer the action bar configurer for the window
 	 */
-	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
+	public ApplicationActionBarAdvisor(final IActionBarConfigurer configurer) {
 		super(configurer);
 		this.window = configurer.getWindowConfigurer().getWindow();
 	}
@@ -106,6 +108,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		register(this.preferenceAction);
 
 		this.undoAction = ActionFactory.UNDO.create(window);
+//		this.undoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(, name))
 		register(this.undoAction);
 
 		this.redoAction = ActionFactory.REDO.create(window);
@@ -127,7 +130,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	@Override
-	protected void fillMenuBar(IMenuManager menuBar) {
+	protected void fillMenuBar(final IMenuManager menuBar) {
 		menuBar.add(createFileMenu());
 		menuBar.add(createEditMenu());
 		menuBar.add(createExtraMenu());
@@ -145,7 +148,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	/**
 	 * @param trayItem
 	 */
-	protected void fillTrayItem(IMenuManager trayItem) {
+	protected void fillTrayItem(final IMenuManager trayItem) {
 		trayItem.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		trayItem.add(getAction(ActionFactory.QUIT.getId()));
 	}
@@ -329,8 +332,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 
 
-	private IContributionItem getItem(String actionId, String commandId,
-			String image, String disabledImage, String label, String tooltip, String helpContextId) {
+	private IContributionItem getItem(final String actionId, final String commandId,
+			final String image, final String disabledImage, final String label, final String tooltip, final String helpContextId) {
 		ISharedImages sharedImages = getWindow().getWorkbench()
 		.getSharedImages();
 
@@ -344,6 +347,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				.getImageDescriptor(disabledImage), null, label, null,
 				tooltip, CommandContributionItem.STYLE_PUSH, null, false);
 		return new CommandContributionItem(commandParm);
+	}
+	
+	private Bundle getBundleById(final String id) {
+		return Platform.getBundle(id);
 	}
 
 

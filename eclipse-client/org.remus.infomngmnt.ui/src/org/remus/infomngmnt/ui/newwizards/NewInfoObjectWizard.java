@@ -12,7 +12,12 @@
 
 package org.remus.infomngmnt.ui.newwizards;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -30,6 +35,7 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 
@@ -46,6 +52,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 	 * 
 	 */
 	public NewInfoObjectWizard() {
+		setNeedsProgressMonitor(true);
 		this.newElement = createNewInformationUnit();
 	}
 
@@ -77,6 +84,24 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public boolean performFinish() {
+		final IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(getInfoTypeId());
+		try {
+			getContainer().run(true, true, new CancelableRunnable() {
+				@Override
+				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
+					infoTypeByType.getCreationFactory()
+						.handlePreSaving(NewInfoObjectWizard.this.newElement, monitor);
+					return Status.OK_STATUS;
+				}
+			});
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
 		.execute(CommandFactory.CREATE_INFOTYPE(this.newElement, findCategory()));
 		try {

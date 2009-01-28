@@ -149,7 +149,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 		// make sure we always save and restore workspace state
 		configurer.setSaveAndRestore(true);
 
-
+		
 		// register workspace adapters
 		WorkbenchAdapterBuilder.registerAdapters();
 
@@ -244,8 +244,9 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 		Object proxyService = null;
 		if (bundle != null) {
 			ServiceReference ref = bundle.getBundleContext().getServiceReference(IProxyService.class.getName());
-			if (ref != null)
+			if (ref != null) {
 				proxyService = bundle.getBundleContext().getService(ref);
+			}
 		}
 		if (proxyService == null) {
 			IDEWorkbenchPlugin.log("Proxy service could not be found."); //$NON-NLS-1$
@@ -262,8 +263,9 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 			.getHighContrast();
 
 			public void handleEvent(final org.eclipse.swt.widgets.Event event) {
-				if (Display.getCurrent().getHighContrast() == this.currentHighContrast)
+				if (Display.getCurrent().getHighContrast() == this.currentHighContrast) {
 					return;
+				}
 
 				this.currentHighContrast = !this.currentHighContrast;
 
@@ -328,8 +330,9 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 			final IWorkbenchWindowConfigurer configurer) {
 		/* Store primary advisor if not yet done */
 		ApplicationWorkbenchWindowAdvisor windowAdvisor = new ApplicationWorkbenchWindowAdvisor(this, configurer);
-		if (UIUtil.fgPrimaryApplicationWorkbenchWindowAdvisor == null)
+		if (UIUtil.fgPrimaryApplicationWorkbenchWindowAdvisor == null) {
 			UIUtil.fgPrimaryApplicationWorkbenchWindowAdvisor = windowAdvisor;
+		}
 		return windowAdvisor;
 	}
 

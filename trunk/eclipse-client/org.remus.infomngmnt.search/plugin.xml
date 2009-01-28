@@ -20,7 +20,7 @@
                minimized="false"
                moveable="true"
                relationship="stack"
-               relative="org.remus.infomngmnt.ui.views.NavigationView"
+               relative="org.eclipse.ui.views.ContentOutline"
                showTitle="true"
                standalone="false"
                visible="true">
@@ -54,6 +54,12 @@
                   class="org.remus.infomngmnt.search.menu.SearchFieldContribution"
                   id="org.remus.infomngmnt.search.menu.SearchFieldContribution">
             </control>
+            <command
+                  commandId="org.remus.infomngmnt.search.openSearchView"
+                  icon="icons/iconexperience/flashlight.png"
+                  label="Open Search"
+                  style="push">
+            </command>
          </toolbar>
          <toolbar
                id="org.remus.infomngmnt.search.contextBar">
@@ -173,6 +179,11 @@
       <command
             id="org.remus.infomngmnt.search.previousResultItem"
             name="Show previous result">
+      </command>
+      <command
+            defaultHandler="org.remus.infomngmnt.search.handler.OpenSearchHandler"
+            id="org.remus.infomngmnt.search.openSearchView"
+            name="name">
       </command>
    </extension>
    <extension

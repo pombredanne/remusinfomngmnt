@@ -12,12 +12,21 @@
 
 package org.remus.infomngmnt.link;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.streams.FileUtil;
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
+import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
+import org.remus.infomngmnt.link.webshot.WebshotUtil;
+import org.remus.infomngmnt.operation.IndexWebPageRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -33,21 +42,50 @@ public class LinkCreationFactory extends AbstractCreationFactory {
 
 	@Override
 	public InformationUnit createNewObject() {
-		IPreferenceStore store = LinkActivator.getDefault().getPreferenceStore();
 		InformationUnit returnValue = super.createNewObject();
 		returnValue.setType(LinkActivator.LINK_INFO_ID);
 		InformationUnit screenShot = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		screenShot.setType(LinkRepresentation.SCREENSHOT_TYPE);
-		screenShot.setBoolValue(store.getBoolean(LinkPreferenceInitializer.MAKE_SCREENSHOT));
-		InformationUnit indexTarget = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		indexTarget.setType(LinkRepresentation.INDEXWEBPAGE_TYPE);
-		indexTarget.setBoolValue(store.getBoolean(LinkPreferenceInitializer.INDEX_DOCUMENT));
-		InformationUnit linkContent = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		linkContent.setType(LinkRepresentation.INDEXWEBPAGECONTENT_TYPE);
+		screenShot.setType(LinkActivator.NODE_WEBSHOTIMAGE_DATA);
+		InformationUnit indexContent = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		indexContent.setType(LinkActivator.NODE_INDEX);
 		returnValue.getChildValues().add(screenShot);
-		returnValue.getChildValues().add(indexTarget);
-		returnValue.getChildValues().add(linkContent);
+		returnValue.getChildValues().add(indexContent);
 		return returnValue;
+	}
+	
+	@Override
+	public void handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
+		IPreferenceStore preferenceStore = LinkActivator.getDefault().getPreferenceStore();
+		final boolean indexWebContent = preferenceStore.getBoolean(LinkPreferenceInitializer.INDEX_DOCUMENT);
+		final boolean makeWebShot = preferenceStore.getBoolean(LinkPreferenceInitializer.MAKE_SCREENSHOT);
+		if (indexWebContent) {
+			monitor.beginTask("Indexing web-content", IProgressMonitor.UNKNOWN);
+			IndexWebPageRunnable runnable = new IndexWebPageRunnable(unit.getStringValue());
+			try {
+				runnable.run(monitor);
+				InformationUnit childByType = InformationUtil.getChildByType(unit, LinkActivator.NODE_INDEX);
+				childByType.setStringValue(runnable.getContent());
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (makeWebShot) {
+			try {
+				monitor.beginTask("Webshotting the link", IProgressMonitor.UNKNOWN);
+				File webShot = File.createTempFile("webshot", ".png");
+				WebshotUtil.performWebShot(unit.getStringValue(),webShot.getAbsolutePath());
+				InformationUnit webShotUnit = InformationUtil.getChildByType(unit,LinkActivator.NODE_WEBSHOTIMAGE_DATA);
+				webShotUnit.setBinaryValue(FileUtil.getBytesFromFile(webShot, monitor));
+				webShot.delete();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

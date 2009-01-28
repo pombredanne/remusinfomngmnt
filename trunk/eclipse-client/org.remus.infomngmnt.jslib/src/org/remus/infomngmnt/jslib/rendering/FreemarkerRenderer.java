@@ -29,6 +29,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateModelException;
 
+import org.remus.infomngmnt.jslib.StyleProvider;
 import org.remus.infomngmnt.jslib.TemplateLocation;
 
 
@@ -60,6 +61,9 @@ public class FreemarkerRenderer {
 		try {
 			this.cfg.setSharedVariable("jslibDir", TemplateLocation.getBasePath());
 			this.cfg.setSharedVariable("jslibstatelocation", TemplateLocation.getGradientSectionImageLocation());
+			this.cfg.setSharedVariable("defaultFont", StyleProvider.getSystemFont());
+			this.cfg.setSharedVariable("defaultFontStyle", StyleProvider.getSystemFontStyle());
+			this.cfg.setSharedVariable("defaultFontSize", StyleProvider.getSystemFontSize());
 		} catch (TemplateModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

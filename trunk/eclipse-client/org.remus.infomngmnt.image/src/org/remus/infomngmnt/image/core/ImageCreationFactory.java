@@ -35,10 +35,13 @@ public class ImageCreationFactory extends AbstractCreationFactory {
 		width.setType(ImagePlugin.NODE_NAME_WIDTH);
 		InformationUnit height = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		height.setType(ImagePlugin.NODE_NAME_HEIGHT);
+		InformationUnit links = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		links.setType(ImagePlugin.NODE_NAME_LINKS);
 		returnValue.getChildValues().add(rawData);
 		returnValue.getChildValues().add(origFilePath);
 		returnValue.getChildValues().add(width);
 		returnValue.getChildValues().add(height);
+		returnValue.getChildValues().add(links);
 		return returnValue;
 	}
 

@@ -49,7 +49,6 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
-import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
@@ -136,14 +135,22 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		});
 		new Label(composite, SWT.NONE);
 
-		final ImageHyperlink setLinksInImage = toolkit.createImageHyperlink(composite, SWT.NONE);
-		setLinksInImage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
-		setLinksInImage.setText("Set Links within image");
+		final Hyperlink setCommentsInImage = toolkit.createHyperlink(composite,"Set Comments within image", SWT.NONE);
+		setCommentsInImage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
+		setCommentsInImage.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(final HyperlinkEvent e) {
+				CommentImageDialog dialog = new CommentImageDialog(
+						getSite().getShell(),
+						getModelObject(),
+						ImageEditPage.this.editingDomain);
+				dialog.open();
+			}
+		});
 		new Label(composite, SWT.NONE);
 
-		final ImageHyperlink changeImageHyperlink = toolkit.createImageHyperlink(composite, SWT.NONE);
+		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite, "Change image",SWT.NONE);
 		changeImageHyperlink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
-		changeImageHyperlink.setText("Change image");
 		changeImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {

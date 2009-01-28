@@ -25,6 +25,10 @@ public class ImagePlugin extends AbstractUIPlugin {
 	public static final String NODE_NAME_WIDTH = "width"; //$NON-NLS-1$
 	
 	public static final String NODE_NAME_HEIGHT = "height"; //$NON-NLS-1$
+
+	public static final String NODE_NAME_LINKS = "links";
+
+	public static final String NODE_NAME_LINK = "link";
 	
 	
 	

@@ -92,7 +92,7 @@ public class ReplaceElementsJob extends Job {
 				changeSetExecutor.prepareDiff(targetCategory);
 				DiffModel makeDiff = changeSetExecutor.makeDiff();
 				monitor.setTaskName("Getting data from repository...");
-				changeSetExecutor.performCheckout(makeDiff.getOwnedElements());
+				changeSetExecutor.performCheckout(makeDiff.getOwnedElements(), monitor);
 				
 			} else if (remoteObject instanceof RemoteObject && synchronizableObject instanceof InformationUnitListItem) {
 				// TODO implement replacement of single info units.

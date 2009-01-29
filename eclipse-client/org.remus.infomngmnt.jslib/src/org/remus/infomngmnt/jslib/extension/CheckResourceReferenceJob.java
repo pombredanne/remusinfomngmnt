@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Constants;
 
@@ -130,7 +131,7 @@ public class CheckResourceReferenceJob extends Job {
 				}
 				map.put(
 						id.replaceAll("\\.", "_"), 
-						file.getLocation().toOSString());
+						URI.createFileURI(file.getLocation().toOSString()).toString());
 			} catch (Exception e) {
 //				Activator.getDefault().getLog().log(new Status(
 //						IStatus.ERROR,

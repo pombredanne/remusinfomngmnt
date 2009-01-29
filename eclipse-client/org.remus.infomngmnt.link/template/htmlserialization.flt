@@ -83,7 +83,7 @@
   	<div>
   		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
   			<span class="systemfont" style="font-weight:bold;">Webshot</span>
-  			<div style="right:5px; width:16px; top: 0px; height:16px; position:absolute;"><a href="#" onmouseover="return overlib('Fit to page');" onmouseout="return nd()"; onClick="fit2Page('${infoUnit.@label?js_string}');"><img border="0" src="${.globals.jslibDir}/icons/iconexperience/fit_to_size.png" width="16" height="16"></a></div>
+  			<div style="right:5px; width:16px; top: 0px; height:16px; position:absolute;"><a href="#" onmouseover="return overlib('Fit to page');" onmouseout="return nd()"; onClick="fit2Page('${infoUnit.@label?js_string}');"><img border="0" src="${.globals.sharedResources.org_remus_infomngmnt_link_fittosizeimage}" width="16" height="16"></a></div>
   		</div>
   		<div style="margin:10px;">
   			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}">

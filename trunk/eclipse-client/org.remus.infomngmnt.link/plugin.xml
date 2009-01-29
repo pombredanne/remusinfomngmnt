@@ -72,5 +72,14 @@
             name="name">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.link.newLinkWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
 
 </plugin>

@@ -6,13 +6,10 @@
 <#assign height = infoUnit["childValues[@type='height']/@longValue"]>
 <#assign exif = infoUnit["childValues[@type='exifdata']/childValues"]>
 <#assign links = infoUnit["childValues[@type='links']/childValues"]>
-
-<!-- if the image has some exif data we have to show a second box -->
 <#assign exifCount = infoUnit["count(childValues[@type='exifdata'])"]>
 <#assign linkCount = infoUnit["count(childValues[@type='links']/childValues)"]>
 <#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
 <#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,7 +31,7 @@
 	          autoPad: true
 	      }
 	
-	      var myBoxObject = new curvyCorners(settings,"image");
+	      var myBoxObject = new curvyCorners(settings,"imageRep");
 	      
 	      myBoxObject.applyCornersToAll();
 	      
@@ -78,8 +75,7 @@
 </head>
 <body>
 	<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-	<div>
-		<p>
+	<div style="margin:5px;">
 		<table>
 			<tr>
 				<td class="bold">Image Name:</td>
@@ -98,11 +94,10 @@
 			</tr>
 			</#if>
 		</table>
-		</p>
 	</div>
   	<div>
-  		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  			<span class="systemfont" style="font-weight:bold;">Image</span>
+  		<div class="imageRep" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  			<span class="systemfont" style="font-weight:bold;">Webshot</span>
   		</div>
   		<div style="position:relative;margin:10px;">
   			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}" width="${width}" height="${height}">

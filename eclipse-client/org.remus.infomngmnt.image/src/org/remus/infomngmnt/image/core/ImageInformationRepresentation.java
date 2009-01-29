@@ -97,10 +97,12 @@ public class ImageInformationRepresentation extends
 			throws CoreException {
 		StringBuilder sb = new StringBuilder();
 		InformationUnit childByType = InformationUtil.getChildByType(getValue(),ImagePlugin.NODE_NAME_EXIF);
-		EList<InformationUnit> exifData = childByType.getChildValues();
-		for (InformationUnit informationUnit : exifData) {
-			if (informationUnit.getStringValue() != null && informationUnit.getStringValue().length() > 0) {
-				sb.append(informationUnit.getStringValue()).append(" ");
+		if (childByType != null) {
+			EList<InformationUnit> exifData = childByType.getChildValues();
+			for (InformationUnit informationUnit : exifData) {
+				if (informationUnit.getStringValue() != null && informationUnit.getStringValue().length() > 0) {
+					sb.append(informationUnit.getStringValue()).append(" ");
+				}
 			}
 		}
 		return sb.toString();

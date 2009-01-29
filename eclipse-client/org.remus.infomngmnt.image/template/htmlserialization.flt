@@ -2,14 +2,10 @@
 <#setting url_escaping_charset="UTF-8">  
 <#setting number_format="0">
 <#assign infoUnit = doc.InformationUnit>
-<#assign width = infoUnit["childValues[@type='width']/@longValue"]>
-<#assign height = infoUnit["childValues[@type='height']/@longValue"]>
-<#assign exif = infoUnit["childValues[@type='exifdata']/childValues"]>
-<#assign links = infoUnit["childValues[@type='links']/childValues"]>
-<#assign exifCount = infoUnit["count(childValues[@type='exifdata'])"]>
-<#assign linkCount = infoUnit["count(childValues[@type='links']/childValues)"]>
+
 <#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
 <#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,7 +14,6 @@
   <script src="${.globals.jslibDir}/js/curvycorners.js"></script>
   <script src="${.globals.jslibDir}/js/overlib.js"></script>
   <script type="text/JavaScript">
-      var countLayers = ${linkCount};
       var overlaysShown = false;
 	  window.onload = function()
 	  {
@@ -31,28 +26,12 @@
 	          autoPad: true
 	      }
 	
-	      var myBoxObject = new curvyCorners(settings,"imageRep");
+	      var myBoxObject = new curvyCorners(settings,"image");
 	      
 	      myBoxObject.applyCornersToAll();
 	      
 	  }
-	  function showOverlays() {
-		if (overlaysShown) {
-			for (var i = 0; i < countLayers; i++) {
-				var currentElement = document.getElementById('overlay' + i);
-				currentElement.style.visibility = "visible";
-			}
-		} else {
-			hideOverlays();
-		}
-		overlaysShown = !overlaysShown;
-	  }
-   	  function hideOverlays() {
-		for (var i = 0; i < countLayers; i++) {
-		    var currentElement = document.getElementById('overlay' + i);
-			currentElement.style.visibility = "hidden";
-		}
-	  }
+	  
 </script>
   <title>${infoUnit.@label}</title>
   <style type="text/css">
@@ -70,14 +49,16 @@
 	
 }
 	
+	
   </style>
 </head>
 <body>
 	<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-	<div style="margin:5px;">
+	<div>
+		<p>
 		<table>
 			<tr>
-				<td class="bold">Image Name:</td>
+				<td class="bold">Link Name:</td>
 				<td>${infoUnit.@label?html}</td>
 			</tr>
 			<#if hasKeywords >
@@ -92,53 +73,21 @@
 				<td>${infoUnit.@description?html}</td>
 			</tr>
 			</#if>
+			<tr>
+				<td class="bold">Link:</td>
+				<td><a target="_blank" href="${infoUnit.@stringValue?html}">${infoUnit.@stringValue?html}<a></td>
+			</tr>
 		</table>
+		</p>
 	</div>
   	<div>
-  		<div class="imageRep" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
   			<span class="systemfont" style="font-weight:bold;">Webshot</span>
+  			<div style="right:5px; width:16px; top: 0px; height:16px; position:absolute;"><a href="#" onmouseover="return overlib('Fit to page');" onmouseout="return nd()"; onClick="fit2Page('${infoUnit.@label?js_string}');"><img border="0" src="${.globals.jslibDir}/icons/iconexperience/fit_to_size.png" width="16" height="16"></a></div>
   		</div>
-  		<div style="position:relative;margin:10px;">
-  			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}" width="${width}" height="${height}">
-  			<#if linkCount != 0>
-	  			<#assign count = 0 >
-	  			<#list links as link >
-		  			<#assign locationX = link["childValues[@type='loc_x']"].@longValue?number * (width?number/1000) >
-		  			<#assign locationY = link["childValues[@type='loc_y']"].@longValue?number * (height?number/1000) >
-		  			<#assign linkWidth = link["childValues[@type='dim_width']"].@longValue?number * (width?number/1000) >
-		  			<#assign linkHeight = link["childValues[@type='dim_height']"].@longValue?number * (height?number/1000) >
-		  			<#if link["count(childValues[@type='text']/@stringValue)"] != 0 >
-		  				<#assign commentText = link["childValues[@type='text']"].@stringValue?js_string>
-		  			<#else>
-		  				<#assign commentText = "n.a.">
-		  			</#if>
-		  			<div id="overlay${count}" style="left: ${locationX}px; width: ${linkWidth}px; position: absolute; top: ${locationY}px;height:${linkHeight}px; border:2px solid white;visibility:show"><a "href="#" onmouseover="return overlib('${commentText}');" onmouseout="return nd();"><img width="${linkWidth}" height="${linkHeight}" border="0" src="${.globals.jslibDir}/gif/transparent.gif"></a></div>
-	  				<#assign count = count + 1 >
-  				</#list>
-  				<p>
-					<a href="#" onClick="showOverlays();">Show/Hide comments</a>
-				</p>
-  			</#if>
+  		<div style="margin:10px;">
+  			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}">
   		</div>
   	</div>
-  	<#if exifCount != 0>
-  	<div>
-  		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  			<span class="systemfont" style="font-weight:bold;">Exif Data</span>
-  		</div>
-  		<table>
-  			<#list exif as exifItem >
-  			<tr>
-  				<td class="bold">
-  					${exifItem.@type?html}
-  				</td>
-  				<td>
-  					${exifItem.@stringValue?html}
-  				</td>
-  			</tr>
-  			</#list>
-  		</table>
-  	</div>
-  	</#if>
 </body>
 </html>

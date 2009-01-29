@@ -20,5 +20,5 @@ function resizeImage(percentageWidth, imageName) {
 	document.images[imageName].width = percentageWidth;
 }
 function fit2Page(imageName) {
-	document.images[imageName].width = document.body.clientWidth;
+	document.images[imageName].width = document.body.clientWidth -10;
 }

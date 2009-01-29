@@ -30,8 +30,10 @@ import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.views.NewWizardMenu;
 import org.remus.infomngmnt.ui.views.action.RenameAction;
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 
 /**
@@ -152,11 +154,13 @@ ISelectionChangedListener
 		
 
 		this.undoAction = new UndoAction();
-		this.undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+		this.undoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				UimodelEditPlugin.getPlugin(), "icons/iconexperience/undo.png"));
 		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), this.undoAction);
 
 		this.redoAction = new RedoAction();
-		this.redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		this.redoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				UimodelEditPlugin.getPlugin(), "icons/iconexperience/redo.png"));
 		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
 
 		this.renameAction = new RenameAction();

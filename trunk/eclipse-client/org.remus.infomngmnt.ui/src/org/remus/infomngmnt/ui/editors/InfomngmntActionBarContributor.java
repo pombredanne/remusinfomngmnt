@@ -41,6 +41,9 @@ import org.eclipse.ui.part.MultiPageEditorActionBarContributor;
 import org.eclipse.ui.texteditor.IUpdate;
 import org.eclipse.ui.views.properties.PropertySheet;
 
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
+
 
 /**
  * This is a contributor for an editor, multi-page or otherwise,
@@ -67,7 +70,7 @@ IPropertyListener
 	class GlobalAction extends Action implements IUpdate {
 		private final String id;
 
-		public GlobalAction(String id) {
+		public GlobalAction(final String id) {
 			this.id = id;
 		}
 
@@ -83,12 +86,12 @@ IPropertyListener
 	}
 
 	class ClipboardAction extends GlobalAction {
-		public ClipboardAction(String id) {
+		public ClipboardAction(final String id) {
 			super(id);
 			setEnabled(false);
 		}
 
-		public void selectionChanged(ISelection selection) {
+		public void selectionChanged(final ISelection selection) {
 		}
 
 
@@ -103,7 +106,7 @@ IPropertyListener
 		}
 
 		@Override
-		public void selectionChanged(ISelection selection) {
+		public void selectionChanged(final ISelection selection) {
 			setEnabled(isEditable() && InfomngmntActionBarContributor.this.activeEditor.canCut(selection));
 		}
 	}
@@ -116,7 +119,7 @@ IPropertyListener
 		}
 
 		@Override
-		public void selectionChanged(ISelection selection) {
+		public void selectionChanged(final ISelection selection) {
 			setEnabled(InfomngmntActionBarContributor.this.activeEditor.canCopy(selection));
 		}
 	}
@@ -129,7 +132,7 @@ IPropertyListener
 		}
 
 		@Override
-		public void selectionChanged(ISelection selection) {
+		public void selectionChanged(final ISelection selection) {
 			setEnabled(isEditable() && InfomngmntActionBarContributor.this.activeEditor.canPasteFromClipboard());
 			System.out.println(isEnabled());
 		}
@@ -192,7 +195,7 @@ IPropertyListener
 		super();
 	}
 
-	public void updateSelectableActions(ISelection selection) {
+	public void updateSelectableActions(final ISelection selection) {
 		if (this.activeEditor != null) {
 			this.cutAction.selectionChanged(selection);
 			this.copyAction.selectionChanged(selection);
@@ -209,14 +212,14 @@ IPropertyListener
 	/**
 	 * This creates an instance of the contributor.
 	 */
-	public InfomngmntActionBarContributor(int style)
+	public InfomngmntActionBarContributor(final int style)
 	{
 		super();
 		this.style = style;
 	}
 
 	@Override
-	public void init(IActionBars actionBars)
+	public void init(final IActionBars actionBars)
 	{
 		super.init(actionBars);
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
@@ -238,11 +241,13 @@ IPropertyListener
 		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), this.pasteAction);
 
 		this.undoAction = new UndoAction();
-		this.undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+		this.undoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				UimodelEditPlugin.getPlugin(), "icons/iconexperience/undo.png"));
 		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), this.undoAction);
 
 		this.redoAction = new RedoAction();
-		this.redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		this.redoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				UimodelEditPlugin.getPlugin(), "icons/iconexperience/redo.png"));
 		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
 	}
 
@@ -258,24 +263,24 @@ IPropertyListener
 	}
 
 	@Override
-	public void contributeToMenu(IMenuManager menuManager)
+	public void contributeToMenu(final IMenuManager menuManager)
 	{
 		super.contributeToMenu(menuManager);
 	}
 
 	@Override
-	public void contributeToStatusLine(IStatusLineManager statusLineManager)
+	public void contributeToStatusLine(final IStatusLineManager statusLineManager)
 	{
 		super.contributeToStatusLine(statusLineManager);
 	}
 
 	@Override
-	public void contributeToToolBar(IToolBarManager toolBarManager)
+	public void contributeToToolBar(final IToolBarManager toolBarManager)
 	{
 		super.contributeToToolBar(toolBarManager);
 	}
 
-	public void shareGlobalActions(IPage page, IActionBars actionBars)
+	public void shareGlobalActions(final IPage page, final IActionBars actionBars)
 	{
 		if ((page instanceof InformationEditor))
 		{
@@ -292,7 +297,7 @@ IPropertyListener
 	 * @deprecated
 	 */
 	@Deprecated
-	public void setActiveView(IViewPart part)
+	public void setActiveView(final IViewPart part)
 	{
 		IActionBars actionBars = part.getViewSite().getActionBars();
 		if (!(part instanceof PropertySheet))
@@ -314,7 +319,7 @@ IPropertyListener
 	}
 
 	@Override
-	public void setActiveEditor(IEditorPart part)
+	public void setActiveEditor(final IEditorPart part)
 	{
 		super.setActiveEditor(part);
 
@@ -335,7 +340,7 @@ IPropertyListener
 	}
 
 	@Override
-	public void setActivePage(IEditorPart part)
+	public void setActivePage(final IEditorPart part)
 	{
 
 
@@ -407,7 +412,7 @@ IPropertyListener
 	/**
 	 * This implements {@link org.eclipse.jface.action.IMenuListener} to help fill the context menus with contributions from the Edit menu.
 	 */
-	public void menuAboutToShow(IMenuManager menuManager)
+	public void menuAboutToShow(final IMenuManager menuManager)
 	{
 		// Add our standard marker.
 		//
@@ -444,13 +449,13 @@ IPropertyListener
 	/**
 	 * This inserts global actions before the "additions-end" separator.
 	 */
-	protected void addGlobalActions(IMenuManager menuManager)
+	protected void addGlobalActions(final IMenuManager menuManager)
 	{
 		String key = (this.style & ADDITIONS_LAST_STYLE) == 0 ? "additions-end" : "additions";
 
 	}
 
-	public void propertyChanged(Object source, int id)
+	public void propertyChanged(final Object source, final int id)
 	{
 		update();
 	}

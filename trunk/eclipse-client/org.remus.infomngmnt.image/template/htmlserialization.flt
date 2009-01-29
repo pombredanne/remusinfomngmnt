@@ -98,7 +98,7 @@
   		<div class="imageRep" style="margin: 0 position:relative; auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
   			<span class="systemfont" style="font-weight:bold;">Webshot</span>
   			<#if linkCount != 0>
-  			<div style="right:5px; width:16px; top: 0px; height:16px; position:absolute;"><a href="#" onmouseover="return overlib('Show/Hide comments');" onmouseout="return nd()"; onClick="showOverlays();"><img border="0" src="${.globals.jslibDir}/icons/iconexperience/messages.png" width="16" height="16"></a></div>
+  			<div style="right:5px; width:16px; top: 0px; height:16px; position:absolute;"><a href="#" onmouseover="return overlib('Show/Hide comments');" onmouseout="return nd()"; onClick="showOverlays();"><img border="0" src="${.globals.sharedResources.org_remus_infomngmnt_image_showCommentImage}" width="16" height="16"></a></div>
   			</#if>
   		</div>
   		<div style="position:relative;margin:10px;">

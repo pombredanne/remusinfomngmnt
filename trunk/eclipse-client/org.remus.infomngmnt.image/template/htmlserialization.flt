@@ -123,7 +123,7 @@
   	</div>
   	<#if exifCount != 0>
   	<div>
-  		<div class="image" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<div class="imageRep" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
   			<span class="systemfont" style="font-weight:bold;">Exif Data</span>
   		</div>
   		<table>

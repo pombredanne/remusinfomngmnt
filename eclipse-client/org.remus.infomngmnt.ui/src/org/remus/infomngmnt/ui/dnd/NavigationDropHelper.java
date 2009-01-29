@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 
 import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
@@ -239,6 +240,25 @@ public class NavigationDropHelper {
 										((SynchronizableObject) eObject).getSynchronizationMetaData(), InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__URL,null));
 							}
 						}						
+					}
+				} else {
+					/*
+					 * Check wherether target is sync-object
+					 * Only if the target is under remote-control we have
+					 * to add the new SynchronizationMetaData
+					 */
+					if (targetSyncData != null) {
+						SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
+						metadata.setRepositoryId(targetSyncData.getRepositoryId());
+						metadata.setSyncState(SynchronizationState.NOT_ADDED);
+						
+						compoundCommand.append(new SetCommand(
+								EditingUtil.getInstance().getNavigationEditingDomain(),
+								(EObject)object,
+								InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+								metadata)
+								);
+						
 					}
 				}
 			}

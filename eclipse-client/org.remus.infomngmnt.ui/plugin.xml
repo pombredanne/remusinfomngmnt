@@ -51,7 +51,7 @@
       <view
             allowMultiple="false"
             class="org.remus.infomngmnt.ui.views.MainViewPart"
-            icon="icons/sample.gif"
+            icon="icons/iconexperience/16/document.png"
             id="org.remus.infomngmnt.ui.main"
             name="Main"
             restorable="true">
@@ -75,7 +75,7 @@
             class="org.remus.infomngmnt.ui.editors.InformationEditor"
             contributorClass="org.remus.infomngmnt.ui.editors.InfomngmntActionBarContributor"
             extensions="info"
-            icon="icons/sample.gif"
+            icon="icons/iconexperience/16/document.png"
             id="org.remus.infomngmnt.ui.editors.InformationEditor"
             name="InformationInfoEditor">
       </editor>
@@ -194,9 +194,13 @@
             class="org.remus.infomngmnt.ui.handler.ShareCategoryHandler"
             commandId="org.remus.infomngmnt.ui.shareCategory">
          <activeWhen>
-            <reference
-                  definitionId="selectionAreLocalCategories">
-            </reference>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <test
+                     property="org.remus.infomngmnt.ui.canAdd">
+               </test>
+            </iterate>
          </activeWhen>
       </handler>
       <handler

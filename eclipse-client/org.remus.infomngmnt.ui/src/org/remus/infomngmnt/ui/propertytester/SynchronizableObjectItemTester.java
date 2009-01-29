@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.ui.propertytester;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.core.resources.IProject;
 
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
@@ -35,6 +36,10 @@ public class SynchronizableObjectItemTester extends PropertyTester {
 	public boolean test(final Object receiver, final String property, final Object[] args,
 			final Object expectedValue) {
 		if (receiver instanceof SynchronizableObject) {
+			// no sync for root categories.
+			if (((SynchronizableObject) receiver).getAdapter(IProject.class) != null) {
+				return false;
+			}
 			SynchronizationMetadata metaData = ((SynchronizableObject) receiver).getSynchronizationMetaData();
 			if (PROPERTY_REPLACECOMMIT.equals(property)) {
 				return metaData != null && metaData.getSyncState() != SynchronizationState.NOT_ADDED;

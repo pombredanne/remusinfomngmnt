@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.core.sync.ChangeSetExecutor;
+import org.remus.infomngmnt.core.sync.CheckoutJob;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -37,8 +38,6 @@ public class SynchronizationWizard extends Wizard {
 	public SynchronizationWizard(final int mode) {
 		this.mode = mode;
 		this.changeSetExecutor = new ChangeSetExecutor();
-		setNeedsProgressMonitor(true);
-		
 	}
 
 	@Override
@@ -64,10 +63,12 @@ public class SynchronizationWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		DiffModel diffModel = this.page1.getDiffModel();
-		EList<DiffElement> ownedElements = diffModel.getOwnedElements();
-		switch (this.mode) {
+		final EList<DiffElement> ownedElements = diffModel.getOwnedElements();
+		switch (SynchronizationWizard.this.mode) {
 		case CHECKOUTMODE:
-			this.changeSetExecutor.performCheckout(ownedElements);
+			CheckoutJob checkoutJob = new CheckoutJob(ownedElements, SynchronizationWizard.this.changeSetExecutor);
+			checkoutJob.setUser(true);
+			checkoutJob.schedule();
 			break;
 		default:
 			break;

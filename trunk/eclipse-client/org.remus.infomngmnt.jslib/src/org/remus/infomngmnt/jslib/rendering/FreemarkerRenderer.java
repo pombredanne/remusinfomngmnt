@@ -31,6 +31,7 @@ import freemarker.template.TemplateModelException;
 
 import org.remus.infomngmnt.jslib.StyleProvider;
 import org.remus.infomngmnt.jslib.TemplateLocation;
+import org.remus.infomngmnt.jslib.extension.CheckResourceReferenceJob;
 
 
 /**
@@ -64,6 +65,7 @@ public class FreemarkerRenderer {
 			this.cfg.setSharedVariable("defaultFont", StyleProvider.getSystemFont());
 			this.cfg.setSharedVariable("defaultFontStyle", StyleProvider.getSystemFontStyle());
 			this.cfg.setSharedVariable("defaultFontSize", StyleProvider.getSystemFontSize());
+			this.cfg.setSharedVariable("sharedResources", CheckResourceReferenceJob.map);
 		} catch (TemplateModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

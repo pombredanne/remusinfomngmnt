@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.ui.collapsiblebuttons;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -33,8 +35,13 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PlatformUI;
@@ -59,23 +66,76 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	private RemoteRepositoryContextMenu actionBar;
 	private final EditingDomain editingDomain;
 	private AddRemoteRepositoryAction addRepAction;
+	private StackLayout stackLayout;
+	private final AdapterImpl checkRepositoryCountAdapter = new AdapterImpl() {
+		@Override
+		public void notifyChanged(final Notification msg) {
+			int eventType = msg.getEventType();
+			switch (eventType) {
+			case Notification.ADD:
+			case Notification.ADD_MANY:
+			case Notification.REMOVE:
+			case Notification.REMOVE_MANY:
+				checkRepositories();
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+	private Composite descriptionText;
+	private Composite mainComp;
+	private RepositoryCollection repositories;
 	
 	public RemoteRepositoriesButtonBar() {
 		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 	}
 
+	protected void checkRepositories() {
+		if (this.repositories.getRepositories().size() == 0 && this.stackLayout.topControl != this.descriptionText) {
+			this.stackLayout.topControl = this.descriptionText;
+			this.mainComp.layout(true);
+		} else if (this.repositories.getRepositories().size() != 0 && this.stackLayout.topControl != this.viewer.getControl()){
+			this.stackLayout.topControl = this.viewer.getControl();
+			this.mainComp.layout(true);
+		}
+	}
+
 	@Override
 	public void createControl(final Composite parent) {
-		Tree tree = new Tree(parent, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		
+		this.mainComp = new Composite(parent, SWT.NONE);
+		this.mainComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		this.mainComp.setLayout(this.stackLayout = new StackLayout());
+		
+		this.descriptionText = new Composite(this.mainComp, SWT.NONE);
+		this.descriptionText.setBackground(getViewSite().getShell().getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+		this.descriptionText.setLayout(new GridLayout());
+		Link link = new Link(this.descriptionText, SWT.WRAP);
+		link.setBackground(this.descriptionText.getBackground());
+		link.setText("No repositories available. Click <a>here</a> to create a new repository.");
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData.verticalIndent = 5;
+		gridData.horizontalIndent = 5;
+		link.setLayoutData(gridData);
+		link.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				RemoteRepositoriesButtonBar.this.addRepAction.run();
+			}
+		});
+		
+		Tree tree = new Tree(this.mainComp, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.viewer = new TreeViewer(tree);
-		setControl(tree);
+		setControl(this.mainComp);
 		
 		initProvider();
 		initInput();
 		initOpen();
 		hookContextMenu();
 		hookActions();
+		checkRepositories();
 	}
 
 	private void hookActions() {
@@ -97,8 +157,9 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	}
 
 	private void initInput() {
-		RepositoryCollection repositories = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositories();
-		this.viewer.setInput(repositories);
+		this.repositories = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositories();
+		this.repositories.eAdapters().add(this.checkRepositoryCountAdapter);
+		this.viewer.setInput(this.repositories);
 	}
 
 	private void initProvider() {
@@ -152,6 +213,7 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	@Override
 	public void dispose() {
 		this.viewer.removeSelectionChangedListener(this.actionBar);
+		this.repositories.eAdapters().remove(this.checkRepositoryCountAdapter);
 		super.dispose();
 	}
 

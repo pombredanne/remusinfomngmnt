@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             creationFactory="org.remus.infomngmnt.link.LinkCreationFactory"
-            icon="icons/link.png"
+            icon="icons/iconexperience/link.png"
             name="Link"
             presentation="org.remus.infomngmnt.link.LinkRepresentation"
             type="LINK">
@@ -21,7 +21,7 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.link.ui.EditLinkPage"
-            icon="icons/link_edit.png"
+            icon="icons/iconexperience/link_edit.png"
             id="org.remus.infomngmnt.link.editPage"
             label="Edit Link"
             type="LINK">
@@ -46,7 +46,7 @@
       <wizard
             class="org.remus.infomngmnt.link.ui.NewLinkWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
-            icon="icons/link_new.png"
+            icon="icons/iconexperience/link_new.png"
             id="org.remus.infomngmnt.link.newLinkWizard"
             name="Link">
       </wizard>
@@ -80,6 +80,13 @@
                id="org.remus.infomngmnt.link.newLinkWizard">
          </newWizardShortcut>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.link.fittosizeimage"
+            resource="icons/iconexperience/fit_to_size.png">
+      </referenceResource>
    </extension>
 
 </plugin>

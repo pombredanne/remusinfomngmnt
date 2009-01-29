@@ -128,10 +128,8 @@ public class CommentImageDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.CLOSE_LABEL,
 				true);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
 	}
 
 	/**

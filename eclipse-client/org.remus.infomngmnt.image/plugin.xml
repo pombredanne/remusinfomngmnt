@@ -48,5 +48,12 @@
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.image.showCommentImage"
+            resource="icons/iconexperience/messages.png">
+      </referenceResource>
+   </extension>
 
 </plugin>

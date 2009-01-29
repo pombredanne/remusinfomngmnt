@@ -17,7 +17,10 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -35,9 +38,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -53,6 +58,7 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	private TreeViewer viewer;
 	private RemoteRepositoryContextMenu actionBar;
 	private final EditingDomain editingDomain;
+	private AddRemoteRepositoryAction addRepAction;
 	
 	public RemoteRepositoriesButtonBar() {
 		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
@@ -69,6 +75,12 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 		initInput();
 		initOpen();
 		hookContextMenu();
+		hookActions();
+	}
+
+	private void hookActions() {
+		this.addRepAction = new AddRemoteRepositoryAction();
+		
 	}
 
 	private void initOpen() {
@@ -115,6 +127,12 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 		getViewSite().registerContextMenu(getId(), contextMenu, new UnwrappingSelectionProvider(this));
 
 	}
+	
+	@Override
+	public void initToolbar(final IToolBarManager toolbarManager) {
+		toolbarManager.add(this.addRepAction);
+		toolbarManager.update(true);
+	}
 
 	public void addSelectionChangedListener(final ISelectionChangedListener listener) {
 		this.viewer.addSelectionChangedListener(listener);
@@ -148,6 +166,35 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 
 	public Viewer getViewer() {
 		return this.viewer;
+	}
+	
+	private class AddRemoteRepositoryAction extends Action {
+		public static final String CMD_ID = "org.remus.infomngmnt.ui.newRepository"; //$NON-NLS-1$
+		private IHandlerService service;
+		
+		AddRemoteRepositoryAction() {
+			setToolTipText("Add new repository");
+			setImageDescriptor(
+					ResourceManager.getPluginImageDescriptor(
+							UIPlugin.getDefault(), 
+							"icons/iconexperience/16/server_new.png"));
+		}
+		
+		@Override
+		public void run() {
+			if (this.service == null) {
+				this.service = (IHandlerService) getViewSite().getService(
+						IHandlerService.class);
+			}
+			try {
+				this.service.executeCommand(CMD_ID, null);
+			} catch (Exception e) {
+				ErrorDialog.openError(
+						getViewSite().getShell(), 
+						"Error executing command", "Error creating new repository", null);
+			}
+			
+		}
 	}
 
 }

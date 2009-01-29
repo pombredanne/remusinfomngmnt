@@ -25,25 +25,27 @@ import org.eclipse.ui.internal.FastViewBar;
 import org.eclipse.ui.internal.Perspective;
 import org.eclipse.ui.internal.WorkbenchPage;
 
-import org.remus.infomngmnt.search.ui.view.SearchView;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 @SuppressWarnings("restriction")
 public class OpenSearchHandler extends AbstractHandler {
 
+	public static final String PARAMTER_ID = "org.remus.infomngmnt.search.viewId"; //$NON-NLS-1$
 	private final boolean makeFast = false;
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		IWorkbenchWindow activeWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindow(event);
-		try {
-			openView(SearchView.ID, activeWorkbenchWindow);
-		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String parameter = event.getParameter(PARAMTER_ID);
+		if (parameter != null && parameter.length() > 0) {
+			IWorkbenchWindow activeWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindow(event);
+			try {
+				openView(parameter, activeWorkbenchWindow);
+			} catch (PartInitException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}

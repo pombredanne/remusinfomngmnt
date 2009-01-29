@@ -19,6 +19,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
+import org.remus.infomngmnt.common.ui.swt.InputPrompter;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -34,7 +36,7 @@ public class SearchFieldContribution extends WorkbenchWindowControlContribution 
 	/**
 	 * @param id
 	 */
-	public SearchFieldContribution(String id) {
+	public SearchFieldContribution(final String id) {
 		super(id);
 		// TODO Auto-generated constructor stub
 	}
@@ -43,16 +45,17 @@ public class SearchFieldContribution extends WorkbenchWindowControlContribution 
 	 * @see org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createControl(Composite parent) {
+	protected Control createControl(final Composite parent) {
+		
 		Text text = new Text(parent, SWT.SINGLE | SWT.LEAD | SWT.BORDER | SWT.SEARCH);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		text.setText("Search");
-
+//		text.setText("Search");
+		InputPrompter.addPrompt(text, "Enter your searchterm");
 		return text;
 	}
 
 	@Override
-	protected int computeWidth(Control control) {
+	protected int computeWidth(final Control control) {
 		return 300;
 	}
 

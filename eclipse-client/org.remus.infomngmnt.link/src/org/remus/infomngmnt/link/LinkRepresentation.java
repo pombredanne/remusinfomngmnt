@@ -13,19 +13,26 @@
 package org.remus.infomngmnt.link;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
+import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -116,39 +123,26 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	@Override
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
 	throws CoreException {
-		//boolean renderWebShot = InformationUtil.getChildByType(getValue(), SCREENSHOT_TYPE).isBoolValue();
-		StringWriter sw = new StringWriter();
-//		sw.append(HtmlSnippets.HTML_HEAD)
-//		.append(StyleProvider.STYLE_DEFINITION_START)
-//		.append(StyleProvider.getSystemFontDefinition())
-//		.append(StyleProvider.STYLE_DEFINITION_END)
-//		.append(JavaScriptSnippets.SCRIPT_SRC_IMAGES_JS)
-//		.append(JavaScriptSnippets.SCRIPT_SRC_ROUNDED_CORNERS_JS);
-//		if (renderWebShot) {
-//			sw.append(JavaScriptSnippets.SECTION_BOX_DEFINITION(WEBSHOT_SECTION_ID, 5));
-//		}
-		//sw.append(HtmlSnippets.HTML_HEAD_END_BODY_START)
-		sw.append("<p style=\"text-align:center;\">\r\n")
-		.append("<a href=\"").append(getValue().getStringValue())
-		.append("\" target=\"_blank\">")
-		.append(getValue().getStringValue())
-		.append("</a>")
-		.append("</p>\r\n");
-		if (true) {
-			sw.append("<div>");
-			//sw.append(HtmlSnippets.CREATE_SECTION_BOX("Webshot", WEBSHOT_SECTION_ID));
-			sw.append("<p>\r\n")
-			.append("<a href=\"javascript:fit2Page(\'")
-			.append(getValue().getId())
-			.append("\');\">Fit</a><br> <img name=\"")
-			.append(getValue().getId())
-			.append("\" src=\"")
-			.append(URI.createFileURI(getWebShotFile().getLocation().toOSString()).toString())
-			.append("\">")
-			.append("</div>");
+		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
+		InputStream templateIs = null;
+		InputStream contentsIs = getFile().getContents();
+		try {
+			templateIs = FileLocator.openStream(
+					Platform.getBundle(LinkActivator.PLUGIN_ID), 
+					new Path("template/htmlserialization.flt"), false);
+			FreemarkerRenderer.getInstance().process(
+					LinkActivator.PLUGIN_ID,
+					templateIs,
+					contentsIs,
+					returnValue, 
+					Collections.<String,String> singletonMap("imageHref", URI.createFileURI(this.imageHref).toString()));
+		} catch (IOException e) {
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations",e));
+		} finally {
+			StreamCloser.closeStreams(templateIs, contentsIs);
 		}
-		//sw.append(HtmlSnippets.HTML_BODY_END_HTML_END);
-		return new ByteArrayInputStream(sw.toString().getBytes());
+		return new ByteArrayInputStream(returnValue.toByteArray());
 	}
 
 }

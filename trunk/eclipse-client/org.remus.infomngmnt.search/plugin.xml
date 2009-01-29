@@ -57,8 +57,22 @@
             <command
                   commandId="org.remus.infomngmnt.search.openSearchView"
                   icon="icons/iconexperience/flashlight.png"
-                  label="Open Search"
+                  label="Open Advanced Search"
                   style="push">
+               <parameter
+                     name="org.remus.infomngmnt.search.viewId"
+                     value="org.remus.infomngmnt.search.ui.view.SearchView">
+               </parameter>
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.search.openSearchView"
+                  icon="icons/iconexperience/history.png"
+                  label="Open Search History"
+                  style="push">
+               <parameter
+                     name="org.remus.infomngmnt.search.viewId"
+                     value="org.remus.infomngmnt.search.ui.view.SearchHistoryView">
+               </parameter>
             </command>
          </toolbar>
          <toolbar
@@ -184,6 +198,11 @@
             defaultHandler="org.remus.infomngmnt.search.handler.OpenSearchHandler"
             id="org.remus.infomngmnt.search.openSearchView"
             name="name">
+         <commandParameter
+               id="org.remus.infomngmnt.search.viewId"
+               name="viewId"
+               optional="true">
+         </commandParameter>
       </command>
    </extension>
    <extension

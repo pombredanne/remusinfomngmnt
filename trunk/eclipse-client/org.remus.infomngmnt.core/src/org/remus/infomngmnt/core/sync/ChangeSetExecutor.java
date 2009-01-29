@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.diff.metamodel.AddModelElement;
@@ -37,7 +38,9 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
@@ -58,7 +61,7 @@ public class ChangeSetExecutor {
 	 * Performs a checkout.
 	 * @param ownedElements
 	 */
-	public void performCheckout(final EList<DiffElement> ownedElements) {
+	public void performCheckout(final EList<DiffElement> ownedElements, final IProgressMonitor monitor) {
 		for (DiffElement diffElement : ownedElements) {
 			if (diffElement instanceof AddModelElement) {
 				EObject rightElement = ((AddModelElement) diffElement).getRightElement();
@@ -75,6 +78,8 @@ public class ChangeSetExecutor {
 								informationUnit.setId(informationUnitListItem.getId());
 								informationUnit.setType(informationUnitListItem.getId());
 							}
+							IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(informationUnit2.getType());
+							infoTypeByType.getCreationFactory().handlePreSaving(informationUnit2, monitor);
 							IFile newFile = CategoryUtil.getProjectByCategory(remoteConvertedContainer).getFile(informationUnitListItem.getId() + ".info");
 							EditingUtil.getInstance().saveObjectToResource(newFile, informationUnit2);
 							informationUnitListItem.setWorkspacePath(newFile.getFullPath().toOSString());
@@ -84,7 +89,7 @@ public class ChangeSetExecutor {
 					}
 				}
 			}
-			performCheckout(diffElement.getSubDiffElements());
+			performCheckout(diffElement.getSubDiffElements(), monitor);
 		}
 	}
 

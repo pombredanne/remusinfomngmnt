@@ -241,7 +241,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 				if (child == null) {
 					child = memento.createChild(item.getId());
 				}
-				item.init(site,memento);
+				item.init(site,child);
 			}
 			this.activeBarId = memento.getString(ACTIVE_BAR);
 			if (memento.getInteger(VISIBLE_BUTTONS) != null) {

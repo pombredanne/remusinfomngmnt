@@ -18,7 +18,9 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
@@ -131,6 +133,14 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	private MenuManager contextMenu;
 
+	private final ArrayList<Object> expandedElements;
+
+	private final ArrayList<Object> selectedElements;
+
+	public NavigationSection() {
+		this.expandedElements = new ArrayList<Object>();
+		this.selectedElements = new ArrayList<Object>();
+	}
 	/**
 	 * Create contents of the view part
 	 * @param parent
@@ -180,6 +190,45 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	public void init(final IViewSite site, final IMemento memento) {
 		super.init(site, memento);
 		this.settings = UIPlugin.getDefault().getDialogSettings();
+		if (memento != null) {
+			ApplicationModelPool.getInstance().getModel();
+			IMemento[] children = memento.getChildren("expanded");
+			for (IMemento iMemento : children) {
+				String textData = iMemento.getTextData();
+				EObject eObject = EditingUtil.getInstance()
+					.getNavigationEditingDomain().getResourceSet()
+					.getEObject(URI.createURI(textData), true);
+				this.expandedElements.add(EditingUtil.getInstance()
+						.getNavigationEditingDomain().getWrapper(eObject));
+			}
+			children = memento.getChildren("selected");
+			for (IMemento iMemento : children) {
+				String textData = iMemento.getTextData();
+				EObject eObject = EditingUtil.getInstance()
+				.getNavigationEditingDomain().getResourceSet()
+				.getEObject(URI.createURI(textData), true);
+				this.selectedElements.add(EditingUtil.getInstance()
+						.getNavigationEditingDomain().getWrapper(eObject));
+			}
+		}
+	}
+	
+	@Override
+	public void saveState(final IMemento child) {
+		Object[] expandedElements = this.viewer.getExpandedElements();
+		for (Object object : expandedElements) {
+			if (object instanceof EObject) {
+				URI uri = EcoreUtil.getURI((EObject) object);
+				IMemento createChild = child.createChild("expanded");
+				createChild.putTextData(uri.toString());
+			}
+		}
+		Object[] array = ((IStructuredSelection) this.viewer.getSelection()).toArray();
+		for (Object object : array) {
+			URI uri = EcoreUtil.getURI((EObject) object);
+			IMemento createChild = child.createChild("selected");
+			createChild.putTextData(uri.toString());
+		}
 	}
 
 	private void initDrag() {
@@ -197,6 +246,8 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	private void initInput() {
 		this.viewer.setInput(ApplicationModelPool.getInstance().getModel());
+		this.viewer.setExpandedElements(this.expandedElements.toArray());
+		this.viewer.setSelection(new StructuredSelection(this.selectedElements), true);
 
 	}
 

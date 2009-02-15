@@ -34,6 +34,7 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.RemoteUtil;
 
 /**
@@ -57,22 +58,33 @@ public class CommitHandler extends AbstractRemoteHandler {
 					for (RemoteRepository remoteRepository : keySet) {
 						List<Adapter> items2commit = groupedRemoteRepository.get(remoteRepository);
 						for (Adapter item2commit : items2commit) {
-							if (item2commit instanceof Category) {
-								remoteRepository.getRepositoryImplementation().commit((Category)item2commit, monitor);
-								List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(item2commit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT);
-								for (InformationUnitListItem informationUnitListItem : allChildren) {
-									remoteRepository.getRepositoryImplementation().commit(informationUnitListItem, monitor);
-									
-								}
-							} else if (item2commit instanceof InformationUnitListItem) {
-								remoteRepository.getRepositoryImplementation().commit((InformationUnitListItem)item2commit, monitor);
-							}
-							SynchronizationMetadata adapter = (SynchronizationMetadata) item2commit.getAdapter(SynchronizationMetadata.class);
-							adapter.setSyncState(SynchronizationState.IN_SYNC);
+							recursivelyCommit(item2commit, monitor, remoteRepository.getRepositoryImplementation());
 						}
 					}
 				}
 				return Status.OK_STATUS;
+			}
+
+			private void recursivelyCommit(final Adapter item2commit, final IProgressMonitor monitor, final IRepository iRepository) {
+				String newHash = null;
+				if (item2commit instanceof Category) {
+					newHash = iRepository.commit((Category)item2commit, monitor);
+					List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(item2commit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT);
+					for (InformationUnitListItem informationUnitListItem : allChildren) {
+						recursivelyCommit(informationUnitListItem, monitor, iRepository);
+						
+					}
+					List<Category> catChildren = ModelUtil.getAllChildren(item2commit, InfomngmntPackage.Literals.CATEGORY);
+					for (Category category : catChildren) {
+						recursivelyCommit(category, monitor, iRepository);
+					}
+					newHash = iRepository.commit((Category)item2commit, monitor);
+				} else if (item2commit instanceof InformationUnitListItem) {
+					newHash = iRepository.commit((InformationUnitListItem)item2commit, monitor);
+				}
+				SynchronizationMetadata adapter = (SynchronizationMetadata) item2commit.getAdapter(SynchronizationMetadata.class);
+				adapter.setSyncState(SynchronizationState.IN_SYNC);
+				adapter.setHash(newHash);
 			}
 		};
 		job.setUser(true);

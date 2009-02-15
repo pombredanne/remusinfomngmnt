@@ -45,7 +45,7 @@ import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
 
-public class ChangeSetWizardPage extends WizardPage {
+public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
 
 	private Text parentCategoryText;
 	private Category selection;

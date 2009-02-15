@@ -56,7 +56,7 @@ import org.remus.infomngmnt.image.ImagePlugin;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class LoadImageRunnable extends CancelableRunnable {
-	
+
 	private String imagePath;
 	private InformationUnit rawImageDataNode;
 	private InformationUnit widhtImageNode;
@@ -87,7 +87,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 				if (this.domain == null) {
 					this.domain = EditingUtil.getInstance().createNewEditingDomain();
 				}
-				
+
 				final CompoundCommand cc = new CompoundCommand();
 				cc.append(new SetCommand(
 						this.domain,
@@ -128,17 +128,22 @@ public class LoadImageRunnable extends CancelableRunnable {
 								InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
 								childByType.getChildValues()));
 					} else {
-						childByType = InfomngmntFactory.eINSTANCE.createInformationUnit();
-						childByType.setType(ImagePlugin.NODE_NAME_EXIF);
+						if (exifData.size() > 0) {
+							childByType = InfomngmntFactory.eINSTANCE.createInformationUnit();
+							childByType.setType(ImagePlugin.NODE_NAME_EXIF);
+							cc.append(new AddCommand(
+									this.domain,
+									this.infoUnit.getChildValues(),
+									Collections.singleton(childByType)));
+						}
+					}
+					if (exifData.size() > 0) {
 						cc.append(new AddCommand(
 								this.domain,
-								this.infoUnit.getChildValues(),
-								Collections.singleton(childByType)));
+								childByType.getChildValues(),
+								exifData));
+
 					}
-					cc.append(new AddCommand(
-							this.domain,
-							childByType.getChildValues(),
-							exifData));
 				} else {
 					if (childByType != null) {
 						cc.append(new RemoveCommand(
@@ -146,10 +151,10 @@ public class LoadImageRunnable extends CancelableRunnable {
 								this.infoUnit,
 								InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
 								Collections.singleton(childByType)));
-						
+
 					}
 				}
-				
+
 				InputStream is = new FileInputStream(this.file);
 				// Reading src & height of the image:
 				ImageData imageData = new ImageData(is);
@@ -158,19 +163,19 @@ public class LoadImageRunnable extends CancelableRunnable {
 						this.widhtImageNode,
 						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
 						Long.valueOf(imageData.width)));
-				
+
 				cc.append(new SetCommand(
 						this.domain,
 						this.heightImageNode,
 						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
 						Long.valueOf(imageData.height)));
-				
+
 				cc.append(new SetCommand(
 						this.domain,
 						InformationUtil.getChildByType(this.infoUnit, ImagePlugin.ORIGINAL_FILEPATH),
 						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
 						this.imagePath));
-//				
+				//				
 				cc.setLabel("Set new image");
 				UIUtil.getDisplay().asyncExec(new Runnable() {
 					public void run() {
@@ -186,9 +191,9 @@ public class LoadImageRunnable extends CancelableRunnable {
 		return StatusCreator.newStatus("File not exisits or is not accessible");
 	}
 
-	
-	
-	
+
+
+
 
 	public void setImageNode(final InformationUnit infoUnit) {
 		this.infoUnit = infoUnit;

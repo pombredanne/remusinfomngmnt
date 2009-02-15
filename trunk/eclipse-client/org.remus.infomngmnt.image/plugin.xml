@@ -9,6 +9,9 @@
             name="Photo/Graphics"
             presentation="org.remus.infomngmnt.image.core.ImageInformationRepresentation"
             type="IMAGE">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.imagetransfer">
+         </validTransfers>
       </information>
    </extension>
    <extension
@@ -34,10 +37,14 @@
             type="IMAGE">
       </editPage>
       <transferpreferences
-            implementation="org.remus.infomngmnt.image.AbstractCreationPreferencePage:1"
+            implementation="org.remus.infomngmnt.image.preferences.ImageCreationPreferencePage"
             transferId="org.remus.infomngmnt.core.imagetransfer"
             typeId="IMAGE">
       </transferpreferences>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.image.ui.ImageCreationTrigger"
+            typeId="IMAGE">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

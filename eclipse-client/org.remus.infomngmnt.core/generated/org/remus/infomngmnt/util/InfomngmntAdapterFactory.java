@@ -193,8 +193,8 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createInformationUnitListItemToInformationUnitMapAdapter();
 			}
 			@Override
-			public Adapter caseInformationUnitListItemToSynchronizationActionMap(Map.Entry<InformationUnitListItem, SynchronizationAction> object) {
-				return createInformationUnitListItemToSynchronizationActionMapAdapter();
+			public Adapter caseSynchronizableObjectToSynchronizationActionMap(Map.Entry<SynchronizableObject, SynchronizationAction> object) {
+				return createSynchronizableObjectToSynchronizationActionMapAdapter();
 			}
 			@Override
 			public Adapter caseTag(Tag object) {
@@ -621,7 +621,7 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Information Unit List Item To Synchronization Action Map</em>}'.
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Synchronizable Object To Synchronization Action Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -630,7 +630,7 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter createInformationUnitListItemToSynchronizationActionMapAdapter() {
+	public Adapter createSynchronizableObjectToSynchronizationActionMapAdapter() {
 		return null;
 	}
 

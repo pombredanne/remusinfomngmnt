@@ -12,11 +12,21 @@
 
 package org.remus.infomngmnt.core.sync;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
+import org.eclipse.emf.query.conditions.eobjects.EObjectInstanceCondition;
+import org.eclipse.emf.query.conditions.eobjects.EObjectTypeRelationCondition;
+import org.eclipse.emf.query.statements.FROM;
+import org.eclipse.emf.query.statements.IQueryResult;
+import org.eclipse.emf.query.statements.SELECT;
+import org.eclipse.emf.query.statements.WHERE;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
@@ -28,6 +38,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
@@ -42,7 +53,7 @@ import org.remus.infomngmnt.core.remote.RemoteUtil;
  */
 public class ChangeSetManager {
 	
-	public ChangeSet createCheckOutChangeSet(final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository) {
+	public ChangeSet createCheckOutChangeSet(final Category localContainer, final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository) {
 		
 		/*
 		 * At first we make sure that all elements are located within
@@ -66,6 +77,17 @@ public class ChangeSetManager {
 			 * Now it's time to create a changeset
 			 */
 			ChangeSet createChangeSet = InfomngmntFactory.eINSTANCE.createChangeSet();
+			
+			
+			if (localContainer != null) {
+				createChangeSet.setTargetCategory(localContainer);
+				
+			}
+			
+			/*
+			 * We assume that 
+			 */
+			
 			/*
 			 * A changeset is always bound to a remote-repository.
 			 */
@@ -95,7 +117,6 @@ public class ChangeSetManager {
 				
 				
 				Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
-				createCategory.setId(new UniversalUniqueIdentifier().toString());
 				createCategory.setLabel(remoteObject.getName());
 				
 				SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
@@ -105,6 +126,7 @@ public class ChangeSetManager {
 				metadata.setRepositoryId(repository.getId());
 				metadata.setUrl(remoteObject.getUrl());
 				createCategory.setSynchronizationMetaData(metadata);
+				createCategory.setId(findId(createCategory, createChangeSetItem));
 				createChangeSetItem.setRemoteOriginalObject(copiedItem);
 				createChangeSetItem.setRemoteConvertedContainer(createCategory);
 				RemoteObject[] children = repositoryImplementation.getChildren(null, copiedItem, false);
@@ -131,7 +153,7 @@ public class ChangeSetManager {
 			final RemoteRepository remoteRepository, final Category parentCategory) {
 		if (remoteObject2 instanceof RemoteContainer) {
 			Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
-			createCategory.setId(new UniversalUniqueIdentifier().toString());
+			
 			
 			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
 			metadata.setHash(remoteObject2.getHash());
@@ -139,13 +161,14 @@ public class ChangeSetManager {
 			metadata.setSyncState(SynchronizationState.IN_SYNC);
 			metadata.setRepositoryId(remoteRepository.getId());
 			metadata.setUrl(remoteObject2.getUrl());
+			
 			createCategory.setSynchronizationMetaData(metadata);
+			createCategory.setId(findId(createCategory, changeSetItem));
 			if (parentCategory != null) {
 				parentCategory.getChildren().add(createCategory);
 			} else {
 				changeSetItem.setRemoteConvertedContainer(createCategory);
 			}
-			
 			
 			RemoteObject[] children = remoteRepository.getRepositoryImplementation().getChildren(new NullProgressMonitor(), (RemoteContainer) remoteObject2, false);
 			for (RemoteObject newChildren : children) {
@@ -155,7 +178,7 @@ public class ChangeSetManager {
 			InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE.createInformationUnitListItem();
 
 			// transfer the needed information
-			createInformationUnitListItem.setId(new UniversalUniqueIdentifier().toString());
+			
 			createInformationUnitListItem.setLabel(remoteObject2.getName());
 			createInformationUnitListItem.setType(remoteRepository.getRepositoryImplementation().getTypeIdByObject(remoteObject2));
 
@@ -174,13 +197,72 @@ public class ChangeSetManager {
 			changeSetItem.getRemoteFullObjectMap().put(
 					createInformationUnitListItem, prefetchedInformationUnit 
 			);
+			createInformationUnitListItem.setId(findId(createInformationUnitListItem, changeSetItem));
 			if (prefetchedInformationUnit != null) {
 				prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
 			}
 			prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
-			changeSetItem.getSyncInformationUnitActionMap().put(createInformationUnitListItem, SynchronizationAction.ADD_LOCAL);
+			changeSetItem.getSyncObjectActionMap().put(createInformationUnitListItem, SynchronizationAction.ADD_LOCAL);
 		}
+	}
+
+	private String findId(final Category createCategory, final ChangeSetItem changeSetItem) {
+		Category localContainer = ((ChangeSet) changeSetItem.eContainer()).getTargetCategory();
+		if (localContainer != null) {
+			if (((SynchronizableObject) localContainer).getSynchronizationMetaData() != null &&
+								createCategory.getSynchronizationMetaData().getUrl().equals(
+									((SynchronizableObject) localContainer).getSynchronizationMetaData().getUrl())) {
+				return localContainer.getId();
+			}
+			EObjectCondition typeRelationCondition = new EObjectInstanceCondition(InfomngmntPackage.Literals.CATEGORY);
+			EObjectCondition valueCondition = new EObjectCondition() {
+						@Override
+						public boolean isSatisfied(final EObject eObject) {
+							return ((SynchronizableObject) eObject).getSynchronizationMetaData() != null &&
+								createCategory.getSynchronizationMetaData().getUrl().equals(
+									((SynchronizableObject) eObject).getSynchronizationMetaData().getUrl());
+						}
+					};
+			SELECT select = new SELECT(new FROM(localContainer), new WHERE(typeRelationCondition.AND(valueCondition)));
+			IQueryResult execute = select.execute();
+			Set<? extends EObject> eObjects = execute.getEObjects();
+			if (eObjects.size() > 0) {
+				Iterator<? extends EObject> iterator = eObjects.iterator();
+				while (iterator.hasNext()) {
+					EObject eObject = iterator.next();
+					return ((Category) eObject).getId();
+				}
+			}
+		}
+		return new UniversalUniqueIdentifier().toString();
 		
+		
+	}
+	private String findId(final InformationUnitListItem infoUnit, final ChangeSetItem changeSetItem) {
+		Category localContainer = ((ChangeSet) changeSetItem.eContainer()).getTargetCategory();
+		if (localContainer != null) {
+			
+			EObjectCondition typeRelationCondition = new EObjectTypeRelationCondition(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
+			EObjectCondition valueCondition = new EObjectCondition() {
+						@Override
+						public boolean isSatisfied(final EObject eObject) {
+							return ((SynchronizableObject) eObject).getSynchronizationMetaData() != null && 
+								infoUnit.getSynchronizationMetaData().getUrl().equals(
+									((SynchronizableObject) eObject).getSynchronizationMetaData().getUrl());
+						}
+					};
+			SELECT select = new SELECT(new FROM(localContainer), new WHERE(typeRelationCondition.AND(valueCondition)));
+			IQueryResult execute = select.execute();
+			Set<? extends EObject> eObjects = execute.getEObjects();
+			if (eObjects.size() > 0) {
+				Iterator<? extends EObject> iterator = eObjects.iterator();
+				while (iterator.hasNext()) {
+					EObject eObject = iterator.next();
+					return ((InformationUnitListItem) eObject).getId();
+				}
+			}
+		}
+		return new UniversalUniqueIdentifier().toString();
 		
 	}
 	

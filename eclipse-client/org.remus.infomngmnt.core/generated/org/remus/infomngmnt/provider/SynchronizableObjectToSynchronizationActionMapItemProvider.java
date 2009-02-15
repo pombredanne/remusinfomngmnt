@@ -44,7 +44,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class InformationUnitListItemToSynchronizationActionMapItemProvider
+public class SynchronizableObjectToSynchronizationActionMapItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -59,7 +59,7 @@ public class InformationUnitListItemToSynchronizationActionMapItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InformationUnitListItemToSynchronizationActionMapItemProvider(AdapterFactory adapterFactory) {
+	public SynchronizableObjectToSynchronizationActionMapItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -91,9 +91,9 @@ public class InformationUnitListItemToSynchronizationActionMapItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_InformationUnitListItemToSynchronizationActionMap_key_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItemToSynchronizationActionMap_key_feature", "_UI_InformationUnitListItemToSynchronizationActionMap_type"),
-				 InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY,
+				 getString("_UI_SynchronizableObjectToSynchronizationActionMap_key_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizableObjectToSynchronizationActionMap_key_feature", "_UI_SynchronizableObjectToSynchronizationActionMap_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY,
 				 true,
 				 false,
 				 true,
@@ -113,9 +113,9 @@ public class InformationUnitListItemToSynchronizationActionMapItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_InformationUnitListItemToSynchronizationActionMap_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItemToSynchronizationActionMap_value_feature", "_UI_InformationUnitListItemToSynchronizationActionMap_type"),
-				 InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE,
+				 getString("_UI_SynchronizableObjectToSynchronizationActionMap_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizableObjectToSynchronizationActionMap_value_feature", "_UI_SynchronizableObjectToSynchronizationActionMap_type"),
+				 InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE,
 				 true,
 				 false,
 				 false,
@@ -125,14 +125,14 @@ public class InformationUnitListItemToSynchronizationActionMapItemProvider
 	}
 
 	/**
-	 * This returns InformationUnitListItemToSynchronizationActionMap.gif.
+	 * This returns SynchronizableObjectToSynchronizationActionMap.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/InformationUnitListItemToSynchronizationActionMap"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SynchronizableObjectToSynchronizationActionMap"));
 	}
 
 	/**
@@ -143,8 +143,8 @@ public class InformationUnitListItemToSynchronizationActionMapItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		Map.Entry<?, ?> informationUnitListItemToSynchronizationActionMap = (Map.Entry<?, ?>)object;
-		return "" + informationUnitListItemToSynchronizationActionMap.getKey() + " -> " + informationUnitListItemToSynchronizationActionMap.getValue();
+		Map.Entry<?, ?> synchronizableObjectToSynchronizationActionMap = (Map.Entry<?, ?>)object;
+		return "" + synchronizableObjectToSynchronizationActionMap.getKey() + " -> " + synchronizableObjectToSynchronizationActionMap.getValue();
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class InformationUnitListItemToSynchronizationActionMapItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Map.Entry.class)) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

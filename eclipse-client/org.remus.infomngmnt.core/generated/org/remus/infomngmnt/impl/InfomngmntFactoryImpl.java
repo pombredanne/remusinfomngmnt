@@ -41,7 +41,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 */
 	public static InfomngmntFactory init() {
 		try {
-			InfomngmntFactory theInfomngmntFactory = (InfomngmntFactory)EPackage.Registry.INSTANCE.getEFactory("http://remus-software.org/infomngmnt"); 
+			InfomngmntFactory theInfomngmntFactory = (InfomngmntFactory)EPackage.Registry.INSTANCE.getEFactory("http://remus-software.org/infomngmnt/1.0"); 
 			if (theInfomngmntFactory != null) {
 				return theInfomngmntFactory;
 			}
@@ -96,7 +96,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.CHANGE_SET_ITEM: return createChangeSetItem();
 			case InfomngmntPackage.CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createCategoryToSynchronizationActionMap();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP: return (EObject)createInformationUnitListItemToInformationUnitMap();
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createInformationUnitListItemToSynchronizationActionMap();
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createSynchronizableObjectToSynchronizationActionMap();
 			case InfomngmntPackage.TAG: return createTag();
 			case InfomngmntPackage.AVAILABLE_TAGS: return createAvailableTags();
 			default:
@@ -407,9 +407,9 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<InformationUnitListItem, SynchronizationAction> createInformationUnitListItemToSynchronizationActionMap() {
-		InformationUnitListItemToSynchronizationActionMapImpl informationUnitListItemToSynchronizationActionMap = new InformationUnitListItemToSynchronizationActionMapImpl();
-		return informationUnitListItemToSynchronizationActionMap;
+	public Map.Entry<SynchronizableObject, SynchronizationAction> createSynchronizableObjectToSynchronizationActionMap() {
+		SynchronizableObjectToSynchronizationActionMapImpl synchronizableObjectToSynchronizationActionMap = new SynchronizableObjectToSynchronizationActionMapImpl();
+		return synchronizableObjectToSynchronizationActionMap;
 	}
 
 	/**

@@ -284,9 +284,9 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<InformationUnitListItem, SynchronizationAction> informationUnitListItemToSynchronizationActionMap = (Map.Entry<InformationUnitListItem, SynchronizationAction>)theEObject;
-				T result = caseInformationUnitListItemToSynchronizationActionMap(informationUnitListItemToSynchronizationActionMap);
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<SynchronizableObject, SynchronizationAction> synchronizableObjectToSynchronizationActionMap = (Map.Entry<SynchronizableObject, SynchronizationAction>)theEObject;
+				T result = caseSynchronizableObjectToSynchronizationActionMap(synchronizableObjectToSynchronizationActionMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -735,17 +735,17 @@ public class InfomngmntSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Information Unit List Item To Synchronization Action Map</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Synchronizable Object To Synchronization Action Map</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Information Unit List Item To Synchronization Action Map</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Synchronizable Object To Synchronization Action Map</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseInformationUnitListItemToSynchronizationActionMap(Map.Entry<InformationUnitListItem, SynchronizationAction> object) {
+	public T caseSynchronizableObjectToSynchronizationActionMap(Map.Entry<SynchronizableObject, SynchronizationAction> object) {
 		return null;
 	}
 

@@ -689,7 +689,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected InformationUnitListItemToSynchronizationActionMapItemProvider informationUnitListItemToSynchronizationActionMapItemProvider;
+	protected SynchronizableObjectToSynchronizationActionMapItemProvider synchronizableObjectToSynchronizationActionMapItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link java.util.Map.Entry}.
@@ -698,12 +698,12 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public Adapter createInformationUnitListItemToSynchronizationActionMapAdapter() {
-		if (informationUnitListItemToSynchronizationActionMapItemProvider == null) {
-			informationUnitListItemToSynchronizationActionMapItemProvider = new InformationUnitListItemToSynchronizationActionMapItemProvider(this);
+	public Adapter createSynchronizableObjectToSynchronizationActionMapAdapter() {
+		if (synchronizableObjectToSynchronizationActionMapItemProvider == null) {
+			synchronizableObjectToSynchronizationActionMapItemProvider = new SynchronizableObjectToSynchronizationActionMapItemProvider(this);
 		}
 
-		return informationUnitListItemToSynchronizationActionMapItemProvider;
+		return synchronizableObjectToSynchronizationActionMapItemProvider;
 	}
 
 	/**
@@ -877,7 +877,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (changeSetItemItemProvider != null) changeSetItemItemProvider.dispose();
 		if (categoryToSynchronizationActionMapItemProvider != null) categoryToSynchronizationActionMapItemProvider.dispose();
 		if (informationUnitListItemToInformationUnitMapItemProvider != null) informationUnitListItemToInformationUnitMapItemProvider.dispose();
-		if (informationUnitListItemToSynchronizationActionMapItemProvider != null) informationUnitListItemToSynchronizationActionMapItemProvider.dispose();
+		if (synchronizableObjectToSynchronizationActionMapItemProvider != null) synchronizableObjectToSynchronizationActionMapItemProvider.dispose();
 		if (tagItemProvider != null) tagItemProvider.dispose();
 		if (availableTagsItemProvider != null) availableTagsItemProvider.dispose();
 	}

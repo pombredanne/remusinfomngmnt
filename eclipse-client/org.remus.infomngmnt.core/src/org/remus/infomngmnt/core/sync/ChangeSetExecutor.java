@@ -74,10 +74,10 @@ public class ChangeSetExecutor {
 						for (InformationUnitListItem informationUnitListItem : allChildren) {
 							InformationUnit informationUnit2 = changeSetItem.getRemoteFullObjectMap().get(informationUnitListItem);
 							if (informationUnit2 == null) {
-								InformationUnit informationUnit = this.changeSet.getRepository().getRepositoryImplementation().getFullObject(informationUnitListItem);
-								informationUnit.setId(informationUnitListItem.getId());
-								informationUnit.setType(informationUnitListItem.getId());
+								informationUnit2 = this.changeSet.getRepository().getRepositoryImplementation().getFullObject(informationUnitListItem);
 							}
+							informationUnit2.setId(informationUnitListItem.getId());
+							informationUnit2.setType(informationUnitListItem.getType());
 							IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(informationUnit2.getType());
 							infoTypeByType.getCreationFactory().handlePreSaving(informationUnit2, monitor);
 							IFile newFile = CategoryUtil.getProjectByCategory(remoteConvertedContainer).getFile(informationUnitListItem.getId() + ".info");

@@ -266,7 +266,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass informationUnitListItemToSynchronizationActionMapEClass = null;
+	private EClass synchronizableObjectToSynchronizationActionMapEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1290,7 +1290,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getChangeSetItem_SyncInformationUnitActionMap() {
+	public EReference getChangeSetItem_SyncObjectActionMap() {
 		return (EReference)changeSetItemEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -1362,8 +1362,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getInformationUnitListItemToSynchronizationActionMap() {
-		return informationUnitListItemToSynchronizationActionMapEClass;
+	public EClass getSynchronizableObjectToSynchronizationActionMap() {
+		return synchronizableObjectToSynchronizationActionMapEClass;
 	}
 
 	/**
@@ -1371,8 +1371,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getInformationUnitListItemToSynchronizationActionMap_Key() {
-		return (EReference)informationUnitListItemToSynchronizationActionMapEClass.getEStructuralFeatures().get(0);
+	public EReference getSynchronizableObjectToSynchronizationActionMap_Key() {
+		return (EReference)synchronizableObjectToSynchronizationActionMapEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1380,8 +1380,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getInformationUnitListItemToSynchronizationActionMap_Value() {
-		return (EAttribute)informationUnitListItemToSynchronizationActionMapEClass.getEStructuralFeatures().get(1);
+	public EAttribute getSynchronizableObjectToSynchronizationActionMap_Value() {
+		return (EAttribute)synchronizableObjectToSynchronizationActionMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1645,7 +1645,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__REMOTE_ORIGINAL_OBJECT);
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__LOCAL_CONTAINER);
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP);
-		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP);
+		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP);
 		createEReference(changeSetItemEClass, CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP);
 
 		categoryToSynchronizationActionMapEClass = createEClass(CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP);
@@ -1656,9 +1656,9 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(informationUnitListItemToInformationUnitMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__KEY);
 		createEReference(informationUnitListItemToInformationUnitMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__VALUE);
 
-		informationUnitListItemToSynchronizationActionMapEClass = createEClass(INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP);
-		createEReference(informationUnitListItemToSynchronizationActionMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY);
-		createEAttribute(informationUnitListItemToSynchronizationActionMapEClass, INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE);
+		synchronizableObjectToSynchronizationActionMapEClass = createEClass(SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP);
+		createEReference(synchronizableObjectToSynchronizationActionMapEClass, SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY);
+		createEAttribute(synchronizableObjectToSynchronizationActionMapEClass, SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE);
 
 		tagEClass = createEClass(TAG);
 		createEReference(tagEClass, TAG__INFO_UNITS);
@@ -1851,7 +1851,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEReference(getChangeSetItem_RemoteOriginalObject(), this.getRemoteContainer(), null, "remoteOriginalObject", null, 0, 1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangeSetItem_LocalContainer(), this.getCategory(), null, "localContainer", null, 0, 1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangeSetItem_SyncCategoryActionMap(), this.getCategoryToSynchronizationActionMap(), null, "syncCategoryActionMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getChangeSetItem_SyncInformationUnitActionMap(), this.getInformationUnitListItemToSynchronizationActionMap(), null, "syncInformationUnitActionMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getChangeSetItem_SyncObjectActionMap(), this.getSynchronizableObjectToSynchronizationActionMap(), null, "syncObjectActionMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangeSetItem_RemoteFullObjectMap(), this.getInformationUnitListItemToInformationUnitMap(), null, "remoteFullObjectMap", null, 0, -1, ChangeSetItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(categoryToSynchronizationActionMapEClass, Map.Entry.class, "CategoryToSynchronizationActionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
@@ -1862,9 +1862,9 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEReference(getInformationUnitListItemToInformationUnitMap_Key(), this.getInformationUnitListItem(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnitListItemToInformationUnitMap_Value(), this.getInformationUnit(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(informationUnitListItemToSynchronizationActionMapEClass, Map.Entry.class, "InformationUnitListItemToSynchronizationActionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getInformationUnitListItemToSynchronizationActionMap_Key(), this.getInformationUnitListItem(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getInformationUnitListItemToSynchronizationActionMap_Value(), this.getSynchronizationAction(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(synchronizableObjectToSynchronizationActionMapEClass, Map.Entry.class, "SynchronizableObjectToSynchronizationActionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSynchronizableObjectToSynchronizationActionMap_Key(), this.getSynchronizableObject(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizableObjectToSynchronizationActionMap_Value(), this.getSynchronizationAction(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tagEClass, Tag.class, "Tag", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTag_InfoUnits(), this.getInformationUnitListItem(), null, "infoUnits", null, 0, -1, Tag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

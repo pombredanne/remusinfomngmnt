@@ -27,24 +27,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Information Unit List Item To Synchronization Action Map</b></em>'.
+ * An implementation of the model object '<em><b>Synchronizable Object To Synchronization Action Map</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.SynchronizableObjectToSynchronizationActionMapImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.SynchronizableObjectToSynchronizationActionMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class InformationUnitListItemToSynchronizationActionMapImpl extends EObjectImpl implements BasicEMap.Entry<InformationUnitListItem,SynchronizationAction> {
+public class SynchronizableObjectToSynchronizationActionMapImpl extends EObjectImpl implements BasicEMap.Entry<SynchronizableObject,SynchronizationAction> {
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -53,7 +53,7 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * @generated
 	 * @ordered
 	 */
-	protected InformationUnitListItem key;
+	protected SynchronizableObject key;
 
 	/**
 	 * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
@@ -80,7 +80,7 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected InformationUnitListItemToSynchronizationActionMapImpl() {
+	protected SynchronizableObjectToSynchronizationActionMapImpl() {
 		super();
 	}
 
@@ -91,7 +91,7 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP;
+		return InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP;
 	}
 
 	/**
@@ -99,13 +99,13 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InformationUnitListItem getTypedKey() {
+	public SynchronizableObject getTypedKey() {
 		if (key != null && key.eIsProxy()) {
 			InternalEObject oldKey = (InternalEObject)key;
-			key = (InformationUnitListItem)eResolveProxy(oldKey);
+			key = (SynchronizableObject)eResolveProxy(oldKey);
 			if (key != oldKey) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY, oldKey, key));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY, oldKey, key));
 			}
 		}
 		return key;
@@ -116,7 +116,7 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InformationUnitListItem basicGetTypedKey() {
+	public SynchronizableObject basicGetTypedKey() {
 		return key;
 	}
 
@@ -125,11 +125,11 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTypedKey(InformationUnitListItem newKey) {
-		InformationUnitListItem oldKey = key;
+	public void setTypedKey(SynchronizableObject newKey) {
+		SynchronizableObject oldKey = key;
 		key = newKey;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY, oldKey, key));
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY, oldKey, key));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 		SynchronizationAction oldValue = value;
 		value = newValue == null ? VALUE_EDEFAULT : newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE, oldValue, value));
 	}
 
 	/**
@@ -161,10 +161,10 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
 				if (resolve) return getTypedKey();
 				return basicGetTypedKey();
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
 				return getTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -178,10 +178,10 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
-				setTypedKey((InformationUnitListItem)newValue);
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
+				setTypedKey((SynchronizableObject)newValue);
 				return;
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
 				setTypedValue((SynchronizationAction)newValue);
 				return;
 		}
@@ -196,10 +196,10 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
-				setTypedKey((InformationUnitListItem)null);
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
+				setTypedKey((SynchronizableObject)null);
 				return;
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
 				setTypedValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -214,9 +214,9 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY:
 				return key != null;
-			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
+			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE:
 				return value != VALUE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -272,7 +272,7 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InformationUnitListItem getKey() {
+	public SynchronizableObject getKey() {
 		return getTypedKey();
 	}
 
@@ -281,7 +281,7 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setKey(InformationUnitListItem key) {
+	public void setKey(SynchronizableObject key) {
 		setTypedKey(key);
 	}
 
@@ -311,9 +311,9 @@ public class InformationUnitListItemToSynchronizationActionMapImpl extends EObje
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public EMap<InformationUnitListItem, SynchronizationAction> getEMap() {
+	public EMap<SynchronizableObject, SynchronizationAction> getEMap() {
 		EObject container = eContainer();
-		return container == null ? null : (EMap<InformationUnitListItem, SynchronizationAction>)container.eGet(eContainmentFeature());
+		return container == null ? null : (EMap<SynchronizableObject, SynchronizationAction>)container.eGet(eContainmentFeature());
 	}
 
-} //InformationUnitListItemToSynchronizationActionMapImpl
+} //SynchronizableObjectToSynchronizationActionMapImpl

@@ -74,7 +74,7 @@ public interface IRepository {
 	 * @param item2commit
 	 * @param monitor
 	 */
-	void commit(SynchronizableObject item2commit, IProgressMonitor monitor);
+	String commit(SynchronizableObject item2commit, IProgressMonitor monitor);
 	
 	RemoteObject addToRepository(SynchronizableObject item, IProgressMonitor monitor);
 	

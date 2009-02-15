@@ -153,7 +153,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteOriginalObject"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/localContainer"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/syncCategoryActionMap"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/syncInformationUnitActionMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/syncObjectActionMap"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteFullObjectMap"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//CategoryToSynchronizationActionMap">
@@ -164,9 +164,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap/key"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap/value"/>
     </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItemToSynchronizationActionMap">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToSynchronizationActionMap/key"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItemToSynchronizationActionMap/value"/>
+    <genClasses ecoreClass="infomngmnt.ecore#//SynchronizableObjectToSynchronizationActionMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObjectToSynchronizationActionMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizableObjectToSynchronizationActionMap/value"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//Tag">
       <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Tag/infoUnits"/>

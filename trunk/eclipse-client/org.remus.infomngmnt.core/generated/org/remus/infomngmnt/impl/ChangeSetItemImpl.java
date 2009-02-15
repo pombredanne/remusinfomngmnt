@@ -34,6 +34,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
 
 /**
@@ -47,7 +48,7 @@ import org.remus.infomngmnt.SynchronizationAction;
  *   <li>{@link org.remus.infomngmnt.impl.ChangeSetItemImpl#getRemoteOriginalObject <em>Remote Original Object</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.ChangeSetItemImpl#getLocalContainer <em>Local Container</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.ChangeSetItemImpl#getSyncCategoryActionMap <em>Sync Category Action Map</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.ChangeSetItemImpl#getSyncInformationUnitActionMap <em>Sync Information Unit Action Map</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.ChangeSetItemImpl#getSyncObjectActionMap <em>Sync Object Action Map</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.ChangeSetItemImpl#getRemoteFullObjectMap <em>Remote Full Object Map</em>}</li>
  * </ul>
  * </p>
@@ -96,14 +97,14 @@ public class ChangeSetItemImpl extends AdapterImpl implements ChangeSetItem {
 	protected EMap<Category, SynchronizationAction> syncCategoryActionMap;
 
 	/**
-	 * The cached value of the '{@link #getSyncInformationUnitActionMap() <em>Sync Information Unit Action Map</em>}' map.
+	 * The cached value of the '{@link #getSyncObjectActionMap() <em>Sync Object Action Map</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSyncInformationUnitActionMap()
+	 * @see #getSyncObjectActionMap()
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap<InformationUnitListItem, SynchronizationAction> syncInformationUnitActionMap;
+	protected EMap<SynchronizableObject, SynchronizationAction> syncObjectActionMap;
 
 	/**
 	 * The cached value of the '{@link #getRemoteFullObjectMap() <em>Remote Full Object Map</em>}' map.
@@ -275,11 +276,11 @@ public class ChangeSetItemImpl extends AdapterImpl implements ChangeSetItem {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<InformationUnitListItem, SynchronizationAction> getSyncInformationUnitActionMap() {
-		if (syncInformationUnitActionMap == null) {
-			syncInformationUnitActionMap = new EcoreEMap<InformationUnitListItem,SynchronizationAction>(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP, InformationUnitListItemToSynchronizationActionMapImpl.class, this, InfomngmntPackage.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP);
+	public EMap<SynchronizableObject, SynchronizationAction> getSyncObjectActionMap() {
+		if (syncObjectActionMap == null) {
+			syncObjectActionMap = new EcoreEMap<SynchronizableObject,SynchronizationAction>(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP, SynchronizableObjectToSynchronizationActionMapImpl.class, this, InfomngmntPackage.CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP);
 		}
-		return syncInformationUnitActionMap;
+		return syncObjectActionMap;
 	}
 
 	/**
@@ -308,8 +309,8 @@ public class ChangeSetItemImpl extends AdapterImpl implements ChangeSetItem {
 				return basicSetRemoteOriginalObject(null, msgs);
 			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP:
 				return ((InternalEList<?>)getSyncCategoryActionMap()).basicRemove(otherEnd, msgs);
-			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP:
-				return ((InternalEList<?>)getSyncInformationUnitActionMap()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP:
+				return ((InternalEList<?>)getSyncObjectActionMap()).basicRemove(otherEnd, msgs);
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP:
 				return ((InternalEList<?>)getRemoteFullObjectMap()).basicRemove(otherEnd, msgs);
 		}
@@ -334,9 +335,9 @@ public class ChangeSetItemImpl extends AdapterImpl implements ChangeSetItem {
 			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP:
 				if (coreType) return getSyncCategoryActionMap();
 				else return getSyncCategoryActionMap().map();
-			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP:
-				if (coreType) return getSyncInformationUnitActionMap();
-				else return getSyncInformationUnitActionMap().map();
+			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP:
+				if (coreType) return getSyncObjectActionMap();
+				else return getSyncObjectActionMap().map();
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP:
 				if (coreType) return getRemoteFullObjectMap();
 				else return getRemoteFullObjectMap().map();
@@ -364,8 +365,8 @@ public class ChangeSetItemImpl extends AdapterImpl implements ChangeSetItem {
 			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP:
 				((EStructuralFeature.Setting)getSyncCategoryActionMap()).set(newValue);
 				return;
-			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP:
-				((EStructuralFeature.Setting)getSyncInformationUnitActionMap()).set(newValue);
+			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP:
+				((EStructuralFeature.Setting)getSyncObjectActionMap()).set(newValue);
 				return;
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP:
 				((EStructuralFeature.Setting)getRemoteFullObjectMap()).set(newValue);
@@ -394,8 +395,8 @@ public class ChangeSetItemImpl extends AdapterImpl implements ChangeSetItem {
 			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP:
 				getSyncCategoryActionMap().clear();
 				return;
-			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP:
-				getSyncInformationUnitActionMap().clear();
+			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP:
+				getSyncObjectActionMap().clear();
 				return;
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP:
 				getRemoteFullObjectMap().clear();
@@ -420,8 +421,8 @@ public class ChangeSetItemImpl extends AdapterImpl implements ChangeSetItem {
 				return localContainer != null;
 			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP:
 				return syncCategoryActionMap != null && !syncCategoryActionMap.isEmpty();
-			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP:
-				return syncInformationUnitActionMap != null && !syncInformationUnitActionMap.isEmpty();
+			case InfomngmntPackage.CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP:
+				return syncObjectActionMap != null && !syncObjectActionMap.isEmpty();
 			case InfomngmntPackage.CHANGE_SET_ITEM__REMOTE_FULL_OBJECT_MAP:
 				return remoteFullObjectMap != null && !remoteFullObjectMap.isEmpty();
 		}

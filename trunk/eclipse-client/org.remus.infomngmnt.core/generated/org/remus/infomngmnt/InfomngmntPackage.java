@@ -51,7 +51,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://remus-software.org/infomngmnt";
+	String eNS_URI = "http://remus-software.org/infomngmnt/1.0";
 
 	/**
 	 * The package namespace name.
@@ -1653,13 +1653,13 @@ public interface InfomngmntPackage extends EPackage {
 	int CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP = ADAPTER_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Sync Information Unit Action Map</b></em>' map.
+	 * The feature id for the '<em><b>Sync Object Action Map</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP = ADAPTER_FEATURE_COUNT + 4;
+	int CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP = ADAPTER_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Remote Full Object Map</b></em>' map.
@@ -1754,14 +1754,14 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl <em>Information Unit List Item To Synchronization Action Map</em>}' class.
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.SynchronizableObjectToSynchronizationActionMapImpl <em>Synchronizable Object To Synchronization Action Map</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl
-	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToSynchronizationActionMap()
+	 * @see org.remus.infomngmnt.impl.SynchronizableObjectToSynchronizationActionMapImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObjectToSynchronizationActionMap()
 	 * @generated
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP = 28;
+	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP = 28;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1770,7 +1770,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY = 0;
+	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY = 0;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1779,16 +1779,16 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = 1;
+	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = 1;
 
 	/**
-	 * The number of structural features of the '<em>Information Unit List Item To Synchronization Action Map</em>' class.
+	 * The number of structural features of the '<em>Synchronizable Object To Synchronization Action Map</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP_FEATURE_COUNT = 2;
+	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.TagImpl <em>Tag</em>}' class.
@@ -2974,15 +2974,15 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getChangeSetItem_SyncCategoryActionMap();
 
 	/**
-	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getSyncInformationUnitActionMap <em>Sync Information Unit Action Map</em>}'.
+	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getSyncObjectActionMap <em>Sync Object Action Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Sync Information Unit Action Map</em>'.
-	 * @see org.remus.infomngmnt.ChangeSetItem#getSyncInformationUnitActionMap()
+	 * @return the meta object for the map '<em>Sync Object Action Map</em>'.
+	 * @see org.remus.infomngmnt.ChangeSetItem#getSyncObjectActionMap()
 	 * @see #getChangeSetItem()
 	 * @generated
 	 */
-	EReference getChangeSetItem_SyncInformationUnitActionMap();
+	EReference getChangeSetItem_SyncObjectActionMap();
 
 	/**
 	 * Returns the meta object for the map '{@link org.remus.infomngmnt.ChangeSetItem#getRemoteFullObjectMap <em>Remote Full Object Map</em>}'.
@@ -3064,16 +3064,16 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getInformationUnitListItemToInformationUnitMap_Value();
 
 	/**
-	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Information Unit List Item To Synchronization Action Map</em>}'.
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Synchronizable Object To Synchronization Action Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Information Unit List Item To Synchronization Action Map</em>'.
+	 * @return the meta object for class '<em>Synchronizable Object To Synchronization Action Map</em>'.
 	 * @see java.util.Map.Entry
-	 * @model keyType="org.remus.infomngmnt.InformationUnitListItem"
+	 * @model keyType="org.remus.infomngmnt.SynchronizableObject"
 	 *        valueDataType="org.remus.infomngmnt.SynchronizationAction"
 	 * @generated
 	 */
-	EClass getInformationUnitListItemToSynchronizationActionMap();
+	EClass getSynchronizableObjectToSynchronizationActionMap();
 
 	/**
 	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
@@ -3081,10 +3081,10 @@ public interface InfomngmntPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Key</em>'.
 	 * @see java.util.Map.Entry
-	 * @see #getInformationUnitListItemToSynchronizationActionMap()
+	 * @see #getSynchronizableObjectToSynchronizationActionMap()
 	 * @generated
 	 */
-	EReference getInformationUnitListItemToSynchronizationActionMap_Key();
+	EReference getSynchronizableObjectToSynchronizationActionMap_Key();
 
 	/**
 	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
@@ -3092,10 +3092,10 @@ public interface InfomngmntPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
 	 * @see java.util.Map.Entry
-	 * @see #getInformationUnitListItemToSynchronizationActionMap()
+	 * @see #getSynchronizableObjectToSynchronizationActionMap()
 	 * @generated
 	 */
-	EAttribute getInformationUnitListItemToSynchronizationActionMap_Value();
+	EAttribute getSynchronizableObjectToSynchronizationActionMap_Value();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.Tag <em>Tag</em>}'.
@@ -4099,12 +4099,12 @@ public interface InfomngmntPackage extends EPackage {
 		EReference CHANGE_SET_ITEM__SYNC_CATEGORY_ACTION_MAP = eINSTANCE.getChangeSetItem_SyncCategoryActionMap();
 
 		/**
-		 * The meta object literal for the '<em><b>Sync Information Unit Action Map</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Sync Object Action Map</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CHANGE_SET_ITEM__SYNC_INFORMATION_UNIT_ACTION_MAP = eINSTANCE.getChangeSetItem_SyncInformationUnitActionMap();
+		EReference CHANGE_SET_ITEM__SYNC_OBJECT_ACTION_MAP = eINSTANCE.getChangeSetItem_SyncObjectActionMap();
 
 		/**
 		 * The meta object literal for the '<em><b>Remote Full Object Map</b></em>' map feature.
@@ -4167,14 +4167,14 @@ public interface InfomngmntPackage extends EPackage {
 		EReference INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP__VALUE = eINSTANCE.getInformationUnitListItemToInformationUnitMap_Value();
 
 		/**
-		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl <em>Information Unit List Item To Synchronization Action Map</em>}' class.
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.SynchronizableObjectToSynchronizationActionMapImpl <em>Synchronizable Object To Synchronization Action Map</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.remus.infomngmnt.impl.InformationUnitListItemToSynchronizationActionMapImpl
-		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToSynchronizationActionMap()
+		 * @see org.remus.infomngmnt.impl.SynchronizableObjectToSynchronizationActionMapImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObjectToSynchronizationActionMap()
 		 * @generated
 		 */
-		EClass INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP = eINSTANCE.getInformationUnitListItemToSynchronizationActionMap();
+		EClass SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP = eINSTANCE.getSynchronizableObjectToSynchronizationActionMap();
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
@@ -4182,7 +4182,7 @@ public interface InfomngmntPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__KEY = eINSTANCE.getInformationUnitListItemToSynchronizationActionMap_Key();
+		EReference SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__KEY = eINSTANCE.getSynchronizableObjectToSynchronizationActionMap_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
@@ -4190,7 +4190,7 @@ public interface InfomngmntPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute INFORMATION_UNIT_LIST_ITEM_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = eINSTANCE.getInformationUnitListItemToSynchronizationActionMap_Value();
+		EAttribute SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE = eINSTANCE.getSynchronizableObjectToSynchronizationActionMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.TagImpl <em>Tag</em>}' class.

@@ -80,8 +80,8 @@ public class ReplaceElementsJob extends Job {
 			}
 			else if (remoteObject instanceof RemoteContainer && synchronizableObject instanceof Category) {
 				monitor.setTaskName(NLS.bind("Found object in repository. Preparing replace for \'{0}\'", remoteObject.getName()));
-				ChangeSet changeSet = new ChangeSetManager().createCheckOutChangeSet(Collections.<RemoteContainer> singletonList((RemoteContainer)remoteObject), localRepository);
 				Category targetCategory = ((Category) synchronizableObject.eContainer());
+				ChangeSet changeSet = new ChangeSetManager().createCheckOutChangeSet(targetCategory, Collections.<RemoteContainer> singletonList((RemoteContainer)remoteObject), localRepository);
 				EditingDomain navigationEditingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
 				Command deleteCategory = CommandFactory.DELETE_CATEGORY((Category) synchronizableObject, navigationEditingDomain);
 				System.out.println(deleteCategory.canExecute());

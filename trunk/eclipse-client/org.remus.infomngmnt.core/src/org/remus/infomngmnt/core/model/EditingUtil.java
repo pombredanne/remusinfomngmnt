@@ -51,7 +51,7 @@ public class EditingUtil {
 
 	private final EditingDomain editingDomain;
 	private final ComposedAdapterFactory adapterFactory;
-	private final EditingDomain navigationEditingDomain;
+	private final AdapterFactoryEditingDomain navigationEditingDomain;
 
 	public static EditingUtil getInstance() {
 		if (EditingUtil.INSTANCE == null) {
@@ -311,7 +311,7 @@ public class EditingUtil {
 		return this.adapterFactory;
 	}
 
-	public EditingDomain getNavigationEditingDomain() {
+	public AdapterFactoryEditingDomain getNavigationEditingDomain() {
 		return this.navigationEditingDomain;
 	}
 }

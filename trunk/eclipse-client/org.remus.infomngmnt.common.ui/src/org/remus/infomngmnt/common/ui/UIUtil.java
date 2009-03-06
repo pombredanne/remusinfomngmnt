@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -35,6 +36,8 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 public class UIUtil {
 
 	public static WorkbenchWindowAdvisor fgPrimaryApplicationWorkbenchWindowAdvisor;
+	
+	private static ArrayContentProvider arcontentprovider = new ArrayContentProvider(); 
 
 
 	/**
@@ -129,6 +132,10 @@ public class UIUtil {
 			section = settings.getSection(sectionName);
 		}
 		return section;
+	}
+	
+	public static ArrayContentProvider getArrayContentProviderInstance() {
+		return arcontentprovider;
 	}
 
 

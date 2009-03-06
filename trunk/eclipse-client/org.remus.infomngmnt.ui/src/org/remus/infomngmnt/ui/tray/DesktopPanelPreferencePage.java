@@ -146,7 +146,7 @@ IWorkbenchPreferencePage {
 		this.avaialableTemplatesViewer = new TableViewer(avaiableTemplatesGroup, SWT.BORDER);
 		this.avaialableTemplatesViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		sashForm_1.setWeights(new int[] {7, 3 });
-		this.avaialableTemplatesViewer.setContentProvider(ArrayContentProvider.getInstance());
+		this.avaialableTemplatesViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.avaialableTemplatesViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {

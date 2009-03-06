@@ -51,6 +51,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Section;
 
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.databinding.CalendarComboModelToTarget;
 import org.remus.infomngmnt.common.ui.databinding.CalendarComboTargetToModel;
 import org.remus.infomngmnt.common.ui.databinding.RadioButtonGroupEnumBinding;
@@ -124,7 +125,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.table.setLayoutData(gd_table);
 
 		this.viewer = new CheckboxTableViewer(this.table);
-		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
+		this.viewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.viewer.setInput(InformationExtensionManager.getInstance().getTypes());
 		this.viewer.setLabelProvider(new LabelProvider() {
 			@Override

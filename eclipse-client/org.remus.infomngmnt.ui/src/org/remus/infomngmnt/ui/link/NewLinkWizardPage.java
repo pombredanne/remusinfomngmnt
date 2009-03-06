@@ -35,6 +35,7 @@ import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.LinkUtil;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
@@ -99,7 +100,7 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 		targetsGroup.setLayout(gridLayout_1);
 
 		this.tableViewer = new TableViewer(targetsGroup, SWT.FULL_SELECTION);
-		this.tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+		this.tableViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.tableViewer.setLabelProvider(new ITableLabelProvider() {
 
 			public Image getColumnImage(final Object element, final int columnIndex) {

@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Label;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 
 /**
@@ -58,7 +59,7 @@ public class GeneralCheckoutPage extends GeneralPage implements IMultipleInfoObj
 		gridData.widthHint = SWT.DEFAULT;
 		tableViewer.getControl().setLayoutData(gridData);
 		
-		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+		tableViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
 		tableViewer.setInput(this.infoUnits);
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {

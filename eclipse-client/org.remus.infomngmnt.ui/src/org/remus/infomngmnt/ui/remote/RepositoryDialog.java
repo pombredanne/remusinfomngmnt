@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
@@ -69,7 +70,7 @@ public class RepositoryDialog extends TitleAreaDialog {
 		setTitle("Repository connectors");
 		setMessage("Choose a connector to connect with");
 
-		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+		tableViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		tableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {

@@ -28,6 +28,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
 import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
 import org.remus.infomngmnt.common.ui.extension.IToolbarContribution;
 import org.remus.infomngmnt.common.ui.service.CommonServices;
@@ -55,7 +56,7 @@ public class TrayActionPreferences extends AbstractTrayPreferencePage {
 	@Override
 	public void createControl(final Composite parent) {
 		this.viewer = CheckboxTableViewer.newCheckList(parent, SWT.NONE);
-		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
+		this.viewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.viewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public Image getImage(final Object element) {

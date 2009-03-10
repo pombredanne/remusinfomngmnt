@@ -14,7 +14,8 @@ package org.aspencloud.calypso.ui.workbench.views.calendar.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.remus.calendartest.ccalendar.CCalendar;
+
+import org.remus.infomngmnt.ccalendar.CCalendar;
 
 public class ZoomInAction extends Action {
 	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.stuff.actions.ZoomInAction";

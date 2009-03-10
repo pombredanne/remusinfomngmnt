@@ -9,7 +9,7 @@
 *    Jeremy Dowdall <aspencloud@users.sourceforge.net> - initial API and implementation
 *****************************************************************************/
 
-package org.remus.calendartest.ccalendar;
+package org.remus.infomngmnt.ccalendar;
 
 
 import java.util.Date;
@@ -33,15 +33,15 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
-import org.remus.calendartest.ccalendar.actions.EditModelAction;
-import org.remus.calendartest.ccalendar.actions.MoveToTodayAction;
-import org.remus.calendartest.ccalendar.actions.RemoveAction;
 import org.remus.infomgmnt.provider.CalendarContentProvider;
 import org.remus.infomngmnt.calendar.model.EndEvent;
 import org.remus.infomngmnt.calendar.model.ModelFactory;
 import org.remus.infomngmnt.calendar.model.StartEvent;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
+import org.remus.infomngmnt.ccalendar.actions.EditModelAction;
+import org.remus.infomngmnt.ccalendar.actions.MoveToTodayAction;
+import org.remus.infomngmnt.ccalendar.actions.RemoveAction;
 
 
 /**

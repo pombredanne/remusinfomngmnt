@@ -25,12 +25,12 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.swt.widgets.Display;
-import org.remus.calendartest.ccalendar.CalendarViewer;
 import org.remus.infomngmnt.calendar.model.CEvent;
 import org.remus.infomngmnt.calendar.model.ModelPackage;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.impl.CEventImpl;
 import org.remus.infomngmnt.calendar.model.impl.TaskImpl;
+import org.remus.infomngmnt.ccalendar.CalendarViewer;
 
 public class TaskPart extends AbstractGraphicalEditPart implements Adapter {
 

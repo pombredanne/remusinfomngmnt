@@ -9,7 +9,7 @@
 *    Jeremy Dowdall <aspencloud@users.sourceforge.net> - initial API and implementation
 *****************************************************************************/
 
-package org.remus.calendartest.ccalendar.actions;
+package org.remus.infomngmnt.ccalendar.actions;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;

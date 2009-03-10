@@ -9,7 +9,7 @@
 *    Jeremy Dowdall <aspencloud@users.sourceforge.net> - initial API and implementation
 *****************************************************************************/
 
-package org.remus.calendartest.ccalendar;
+package org.remus.infomngmnt.ccalendar;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

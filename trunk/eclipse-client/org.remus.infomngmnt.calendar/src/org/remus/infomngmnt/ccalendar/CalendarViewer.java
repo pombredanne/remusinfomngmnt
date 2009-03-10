@@ -1,4 +1,4 @@
-package org.remus.calendartest.ccalendar;
+package org.remus.infomngmnt.ccalendar;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;

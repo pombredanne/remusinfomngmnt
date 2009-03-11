@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;bundle-version="2.4.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.remus.infomngmnt.common.core.md5,
+Export-Package: org.remus.infomngmnt.common.core.indexing,
+ org.remus.infomngmnt.common.core.md5,
  org.remus.infomngmnt.common.core.streams,
  org.remus.infomngmnt.common.core.util

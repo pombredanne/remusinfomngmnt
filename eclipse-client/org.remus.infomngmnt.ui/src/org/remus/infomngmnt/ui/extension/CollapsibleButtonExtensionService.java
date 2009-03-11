@@ -33,62 +33,67 @@ import org.remus.infomngmnt.ui.service.ICollapsibleButtonExtensionService;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class CollapsibleButtonExtensionService extends PluginRegistryDynamic implements ICollapsibleButtonExtensionService {
+public class CollapsibleButtonExtensionService extends PluginRegistryDynamic implements
+		ICollapsibleButtonExtensionService {
 
 	public CollapsibleButtonExtensionService() {
 		super(EXTENSION_POINT);
-		
+
 	}
-	
+
 	private Map<String, CollapsibleButtonBar> items;
-	
 
 	@Override
 	protected void init() {
 		this.items = new HashMap<String, CollapsibleButtonBar>();
-		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
-		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+				EXTENSION_POINT);
+		final IConfigurationElement[] configurationElements = extensionPoint
+				.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
 			try {
-				CollapsibleButtonBar item = (CollapsibleButtonBar) configurationElement.createExecutableExtension(CLASS_ATT);
+				final CollapsibleButtonBar item = (CollapsibleButtonBar) configurationElement
+						.createExecutableExtension(CLASS_ATT);
 				item.setId(configurationElement.getAttribute(ID_ATT));
 				item.setTitle(configurationElement.getAttribute(NAME_ATT));
 				item.setTooltip(configurationElement.getAttribute(TOOLTIP_ATT));
 				item.setContextId(configurationElement.getAttribute(CONTEXT_ID_ATT));
-				ImageDescriptor iconDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(
-						configurationElement.getContributor().getName(), configurationElement.getAttribute(ICON_ATT));
+				final ImageDescriptor iconDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(
+						configurationElement.getContributor().getName(), configurationElement
+								.getAttribute(ICON_ATT));
 				if (iconDescriptor != null) {
 					item.setIcon(iconDescriptor.createImage());
 				}
 				if (configurationElement.getAttribute(BIG_IMAGE_ATT) != null) {
-					ImageDescriptor bigImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(
-							configurationElement.getContributor().getName(), configurationElement.getAttribute(BIG_IMAGE_ATT));
+					final ImageDescriptor bigImageDescriptor = AbstractUIPlugin
+							.imageDescriptorFromPlugin(configurationElement.getContributor()
+									.getName(), configurationElement.getAttribute(BIG_IMAGE_ATT));
 					if (bigImageDescriptor != null) {
 						item.setBigIcon(bigImageDescriptor.createImage());
 					}
 				}
 				try {
 					item.setOrder(Integer.valueOf(configurationElement.getAttribute(ORDER_ATT)));
-				} catch (NumberFormatException e) {
+				} catch (final NumberFormatException e) {
 					// do nothing.
 				}
 				this.items.put(item.getId(), item);
-			} catch (CoreException e) {
+			} catch (final CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public Collection<CollapsibleButtonBar> getAllItems() {
-		List<CollapsibleButtonBar> itemsAsList = new LinkedList<CollapsibleButtonBar>(this.items.values());
+		final List<CollapsibleButtonBar> itemsAsList = new LinkedList<CollapsibleButtonBar>(
+				this.items.values());
 		Collections.sort(itemsAsList, new Comparator<CollapsibleButtonBar>() {
-			public int compare(final CollapsibleButtonBar arg0,
-					final CollapsibleButtonBar arg1) {
-				return ((Integer)arg0.getOrder()).compareTo(arg1.getOrder());
+			public int compare(final CollapsibleButtonBar arg0, final CollapsibleButtonBar arg1) {
+				return ((Integer) arg0.getOrder()).compareTo(arg1.getOrder());
 			}
 		});
 		return itemsAsList;
 	}
-	
+
 }

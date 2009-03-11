@@ -280,6 +280,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 			this.contextSwitcher.activate(element.getContextId());
 		}
 		if (!MainViewPart.this.renderedItems.contains(element.getId())) {
+			element.setToolkit(this.toolkit);
 			element.createControl(this.upperComp);
 			MainViewPart.this.renderedItems.add(element.getId());
 		}

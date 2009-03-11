@@ -39,61 +39,65 @@ public abstract class InformationFormPage extends FormPage {
 
 	private final FocusAdapter focusAdapter = new FocusAdapter() {
 		@Override
-		public void focusGained(FocusEvent e) {
+		public void focusGained(final FocusEvent e) {
 			ITextSelection selection = new TextSelection(1, 1);
 			getInfoEditor().getActionBarContributor().updateSelectableActions(selection);
 		}
 
 		@Override
-		public void focusLost(FocusEvent e) {
+		public void focusLost(final FocusEvent e) {
 			// do nothing
 		}
 	};
 
-	public InformationFormPage(FormEditor editor, String id, String title) {
+	public InformationFormPage(final FormEditor editor, final String id, final String title) {
 		super(editor, id, title);
 		this.registeredControls = new ArrayList<Control>();
 	}
 
-	protected void addControl(Control control) {
+	protected void addControl(final Control control) {
 		control.addFocusListener(this.focusAdapter);
 	}
 
 	protected Control getFocusControl() {
 		IManagedForm form = getManagedForm();
-		if (form == null)
+		if (form == null) {
 			return null;
+		}
 		Control control = form.getForm();
-		if (control == null || control.isDisposed())
+		if (control == null || control.isDisposed()) {
 			return null;
+		}
 		Display display = control.getDisplay();
 		Control focusControl = display.getFocusControl();
-		if (focusControl == null || focusControl.isDisposed())
+		if (focusControl == null || focusControl.isDisposed()) {
 			return null;
+		}
 		return focusControl;
 	}
 
-	public boolean performGlobalAction(String actionId) {
+	public boolean performGlobalAction(final String actionId) {
 		Control focusControl = getFocusControl();
-		if (focusControl == null)
+		if (focusControl == null) {
 			return false;
+		}
 
-		if (canPerformDirectly(actionId, focusControl))
+		if (canPerformDirectly(actionId, focusControl)) {
 			return true;
+		}
 
 		return false;
 	}
 
-	public boolean canPaste(Clipboard clipboard) {
-		return getFocusControl() instanceof Text
-		|| getFocusControl() instanceof StyledText;
+	public boolean canPaste(final Clipboard clipboard) {
+		return getFocusControl() instanceof Text || getFocusControl() instanceof StyledText;
 	}
 
 	/**
 	 * @param selection
 	 * @return
 	 */
-	public boolean canCopy(ISelection selection) {
+	public boolean canCopy(final ISelection selection) {
 		// clients overwrite
 		return false;
 	}
@@ -102,7 +106,7 @@ public abstract class InformationFormPage extends FormPage {
 	 * @param selection
 	 * @return
 	 */
-	public boolean canCut(ISelection selection) {
+	public boolean canCut(final ISelection selection) {
 		// clients overwrite
 		return false;
 	}
@@ -113,9 +117,7 @@ public abstract class InformationFormPage extends FormPage {
 		super.dispose();
 	}
 
-
-
-	protected boolean canPerformDirectly(String id, Control control) {
+	protected boolean canPerformDirectly(final String id, final Control control) {
 		if (control instanceof Text) {
 			Text text = (Text) control;
 			if (id.equals(ActionFactory.CUT.getId())) {
@@ -169,6 +171,5 @@ public abstract class InformationFormPage extends FormPage {
 	protected InformationEditor getInfoEditor() {
 		return (InformationEditor) getEditor();
 	}
-
 
 }

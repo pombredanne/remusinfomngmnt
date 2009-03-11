@@ -40,6 +40,17 @@ import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 
 /**
+ * <p>
+ * This class provides some basic key-features of
+ * the wizard which can be used for creating new
+ * information units.
+ * </p>
+ * <p>
+ * This class will create a new {@link InformationUnit} object,
+ * a {@link GeneralPage} and will 
+ * try to create a new information unit within the workspace.
+ * </p>
+ * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
@@ -74,6 +85,11 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		return null;
 	}
 
+	/**
+	 * Returns the {@link Category} object based
+	 * on the {@link GeneralPage#getCategoryString()}
+	 * @return the category
+	 */
 	protected Category findCategory() {
 		String parentCategoryValue = this.page1.getCategoryString();
 		return CategoryUtil.findCategory(parentCategoryValue, true);
@@ -131,9 +147,14 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		return nextPage;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
-	 */
+    /**
+     * initializes the wizard with the Workbench selection.
+     * At this time the Wizard pages are created with the 
+     * selected objects.
+     *
+     * @param workbench the current workbench
+     * @param selection the current object selection
+     */
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {

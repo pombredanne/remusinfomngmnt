@@ -18,6 +18,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -32,39 +33,44 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
+import org.remus.infomngmnt.common.ui.databinding.IEMFEditBindingProvider;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public abstract class AbstractInformationFormPage extends InformationFormPage {
-
-	private InformationUnit modelObject = null;
+public abstract class AbstractInformationFormPage extends InformationFormPage implements
+		IEMFEditBindingProvider {
 
 	public AbstractInformationFormPage() {
 		super(null, null, null);
 	}
 
+	private InformationUnit modelObject = null;
+
 	private boolean dirty = false;
+
 	protected AdapterFactoryEditingDomain editingDomain;
+
 	protected EMFDataBindingContext dataBindingContext;
+
 	private Text keyWordText;
+
 	private Text descriptionText;
 
 	@Override
-	public void setPartName(String partName) {
+	public void setPartName(final String partName) {
 		super.setPartName(partName);
 	}
-
-	protected abstract String getString();
 
 	@Override
 	public boolean isDirty() {
 		return this.dirty;
 	}
 
-	public void setDirty(boolean dirty) {
+	public void setDirty(final boolean dirty) {
 		if (dirty != this.dirty) {
 			this.dirty = dirty;
 			if (dirty) {
@@ -74,21 +80,25 @@ public abstract class AbstractInformationFormPage extends InformationFormPage {
 	}
 
 	/**
-	 * Binds a text control to a text control. The value to the model
-	 * object is set
+	 * Binds a text control to a text control. The value to the model object is
+	 * set
+	 * 
 	 * @param control
 	 * @param attribute
 	 */
-	protected void addDirtyOnTextModifyListener(Control control, EAttribute attribute) {
+	protected void addDirtyOnTextModifyListener(final Control control, final EAttribute attribute) {
 
-		IObservableValue mObs = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), attribute);
-		ISWTObservableValue uObs = SWTObservables.observeDelayedValue(100, SWTObservables.observeText(control, SWT.Modify));
-		this.dataBindingContext.bindValue(uObs, mObs,null,null);
+		IObservableValue mObs = EMFEditObservables.observeValue(Realm.getDefault(),
+				this.editingDomain, getModelObject(), attribute);
+		ISWTObservableValue uObs = SWTObservables.observeDelayedValue(100, SWTObservables
+				.observeText(control, SWT.Modify));
+		this.dataBindingContext.bindValue(uObs, mObs, null, null);
 	}
 
-	protected void doCreateSemanticSection(Composite parent, FormToolkit toolkit) {
+	protected void doCreateSemanticSection(final Composite parent, final FormToolkit toolkit) {
 		final Section semanticsSection = toolkit.createSection(parent,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
+						| ExpandableComposite.EXPANDED);
 		final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		semanticsSection.setLayoutData(gd_semanticsSection);
 		semanticsSection.setText("Semantics");
@@ -108,22 +118,23 @@ public abstract class AbstractInformationFormPage extends InformationFormPage {
 
 		toolkit.createLabel(composite_2, "Description:", SWT.NONE);
 
-		this.descriptionText = toolkit.createText(composite_2, null, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		this.descriptionText = toolkit.createText(composite_2, null, SWT.WRAP | SWT.V_SCROLL
+				| SWT.MULTI);
 		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_descriptionText.heightHint = 70;
 		this.descriptionText.setLayoutData(gd_descriptionText);
 
-		// EMF Databinding
-		ISWTObservableValue swtKeyWords = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.keyWordText, SWT.Modify));
-		IObservableValue emfKeyWord = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS);
-		this.dataBindingContext.bindValue(swtKeyWords, emfKeyWord, null, null);
-
-		ISWTObservableValue swtDescription = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.descriptionText, SWT.Modify));
-		IObservableValue emfDescription = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
-		this.dataBindingContext.bindValue(swtDescription, emfDescription, null, null);
-
 		addControl(this.keyWordText);
 		addControl(this.descriptionText);
+
+	}
+
+	protected void bindValuesToUi() {
+
+		BindingUtil.createTextAndBind(this.keyWordText, getModelObject(),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS, this);
+		BindingUtil.createTextAndBind(this.descriptionText, getModelObject(),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS, this);
 
 	}
 
@@ -131,15 +142,23 @@ public abstract class AbstractInformationFormPage extends InformationFormPage {
 		return this.modelObject;
 	}
 
-	public void setModelObject(InformationUnit modelObject) {
+	public void setModelObject(final InformationUnit modelObject) {
 		this.modelObject = modelObject;
 	}
 
-	public void setEditingDomain(AdapterFactoryEditingDomain editingDomain) {
+	public EditingDomain getEditingDomain() {
+		return this.editingDomain;
+	}
+
+	public EMFDataBindingContext getDatabindingContext() {
+		return this.dataBindingContext;
+	}
+
+	public void setEditingDomain(final AdapterFactoryEditingDomain editingDomain) {
 		this.editingDomain = editingDomain;
 	}
 
-	public void setBindingContext(EMFDataBindingContext ctx) {
+	public void setBindingContext(final EMFDataBindingContext ctx) {
 		this.dataBindingContext = ctx;
 
 	}

@@ -77,7 +77,15 @@
             extensions="info"
             icon="icons/iconexperience/16/document.png"
             id="org.remus.infomngmnt.ui.editors.InformationEditor"
-            name="InformationInfoEditor">
+            name="InformationEditor">
+      </editor>
+      <editor
+            class="org.remus.infomngmnt.ui.calendar.CalendarEditor"
+            default="false"
+            extensions="calendar"
+            icon="icons/iconexperience/16/calendar.png"
+            id="org.remus.infomngmnt.ui.editor1"
+            name="Calendar">
       </editor>
    </extension>
    <extension
@@ -335,6 +343,14 @@
             name="Remote Repositories"
             order="30"
             tooltip="Remote Repositories Tooltip">
+      </collapsibleButton>
+      <collapsibleButton
+            bigImage="icons/iconexperience/24/calendar.png"
+            class="org.remus.infomngmnt.ui.collapsiblebuttons.CalendarSection"
+            icon="icons/iconexperience/16/calendar.png"
+            id="org.remus.infomngmnt.ui.collapsiblebuttons.CalendarSection"
+            name="Calendar"
+            order="25">
       </collapsibleButton>
    </extension>
    <extension

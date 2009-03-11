@@ -23,18 +23,18 @@ import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 public class EditLinkPage extends AbstractInformationFormPage {
 
-
 	private Text text;
+
 	@Override
-	protected void createFormContent(IManagedForm managedForm) {
+	protected void createFormContent(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		final Section generalSection = toolkit.createSection(body,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
 		generalSection.setText("General");
@@ -52,22 +52,27 @@ public class EditLinkPage extends AbstractInformationFormPage {
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(composite, SWT.NONE);
 
-		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.text, SWT.Modify));
-		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables
+				.observeText(this.text, SWT.Modify));
+		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(),
+				this.editingDomain, getModelObject(),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		this.dataBindingContext.bindValue(swtLink, emfLink, null, null);
 
 		toolkit.createHyperlink(composite, "Open Url in System-Browser", SWT.NONE);
 		new Label(composite, SWT.NONE);
 
-		final ImageHyperlink refreshWebshotImageHyperlink = toolkit.createImageHyperlink(composite, SWT.NONE);
+		final ImageHyperlink refreshWebshotImageHyperlink = toolkit.createImageHyperlink(composite,
+				SWT.NONE);
 		refreshWebshotImageHyperlink.setText("Refresh Webshot");
 		new Label(composite, SWT.NONE);
 
-		final ImageHyperlink refreshSearchableContentImageHyperlink = toolkit.createImageHyperlink(composite, SWT.NONE);
+		final ImageHyperlink refreshSearchableContentImageHyperlink = toolkit.createImageHyperlink(
+				composite, SWT.NONE);
 		refreshSearchableContentImageHyperlink.setText("Refresh searchable content");
 
-		final Section section_1 = toolkit.createSection(body,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		section_1.setText("New Section");
 
@@ -77,14 +82,6 @@ public class EditLinkPage extends AbstractInformationFormPage {
 
 		doCreateSemanticSection(body, toolkit);
 
-	}
-
-
-
-	@Override
-	protected String getString() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

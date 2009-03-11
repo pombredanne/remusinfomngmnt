@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Tom Seidel, Remus Software
+ * Copyright (c) 2009 Tom Seidel, Remus Software
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,30 +9,25 @@
  * Contributors:
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
-package org.remus.infomngmnt.common.service;
 
-import org.eclipse.swt.widgets.Shell;
+package org.remus.infomngmnt.common.ui.databinding;
+
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
 /**
- * <p>
- * This interface is used as as an OSGi Service definition which enables a
- * client to move the application into the tray or restore it from there.
- * </p>
+ * This interface defines a class that provides the two essential objects for
+ * EMF Databinding. It is used to make API easier.
  * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
- * @since 1.0
  */
-public interface ITrayService {
+public interface IEMFEditBindingProvider extends IEditingDomainProvider {
 
 	/**
-	 * Restores an application from tray. If the application is already "trayed"
-	 * this method has no effect.
+	 * Returns the appropriate Databinding Context
 	 * 
-	 * @param shell
-	 * @since 1.0
+	 * @return the databindig context
 	 */
-	void restoreFromTray(Shell shell);
-
-	void moveToTray(Shell shell);
+	EMFDataBindingContext getDatabindingContext();
 
 }

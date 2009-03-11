@@ -44,7 +44,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
@@ -125,7 +124,6 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	private AdapterFactoryContentProvider contentProvider;
 	private ILabelProvider labelProvider;
 	private TreeViewer viewer;
-	private TreeViewerColumn tvc1;
 	private Action linkEditorAction;
 	private boolean linkEditor;
 	private IDialogSettings settings;

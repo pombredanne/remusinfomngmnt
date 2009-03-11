@@ -18,26 +18,42 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
+ * <p>
+ * An item which is the main implementation for the extension-point
+ * <code>org.remus.infomngmnt.ui.collapsibleButtonBar</code>. This class
+ * describes the appearance and behavior of the defined collapsible button bar,
+ * which can be found mostly as viewpart in the left corner of the remus
+ * application.
+ * </p>
+ * <p>
+ * Clients must extend this class for creating new collapisble items. This class
+ * is not intended to be instantiated.
+ * </p>
+ * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
+ * @since 1.0
  */
 public abstract class CollapsibleButtonBar {
-	
+
 	private String id;
-	
+
 	private String title;
-	
+
 	private String tooltip;
-	
+
 	private Image icon;
-	
+
 	private Image bigIcon;
-	
+
 	private Control control;
-	
+
 	private String contextId;
-	
+
+	private FormToolkit toolkit;
+
 	public String getContextId() {
 		return this.contextId;
 	}
@@ -49,7 +65,15 @@ public abstract class CollapsibleButtonBar {
 	private int order = Integer.MAX_VALUE;
 
 	private IViewSite viewSite;
-	
+
+	/**
+	 * Creates the graphical content of this control. Clients must, or should
+	 * override this method. <b>IMPORTANT: </b>In this method you also have to
+	 * call {@link #setControl(Control)}.
+	 * 
+	 * @param parent
+	 *            the parent control
+	 */
 	public void createControl(final Composite parent) {
 		// does nothing by default.
 	}
@@ -112,26 +136,24 @@ public abstract class CollapsibleButtonBar {
 	public void setOrder(final int order) {
 		this.order = order;
 	}
-	
+
 	public void dispose() {
 		// nothing by default
 	}
-	
+
 	public void setFocus() {
 		// does nothing by default.
 	}
 
 	public void handleDeselect() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void handleSelect() {
 		// TODO Auto-generated method stub
-		
-	}
 
-	
+	}
 
 	protected IViewSite getViewSite() {
 		return this.viewSite;
@@ -139,7 +161,7 @@ public abstract class CollapsibleButtonBar {
 
 	public void saveState(final IMemento child) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void init(final IViewSite site, final IMemento memento) {
@@ -148,9 +170,15 @@ public abstract class CollapsibleButtonBar {
 
 	public void initToolbar(final IToolBarManager toolbarManager) {
 		// does nothing by default
-		
+
 	}
-	
-	
+
+	public FormToolkit getToolkit() {
+		return this.toolkit;
+	}
+
+	public void setToolkit(final FormToolkit toolkit) {
+		this.toolkit = toolkit;
+	}
 
 }

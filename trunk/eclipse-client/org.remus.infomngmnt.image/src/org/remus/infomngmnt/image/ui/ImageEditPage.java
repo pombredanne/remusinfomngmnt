@@ -60,7 +60,6 @@ import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -71,16 +70,18 @@ public class ImageEditPage extends AbstractInformationFormPage {
 	private Text text;
 	private boolean keepRatio = true;
 	private float ratio = 0;
-	private final Action keepRationAction = new Action("",IAction.AS_CHECK_BOX) {
+	private final Action keepRationAction = new Action("", IAction.AS_CHECK_BOX) {
 		@Override
 		public ImageDescriptor getImageDescriptor() {
-			return ImageDescriptor.createFromImage(
-					ResourceManager.getPluginImage(ImagePlugin.getDefault(), "icons/iconexperience/fit_to_size.png"));
+			return ImageDescriptor.createFromImage(ResourceManager.getPluginImage(ImagePlugin
+					.getDefault(), "icons/iconexperience/fit_to_size.png"));
 		};
+
 		@Override
 		public String getToolTipText() {
 			return "Keep Aspect ratio";
 		};
+
 		@Override
 		public void run() {
 			if (isChecked()) {
@@ -89,6 +90,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 			ImageEditPage.this.keepRatio = isChecked();
 		};
 	};
+
 	@Override
 	protected void createFormContent(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
@@ -97,8 +99,8 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		final Section generalSection = toolkit.createSection(body,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
 		generalSection.setText("General");
@@ -115,48 +117,51 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		this.text = toolkit.createText(composite, null, SWT.READ_ONLY);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 
-		
 		new Label(composite, SWT.NONE);
 
-		final Hyperlink openImageWithExternalApp = toolkit.createHyperlink(composite, "Open Image with the default external application", SWT.NONE);
-		openImageWithExternalApp.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+		final Hyperlink openImageWithExternalApp = toolkit.createHyperlink(composite,
+				"Open Image with the default external application", SWT.NONE);
+		openImageWithExternalApp.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4,
+				1));
 		openImageWithExternalApp.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				IFile adapter = (IFile) getModelObject().getAdapter(IFile.class);
 				IFolder folder = adapter.getParent().getFolder(new Path(getModelObject().getId()));
 				if (folder.exists()) {
-					InformationUnit origString = InformationUtil.getChildByType(getModelObject(), ImagePlugin.ORIGINAL_FILEPATH);
+					InformationUnit origString = InformationUtil.getChildByType(getModelObject(),
+							ImagePlugin.ORIGINAL_FILEPATH);
 					IPath path = new Path(origString.getStringValue());
-					IFile imageFile = folder.getFile(new Path(getModelObject().getId()).addFileExtension(path.getFileExtension()));
+					IFile imageFile = folder.getFile(new Path(getModelObject().getId())
+							.addFileExtension(path.getFileExtension()));
 					Program.launch(imageFile.getLocation().toOSString());
 				}
 			}
 		});
 		new Label(composite, SWT.NONE);
 
-		final Hyperlink setCommentsInImage = toolkit.createHyperlink(composite,"Set Comments within image", SWT.NONE);
+		final Hyperlink setCommentsInImage = toolkit.createHyperlink(composite,
+				"Set Comments within image", SWT.NONE);
 		setCommentsInImage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		setCommentsInImage.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
-				CommentImageDialog dialog = new CommentImageDialog(
-						getSite().getShell(),
-						getModelObject(),
-						ImageEditPage.this.editingDomain);
+				CommentImageDialog dialog = new CommentImageDialog(getSite().getShell(),
+						getModelObject(), ImageEditPage.this.editingDomain);
 				dialog.open();
 			}
 		});
 		new Label(composite, SWT.NONE);
 
-		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite, "Change image",SWT.NONE);
+		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite, "Change image",
+				SWT.NONE);
 		changeImageHyperlink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		changeImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				FileDialog fd = new FileDialog(getSite().getShell());
-				fd.setFilterExtensions(new String[] {"*.jpg;*.jpeg;*.png;*.gif;*.bmp"});
-				fd.setFilterNames(new String[] {"Supported Images (JPG,PNG,GIF,BMP)"});
+				fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" });
+				fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
 				String open = fd.open();
 				if (open != null) {
 					LoadImageRunnable loadImage = new LoadImageRunnable();
@@ -177,17 +182,19 @@ public class ImageEditPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		
-//		final ImageHyperlink editExifDataLink = toolkit.createImageHyperlink(composite, SWT.NONE);
-//		editExifDataLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
-//		editExifDataLink.setText("Change image");
-//		editExifDataLink.addHyperlinkListener(new HyperlinkAdapter() {
-//			@Override
-//			public void linkActivated(final HyperlinkEvent e) {
-//				
-//			}
-//		});
-		
+
+		// final ImageHyperlink editExifDataLink =
+		// toolkit.createImageHyperlink(composite, SWT.NONE);
+		// editExifDataLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+		// false, false, 4, 1));
+		// editExifDataLink.setText("Change image");
+		// editExifDataLink.addHyperlinkListener(new HyperlinkAdapter() {
+		// @Override
+		// public void linkActivated(final HyperlinkEvent e) {
+		//				
+		// }
+		// });
+
 		toolkit.createLabel(composite, "Width", SWT.NONE);
 
 		this.widthText = toolkit.createText(composite, null, SWT.NONE);
@@ -196,26 +203,25 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		this.widthText.setLayoutData(gd_widthText);
 		this.widthText.addVerifyListener(new VerifyListener() {
 			public void verifyText(final VerifyEvent e) {
-				 Pattern pattern = Pattern.compile("[0-9]*");
-				 Matcher m = pattern.matcher(e.text);
-				 // ONLY NUMERICAL VALUES ARE ACCEPTED    .
-				 if (!m.matches()) {
-					 e.doit = false;
-				 }
+				Pattern pattern = Pattern.compile("[0-9]*");
+				Matcher m = pattern.matcher(e.text);
+				// ONLY NUMERICAL VALUES ARE ACCEPTED .
+				if (!m.matches()) {
+					e.doit = false;
+				}
 			}
 		});
 
 		toolkit.createLabel(composite, "px", SWT.NONE);
 		new Label(composite, SWT.NONE);
 
-		
-		ToolBar tb = new ToolBar(composite,SWT.FLAT);
+		ToolBar tb = new ToolBar(composite, SWT.FLAT);
 		ToolBarManager tbm = new ToolBarManager(tb);
 		this.keepRationAction.setChecked(this.keepRatio);
 		tbm.add(this.keepRationAction);
 		tbm.update(true);
 		tb.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 2));
-	
+
 		final Label heightLabel = toolkit.createLabel(composite, "Height", SWT.NONE);
 		final GridData gd_heightLabel = new GridData();
 		heightLabel.setLayoutData(gd_heightLabel);
@@ -226,12 +232,12 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		this.heightText.setLayoutData(gd_heightText);
 		this.heightText.addVerifyListener(new VerifyListener() {
 			public void verifyText(final VerifyEvent e) {
-				 Pattern pattern = Pattern.compile("[0-9]*");
-				 Matcher m = pattern.matcher(e.text);
-				 // ONLY NUMERICAL VALUES ARE ACCEPTED    .
-				 if (!m.matches()) {
-					 e.doit = false;
-				 }
+				Pattern pattern = Pattern.compile("[0-9]*");
+				Matcher m = pattern.matcher(e.text);
+				// ONLY NUMERICAL VALUES ARE ACCEPTED .
+				if (!m.matches()) {
+					e.doit = false;
+				}
 			}
 		});
 
@@ -242,55 +248,62 @@ public class ImageEditPage extends AbstractInformationFormPage {
 
 	}
 
-	
 	protected void setCurrentRatio() {
-		long width = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_WIDTH).getLongValue();
-		long height = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_HEIGHT).getLongValue();
-		this.ratio = (float)width / (float)height;
+		long width = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_WIDTH)
+				.getLongValue();
+		long height = InformationUtil
+				.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_HEIGHT).getLongValue();
+		this.ratio = (float) width / (float) height;
 	}
 
-
 	private void initDatabinding() {
-		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.text, SWT.Modify));
-		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
+		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables
+				.observeText(this.text, SWT.Modify));
+		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(),
+				this.editingDomain, getModelObject(),
+				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
 		this.dataBindingContext.bindValue(swtLink, emfLink, null, null);
-		
-		InformationUnit widthNode = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_WIDTH);
-		ISWTObservableValue swtWidth = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.widthText, SWT.Modify));
+
+		InformationUnit widthNode = InformationUtil.getChildByType(getModelObject(),
+				ImagePlugin.NODE_NAME_WIDTH);
+		ISWTObservableValue swtWidth = SWTObservables.observeDelayedValue(500, SWTObservables
+				.observeText(this.widthText, SWT.Modify));
 		swtWidth.addValueChangeListener(new IValueChangeListener() {
 			public void handleValueChange(final ValueChangeEvent event) {
 				if (ImageEditPage.this.keepRatio) {
-					ImageEditPage.this.heightText.setText(String.valueOf(Math.round(Long.parseLong((String) event.getObservableValue().getValue()) / ImageEditPage.this.ratio)));
+					ImageEditPage.this.heightText.setText(String.valueOf(Math.round(Long
+							.parseLong((String) event.getObservableValue().getValue())
+							/ ImageEditPage.this.ratio)));
 				}
 			}
 		});
-		IObservableValue emfWidth = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, widthNode, InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
+		IObservableValue emfWidth = EMFEditObservables.observeValue(Realm.getDefault(),
+				this.editingDomain, widthNode,
+				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
 		this.dataBindingContext.bindValue(swtWidth, emfWidth, null, null);
-		
-		InformationUnit heightNode = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_HEIGHT);
-		ISWTObservableValue swtHeight = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.heightText, SWT.Modify));
-		IObservableValue emfHeight = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, heightNode, InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
+
+		InformationUnit heightNode = InformationUtil.getChildByType(getModelObject(),
+				ImagePlugin.NODE_NAME_HEIGHT);
+		ISWTObservableValue swtHeight = SWTObservables.observeDelayedValue(500, SWTObservables
+				.observeText(this.heightText, SWT.Modify));
+		IObservableValue emfHeight = EMFEditObservables.observeValue(Realm.getDefault(),
+				this.editingDomain, heightNode,
+				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
 		this.dataBindingContext.bindValue(swtHeight, emfHeight, null, null);
 		swtHeight.addValueChangeListener(new IValueChangeListener() {
 			public void handleValueChange(final ValueChangeEvent event) {
 				if (ImageEditPage.this.keepRatio) {
-					ImageEditPage.this.widthText.setText(String.valueOf(Math.round(Long.parseLong((String) event.getObservableValue().getValue()) * ImageEditPage.this.ratio)));
+					ImageEditPage.this.widthText.setText(String.valueOf(Math.round(Long
+							.parseLong((String) event.getObservableValue().getValue())
+							* ImageEditPage.this.ratio)));
 				}
 			}
 		});
-		
-		
+
 		addControl(this.text);
 		addControl(this.widthText);
 		addControl(this.heightText);
-		
-	}
 
-
-	@Override
-	protected String getString() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

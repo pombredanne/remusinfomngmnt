@@ -1,6 +1,6 @@
-<#ftl ns_prefixes={"e":"http://remus-software.org/infomngmnt"}>
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
 <#setting url_escaping_charset="UTF-8">  
-<#assign infoUnit = doc["e:InformationUnit"]>
+<#assign infoUnit = doc.InformationUnit>
 <#assign text = additionals.formattedSrc >
 <#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
 <#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >

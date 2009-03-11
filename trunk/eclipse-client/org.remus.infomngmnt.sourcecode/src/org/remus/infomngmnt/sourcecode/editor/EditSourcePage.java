@@ -13,14 +13,10 @@
 package org.remus.infomngmnt.sourcecode.editor;
 
 import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
@@ -37,6 +33,8 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.StyledTextObservableValue;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
@@ -50,22 +48,17 @@ public class EditSourcePage extends AbstractInformationFormPage {
 	private Combo combo;
 	private StyledText styledText;
 	private Text text;
-	@Override
-	protected String getString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	protected void createFormContent(IManagedForm managedForm) {
+	protected void createFormContent(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		final Section generalSection = toolkit.createSection(body,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
 		generalSection.setText("General");
@@ -92,30 +85,36 @@ public class EditSourcePage extends AbstractInformationFormPage {
 		final GridData gd_sourcecodeLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1);
 		sourcecodeLabel.setLayoutData(gd_sourcecodeLabel);
 
-
-		this.styledText = new StyledText(composite, SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER);
+		this.styledText = new StyledText(composite, SWT.FULL_SELECTION | SWT.V_SCROLL
+				| SWT.H_SCROLL | SWT.BORDER);
 		this.styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
 		toolkit.adapt(this.styledText, true, true);
-
-
-		ISWTObservableValue swtSource = SWTObservables.observeDelayedValue(500, new StyledTextObservableValue(this.styledText, SWT.Modify));
-		IObservableValue emfSource = EMFEditObservables.observeValue(Realm.getDefault(), this.editingDomain, getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		this.dataBindingContext.bindValue(swtSource, emfSource, null, null);
-		addControl(this.text);
-		addControl(this.styledText);
 		doCreateSemanticSection(body, toolkit);
 
-		ComboViewer ccViewer = new ComboViewer(this.combo);
-		ccViewer.setContentProvider(new ObservableListContentProvider());
-		ccViewer.setLabelProvider(new LabelProvider());
-		WritableList list = new WritableList();
-		list.addAll(SourceCodePlugin.getDefault().getSourceTypes().keySet());
-		ccViewer.setInput(list);
+		addControl(this.text);
+		addControl(this.styledText);
 
-		ISWTObservableValue swtType = SWTObservables.observeText(this.combo);
-		InformationUnit srcTypeInfo = InformationUtil.getChildByType(getModelObject(), SourceCodePlugin.SRCTYPE_NAME);
-		IObservableValue emfType = EMFEditObservables.observeValue(this.editingDomain, srcTypeInfo, InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		this.dataBindingContext.bindValue(swtType, emfType, null, null);
+		bindValuesToUi();
+	}
+
+	@Override
+	protected void bindValuesToUi() {
+		super.bindValuesToUi();
+		ISWTObservableValue swtSource = SWTObservables.observeDelayedValue(500,
+				new StyledTextObservableValue(this.styledText, SWT.Modify));
+		IObservableValue emfSource = EMFEditObservables.observeValue(Realm.getDefault(),
+				this.editingDomain, getModelObject(),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		this.dataBindingContext.bindValue(swtSource, emfSource, null, null);
+
+		ComboBindingWidget createComboBinding = BindingWidgetFactory.createComboBinding(this.combo,
+				this);
+		createComboBinding.setInput(SourceCodePlugin.getDefault().getSourceTypes().keySet());
+		InformationUnit srcTypeInfo = InformationUtil.getChildByType(getModelObject(),
+				SourceCodePlugin.SRCTYPE_NAME);
+		createComboBinding.bindModel(srcTypeInfo,
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
 	}
 
 }

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -52,6 +53,8 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 
 	private Map<String,IInfoType> items;
 
+	private Logger log;
+
 	public static InformationExtensionManager getInstance() {
 		if (INSTANCE == null) {
 			synchronized (InformationExtensionManager.class) {
@@ -65,14 +68,17 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 
 	private InformationExtensionManager() {
 		super(EXTENSION_POINT);
+
 	}
 
 	@Override
 	protected void init() {
+		this.log = Logger.getLogger(InformationExtensionManager.class);
 		this.items = new HashMap<String,IInfoType>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
 		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
+			this.log.debug("Found new infotype: " + configurationElement.getAttribute(TYPE_ATT));
 			final InfoType infoType = new InfoType(
 					configurationElement,
 					configurationElement.getContributor().getName(),
@@ -83,6 +89,8 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 			IConfigurationElement[] children = configurationElement.getChildren(TRANSFER_TYPE_NODENAME);
 			List<String> validTransferIds = new ArrayList<String>();
 			for (IConfigurationElement configurationElement2 : children) {
+				this.log.debug("Adding transfertype " + configurationElement2.getAttribute(TRANSFERID_ATT) +
+						" to " + configurationElement.getAttribute(TYPE_ATT));
 				validTransferIds.add(configurationElement2.getAttribute(TRANSFERID_ATT));
 			}
 			infoType.setValidTransferTypeIds(validTransferIds);

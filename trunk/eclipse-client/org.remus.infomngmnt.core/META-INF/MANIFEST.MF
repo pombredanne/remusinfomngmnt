@@ -45,5 +45,6 @@ Service-Component: OSGI-INF/ruleextensions.xml,
  OSGI-INF/repositoryextension.xml,
  OSGI-INF/repositories.xml,
  OSGI-INF/saveparticipantextensions.xml
+Import-Package: org.apache.log4j
 
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            creationFactory="org.remus.infomngmnt.richtext.presentation.RichTextCreationFactory"
+            icon="icons/text_rich_colored.png"
+            name="Rich Text"
+            presentation="org.remus.infomngmnt.richtext.presentation.RichTextPresentation"
+            type="HTML">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.richtext.editor.RichTextEditPage"
+            icon="icons/iconexperience/richtext_edit.png"
+            id="org.remus.infomngmnt.richtext.editor.RichTextEditPage"
+            label="Edit RichText"
+            type="HTML">
+      </editPage>
+      <transferpreferences
+            implementation="org.remus.infomngmnt.richtext.preferences.RichTextCreationPreferencePage"
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="HTML">
+      </transferpreferences>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/richtext_new.png"
+            id="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
+            name="name">
+      </wizard>
+   </extension>
+
+</plugin>

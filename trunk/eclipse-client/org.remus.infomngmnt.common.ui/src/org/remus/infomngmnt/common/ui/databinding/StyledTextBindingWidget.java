@@ -12,8 +12,8 @@
 
 package org.remus.infomngmnt.common.ui.databinding;
 
-import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -22,16 +22,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.custom.StyledText;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class TextBindingWidget extends AbstractBindingWidget {
-
-	TextBindingWidget() {
-		// prevents instantations
-	}
+public class StyledTextBindingWidget extends AbstractBindingWidget {
 
 	/*
 	 * (non-Javadoc)
@@ -45,17 +41,15 @@ public class TextBindingWidget extends AbstractBindingWidget {
 	@Override
 	public void bindModel(final EObject object, final EStructuralFeature feature,
 			UpdateValueStrategy target2Model, final UpdateValueStrategy model2target) {
-		ISWTObservableValue textObservable = SWTObservables.observeDelayedValue(500, SWTObservables
-				.observeText(getWrappedControl(), SWT.Modify));
-		IObservableValue observeValue = EMFEditObservables.observeValue(getEditingDomain(), object,
-				feature);
+		ISWTObservableValue swtSource = SWTObservables.observeDelayedValue(500,
+				new StyledTextObservableValue((StyledText) getWrappedControl(), SWT.Modify));
+		IObservableValue emfSource = EMFEditObservables.observeValue(Realm.getDefault(),
+				getEditingDomain(), object, feature);
 		if (target2Model == null) {
 			target2Model = new EMFUpdateValueStrategy();
 		}
 		target2Model.setAfterConvertValidator(getTarget2ModelValidators());
-		Binding bindValue = getBindingContext().bindValue(textObservable, observeValue,
-				target2Model, model2target);
-		setBinding(bindValue);
+		setBinding(getBindingContext().bindValue(swtSource, emfSource, target2Model, model2target));
 	}
 
 	/*
@@ -66,7 +60,7 @@ public class TextBindingWidget extends AbstractBindingWidget {
 	 */
 	@Override
 	protected void updateReadOnly() {
-		((Text) getWrappedControl()).setEditable(isReadonly());
+		((StyledText) getWrappedControl()).setEditable(isReadonly());
 	}
 
 }

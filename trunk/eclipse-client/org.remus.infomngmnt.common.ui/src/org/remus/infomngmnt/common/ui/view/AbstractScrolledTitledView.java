@@ -23,16 +23,16 @@ import org.eclipse.ui.part.ViewPart;
  * @author Tom Seidel <tom.seidel@spiritlink.de>
  * 
  */
-public abstract class AbstractScrolledTitledView extends ViewPart
-{
+public abstract class AbstractScrolledTitledView extends ViewPart {
 	protected FormToolkit toolkit;
-	private ScrolledForm form;
-
+	protected ScrolledForm form;
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	@Override
 	public void createPartControl(final Composite parent) {
@@ -53,7 +53,7 @@ public abstract class AbstractScrolledTitledView extends ViewPart
 		createHeaderControl(comp);
 
 		this.form = this.toolkit.createScrolledForm(comp);
-		//this.form.setFont(UIUtil.getStandaloneViewHeaderFont(getSite().getShell().getDisplay()));
+		// this.form.setFont(UIUtil.getStandaloneViewHeaderFont(getSite().getShell().getDisplay()));
 		this.form.setText(getTitle());
 		if (getDefaultImage() != getTitleImage()) {
 			this.form.setImage(getTitleImage());
@@ -64,16 +64,17 @@ public abstract class AbstractScrolledTitledView extends ViewPart
 
 		final Composite client = this.toolkit.createComposite(this.form.getBody(), SWT.WRAP);
 		client.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		client.setLayout(new FillLayout()); // if layout changes here please update the javadoc of #createViewContents(Composite)
-
+		client.setLayout(new GridLayout());
+		this.toolkit.paintBordersFor(client);
 		createViewContents(client);
-		//this.form.layout(true);
+		this.form.layout(true);
 		initializeToolBar();
 
 	}
 
 	/**
-	 * initializes the {@link GridLayout} (no margin, no spacing) used by the scrolled form
+	 * initializes the {@link GridLayout} (no margin, no spacing) used by the
+	 * scrolled form
 	 */
 	protected Layout createScrolledFormLayout() {
 		final GridLayout layout = new GridLayout();
@@ -88,18 +89,22 @@ public abstract class AbstractScrolledTitledView extends ViewPart
 	}
 
 	/**
-	 * default implementation does nothing, subclasses can add a header control above the scrolled form by overriding this method
+	 * default implementation does nothing, subclasses can add a header control
+	 * above the scrolled form by overriding this method
 	 * 
-	 * @param parent the parent control
+	 * @param parent
+	 *            the parent control
 	 */
-	protected void createHeaderControl(final Composite parent)
-	{
+	protected void createHeaderControl(final Composite parent) {
 		// default
 	}
 
 	/**
 	 * abstract method for implementor's view content creation
-	 * @param parent a new composite on a {@link ScrolledForm}'s body, initialized with a {@link FillLayout} (can be reset to any other layout)
+	 * 
+	 * @param parent
+	 *            a new composite on a {@link ScrolledForm}'s body, initialized
+	 *            with a {@link FillLayout} (can be reset to any other layout)
 	 */
 	public abstract void createViewContents(Composite parent);
 
@@ -122,6 +127,7 @@ public abstract class AbstractScrolledTitledView extends ViewPart
 	public FormToolkit getToolkit() {
 		return this.toolkit;
 	}
+
 	private void initializeToolBar() {
 		final IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 	}

@@ -133,7 +133,9 @@ public abstract class AbstractBindingWidget {
 		}
 	}
 
-	protected abstract void updateReadOnly();
+	protected void updateReadOnly() {
+		getWrappedControl().setEnabled(isReadonly());
+	}
 
 	public void bindModel(final EObject object, final EStructuralFeature feature) {
 		bindModel(object, feature, null, null);

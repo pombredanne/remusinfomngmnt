@@ -60,45 +60,46 @@ import org.remus.infomngmnt.util.ValueObject;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEditingDomainProvider, ISelectionProvider, IViewerProvider{
+public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEditingDomainProvider,
+		ISelectionProvider, IViewerProvider {
 
 	private static final String VISIBLE_BUTTONS = "visibleButtons";
-	
+
 	private static final String ACTIVE_BAR = "activeBar";
-	
+
 	private final Collection<CollapsibleButtonBar> items;
-	
+
 	private StackLayout stackLayout;
-	
+
 	private CollapsibleButtonBar activeButtonBar;
-	
+
 	private final List<String> renderedItems;
-	
+
 	private Composite upperComp;
-	
+
 	private CollapsibleButtons cb;
-	
+
 	private String activeBarId;
-	
+
 	private int visibleButtonCount;
-	
+
 	private FormToolkit toolkit;
-	
+
 	private Form form;
-	
+
 	private final MainViewContextSwitcher contextSwitcher;
-	
+
 	private SelectionProviderIntermediate selectionDelegate;
-	
+
 	/**
 	 * @author Tom Seidel <tom.seidel@remus-software.org>
 	 */
 	private class MainViewContextSwitcher {
 
 		private IContextService contextService;
-		
+
 		private final Map<String, IContextActivation> contextActivationMap;
-		
+
 		public MainViewContextSwitcher() {
 			this.contextActivationMap = new HashMap<String, IContextActivation>();
 		}
@@ -107,11 +108,11 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 			deactivate(contextId);
 			putContext(contextId, getContextService().activateContext(contextId));
 		}
-		
+
 		private void putContext(final String contextId, final IContextActivation activation) {
 			this.contextActivationMap.put(contextId, activation);
 		}
-		
+
 		private IContextActivation getContext(final String contextId) {
 			return this.contextActivationMap.get(contextId);
 		}
@@ -129,33 +130,36 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 
 		private IContextService getContextService() {
 			if (this.contextService == null) {
-				this.contextService = (IContextService) PlatformUI.getWorkbench().getService(IContextService.class);
+				this.contextService = (IContextService) PlatformUI.getWorkbench().getService(
+						IContextService.class);
 			}
 			return this.contextService;
 		}
 
-
 	}
-	
+
 	public static final String VIEW_ID = "org.remus.infomngmnt.ui.main"; //$NON-NLS-1$
+
 	/**
 	 * 
 	 */
 	public MainViewPart() {
 		this.renderedItems = new ArrayList<String>();
-		this.items = UIPlugin.getDefault().getService(ICollapsibleButtonExtensionService.class).getAllItems();
+		this.items = UIPlugin.getDefault().getService(ICollapsibleButtonExtensionService.class)
+				.getAllItems();
 		this.visibleButtonCount = 2;
 		this.contextSwitcher = new MainViewContextSwitcher();
 	}
 
 	@Override
 	public void createPartControl(final Composite parent) {
-		
+
 		this.toolkit = new FormToolkit(parent.getDisplay());
-		getSite().setSelectionProvider(this.selectionDelegate = new SelectionProviderIntermediate());
+		getSite()
+				.setSelectionProvider(this.selectionDelegate = new SelectionProviderIntermediate());
 		final Composite comp = this.toolkit.createComposite(parent, SWT.NONE);
 		comp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		GridLayout gridLayout = new GridLayout(1,false);
+		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
 		parent.setLayout(gridLayout);
@@ -163,13 +167,13 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 
 		this.form = this.toolkit.createForm(comp);
 		this.toolkit.decorateFormHeading(this.form);
-		//this.form.setFont(UIUtil.getStandaloneViewHeaderFont(getSite().getShell().getDisplay()));
+		// this.form.setFont(UIUtil.getStandaloneViewHeaderFont(getSite().getShell().getDisplay()));
 		this.form.setText(getTitle());
 		if (getDefaultImage() != getTitleImage()) {
 			this.form.setImage(getTitleImage());
 		}
 		this.form.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+
 		this.form.getBody().setLayout(gridLayout);
 		this.upperComp = this.toolkit.createComposite(this.form.getBody(), SWT.NONE);
 		this.upperComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -178,15 +182,16 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		final ValueObject<Boolean> created = new ValueObject<Boolean>();
 		created.setObject(Boolean.FALSE);
 		final ValueObject<CollapsibleButtonBar> firstSelection = new ValueObject<CollapsibleButtonBar>();
-		
+
 		this.cb = new CollapsibleButtons(parent, SWT.NONE, IColorManager.SKIN_OFFICE_2007);
 		int counter = 1;
 		for (final CollapsibleButtonBar element : this.items) {
-			CustomButton button = this.cb.addButton(element.getTitle(), element.getTooltip(), element.getBigIcon(), element.getIcon());
+			CustomButton button = this.cb.addButton(element.getTitle(), element.getTooltip(),
+					element.getBigIcon(), element.getIcon());
 
-//			element.createControl(this.upperComp);
-//			MainViewPart.this.renderedItems.add(element.getId());
-			
+			// element.createControl(this.upperComp);
+			// MainViewPart.this.renderedItems.add(element.getId());
+
 			if (counter++ <= this.visibleButtonCount) {
 			} else {
 				this.cb.hideButton(button);
@@ -195,7 +200,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 			if (element.getId().equals(this.activeBarId)) {
 				firstSelection.setObject(element);
 			}
-			
+
 		}
 		this.cb.addPaintListener(new PaintListener() {
 			public void paintControl(final PaintEvent e) {
@@ -204,10 +209,10 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 					created.setObject(true);
 					if (firstSelection.getObject() != null) {
 						handleSelection(firstSelection.getObject());
-						//MainViewPart.this.cb.selectItem(firstSelection.getObject());
+						// MainViewPart.this.cb.selectItem(firstSelection.getObject());
 					}
 				}
-				
+
 			}
 		});
 		this.cb.addButtonListener(new ButtonListenerAdapter() {
@@ -216,13 +221,14 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 				handleSelection((CollapsibleButtonBar) button.getData());
 			}
 		});
-		//this.cb.setLayoutData(new GridData(GridData.GRAB_VERTICAL | GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
-		GridData gridData = new GridData(SWT.FILL, SWT.END, false, false);
+		// this.cb.setLayoutData(new GridData(GridData.GRAB_VERTICAL |
+		// GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
+		GridData gridData = new GridData(SWT.FILL, SWT.END, true, false);
 		this.cb.setLayoutData(gridData);
-		
-//		parent.layout(true);
+
+		// parent.layout(true);
 	}
-	
+
 	@Override
 	public void dispose() {
 		for (CollapsibleButtonBar item : this.items) {
@@ -231,7 +237,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		this.renderedItems.clear();
 		super.dispose();
 	}
-	
+
 	@Override
 	public void init(final IViewSite site, final IMemento memento) throws PartInitException {
 		super.init(site, memento);
@@ -241,7 +247,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 				if (child == null) {
 					child = memento.createChild(item.getId());
 				}
-				item.init(site,child);
+				item.init(site, child);
 			}
 			this.activeBarId = memento.getString(ACTIVE_BAR);
 			if (memento.getInteger(VISIBLE_BUTTONS) != null) {
@@ -249,11 +255,11 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 			}
 		} else {
 			for (CollapsibleButtonBar item : this.items) {
-				item.init(site,null);
+				item.init(site, null);
 			}
 		}
 	}
-	
+
 	@Override
 	public void saveState(final IMemento memento) {
 		for (CollapsibleButtonBar item : this.items) {
@@ -267,7 +273,6 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		memento.putInteger(VISIBLE_BUTTONS, this.cb.getNumVisibleButtons());
 		super.saveState(memento);
 	}
-
 
 	protected void handleSelection(final CollapsibleButtonBar element) {
 		if (element == this.activeButtonBar) {
@@ -298,19 +303,22 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		setNewTitle(element.getTitle());
 		setNewImage(element.getIcon());
 		this.upperComp.layout();
+
 	}
 
 	private void setNewImage(final Image icon) {
 		this.form.setImage(icon);
 		setTitleImage(icon);
-		
+
 	}
 
 	private void setNewTitle(final String title) {
 		this.form.setText(title);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
 	 */
 	@Override
@@ -321,16 +329,17 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		}
 
 	}
+
 	private void initializeToolBar() {
 		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 	}
 
-public void selectReveal(final ISelection selection) {
-	if (this.activeButtonBar instanceof ISetSelectionTarget) {
-		((ISetSelectionTarget) this.activeButtonBar).selectReveal(selection);
-	}
+	public void selectReveal(final ISelection selection) {
+		if (this.activeButtonBar instanceof ISetSelectionTarget) {
+			((ISetSelectionTarget) this.activeButtonBar).selectReveal(selection);
+		}
 
-}
+	}
 
 	public EditingDomain getEditingDomain() {
 		return EditingUtil.getInstance().getNavigationEditingDomain();
@@ -350,8 +359,7 @@ public void selectReveal(final ISelection selection) {
 		return null;
 	}
 
-	public void removeSelectionChangedListener(
-			final ISelectionChangedListener listener) {
+	public void removeSelectionChangedListener(final ISelectionChangedListener listener) {
 		if (this.activeButtonBar instanceof ISelectionProvider) {
 			((ISelectionProvider) this.activeButtonBar).removeSelectionChangedListener(listener);
 		}
@@ -363,7 +371,6 @@ public void selectReveal(final ISelection selection) {
 			((ISelectionProvider) this.activeButtonBar).setSelection(selection);
 		}
 
-
 	}
 
 	public Viewer getViewer() {
@@ -372,7 +379,5 @@ public void selectReveal(final ISelection selection) {
 		}
 		return null;
 	}
-
-
 
 }

@@ -13,12 +13,24 @@
 package org.remus.infomngmnt.ui.calendar;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class CalendarEditor extends SharedHeaderFormEditor {
+
+	private CalendarPage page1;
+
+	@Override
+	protected void createHeaderContents(final IManagedForm headerForm) {
+		headerForm.getForm().setText("Calendar");
+		// headerForm.getForm().setImage(InformationExtensionManager.getInstance().getInfoTypeByType(getPrimaryModel().getType()).getImageDescriptor().createImage());
+		getToolkit().decorateFormHeading(headerForm.getForm().getForm());
+	}
 
 	/**
 	 * 
@@ -27,17 +39,35 @@ public class CalendarEditor extends SharedHeaderFormEditor {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
 	 */
 	@Override
 	protected void addPages() {
-		// TODO Auto-generated method stub
+		try {
+			addPage(this.page1 = new CalendarPage(this, "cal", "cal"));
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	@Override
+	protected void createPages() {
+		super.createPages();
+		if (getPageCount() == 1 && getContainer() instanceof CTabFolder) {
+			((CTabFolder) getContainer()).setTabHeight(0);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.
+	 * IProgressMonitor)
 	 */
 	@Override
 	public void doSave(final IProgressMonitor monitor) {
@@ -45,7 +75,9 @@ public class CalendarEditor extends SharedHeaderFormEditor {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.EditorPart#doSaveAs()
 	 */
 	@Override
@@ -54,7 +86,9 @@ public class CalendarEditor extends SharedHeaderFormEditor {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
 	 */
 	@Override

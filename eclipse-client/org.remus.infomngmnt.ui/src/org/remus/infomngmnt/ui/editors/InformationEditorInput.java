@@ -32,41 +32,39 @@ import org.remus.infomngmnt.core.model.EditingUtil;
  */
 public class InformationEditorInput extends FileEditorInput implements IFileEditorInput {
 
-
 	private String type;
 	private String label;
 
-
-	public InformationEditorInput(InformationUnitListItem infoFile) {
-		this(ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(infoFile.getWorkspacePath())));
+	public InformationEditorInput(final InformationUnitListItem infoFile) {
+		this(ResourcesPlugin.getWorkspace().getRoot()
+				.getFile(new Path(infoFile.getWorkspacePath())));
 		setLabels(infoFile);
 	}
 
-
-	public InformationEditorInput(IFile file) {
+	public InformationEditorInput(final IFile file) {
 		super(file);
-		InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile(
-				file, InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
+		InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile(file,
+				InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
 		setLabels(objectFromFile);
 		objectFromFile.eResource().unload();
 
 	}
 
-	private void setLabels(AbstractInformationUnit unit) {
+	private void setLabels(final AbstractInformationUnit unit) {
 		this.type = unit.getType();
 		this.label = unit.getLabel();
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public Object getAdapter(final Class adapter) {
 
 		return super.getAdapter(adapter);
 	}
 
-
 	@Override
 	public ImageDescriptor getImageDescriptor() {
-		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(this.type);
+		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+				this.type);
 		return infoTypeByType.getImageDescriptor();
 	}
 
@@ -80,12 +78,9 @@ public class InformationEditorInput extends FileEditorInput implements IFileEdit
 		return this.label;
 	}
 
-
 	@Override
 	public String getFactoryId() {
-		System.out.println("GET FACTORY");
 		return InformationEditorCreationFactory.FACTORY_ID;
 	}
-
 
 }

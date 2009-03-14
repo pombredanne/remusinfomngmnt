@@ -134,7 +134,7 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 		BindingUtil.createTextAndBind(this.keyWordText, getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS, this);
 		BindingUtil.createTextAndBind(this.descriptionText, getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS, this);
+				InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION, this);
 
 	}
 

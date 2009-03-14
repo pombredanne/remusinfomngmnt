@@ -15,7 +15,10 @@ package org.remus.infomngmnt.common.ui.databinding;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -38,9 +41,7 @@ public class BindingWidgetFactory {
 	public static TextBindingWidget createTextBinding(final Text text,
 			final EMFDataBindingContext ctx, final EditingDomain domain) {
 		TextBindingWidget textWidget = new TextBindingWidget();
-		textWidget.setBindingContext(ctx);
-		textWidget.setEditingDomain(domain);
-		textWidget.setWrappedControl(text);
+		initControl(textWidget, ctx, domain, text);
 		return textWidget;
 	}
 
@@ -53,9 +54,7 @@ public class BindingWidgetFactory {
 	public static ComboBindingWidget createComboBinding(final Combo combo,
 			final EMFDataBindingContext ctx, final EditingDomain domain) {
 		ComboBindingWidget bindingWidget = new ComboBindingWidget();
-		bindingWidget.setBindingContext(ctx);
-		bindingWidget.setEditingDomain(domain);
-		bindingWidget.setWrappedControl(combo);
+		initControl(bindingWidget, ctx, domain, combo);
 		return bindingWidget;
 	}
 
@@ -63,6 +62,33 @@ public class BindingWidgetFactory {
 			final IEMFEditBindingProvider provider) {
 		return createComboBinding(combo, provider.getDatabindingContext(), provider
 				.getEditingDomain());
+	}
+
+	public static StyledTextBindingWidget createStyledText(final StyledText text,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		StyledTextBindingWidget bindingWidget = new StyledTextBindingWidget();
+		initControl(bindingWidget, ctx, domain, text);
+		return bindingWidget;
+	}
+
+	public static StyledTextBindingWidget createStyledText(final StyledText text,
+			final IEMFEditBindingProvider provider) {
+		return createStyledText(text, provider.getDatabindingContext(), provider.getEditingDomain());
+
+	}
+
+	public static SpinnerBindingWidget createSpinner(final Spinner spinner,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		SpinnerBindingWidget bindingWidget = new SpinnerBindingWidget();
+		initControl(bindingWidget, ctx, domain, spinner);
+		return bindingWidget;
+	}
+
+	private static void initControl(final AbstractBindingWidget widget,
+			final EMFDataBindingContext ctx, final EditingDomain domain, final Control control) {
+		widget.setBindingContext(ctx);
+		widget.setEditingDomain(domain);
+		widget.setWrappedControl(control);
 	}
 
 }

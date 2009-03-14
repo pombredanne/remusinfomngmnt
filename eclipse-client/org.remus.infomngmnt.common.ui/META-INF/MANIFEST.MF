@@ -35,6 +35,7 @@ Export-Package: org.eclipse.nebula.widgets.calendarcombo,
  org.remus.infomngmnt.common.ui.quickaccess,
  org.remus.infomngmnt.common.ui.swt,
  org.remus.infomngmnt.common.ui.view,
+ org.remus.infomngmnt.common.ui.widgets,
  org.remus.infomngmt.common.ui.uimodel,
  org.remus.infomngmt.common.ui.uimodel.provider
 Bundle-ClassPath: lib/nebula_cdatetime_0.9.0.jar,

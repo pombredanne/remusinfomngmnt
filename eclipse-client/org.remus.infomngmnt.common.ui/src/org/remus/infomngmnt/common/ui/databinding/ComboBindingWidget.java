@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.common.ui.databinding;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -36,8 +37,7 @@ public class ComboBindingWidget extends AbstractBindingWidget {
 
 	@SuppressWarnings("unchecked")
 	public void setInput(final Collection input) {
-		this.input = new WritableList(null);
-		input.addAll(input);
+		this.input = new WritableList(new ArrayList(input), null);
 	}
 
 	/*

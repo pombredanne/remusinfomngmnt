@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             creationFactory="org.remus.infomngmnt.richtext.presentation.RichTextCreationFactory"
-            icon="icons/text_rich_colored.png"
+            icon="icons/iconexperience/text_rich_colored.png"
             name="Rich Text"
             presentation="org.remus.infomngmnt.richtext.presentation.RichTextPresentation"
             type="HTML">
@@ -36,7 +36,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/richtext_new.png"
             id="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
-            name="name">
+            name="Rich Text">
       </wizard>
    </extension>
 

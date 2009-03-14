@@ -12,11 +12,6 @@
 
 package org.remus.infomngmnt.sourcecode.editor;
 
-import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
@@ -35,7 +30,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.StyledTextObservableValue;
+import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
@@ -100,12 +95,11 @@ public class EditSourcePage extends AbstractInformationFormPage {
 	@Override
 	protected void bindValuesToUi() {
 		super.bindValuesToUi();
-		ISWTObservableValue swtSource = SWTObservables.observeDelayedValue(500,
-				new StyledTextObservableValue(this.styledText, SWT.Modify));
-		IObservableValue emfSource = EMFEditObservables.observeValue(Realm.getDefault(),
-				this.editingDomain, getModelObject(),
+
+		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
+				this.styledText, this);
+		textBindingWidget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		this.dataBindingContext.bindValue(swtSource, emfSource, null, null);
 
 		ComboBindingWidget createComboBinding = BindingWidgetFactory.createComboBinding(this.combo,
 				this);

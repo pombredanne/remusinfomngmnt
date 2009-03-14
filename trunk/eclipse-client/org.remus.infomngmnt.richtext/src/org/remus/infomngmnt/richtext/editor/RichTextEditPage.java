@@ -12,11 +12,21 @@
 
 package org.remus.infomngmnt.richtext.editor;
 
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.cyberneko.html.parsers.DOMParser;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.Separator;
@@ -42,6 +52,10 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import de.spiritlink.richhtml4eclipse.widgets.HtmlComposer;
 import de.spiritlink.richhtml4eclipse.widgets.JavaScriptCommands;
@@ -125,7 +139,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		generalSection.setClient(client);
 
 		CoolBar coolbar = new CoolBar(client, SWT.NONE);
-
+		toolkit.adapt(coolbar);
 		GridData gd = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		gd.widthHint = 100;
 		coolbar.setLayoutData(gd);
@@ -135,7 +149,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 				client.getShell().layout();
 			}
 		});
-		final Composite comboComp = new Composite(coolbar, SWT.NONE);
+		final Composite comboComp = toolkit.createComposite(coolbar, SWT.NONE);
 		comboComp.setLayout(new GridLayout(3, false));
 
 		this.formatCombo = new Combo(comboComp, SWT.SINGLE);
@@ -144,6 +158,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 				.setItems(SelectFormatAction.formatMappings.values().toArray(new String[0]));
 		this.formatCombo.add("--[Format]--", 0);
 		this.formatCombo.select(0);
+		toolkit.adapt(this.formatCombo);
 
 		Point formatTextSize = this.formatCombo.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		formatTextSize = this.formatCombo.computeSize(formatTextSize.x, formatTextSize.y);
@@ -153,6 +168,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		this.fontCombo.setItems(getFontList());
 		this.fontCombo.add("--[Font]--", 0);
 		this.fontCombo.select(0);
+		toolkit.adapt(this.fontCombo);
 
 		Point fontTextSize = this.fontCombo.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		fontTextSize = this.fontCombo.computeSize(fontTextSize.x, fontTextSize.y);
@@ -160,6 +176,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		this.fontsizeCombo = new Combo(comboComp, SWT.SINGLE);
 		this.fontsizeCombo.setItems(new String[] { "--[Size]--", "1", "2", "3", "4", "5", "6" });
 		this.fontsizeCombo.select(0);
+		toolkit.adapt(this.fontsizeCombo);
 
 		CoolItem comboItem = new CoolItem(coolbar, SWT.NONE);
 		comboItem.setControl(comboComp);
@@ -232,6 +249,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 				for (int j = 0, n = bar.getItemCount(); j < n; j++) {
 					size.x += bar.getSize().x;
 				}
+				toolkit.adapt(bar);
 			}
 			coolItem.setMinimumSize(size);
 			coolItem.setPreferredSize(coolSize);
@@ -360,6 +378,38 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		IObservableValue emfContent = EMFEditObservables.observeValue(this.editingDomain,
 				getModelObject(), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		this.dataBindingContext.bindValue(swtContent, emfContent, null, null);
+	}
+
+	@Override
+	public void doSave(final IProgressMonitor monitor) {
+		monitor.setTaskName("Pre-save formatting...");
+		final DOMParser parser = new DOMParser();
+
+		try {
+			parser.parse(new org.apache.xerces.xni.parser.XMLInputSource(null, null, null,
+					new StringReader(getModelObject().getStringValue()), "UTF-8"));
+			final Document document = parser.getDocument();
+			NodeList elementsByTagName = document.getElementsByTagName("a");
+			for (int i = 0; i < elementsByTagName.getLength(); i++) {
+				final Node node = elementsByTagName.item(i);
+				((Element) node).setAttribute("target", "_blank");
+			}
+			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			final DOMSource source = new DOMSource(document);
+			final StringWriter writer = new StringWriter();
+
+			final StreamResult result = new StreamResult(writer);
+			transformer.transform(source, result);
+			getModelObject().setStringValue(writer.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		super.doSave(monitor);
 	}
 
 	private static String[] getFontList() {

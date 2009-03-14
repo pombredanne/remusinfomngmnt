@@ -36,8 +36,8 @@ import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 
 /**
- * The new category wizard provides the ability for the user to
- * create new category under a given category.
+ * The new category wizard provides the ability for the user to create new
+ * category under a given category.
  * 
  * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -51,11 +51,13 @@ public class NewCategoryWizardPage extends WizardPage {
 	private final Category selection;
 	private String newCategoryValue;
 	private String parentCategoryValue;
+
 	/**
 	 * Create the wizard
+	 * 
 	 * @param selection
 	 */
-	public NewCategoryWizardPage(Category selection) {
+	public NewCategoryWizardPage(final Category selection) {
 		super("wizardPage");
 		this.selection = selection;
 		setTitle("Wizard Page title");
@@ -64,9 +66,10 @@ public class NewCategoryWizardPage extends WizardPage {
 
 	/**
 	 * Create contents of the wizard
+	 * 
 	 * @param parent
 	 */
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
@@ -83,7 +86,7 @@ public class NewCategoryWizardPage extends WizardPage {
 			this.parentCategoryText.setText(CategoryUtil.categoryToString(this.selection));
 		}
 		this.parentCategoryText.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				validatePage();
 			}
 		});
@@ -91,18 +94,21 @@ public class NewCategoryWizardPage extends WizardPage {
 		final Button browseButton = new Button(container, SWT.NONE);
 		browseButton.setText("B&rowse...");
 		browseButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
-				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory());
-				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),adapterFactoryLabelProvider,adapterFactoryContentProvider);
+			public void handleEvent(final Event event) {
+				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
+						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
 				dialog.setDoubleClickSelects(true);
 				dialog.setValidator(new ISelectionStatusValidator() {
-					public IStatus validate(Object[] selection) {
+					public IStatus validate(final Object[] selection) {
 						if (selection.length == 0) {
 							return StatusCreator.newStatus("No parent category selected...");
 						}
-						return StatusCreator.newStatus(IStatus.OK, "",null);
+						return StatusCreator.newStatus(IStatus.OK, "", null);
 					}
 				});
 				dialog.setInput(ApplicationModelPool.getInstance().getModel());
@@ -110,7 +116,8 @@ public class NewCategoryWizardPage extends WizardPage {
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();
 					Category selectedCategory = (Category) result[0];
-					NewCategoryWizardPage.this.parentCategoryText.setText(CategoryUtil.categoryToString(selectedCategory));
+					NewCategoryWizardPage.this.parentCategoryText.setText(CategoryUtil
+							.categoryToString(selectedCategory));
 				}
 			}
 
@@ -122,7 +129,7 @@ public class NewCategoryWizardPage extends WizardPage {
 		this.newCategoriyName = new Text(container, SWT.BORDER);
 		this.newCategoriyName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		this.newCategoriyName.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				validatePage();
 			}
 		});
@@ -132,15 +139,16 @@ public class NewCategoryWizardPage extends WizardPage {
 	}
 
 	/**
-	 * Validates the wizard-page. The page is complete
-	 * if the Parent-Category path is a valid path to categories
+	 * Validates the wizard-page. The page is complete if the Parent-Category
+	 * path is a valid path to categories
 	 * 
 	 * @see CategoryUtil#categoryToString(Category)
 	 */
 	protected void validatePage() {
 		if (CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText()).getSeverity() == IStatus.OK
 				&& CategoryUtil.isCategoryNameValid(this.newCategoriyName.getText()).getSeverity() == IStatus.OK
-				&& CategoryUtil.isCategoryStructureValid(this.parentCategoryText.getText(),this.newCategoriyName.getText()).getSeverity() == IStatus.OK) {
+				&& CategoryUtil.isCategoryStructureValid(this.parentCategoryText.getText(),
+						this.newCategoriyName.getText()).getSeverity() == IStatus.OK) {
 			setPageComplete(true);
 			this.newCategoryValue = this.newCategoriyName.getText();
 			this.parentCategoryValue = this.parentCategoryText.getText();
@@ -157,6 +165,5 @@ public class NewCategoryWizardPage extends WizardPage {
 	public String getParentCategoryValue() {
 		return this.parentCategoryValue;
 	}
-
 
 }

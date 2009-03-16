@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?pde version="3.5"?>
+<?pde version="3.4"?>
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
@@ -26,13 +26,18 @@
 
    <plugins>
       <plugin id="com.ibm.icu"/>
+      <plugin id="de.spiritlink.richhtml4eclipse"/>
+      <plugin id="javax.xml"/>
       <plugin id="net.sf.colorer"/>
       <plugin id="org.apache.commons.codec"/>
       <plugin id="org.apache.commons.httpclient"/>
       <plugin id="org.apache.commons.lang"/>
       <plugin id="org.apache.commons.logging"/>
+      <plugin id="org.apache.log4j"/>
+      <plugin id="org.apache.xerces"/>
+      <plugin id="org.apache.xml.resolver"/>
+      <plugin id="org.apache.xml.serializer"/>
       <plugin id="org.eclipse.compare"/>
-      <plugin id="org.eclipse.compare.core"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
@@ -49,10 +54,8 @@
       <plugin id="org.eclipse.core.resources.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.core.runtime"/>
       <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
-      <plugin id="org.eclipse.ecf"/>
-      <plugin id="org.eclipse.ecf.filetransfer"/>
-      <plugin id="org.eclipse.ecf.identity"/>
-      <plugin id="org.eclipse.ecf.ssl" fragment="true"/>
+      <plugin id="org.eclipse.draw2d"/>
+      <plugin id="org.eclipse.emf"/>
       <plugin id="org.eclipse.emf.common"/>
       <plugin id="org.eclipse.emf.common.ui"/>
       <plugin id="org.eclipse.emf.compare"/>
@@ -70,17 +73,12 @@
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.ds"/>
-      <plugin id="org.eclipse.equinox.p2.artifact.repository"/>
-      <plugin id="org.eclipse.equinox.p2.core"/>
-      <plugin id="org.eclipse.equinox.p2.engine"/>
-      <plugin id="org.eclipse.equinox.p2.jarprocessor"/>
-      <plugin id="org.eclipse.equinox.p2.metadata"/>
-      <plugin id="org.eclipse.equinox.p2.metadata.repository"/>
       <plugin id="org.eclipse.equinox.preferences"/>
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.equinox.security"/>
       <plugin id="org.eclipse.equinox.security.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.equinox.util"/>
+      <plugin id="org.eclipse.gef"/>
       <plugin id="org.eclipse.help"/>
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
@@ -88,7 +86,6 @@
       <plugin id="org.eclipse.nebula.widgets.collapsiblebuttons"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
-      <plugin id="org.eclipse.osgi.util"/>
       <plugin id="org.eclipse.swt"/>
       <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.text"/>
@@ -102,6 +99,7 @@
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
       <plugin id="org.eclipse.update.configurator"/>
       <plugin id="org.remus.infomngmnt.application"/>
+      <plugin id="org.remus.infomngmnt.calendar"/>
       <plugin id="org.remus.infomngmnt.common.core"/>
       <plugin id="org.remus.infomngmnt.common.ui"/>
       <plugin id="org.remus.infomngmnt.core"/>
@@ -111,11 +109,11 @@
       <plugin id="org.remus.infomngmnt.link"/>
       <plugin id="org.remus.infomngmnt.link.delicious"/>
       <plugin id="org.remus.infomngmnt.plaintext"/>
+      <plugin id="org.remus.infomngmnt.richtext"/>
       <plugin id="org.remus.infomngmnt.search"/>
       <plugin id="org.remus.infomngmnt.search.local"/>
       <plugin id="org.remus.infomngmnt.sourcecode"/>
       <plugin id="org.remus.infomngmnt.ui"/>
    </plugins>
-
 
 </product>

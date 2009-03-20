@@ -8,6 +8,10 @@ import org.osgi.framework.BundleContext;
  */
 public class PasswordPlugin extends AbstractUIPlugin {
 
+	public static String PASSWORD_INFO_ID = "PASSWORD";
+	public static String NODE_URL = "url";
+	public static String NODE_USERNAME = "username";
+	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.password";
 

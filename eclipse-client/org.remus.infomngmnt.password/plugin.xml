@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            creationFactory="org.remus.infomngmnt.password.core.PlainTextCreationFactory"
+            icon="icons/iconexperience/key.png"
+            name="Password"
+            presentation="org.remus.infomngmnt.password.AbstractInformationRepresentation"
+            type="PASSWORD">
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.password.FormPage"
+            icon="icons/iconexperience/key.png"
+            id="org.remus.infomngmnt.password.editPage1"
+            label="Edit Password"
+            type="PASSWORD">
+      </editPage>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="org.remus.infomngmnt.password.NewPasswordWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/password_new.png"
+            id="org.remus.infomngmnt.password.newWizard"
+            name="Password">
+      </wizard>
+   </extension>
+
+</plugin>

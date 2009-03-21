@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Password Plug-in
-Bundle-SymbolicName: org.remus.infomngmnt.password12;singleton:=true
+Bundle-SymbolicName: org.remus.infomngmnt.password;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.remus.infomngmnt.password.PasswordPlugin
 Require-Bundle: org.eclipse.ui,

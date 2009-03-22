@@ -13,6 +13,7 @@ package org.remus.infomngmnt.core.model;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+
 import org.remus.infomngmnt.core.CorePlugin;
 
 

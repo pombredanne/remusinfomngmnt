@@ -41,6 +41,8 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 
 	public static final String ICON_ATT = "icon"; //$NON-NLS-1$
 
+	public static final String BUILDHTML_ATT = "buildHtml"; //$NON-NLS-1$
+
 	public static final String TRANSFERID_ATT = "transferId"; //$NON-NLS-1$
 
 	public static final String CREATION_FACTORY_ATT = "creationFactory"; //$NON-NLS-1$
@@ -51,7 +53,7 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 
 	private static InformationExtensionManager INSTANCE;
 
-	private Map<String,IInfoType> items;
+	private Map<String, IInfoType> items;
 
 	private Logger log;
 
@@ -74,27 +76,30 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 	@Override
 	protected void init() {
 		this.log = Logger.getLogger(InformationExtensionManager.class);
-		this.items = new HashMap<String,IInfoType>();
-		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
-		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+		this.items = new HashMap<String, IInfoType>();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+				EXTENSION_POINT);
+		final IConfigurationElement[] configurationElements = extensionPoint
+				.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
 			this.log.debug("Found new infotype: " + configurationElement.getAttribute(TYPE_ATT));
-			final InfoType infoType = new InfoType(
-					configurationElement,
-					configurationElement.getContributor().getName(),
-					configurationElement.getAttribute(NAME_ATT),
-					configurationElement.getAttribute(TYPE_ATT),
-					CREATION_FACTORY_ATT,
-					configurationElement.getAttribute(ICON_ATT));
-			IConfigurationElement[] children = configurationElement.getChildren(TRANSFER_TYPE_NODENAME);
+			boolean buildHtml = configurationElement.getAttribute(BUILDHTML_ATT) == null ? Boolean.TRUE
+					: Boolean.valueOf(configurationElement.getAttribute(BUILDHTML_ATT));
+			final InfoType infoType = new InfoType(configurationElement, configurationElement
+					.getContributor().getName(), configurationElement.getAttribute(NAME_ATT),
+					configurationElement.getAttribute(TYPE_ATT), CREATION_FACTORY_ATT,
+					configurationElement.getAttribute(ICON_ATT), buildHtml);
+			IConfigurationElement[] children = configurationElement
+					.getChildren(TRANSFER_TYPE_NODENAME);
 			List<String> validTransferIds = new ArrayList<String>();
 			for (IConfigurationElement configurationElement2 : children) {
-				this.log.debug("Adding transfertype " + configurationElement2.getAttribute(TRANSFERID_ATT) +
-						" to " + configurationElement.getAttribute(TYPE_ATT));
+				this.log.debug("Adding transfertype "
+						+ configurationElement2.getAttribute(TRANSFERID_ATT) + " to "
+						+ configurationElement.getAttribute(TYPE_ATT));
 				validTransferIds.add(configurationElement2.getAttribute(TRANSFERID_ATT));
 			}
 			infoType.setValidTransferTypeIds(validTransferIds);
-			this.items.put(infoType.getType(),infoType);
+			this.items.put(infoType.getType(), infoType);
 		}
 	}
 
@@ -106,7 +111,5 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 	public Collection<IInfoType> getTypes() {
 		return this.items.values();
 	}
-
-
 
 }

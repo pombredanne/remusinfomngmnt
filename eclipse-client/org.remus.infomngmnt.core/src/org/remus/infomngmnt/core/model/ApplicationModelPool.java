@@ -54,30 +54,25 @@ public class ApplicationModelPool {
 			if (msg.getNotifier() instanceof ResourceImpl) {
 				return;
 			}
-			try {
-				this.category.eResource().save(null);
-			} catch (IOException e) {
-				// do nothing
-			}
+			EditingUtil.getInstance().saveObjectToResource(this.category);
 			super.notifyChanged(msg);
 		}
 	}
+
 	private final class AdapterTagImplExtension extends EContentAdapter {
-		
-		
+
 		AdapterTagImplExtension() {
-			
+
 		}
-		
+
 		@Override
 		public void notifyChanged(final Notification msg) {
 			if (msg.getNotifier() instanceof ResourceImpl) {
 				return;
 			}
 			try {
-				ApplicationModelPool
-					.getInstance().getModel()
-					.getAvailableTags().eResource().save(Collections.EMPTY_MAP);
+				ApplicationModelPool.getInstance().getModel().getAvailableTags().eResource().save(
+						Collections.EMPTY_MAP);
 			} catch (IOException e) {
 				// do nothing
 			}
@@ -104,17 +99,25 @@ public class ApplicationModelPool {
 		this.model = InfomngmntFactory.eINSTANCE.createApplicationRoot();
 		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
 		for (IProject project : relevantProjects) {
-			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator + ResourceUtil.PRIMARY_CONTENT_FILE));
-			final Category category = EditingUtil.getInstance().getObjectFromFile(
-					file, InfomngmntPackage.eINSTANCE.getCategory(), EditingUtil.getInstance().getNavigationEditingDomain());
-			category.eResource().eAdapters().add(new AdapterImplExtension(category));
-			this.model.getRootCategories().add(category);
-			EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(category.eResource());
+			if (project.isOpen()) {
+				IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
+						+ ResourceUtil.PRIMARY_CONTENT_FILE));
+				final Category category = EditingUtil.getInstance().getObjectFromFile(file,
+						InfomngmntPackage.eINSTANCE.getCategory(),
+						EditingUtil.getInstance().getNavigationEditingDomain());
+				category.eResource().eAdapters().add(new AdapterImplExtension(category));
+				this.model.getRootCategories().add(category);
+				EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet()
+						.getResources().add(category.eResource());
+			}
 		}
 		this.cache = new AvailableInformationCache();
-		AvailableTags objectFromUri = EditingUtil.getInstance().getObjectFromFileUri(URI.createFileURI(InfomngmntEditPlugin.getPlugin().getStateLocation().append("tags.xml").toOSString()),
-				InfomngmntPackage.Literals.AVAILABLE_TAGS, EditingUtil.getInstance().getNavigationEditingDomain());
-		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(objectFromUri.eResource());
+		AvailableTags objectFromUri = EditingUtil.getInstance().getObjectFromFileUri(
+				URI.createFileURI(InfomngmntEditPlugin.getPlugin().getStateLocation().append(
+						"tags.xml").toOSString()), InfomngmntPackage.Literals.AVAILABLE_TAGS,
+				EditingUtil.getInstance().getNavigationEditingDomain());
+		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(
+				objectFromUri.eResource());
 		this.model.setAvailableTags(objectFromUri);
 		this.model.getAvailableTags().eAdapters().add(new AdapterTagImplExtension());
 	}
@@ -124,20 +127,17 @@ public class ApplicationModelPool {
 	}
 
 	public void addListenerToCategory(final Category category) {
-		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(category.eResource());
+		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(
+				category.eResource());
 		category.eAdapters().add(new AdapterImplExtension(category));
 	}
 
-	public Map<String, InformationUnitListItem> getAllItems(
-			final IProgressMonitor monitor) {
+	public Map<String, InformationUnitListItem> getAllItems(final IProgressMonitor monitor) {
 		return this.cache.getAllItems(monitor);
 	}
 
-	public InformationUnitListItem getItemById(final String id,
-			final IProgressMonitor monitor) {
+	public InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor) {
 		return this.cache.getItemById(id, monitor);
 	}
-
-
 
 }

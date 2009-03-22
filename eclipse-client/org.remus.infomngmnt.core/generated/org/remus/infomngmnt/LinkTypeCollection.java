@@ -15,7 +15,6 @@
 package org.remus.infomngmnt;
 
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

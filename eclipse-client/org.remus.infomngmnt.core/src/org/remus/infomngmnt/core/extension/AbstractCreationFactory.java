@@ -21,24 +21,21 @@ import org.remus.infomngmnt.InformationUnit;
 
 /**
  * @author Tom Seidel <toms@tomosch.de>
- *
+ * 
  */
 public abstract class AbstractCreationFactory {
 
-
 	protected EditingDomain editingDomain;
-
 
 	public InformationUnit createNewObject() {
 		InformationUnit newInfoObject = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		newInfoObject.setCreationDate(new Date());
+		newInfoObject.setCalendarEntry(InfomngmntFactory.eINSTANCE.createCalenderEntry());
 		return newInfoObject;
 	}
-	
+
 	public void handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
 		// does nothing by default.
 	}
-
-
 
 }

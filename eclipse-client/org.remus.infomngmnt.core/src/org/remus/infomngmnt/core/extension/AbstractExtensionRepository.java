@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+
 import org.remus.infomngmnt.core.remote.AbstractRepository;
 import org.remus.infomngmnt.core.remote.ICredentialProvider;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;

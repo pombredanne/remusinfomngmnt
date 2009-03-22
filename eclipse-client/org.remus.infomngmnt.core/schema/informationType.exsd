@@ -109,6 +109,13 @@
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="buildHtml" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.services.IRuleExtensionService;
 

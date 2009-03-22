@@ -15,16 +15,46 @@
 package org.remus.infomngmnt.impl;
 
 import java.util.Map;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import org.remus.infomngmnt.*;
+import org.remus.infomngmnt.Annotation;
+import org.remus.infomngmnt.ApplicationRoot;
+import org.remus.infomngmnt.AvailableRuleDefinitions;
+import org.remus.infomngmnt.AvailableTags;
+import org.remus.infomngmnt.CalendarEntryType;
+import org.remus.infomngmnt.CalenderEntry;
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.ChangeSet;
+import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.LinkType;
+import org.remus.infomngmnt.LinkTypeCollection;
+import org.remus.infomngmnt.NewElementRules;
+import org.remus.infomngmnt.RecentlyUsedKeywords;
+import org.remus.infomngmnt.RemoteContainer;
+import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.RemusTransferType;
+import org.remus.infomngmnt.RepositoryCollection;
+import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.RuleResult;
+import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.SynchronizationAction;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.Tag;
+import org.remus.infomngmnt.Usage;
 
 /**
  * <!-- begin-user-doc -->
@@ -99,6 +129,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createSynchronizableObjectToSynchronizationActionMap();
 			case InfomngmntPackage.TAG: return createTag();
 			case InfomngmntPackage.AVAILABLE_TAGS: return createAvailableTags();
+			case InfomngmntPackage.CALENDER_ENTRY: return createCalenderEntry();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -116,6 +147,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return createSynchronizationStateFromString(eDataType, initialValue);
 			case InfomngmntPackage.SYNCHRONIZATION_ACTION:
 				return createSynchronizationActionFromString(eDataType, initialValue);
+			case InfomngmntPackage.CALENDAR_ENTRY_TYPE:
+				return createCalendarEntryTypeFromString(eDataType, initialValue);
 			case InfomngmntPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			default:
@@ -135,6 +168,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return convertSynchronizationStateToString(eDataType, instanceValue);
 			case InfomngmntPackage.SYNCHRONIZATION_ACTION:
 				return convertSynchronizationActionToString(eDataType, instanceValue);
+			case InfomngmntPackage.CALENDAR_ENTRY_TYPE:
+				return convertCalendarEntryTypeToString(eDataType, instanceValue);
 			case InfomngmntPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			default:
@@ -437,6 +472,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public CalenderEntry createCalenderEntry() {
+		CalenderEntryImpl calenderEntry = new CalenderEntryImpl();
+		return calenderEntry;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public SynchronizationState createSynchronizationStateFromString(EDataType eDataType, String initialValue) {
 		SynchronizationState result = SynchronizationState.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -469,6 +514,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * @generated
 	 */
 	public String convertSynchronizationActionToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CalendarEntryType createCalendarEntryTypeFromString(EDataType eDataType, String initialValue) {
+		CalendarEntryType result = CalendarEntryType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertCalendarEntryTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

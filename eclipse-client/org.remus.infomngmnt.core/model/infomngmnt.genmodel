@@ -25,6 +25,13 @@
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/ADD_REMOTE"/>
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/RESOLVE_CONFLICT"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//CalendarEntryType">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/ONE_TIME"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/WEEKLY"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/TWO_WEEK"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/MONTHLY"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/ANNUAL"/>
+    </genEnums>
     <genDataTypes ecoreDataType="infomngmnt.ecore#//Object"/>
     <genDataTypes ecoreDataType="infomngmnt.ecore#//IRepository"/>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnit" labelFeature="#//infomngmnt/AbstractInformationUnit/label">
@@ -40,6 +47,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/usageData"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/keywords"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/calendarEntry"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//Usage">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Usage/lastAccess"/>
@@ -178,6 +186,12 @@
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//SynchronizableObject">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/synchronizationMetaData"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/markedAsDeleteItems"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//CalenderEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/start"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/end"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/entryType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/reminder"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

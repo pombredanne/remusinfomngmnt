@@ -50,14 +50,18 @@ public class TagService extends LuceneStore implements ITagService {
 				if (notification.getNotifier() instanceof Tag) {
 					addTag((Tag) notification.getNotifier());
 				} else if (notification.getNotifier() instanceof InformationUnitListItem) {
-					checkNewItems(Collections.<InformationUnitListItem> singleton((InformationUnitListItem)notification.getNotifier()));
+					checkNewItems(Collections
+							.<InformationUnitListItem> singleton((InformationUnitListItem) notification
+									.getNotifier()));
 				}
 				break;
 			case Notification.REMOVE:
 				if (notification.getNotifier() instanceof Tag) {
 					removeTag(((Tag) notification.getNotifier()));
 				} else if (notification.getNotifier() instanceof InformationUnitListItem) {
-					removeItems(Collections.<InformationUnitListItem> singleton((InformationUnitListItem)notification.getNotifier()));
+					removeItems(Collections
+							.<InformationUnitListItem> singleton((InformationUnitListItem) notification
+									.getNotifier()));
 				}
 				break;
 			default:
@@ -65,11 +69,11 @@ public class TagService extends LuceneStore implements ITagService {
 			}
 			super.notifyChanged(notification);
 		}
+
 		private void checkNewItems(final Collection<InformationUnitListItem> singleton) {
 
-
 		}
-		
+
 	}
 
 	public static final String INDEX_LOCATION = "tagreferences/"; //$NON-NLS-1$
@@ -80,22 +84,22 @@ public class TagService extends LuceneStore implements ITagService {
 	public TagService() {
 		super(INDEX_LOCATION);
 	}
-	
+
 	public void startListening() {
-		ApplicationModelPool.getInstance().getModel().getAvailableTags().eAdapters().add(new EContentAdapterExtension());
+		ApplicationModelPool.getInstance().getModel().getAvailableTags().eAdapters().add(
+				new EContentAdapterExtension());
 	}
 
-	public void addItems(final Collection<InformationUnitListItem>  infoUnit, final Tag tagByName) {
+	public void addItems(final Collection<InformationUnitListItem> infoUnit, final Tag tagByName) {
 		for (InformationUnitListItem informationUnitListItem : infoUnit) {
 			Document returnValue = new Document();
 
-			Field idField = new Field(
-					TAGNAME, tagByName.getName(),Field.Store.YES,Field.Index.UN_TOKENIZED);
+			Field idField = new Field(TAGNAME, tagByName.getName(), Field.Store.YES,
+					Field.Index.TOKENIZED);
 			returnValue.add(idField);
 
-
-			Field unitField = new Field(
-					INFOUNITID, informationUnitListItem.getId() ,Field.Store.YES, Field.Index.UN_TOKENIZED);
+			Field unitField = new Field(INFOUNITID, informationUnitListItem.getId(),
+					Field.Store.YES, Field.Index.TOKENIZED);
 			returnValue.add(unitField);
 			try {
 				getIndexWriter().addDocument(returnValue);
@@ -111,10 +115,12 @@ public class TagService extends LuceneStore implements ITagService {
 
 	}
 
-
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.services.ITagService#addTag(org.remus.infomngmnt.Tag)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.services.ITagService#addTag(org.remus.infomngmnt
+	 * .Tag)
 	 */
 	public void addTag(final Tag tag) {
 
@@ -124,7 +130,9 @@ public class TagService extends LuceneStore implements ITagService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.remus.infomngmnt.core.services.ITagService#getAllTags()
 	 */
 	public EList<Tag> getAllTags() {
@@ -132,10 +140,12 @@ public class TagService extends LuceneStore implements ITagService {
 		return null;
 	}
 
-
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.services.ITagService#getTagsByInformationUnit(org.remus.infomngmnt.InformationUnitListItem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.services.ITagService#getTagsByInformationUnit
+	 * (org.remus.infomngmnt.InformationUnitListItem)
 	 */
 	public Tag[] getTagsByInformationUnit(final InformationUnitListItem item) {
 		List<String> termList = new ArrayList<String>();
@@ -149,10 +159,9 @@ public class TagService extends LuceneStore implements ITagService {
 
 		Query tagQuery = null;
 		try {
-			tagQuery = MultiFieldQueryParser.parse(
-					termList.toArray(new String[termList.size()]),
-					fieldList.toArray(new String[fieldList.size()]),
-					flagList.toArray(new Occur[flagList.size()]), getAnalyser());
+			tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList.size()]),
+					fieldList.toArray(new String[fieldList.size()]), flagList
+							.toArray(new Occur[flagList.size()]), getAnalyser());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,7 +171,7 @@ public class TagService extends LuceneStore implements ITagService {
 			ScoreDoc[] docs = search.scoreDocs;
 			for (ScoreDoc scoreDoc : docs) {
 				Document doc = getIndexSearcher().doc(scoreDoc.doc);
-				//doc.get(arg0)
+				// doc.get(arg0)
 			}
 		} catch (CorruptIndexException e) {
 			// TODO Auto-generated catch block
@@ -174,21 +183,29 @@ public class TagService extends LuceneStore implements ITagService {
 		return new Tag[0];
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.services.ITagService#removeItem(org.remus.infomngmnt.InformationUnitListItem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.remus.infomngmnt.core.services.ITagService#removeItem(org.remus.
+	 * infomngmnt.InformationUnitListItem)
 	 */
 	public void removeItems(final Collection<InformationUnitListItem> infoUnit) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.services.ITagService#removeTag(org.remus.infomngmnt.Tag)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.services.ITagService#removeTag(org.remus.infomngmnt
+	 * .Tag)
 	 */
 	public void removeTag(final Tag tag) {
 		// TODO Auto-generated method stub
 
 	}
+
 	public InformationUnitListItem[] getItemsForTag(final Tag tag) {
 		List<InformationUnitListItem> returnValue = new ArrayList<InformationUnitListItem>();
 		List<String> termList = new ArrayList<String>();
@@ -202,10 +219,9 @@ public class TagService extends LuceneStore implements ITagService {
 
 		Query tagQuery = null;
 		try {
-			tagQuery = MultiFieldQueryParser.parse(
-					termList.toArray(new String[termList.size()]),
-					fieldList.toArray(new String[fieldList.size()]),
-					flagList.toArray(new Occur[flagList.size()]), getAnalyser());
+			tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList.size()]),
+					fieldList.toArray(new String[fieldList.size()]), flagList
+							.toArray(new Occur[flagList.size()]), getAnalyser());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

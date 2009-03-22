@@ -69,7 +69,7 @@ public class AESCryptoManager {
 		FileInputStream fileIn = new FileInputStream(file);
 		IvParameterSpec ivParamSpec = new IvParameterSpec(IV);
 		SecretKeySpec sKeySpec = new SecretKeySpec(deriveKey(), CIPHER_KEY_TYPE);
-		Cipher cipher = Cipher.getInstance(CIPHER_KEY_TYPE);
+		Cipher cipher = Cipher.getInstance(CIPHER_TYPE);
 		cipher.init(Cipher.DECRYPT_MODE, sKeySpec, ivParamSpec);
 
 		return new CipherInputStream(fileIn, cipher);

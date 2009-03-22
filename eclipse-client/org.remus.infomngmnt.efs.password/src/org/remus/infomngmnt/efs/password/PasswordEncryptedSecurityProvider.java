@@ -34,7 +34,7 @@ public class PasswordEncryptedSecurityProvider extends AbstractSecurityProvider 
 	 */
 	@Override
 	public boolean initialize(final Shell parentShell) {
-		PasswordPrompt prompt = new PasswordPrompt(parentShell);
+		PasswordPrompt prompt = new PasswordPrompt(parentShell, true);
 		if (prompt.open() == IDialogConstants.OK_ID) {
 			cryptoManager = new AESCryptoManager(prompt.getPwd().getBytes());
 			return true;
@@ -50,7 +50,11 @@ public class PasswordEncryptedSecurityProvider extends AbstractSecurityProvider 
 	 */
 	@Override
 	public boolean initializeForProject(final Shell shell) {
-		// TODO Auto-generated method stub
+		PasswordPrompt prompt = new PasswordPrompt(shell, false);
+		if (prompt.open() == IDialogConstants.OK_ID) {
+			cryptoManager = new AESCryptoManager(prompt.getPwd().getBytes());
+			return true;
+		}
 		return false;
 	}
 

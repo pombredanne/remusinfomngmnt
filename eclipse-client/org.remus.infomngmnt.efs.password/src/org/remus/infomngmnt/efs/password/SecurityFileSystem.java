@@ -24,7 +24,7 @@ public class SecurityFileSystem extends LocalFileSystem {
 		return PasswordEncryptedSecurityProvider.getCryptoManager();
 	}
 
-	public static final String ENCRYPTION_FILE_SCHEME = "pwdencrypted";
+	public static final String ENCRYPTION_FILE_SCHEME = "encryptedpwd";
 
 	/*
 	 * (non-Javadoc)

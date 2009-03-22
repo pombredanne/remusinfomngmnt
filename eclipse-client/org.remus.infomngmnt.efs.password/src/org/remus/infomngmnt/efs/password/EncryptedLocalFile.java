@@ -18,6 +18,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
+import org.remus.infomngmnt.core.model.StatusCreator;
+
 /**
  * @author tmseidel
  * 
@@ -39,9 +41,9 @@ public class EncryptedLocalFile extends LocalFile {
 		try {
 			return SecurityFileSystem.getCryptomanager().getDecryptedInputStream(this.file);
 		} catch (Exception e) {
-			return null;
+			e.printStackTrace();
+			throw new CoreException(StatusCreator.newStatus(e.getMessage()));
 		}
-		// return super.openInputStream(options, monitor);
 	}
 
 	@Override
@@ -51,7 +53,8 @@ public class EncryptedLocalFile extends LocalFile {
 		try {
 			return SecurityFileSystem.getCryptomanager().getEncryptedOutputStream(this.file);
 		} catch (Exception e) {
-			return null;
+			e.printStackTrace();
+			throw new CoreException(StatusCreator.newStatus(e.getMessage()));
 		}
 		// return super.openOutputStream(options, monitor);
 	}

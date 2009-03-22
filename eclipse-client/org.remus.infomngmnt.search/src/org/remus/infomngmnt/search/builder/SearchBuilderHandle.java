@@ -22,13 +22,18 @@ import org.remus.infomngmnt.resources.util.ResourceUtil;
  */
 public class SearchBuilderHandle implements IPostProjectHandle {
 
-
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.resources.util.IPostProjectHandle#postProjectCreation(org.eclipse.core.resources.IProject)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.resources.util.IPostProjectHandle#postProjectCreation
+	 * (org.eclipse.core.resources.IProject)
 	 */
-	public void postProjectCreation(IProjectDescription project) {
-		ResourceUtil.addBuilder(project, SearchBuilder.BUILDER_ID);
+	public void postProjectCreation(final IProjectDescription project) {
+		if (!project.getLocationURI().getScheme().startsWith(
+				ResourceUtil.SHEMAPREFIX_ENCRYPTED_PROJECTS)) {
+			ResourceUtil.addBuilder(project, SearchBuilder.BUILDER_ID);
+		}
 	}
 
 }

@@ -21,6 +21,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
+import org.remus.infomngmnt.common.ui.richtext.RichTextWidget;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -82,6 +84,19 @@ public class BindingWidgetFactory {
 		SpinnerBindingWidget bindingWidget = new SpinnerBindingWidget();
 		initControl(bindingWidget, ctx, domain, spinner);
 		return bindingWidget;
+	}
+
+	public static RichTextBindingWidget createRichText(final RichTextWidget control,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		RichTextBindingWidget bindingWidget = new RichTextBindingWidget();
+		initControl(bindingWidget, ctx, domain, control);
+		return bindingWidget;
+	}
+
+	public static RichTextBindingWidget createRichText(final RichTextWidget control,
+			final IEMFEditBindingProvider provider) {
+		return createRichText(control, provider.getDatabindingContext(), provider
+				.getEditingDomain());
 	}
 
 	private static void initControl(final AbstractBindingWidget widget,

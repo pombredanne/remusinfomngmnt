@@ -1,4 +1,4 @@
-<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt"}>
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
 <#setting url_escaping_charset="UTF-8">  
 <#setting number_format="0">
 <#assign infoUnit = doc.InformationUnit>

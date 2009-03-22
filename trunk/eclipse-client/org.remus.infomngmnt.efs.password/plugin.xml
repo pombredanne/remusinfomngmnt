@@ -5,25 +5,17 @@
          id="pwdencrypted"
          point="org.eclipse.core.filesystem.filesystems">
       <filesystem
-            scheme="pwdencrypted">
+            scheme="encryptedpwd">
          <run
                class="org.remus.infomngmnt.efs.password.SecurityFileSystem">
          </run>
       </filesystem>
    </extension>
    <extension
-         point="org.eclipse.ui.ide.filesystemSupport">
-      <filesystemContributor
-            class="org.remus.infomngmnt.efs.password.EncryptedFileSystemContributor"
-            label="Password Encrypted"
-            scheme="org.remus.infomngmnt.efs.password.pwdencrypted">
-      </filesystemContributor>
-   </extension>
-   <extension
          point="org.remus.infomngmnt.efs.securityProvider">
       <provider
             class="org.remus.infomngmnt.efs.password.PasswordEncryptedSecurityProvider"
-            scheme="pwdencrypted"
+            scheme="encryptedpwd"
             id="passwdencrypted"
             name="Password encrypted Filestore">
          <description>

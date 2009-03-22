@@ -23,13 +23,16 @@ public class PasswordPrompt extends StatusDialog {
 
 	private String pwd;
 
+	private final boolean creation;
+
 	/**
 	 * Create the dialog
 	 * 
 	 * @param parentShell
 	 */
-	public PasswordPrompt(final Shell parentShell) {
+	public PasswordPrompt(final Shell parentShell, final boolean creation) {
 		super(parentShell);
+		this.creation = creation;
 	}
 
 	/**
@@ -43,8 +46,13 @@ public class PasswordPrompt extends StatusDialog {
 		container.setLayout(new TableWrapLayout());
 
 		final Label pleaseEnterALabel = new Label(container, SWT.WRAP);
-		pleaseEnterALabel
-				.setText("Please enter a password which is used for en- and decryption of project contents. Pleas keep this password in mind, it won't be saved on disc.");
+		if (this.creation) {
+			pleaseEnterALabel
+					.setText("Please enter a password which is used for en- and decryption of project contents. Pleas keep this password in mind, it won't be saved on disc.");
+		} else {
+			pleaseEnterALabel
+					.setText("Please enter the password you have chosen on creating the projects. This is required to access the content of the project.");
+		}
 
 		final Label label_1 = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_1.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.TOP));

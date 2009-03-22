@@ -15,4 +15,6 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/securityprovider.xml
 Export-Package: org.remus.infomngmnt.efs,
- org.remus.infomngmnt.efs.extension
+ org.remus.infomngmnt.efs.extension,
+ org.remus.infomngmnt.efs.internal.model,
+ org.remus.infomngmnt.efs.ui

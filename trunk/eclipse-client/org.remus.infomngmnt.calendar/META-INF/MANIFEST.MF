@@ -10,3 +10,20 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore;bundle-version="2.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.aspencloud.calypso.ui.calendar,
+ org.aspencloud.calypso.ui.calendar.activities,
+ org.aspencloud.calypso.ui.calendar.activitiesCalendar,
+ org.aspencloud.calypso.ui.calendar.commands,
+ org.aspencloud.calypso.ui.calendar.factories,
+ org.aspencloud.calypso.ui.calendar.filters,
+ org.aspencloud.calypso.ui.calendar.model,
+ org.aspencloud.calypso.ui.calendar.tasks,
+ org.aspencloud.calypso.ui.calendar.tasksCalendar,
+ org.aspencloud.calypso.ui.workbench.views.calendar.actions,
+ org.aspencloud.calypso.util,
+ org.remus.infomgmnt.provider,
+ org.remus.infomngmnt.calendar.model,
+ org.remus.infomngmnt.calendar.model.impl,
+ org.remus.infomngmnt.calendar.model.util,
+ org.remus.infomngmnt.ccalendar,
+ org.remus.infomngmnt.ccalendar.actions

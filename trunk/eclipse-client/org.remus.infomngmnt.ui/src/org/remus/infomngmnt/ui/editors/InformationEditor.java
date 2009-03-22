@@ -77,6 +77,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
+import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -303,7 +304,11 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	@Override
 	protected void addPages() {
 		try {
-			addPage(this.page1 = new ViewPage(this, getPrimaryModel()));
+			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+					getPrimaryModel().getType());
+			if (infoTypeByType.isBuildHtml()) {
+				addPage(this.page1 = new ViewPage(this, getPrimaryModel()));
+			}
 			List<IEditPage> editPageByType = UIExtensionManager.getInstance().getEditPageByType(
 					getPrimaryModel().getType());
 			for (int i = 0, n = editPageByType.size(); i < n; i++) {

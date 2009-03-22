@@ -36,6 +36,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
+
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -52,18 +53,18 @@ import org.remus.infomngmnt.ui.link.NewLinkWizardPage;
 
 public class LinkOutline extends ContentOutlinePage {
 
-	private final class CustomDropTargetListenerExtension extends
-	CustomDropTargetListener {
+	private final class CustomDropTargetListenerExtension extends CustomDropTargetListener {
 		private List objectSelection = null;
 
-		CustomDropTargetListenerExtension(Object target) {
+		CustomDropTargetListenerExtension(final Object target) {
 			super(target);
 		}
 
-		public void dragOver(DropTargetEvent event) {
+		public void dragOver(final DropTargetEvent event) {
 			Object data = event.data;
 			if (LocalTransfer.getInstance().isSupportedType(event.currentDataType)) {
-				Object nativeToJava = LocalTransfer.getInstance().nativeToJava(event.currentDataType);
+				Object nativeToJava = LocalTransfer.getInstance().nativeToJava(
+						event.currentDataType);
 				if (nativeToJava instanceof IStructuredSelection) {
 					this.objectSelection = ((IStructuredSelection) nativeToJava).toList();
 					event.detail = DND.DROP_COPY;
@@ -74,7 +75,7 @@ public class LinkOutline extends ContentOutlinePage {
 			}
 		}
 
-		public void drop(DropTargetEvent event) {
+		public void drop(final DropTargetEvent event) {
 			List<AbstractInformationUnit> sources = new ArrayList<AbstractInformationUnit>();
 			for (Object obj : this.objectSelection) {
 				if (obj instanceof AbstractInformationUnit) {
@@ -83,18 +84,20 @@ public class LinkOutline extends ContentOutlinePage {
 			}
 			List<Link> createLinks = createLinks(sources);
 			for (Link link : createLinks) {
-				CreateChildCommand create_link = CommandFactory.CREATE_LINK(LinkOutline.this.info, link, LinkOutline.this.adapterFactoryEditingDomain);
+				CreateChildCommand create_link = CommandFactory.CREATE_LINK(LinkOutline.this.info,
+						link, LinkOutline.this.adapterFactoryEditingDomain);
 
 				LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(create_link);
 			}
-			//((EList<Link>)this.targetObject).addAll(createLinks);
+			// ((EList<Link>)this.targetObject).addAll(createLinks);
 		}
 
-		public List<Link> createLinks(List<AbstractInformationUnit> sources) {
+		public List<Link> createLinks(final List<AbstractInformationUnit> sources) {
 			List<Link> returnValue = new ArrayList<Link>();
 			for (AbstractInformationUnit source : sources) {
 				Link newLink = InfomngmntFactory.eINSTANCE.createLink();
-				newLink.setLinktype(LinkUtil.getInstance().getLinkTypes().getAvailableLinkTypes().get(0).getValue());
+				newLink.setLinktype(LinkUtil.getInstance().getLinkTypes().getAvailableLinkTypes()
+						.get(0).getValue());
 				if (source instanceof InformationUnit) {
 					newLink.setTarget((InformationUnit) source);
 					returnValue.add(newLink);
@@ -118,7 +121,7 @@ public class LinkOutline extends ContentOutlinePage {
 	private FormText linkListingForm;
 	private final EditingDomain adapterFactoryEditingDomain;
 
-	public LinkOutline(InformationUnit info, EditingDomain adapterFactoryEditingDomain) {
+	public LinkOutline(final InformationUnit info, final EditingDomain adapterFactoryEditingDomain) {
 		this.info = info;
 		this.adapterFactoryEditingDomain = adapterFactoryEditingDomain;
 
@@ -126,7 +129,7 @@ public class LinkOutline extends ContentOutlinePage {
 
 	private final AdapterImpl linkListChangeAdapter = new AdapterImpl() {
 		@Override
-		public void notifyChanged(org.eclipse.emf.common.notify.Notification msg) {
+		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
 			buildList();
 		}
 	};
@@ -140,19 +143,28 @@ public class LinkOutline extends ContentOutlinePage {
 
 	/**
 	 * Create contents of the view part
+	 * 
 	 * @param parent
 	 */
 	@Override
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 
 		FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-		//ScrolledForm createScrolledForm = toolkit.createScrolledForm(parent);
+		// ScrolledForm createScrolledForm = toolkit.createScrolledForm(parent);
 
 		this.container = toolkit.createComposite(parent, SWT.NONE);
 		this.container.setLayout(new GridLayout());
 		toolkit.paintBordersFor(this.container);
 
+		final Section eventSection = toolkit.createSection(this.container, Section.TITLE_BAR);
+		GridData layoutData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		layoutData.heightHint = 100;
+		eventSection.setLayoutData(layoutData);
+		eventSection.setText("Associated Event");
 
+		final Composite eventComposite = toolkit.createComposite(eventSection, SWT.NONE);
+		toolkit.paintBordersFor(eventComposite);
+		eventSection.setClient(eventComposite);
 
 		final Section section = toolkit.createSection(this.container, Section.TITLE_BAR);
 		section.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -169,11 +181,15 @@ public class LinkOutline extends ContentOutlinePage {
 		this.noLinkComposite.setLayout(new TableWrapLayout());
 
 		FormText formText = new FormText(this.noLinkComposite, SWT.NONE);
-		formText.setText("<form><p>No Links attached. You can <a href=\"addLink\">add a new Link</a> or drop a link target into this part.</p></form>", true, false);
+		formText
+				.setText(
+						"<form><p>No Links attached. You can <a href=\"addLink\">add a new Link</a> or drop a link target into this part.</p></form>",
+						true, false);
 		formText.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
-			public void linkActivated(HyperlinkEvent e) {
-				NewLinkWizardPage newLinkWizardPage = new NewLinkWizardPage(getSite().getShell(),LinkOutline.this.info);
+			public void linkActivated(final HyperlinkEvent e) {
+				NewLinkWizardPage newLinkWizardPage = new NewLinkWizardPage(getSite().getShell(),
+						LinkOutline.this.info);
 				newLinkWizardPage.open();
 			}
 		});
@@ -186,12 +202,20 @@ public class LinkOutline extends ContentOutlinePage {
 		buildList();
 		this.info.eAdapters().add(this.linkListChangeAdapter);
 
-
 		//
 		createActions();
 		initializeToolBar();
 		initializeMenu();
 		initDrop();
+		bindValuesToUi();
+	}
+
+	private void bindValuesToUi() {
+
+	}
+
+	protected void fillCalendarEntries() {
+
 	}
 
 	/**
@@ -200,13 +224,15 @@ public class LinkOutline extends ContentOutlinePage {
 	private void initDrop() {
 		final int dndOperations = DND.DROP_MOVE | DND.DROP_LINK | DND.DROP_COPY;
 		final Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
-		DropTarget abstractDropZone = new DropTarget(this.noLinkComposite,dndOperations);
+		DropTarget abstractDropZone = new DropTarget(this.noLinkComposite, dndOperations);
 		abstractDropZone.setTransfer(transfers);
-		abstractDropZone.addDropListener(new CustomDropTargetListenerExtension(this.info.getLinks()));
+		abstractDropZone
+				.addDropListener(new CustomDropTargetListenerExtension(this.info.getLinks()));
 
-		DropTarget abstractDropZone2 = new DropTarget(this.linkListingComposite,dndOperations);
+		DropTarget abstractDropZone2 = new DropTarget(this.linkListingComposite, dndOperations);
 		abstractDropZone2.setTransfer(transfers);
-		abstractDropZone2.addDropListener(new CustomDropTargetListenerExtension(this.info.getLinks()));
+		abstractDropZone2.addDropListener(new CustomDropTargetListenerExtension(this.info
+				.getLinks()));
 	}
 
 	protected void buildList() {
@@ -221,15 +247,17 @@ public class LinkOutline extends ContentOutlinePage {
 		sw.append("<form>");
 		for (Link link : links) {
 			sw.append("<p>");
-			//sw.append("<li>");
+			// sw.append("<li>");
 			sw.append("<img href=\"").append(link.getTarget().getType()).append("\" /> ");
 			sw.append("<a href=\"").append(link.getTarget().getId()).append("\">");
 			sw.append(link.getTarget().getLabel());
 			sw.append("</a>");
 			sw.append("<br />");
-			//sw.append("</li>");
+			// sw.append("</li>");
 			if (!addedImages.contains(link.getTarget().getType())) {
-				Object image2 = ((IItemLabelProvider) EditingUtil.getInstance().getAdapterFactory().adapt(link.getTarget(),IItemLabelProvider.class)).getImage(link.getTarget());
+				Object image2 = ((IItemLabelProvider) EditingUtil.getInstance().getAdapterFactory()
+						.adapt(link.getTarget(), IItemLabelProvider.class)).getImage(link
+						.getTarget());
 				if (image2 instanceof Image) {
 					this.linkListingForm.setImage(link.getTarget().getType(), (Image) image2);
 					addedImages.add(link.getTarget().getType());
@@ -241,10 +269,13 @@ public class LinkOutline extends ContentOutlinePage {
 		this.linkListingForm.setText(sw.toString(), true, false);
 		this.linkListingForm.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
-			public void linkActivated(HyperlinkEvent e) {
+			public void linkActivated(final HyperlinkEvent e) {
 				try {
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-							new InformationEditorInput(ApplicationModelPool.getInstance().getItemById(e.getHref().toString(), null)), InformationEditor.ID);
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+							.openEditor(
+									new InformationEditorInput(ApplicationModelPool.getInstance()
+											.getItemById(e.getHref().toString(), null)),
+									InformationEditor.ID);
 				} catch (PartInitException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -270,7 +301,8 @@ public class LinkOutline extends ContentOutlinePage {
 		tbm.add(new Action("Edit") {
 			@Override
 			public void run() {
-				NewLinkWizardPage page = new NewLinkWizardPage(getSite().getShell(), LinkOutline.this.info);
+				NewLinkWizardPage page = new NewLinkWizardPage(getSite().getShell(),
+						LinkOutline.this.info);
 				page.open();
 			}
 		});

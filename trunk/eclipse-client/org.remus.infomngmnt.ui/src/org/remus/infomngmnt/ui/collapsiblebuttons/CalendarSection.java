@@ -20,12 +20,16 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.events.IExpansionListener;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.common.ui.widgets.CalendarComposite;
+import org.remus.infomngmnt.ui.calendar.CalendarEditor;
+import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 
 /**
@@ -82,8 +86,6 @@ public class CalendarSection extends CollapsibleButtonBar {
 
 		getToolkit().adapt(cc);
 
-		;
-
 		final Section today = getToolkit().createSection(comp, SECTION_STYLE);
 		today.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		today.setText("Today");
@@ -110,6 +112,18 @@ public class CalendarSection extends CollapsibleButtonBar {
 
 		setControl(comp);
 
+	}
+
+	@Override
+	public void handleSelect() {
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
+					new CalendarEditorInput(), CalendarEditor.EDITOR_ID);
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		super.handleSelect();
 	}
 
 }

@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
+
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
@@ -40,38 +41,43 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 	public static final String SECTION_DIALOG = "ds_infounitselectiondialog"; //$NON-NLS-1$
 	public static final String SELECTION_MEMENTO = "memento_infounitselectiondialog"; //$NON-NLS-1$
 
-
-	public InfoUnitSelectionDialog(Shell shell, boolean multi) {
+	public InfoUnitSelectionDialog(final Shell shell, final boolean multi) {
 		super(shell, multi);
 		setSelectionHistory(new ItemSelectionHistory());
-		//setMessage("Select an information item to open" + getMessage());
+		// setMessage("Select an information item to open" + getMessage());
 		setTitle("Open Information Item");
 	}
 
 	class ItemSelectionHistory extends SelectionHistory {
 
 		@Override
-		protected Object restoreItemFromMemento(IMemento memento) {
+		protected Object restoreItemFromMemento(final IMemento memento) {
 			return ApplicationModelPool.getInstance().getItemById(memento.getTextData(), null);
 		}
 
 		@Override
-		protected void storeItemToMemento(Object item, IMemento memento) {
+		protected void storeItemToMemento(final Object item, final IMemento memento) {
 			memento.putTextData(((AbstractInformationUnit) item).getId());
 		}
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#createExtendedContentArea(org.eclipse.swt.widgets.Composite)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#createExtendedContentArea
+	 * (org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createExtendedContentArea(Composite parent) {
+	protected Control createExtendedContentArea(final Composite parent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#createFilter()
 	 */
 	@Override
@@ -80,26 +86,34 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 		return new ItemsFilter() {
 
 			@Override
-			public boolean isConsistentItem(Object item) {
+			public boolean isConsistentItem(final Object item) {
 				return true;
 			}
 
 			@Override
-			public boolean matchItem(Object item) {
+			public boolean matchItem(final Object item) {
 				return matches(((AbstractInformationUnit) item).getLabel());
 			}
 
 		};
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#fillContentProvider(org.eclipse.ui.dialogs.FilteredItemsSelectionDialog.AbstractContentProvider, org.eclipse.ui.dialogs.FilteredItemsSelectionDialog.ItemsFilter, org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#fillContentProvider
+	 * (org
+	 * .eclipse.ui.dialogs.FilteredItemsSelectionDialog.AbstractContentProvider,
+	 * org.eclipse.ui.dialogs.FilteredItemsSelectionDialog.ItemsFilter,
+	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	protected void fillContentProvider(AbstractContentProvider contentProvider,
-			ItemsFilter itemsFilter, IProgressMonitor progressMonitor)
-	throws CoreException {
-		Map<String, InformationUnitListItem> allItems = ApplicationModelPool.getInstance().getAllItems(progressMonitor);
+	protected void fillContentProvider(final AbstractContentProvider contentProvider,
+			final ItemsFilter itemsFilter, final IProgressMonitor progressMonitor)
+			throws CoreException {
+		Map<String, InformationUnitListItem> allItems = ApplicationModelPool.getInstance()
+				.getAllItems(progressMonitor);
 		Collection<InformationUnitListItem> values = allItems.values();
 		for (InformationUnitListItem informationUnitListItem : values) {
 			contentProvider.add(informationUnitListItem, itemsFilter);
@@ -107,12 +121,16 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#getDialogSettings()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#getDialogSettings()
 	 */
 	@Override
 	protected IDialogSettings getDialogSettings() {
-		IDialogSettings section = UIPlugin.getDefault().getDialogSettings().getSection(SECTION_DIALOG);
+		IDialogSettings section = UIPlugin.getDefault().getDialogSettings().getSection(
+				SECTION_DIALOG);
 		if (section == null) {
 			UIPlugin.getDefault().getDialogSettings().addNewSection(SECTION_DIALOG);
 			section = UIPlugin.getDefault().getDialogSettings().getSection(SECTION_DIALOG);
@@ -120,35 +138,43 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 		return section;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#getElementName(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#getElementName(java
+	 * .lang.Object)
 	 */
 	@Override
-	public String getElementName(Object item) {
+	public String getElementName(final Object item) {
 		return ((AbstractInformationUnit) item).getLabel();
 	}
 
-
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#getItemsComparator()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#getItemsComparator()
 	 */
 	@Override
 	protected Comparator getItemsComparator() {
 		return new Comparator<InformationUnitListItem>() {
 
-			public int compare(InformationUnitListItem o1,
-					InformationUnitListItem o2) {
+			public int compare(final InformationUnitListItem o1, final InformationUnitListItem o2) {
 				return Collator.getInstance().compare(o1.getLabel(), o2.getLabel());
 			}
 		};
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#validateItem(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.dialogs.FilteredItemsSelectionDialog#validateItem(java
+	 * .lang.Object)
 	 */
 	@Override
-	protected IStatus validateItem(Object item) {
+	protected IStatus validateItem(final Object item) {
 		return Status.OK_STATUS;
 	}
 

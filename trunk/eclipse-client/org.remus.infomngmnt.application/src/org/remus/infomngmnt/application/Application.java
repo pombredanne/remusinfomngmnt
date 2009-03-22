@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -16,6 +17,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
@@ -31,6 +33,10 @@ import org.eclipse.ui.internal.ide.ChooseWorkspaceDialog;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.internal.ide.StatusUtil;
+
+import org.remus.infomngmnt.efs.EFSActivator;
+import org.remus.infomngmnt.efs.internal.model.SecurityWrapper;
+import org.remus.infomngmnt.efs.ui.InitializeSecurityProviderDialog;
 
 /**
  * This class controls all aspects of the application's execution
@@ -77,8 +83,11 @@ public class Application implements IApplication {
 		// There is nothing to do for IDEApplication
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext context)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
+	 * IApplicationContext context)
 	 */
 	public Object start(final IApplicationContext appContext) throws Exception {
 		Display display = createDisplay();
@@ -89,9 +98,12 @@ public class Application implements IApplication {
 			// look and see if there's a splash shell we can parent off of
 			Shell shell = WorkbenchPlugin.getSplashShell(display);
 			if (shell != null) {
-				// should should set the icon and message for this shell to be the
-				// same as the chooser dialog - this will be the guy that lives in
-				// the task bar and without these calls you'd have the default icon
+				// should should set the icon and message for this shell to be
+				// the
+				// same as the chooser dialog - this will be the guy that lives
+				// in
+				// the task bar and without these calls you'd have the default
+				// icon
 				// with no message.
 				shell.setText(ChooseWorkspaceDialog.getWindowTitle());
 				shell.setImages(Dialog.getDefaultImages());
@@ -103,7 +115,20 @@ public class Application implements IApplication {
 				return EXIT_OK;
 			}
 
-
+			// Before accessing to projects we have to initialize the
+			// security-providers
+			// Therefore we iterate through projects and searching for schemes
+			// that match
+			// to a file system which is encrypted.
+			List<SecurityWrapper> securityProvideProjects = EFSActivator.getDefault()
+					.getSecurityProvideProjects();
+			if (securityProvideProjects.size() > 0) {
+				InitializeSecurityProviderDialog diag = new InitializeSecurityProviderDialog(
+						display.getActiveShell(), securityProvideProjects);
+				if (diag.open() != IDialogConstants.OK_ID) {
+					return EXIT_OK;
+				}
+			}
 
 			// create the workbench with this advisor and run it until it exits
 			// N.B. createWorkbench remembers the advisor, and also registers
@@ -143,8 +168,13 @@ public class Application implements IApplication {
 		return PlatformUI.createDisplay();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.IExecutableExtension#setInitializationData(org.eclipse.core.runtime.IConfigurationElement, java.lang.String, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.runtime.IExecutableExtension#setInitializationData(org
+	 * .eclipse.core.runtime.IConfigurationElement, java.lang.String,
+	 * java.lang.Object)
 	 */
 	public void setInitializationData(final IConfigurationElement config,
 			final String propertyName, final Object data) {
@@ -162,9 +192,7 @@ public class Application implements IApplication {
 		// -data @none was specified but an ide requires workspace
 		Location instanceLoc = Platform.getInstanceLocation();
 		if (instanceLoc == null) {
-			MessageDialog
-			.openError(
-					shell,
+			MessageDialog.openError(shell,
 					IDEWorkbenchMessages.IDEApplication_workspaceMandatoryTitle,
 					IDEWorkbenchMessages.IDEApplication_workspaceMandatoryMessage);
 			return false;
@@ -192,31 +220,24 @@ public class Application implements IApplication {
 				// 2. directory could not be created
 				File workspaceDirectory = new File(instanceLoc.getURL().getFile());
 				if (workspaceDirectory.exists()) {
-					MessageDialog.openError(
-							shell,
+					MessageDialog.openError(shell,
 							IDEWorkbenchMessages.IDEApplication_workspaceCannotLockTitle,
 							IDEWorkbenchMessages.IDEApplication_workspaceCannotLockMessage);
 				} else {
-					MessageDialog.openError(
-							shell,
+					MessageDialog.openError(shell,
 							IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetTitle,
 							IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetMessage);
 				}
 			} catch (IOException e) {
 				IDEWorkbenchPlugin.log("Could not obtain lock for workspace location", //$NON-NLS-1$
 						e);
-				MessageDialog
-				.openError(
-						shell,
-						IDEWorkbenchMessages.InternalError,
-						e.getMessage());
+				MessageDialog.openError(shell, IDEWorkbenchMessages.InternalError, e.getMessage());
 			}
 			return false;
 		}
 
 		// -data @noDefault or -data not specified, prompt and set
-		ChooseWorkspaceData launchData = new ChooseWorkspaceData(instanceLoc
-				.getDefault());
+		ChooseWorkspaceData launchData = new ChooseWorkspaceData(instanceLoc.getDefault());
 
 		boolean force = false;
 		while (true) {
@@ -238,9 +259,7 @@ public class Application implements IApplication {
 					return true;
 				}
 			} catch (IllegalStateException e) {
-				MessageDialog
-				.openError(
-						shell,
+				MessageDialog.openError(shell,
 						IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetTitle,
 						IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetMessage);
 				return false;
@@ -285,9 +304,7 @@ public class Application implements IApplication {
 
 			// 70576: don't accept empty input
 			if (instancePath.length() <= 0) {
-				MessageDialog
-				.openError(
-						shell,
+				MessageDialog.openError(shell,
 						IDEWorkbenchMessages.IDEApplication_workspaceEmptyTitle,
 						IDEWorkbenchMessages.IDEApplication_workspaceEmptyMessage);
 				continue;
@@ -300,15 +317,13 @@ public class Application implements IApplication {
 			}
 
 			try {
-				// Don't use File.toURL() since it adds a leading slash that Platform does not
-				// handle properly.  See bug 54081 for more details.
-				String path = workspace.getAbsolutePath().replace(
-						File.separatorChar, '/');
+				// Don't use File.toURL() since it adds a leading slash that
+				// Platform does not
+				// handle properly. See bug 54081 for more details.
+				String path = workspace.getAbsolutePath().replace(File.separatorChar, '/');
 				url = new URL("file", null, path); //$NON-NLS-1$
 			} catch (MalformedURLException e) {
-				MessageDialog
-				.openError(
-						shell,
+				MessageDialog.openError(shell,
 						IDEWorkbenchMessages.IDEApplication_workspaceInvalidTitle,
 						IDEWorkbenchMessages.IDEApplication_workspaceInvalidMessage);
 				continue;
@@ -355,10 +370,11 @@ public class Application implements IApplication {
 		// other than the current ide version -- find out if the user wants
 		// to use it anyhow.
 		String title = IDEWorkbenchMessages.IDEApplication_versionTitle;
-		String message = NLS.bind(IDEWorkbenchMessages.IDEApplication_versionMessage, url.getFile());
+		String message = NLS
+				.bind(IDEWorkbenchMessages.IDEApplication_versionMessage, url.getFile());
 
-		MessageBox mbox = new MessageBox(shell, SWT.OK | SWT.CANCEL
-				| SWT.ICON_WARNING | SWT.APPLICATION_MODAL);
+		MessageBox mbox = new MessageBox(shell, SWT.OK | SWT.CANCEL | SWT.ICON_WARNING
+				| SWT.APPLICATION_MODAL);
 		mbox.setText(title);
 		mbox.setMessage(message);
 		return mbox.open() == SWT.OK;
@@ -389,18 +405,17 @@ public class Application implements IApplication {
 			return props.getProperty(WORKSPACE_VERSION_KEY);
 		} catch (IOException e) {
 			IDEWorkbenchPlugin.log("Could not read version file", new Status( //$NON-NLS-1$
-					IStatus.ERROR, IDEWorkbenchPlugin.IDE_WORKBENCH,
-					IStatus.ERROR,
+					IStatus.ERROR, IDEWorkbenchPlugin.IDE_WORKBENCH, IStatus.ERROR,
 					e.getMessage() == null ? "" : e.getMessage(), //$NON-NLS-1$,
-							e));
+					e));
 			return null;
 		}
 	}
 
 	/**
 	 * Write the version of the metadata into a known file overwriting any
-	 * existing file contents. Writing the version file isn't really crucial,
-	 * so the function is silent about failure
+	 * existing file contents. Writing the version file isn't really crucial, so
+	 * the function is silent about failure
 	 */
 	private static void writeWorkspaceVersion() {
 		Location instanceLoc = Platform.getInstanceLocation();
@@ -415,8 +430,7 @@ public class Application implements IApplication {
 
 		OutputStream output = null;
 		try {
-			String versionLine = WORKSPACE_VERSION_KEY + '='
-			+ WORKSPACE_VERSION_VALUE;
+			String versionLine = WORKSPACE_VERSION_KEY + '=' + WORKSPACE_VERSION_VALUE;
 
 			output = new FileOutputStream(versionFile);
 			output.write(versionLine.getBytes("UTF-8")); //$NON-NLS-1$
@@ -459,8 +473,7 @@ public class Application implements IApplication {
 
 			// make sure the file exists
 			File versionFile = new File(metaDir, VERSION_FILENAME);
-			if (!versionFile.exists()
-					&& (!create || !versionFile.createNewFile())) {
+			if (!versionFile.exists() && (!create || !versionFile.createNewFile())) {
 				return null;
 			}
 
@@ -471,7 +484,9 @@ public class Application implements IApplication {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.equinox.app.IApplication#stop()
 	 */
 	public void stop() {

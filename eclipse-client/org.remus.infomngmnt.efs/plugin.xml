@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="securityProvider" name="securityProvider" schema="schema/securityProvider.exsd"/>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="org.remus.infomngmnt.efs.ui.NewEncryptedProjectWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/encrypted_project_new.png"
+            id="org.remus.infomngmnt.efs.newencryptedproject"
+            name="Encrypted Information Project"
+            project="true">
+      </wizard>
+   </extension>
+
+</plugin>

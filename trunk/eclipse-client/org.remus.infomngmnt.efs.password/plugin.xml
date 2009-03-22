@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="pwdencrypted"
+         point="org.eclipse.core.filesystem.filesystems">
+      <filesystem
+            scheme="pwdencrypted">
+         <run
+               class="org.remus.infomngmnt.efs.password.SecurityFileSystem">
+         </run>
+      </filesystem>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.filesystemSupport">
+      <filesystemContributor
+            class="org.remus.infomngmnt.efs.password.EncryptedFileSystemContributor"
+            label="Password Encrypted"
+            scheme="org.remus.infomngmnt.efs.password.pwdencrypted">
+      </filesystemContributor>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.efs.securityProvider">
+      <provider
+            class="org.remus.infomngmnt.efs.password.PasswordEncryptedSecurityProvider"
+            scheme="pwdencrypted"
+            id="passwdencrypted"
+            name="Password encrypted Filestore">
+         <description>
+            This password provider uses AES Encryption with key derivation, based on a user chosen password. The password is not saved to local-disc. If you loose the password you won't be ablte to restore the projects content.
+         </description>
+      </provider>
+   </extension>
+
+</plugin>

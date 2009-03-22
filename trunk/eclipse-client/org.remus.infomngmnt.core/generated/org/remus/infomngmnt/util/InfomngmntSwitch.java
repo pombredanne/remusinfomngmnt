@@ -15,12 +15,42 @@
 package org.remus.infomngmnt.util;
 
 import java.util.List;
-
 import java.util.Map;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
-import org.remus.infomngmnt.*;
+import org.remus.infomngmnt.AbstractInformationUnit;
+import org.remus.infomngmnt.Adapter;
+import org.remus.infomngmnt.Annotation;
+import org.remus.infomngmnt.ApplicationRoot;
+import org.remus.infomngmnt.AvailableRuleDefinitions;
+import org.remus.infomngmnt.AvailableTags;
+import org.remus.infomngmnt.CalenderEntry;
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.ChangeSet;
+import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.LinkType;
+import org.remus.infomngmnt.LinkTypeCollection;
+import org.remus.infomngmnt.NewElementRules;
+import org.remus.infomngmnt.RecentlyUsedKeywords;
+import org.remus.infomngmnt.RemoteContainer;
+import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.RemusTransferType;
+import org.remus.infomngmnt.RepositoryCollection;
+import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.RuleResult;
+import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.SynchronizationAction;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.Tag;
+import org.remus.infomngmnt.Usage;
 
 /**
  * <!-- begin-user-doc -->
@@ -307,6 +337,12 @@ public class InfomngmntSwitch<T> {
 				SynchronizableObject synchronizableObject = (SynchronizableObject)theEObject;
 				T result = caseSynchronizableObject(synchronizableObject);
 				if (result == null) result = caseAdapter(synchronizableObject);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.CALENDER_ENTRY: {
+				CalenderEntry calenderEntry = (CalenderEntry)theEObject;
+				T result = caseCalenderEntry(calenderEntry);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -791,6 +827,21 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseSynchronizableObject(SynchronizableObject object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Calender Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Calender Entry</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCalenderEntry(CalenderEntry object) {
 		return null;
 	}
 

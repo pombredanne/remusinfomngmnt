@@ -56,25 +56,31 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			InformationUnit objectFromFile = null;
 			IInfoType infoTypeByType = null;
 			if (resourceDelta.getResource().getParent() != null
-					&& resourceDelta.getResource().getParent().getName().equals(ResourceUtil.SETTINGS_FOLDER)) {
+					&& resourceDelta.getResource().getParent().getName().equals(
+							ResourceUtil.SETTINGS_FOLDER)) {
 				return;
 			}
 
 			if (resourceDelta.getResource() != null
 					&& resourceDelta.getResource().getType() == IResource.FILE
-					&& resourceDelta.getResource().getFileExtension().equals(ResourceUtil.FILE_EXTENSION)) {
+					&& resourceDelta.getResource().getFileExtension().equals(
+							ResourceUtil.FILE_EXTENSION)) {
 				if (resourceDelta.getResource().exists()) {
 					objectFromFile = EditingUtil.getInstance().getObjectFromFile(
-							(IFile) resourceDelta.getResource(), InfomngmntPackage.eINSTANCE.getInformationUnit(),null,false);
-					infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(objectFromFile.getType());
+							(IFile) resourceDelta.getResource(),
+							InfomngmntPackage.eINSTANCE.getInformationUnit(), null, false);
+					infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+							objectFromFile.getType());
 
 				}
 				switch (resourceDelta.getKind()) {
 				case IResourceDelta.REPLACED:
 				case IResourceDelta.ADDED:
 				case IResourceDelta.CHANGED:
-					if (resourceDelta.getResource().exists() && objectFromFile != null && objectFromFile.getId() != null) {
-						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta.getResource());
+					if (resourceDelta.getResource().exists() && objectFromFile != null
+							&& objectFromFile.getId() != null) {
+						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta
+								.getResource());
 					}
 					break;
 				case IResourceDelta.REMOVED:
@@ -85,10 +91,12 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 		}
 	}
 
-	void buildSingleInfoUnit(final InformationUnit objectFromFile, final IInfoType infoTypeByType, final IFile resource) {
+	void buildSingleInfoUnit(final InformationUnit objectFromFile, final IInfoType infoTypeByType,
+			final IFile resource) {
 		try {
 			File createTempFile = null;
-			AbstractInformationRepresentation informationRepresentation = infoTypeByType.getInformationRepresentation();
+			AbstractInformationRepresentation informationRepresentation = infoTypeByType
+					.getInformationRepresentation();
 			informationRepresentation.setValue(objectFromFile);
 			IFileState[] history = resource.getHistory(this.monitor);
 			if (history.length > 0) {
@@ -97,12 +105,13 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				contents = history[0].getContents();
 
 				try {
-					createTempFile = File.createTempFile(objectFromFile.getId(), ResourceUtil.FILE_EXTENSION);
+					createTempFile = File.createTempFile(objectFromFile.getId(),
+							ResourceUtil.FILE_EXTENSION);
 					fos = new FileOutputStream(createTempFile);
-					byte buf[]=new byte[1024];
+					byte buf[] = new byte[1024];
 					int len;
-					while((len = contents.read(buf))>0) {
-						fos.write(buf,0,len);
+					while ((len = contents.read(buf)) > 0) {
+						fos.write(buf, 0, len);
 					}
 
 				} catch (Exception e) {
@@ -127,9 +136,10 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			} else {
 				informationRepresentation.setPreviousVersion(null);
 			}
-			
+
 			if (informationRepresentation.createFolderOnBuild()) {
-				String folderName = resource.getProjectRelativePath().removeFileExtension().lastSegment();
+				String folderName = resource.getProjectRelativePath().removeFileExtension()
+						.lastSegment();
 				IFolder folder = resource.getParent().getFolder(new Path(folderName));
 				if (folder.exists()) {
 					folder.delete(true, this.monitor);
@@ -137,26 +147,28 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				folder.create(true, true, this.monitor);
 				informationRepresentation.setBuildFolder(folder);
 			}
-			
+
 			informationRepresentation.handlePreBuild(this.monitor);
-			InputStream handleHtmlGeneration = infoTypeByType.getInformationRepresentation().handleHtmlGeneration(this.monitor);
-			IFile writeContent = null;
-			try {
-				writeContent = writeContent(resource, handleHtmlGeneration, this.monitor);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			informationRepresentation.handlePostBuild(writeContent, this.monitor);
-			if (createTempFile != null) {
-				createTempFile.delete();
+			if (infoTypeByType.isBuildHtml()) {
+				InputStream handleHtmlGeneration = infoTypeByType.getInformationRepresentation()
+						.handleHtmlGeneration(this.monitor);
+				IFile writeContent = null;
+				try {
+					writeContent = writeContent(resource, handleHtmlGeneration, this.monitor);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				informationRepresentation.handlePostBuild(writeContent, this.monitor);
+				if (createTempFile != null) {
+					createTempFile.delete();
+				}
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 
 	}
 
@@ -165,13 +177,15 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	}
 
-	private IFile writeContent(final IFile origFile, final InputStream handleHtmlGeneration, final IProgressMonitor monitor) throws Exception {
-		SubProgressMonitor progressMonitor = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
+	private IFile writeContent(final IFile origFile, final InputStream handleHtmlGeneration,
+			final IProgressMonitor monitor) throws Exception {
+		SubProgressMonitor progressMonitor = new SubProgressMonitor(monitor,
+				IProgressMonitor.UNKNOWN);
 		IPath computeBinFilePath = ResourceUtil.computeBinFileFulllPath(origFile);
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(computeBinFilePath);
 		try {
 			if (file.exists()) {
-				file.setContents(handleHtmlGeneration, true,true, progressMonitor);
+				file.setContents(handleHtmlGeneration, true, true, progressMonitor);
 			} else {
 				file.create(handleHtmlGeneration, true, progressMonitor);
 			}
@@ -189,8 +203,5 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			}
 		}
 	}
-
-
-
 
 }

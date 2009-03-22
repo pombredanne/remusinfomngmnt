@@ -16,8 +16,6 @@ package org.remus.infomngmnt;
 
 import java.util.Date;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Synchronization Metadata</b></em>'.

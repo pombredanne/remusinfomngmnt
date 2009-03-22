@@ -15,14 +15,42 @@
 package org.remus.infomngmnt.util;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
-import org.remus.infomngmnt.*;
+import org.remus.infomngmnt.AbstractInformationUnit;
+import org.remus.infomngmnt.Annotation;
+import org.remus.infomngmnt.ApplicationRoot;
+import org.remus.infomngmnt.AvailableRuleDefinitions;
+import org.remus.infomngmnt.AvailableTags;
+import org.remus.infomngmnt.CalenderEntry;
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.ChangeSet;
+import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.LinkType;
+import org.remus.infomngmnt.LinkTypeCollection;
+import org.remus.infomngmnt.NewElementRules;
+import org.remus.infomngmnt.RecentlyUsedKeywords;
+import org.remus.infomngmnt.RemoteContainer;
+import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.RemusTransferType;
+import org.remus.infomngmnt.RepositoryCollection;
+import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.RuleResult;
+import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.SynchronizationAction;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.Tag;
+import org.remus.infomngmnt.Usage;
 
 /**
  * <!-- begin-user-doc -->
@@ -207,6 +235,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseSynchronizableObject(SynchronizableObject object) {
 				return createSynchronizableObjectAdapter();
+			}
+			@Override
+			public Adapter caseCalenderEntry(CalenderEntry object) {
+				return createCalenderEntryAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -673,6 +705,20 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSynchronizableObjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.CalenderEntry <em>Calender Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.CalenderEntry
+	 * @generated
+	 */
+	public Adapter createCalenderEntryAdapter() {
 		return null;
 	}
 

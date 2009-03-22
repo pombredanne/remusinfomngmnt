@@ -19,18 +19,15 @@ import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.remus.infomngmnt.CalenderEntry;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.Link;
@@ -55,6 +52,7 @@ import org.remus.infomngmnt.Usage;
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getUsageData <em>Usage Data</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getKeywords <em>Keywords</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getCalendarEntry <em>Calendar Entry</em>}</li>
  * </ul>
  * </p>
  *
@@ -260,6 +258,16 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @ordered
 	 */
 	protected String keywords = KEYWORDS_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getCalendarEntry() <em>Calendar Entry</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCalendarEntry()
+	 * @generated
+	 * @ordered
+	 */
+	protected CalenderEntry calendarEntry;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -527,6 +535,49 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public CalenderEntry getCalendarEntry() {
+		return calendarEntry;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetCalendarEntry(CalenderEntry newCalendarEntry, NotificationChain msgs) {
+		CalenderEntry oldCalendarEntry = calendarEntry;
+		calendarEntry = newCalendarEntry;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY, oldCalendarEntry, newCalendarEntry);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCalendarEntry(CalenderEntry newCalendarEntry) {
+		if (newCalendarEntry != calendarEntry) {
+			NotificationChain msgs = null;
+			if (calendarEntry != null)
+				msgs = ((InternalEObject)calendarEntry).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY, null, msgs);
+			if (newCalendarEntry != null)
+				msgs = ((InternalEObject)newCalendarEntry).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY, null, msgs);
+			msgs = basicSetCalendarEntry(newCalendarEntry, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY, newCalendarEntry, newCalendarEntry));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -534,6 +585,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return ((InternalEList<?>)getChildValues()).basicRemove(otherEnd, msgs);
 			case InfomngmntPackage.INFORMATION_UNIT__LINKS:
 				return ((InternalEList<?>)getLinks()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
+				return basicSetCalendarEntry(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -571,6 +624,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return getDescription();
 			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
 				return getKeywords();
+			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
+				return getCalendarEntry();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -623,6 +678,9 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
 				setKeywords((String)newValue);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
+				setCalendarEntry((CalenderEntry)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -671,6 +729,9 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
 				setKeywords(KEYWORDS_EDEFAULT);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
+				setCalendarEntry((CalenderEntry)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -707,6 +768,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
 				return KEYWORDS_EDEFAULT == null ? keywords != null : !KEYWORDS_EDEFAULT.equals(keywords);
+			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
+				return calendarEntry != null;
 		}
 		return super.eIsSet(featureID);
 	}

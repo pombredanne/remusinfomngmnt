@@ -19,6 +19,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="usageData" eType="#//Usage"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keywords" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calendarEntry" eType="#//CalenderEntry"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Usage">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastAccess" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
@@ -223,19 +225,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="markedAsDeleteItems" upperBound="-1"
         eType="#//SynchronizableObject" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CalenderEntryCollection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="entries" upperBound="-1"
-        eType="#//CalenderEntry" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CalenderEntry" eSuperTypes="#//InformationUnitListItem">
+  <eClassifiers xsi:type="ecore:EClass" name="CalenderEntry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="start" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="entryType" eType="#//CalendarEntryType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reminder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CalendarEntryType">
     <eLiterals name="ONE_TIME"/>
     <eLiterals name="WEEKLY" value="1"/>
-    <eLiterals name="TWO-WEEK" value="2"/>
+    <eLiterals name="TWO_WEEK" value="2"/>
     <eLiterals name="MONTHLY" value="3"/>
     <eLiterals name="ANNUAL" value="4"/>
   </eClassifiers>

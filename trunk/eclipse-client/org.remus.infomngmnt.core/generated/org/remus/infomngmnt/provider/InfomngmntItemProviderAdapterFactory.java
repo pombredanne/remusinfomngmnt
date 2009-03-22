@@ -20,7 +20,6 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -753,6 +752,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.CalenderEntry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CalenderEntryItemProvider calenderEntryItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.CalenderEntry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCalenderEntryAdapter() {
+		if (calenderEntryItemProvider == null) {
+			calenderEntryItemProvider = new CalenderEntryItemProvider(this);
+		}
+
+		return calenderEntryItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -880,6 +902,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (synchronizableObjectToSynchronizationActionMapItemProvider != null) synchronizableObjectToSynchronizationActionMapItemProvider.dispose();
 		if (tagItemProvider != null) tagItemProvider.dispose();
 		if (availableTagsItemProvider != null) availableTagsItemProvider.dispose();
+		if (calenderEntryItemProvider != null) calenderEntryItemProvider.dispose();
 	}
 
 }

@@ -17,6 +17,7 @@ package org.remus.infomngmnt.impl;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.InfomngmntPackage;
 

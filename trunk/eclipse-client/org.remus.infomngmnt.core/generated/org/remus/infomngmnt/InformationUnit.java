@@ -38,6 +38,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getUsageData <em>Usage Data</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getKeywords <em>Keywords</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnit#getCalendarEntry <em>Calendar Entry</em>}</li>
  * </ul>
  * </p>
  *
@@ -327,5 +328,31 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @generated
 	 */
 	void setKeywords(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Calendar Entry</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Calendar Entry</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Calendar Entry</em>' containment reference.
+	 * @see #setCalendarEntry(CalenderEntry)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_CalendarEntry()
+	 * @model containment="true"
+	 * @generated
+	 */
+	CalenderEntry getCalendarEntry();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getCalendarEntry <em>Calendar Entry</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Calendar Entry</em>' containment reference.
+	 * @see #getCalendarEntry()
+	 * @generated
+	 */
+	void setCalendarEntry(CalenderEntry value);
 
 } // InformationUnit

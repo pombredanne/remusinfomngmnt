@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.internal.extension;
 
-
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -27,11 +26,12 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 
 /**
  * A object represenation of a registered information type. This class is
+ * 
  * @author Tom Seidel <toms@tomosch.de>
  * @noextend This class is not intended to be subclassed by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
-public class InfoType implements IInfoType{
+public class InfoType implements IInfoType {
 
 	/** The configuration element which comes from the plugin-registry **/
 	private final IConfigurationElement configurationElement;
@@ -46,54 +46,55 @@ public class InfoType implements IInfoType{
 	private final String imageFilePath;
 	private List<String> validTransferTypeIds;
 	private final String name;
+	private final boolean buildHtml;
 
 	/**
 	 * Creates
+	 * 
 	 * @param configurationElement
 	 * @param contributor
 	 * @param type
 	 * @param createFactoryClass
 	 * @param imageFilePath
 	 */
-	public InfoType(final IConfigurationElement configurationElement,
-			final String contributor,
-			final String name,
-			final String type,
-			final String createFactoryClass,
-			final String imageFilePath) {
+	public InfoType(final IConfigurationElement configurationElement, final String contributor,
+			final String name, final String type, final String createFactoryClass,
+			final String imageFilePath, final boolean buildHtml) {
 		this.configurationElement = configurationElement;
 		this.contributor = contributor;
 		this.name = name;
 		this.type = type;
 		this.createFactoryClass = createFactoryClass;
 		this.imageFilePath = imageFilePath;
+		this.buildHtml = buildHtml;
 
 	}
 
 	/**
-	 * Returns the creation factory. Every info-type contributes
-	 * a separate implementation of how-to create new information
-	 * objects
+	 * Returns the creation factory. Every info-type contributes a separate
+	 * implementation of how-to create new information objects
+	 * 
 	 * @return the factory which creates new info-objects.
 	 */
 	public AbstractCreationFactory getCreationFactory() {
 		if (this.createFactory == null) {
 			try {
-				this.createFactory = (AbstractCreationFactory) this.configurationElement.createExecutableExtension(this.createFactoryClass);
+				this.createFactory = (AbstractCreationFactory) this.configurationElement
+						.createExecutableExtension(this.createFactoryClass);
 			} catch (final CoreException e) {
-				//TODO Logging
+				// TODO Logging
 			}
 		}
 		return this.createFactory;
 	}
+
 	public AbstractInformationRepresentation getInformationRepresentation() {
 		if (this.informationRepresentation == null) {
 			try {
-				this.informationRepresentation =
-					(AbstractInformationRepresentation) this.configurationElement
-					.createExecutableExtension(InformationExtensionManager.PRESENTATION_ATT);
+				this.informationRepresentation = (AbstractInformationRepresentation) this.configurationElement
+						.createExecutableExtension(InformationExtensionManager.PRESENTATION_ATT);
 			} catch (final CoreException e) {
-				//TODO Logging
+				// TODO Logging
 			}
 		}
 		return this.informationRepresentation;
@@ -105,7 +106,8 @@ public class InfoType implements IInfoType{
 
 	public ImageDescriptor getImageDescriptor() {
 		if (this.img == null) {
-			this.img = AbstractUIPlugin.imageDescriptorFromPlugin(this.contributor, this.imageFilePath);
+			this.img = AbstractUIPlugin.imageDescriptorFromPlugin(this.contributor,
+					this.imageFilePath);
 		}
 		return this.img;
 
@@ -118,7 +120,7 @@ public class InfoType implements IInfoType{
 		return this.image;
 	}
 
-	public void setValidTransferTypeIds(List<String> validTransferTypeIds) {
+	public void setValidTransferTypeIds(final List<String> validTransferTypeIds) {
 		this.validTransferTypeIds = validTransferTypeIds;
 	}
 
@@ -130,7 +132,11 @@ public class InfoType implements IInfoType{
 		return this.name;
 	}
 
-
-
+	/**
+	 * @return the buildHtml
+	 */
+	public boolean isBuildHtml() {
+		return this.buildHtml;
+	}
 
 }

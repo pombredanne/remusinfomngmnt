@@ -36,4 +36,6 @@ public interface IInfoType {
 
 	String getName();
 
+	boolean isBuildHtml();
+
 }

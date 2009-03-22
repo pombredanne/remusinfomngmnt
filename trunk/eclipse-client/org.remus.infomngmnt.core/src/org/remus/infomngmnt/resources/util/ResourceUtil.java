@@ -33,15 +33,27 @@ import org.remus.infomngmnt.core.model.EditingUtil;
 public class ResourceUtil {
 
 	public static final String FILE_EXTENSION = "info";
+
 	public static final String PRIMARY_CONTENT_FILE = "primaryContent.info"; //$NON-NLS-1$
+
 	public static final String SETTINGS_FOLDER = ".settings"; //$NON-NLS-1$
+
 	public static final String BIN_FOLDER = "bin"; //$NON-NLS-1$
+
 	public static final String HTML_EXTENSION = "html";
 
+	public static final String SHEMAPREFIX_ENCRYPTED_PROJECTS = "encrypted"; //$NON-NLS-1$
+
+	/**
+	 * Checks for presence of the {@link InformationBuilder#BUILDER_ID} builder.
+	 * 
+	 * @param project
+	 *            the project to check
+	 * @return true if the project has the builder, else <code>false</code>.
+	 */
 	public static boolean isRelevantProject(final IProject project) {
 		try {
-			final ICommand[] buildSpec = project.getDescription()
-			.getBuildSpec();
+			final ICommand[] buildSpec = project.getDescription().getBuildSpec();
 			for (final ICommand command : buildSpec) {
 				if (InformationBuilder.BUILDER_ID.equals(command.getBuilderName())) {
 					return true;
@@ -49,7 +61,8 @@ public class ResourceUtil {
 			}
 		} catch (final CoreException e) {
 			// do nothing
-		}System.out.println("test");
+		}
+		System.out.println("test");
 		return false;
 	}
 
@@ -68,16 +81,15 @@ public class ResourceUtil {
 	 * Adds a builder to the project
 	 * 
 	 * @param builder
-	 *      the builder id
+	 *            the builder id
 	 * @throws CoreException
-	 *      if the project-descriptiion is invalid
+	 *             if the project-descriptiion is invalid
 	 */
 	public static void addBuilder(final IProject project, final String builder)
-	throws CoreException {
+			throws CoreException {
 		// Get project description and then the associated build commands
 		final IProjectDescription desc = project.getDescription();
-		addBuilder(desc,builder);
-
+		addBuilder(desc, builder);
 
 	}
 
@@ -109,8 +121,8 @@ public class ResourceUtil {
 
 	}
 
-	public static void removeBuilder(final IProject project,
-			final String builder) throws CoreException {
+	public static void removeBuilder(final IProject project, final String builder)
+			throws CoreException {
 
 		final IProjectDescription desp = project.getDescription();
 		final ICommand[] commands = desp.getBuildSpec();
@@ -137,9 +149,9 @@ public class ResourceUtil {
 		}
 	}
 
-
 	public static IProject getProject(final String text) {
-		final IProject project = org.eclipse.core.resources.ResourcesPlugin.getWorkspace().getRoot().getProject(text);
+		final IProject project = org.eclipse.core.resources.ResourcesPlugin.getWorkspace()
+				.getRoot().getProject(text);
 		if (project.exists() && project.isOpen() && isRelevantProject(project)) {
 			return project;
 		}
@@ -148,25 +160,47 @@ public class ResourceUtil {
 	}
 
 	public static String computeBinFileLocation(final IFile originalFile) {
-		IPath binPath = originalFile.getProject().getLocation().append(new Path(ResourceUtil.BIN_FOLDER + File.separator + originalFile.getProjectRelativePath()));
-		return Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(binPath.toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
+		IPath binPath = originalFile.getProject().getLocation().append(
+				new Path(ResourceUtil.BIN_FOLDER + File.separator
+						+ originalFile.getProjectRelativePath()));
+		return Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(binPath.toOSString())
+				.replaceFirst(ResourceUtil.HTML_EXTENSION);
 	}
 
+	/**
+	 * Returns the path of the build HTML file
+	 * 
+	 * @param originalFile
+	 *            the original info unit file
+	 * @return the path of the generated html file
+	 */
 	public static IPath computeBinFileFulllPath(final IFile originalFile) {
-		String replacedProjectRelativePath = Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(originalFile.getProjectRelativePath().toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
-		IPath binPath = originalFile.getProject().getFullPath().append(new Path(ResourceUtil.BIN_FOLDER)).append(replacedProjectRelativePath);
+		String replacedProjectRelativePath = Pattern.compile(ResourceUtil.FILE_EXTENSION + "$")
+				.matcher(originalFile.getProjectRelativePath().toOSString()).replaceFirst(
+						ResourceUtil.HTML_EXTENSION);
+		IPath binPath = originalFile.getProject().getFullPath().append(
+				new Path(ResourceUtil.BIN_FOLDER)).append(replacedProjectRelativePath);
 		return binPath;
 	}
 
+	/**
+	 * If you're creating a project programmatically this method must be called
+	 * after the project is created due to the processing of the
+	 * postProjectHandle Extension Point.
+	 * 
+	 * @param description
+	 *            the project descriptor
+	 */
 	public static void postProjectCreation(final IProjectDescription description) {
-		PostProjectHandleExtensionManager manager = new PostProjectHandleExtensionManager(description);
+		PostProjectHandleExtensionManager manager = new PostProjectHandleExtensionManager(
+				description);
 		manager.executeProxyImplementations();
 	}
 
 	/**
 	 * <p>
-	 * Class that looks through extension registry to find present
-	 * postproject Handle Implementations.
+	 * Class that looks through extension registry to find present postproject
+	 * Handle Implementations.
 	 * </p>
 	 * 
 	 * 
@@ -182,12 +216,14 @@ public class ResourceUtil {
 		}
 
 		void executeProxyImplementations() {
-			final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
-			final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+			final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
+					.getExtensionPoint(EXTENSION_POINT);
+			final IConfigurationElement[] configurationElements = extensionPoint
+					.getConfigurationElements();
 			for (final IConfigurationElement configurationElement : configurationElements) {
 				try {
 					IPostProjectHandle extension = (IPostProjectHandle) configurationElement
-					.createExecutableExtension(HANDLE_IMPL_NODE_NAME);
+							.createExecutableExtension(HANDLE_IMPL_NODE_NAME);
 					extension.postProjectCreation(this.description);
 				} catch (CoreException e) {
 					// TODO Auto-generated catch block
@@ -197,23 +233,45 @@ public class ResourceUtil {
 		}
 	}
 
-public static void createNewProject(final IProject newProject, final IProgressMonitor monitor, final String description) throws CoreException{
-	IFolder folder = newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
-	if (!folder.exists()) {
-		folder.create(true, true, monitor);
+	/**
+	 * <p>
+	 * Creates a new project and creates the needed XMI file for creating new
+	 * unit within that project. This is wrapped in a command and is executed on
+	 * the Editing domain which is returned on
+	 * {@link EditingUtil#getNavigationEditingDomain()}
+	 * </p>
+	 * <p>
+	 * The {@link IProject} is already created.
+	 * </p>
+	 * 
+	 * @param newProject
+	 *            the new project
+	 * @param monitor
+	 *            the progress monitor
+	 * @param description
+	 *            the project descriptor
+	 * @throws CoreException
+	 *             if folder or file creation fails.
+	 */
+	public static void createNewProject(final IProject newProject, final IProgressMonitor monitor,
+			final String description) throws CoreException {
+		IFolder folder = newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
+		if (!folder.exists()) {
+			folder.create(true, true, monitor);
+		}
+		IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
+		Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file,
+				InfomngmntPackage.eINSTANCE.getCategory(), true);
+		rootCategory.setLabel(newProject.getName());
+		rootCategory.setId(new UniversalUniqueIdentifier().toString());
+		rootCategory.setDescription(description);
+		EditingUtil.getInstance().saveObjectToResource(rootCategory);
+
+		EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
+		Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
+		editingDomain.getCommandStack().execute(createCommand);
+		ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
+
 	}
-	IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
-	Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(),true);
-	rootCategory.setLabel(newProject.getName());
-	rootCategory.setId(new UniversalUniqueIdentifier().toString());
-	rootCategory.setDescription(description);
-	EditingUtil.getInstance().saveObjectToResource(rootCategory);
-
-	EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
-	Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
-	editingDomain.getCommandStack().execute(createCommand);
-	ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
-
-}
 
 }

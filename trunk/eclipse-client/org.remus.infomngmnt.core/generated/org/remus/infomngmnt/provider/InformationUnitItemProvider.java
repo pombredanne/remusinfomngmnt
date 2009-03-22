@@ -31,6 +31,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -79,6 +80,7 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 			addUsageDataPropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
 			addKeywordsPropertyDescriptor(object);
+			addCalendarEntryPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -321,6 +323,28 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Calendar Entry feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addCalendarEntryPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_calendarEntry_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_calendarEntry_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
+				 true,
+				 false,
+				 true,
+				 null,
 				 null,
 				 null));
 	}

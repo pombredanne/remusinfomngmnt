@@ -34,26 +34,31 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.remus.infomngmnt.CalenderEntry;
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.Usage;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.Usage} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.CalenderEntry} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class UsageItemProvider
+public class CalenderEntryItemProvider
 	extends ItemProviderAdapter
 	implements
-		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource,
+		IItemColorProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public UsageItemProvider(AdapterFactory adapterFactory) {
+	public CalenderEntryItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -68,26 +73,28 @@ public class UsageItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addLastAccessPropertyDescriptor(object);
-			addAccessCountPropertyDescriptor(object);
+			addStartPropertyDescriptor(object);
+			addEndPropertyDescriptor(object);
+			addEntryTypePropertyDescriptor(object);
+			addReminderPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Last Access feature.
+	 * This adds a property descriptor for the Start feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLastAccessPropertyDescriptor(Object object) {
+	protected void addStartPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Usage_lastAccess_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Usage_lastAccess_feature", "_UI_Usage_type"),
-				 InfomngmntPackage.Literals.USAGE__LAST_ACCESS,
+				 getString("_UI_CalenderEntry_start_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_start_feature", "_UI_CalenderEntry_type"),
+				 InfomngmntPackage.Literals.CALENDER_ENTRY__START,
 				 true,
 				 false,
 				 false,
@@ -97,19 +104,63 @@ public class UsageItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Access Count feature.
+	 * This adds a property descriptor for the End feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addAccessCountPropertyDescriptor(Object object) {
+	protected void addEndPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Usage_accessCount_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Usage_accessCount_feature", "_UI_Usage_type"),
-				 InfomngmntPackage.Literals.USAGE__ACCESS_COUNT,
+				 getString("_UI_CalenderEntry_end_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_end_feature", "_UI_CalenderEntry_type"),
+				 InfomngmntPackage.Literals.CALENDER_ENTRY__END,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Entry Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addEntryTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_CalenderEntry_entryType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_entryType_feature", "_UI_CalenderEntry_type"),
+				 InfomngmntPackage.Literals.CALENDER_ENTRY__ENTRY_TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Reminder feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addReminderPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_CalenderEntry_reminder_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_reminder_feature", "_UI_CalenderEntry_type"),
+				 InfomngmntPackage.Literals.CALENDER_ENTRY__REMINDER,
 				 true,
 				 false,
 				 false,
@@ -119,14 +170,14 @@ public class UsageItemProvider
 	}
 
 	/**
-	 * This returns Usage.gif.
+	 * This returns CalenderEntry.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Usage"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CalenderEntry"));
 	}
 
 	/**
@@ -137,11 +188,11 @@ public class UsageItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		Date labelValue = ((Usage)object).getLastAccess();
+		Date labelValue = ((CalenderEntry)object).getStart();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Usage_type") :
-			getString("_UI_Usage_type") + " " + label;
+			getString("_UI_CalenderEntry_type") :
+			getString("_UI_CalenderEntry_type") + " " + label;
 	}
 
 	/**
@@ -155,9 +206,11 @@ public class UsageItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Usage.class)) {
-			case InfomngmntPackage.USAGE__LAST_ACCESS:
-			case InfomngmntPackage.USAGE__ACCESS_COUNT:
+		switch (notification.getFeatureID(CalenderEntry.class)) {
+			case InfomngmntPackage.CALENDER_ENTRY__START:
+			case InfomngmntPackage.CALENDER_ENTRY__END:
+			case InfomngmntPackage.CALENDER_ENTRY__ENTRY_TYPE:
+			case InfomngmntPackage.CALENDER_ENTRY__REMINDER:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

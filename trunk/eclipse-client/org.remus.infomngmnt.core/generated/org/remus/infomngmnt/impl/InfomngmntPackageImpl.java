@@ -30,6 +30,8 @@ import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.AvailableTags;
+import org.remus.infomngmnt.CalendarEntryType;
+import org.remus.infomngmnt.CalenderEntry;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -294,6 +296,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass calenderEntryEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum synchronizationStateEEnum = null;
 
 	/**
@@ -302,6 +311,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EEnum synchronizationActionEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum calendarEntryTypeEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -500,6 +516,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EAttribute getInformationUnit_Keywords() {
 		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInformationUnit_CalendarEntry() {
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -1461,6 +1486,51 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCalenderEntry() {
+		return calenderEntryEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCalenderEntry_Start() {
+		return (EAttribute)calenderEntryEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCalenderEntry_End() {
+		return (EAttribute)calenderEntryEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCalenderEntry_EntryType() {
+		return (EAttribute)calenderEntryEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCalenderEntry_Reminder() {
+		return (EAttribute)calenderEntryEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSynchronizationState() {
 		return synchronizationStateEEnum;
 	}
@@ -1472,6 +1542,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EEnum getSynchronizationAction() {
 		return synchronizationActionEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getCalendarEntryType() {
+		return calendarEntryTypeEEnum;
 	}
 
 	/**
@@ -1533,6 +1612,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(informationUnitEClass, INFORMATION_UNIT__USAGE_DATA);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__DESCRIPTION);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__KEYWORDS);
+		createEReference(informationUnitEClass, INFORMATION_UNIT__CALENDAR_ENTRY);
 
 		usageEClass = createEClass(USAGE);
 		createEAttribute(usageEClass, USAGE__LAST_ACCESS);
@@ -1671,9 +1751,16 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEReference(synchronizableObjectEClass, SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
 		createEReference(synchronizableObjectEClass, SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS);
 
+		calenderEntryEClass = createEClass(CALENDER_ENTRY);
+		createEAttribute(calenderEntryEClass, CALENDER_ENTRY__START);
+		createEAttribute(calenderEntryEClass, CALENDER_ENTRY__END);
+		createEAttribute(calenderEntryEClass, CALENDER_ENTRY__ENTRY_TYPE);
+		createEAttribute(calenderEntryEClass, CALENDER_ENTRY__REMINDER);
+
 		// Create enums
 		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
 		synchronizationActionEEnum = createEEnum(SYNCHRONIZATION_ACTION);
+		calendarEntryTypeEEnum = createEEnum(CALENDAR_ENTRY_TYPE);
 
 		// Create data types
 		objectEDataType = createEDataType(OBJECT);
@@ -1737,6 +1824,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEReference(getInformationUnit_UsageData(), this.getUsage(), null, "usageData", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_Description(), ecorePackage.getEString(), "description", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_Keywords(), ecorePackage.getEString(), "keywords", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInformationUnit_CalendarEntry(), this.getCalenderEntry(), null, "calendarEntry", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(usageEClass, Usage.class, "Usage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUsage_LastAccess(), ecorePackage.getEDate(), "lastAccess", null, 0, 1, Usage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1877,6 +1965,12 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEReference(getSynchronizableObject_SynchronizationMetaData(), this.getSynchronizationMetadata(), null, "synchronizationMetaData", null, 0, 1, SynchronizableObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSynchronizableObject_MarkedAsDeleteItems(), this.getSynchronizableObject(), null, "markedAsDeleteItems", null, 0, -1, SynchronizableObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(calenderEntryEClass, CalenderEntry.class, "CalenderEntry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCalenderEntry_Start(), ecorePackage.getEDate(), "start", null, 1, 1, CalenderEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCalenderEntry_End(), ecorePackage.getEDate(), "end", null, 1, 1, CalenderEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCalenderEntry_EntryType(), this.getCalendarEntryType(), "entryType", null, 0, 1, CalenderEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCalenderEntry_Reminder(), ecorePackage.getEInt(), "reminder", null, 0, 1, CalenderEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");
 		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.LOCAL_DELETED);
@@ -1894,6 +1988,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.ADD_LOCAL);
 		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.ADD_REMOTE);
 		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.RESOLVE_CONFLICT);
+
+		initEEnum(calendarEntryTypeEEnum, CalendarEntryType.class, "CalendarEntryType");
+		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.ONE_TIME);
+		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.WEEKLY);
+		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.TWO_WEEK);
+		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.MONTHLY);
+		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.ANNUAL);
 
 		// Initialize data types
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

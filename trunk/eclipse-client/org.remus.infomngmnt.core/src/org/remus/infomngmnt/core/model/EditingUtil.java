@@ -12,12 +12,13 @@
 
 package org.remus.infomngmnt.core.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -49,6 +50,8 @@ public class EditingUtil {
 
 	private static EditingUtil INSTANCE;
 
+	public static final String FILEHISTORYKEEPINGSCHEME = "file"; //$NON-NLS-1$
+
 	private final EditingDomain editingDomain;
 	private final ComposedAdapterFactory adapterFactory;
 	private final AdapterFactoryEditingDomain navigationEditingDomain;
@@ -65,24 +68,31 @@ public class EditingUtil {
 	}
 
 	private EditingUtil() {
-		this.adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		this.adapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		this.adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		this.adapterFactory.addAdapterFactory(new InfomngmntItemProviderAdapterFactory());
 		this.adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-		this.editingDomain = new AdapterFactoryEditingDomain(this.adapterFactory, new BasicCommandStack());
-		this.navigationEditingDomain = new AdapterFactoryEditingDomain(this.adapterFactory, new BasicCommandStack());
-		this.editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(InfomngmntPackage.eNS_URI,
-				InfomngmntPackage.eINSTANCE);
+		this.editingDomain = new AdapterFactoryEditingDomain(this.adapterFactory,
+				new BasicCommandStack());
+		this.navigationEditingDomain = new AdapterFactoryEditingDomain(this.adapterFactory,
+				new BasicCommandStack());
+		this.editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
+				.put(InfomngmntPackage.eNS_URI, InfomngmntPackage.eINSTANCE);
 	}
+
 	/**
 	 * Returns a {@link Resource} object from the given uri
-	 * @param uri the uri
-	 * @param cache see also bug 10
+	 * 
+	 * @param uri
+	 *            the uri
+	 * @param cache
+	 *            see also bug 10
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends EObject> T getObjectFromFileUri(final URI uri, final EClass objectClas, final EditingDomain editingDomain) {
+	public <T extends EObject> T getObjectFromFileUri(final URI uri, final EClass objectClas,
+			final EditingDomain editingDomain) {
 		Resource resource = null;
 		ResourceSet resourceSet = null;
 		T returnValue;
@@ -91,11 +101,10 @@ public class EditingUtil {
 			resourceSet = editingDomain.getResourceSet();
 		} else {
 			resourceSet = new ResourceSetImpl();
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-			(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+					org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
 					new XMLResourceFactoryImpl());
-			resourceSet.getPackageRegistry().put
-			(InfomngmntPackage.eNS_URI,
+			resourceSet.getPackageRegistry().put(InfomngmntPackage.eNS_URI,
 					InfomngmntPackage.eINSTANCE);
 		}
 
@@ -123,26 +132,30 @@ public class EditingUtil {
 
 	/**
 	 * Returns a {@link Resource} object from the given uri
-	 * @param uri the uri
+	 * 
+	 * @param uri
+	 *            the uri
 	 * @param cache
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas, final boolean cache, final EditingDomain domain, final boolean createOnDemand) {
+	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas,
+			final boolean cache, final EditingDomain domain, final boolean createOnDemand) {
 		Resource resource = null;
 		ResourceSet resourceSet = null;
 		T returnValue = null;
-		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(uri.toString(),false);
-		final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toString()));
+		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI
+				.createPlatformResourceURI(uri.toString(), false);
+		final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+				new Path(uri.toString()));
 		if (cache) {
 			resourceSet = domain.getResourceSet();
 		} else {
 			resourceSet = new ResourceSetImpl();
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-			(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+					org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
 					new XMLResourceFactoryImpl());
-			resourceSet.getPackageRegistry().put
-			(InfomngmntPackage.eNS_URI,
+			resourceSet.getPackageRegistry().put(InfomngmntPackage.eNS_URI,
 					InfomngmntPackage.eINSTANCE);
 		}
 		if (file.exists()) {
@@ -157,11 +170,7 @@ public class EditingUtil {
 				final EObject create = InfomngmntFactory.eINSTANCE.create(objectClas);
 				resource = resourceSet.createResource(createURI);
 				resource.getContents().add(create);
-				try {
-					resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
-				} catch (final IOException e) {
-					// FIXME What to do here?
-				}
+				saveObjectToResource(create);
 				returnValue = (T) create;
 			}
 		}
@@ -174,41 +183,70 @@ public class EditingUtil {
 
 	/**
 	 * Returns a {@link Resource} object from the given uri
-	 * @param uri the uri
+	 * 
+	 * @param uri
+	 *            the uri
 	 * @return the contents of the file
 	 */
 	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas) {
 		return getObjectFromUri(uri.getFullPath(), objectClas, true, this.editingDomain, false);
 	}
+
 	/**
 	 * Returns a {@link Resource} object from the given uri
-	 * @param uri the uri
+	 * 
+	 * @param uri
+	 *            the uri
 	 * @return the contents of the file
 	 */
-	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, final boolean cacheInEditingDomain) {
-		return getObjectFromUri(uri.getFullPath(), objectClas, cacheInEditingDomain, this.editingDomain, true);
+	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas,
+			final boolean cacheInEditingDomain) {
+		return getObjectFromUri(uri.getFullPath(), objectClas, cacheInEditingDomain,
+				this.editingDomain, true);
 	}
+
 	/**
 	 * Returns a {@link Resource} object from the given uri
-	 * @param uri the uri
+	 * 
+	 * @param uri
+	 *            the uri
 	 * @return the contents of the file
 	 */
-	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, final EditingDomain domain, final boolean loadOnDemand) {
-		return getObjectFromUri(uri.getFullPath(), objectClas, domain != null ? true : false, this.editingDomain, loadOnDemand);
+	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas,
+			final EditingDomain domain, final boolean loadOnDemand) {
+		return getObjectFromUri(uri.getFullPath(), objectClas, domain != null ? true : false,
+				this.editingDomain, loadOnDemand);
 	}
+
 	/**
 	 * Returns a {@link Resource} object from the given uri
-	 * @param uri the uri
+	 * 
+	 * @param uri
+	 *            the uri
 	 * @return the contents of the file
 	 */
-	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas, final EditingDomain domain) {
+	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas,
+			final EditingDomain domain) {
 		return getObjectFromUri(uri.getFullPath(), objectClas, true, this.editingDomain, true);
 	}
 
-
 	public void saveObjectToResource(final EObject object) {
 		try {
-			object.eResource().save(Collections.EMPTY_MAP);
+			String scheme = null;
+			if (object.eResource().getURI().isPlatform()) {
+				String uriString = object.eResource().getURI().toPlatformString(true);
+				scheme = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uriString))
+						.getLocationURI().getScheme();
+			} else {
+				scheme = object.eResource().getURI().scheme();
+			}
+			if (!(FILEHISTORYKEEPINGSCHEME.equals(scheme))) {
+				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+						new Path(object.eResource().getURI().toPlatformString(true)));
+				saveObjectToResource(file, object);
+			} else {
+				object.eResource().save(Collections.EMPTY_MAP);
+			}
 		} catch (final IOException e) {
 			// FIXME Error-Handling
 			e.printStackTrace();
@@ -218,12 +256,11 @@ public class EditingUtil {
 	public void saveObjectToResource(final EObject object, final String fileName) {
 		File file = new File(fileName);
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+				org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
 				new XMLResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put
-		(InfomngmntPackage.eNS_URI,
-				InfomngmntPackage.eINSTANCE);
+		resourceSet.getPackageRegistry()
+				.put(InfomngmntPackage.eNS_URI, InfomngmntPackage.eINSTANCE);
 		Resource resource;
 		if (file.exists()) {
 			try {
@@ -241,23 +278,22 @@ public class EditingUtil {
 			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
 		} catch (final IOException e) {
 			// FIXME What to do here?
-		}	
+		}
 	}
-	
+
 	public Resource createRessource(final String fileName) {
 		File file = new File(fileName);
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+				org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
 				new XMLResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put
-		(InfomngmntPackage.eNS_URI,
-				InfomngmntPackage.eINSTANCE);
+		resourceSet.getPackageRegistry()
+				.put(InfomngmntPackage.eNS_URI, InfomngmntPackage.eINSTANCE);
 		Resource resource = null;
 		if (file.exists()) {
 			resource = resourceSet.getResource(URI.createFileURI(fileName), true);
 			resource.getContents().clear();
-			
+
 		} else {
 			resource = resourceSet.createResource(URI.createFileURI(fileName));
 			resource.getContents();
@@ -267,28 +303,35 @@ public class EditingUtil {
 		} catch (final IOException e) {
 			// FIXME What to do here?
 		}
-		
+
 		return resource;
-		
+
 	}
 
 	public void saveObjectToResource(final IFile target, final EObject object) {
 		try {
-			final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(target.getFullPath().toString(),false);
+			final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI
+					.createPlatformResourceURI(target.getFullPath().toString(), false);
 			ResourceSet resourceSet = new ResourceSetImpl();
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-			(Resource.Factory.Registry.DEFAULT_EXTENSION,
-					new XMLResourceFactoryImpl());
-			resourceSet.getPackageRegistry().put
-			(InfomngmntPackage.eNS_URI,
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+					Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
+			resourceSet.getPackageRegistry().put(InfomngmntPackage.eNS_URI,
 					InfomngmntPackage.eINSTANCE);
-			if (target.exists()) {
-				target.delete(true, new NullProgressMonitor());
-			}
 			Resource resource = resourceSet.createResource(createURI);
 			resource.getContents().add(object);
-			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
-			target.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			resource.save(baos, Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			String scheme = target.getLocationURI().getScheme();
+			boolean keepHistory = FILEHISTORYKEEPINGSCHEME.equals(scheme);
+			if (target.exists()) {
+				target.setContents(new ByteArrayInputStream(baos.toByteArray()), true, keepHistory,
+						new NullProgressMonitor());
+			} else {
+				target.create(new ByteArrayInputStream(baos.toByteArray()), true,
+						new NullProgressMonitor());
+			}
+			// target.refreshLocal(IResource.DEPTH_INFINITE, new
+			// NullProgressMonitor());
 		} catch (final IOException e) {
 			// FIXME Error-Handling
 			e.printStackTrace();
@@ -305,7 +348,6 @@ public class EditingUtil {
 	public EditingDomain createNewEditingDomain() {
 		return new AdapterFactoryEditingDomain(this.adapterFactory, new BasicCommandStack());
 	}
-
 
 	public ComposedAdapterFactory getAdapterFactory() {
 		return this.adapterFactory;

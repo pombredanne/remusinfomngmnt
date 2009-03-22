@@ -12,9 +12,29 @@
 
 package org.remus.infomngmnt.ui.calendar;
 
-import org.eclipse.ui.forms.IManagedForm;
-import org.eclipse.ui.forms.editor.FormEditor;
+import java.util.Date;
 
+import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ShowGridAction;
+import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ZoomInAction;
+import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ZoomOutAction;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.forms.editor.FormEditor;
+import org.eclipse.ui.forms.widgets.Form;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+
+import org.remus.infomgmnt.provider.CalendarContentProvider;
+import org.remus.infomngmnt.calendar.model.Task;
+import org.remus.infomngmnt.ccalendar.CCalendar;
 import org.remus.infomngmnt.ui.editors.InformationFormPage;
 
 /**
@@ -22,15 +42,98 @@ import org.remus.infomngmnt.ui.editors.InformationFormPage;
  */
 public class CalendarPage extends InformationFormPage {
 
+	private CCalendar calendar;
+	private Form form;
+
+	private ZoomInAction zoomInAction;
+	private ZoomOutAction zoomOutAction;
+	private ShowGridAction gridAction;
+	private IAction createAction;
+	private IAction removeAction;
+
 	public CalendarPage(final FormEditor editor, final String id, final String title) {
 		super(editor, id, title);
 	}
 
-	
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
-		
-		super.createFormContent(managedForm);
+	public void createPartControl(final Composite parent) {
+		this.form = getEditor().getToolkit().createForm(parent);
+		BusyIndicator.showWhile(parent.getDisplay(), new Runnable() {
+			public void run() {
+				createFormContent(CalendarPage.this.form);
+			}
+		});
 	}
-	
+
+	@Override
+	public Control getPartControl() {
+		return this.form;
+	}
+
+	@Override
+	public void setActive(final boolean active) {
+		if (active) {
+			// We are switching to this page - refresh it
+			// if needed.
+
+		}
+	}
+
+	protected void createFormContent(final Form form2) {
+		FormToolkit toolkit = getEditor().getToolkit();
+		Composite body = this.form.getBody();
+		body.setLayout(new GridLayout());
+		toolkit.paintBordersFor(body);
+
+		this.calendar = new CCalendar(body, SWT.BORDER);
+		this.calendar.setContentProvider(new CalendarContentProvider());
+		this.calendar.setCalendarToWeekContaining(new Date());
+		// this.calendar.setInput(CalypsoManager.getOwner());
+		this.calendar.addOpenListener(new Listener() {
+			public void handleEvent(final Event event) {
+				Task task = (Task) event.data;
+				if (task != null) {
+					// ModelDialog dialog = new
+					// ModelDialog(CalendarView.this.calendar.getShell(), task);
+					// dialog.open();
+				}
+			}
+		});
+		makeActions();
+		createContextMenu();
+		this.calendar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		getSite().setSelectionProvider(this.calendar);
+
+		// CalypsoManager.getManager().addPropertyChangeListener(new
+		// PropertyChangeListener() {
+		// public void propertyChange(final PropertyChangeEvent evt) {
+		// CalendarView.this.calendar.setInput(CalypsoManager.getOwner());
+		// }
+		// });
+
+	}
+
+	private void makeActions() {
+		((CalendarEditor) getEditor()).getZoomInAction().setCalendar(this.calendar);
+		((CalendarEditor) getEditor()).getZoomOutAction().setCalendar(this.calendar);
+		((CalendarEditor) getEditor()).getShowGridAction().setViewers(this.calendar);
+
+		this.createAction = this.calendar.getCreateAction();
+
+	}
+
+	private void createContextMenu() {
+		Control[] controlsForContextMenu = this.calendar.getControlsForContextMenu();
+		for (Control control : controlsForContextMenu) {
+			if (control != null) {
+				MenuManager manager = new MenuManager();
+				Menu menu = manager.createContextMenu(control);
+				control.setMenu(menu);
+				manager.add(this.createAction);
+				// manager.add(this.removeAction);
+			}
+		}
+
+	}
+
 }

@@ -12,7 +12,11 @@
 
 package org.remus.infomngmnt.ui.calendar;
 
+import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ShowGridAction;
+import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ZoomInAction;
+import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ZoomOutAction;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IManagedForm;
@@ -25,11 +29,24 @@ public class CalendarEditor extends SharedHeaderFormEditor {
 
 	private CalendarPage page1;
 
+	private ZoomInAction zoomInAction;
+
+	private ZoomOutAction zoomOutAction;
+
+	private ShowGridAction showGridAction;
+
+	public static final String EDITOR_ID = "org.remus.infomngmnt.ui.calendar.CalendarEditor"; //$NON-NLS-1$
+
 	@Override
 	protected void createHeaderContents(final IManagedForm headerForm) {
 		headerForm.getForm().setText("Calendar");
 		// headerForm.getForm().setImage(InformationExtensionManager.getInstance().getInfoTypeByType(getPrimaryModel().getType()).getImageDescriptor().createImage());
 		getToolkit().decorateFormHeading(headerForm.getForm().getForm());
+		headerForm.getForm().getToolBarManager().add(this.zoomInAction = new ZoomInAction());
+		headerForm.getForm().getToolBarManager().add(this.zoomOutAction = new ZoomOutAction());
+		headerForm.getForm().getToolBarManager().add(new Separator());
+		headerForm.getForm().getToolBarManager().add(this.showGridAction = new ShowGridAction());
+		headerForm.getForm().getToolBarManager().update(true);
 	}
 
 	/**
@@ -94,6 +111,27 @@ public class CalendarEditor extends SharedHeaderFormEditor {
 	@Override
 	public boolean isSaveAsAllowed() {
 		return false;
+	}
+
+	/**
+	 * @return the zoomInAction
+	 */
+	public ZoomInAction getZoomInAction() {
+		return this.zoomInAction;
+	}
+
+	/**
+	 * @return the zoomOutAction
+	 */
+	public ZoomOutAction getZoomOutAction() {
+		return this.zoomOutAction;
+	}
+
+	/**
+	 * @return the showGridAction
+	 */
+	public ShowGridAction getShowGridAction() {
+		return this.showGridAction;
 	}
 
 }

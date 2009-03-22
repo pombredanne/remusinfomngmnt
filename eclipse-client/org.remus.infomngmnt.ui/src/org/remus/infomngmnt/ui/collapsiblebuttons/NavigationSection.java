@@ -84,21 +84,23 @@ import org.remus.infomngmnt.ui.views.MainViewPart;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class NavigationSection extends CollapsibleButtonBar implements ISelectionProvider, IEditingDomainProvider, ISetSelectionTarget, IViewerProvider {
+public class NavigationSection extends CollapsibleButtonBar implements ISelectionProvider,
+		IEditingDomainProvider, ISetSelectionTarget, IViewerProvider {
 
 	IPartListener partListener = new IPartListener() {
 		public void partActivated(final IWorkbenchPart part) {
 			if (part instanceof EditorPart) {
 				IEditorInput input = ((EditorPart) part).getEditorInput();
 				if (input instanceof FileEditorInput) {
-					Object adapter = Platform.getAdapterManager().getAdapter(((FileEditorInput) input).getFile(), InformationUnitListItem.class);
+					Object adapter = Platform.getAdapterManager().getAdapter(
+							((FileEditorInput) input).getFile(), InformationUnitListItem.class);
 					if (adapter != null) {
 						setSelection(new StructuredSelection(adapter));
 					}
 				}
 			}
 			if (part instanceof MainViewPart) {
-				//NavigationView.this.actionBar.setActiveDomain(NavigationView.this);
+				// NavigationView.this.actionBar.setActiveDomain(NavigationView.this);
 			}
 
 		}
@@ -139,8 +141,10 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		this.expandedElements = new ArrayList<Object>();
 		this.selectedElements = new ArrayList<Object>();
 	}
+
 	/**
 	 * Create contents of the view part
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -148,7 +152,7 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 		//
 		Tree tree = new Tree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		//tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		// tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		this.viewer = new TreeViewer(tree);
 		initProvider();
@@ -170,8 +174,11 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 				for (Object object : list) {
 					if (object instanceof InformationUnitListItem) {
 						try {
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-									new InformationEditorInput((InformationUnitListItem) object), InformationEditor.ID);
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+									.openEditor(
+											new InformationEditorInput(
+													(InformationUnitListItem) object),
+											InformationEditor.ID);
 						} catch (PartInitException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -192,25 +199,35 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 			ApplicationModelPool.getInstance().getModel();
 			IMemento[] children = memento.getChildren("expanded");
 			for (IMemento iMemento : children) {
-				String textData = iMemento.getTextData();
-				EObject eObject = EditingUtil.getInstance()
-					.getNavigationEditingDomain().getResourceSet()
-					.getEObject(URI.createURI(textData), true);
-				this.expandedElements.add(EditingUtil.getInstance()
-						.getNavigationEditingDomain().getWrapper(eObject));
+				try {
+					String textData = iMemento.getTextData();
+					EObject eObject = EditingUtil.getInstance().getNavigationEditingDomain()
+							.getResourceSet().getEObject(URI.createURI(textData), true);
+					this.expandedElements.add(EditingUtil.getInstance()
+							.getNavigationEditingDomain().getWrapper(eObject));
+				} catch (Exception e) {
+					// if any exception occurs, e.g.
+					// the project is not open we have to skip
+					// here.
+				}
 			}
 			children = memento.getChildren("selected");
 			for (IMemento iMemento : children) {
-				String textData = iMemento.getTextData();
-				EObject eObject = EditingUtil.getInstance()
-				.getNavigationEditingDomain().getResourceSet()
-				.getEObject(URI.createURI(textData), true);
-				this.selectedElements.add(EditingUtil.getInstance()
-						.getNavigationEditingDomain().getWrapper(eObject));
+				try {
+					String textData = iMemento.getTextData();
+					EObject eObject = EditingUtil.getInstance().getNavigationEditingDomain()
+							.getResourceSet().getEObject(URI.createURI(textData), true);
+					this.selectedElements.add(EditingUtil.getInstance()
+							.getNavigationEditingDomain().getWrapper(eObject));
+				} catch (Exception e) {
+					// if any exception occurs, e.g.
+					// the project is not open we have to skip
+					// here.
+				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void saveState(final IMemento child) {
 		Object[] expandedElements = this.viewer.getExpandedElements();
@@ -238,8 +255,10 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	private void initDrop() {
 		final int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-		this.viewer.addDropSupport(dndOperations, getTransferTypes(), new NavigationDropAdapter(getEditingDomain(),this.viewer));
-		//this.viewer.addDropSupport(dndOperations, getTransferTypes(), new EditingDomainViewerDropAdapter(getEditingDomain(),this.viewer));
+		this.viewer.addDropSupport(dndOperations, getTransferTypes(), new NavigationDropAdapter(
+				getEditingDomain(), this.viewer));
+		// this.viewer.addDropSupport(dndOperations, getTransferTypes(), new
+		// EditingDomainViewerDropAdapter(getEditingDomain(),this.viewer));
 	}
 
 	private void initInput() {
@@ -250,7 +269,8 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	}
 
 	private void initProvider() {
-		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory()) {
+		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance()
+				.getAdapterFactory()) {
 			@Override
 			public boolean hasChildren(final Object object) {
 				if (object instanceof InformationUnitListItem) {
@@ -258,15 +278,15 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 				}
 				return super.hasChildren(object);
 			}
+
 			@Override
 			public Object[] getChildren(final Object object) {
 				return super.getChildren(object);
 			}
 		};
-		
-		this.labelProvider = new NavigatorDecoratingLabelProvider(
-				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
-				
+
+		this.labelProvider = new NavigatorDecoratingLabelProvider(new AdapterFactoryLabelProvider(
+				EditingUtil.getInstance().getAdapterFactory()));
 
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);
@@ -282,14 +302,13 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 			@Override
 			public boolean select(final Viewer viewer, final Object parentElement,
 					final Object element) {
-				return ((EObject)element).eContainingFeature() != InfomngmntPackage
-					.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS;
+				return ((EObject) element).eContainingFeature() != InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS;
 			}
-			
-		});
-		
-		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance().getAdapterFactory());
 
+		});
+
+		new AdapterFactoryTreeEditor(this.viewer.getTree(), EditingUtil.getInstance()
+				.getAdapterFactory());
 
 	}
 
@@ -305,13 +324,13 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		toolbarManager.add(this.linkEditorAction);
 		toolbarManager.update(true);
 	}
-	
 
 	private void hookActionBars() {
 		this.actionBar = new NavigationContextMenu();
 		this.actionBar.init(getViewSite().getActionBars());
 		this.actionBar.setActiveDomain(this);
 	}
+
 	/**
 	 * @param viewer2
 	 */
@@ -321,9 +340,9 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		this.contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = this.contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
-		getViewSite().registerContextMenu(getId(), this.contextMenu, new UnwrappingSelectionProvider(this));
-		
-		
+		getViewSite().registerContextMenu(getId(), this.contextMenu,
+				new UnwrappingSelectionProvider(this));
+
 	}
 
 	@Override
@@ -332,19 +351,17 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		getViewSite().setSelectionProvider(this);
 		super.handleSelect();
 	}
-	
+
 	@Override
 	public void handleDeselect() {
 		super.handleDeselect();
-		
-		
+
 	}
 
 	@Override
 	public void setFocus() {
 		this.viewer.getControl().setFocus();
 	}
-	
 
 	public void selectReveal(final ISelection selection) {
 		this.viewer.setSelection(selection, true);
@@ -360,22 +377,22 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	}
 
-
-
 	/**
 	 * 
 	 */
 	private void initLinkWithEditor() {
 		// Try the dialog settings first, which remember the last choice.
 		final String setting = this.settings
-		.get(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR);
+				.get(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR);
 		if (setting != null) {
 			this.linkEditor = setting.equals("true"); //$NON-NLS-1$
 		}
 		// Link with editor
 
 		this.linkEditorAction = new Action("Link with editor", IAction.AS_CHECK_BOX) {
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.eclipse.jface.action.Action#run()
 			 */
 			@Override
@@ -383,25 +400,30 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 				setLinkingEnabled(isChecked());
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.eclipse.jface.action.Action#getToolTipText()
 			 */
 			@Override
 			public String getToolTipText() {
 				return getText();
 			}
-			/* (non-Javadoc)
+
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.eclipse.jface.action.Action#getImageDescriptor()
 			 */
 			@Override
 			public ImageDescriptor getImageDescriptor() {
-				return AbstractUIPlugin.imageDescriptorFromPlugin(UIPlugin.PLUGIN_ID, "icons/synced.gif");
+				return AbstractUIPlugin.imageDescriptorFromPlugin(UIPlugin.PLUGIN_ID,
+						"icons/synced.gif");
 			}
-
 
 		};
 		this.linkEditorAction.setChecked(this.linkEditor);
-		//setLinkingEnabled(true);
+		// setLinkingEnabled(true);
 
 	}
 
@@ -409,33 +431,36 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		this.linkEditor = enabled;
 
 		// remember the last settings in the dialog settings
-		this.settings.put(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR,
-				enabled);
+		this.settings.put(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR, enabled);
 
-		// if turning linking on, update the selection to correspond to the active editor
+		// if turning linking on, update the selection to correspond to the
+		// active editor
 		if (enabled) {
 			if (PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage() != null) {
-				IEditorInput editorInput = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
+				IEditorInput editorInput = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+						.getActivePage().getActiveEditor().getEditorInput();
 				if (editorInput instanceof FileEditorInput) {
-					Object adapter = Platform.getAdapterManager().getAdapter(((FileEditorInput) editorInput).getFile(), InformationUnitListItem.class);
+					Object adapter = Platform.getAdapterManager().getAdapter(
+							((FileEditorInput) editorInput).getFile(),
+							InformationUnitListItem.class);
 					if (adapter != null) {
 						setSelection(new StructuredSelection(adapter));
 					}
 				}
 			}
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(this.partListener);
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(
+					this.partListener);
 		} else {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().removePartListener(this.partListener);
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+					.removePartListener(this.partListener);
 		}
 	}
-	
 
 	public ISelection getSelection() {
 		return this.viewer.getSelection();
 	}
 
-	public void removeSelectionChangedListener(
-			final ISelectionChangedListener listener) {
+	public void removeSelectionChangedListener(final ISelectionChangedListener listener) {
 		this.viewer.removeSelectionChangedListener(listener);
 	}
 
@@ -450,7 +475,8 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	private Transfer[] getTransferTypes() {
 		List<Transfer> returnValue = new ArrayList<Transfer>();
-		Collection<TransferWrapper> values = InfomngmntEditPlugin.getPlugin().getService(IRuleExtensionService.class).getAllTransferTypes().values();
+		Collection<TransferWrapper> values = InfomngmntEditPlugin.getPlugin().getService(
+				IRuleExtensionService.class).getAllTransferTypes().values();
 		for (TransferWrapper transferWrapper : values) {
 			returnValue.add(transferWrapper.getTransfer());
 		}
@@ -458,6 +484,5 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		returnValue.add(LocalTransfer.getInstance());
 		return returnValue.toArray(new Transfer[returnValue.size()]);
 	}
-	
-	
+
 }

@@ -31,11 +31,13 @@ public class InformationEditorCreationFactory implements IElementFactory {
 	 */
 	private static final String TAG_PATH = "path"; //$NON-NLS-1$
 
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IElementFactory#createElement(org.eclipse.ui.IMemento)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IElementFactory#createElement(org.eclipse.ui.IMemento)
 	 */
-	public IAdaptable createElement(IMemento memento) {
+	public IAdaptable createElement(final IMemento memento) {
 		String fileName = memento.getString(TAG_PATH);
 		if (fileName == null) {
 			return null;
@@ -43,9 +45,8 @@ public class InformationEditorCreationFactory implements IElementFactory {
 
 		// Get a handle to the IFile...which can be a handle
 		// to a resource that does not exist in workspace
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
-				new Path(fileName));
-		if (file != null) {
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
+		if (file != null && file.isAccessible()) {
 			return new InformationEditorInput(file);
 		}
 		return null;

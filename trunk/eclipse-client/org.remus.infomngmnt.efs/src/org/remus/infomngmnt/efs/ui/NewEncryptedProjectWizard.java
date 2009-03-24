@@ -199,8 +199,8 @@ public class NewEncryptedProjectWizard extends Wizard implements INewWizard {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		final IProjectDescription description = workspace.newProjectDescription(newProjectHandle
 				.getName());
-		postProjectCreation(description);
 		description.setLocationURI(location);
+		postProjectCreation(description);
 
 		// update the referenced project if provided
 		// create the new project operation

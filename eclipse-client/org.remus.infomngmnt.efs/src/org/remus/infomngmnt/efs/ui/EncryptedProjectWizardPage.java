@@ -31,6 +31,7 @@ import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.efs.EFSActivator;
 import org.remus.infomngmnt.efs.extension.AbstractSecurityProvider;
 import org.remus.infomngmnt.efs.extension.ISecurityProviderExtension;
@@ -65,8 +66,9 @@ public class EncryptedProjectWizardPage extends WizardPage {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
 		//
-		setControl(container);
-
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(EFSActivator.getDefault(),
+				"icons/iconexperience/wizards/new_encryptedproject_wizard.png"));
+		setTitle("New encrypted project");
 		final Group projectPropertiesGroup = new Group(container, SWT.NONE);
 		projectPropertiesGroup.setText("Project properties");
 		final GridData gd_projectPropertiesGroup = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -161,6 +163,7 @@ public class EncryptedProjectWizardPage extends WizardPage {
 		this.initializeProviderButton.setLayoutData(gd_initializeProviderButton);
 		this.initializeProviderButton.setText("Initialize provider");
 		sashForm.setWeights(new int[] { 1, 1 });
+		setControl(container);
 	}
 
 	private boolean validatePage() {

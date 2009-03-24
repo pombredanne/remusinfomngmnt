@@ -12,6 +12,18 @@
             name="Encrypted Information Project"
             project="true">
       </wizard>
+      <primaryWizard
+            id="org.remus.infomngmnt.efs.newencryptedproject">
+      </primaryWizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.efs.newencryptedproject">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.efs.EFSActivator;
 import org.remus.infomngmnt.efs.internal.model.SecurityAffectedProject;
 import org.remus.infomngmnt.efs.internal.model.SecurityWrapper;
 
@@ -45,6 +47,7 @@ public class InitializeSecurityProviderDialog extends TitleAreaDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
+		newShell.setText("Initialization of encrypted projects");
 	}
 
 	/**
@@ -54,6 +57,11 @@ public class InitializeSecurityProviderDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(final Composite parent) {
+
+		setTitleImage(ResourceManager.getPluginImage(EFSActivator.getDefault(),
+				"icons/iconexperience/wizards/unlock_project.png"));
+		setTitle("Initialization of encrypted projects");
+		setMessage("Please enter the required credentials to encrypt the projects.");
 		Composite area = (Composite) super.createDialogArea(parent);
 		final Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout());

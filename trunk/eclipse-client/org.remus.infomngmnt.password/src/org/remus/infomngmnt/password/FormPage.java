@@ -35,6 +35,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.password.generator.PasswordGenerationDialog;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 /**
@@ -44,7 +45,7 @@ import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 public class FormPage extends AbstractInformationFormPage {
 
 	public FormPage() {
-		// TODO Asuto-generated constructor stub
+		// Asuto-generated constructor stub
 	}
 
 	// private Text styledText;
@@ -52,7 +53,6 @@ public class FormPage extends AbstractInformationFormPage {
 	private Text textUsername;
 	private Text textPassword;
 	private Text textPasswordDecrypted;
-	static int pageNum = -1;
 
 	@Override
 	protected void createFormContent(final IManagedForm managedForm) {
@@ -63,10 +63,50 @@ public class FormPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		// ///////////////////
-		// general proporties
-		// ///////////////////
+		doCreateGeneraSectionl(body, toolkit);
+		doCreateAdditionalSection(body, toolkit);
+		doCreateSemanticSection(body, toolkit);
+	}
 
+	private void doCreateAdditionalSection(final Composite body, final FormToolkit toolkit) {
+
+		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		section_1.setText("Additional");
+
+		final Composite compositeAdditional = toolkit.createComposite(section_1, SWT.NONE);
+		final GridLayout gridLayoutAdditional = new GridLayout();
+		gridLayoutAdditional.numColumns = 2;
+		compositeAdditional.setLayout(gridLayoutAdditional);
+		toolkit.paintBordersFor(compositeAdditional);
+		section_1.setClient(compositeAdditional);
+
+		// Url
+		toolkit.createLabel(compositeAdditional, "Url:", SWT.NONE);
+
+		this.textUrl = toolkit.createText(compositeAdditional, null, SWT.NONE);
+		this.textUrl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		new Label(compositeAdditional, SWT.NONE);
+
+		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+				this.textUrl, this);
+		createTextBindingWidget
+				.bindModel(InformationUtil
+						.getChildByType(getModelObject(), PasswordPlugin.NODE_URL),
+						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+		Hyperlink hyperlink = toolkit.createHyperlink(compositeAdditional,
+				"Open Url in System-Browser", SWT.NONE);
+		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(final HyperlinkEvent e) {
+				Program.launch(FormPage.this.textUrl.getText());
+			}
+		});
+	}
+
+	private void doCreateGeneraSectionl(final Composite body, final FormToolkit toolkit) {
 		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -114,63 +154,30 @@ public class FormPage extends AbstractInformationFormPage {
 		createTextBindingWidget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		layout.topControl = this.textPassword;
-		// compositePassword.layout();
+		layout.topControl = this.textPasswordDecrypted;
+
 		toolkit.paintBordersFor(compositePassword);
 
 		// create the button that will switch between the pages
-		Button pageButton = toolkit.createButton(composite, "change", SWT.NONE);
-		pageButton.setBounds(10, 10, 80, 25);
+		final Button pageButton = toolkit.createButton(composite, "switch", SWT.NONE);
 		pageButton.addListener(SWT.Selection, new Listener() {
-
 			public void handleEvent(final Event event) {
 				layout.topControl = FormPage.this.textPassword.isVisible() ? FormPage.this.textPasswordDecrypted
 						: FormPage.this.textPassword;
 				compositePassword.layout();
 			}
-
 		});
 
-		// //////////////////////
-		// additional proporties
-		// //////////////////////
+		final Button generatePasswordButton = toolkit.createButton(composite, "generate password",
+				SWT.NONE);
+		generatePasswordButton.addListener(SWT.Selection, new Listener() {
 
-		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("Additional");
-
-		final Composite compositeAdditional = toolkit.createComposite(section_1, SWT.NONE);
-		final GridLayout gridLayoutAdditional = new GridLayout();
-		gridLayoutAdditional.numColumns = 2;
-		compositeAdditional.setLayout(gridLayoutAdditional);
-		toolkit.paintBordersFor(compositeAdditional);
-		section_1.setClient(compositeAdditional);
-
-		// Url
-		toolkit.createLabel(compositeAdditional, "Url:", SWT.NONE);
-
-		this.textUrl = toolkit.createText(compositeAdditional, null, SWT.NONE);
-		this.textUrl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		new Label(compositeAdditional, SWT.NONE);
-
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.textUrl, this);
-		createTextBindingWidget
-				.bindModel(InformationUtil
-						.getChildByType(getModelObject(), PasswordPlugin.NODE_URL),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-
-		Hyperlink hyperlink = toolkit.createHyperlink(compositeAdditional,
-				"Open Url in System-Browser", SWT.NONE);
-		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
-			@Override
-			public void linkActivated(final HyperlinkEvent e) {
-				Program.launch(FormPage.this.textUrl.getText());
+			public void handleEvent(final Event event) {
+				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
+						getSite().getShell(), getModelObject());
+				dialog.open();
 			}
 		});
 
-		doCreateSemanticSection(body, toolkit);
-
 	}
-
 }

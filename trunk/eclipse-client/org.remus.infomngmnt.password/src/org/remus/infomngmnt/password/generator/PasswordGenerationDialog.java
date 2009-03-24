@@ -3,6 +3,7 @@ package org.remus.infomngmnt.password.generator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -30,26 +31,6 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.password.PasswordPlugin;
 
 public class PasswordGenerationDialog extends TitleAreaDialog {
-
-	private static final String[] ITEMS_DEFAULT_PASSWORD_LENGTH = { "8", "10", "12", "16", "20",
-			"64", "128", "256" };
-	private static final String CHARACTERS_WIDE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private static final String CHARACTERS_SMALL = "abcdefghijklmnopqrstuvwxyz";
-	private static final String CHARACTERS_NUMBERS = "0123456789";
-	private static final int QUANTITY_PASSWORDS = 5;
-	private static final String AC_DEFAULT_ADDITIONAL_CHARACTERS = "@<({[/=]})>!?$%&#*-+.,;:_";
-	private static final String AC_RADIO_DEFAULT_PASSWORD = "raddefpwd";
-	private static final String AC_RADIO_USER_DEFINED_PASSWORD = "raduserdefpwd";
-	private static final String AC_CURRENT_PASSWORD_LENGTH = "curpwdlen";
-	private static final String AC_CHECK_WIDE = "ckwide";
-	private static final String AC_CHECK_NUMBER = "chnumber";
-	private static final String AC_CHECK_SMALL = "cksmall";
-	private static final String AC_CHECK_ADDITIONAL = "ckadd";
-	private static final String AC_TX_ADDITIONAL_CHARACTERS = "txaddchar";
-	private static final String AC_COMBO_DEFAULT_PASSWORD_INDEX = "cbdefpwdi";
-	private static final String AC_SP_PASSWORD_LENGTH = "sppwdlen";
-	private static final String AC_TX_ADDITIONAL_CHARACTERS_ENABLED = "txaddcharen";
-	private static final String AC_USER_SETTINGS = "defsettings";
 
 	private final InformationUnit password;
 
@@ -82,6 +63,34 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	}
 
 	@Override
+	protected void createButtonsForButtonBar(final Composite parent) {
+		this.bt_SaveProporties = createButton(parent, IDialogConstants.OK_ID,
+				"Apply Selected Password", true);
+		this.bt_SaveProporties.setEnabled(false);
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+	}
+
+	@Override
+	protected void okPressed() {
+		PasswordGenerationDialog.this.password
+				.setStringValue(PasswordGenerationDialog.this.selectedPassword);
+		setPasswortProportiesFromPasswortGenerationDialogToActivator();
+		super.okPressed();
+	}
+
+	@Override
+	public boolean close() {
+		setPasswortProportiesFromPasswortGenerationDialogToActivator();
+		return super.close();
+	}
+
+	@Override
+	protected void cancelPressed() {
+		setPasswortProportiesFromPasswortGenerationDialogToActivator();
+		super.cancelPressed();
+	}
+
+	@Override
 	protected Control createDialogArea(final Composite parent) {
 		this.area = new Composite((Composite) super.createDialogArea(parent), SWT.NONE);
 		this.area.setLayout(new GridLayout());
@@ -94,54 +103,13 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		// Group Generated Passwords
 		setGroupGeneratePasswordsUI();
 
-		if (!PasswordPlugin.getDefault().getDialogSettings().getBoolean(AC_USER_SETTINGS)) {
+		if (!PasswordPlugin.getDefault().getDialogSettings()
+				.getBoolean(PGSettings.AC_USER_SETTINGS)) {
 			setPasswortProportiesFromActivatorToDefault();
 			setPasswortProportiesFromActivatorToPasswordGenerationDialog();
 		} else {
 			setPasswortProportiesFromActivatorToPasswordGenerationDialog();
 		}
-
-		this.bt_SetPassword = new Button(this.area, SWT.NONE);
-		// this.bt_SetPassword.setEnabled(false);
-		this.bt_SetPassword.setText("Set selceted password");
-		this.bt_SetPassword.addSelectionListener(new SelectionListener() {
-
-			public void widgetDefaultSelected(final SelectionEvent e) {
-				// Auto-generated method stub
-
-			}
-
-			public void widgetSelected(final SelectionEvent e) {
-				PasswordGenerationDialog.this.password
-						.setStringValue(PasswordGenerationDialog.this.selectedPassword);
-			}
-		});
-
-		this.bt_SaveProporties = new Button(this.area, SWT.NONE);
-		this.bt_SaveProporties.setText("Save Proporties");
-		this.bt_SaveProporties.addSelectionListener(new SelectionListener() {
-
-			public void widgetDefaultSelected(final SelectionEvent e) {
-				// Auto-generated method stub
-
-			}
-
-			public void widgetSelected(final SelectionEvent e) {
-				setPasswortProportiesFromPasswortGenerationDialogToActivator();
-			}
-		});
-		this.bt_ResetProporties = new Button(this.area, SWT.NONE);
-		this.bt_ResetProporties.setText("Reset Proporties (TODO!!!)");
-		this.bt_ResetProporties.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(final SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void widgetSelected(final SelectionEvent e) {
-				setPasswortProportiesFromActivatorToDefault();
-			}
-		});
 		// setPasswortProportiesFromActivatorToPasswordGenerationDialog();
 		return this.area;
 	}
@@ -165,8 +133,8 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.tv_GeneratedPasswords.getTable().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		List<String> l = new ArrayList<String>(QUANTITY_PASSWORDS);
-		for (int i = 1; i < QUANTITY_PASSWORDS; i++) {
+		List<String> l = new ArrayList<String>(PGSettings.QUANTITY_PASSWORDS);
+		for (int i = 1; i < PGSettings.QUANTITY_PASSWORDS; i++) {
 			l.add("");
 		}
 		this.tv_GeneratedPasswords.setInput(l);
@@ -181,7 +149,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
-				// PasswordGenerationDialog.this.bt_SetPassword.setEnabled(true);
+				PasswordGenerationDialog.this.bt_SaveProporties.setEnabled(true);
 			}
 		});
 	}
@@ -200,7 +168,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.radioDefaultPassword.setText("Default Length");
 
 		this.comboDefaultPasswordLength = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
-		this.comboDefaultPasswordLength.setItems(ITEMS_DEFAULT_PASSWORD_LENGTH);
+		this.comboDefaultPasswordLength.setItems(PGSettings.ITEMS_DEFAULT_PASSWORD_LENGTH);
 
 		this.radioUserDefinedPassword = new Button(group_Properties, SWT.RADIO);
 		this.radioUserDefinedPassword.setText("User Defind");
@@ -236,7 +204,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.checkAdditional.setText("Additonal Characters");
 
 		this.tx_additionalCharacters = new Text(cs_UserDefined, SWT.NONE);
-		// this.tx_additionalCharacters.setText("@<({[/=]})>!?$%&#*-+.,;:_");
 		// this.tx_additionalCharacters.setEnabled(false);
 		this.tx_additionalCharacters.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
@@ -288,7 +255,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.radioDefaultPassword.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(final SelectionEvent e) {
 				// Auto-generated method stub
-
 			}
 
 			public void widgetSelected(final SelectionEvent e) {
@@ -308,20 +274,21 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		// default password
 		if (this.radioDefaultPassword.getSelection()) {
 
-			currentPasswordString += this.tx_additionalCharacters.getText() + CHARACTERS_WIDE
-					+ PasswordGenerationDialog.CHARACTERS_SMALL + CHARACTERS_NUMBERS;
+			currentPasswordString += this.tx_additionalCharacters.getText()
+					+ PGSettings.CHARACTERS_WIDE + PGSettings.CHARACTERS_SMALL
+					+ PGSettings.CHARACTERS_NUMBERS;
 
 		}
 		// user generated password
 		else {
 			if (this.checkWide.getSelection()) {
-				currentPasswordString += CHARACTERS_WIDE;
+				currentPasswordString += PGSettings.CHARACTERS_WIDE;
 			}
 			if (this.checkSmall.getSelection()) {
-				currentPasswordString += CHARACTERS_SMALL;
+				currentPasswordString += PGSettings.CHARACTERS_SMALL;
 			}
 			if (this.checkNumber.getSelection()) {
-				currentPasswordString += CHARACTERS_NUMBERS;
+				currentPasswordString += PGSettings.CHARACTERS_NUMBERS;
 			}
 			if (this.checkAdditional.getSelection()) {
 				currentPasswordString += this.tx_additionalCharacters.getText();
@@ -335,7 +302,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 				.valueOf(this.comboDefaultPasswordLength.getText());
 
 		List<String> result = new ArrayList<String>();
-		for (int j = 0; j < QUANTITY_PASSWORDS; j++) {
+		for (int j = 0; j < PGSettings.QUANTITY_PASSWORDS; j++) {
 			String s = new String();
 
 			for (int i = 0; i < currentPasswordLength; i++) {
@@ -365,14 +332,16 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.radioDefaultPassword.setSelection(PasswordPlugin
-					.getDefault().getDialogSettings().getBoolean(AC_RADIO_DEFAULT_PASSWORD));
+					.getDefault().getDialogSettings().getBoolean(
+							PGSettings.AC_RADIO_DEFAULT_PASSWORD));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
 		}
 		try {
 			PasswordGenerationDialog.this.comboDefaultPasswordLength.select(PasswordPlugin
-					.getDefault().getDialogSettings().getInt(AC_COMBO_DEFAULT_PASSWORD_INDEX));
+					.getDefault().getDialogSettings().getInt(
+							PGSettings.AC_COMBO_DEFAULT_PASSWORD_INDEX));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -380,7 +349,8 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.radioUserDefinedPassword.setSelection(PasswordPlugin
-					.getDefault().getDialogSettings().getBoolean(AC_RADIO_USER_DEFINED_PASSWORD));
+					.getDefault().getDialogSettings().getBoolean(
+							PGSettings.AC_RADIO_USER_DEFINED_PASSWORD));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -388,7 +358,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.currentPasswordLength = PasswordPlugin.getDefault()
-					.getDialogSettings().getInt(AC_CURRENT_PASSWORD_LENGTH);
+					.getDialogSettings().getInt(PGSettings.AC_CURRENT_PASSWORD_LENGTH);
 		} catch (NumberFormatException e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -396,7 +366,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.checkWide.setSelection(PasswordPlugin.getDefault()
-					.getDialogSettings().getBoolean(AC_CHECK_WIDE));
+					.getDialogSettings().getBoolean(PGSettings.AC_CHECK_WIDE));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -404,7 +374,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.checkNumber.setSelection(PasswordPlugin.getDefault()
-					.getDialogSettings().getBoolean(AC_CHECK_NUMBER));
+					.getDialogSettings().getBoolean(PGSettings.AC_CHECK_NUMBER));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -412,7 +382,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.checkSmall.setSelection(PasswordPlugin.getDefault()
-					.getDialogSettings().getBoolean(AC_CHECK_SMALL));
+					.getDialogSettings().getBoolean(PGSettings.AC_CHECK_SMALL));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -420,7 +390,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.checkAdditional.setSelection(PasswordPlugin.getDefault()
-					.getDialogSettings().getBoolean(AC_CHECK_ADDITIONAL));
+					.getDialogSettings().getBoolean(PGSettings.AC_CHECK_ADDITIONAL));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -428,7 +398,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		try {
 			PasswordGenerationDialog.this.tx_additionalCharacters.setText(PasswordPlugin
-					.getDefault().getDialogSettings().get(AC_TX_ADDITIONAL_CHARACTERS));
+					.getDefault().getDialogSettings().get(PGSettings.AC_TX_ADDITIONAL_CHARACTERS));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -436,14 +406,14 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		try {
 			PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(PasswordPlugin
 					.getDefault().getDialogSettings().getBoolean(
-							AC_TX_ADDITIONAL_CHARACTERS_ENABLED));
+							PGSettings.AC_TX_ADDITIONAL_CHARACTERS_ENABLED));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
 		}
 		try {
 			PasswordGenerationDialog.this.sp_PasswordLength.setSelection(PasswordPlugin
-					.getDefault().getDialogSettings().getInt(AC_SP_PASSWORD_LENGTH));
+					.getDefault().getDialogSettings().getInt(PGSettings.AC_SP_PASSWORD_LENGTH));
 		} catch (Exception e) {
 			// TODO: log4j
 			e.printStackTrace();
@@ -451,45 +421,52 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	}
 
 	private void setPasswortProportiesFromActivatorToDefault() {
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_USER_SETTINGS, false);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_RADIO_DEFAULT_PASSWORD, true);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_COMBO_DEFAULT_PASSWORD_INDEX, 3);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_RADIO_USER_DEFINED_PASSWORD, false);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CURRENT_PASSWORD_LENGTH, 8);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_WIDE, false);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_NUMBER, false);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_SMALL, false);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_ADDITIONAL, false);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_TX_ADDITIONAL_CHARACTERS,
-				AC_DEFAULT_ADDITIONAL_CHARACTERS);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_TX_ADDITIONAL_CHARACTERS_ENABLED,
-				false);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_SP_PASSWORD_LENGTH, 8);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_USER_SETTINGS, false);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_RADIO_DEFAULT_PASSWORD,
+				true);
+		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_COMBO_DEFAULT_PASSWORD_INDEX, 3);
+		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_RADIO_USER_DEFINED_PASSWORD, false);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CURRENT_PASSWORD_LENGTH,
+				8);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_WIDE, false);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_NUMBER, false);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_SMALL, false);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_ADDITIONAL, false);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_TX_ADDITIONAL_CHARACTERS,
+				PGSettings.AC_DEFAULT_ADDITIONAL_CHARACTERS);
+		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_TX_ADDITIONAL_CHARACTERS_ENABLED, false);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_SP_PASSWORD_LENGTH, 8);
 	}
 
 	private void setPasswortProportiesFromPasswortGenerationDialogToActivator() {
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_USER_SETTINGS, true);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_RADIO_DEFAULT_PASSWORD,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_USER_SETTINGS, true);
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_RADIO_DEFAULT_PASSWORD,
 				PasswordGenerationDialog.this.radioDefaultPassword.getSelection());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_RADIO_USER_DEFINED_PASSWORD,
+		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_RADIO_USER_DEFINED_PASSWORD,
 				PasswordGenerationDialog.this.radioUserDefinedPassword.getSelection());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CURRENT_PASSWORD_LENGTH,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CURRENT_PASSWORD_LENGTH,
 				PasswordGenerationDialog.this.currentPasswordLength);
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_WIDE,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_WIDE,
 				PasswordGenerationDialog.this.checkWide.getSelection());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_NUMBER,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_NUMBER,
 				PasswordGenerationDialog.this.checkNumber.getSelection());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_SMALL,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_SMALL,
 				PasswordGenerationDialog.this.checkSmall.getSelection());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_CHECK_ADDITIONAL,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CHECK_ADDITIONAL,
 				PasswordGenerationDialog.this.checkAdditional.getSelection());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_TX_ADDITIONAL_CHARACTERS,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_TX_ADDITIONAL_CHARACTERS,
 				PasswordGenerationDialog.this.tx_additionalCharacters.getText());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_TX_ADDITIONAL_CHARACTERS_ENABLED,
+		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_TX_ADDITIONAL_CHARACTERS_ENABLED,
 				PasswordGenerationDialog.this.tx_additionalCharacters.getEnabled());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_COMBO_DEFAULT_PASSWORD_INDEX,
+		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_COMBO_DEFAULT_PASSWORD_INDEX,
 				this.comboDefaultPasswordLength.getSelectionIndex());
-		PasswordPlugin.getDefault().getDialogSettings().put(AC_SP_PASSWORD_LENGTH,
+		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_SP_PASSWORD_LENGTH,
 				this.sp_PasswordLength.getSelection());
 	}
 }

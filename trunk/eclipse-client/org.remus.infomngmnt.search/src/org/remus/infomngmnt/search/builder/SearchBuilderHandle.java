@@ -30,8 +30,9 @@ public class SearchBuilderHandle implements IPostProjectHandle {
 	 * (org.eclipse.core.resources.IProject)
 	 */
 	public void postProjectCreation(final IProjectDescription project) {
-		if (!project.getLocationURI().getScheme().startsWith(
-				ResourceUtil.SHEMAPREFIX_ENCRYPTED_PROJECTS)) {
+		if (project.getLocationURI() == null
+				|| !project.getLocationURI().getScheme().startsWith(
+						ResourceUtil.SHEMAPREFIX_ENCRYPTED_PROJECTS)) {
 			ResourceUtil.addBuilder(project, SearchBuilder.BUILDER_ID);
 		}
 	}

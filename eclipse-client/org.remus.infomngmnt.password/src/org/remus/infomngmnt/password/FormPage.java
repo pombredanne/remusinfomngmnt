@@ -167,7 +167,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 			public void handleEvent(final Event event) {
 				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
-						getSite().getShell(), getModelObject(), toolkit);
+						getSite().getShell(), getModelObject(), FormPage.this.editingDomain);
 				dialog.open();
 			}
 		});

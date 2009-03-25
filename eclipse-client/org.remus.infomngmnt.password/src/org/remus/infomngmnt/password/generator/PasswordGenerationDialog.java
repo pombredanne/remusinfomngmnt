@@ -211,7 +211,9 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.lb_PasswordLength.setText("Quantity Characters");
 		this.sp_PasswordLength = new Spinner(cs_UserDefined, SWT.NONE);
 
-		this.sp_PasswordLength.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+		GridData gd_PasswordLength = new GridData(SWT.FILL, SWT.TOP, true, false);
+		gd_PasswordLength.widthHint = 30;
+		this.sp_PasswordLength.setLayoutData(gd_PasswordLength);
 		// this.sp_PasswordLength.setSelection(8);
 		this.sp_PasswordLength.setMinimum(1);
 		// this.sp_PasswordLength.setEnabled(false);

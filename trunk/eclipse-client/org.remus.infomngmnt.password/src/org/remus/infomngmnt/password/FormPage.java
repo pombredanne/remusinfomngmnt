@@ -158,16 +158,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 		toolkit.paintBordersFor(compositePassword);
 
-		// create the button that will switch between the pages
-		final Button pageButton = toolkit.createButton(composite, "switch", SWT.NONE);
-		pageButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(final Event event) {
-				layout.topControl = FormPage.this.textPassword.isVisible() ? FormPage.this.textPasswordDecrypted
-						: FormPage.this.textPassword;
-				compositePassword.layout();
-			}
-		});
-
+		// create the button that will open an password generation dialog
 		final Button generatePasswordButton = toolkit.createButton(composite, "generate password",
 				SWT.NONE);
 		generatePasswordButton.addListener(SWT.Selection, new Listener() {
@@ -179,5 +170,14 @@ public class FormPage extends AbstractInformationFormPage {
 			}
 		});
 
+		// create the button that will switch between the pages
+		final Button pageButton = toolkit.createButton(composite, "switch", SWT.NONE);
+		pageButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				layout.topControl = FormPage.this.textPassword.isVisible() ? FormPage.this.textPasswordDecrypted
+						: FormPage.this.textPassword;
+				compositePassword.layout();
+			}
+		});
 	}
 }

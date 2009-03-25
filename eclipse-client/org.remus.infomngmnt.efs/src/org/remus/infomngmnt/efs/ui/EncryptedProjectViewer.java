@@ -54,7 +54,7 @@ public class EncryptedProjectViewer extends DetailedViewerControl {
 		setLabelProvider(new SecurityProviderLableProvider());
 		setInput(model);
 		setWeight(new int[] { 5, 2 });
-		setOrientation(SWT.HORIZONTAL);
+		setOrientation(SWT.VERTICAL);
 		setPaneText("Found security providers and affected projects.");
 		createControl();
 	}
@@ -104,15 +104,9 @@ public class EncryptedProjectViewer extends DetailedViewerControl {
 	@Override
 	protected Control createDetailPane(final Composite parent) {
 		Composite returnValue = (Composite) super.createDetailPane(parent);
-		final Label label_1 = new Label(returnValue, SWT.NONE);
-		label_1.setText("Label");
-
-		final Label label = new Label(returnValue, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
-		label.setText("Label");
 
 		this.initializeButton = new Button(returnValue, SWT.NONE);
-		final GridData gd_initializeButton = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+		final GridData gd_initializeButton = new GridData(SWT.RIGHT, SWT.TOP, true, false);
 		this.initializeButton.setLayoutData(gd_initializeButton);
 		this.initializeButton.setText("Initialize");
 		this.initializeButton.addListener(SWT.Selection, new Listener() {

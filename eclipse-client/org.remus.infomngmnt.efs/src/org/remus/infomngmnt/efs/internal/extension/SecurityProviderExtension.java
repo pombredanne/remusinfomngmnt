@@ -60,12 +60,14 @@ public class SecurityProviderExtension extends PluginRegistryDynamic implements
 			try {
 				AbstractSecurityProvider createExecutableExtension = (AbstractSecurityProvider) configurationElement
 						.createExecutableExtension(CLASS_ATT);
-				createExecutableExtension.setScheme(configurationElement
-						.getAttribute(SCHEME_ATT));
+				createExecutableExtension.setScheme(configurationElement.getAttribute(SCHEME_ATT));
 				createExecutableExtension.setId(configurationElement.getAttribute(ID_ATT));
 				createExecutableExtension.setName(configurationElement.getAttribute(NAME_ATT));
-				createExecutableExtension.setDescription(configurationElement
-						.getAttribute(DESCRIPTION_ATT));
+				IConfigurationElement[] children = configurationElement
+						.getChildren(DESCRIPTION_ATT);
+				if (children.length > 0) {
+					createExecutableExtension.setDescription(children[0].getValue());
+				}
 				this.items
 						.put(configurationElement.getAttribute(ID_ATT), createExecutableExtension);
 			} catch (CoreException e) {

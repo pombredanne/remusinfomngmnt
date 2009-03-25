@@ -101,7 +101,9 @@ public class FormPage extends AbstractInformationFormPage {
 		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
-				Program.launch(FormPage.this.textUrl.getText());
+				if (FormPage.this.textUrl.getText().contentEquals("http://")) {
+					Program.launch(FormPage.this.textUrl.getText());
+				}
 			}
 		});
 	}

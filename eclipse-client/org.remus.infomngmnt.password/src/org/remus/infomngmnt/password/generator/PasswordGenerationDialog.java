@@ -125,11 +125,12 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.group_Passwords.setLayout(gl_PasswordGroup);
 		// this.group_Passwords.setEnabled(false);
 
-		this.tv_GeneratedPasswords = new TableViewer(this.group_Passwords, SWT.MULTI | SWT.H_SCROLL
-				| SWT.V_SCROLL | SWT.FULL_SELECTION);
+		this.tv_GeneratedPasswords = new TableViewer(this.group_Passwords, SWT.H_SCROLL
+				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		this.tv_GeneratedPasswords.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.tv_GeneratedPasswords.setLabelProvider(new LabelProvider());
-		this.tv_GeneratedPasswords.getTable().setLinesVisible(true);
+		// this.tv_GeneratedPasswords.getTable().setLinesVisible(false);
+		// this.tv_GeneratedPasswords.
 		this.tv_GeneratedPasswords.getTable().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
 
@@ -203,7 +204,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.checkAdditional = new Button(cs_UserDefined, SWT.CHECK);
 		this.checkAdditional.setText("Additonal Characters");
 
-		this.tx_additionalCharacters = new Text(cs_UserDefined, SWT.NONE);
+		this.tx_additionalCharacters = new Text(cs_UserDefined, SWT.BORDER);
 		// this.tx_additionalCharacters.setEnabled(false);
 		this.tx_additionalCharacters.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
@@ -211,7 +212,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.lb_PasswordLength.setText("Quantity Characters");
 		this.sp_PasswordLength = new Spinner(cs_UserDefined, SWT.NONE);
 
-		GridData gd_PasswordLength = new GridData(SWT.FILL, SWT.TOP, true, false);
+		GridData gd_PasswordLength = new GridData(SWT.FILL, SWT.TOP, true, true);
 		gd_PasswordLength.widthHint = 30;
 		this.sp_PasswordLength.setLayoutData(gd_PasswordLength);
 		// this.sp_PasswordLength.setSelection(8);

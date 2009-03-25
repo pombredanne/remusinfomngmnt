@@ -102,7 +102,7 @@ public abstract class DetailedViewerControl extends Composite {
 		layout.horizontalSpacing = 0;
 		layout.verticalSpacing = 0;
 		setLayout(layout);
-		this.fSplitterControl = new Splitter(this, SWT.VERTICAL);
+		this.fSplitterControl = new Splitter(this, getOrientation());
 		this.fSplitterControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		final Composite leftPane = new Composite(this.fSplitterControl, SWT.NONE);

@@ -113,7 +113,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		// Group Create Properties
 		setGroupCreateProportiesUI();
-		setCreateProportiesButtonListener();
 
 		// Group Generated Passwords
 		setGroupGeneratePasswordsUI();
@@ -125,7 +124,9 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		} else {
 			setPasswortProportiesFromActivatorToPasswordGenerationDialog();
 		}
-		// setPasswortProportiesFromActivatorToPasswordGenerationDialog();
+
+		setCreateProportiesButtonListener();
+
 		return this.area;
 	}
 
@@ -249,16 +250,20 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 				PasswordGenerationDialog.this.generatedPasswords = generatePasswords();
 				PasswordGenerationDialog.this.tv_GeneratedPasswords
 						.setInput(PasswordGenerationDialog.this.generatedPasswords);
-				// PasswordGenerationDialog.this.group_Passwords.setEnabled(true);
-				// PasswordGenerationDialog.this.bt_SetPassword.setEnabled(false);
+				PasswordGenerationDialog.this.group_Passwords.setEnabled(true);
+				PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(false);
 			}
 
 		});
 		this.checkAdditional.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
-				boolean selection = ((Button) event.widget).getSelection();
-				PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(selection);
+				if (PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+					boolean selection = ((Button) event.widget).getSelection();
+					PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(selection);
+				} else {
+					PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(false);
+				}
 			}
 		});
 		this.radioUserDefinedPassword.addSelectionListener(new SelectionListener() {
@@ -267,20 +272,35 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 			public void widgetSelected(final SelectionEvent e) {
 				setAdditionalCheckable(true);
-				// PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(false);
+				PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(false);
 			}
 		});
+		// this.radioUserDefinedPassword.addFocusListener(new FocusListener() {
+		//
+		// public void focusGained(final FocusEvent e) {
+		// PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_USER_SETTINGS,
+		// true);
+		// }
+		//
+		// public void focusLost(final FocusEvent e) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// });
 		this.radioDefaultPassword.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(final SelectionEvent e) {
 				// Auto-generated method stub
 			}
 
 			public void widgetSelected(final SelectionEvent e) {
+				// PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_USER_SETTINGS,
+				// false);
 				setAdditionalCheckable(false);
-				// PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(true);
-				// PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(false);
-				// PasswordGenerationDialog.this.sp_PasswordLength.setEnabled(false);
-				// PasswordGenerationDialog.this.lb_PasswordLength.setEnabled(false);
+				PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(true);
+				PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(false);
+				PasswordGenerationDialog.this.sp_PasswordLength.setEnabled(false);
+				PasswordGenerationDialog.this.lb_PasswordLength.setEnabled(false);
 			}
 		});
 	}
@@ -334,12 +354,12 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	}
 
 	private void setAdditionalCheckable(final boolean b) {
-		// this.checkAdditional.setEnabled(b);
-		// this.checkNumber.setEnabled(b);
-		// this.checkSmall.setEnabled(b);
-		// this.checkWide.setEnabled(b);
-		// this.lb_PasswordLength.setEnabled(b);
-		// this.sp_PasswordLength.setEnabled(b);
+		this.checkAdditional.setEnabled(b);
+		this.checkNumber.setEnabled(b);
+		this.checkSmall.setEnabled(b);
+		this.checkWide.setEnabled(b);
+		this.lb_PasswordLength.setEnabled(b);
+		this.sp_PasswordLength.setEnabled(b);
 
 		// this.checkNumber.setSelection(b);
 		// this.checkSmall.setSelection(b);

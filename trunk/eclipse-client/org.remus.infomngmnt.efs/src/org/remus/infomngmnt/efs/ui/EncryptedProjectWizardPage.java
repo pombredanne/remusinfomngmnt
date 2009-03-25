@@ -69,6 +69,7 @@ public class EncryptedProjectWizardPage extends WizardPage {
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(EFSActivator.getDefault(),
 				"icons/iconexperience/wizards/new_encryptedproject_wizard.png"));
 		setTitle("New encrypted project");
+
 		final Group projectPropertiesGroup = new Group(container, SWT.NONE);
 		projectPropertiesGroup.setText("Project properties");
 		final GridData gd_projectPropertiesGroup = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -82,11 +83,17 @@ public class EncryptedProjectWizardPage extends WizardPage {
 
 		this.text = new Text(projectPropertiesGroup, SWT.BORDER);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
+		this.text.addListener(SWT.Modify, new Listener() {
+			public void handleEvent(final Event event) {
+				boolean valid = validatePage();
+				setPageComplete(valid);
+			}
+		});
 		final Group group_1 = new Group(container, SWT.NONE);
 		final GridLayout gridLayout_1 = new GridLayout();
 		group_1.setLayout(gridLayout_1);
 		group_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		group_1.setText("Security");
 
 		final SashForm sashForm = new SashForm(group_1, SWT.NONE);
 
@@ -118,11 +125,18 @@ public class EncryptedProjectWizardPage extends WizardPage {
 				} else {
 					EncryptedProjectWizardPage.this.currentSecurityProvider = (AbstractSecurityProvider) ((IStructuredSelection) event
 							.getSelection()).getFirstElement();
+					checkProviderInitState();
 				}
 				EncryptedProjectWizardPage.this.initializeProviderButton.setEnabled(!event
 						.getSelection().isEmpty());
+				EncryptedProjectWizardPage.this.descriptionText
+						.setText(EncryptedProjectWizardPage.this.currentSecurityProvider
+								.getDescription());
+				boolean valid = validatePage();
+				setPageComplete(valid);
 
 			}
+
 		});
 
 		final Composite composite_1 = new Composite(sashForm, SWT.NONE);
@@ -134,36 +148,37 @@ public class EncryptedProjectWizardPage extends WizardPage {
 		descriptionLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		descriptionLabel.setText("Description");
 
-		this.descriptionText = new Text(composite_1, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
+		this.descriptionText = new Text(composite_1, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI
+				| SWT.BORDER);
 		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		this.descriptionText.setLayoutData(gd_descriptionText);
-		this.descriptionText.setEnabled(false);
-
-		final Label statusLabel = new Label(composite_1, SWT.NONE);
-		statusLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		statusLabel.setText("Status");
+		this.descriptionText.setEditable(false);
 
 		this.statusImage = new Label(composite_1, SWT.NONE);
-
+		GridData layoutData = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+		layoutData.heightHint = 16;
+		layoutData.widthHint = 16;
+		this.statusImage.setLayoutData(layoutData);
 		this.statusLabelState = new Label(composite_1, SWT.NONE);
+		this.statusLabelState.setLayoutData(new GridData());
 		this.statusLabelState.setText("Nothing selected.");
 
 		this.initializeProviderButton = new Button(composite_1, SWT.NONE);
 		this.initializeProviderButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				EncryptedProjectWizardPage.this.currentSecurityProvider.initProvider(getShell());
-				if (EncryptedProjectWizardPage.this.currentSecurityProvider.isInitialized()) {
-
-				}
-				validatePage();
+				checkProviderInitState();
+				boolean valid = validatePage();
+				setPageComplete(valid);
 			}
 		});
-		final GridData gd_initializeProviderButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false);
+		final GridData gd_initializeProviderButton = new GridData(SWT.LEFT, SWT.CENTER, false,
+				false, 2, 1);
 		this.initializeProviderButton.setLayoutData(gd_initializeProviderButton);
 		this.initializeProviderButton.setText("Initialize provider");
 		sashForm.setWeights(new int[] { 1, 1 });
 		setControl(container);
+		setPageComplete(false);
 	}
 
 	private boolean validatePage() {
@@ -189,13 +204,17 @@ public class EncryptedProjectWizardPage extends WizardPage {
 		}
 
 		ISelection selection = this.tableViewer.getSelection();
-		if (((IStructuredSelection) selection).getFirstElement() == null
-				|| !((AbstractSecurityProvider) ((IStructuredSelection) selection)
-						.getFirstElement()).isInitialized()) {
+		if (((IStructuredSelection) selection).getFirstElement() == null) {
+			setErrorMessage("Security provider required");
 			return false;
 
 		}
-
+		if (!((AbstractSecurityProvider) ((IStructuredSelection) selection).getFirstElement())
+				.isInitialized()) {
+			setErrorMessage("Selected security provider is not initialized.");
+			return false;
+		}
+		setErrorMessage(null);
 		return true;
 
 	}
@@ -216,6 +235,18 @@ public class EncryptedProjectWizardPage extends WizardPage {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private void checkProviderInitState() {
+		if (EncryptedProjectWizardPage.this.currentSecurityProvider.isInitialized()) {
+			EncryptedProjectWizardPage.this.statusLabelState.setText("Initialized");
+			EncryptedProjectWizardPage.this.statusImage.setImage(ResourceManager.getPluginImage(
+					EFSActivator.getDefault(), "icons/iconexperience/ok.png"));
+		} else {
+			EncryptedProjectWizardPage.this.statusLabelState.setText("Not initialized");
+			EncryptedProjectWizardPage.this.statusImage.setImage(ResourceManager.getPluginImage(
+					EFSActivator.getDefault(), "icons/iconexperience/sign_warning.png"));
+		}
 	}
 
 }

@@ -91,6 +91,7 @@ public class NewEncryptedProjectWizard extends Wizard implements INewWizard {
 
 	public NewEncryptedProjectWizard() {
 		setNeedsProgressMonitor(true);
+		setWindowTitle("New encrypted Information project");
 	}
 
 	/*

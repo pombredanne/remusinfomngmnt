@@ -306,8 +306,12 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		try {
 			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
 					getPrimaryModel().getType());
+			int offset = 0;
 			if (infoTypeByType.isBuildHtml()) {
 				addPage(this.page1 = new ViewPage(this, getPrimaryModel()));
+				setPageImage(0, ResourceManager.getPluginImage(UIPlugin.getDefault(),
+						"icons/iconexperience/16/eyeglasses.png"));
+				offset = 1;
 			}
 			List<IEditPage> editPageByType = UIExtensionManager.getInstance().getEditPageByType(
 					getPrimaryModel().getType());
@@ -318,11 +322,9 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				editPage.setEditingDomain(this.editingDomain);
 				editPage.setBindingContext(this.ctx);
 				addPage(editPage);
-				setPageImage(i + 1, editPageByType.get(i).getImage().createImage());
-				setPageText(i + 1, editPageByType.get(i).getLabel());
+				setPageImage(i + offset, editPageByType.get(i).getImage().createImage());
+				setPageText(i + offset, editPageByType.get(i).getLabel());
 			}
-			setPageImage(0, ResourceManager.getPluginImage(UIPlugin.getDefault(),
-					"icons/iconexperience/16/eyeglasses.png"));
 
 		} catch (final PartInitException e) {
 			e.printStackTrace();

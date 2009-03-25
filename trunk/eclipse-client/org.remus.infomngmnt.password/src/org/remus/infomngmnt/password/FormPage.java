@@ -63,7 +63,7 @@ public class FormPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		doCreateGeneraSectionl(body, toolkit);
+		doCreateGeneralSection(body, toolkit);
 		doCreateAdditionalSection(body, toolkit);
 		doCreateSemanticSection(body, toolkit);
 	}
@@ -106,7 +106,7 @@ public class FormPage extends AbstractInformationFormPage {
 		});
 	}
 
-	private void doCreateGeneraSectionl(final Composite body, final FormToolkit toolkit) {
+	private void doCreateGeneralSection(final Composite body, final FormToolkit toolkit) {
 		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -165,7 +165,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 			public void handleEvent(final Event event) {
 				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
-						getSite().getShell(), getModelObject());
+						getSite().getShell(), getModelObject(), toolkit);
 				dialog.open();
 			}
 		});

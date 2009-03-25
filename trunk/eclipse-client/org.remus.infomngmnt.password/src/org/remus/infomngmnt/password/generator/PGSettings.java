@@ -1,5 +1,9 @@
 package org.remus.infomngmnt.password.generator;
 
+/**
+ * @author Jan Hartwig <jhartwig@feb-radebeul.de>
+ * 
+ */
 public class PGSettings {
 	public static final String[] ITEMS_DEFAULT_PASSWORD_LENGTH = { "8", "10", "12", "16", "20",
 			"64", "128", "256" };

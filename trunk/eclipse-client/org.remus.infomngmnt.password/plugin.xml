@@ -4,6 +4,7 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
+            buildHtml="false"
             creationFactory="org.remus.infomngmnt.password.core.PlainTextCreationFactory"
             icon="icons/iconexperience/key.png"
             name="Password"

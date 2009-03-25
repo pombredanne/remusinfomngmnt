@@ -14,6 +14,8 @@ package org.remus.infomngmnt.password.generator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -36,8 +38,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.password.PasswordPlugin;
@@ -70,11 +72,14 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	private int currentPasswordLength;
 	private List<String> generatedPasswords;
 
+	private final AdapterFactoryEditingDomain editingDomain;
+
 	public PasswordGenerationDialog(final Shell parentShell, final InformationUnit password,
-			final FormToolkit toolkit) {
+			final AdapterFactoryEditingDomain editingDomain) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.password = password;
+		this.editingDomain = editingDomain;
 	}
 
 	@Override
@@ -89,6 +94,9 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	protected void okPressed() {
 		PasswordGenerationDialog.this.password
 				.setStringValue(PasswordGenerationDialog.this.selectedPassword);
+		new SetCommand(this.editingDomain, this.password,
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+				PasswordGenerationDialog.this.selectedPassword);
 		setPasswortProportiesFromPasswortGenerationDialogToActivator();
 		super.okPressed();
 	}
@@ -138,14 +146,11 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		final GridLayout gl_PasswordGroup = new GridLayout();
 		gl_PasswordGroup.numColumns = 1;
 		this.group_Passwords.setLayout(gl_PasswordGroup);
-		// this.group_Passwords.setEnabled(false);
 
 		this.tv_GeneratedPasswords = new TableViewer(this.group_Passwords, SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		this.tv_GeneratedPasswords.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.tv_GeneratedPasswords.setLabelProvider(new LabelProvider());
-		// this.tv_GeneratedPasswords.getTable().setLinesVisible(false);
-		// this.tv_GeneratedPasswords.
 		this.tv_GeneratedPasswords.getTable().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
 
@@ -220,7 +225,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.checkAdditional.setText("Additonal Characters");
 
 		this.tx_additionalCharacters = new Text(cs_UserDefined, SWT.NONE);
-		// this.tx_additionalCharacters.setEnabled(false);
 		this.tx_additionalCharacters.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
 
 		this.lb_PasswordLength = new Label(cs_UserDefined, SWT.NONE);
@@ -230,9 +234,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		GridData gd_PasswordLength = new GridData(SWT.FILL, SWT.TOP, true, true);
 		gd_PasswordLength.widthHint = 30;
 		this.sp_PasswordLength.setLayoutData(gd_PasswordLength);
-		// this.sp_PasswordLength.setSelection(8);
 		this.sp_PasswordLength.setMinimum(1);
-		// this.sp_PasswordLength.setEnabled(false);
 
 		setAdditionalCheckable(false);
 
@@ -271,8 +273,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 			}
 
 			public void widgetSelected(final SelectionEvent e) {
-				// PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_USER_SETTINGS,
-				// false);
 				setAdditionalCheckable(false);
 				PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(true);
 				PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(false);
@@ -445,10 +445,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.checkWide.setEnabled(b);
 		this.lb_PasswordLength.setEnabled(b);
 		this.sp_PasswordLength.setEnabled(b);
-
-		// this.checkNumber.setSelection(b);
-		// this.checkSmall.setSelection(b);
-		// this.checkWide.setSelection(b);
 	}
 
 	private void setPasswortProportiesFromActivatorToPasswordGenerationDialog() {
@@ -565,6 +561,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	}
 
 	private void setPasswortProportiesFromPasswortGenerationDialogToActivator() {
+
 		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_USER_SETTINGS, true);
 		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_RADIO_DEFAULT_PASSWORD,
 				PasswordGenerationDialog.this.radioDefaultPassword.getSelection());

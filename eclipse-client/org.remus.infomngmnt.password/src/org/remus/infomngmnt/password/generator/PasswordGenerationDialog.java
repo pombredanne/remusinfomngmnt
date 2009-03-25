@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2009 Jan Hartwig, FEB Radebeul
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *
+ * Contributors:
+ *     Jan Hartwig - initial API and implementation
+ *******************************************************************************/
 package org.remus.infomngmnt.password.generator;
 
 import java.util.ArrayList;
@@ -25,11 +36,16 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.password.PasswordPlugin;
 
+/**
+ * @author Jan Hartwig <jhartwig@feb-radebeul.de>
+ * 
+ */
 public class PasswordGenerationDialog extends TitleAreaDialog {
 
 	private final InformationUnit password;
@@ -48,15 +64,14 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	private Button radioDefaultPassword;
 	private Button radioUserDefinedPassword;
 	private Button bt_GeneratePasswords;
-	private Button bt_SetPassword;
 	private Button bt_SaveProporties;
-	private Button bt_ResetProporties;
 
 	private String selectedPassword;
 	private int currentPasswordLength;
 	private List<String> generatedPasswords;
 
-	public PasswordGenerationDialog(final Shell parentShell, final InformationUnit password) {
+	public PasswordGenerationDialog(final Shell parentShell, final InformationUnit password,
+			final FormToolkit toolkit) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.password = password;
@@ -204,9 +219,9 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.checkAdditional = new Button(cs_UserDefined, SWT.CHECK);
 		this.checkAdditional.setText("Additonal Characters");
 
-		this.tx_additionalCharacters = new Text(cs_UserDefined, SWT.BORDER);
+		this.tx_additionalCharacters = new Text(cs_UserDefined, SWT.NONE);
 		// this.tx_additionalCharacters.setEnabled(false);
-		this.tx_additionalCharacters.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+		this.tx_additionalCharacters.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
 
 		this.lb_PasswordLength = new Label(cs_UserDefined, SWT.NONE);
 		this.lb_PasswordLength.setText("Quantity Characters");
@@ -243,7 +258,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 			public void handleEvent(final Event event) {
 				boolean selection = ((Button) event.widget).getSelection();
-				// PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(selection);
+				PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(selection);
 			}
 		});
 		this.radioUserDefinedPassword.addSelectionListener(new SelectionListener() {

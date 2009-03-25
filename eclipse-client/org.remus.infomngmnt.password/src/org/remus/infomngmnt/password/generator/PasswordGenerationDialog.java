@@ -113,6 +113,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 		// Group Create Properties
 		setGroupCreateProportiesUI();
+		setCreateProportiesButtonListener();
 
 		// Group Generated Passwords
 		setGroupGeneratePasswordsUI();
@@ -124,8 +125,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		} else {
 			setPasswortProportiesFromActivatorToPasswordGenerationDialog();
 		}
-
-		setCreateProportiesButtonListener();
 
 		return this.area;
 	}
@@ -255,17 +254,7 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 			}
 
 		});
-		this.checkAdditional.addListener(SWT.Selection, new Listener() {
 
-			public void handleEvent(final Event event) {
-				if (PasswordGenerationDialog.this.checkAdditional.getSelection()) {
-					boolean selection = ((Button) event.widget).getSelection();
-					PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(selection);
-				} else {
-					PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(false);
-				}
-			}
-		});
 		this.radioUserDefinedPassword.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(final SelectionEvent e) {
 			}
@@ -273,21 +262,9 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 			public void widgetSelected(final SelectionEvent e) {
 				setAdditionalCheckable(true);
 				PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(false);
+				PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(false);
 			}
 		});
-		// this.radioUserDefinedPassword.addFocusListener(new FocusListener() {
-		//
-		// public void focusGained(final FocusEvent e) {
-		// PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_USER_SETTINGS,
-		// true);
-		// }
-		//
-		// public void focusLost(final FocusEvent e) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// });
 		this.radioDefaultPassword.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(final SelectionEvent e) {
 				// Auto-generated method stub
@@ -301,6 +278,114 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 				PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(false);
 				PasswordGenerationDialog.this.sp_PasswordLength.setEnabled(false);
 				PasswordGenerationDialog.this.lb_PasswordLength.setEnabled(false);
+				PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(true);
+			}
+		});
+		this.checkAdditional.addListener(SWT.Selection, new Listener() {
+			boolean selection;
+
+			public void handleEvent(final Event event) {
+				if (PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+					this.selection = ((Button) event.widget).getSelection();
+					PasswordGenerationDialog.this.tx_additionalCharacters
+							.setEnabled(this.selection);
+
+				} else {
+					PasswordGenerationDialog.this.tx_additionalCharacters.setEnabled(false);
+				}
+			}
+		});
+		this.checkAdditional.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(final SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void widgetSelected(final SelectionEvent e) {
+
+				if (PasswordGenerationDialog.this.checkNumber.getSelection()
+						|| PasswordGenerationDialog.this.checkSmall.getSelection()
+						|| PasswordGenerationDialog.this.checkWide.getSelection()
+						|| PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(true);
+
+				} else if (!PasswordGenerationDialog.this.checkNumber.getSelection()
+						&& !PasswordGenerationDialog.this.checkSmall.getSelection()
+						&& !PasswordGenerationDialog.this.checkWide.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(false);
+				}
+			}
+		});
+		this.checkWide.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(final SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void widgetSelected(final SelectionEvent e) {
+				if (PasswordGenerationDialog.this.checkWide.getSelection()
+						|| PasswordGenerationDialog.this.checkSmall.getSelection()
+						|| PasswordGenerationDialog.this.checkNumber.getSelection()
+						|| PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(true);
+
+				} else if (!PasswordGenerationDialog.this.checkSmall.getSelection()
+						&& !PasswordGenerationDialog.this.checkNumber.getSelection()
+						&& !PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(false);
+				}
+			}
+		});
+		this.checkNumber.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(final SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void widgetSelected(final SelectionEvent e) {
+				if (PasswordGenerationDialog.this.checkNumber.getSelection()
+						|| PasswordGenerationDialog.this.checkSmall.getSelection()
+						|| PasswordGenerationDialog.this.checkWide.getSelection()
+						|| PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(true);
+
+				} else if (!PasswordGenerationDialog.this.checkSmall.getSelection()
+						&& !PasswordGenerationDialog.this.checkWide.getSelection()
+						&& !PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(false);
+				}
+			}
+		});
+		this.checkSmall.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(final SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void widgetSelected(final SelectionEvent e) {
+				if (PasswordGenerationDialog.this.checkSmall.getSelection()
+						|| PasswordGenerationDialog.this.checkNumber.getSelection()
+						|| PasswordGenerationDialog.this.checkWide.getSelection()
+						|| PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(true);
+
+				} else if (!PasswordGenerationDialog.this.checkNumber.getSelection()
+						&& !PasswordGenerationDialog.this.checkWide.getSelection()
+						&& !PasswordGenerationDialog.this.checkAdditional.getSelection()) {
+
+					PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(false);
+				}
 			}
 		});
 	}

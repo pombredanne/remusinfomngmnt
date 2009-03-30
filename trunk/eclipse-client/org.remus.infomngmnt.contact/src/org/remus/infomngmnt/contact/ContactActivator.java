@@ -8,6 +8,9 @@ import org.osgi.framework.BundleContext;
  */
 public class ContactActivator extends AbstractUIPlugin {
 
+	public static String PASSWORD_INFO_ID = "CONTACT";
+	
+	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact";
 

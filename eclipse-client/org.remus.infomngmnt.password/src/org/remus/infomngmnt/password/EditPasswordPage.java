@@ -42,9 +42,9 @@ import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
  */
-public class FormPage extends AbstractInformationFormPage {
+public class EditPasswordPage extends AbstractInformationFormPage {
 
-	public FormPage() {
+	public EditPasswordPage() {
 		// Asuto-generated constructor stub
 	}
 
@@ -101,8 +101,8 @@ public class FormPage extends AbstractInformationFormPage {
 		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
-				if (FormPage.this.textUrl.getText().contentEquals("http://")) {
-					Program.launch(FormPage.this.textUrl.getText());
+				if (EditPasswordPage.this.textUrl.getText().contentEquals("http://")) {
+					Program.launch(EditPasswordPage.this.textUrl.getText());
 				}
 			}
 		});
@@ -167,7 +167,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 			public void handleEvent(final Event event) {
 				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
-						getSite().getShell(), getModelObject(), FormPage.this.editingDomain);
+						getSite().getShell(), getModelObject(), EditPasswordPage.this.editingDomain);
 				dialog.open();
 			}
 		});
@@ -176,8 +176,8 @@ public class FormPage extends AbstractInformationFormPage {
 		final Button pageButton = toolkit.createButton(composite, "switch", SWT.NONE);
 		pageButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				layout.topControl = FormPage.this.textPassword.isVisible() ? FormPage.this.textPasswordDecrypted
-						: FormPage.this.textPassword;
+				layout.topControl = EditPasswordPage.this.textPassword.isVisible() ? EditPasswordPage.this.textPasswordDecrypted
+						: EditPasswordPage.this.textPassword;
 				compositePassword.layout();
 			}
 		});

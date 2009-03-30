@@ -6,7 +6,7 @@
          <meta.schema plugin="org.remus.infomngmnt.ui" id="collapsibleButtonBar" name="collapsibleButtonBar"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point is used to create new bar entries in the main view on the left side. 
       </documentation>
    </annotation>
 
@@ -131,7 +131,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         1.0
       </documentation>
    </annotation>
 
@@ -140,7 +140,19 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+            &lt;extension
+         point=&quot;org.remus.infomngmnt.ui.collapsibleButtonBar&quot;&gt;
+      &lt;collapsibleButton
+            bigImage=&quot;icons/iconexperience/24/workplace.png&quot;
+            class=&quot;org.remus.infomngmnt.ui.collapsiblebuttons.NavigationSection&quot;
+            contextId=&quot;org.remus.infomngmnt.ui.navigationContext&quot;
+            icon=&quot;icons/iconexperience/16/workplace.png&quot;
+            id=&quot;org.remus.infomngmnt.ui.navigation&quot;
+            name=&quot;Navigation&quot;
+            order=&quot;10&quot;
+            tooltip=&quot;Navigation&quot;&gt;
+      &lt;/collapsibleButton&gt;
+   &lt;/extension&gt;
       </documentation>
    </annotation>
 

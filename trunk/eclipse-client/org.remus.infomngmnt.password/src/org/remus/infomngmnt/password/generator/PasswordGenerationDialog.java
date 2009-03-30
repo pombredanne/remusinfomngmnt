@@ -97,7 +97,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		new SetCommand(this.editingDomain, this.password,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
 				PasswordGenerationDialog.this.selectedPassword);
-		setPasswortProportiesFromPasswortGenerationDialogToActivator();
 		super.okPressed();
 	}
 
@@ -105,12 +104,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	public boolean close() {
 		setPasswortProportiesFromPasswortGenerationDialogToActivator();
 		return super.close();
-	}
-
-	@Override
-	protected void cancelPressed() {
-		setPasswortProportiesFromPasswortGenerationDialogToActivator();
-		super.cancelPressed();
 	}
 
 	@Override
@@ -465,7 +458,14 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 			// TODO: log4j
 			e.printStackTrace();
 		}
-
+		try {
+			PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(PasswordPlugin
+					.getDefault().getDialogSettings().getBoolean(
+							PGSettings.AC_COMBO_DEFAULT_PASSWORD_ENABLED));
+		} catch (Exception e) {
+			// TODO: log4j
+			e.printStackTrace();
+		}
 		try {
 			PasswordGenerationDialog.this.radioUserDefinedPassword.setSelection(PasswordPlugin
 					.getDefault().getDialogSettings().getBoolean(
@@ -546,6 +546,8 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		PasswordPlugin.getDefault().getDialogSettings().put(
 				PGSettings.AC_COMBO_DEFAULT_PASSWORD_INDEX, 3);
 		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_COMBO_DEFAULT_PASSWORD_ENABLED, true);
+		PasswordPlugin.getDefault().getDialogSettings().put(
 				PGSettings.AC_RADIO_USER_DEFINED_PASSWORD, false);
 		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_CURRENT_PASSWORD_LENGTH,
 				8);
@@ -586,6 +588,9 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		PasswordPlugin.getDefault().getDialogSettings().put(
 				PGSettings.AC_COMBO_DEFAULT_PASSWORD_INDEX,
 				this.comboDefaultPasswordLength.getSelectionIndex());
+		PasswordPlugin.getDefault().getDialogSettings().put(
+				PGSettings.AC_COMBO_DEFAULT_PASSWORD_ENABLED,
+				this.comboDefaultPasswordLength.getEnabled());
 		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_SP_PASSWORD_LENGTH,
 				this.sp_PasswordLength.getSelection());
 	}

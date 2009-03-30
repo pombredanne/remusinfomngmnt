@@ -32,6 +32,7 @@ public class PGSettings {
 	public static final String AC_CHECK_ADDITIONAL = "ckadd";
 	public static final String AC_TX_ADDITIONAL_CHARACTERS = "txaddchar";
 	public static final String AC_COMBO_DEFAULT_PASSWORD_INDEX = "cbdefpwdi";
+	public static final String AC_COMBO_DEFAULT_PASSWORD_ENABLED = "cbdefpwden";
 	public static final String AC_SP_PASSWORD_LENGTH = "sppwdlen";
 	public static final String AC_TX_ADDITIONAL_CHARACTERS_ENABLED = "txaddcharen";
 	public static final String AC_USER_SETTINGS = "defsettings";

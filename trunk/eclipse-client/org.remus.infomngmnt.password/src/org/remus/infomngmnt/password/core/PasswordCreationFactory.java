@@ -20,9 +20,9 @@ import org.remus.infomngmnt.password.PasswordPlugin;
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
  */
-public class PlainTextCreationFactory extends AbstractCreationFactory {
+public class PasswordCreationFactory extends AbstractCreationFactory {
 
-	public PlainTextCreationFactory() {
+	public PasswordCreationFactory() {
 		// TODO Auto-generated constructor stub
 	}
 

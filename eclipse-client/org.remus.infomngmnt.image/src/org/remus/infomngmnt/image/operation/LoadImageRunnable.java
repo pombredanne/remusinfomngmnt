@@ -62,6 +62,8 @@ public class LoadImageRunnable extends CancelableRunnable {
 	private InformationUnit widhtImageNode;
 	private InformationUnit heightImageNode;
 	private EditingDomain domain;
+	private boolean executeOnEditingDomain = true;
+
 	public void setDomain(final EditingDomain domain) {
 		this.domain = domain;
 	}
@@ -82,19 +84,19 @@ public class LoadImageRunnable extends CancelableRunnable {
 		monitor.beginTask("Checking filename...", IProgressMonitor.UNKNOWN);
 		this.file = new File(this.imagePath);
 		if (this.file.exists() && this.file.isFile()) {
-			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file.length());
+			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file
+					.length());
 			try {
 				if (this.domain == null) {
 					this.domain = EditingUtil.getInstance().createNewEditingDomain();
 				}
 
 				final CompoundCommand cc = new CompoundCommand();
-				cc.append(new SetCommand(
-						this.domain,
-						this.rawImageDataNode,
-						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE,
-						FileUtil.getBytesFromFile(this.file, monitor)));
-				boolean isJpgeg = Pattern.compile("^.*\\.jpe?g$", Pattern.CASE_INSENSITIVE).matcher(this.imagePath).matches();
+				cc.append(new SetCommand(this.domain, this.rawImageDataNode,
+						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, FileUtil
+								.getBytesFromFile(this.file, monitor)));
+				boolean isJpgeg = Pattern.compile("^.*\\.jpe?g$", Pattern.CASE_INSENSITIVE)
+						.matcher(this.imagePath).matches();
 				Metadata metadata = null;
 				List<InformationUnit> exifData = new ArrayList<InformationUnit>();
 				if (isJpgeg) {
@@ -105,7 +107,8 @@ public class LoadImageRunnable extends CancelableRunnable {
 						while (tagIterator.hasNext()) {
 							Tag object = (Tag) tagIterator.next();
 							try {
-								InformationUnit createInformationUnit = InfomngmntFactory.eINSTANCE.createInformationUnit();
+								InformationUnit createInformationUnit = InfomngmntFactory.eINSTANCE
+										.createInformationUnit();
 								createInformationUnit.setType(object.getTagName());
 								createInformationUnit.setStringValue(object.getDescription());
 								exifData.add(createInformationUnit);
@@ -119,36 +122,29 @@ public class LoadImageRunnable extends CancelableRunnable {
 						e.printStackTrace();
 					}
 				}
-				InformationUnit childByType = InformationUtil.getChildByType(this.infoUnit, ImagePlugin.NODE_NAME_EXIF);
+				InformationUnit childByType = InformationUtil.getChildByType(this.infoUnit,
+						ImagePlugin.NODE_NAME_EXIF);
 				if (isJpgeg && metadata != null) {
 					if (childByType != null) {
-						cc.append(new RemoveCommand(
-								this.domain,
-								childByType,
+						cc.append(new RemoveCommand(this.domain, childByType,
 								InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
 								childByType.getChildValues()));
 					} else {
 						if (exifData.size() > 0) {
 							childByType = InfomngmntFactory.eINSTANCE.createInformationUnit();
 							childByType.setType(ImagePlugin.NODE_NAME_EXIF);
-							cc.append(new AddCommand(
-									this.domain,
-									this.infoUnit.getChildValues(),
+							cc.append(new AddCommand(this.domain, this.infoUnit.getChildValues(),
 									Collections.singleton(childByType)));
 						}
 					}
 					if (exifData.size() > 0) {
-						cc.append(new AddCommand(
-								this.domain,
-								childByType.getChildValues(),
+						cc.append(new AddCommand(this.domain, childByType.getChildValues(),
 								exifData));
 
 					}
 				} else {
 					if (childByType != null) {
-						cc.append(new RemoveCommand(
-								this.domain,
-								this.infoUnit,
+						cc.append(new RemoveCommand(this.domain, this.infoUnit,
 								InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
 								Collections.singleton(childByType)));
 
@@ -158,31 +154,30 @@ public class LoadImageRunnable extends CancelableRunnable {
 				InputStream is = new FileInputStream(this.file);
 				// Reading src & height of the image:
 				ImageData imageData = new ImageData(is);
-				cc.append(new SetCommand(
-						this.domain,
-						this.widhtImageNode,
-						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
-						Long.valueOf(imageData.width)));
+				cc.append(new SetCommand(this.domain, this.widhtImageNode,
+						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Long
+								.valueOf(imageData.width)));
 
-				cc.append(new SetCommand(
-						this.domain,
-						this.heightImageNode,
-						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
-						Long.valueOf(imageData.height)));
+				cc.append(new SetCommand(this.domain, this.heightImageNode,
+						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Long
+								.valueOf(imageData.height)));
 
-				cc.append(new SetCommand(
-						this.domain,
-						InformationUtil.getChildByType(this.infoUnit, ImagePlugin.ORIGINAL_FILEPATH),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
-						this.imagePath));
+				cc.append(new SetCommand(this.domain, InformationUtil.getChildByType(this.infoUnit,
+						ImagePlugin.ORIGINAL_FILEPATH),
+						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, this.imagePath));
 				//				
 				cc.setLabel("Set new image");
 				UIUtil.getDisplay().asyncExec(new Runnable() {
 					public void run() {
-						LoadImageRunnable.this.domain.getCommandStack().execute(cc);
+						if (LoadImageRunnable.this.executeOnEditingDomain) {
+							LoadImageRunnable.this.domain.getCommandStack().execute(cc);
+						} else {
+							cc.execute();
+						}
 					}
 				});
 				is.close();
+				is = null;
 				return Status.OK_STATUS;
 			} catch (IOException e) {
 				return StatusCreator.newStatus("File not exisits or is not accessible");
@@ -191,21 +186,25 @@ public class LoadImageRunnable extends CancelableRunnable {
 		return StatusCreator.newStatus("File not exisits or is not accessible");
 	}
 
-
-
-
-
 	public void setImageNode(final InformationUnit infoUnit) {
 		this.infoUnit = infoUnit;
-		this.rawImageDataNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_RAWDATA);
+		this.rawImageDataNode = InformationUtil.getChildByType(infoUnit,
+				ImagePlugin.NODE_NAME_RAWDATA);
 		this.widhtImageNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_WIDTH);
-		this.heightImageNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_HEIGHT);
+		this.heightImageNode = InformationUtil.getChildByType(infoUnit,
+				ImagePlugin.NODE_NAME_HEIGHT);
 	}
-
 
 	public void setFile(final File file) {
 		this.file = file;
 	}
 
+	/**
+	 * @param executeOnEditingDomain
+	 *            the executeOnEditingDomain to set
+	 */
+	public void setExecuteOnEditingDomain(final boolean executeOnEditingDomain) {
+		this.executeOnEditingDomain = executeOnEditingDomain;
+	}
 
 }

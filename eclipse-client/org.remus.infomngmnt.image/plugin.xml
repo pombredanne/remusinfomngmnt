@@ -71,5 +71,14 @@
             name="Create Screenshot">
       </trayAction>
    </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            class="org.remus.infomngmnt.image.importt.ImportImageFromDiskWizard"
+            icon="icons/iconexperience/photo_landscape.png"
+            id="org.remus.infomngmnt.image.imageFromDirectory"
+            name="Images from Filesystem">
+      </wizard>
+   </extension>
 
 </plugin>

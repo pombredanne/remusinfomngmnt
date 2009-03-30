@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="false"
-            creationFactory="org.remus.infomngmnt.password.core.PlainTextCreationFactory"
+            creationFactory="org.remus.infomngmnt.password.core.PasswordCreationFactory"
             icon="icons/iconexperience/key.png"
             name="Password"
             presentation="org.remus.infomngmnt.password.AbstractInformationRepresentation"

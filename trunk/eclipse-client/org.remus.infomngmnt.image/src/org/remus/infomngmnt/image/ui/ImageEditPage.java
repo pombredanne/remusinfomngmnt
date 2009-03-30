@@ -242,9 +242,9 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		});
 
 		toolkit.createLabel(composite, "px", SWT.NONE);
-		initDatabinding();
 		setCurrentRatio();
 		doCreateSemanticSection(body, toolkit);
+		bindValuesToUi();
 
 	}
 
@@ -256,7 +256,9 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		this.ratio = (float) width / (float) height;
 	}
 
-	private void initDatabinding() {
+	@Override
+	protected void bindValuesToUi() {
+		super.bindValuesToUi();
 		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables
 				.observeText(this.text, SWT.Modify));
 		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(),

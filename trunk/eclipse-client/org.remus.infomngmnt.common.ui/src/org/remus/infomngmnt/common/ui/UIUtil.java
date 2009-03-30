@@ -22,6 +22,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -36,26 +37,26 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 public class UIUtil {
 
 	public static WorkbenchWindowAdvisor fgPrimaryApplicationWorkbenchWindowAdvisor;
-	
-	private static ArrayContentProvider arcontentprovider = new ArrayContentProvider(); 
 
+	private static ArrayContentProvider arcontentprovider = new ArrayContentProvider();
 
 	/**
-	 * Attempts to select and reveal the specified resource in all
-	 * parts within the supplied workbench window's active page.
+	 * Attempts to select and reveal the specified resource in all parts within
+	 * the supplied workbench window's active page.
 	 * <p>
-	 * Checks all parts in the active page to see if they implement <code>ISetSelectionTarget</code>,
-	 * either directly or as an adapter. If so, tells the part to select and reveal the
-	 * specified resource.
+	 * Checks all parts in the active page to see if they implement
+	 * <code>ISetSelectionTarget</code>, either directly or as an adapter. If
+	 * so, tells the part to select and reveal the specified resource.
 	 * </p>
-	 *
-	 * @param object the resource to be selected and revealed
-	 * @param window the workbench window to select and reveal the resource
+	 * 
+	 * @param object
+	 *            the resource to be selected and revealed
+	 * @param window
+	 *            the workbench window to select and reveal the resource
 	 * 
 	 * @see ISetSelectionTarget
 	 */
-	public static void selectAndReveal(final Object object,
-			final IWorkbenchWindow window) {
+	public static void selectAndReveal(final Object object, final IWorkbenchWindow window) {
 		// validate the input
 		if (window == null || object == null) {
 			return;
@@ -91,8 +92,7 @@ public class UIUtil {
 			if (part instanceof ISetSelectionTarget) {
 				target = (ISetSelectionTarget) part;
 			} else {
-				target = (ISetSelectionTarget) part
-				.getAdapter(ISetSelectionTarget.class);
+				target = (ISetSelectionTarget) part.getAdapter(ISetSelectionTarget.class);
 			}
 
 			if (target != null) {
@@ -110,9 +110,9 @@ public class UIUtil {
 	/**
 	 * Attempts to find the primary <code>IWorkbenchWindow</code> from the
 	 * PlatformUI facade. Otherwise, returns <code>NULL</code> if none.
-	 *
+	 * 
 	 * @return the primary <code>IWorkbenchWindow</code> from the PlatformUI
-	 * facade or <code>NULL</code> if none.
+	 *         facade or <code>NULL</code> if none.
 	 */
 	public static IWorkbenchWindow getPrimaryWindow() {
 
@@ -125,7 +125,8 @@ public class UIUtil {
 		return null;
 	}
 
-	public static IDialogSettings getDialogSettings(final String sectionName, final IDialogSettings settings) {
+	public static IDialogSettings getDialogSettings(final String sectionName,
+			final IDialogSettings settings) {
 		IDialogSettings section = settings.getSection(sectionName);
 		if (section == null) {
 			settings.addNewSection(sectionName);
@@ -133,11 +134,10 @@ public class UIUtil {
 		}
 		return section;
 	}
-	
+
 	public static ArrayContentProvider getArrayContentProviderInstance() {
 		return arcontentprovider;
 	}
-
 
 	public static Display getDisplay() {
 		if (getPrimaryWindow() != null && getPrimaryWindow().getShell().getDisplay() != null) {
@@ -148,8 +148,9 @@ public class UIUtil {
 		return Display.getDefault();
 
 	}
-	
-	public static boolean isSelectionInstanceOf(final IStructuredSelection selection, final Class<?> clazz) {
+
+	public static boolean isSelectionInstanceOf(final IStructuredSelection selection,
+			final Class<?> clazz) {
 		List list = selection.toList();
 		for (Object object : list) {
 			if (!clazz.isAssignableFrom(object.getClass())) {
@@ -157,5 +158,9 @@ public class UIUtil {
 			}
 		}
 		return true;
+	}
+
+	public static void setTextChecked(final String value, final Text text) {
+		text.setText(value == null ? "" : value);
 	}
 }

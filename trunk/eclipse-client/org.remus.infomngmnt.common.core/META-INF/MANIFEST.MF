@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.codec;bundle-version="1.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.remus.infomngmnt.common.core.indexing,
+Export-Package: org.remus.infomngmnt.common.core.beans,
+ org.remus.infomngmnt.common.core.indexing,
  org.remus.infomngmnt.common.core.md5,
  org.remus.infomngmnt.common.core.streams,
  org.remus.infomngmnt.common.core.util

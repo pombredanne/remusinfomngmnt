@@ -15,7 +15,7 @@
    <extension
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
-            editpage="org.remus.infomngmnt.password.FormPage"
+            editpage="org.remus.infomngmnt.password.EditPasswordPage"
             icon="icons/iconexperience/key.png"
             id="org.remus.infomngmnt.password.editPage1"
             label="Edit Password"

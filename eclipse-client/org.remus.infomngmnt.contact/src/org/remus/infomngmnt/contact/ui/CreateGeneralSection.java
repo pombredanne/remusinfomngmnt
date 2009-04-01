@@ -37,7 +37,7 @@ public class CreateGeneralSection {
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		section_1.setText("General");
 		
-		final Composite compositeGeneral = toolkit.createComposite(section_1, SWT.NONE);
+		final Composite compositeGeneral = toolkit.createComposite(section_1, SWT.BORDER);
 		final GridLayout gridLayoutAdditional = new GridLayout();
 		gridLayoutAdditional.numColumns = 2;
 		compositeGeneral.setLayout(gridLayoutAdditional);
@@ -48,6 +48,25 @@ public class CreateGeneralSection {
 		createGroupPhoneNumbers(compositeGeneral, toolkit);
 		createGroupAddress(compositeGeneral, toolkit);
 		createGroupInternet(compositeGeneral, toolkit);
+		new Label(compositeGeneral, SWT.NONE);
+		createGroupButtons(compositeGeneral, toolkit);
+	}
+
+	private void createGroupButtons(Composite compositeGeneral,
+			FormToolkit toolkit) {
+		final Composite composite_CreateDetailButtons = toolkit.createComposite(compositeGeneral, SWT.NONE);
+		final GridLayout gl_CreateDetailButtons = new GridLayout();
+		gl_CreateDetailButtons.numColumns = 5;
+		composite_CreateDetailButtons.setLayoutData( new GridData(SWT.FILL, SWT.END, true, false));
+		composite_CreateDetailButtons.setLayout(gl_CreateDetailButtons);
+		
+		final Label lb = new Label(composite_CreateDetailButtons, SWT.NONE);
+		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		gd_text.horizontalSpan = 2;
+		lb.setLayoutData(gd_text);
+		final Button bt_Ok = toolkit.createButton(composite_CreateDetailButtons, "OK", SWT.NONE);
+		final Button bt_Apply = toolkit.createButton(composite_CreateDetailButtons, "Apply", SWT.NONE);
+		final Button bt_Cancel = toolkit.createButton(composite_CreateDetailButtons, "Cancel", SWT.NONE);
 	}
 private void createGroupPerson(Composite compositeGeneral, FormToolkit toolkit) {
 		

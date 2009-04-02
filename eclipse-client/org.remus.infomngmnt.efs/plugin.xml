@@ -25,5 +25,20 @@
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="false"
+            class="org.remus.infomngmnt.efs.ui.EncryptedProjectDecorator"
+            id="org.remus.infomngmnt.efs.encryptedProject"
+            label="Encrypted Project Label Decorator"
+            lightweight="true"
+            location="BOTTOM_LEFT"
+            state="true">
+         <description>
+            Decorates all encrypted projects with a small icon
+         </description>
+      </decorator>
+   </extension>
 
 </plugin>

@@ -28,11 +28,11 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
-public class CreateDetailsSection {
+public class DetailsSectionUI {
 
-	public CreateDetailsSection(Composite body, FormToolkit toolkit) {
+	public DetailsSectionUI(Composite body, FormToolkit toolkit) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+				| ExpandableComposite.TWISTIE);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		section_1.setText("Details");
 		

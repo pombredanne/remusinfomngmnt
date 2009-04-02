@@ -29,9 +29,9 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
-public class CreateGeneralSection {
+public class GeneralSectionUI {
 
-	public CreateGeneralSection(Composite body, FormToolkit toolkit) {
+	public GeneralSectionUI(Composite body, FormToolkit toolkit) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -44,8 +44,8 @@ public class CreateGeneralSection {
 		toolkit.paintBordersFor(compositeGeneral);
 		section_1.setClient(compositeGeneral);
 
-		createGroupPerson(compositeGeneral, toolkit);
-		createGroupPhoneNumbers(compositeGeneral, toolkit);
+		createGroupPerson(compositeGeneral, toolkit);	
+		createGroupPhoneNumbers(compositeGeneral, toolkit);		
 		createGroupAddress(compositeGeneral, toolkit);
 		createGroupInternet(compositeGeneral, toolkit);
 		new Label(compositeGeneral, SWT.NONE);

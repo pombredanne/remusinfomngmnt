@@ -36,11 +36,11 @@ public class EditContactPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		new CreateGeneralSection(body, toolkit);
-		new CreateDetailsSection(body, toolkit);
-		new CreateEncryptionSection(body, toolkit);
-		new CreateMiscellaneousSection(body, toolkit);
-		new CreateUserDefinedSection(body, toolkit);
+		new GeneralSectionUI(body, toolkit);
+		new DetailsSectionUI(body, toolkit);
+		new EncryptionSectionUI(body, toolkit);
+		new MiscellaneousSectionUI(body, toolkit);
+		new UserDefinedSectionUI(body, toolkit, getSite().getShell(), getModelObject(), EditContactPage.this.editingDomain);
 		doCreateSemanticSection(body, toolkit);
 	}
 }

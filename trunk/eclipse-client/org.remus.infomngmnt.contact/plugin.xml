@@ -16,7 +16,7 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.contact.ui.EditContactPage"
-            icon="icons/iconexperience/contact.png"
+            icon="icons/iconexperience/contact_edit.png"
             id="org.remus.infomngmnt.contact.editPage1"
             label="Edit Contact"
             type="CONTACT">

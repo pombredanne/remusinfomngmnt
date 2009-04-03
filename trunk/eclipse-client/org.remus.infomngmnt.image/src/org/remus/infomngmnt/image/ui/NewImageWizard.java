@@ -40,11 +40,15 @@ public class NewImageWizard extends NewInfoObjectWizard {
 	 */
 	public NewImageWizard() {
 		setNeedsProgressMonitor(true);
-		
+		setWindowTitle("New photo/graphic");
+
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
+	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
@@ -54,15 +58,16 @@ public class NewImageWizard extends NewInfoObjectWizard {
 		} else if (firstElement instanceof InformationUnitListItem) {
 			this.page1 = new GeneralImagePage((InformationUnitListItem) firstElement);
 		} else {
-			this.page1 = new GeneralImagePage((Category)null);
+			this.page1 = new GeneralImagePage((Category) null);
 		}
 
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard#getInfoTypeId()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard#getInfoTypeId()
 	 */
 	@Override
 	protected String getInfoTypeId() {
@@ -71,9 +76,10 @@ public class NewImageWizard extends NewInfoObjectWizard {
 
 	public void setDefaults(final Object value, final RuleValue ruleValue) {
 		if (value instanceof ImageData) {
-			InformationUnit rawDataNode = InformationUtil.getChildByType(this.newElement, ImagePlugin.NODE_NAME_RAWDATA);
+			InformationUnit rawDataNode = InformationUtil.getChildByType(this.newElement,
+					ImagePlugin.NODE_NAME_RAWDATA);
 			ImageLoader loader = new ImageLoader();
-			loader.data = new ImageData[] {(ImageData) value};
+			loader.data = new ImageData[] { (ImageData) value };
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			loader.save(baos, SWT.IMAGE_BMP);
 			rawDataNode.setBinaryValue(baos.toByteArray());
@@ -83,9 +89,11 @@ public class NewImageWizard extends NewInfoObjectWizard {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			InformationUnit width = InformationUtil.getChildByType(this.newElement, ImagePlugin.NODE_NAME_WIDTH);
+			InformationUnit width = InformationUtil.getChildByType(this.newElement,
+					ImagePlugin.NODE_NAME_WIDTH);
 			width.setLongValue(((ImageData) value).width);
-			InformationUnit height = InformationUtil.getChildByType(this.newElement, ImagePlugin.NODE_NAME_HEIGHT);
+			InformationUnit height = InformationUtil.getChildByType(this.newElement,
+					ImagePlugin.NODE_NAME_HEIGHT);
 			height.setLongValue(((ImageData) value).height);
 			int type = ((ImageData) value).type;
 			String extension = "bmp";
@@ -102,21 +110,22 @@ public class NewImageWizard extends NewInfoObjectWizard {
 			default:
 				break;
 			}
-			InformationUnit origFilePath = InformationUtil.getChildByType(this.newElement, ImagePlugin.ORIGINAL_FILEPATH);
+			InformationUnit origFilePath = InformationUtil.getChildByType(this.newElement,
+					ImagePlugin.ORIGINAL_FILEPATH);
 			origFilePath.setStringValue("clipboard." + extension);
-			
+
 		}
-		InformationUnit predefinedCategory = InformationUtil.getChildByType(
-				ruleValue, AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
-		InformationUnit predefinedName = InformationUtil.getChildByType(
-				ruleValue, AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+		InformationUnit predefinedCategory = InformationUtil.getChildByType(ruleValue,
+				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+		InformationUnit predefinedName = InformationUtil.getChildByType(ruleValue,
+				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
 		if (predefinedCategory != null) {
 			this.page1.setCategoryString(predefinedCategory.getStringValue());
 		}
 		if (predefinedName != null) {
 			this.newElement.setLabel(predefinedName.getStringValue());
 		}
-		
+
 	}
 
 }

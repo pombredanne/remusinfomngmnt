@@ -37,6 +37,8 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
 
@@ -49,14 +51,15 @@ public class GeneralLinkPage extends GeneralPage {
 	private Button obTainTextFromHtml;
 	private String tmpText;
 	private final IRunnableWithProgress obtainJob = new IRunnableWithProgress() {
-		public void run(final IProgressMonitor monitor)
-		throws InvocationTargetException, InterruptedException {
+		public void run(final IProgressMonitor monitor) throws InvocationTargetException,
+				InterruptedException {
 			monitor.beginTask("Obtaining title", IProgressMonitor.UNKNOWN);
 			Thread runThread = new Thread() {
 				@Override
 				public void run() {
 
-					final String newTitle = WebshotUtil.obtainHtmlTitle(GeneralLinkPage.this.tmpText);
+					final String newTitle = WebshotUtil
+							.obtainHtmlTitle(GeneralLinkPage.this.tmpText);
 					getShell().getDisplay().asyncExec(new Runnable() {
 						public void run() {
 							GeneralLinkPage.this.nameText.setText(newTitle);
@@ -73,18 +76,24 @@ public class GeneralLinkPage extends GeneralPage {
 			}
 		}
 	};
-	public GeneralLinkPage(InformationUnitListItem selection) {
+
+	public GeneralLinkPage(final InformationUnitListItem selection) {
 		super(selection);
 	}
 
-	public GeneralLinkPage(Category category) {
+	public GeneralLinkPage(final Category category) {
 		super(category);
 	}
 
 	@Override
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
+
+		setTitle("New Link");
+		setMessage("This wizard enables you to create a new link from a url.");
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(LinkActivator.getDefault(),
+				"icons/iconexperience/link_wizard_title.png"));
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
@@ -96,8 +105,7 @@ public class GeneralLinkPage extends GeneralPage {
 		this.obTainTextFromHtml.setText("Obtain title");
 		this.obTainTextFromHtml.addListener(SWT.Selection, new Listener() {
 
-
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				GeneralLinkPage.this.tmpText = GeneralLinkPage.this.urlText.getText();
 				try {
 					getContainer().run(true, true, GeneralLinkPage.this.obtainJob);
@@ -123,7 +131,7 @@ public class GeneralLinkPage extends GeneralPage {
 		doCreatePropertiesGroup(container);
 		initDatabinding();
 		presetValues();
-		setPageComplete(false);
+		initValidation();
 		setControl(container);
 	}
 
@@ -131,17 +139,17 @@ public class GeneralLinkPage extends GeneralPage {
 	protected void initDatabinding() {
 		super.initDatabinding();
 		ISWTObservableValue swtUrl = SWTObservables.observeText(this.urlText, SWT.Modify);
-		IObservableValue emfUrl = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		IObservableValue emfUrl = EMFObservables.observeValue(this.unit,
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		emfUrl.addValueChangeListener(new IValueChangeListener() {
 
-			public void handleValueChange(ValueChangeEvent event) {
+			public void handleValueChange(final ValueChangeEvent event) {
 				Object value = ((EObjectObservableValue) event.getSource()).getValue();
 				GeneralLinkPage.this.obTainTextFromHtml.setEnabled(value.toString().length() > 0);
 			}
 
 		});
 		this.ctx.bindValue(swtUrl, emfUrl, null, null);
-
 
 	}
 

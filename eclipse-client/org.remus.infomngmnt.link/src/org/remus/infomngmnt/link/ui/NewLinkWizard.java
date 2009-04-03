@@ -31,6 +31,10 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 
 	private LinkWizardPage page2;
 
+	public NewLinkWizard() {
+		setNeedsProgressMonitor(true);
+		setWindowTitle("New link");
+	}
 
 	@Override
 	public void addPages() {
@@ -38,10 +42,11 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 		addPage(this.page2 = new LinkWizardPage(this.newElement));
 	}
 
-	
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
+	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
@@ -51,21 +56,19 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 		} else if (firstElement instanceof InformationUnitListItem) {
 			this.page1 = new GeneralLinkPage((InformationUnitListItem) firstElement);
 		} else {
-			this.page1 = new GeneralLinkPage((Category)null);
+			this.page1 = new GeneralLinkPage((Category) null);
 		}
 
 	}
 
 	public void setDefaults(final Object value, final RuleValue ruleValue) {
 		this.newElement.setStringValue(String.valueOf(value));
-		InformationUnit childByType = InformationUtil.getChildByType(
-				ruleValue, AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+		InformationUnit childByType = InformationUtil.getChildByType(ruleValue,
+				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
 		if (childByType != null) {
 			this.page1.setCategoryString(childByType.getStringValue());
 		}
 	}
-
-
 
 	@Override
 	public boolean canFinish() {

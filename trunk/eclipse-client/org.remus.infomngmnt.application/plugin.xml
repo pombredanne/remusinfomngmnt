@@ -19,7 +19,7 @@
             name="Remus Information Management">
          <property
                name="windowImages"
-               value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+               value="icons/iconexperience/windowimages/cabinet_open_16.png,icons/iconexperience/windowimages/cabinet_open_32.png,icons/iconexperience/windowimages/cabinet_open_48.png,icons/iconexperience/windowimages/cabinet_open_64.png,icons/iconexperience/windowimages/cabinet_open_128.png">
          </property>
          <property
                name="preferenceCustomization"

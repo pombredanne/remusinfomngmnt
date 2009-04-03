@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     06.10.2008 21:18:48                                                        
+
+     project    
+     description
+                   
+     tmseidel                                                                
+     ====================================================================== -->
+
+
+<project name="project" default="build">
+
+	<tstamp>
+		<format property="today.date" pattern="yyyy-MM-dd_HH_mm" />
+	</tstamp>
+
+	<!-- properties -->
+
+
+
+
+	<description>
+            description
+    </description>
+
+	
+
+	<!-- ================================= 
+          target: test              
+         ================================= -->
+	<target name="build" description="description">
+		<java failonerror="true" fork="true" jar="C:/IDEs/eclipse_buildtest/runtime/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar">
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="C:/IDEs/eclipse_buildtest/runtime/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/scripts/productBuild/productBuild.xml" />
+			<arg value="-Dbuilder=C:\IDEs\eclipse_remus_3_5_2\eclipse\workspace\org.remus.infomngmnt.build_obsolete" />
+		</java>
+		<!-- <exec executable="pdeBuild.bat" /> -->
+	</target>
+
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" description="Cleaning previous build">
+		<delete failonerror="false" dir="${build.root.location}" />
+		<delete failonerror="false" dir="rim" />
+		<cvs>
+		</cvs>
+	</target>
+
+	
+	<!-- ================================= 
+          target: name              
+         ================================= -->
+	<target name="setproperties" description="description">
+		<copy overwrite="true" file="${plugin_customization}" todir="${build.root.location.plugins}/${app.property.name}">
+		</copy>
+	</target>
+</project>

@@ -39,37 +39,40 @@ import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class ImageInformationRepresentation extends
-		AbstractInformationRepresentation {
-	
+public class ImageInformationRepresentation extends AbstractInformationRepresentation {
+
 	private String imageHref;
-	
+
 	public static final String IMAGE_SECTION_NAME = "imageSection"; //$NON-NLS-1$
 
-	
 	/**
 	 * <p>
-	 * Before we can extract the general values from the 
-	 * information-object we have to extract the raw image data,
-	 * and store them within the workspace. After a successful 
-	 * creation of a new image file, we have to remember the 
-	 * location of the extracted image which is linked within
-	 * the generated html content.
-	 * </p>
-	 * {@inheritDoc}
+	 * Before we can extract the general values from the information-object we
+	 * have to extract the raw image data, and store them within the workspace.
+	 * After a successful creation of a new image file, we have to remember the
+	 * location of the extracted image which is linked within the generated html
+	 * content.
+	 * </p> {@inheritDoc}
+	 * 
 	 * @see #imageHref
 	 * @see #handleHtmlGeneration(IProgressMonitor)
 	 */
 	@Override
 	public void handlePreBuild(final IProgressMonitor monitor) {
-		InformationUnit rawDataNode = InformationUtil.getChildByType(getValue(), ImagePlugin.NODE_NAME_RAWDATA);
+		InformationUnit rawDataNode = InformationUtil.getChildByType(getValue(),
+				ImagePlugin.NODE_NAME_RAWDATA);
 		if (rawDataNode != null && rawDataNode.getBinaryValue() != null) {
 			monitor.setTaskName("Extracting image...");
 		}
-		InformationUnit origFileName = InformationUtil.getChildByType(getValue(), ImagePlugin.ORIGINAL_FILEPATH);
+		InformationUnit origFileName = InformationUtil.getChildByType(getValue(),
+				ImagePlugin.ORIGINAL_FILEPATH);
 		if (origFileName != null) {
-			String fileExtension = new Path(origFileName.getStringValue()).getFileExtension();
-			IFile file = getBuildFolder().getFile(new Path(getValue().getId()).addFileExtension(fileExtension));
+			String fileExtension = "bmp";
+			if (origFileName.getStringValue() != null) {
+				fileExtension = new Path(origFileName.getStringValue()).getFileExtension();
+			}
+			IFile file = getBuildFolder().getFile(
+					new Path(getValue().getId()).addFileExtension(fileExtension));
 			this.imageHref = file.getLocation().toOSString();
 			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
 			try {
@@ -87,20 +90,24 @@ public class ImageInformationRepresentation extends
 		}
 
 	}
-	
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getAdditionalsForIndexing(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #getAdditionalsForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getAdditionalsForIndexing(final IProgressMonitor monitor)
-			throws CoreException {
+	public String getAdditionalsForIndexing(final IProgressMonitor monitor) throws CoreException {
 		StringBuilder sb = new StringBuilder();
-		InformationUnit childByType = InformationUtil.getChildByType(getValue(),ImagePlugin.NODE_NAME_EXIF);
+		InformationUnit childByType = InformationUtil.getChildByType(getValue(),
+				ImagePlugin.NODE_NAME_EXIF);
 		if (childByType != null) {
 			EList<InformationUnit> exifData = childByType.getChildValues();
 			for (InformationUnit informationUnit : exifData) {
-				if (informationUnit.getStringValue() != null && informationUnit.getStringValue().length() > 0) {
+				if (informationUnit.getStringValue() != null
+						&& informationUnit.getStringValue().length() > 0) {
 					sb.append(informationUnit.getStringValue()).append(" ");
 				}
 			}
@@ -108,53 +115,59 @@ public class ImageInformationRepresentation extends
 		return sb.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor)
-			throws CoreException {
+	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
 		StringBuilder sb = new StringBuilder();
-		InformationUnit childByType = InformationUtil.getChildByType(getValue(),ImagePlugin.NODE_NAME_LINKS);
+		InformationUnit childByType = InformationUtil.getChildByType(getValue(),
+				ImagePlugin.NODE_NAME_LINKS);
 		EList<InformationUnit> comments = childByType.getChildValues();
 		for (InformationUnit informationUnit : comments) {
-			InformationUnit commentTextUnit = InformationUtil.getChildByType(informationUnit, ShapableInfoDelegate.TEXT);
-			if (commentTextUnit.getStringValue() != null && commentTextUnit.getStringValue().length() > 0 ) {
+			InformationUnit commentTextUnit = InformationUtil.getChildByType(informationUnit,
+					ShapableInfoDelegate.TEXT);
+			if (commentTextUnit.getStringValue() != null
+					&& commentTextUnit.getStringValue().length() > 0) {
 				sb.append(commentTextUnit.getStringValue()).append(" ");
 			}
 		}
 		return sb.toString();
 	}
-	
+
 	@Override
 	public boolean createFolderOnBuild() {
 		return true;
 	}
 
-	
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
-			throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {
-			templateIs = FileLocator.openStream(
-					Platform.getBundle(ImagePlugin.PLUGIN_ID), 
+			templateIs = FileLocator.openStream(Platform.getBundle(ImagePlugin.PLUGIN_ID),
 					new Path("template/htmlserialization.flt"), false);
 			FreemarkerRenderer.getInstance().process(
 					ImagePlugin.PLUGIN_ID,
 					templateIs,
 					contentsIs,
-					returnValue, 
-					Collections.<String,String> singletonMap("imageHref", URI.createFileURI(this.imageHref).toString()));
+					returnValue,
+					Collections.<String, String> singletonMap("imageHref", URI.createFileURI(
+							this.imageHref).toString()));
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus(
-					"Error reading locations",e));
+			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}

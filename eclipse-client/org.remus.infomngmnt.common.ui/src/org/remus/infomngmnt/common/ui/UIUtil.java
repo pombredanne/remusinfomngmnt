@@ -16,19 +16,28 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
 /**
@@ -162,5 +171,35 @@ public class UIUtil {
 
 	public static void setTextChecked(final String value, final Text text) {
 		text.setText(value == null ? "" : value);
+	}
+
+	/**
+	 * @param section
+	 * @param toolkit
+	 */
+	public static void createSectionToolbar(final Section section, final FormToolkit toolkit,
+			final Action... actions) {
+
+		ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
+		ToolBar toolbar = toolBarManager.createControl(section);
+		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+		toolbar.setCursor(handCursor);
+		// Cursor needs to be explicitly disposed
+		toolbar.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(final DisposeEvent e) {
+				if ((handCursor != null) && (handCursor.isDisposed() == false)) {
+					handCursor.dispose();
+				}
+			}
+		});
+		// Add sort action to the tool bar
+
+		for (Action action : actions) {
+			toolBarManager.add(action);
+		}
+
+		toolBarManager.update(true);
+
+		section.setTextClient(toolbar);
 	}
 }

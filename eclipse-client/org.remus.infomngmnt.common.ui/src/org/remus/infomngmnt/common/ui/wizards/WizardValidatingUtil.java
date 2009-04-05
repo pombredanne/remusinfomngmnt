@@ -32,10 +32,12 @@ public class WizardValidatingUtil {
 			}
 		};
 		for (Control text2 : text) {
-			if (text2 instanceof Text) {
-				text2.addListener(SWT.Modify, listener);
-			} else if (text2 instanceof Button) {
-				text2.addListener(SWT.Selection, listener);
+			if (text2 != null) {
+				if (text2 instanceof Text) {
+					text2.addListener(SWT.Modify, listener);
+				} else if (text2 instanceof Button) {
+					text2.addListener(SWT.Selection, listener);
+				}
 			}
 		}
 	}

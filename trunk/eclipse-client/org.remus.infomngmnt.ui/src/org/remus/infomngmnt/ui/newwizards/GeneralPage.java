@@ -1,6 +1,5 @@
 package org.remus.infomngmnt.ui.newwizards;
 
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -28,6 +27,8 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
+import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -37,7 +38,7 @@ import org.remus.infomngmnt.ui.category.CategorySmartField;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class GeneralPage extends WizardPage implements IInfoObjectSetter{
+public class GeneralPage extends WizardPage implements IInfoObjectSetter, IValidatingWizard {
 
 	protected Text descriptionText;
 	protected Text keywordsText;
@@ -49,10 +50,10 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 	protected InformationUnit unit;
 	protected final EMFDataBindingContext ctx;
 
-
 	public GeneralPage(final InformationUnitListItem selection) {
 		this((Category) selection.eContainer());
 	}
+
 	public GeneralPage(final Category category) {
 		super("wizardPage");
 		this.category = category;
@@ -62,6 +63,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 
 	/**
 	 * Create contents of the wizard
+	 * 
 	 * @param parent
 	 */
 	public void createControl(final Composite parent) {
@@ -73,8 +75,14 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		doCreatePropertiesGroup(container);
 		initDatabinding();
 		presetValues();
-		setPageComplete(false);
+		initValidation();
 		setControl(container);
+	}
+
+	protected void initValidation() {
+		setPageComplete(validate(false));
+		WizardValidatingUtil.validateControlsOnModify(this, this.nameText, this.keywordsText,
+				this.descriptionText, this.parentCategoryText);
 	}
 
 	protected void doCreateNameElements(final Composite container) {
@@ -86,6 +94,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		this.nameText.setLayoutData(gd_nameText);
 
 	}
+
 	protected void doCreatePropertiesGroup(final Composite container) {
 		final Group propertiesGroup = new Group(container, SWT.NONE);
 		propertiesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
@@ -94,9 +103,6 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		gridLayout_1.numColumns = 2;
 		propertiesGroup.setLayout(gridLayout_1);
 
-
-
-
 		final Label keywordsLabel = new Label(propertiesGroup, SWT.NONE);
 		keywordsLabel.setText("Keywords");
 
@@ -104,15 +110,16 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		final GridData gd_keywordsText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		this.keywordsText.setLayoutData(gd_keywordsText);
 
-
 		final Label descriptionLabel = new Label(propertiesGroup, SWT.NONE);
 		descriptionLabel.setText("Description");
 
-		this.descriptionText = new Text(propertiesGroup, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		this.descriptionText = new Text(propertiesGroup, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI
+				| SWT.H_SCROLL | SWT.BORDER);
 		final GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, true);
 		this.descriptionText.setLayoutData(gd_descriptionText);
 
 	}
+
 	protected void doCreateParentElementGroup(final Composite container) {
 
 		final Group parentElementGroup = new Group(container, SWT.NONE);
@@ -123,7 +130,6 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		gridLayout.numColumns = 3;
 		parentElementGroup.setLayout(gridLayout);
 
-
 		this.parentCategoryText = new Text(parentElementGroup, SWT.BORDER);
 		new CategorySmartField(this.parentCategoryText);
 		final GridData gd_parentCategoryText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -131,18 +137,17 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 		if (this.categoryString != null) {
 			this.parentCategoryText.setText(this.categoryString);
 		}
-		this.parentCategoryText.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(final Event event) {
-				validatePage();
-			}
-		});
+
 		this.browserButton = new Button(parentElementGroup, SWT.NONE);
 		this.browserButton.setText("B&rowse...");
 		this.browserButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
-				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory());
-				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),adapterFactoryLabelProvider,adapterFactoryContentProvider);
+				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
+						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
 				dialog.setDoubleClickSelects(true);
 				dialog.setValidator(new ISelectionStatusValidator() {
@@ -150,7 +155,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 						if (pselection.length == 0) {
 							return StatusCreator.newStatus("No parent category selected...");
 						}
-						return StatusCreator.newStatus(IStatus.OK, "",null);
+						return StatusCreator.newStatus(IStatus.OK, "", null);
 					}
 				});
 				dialog.setInput(ApplicationModelPool.getInstance().getModel());
@@ -158,34 +163,37 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();
 					GeneralPage.this.category = (Category) result[0];
-					GeneralPage.this.parentCategoryText.setText(CategoryUtil.categoryToString(GeneralPage.this.category));
+					GeneralPage.this.parentCategoryText.setText(CategoryUtil
+							.categoryToString(GeneralPage.this.category));
 				}
 			}
 		});
 
 	}
-	protected void validatePage() {
 
+	public boolean validate(final boolean showErrorMessage) {
 		if (this.parentCategoryText != null) {
 			this.categoryString = this.parentCategoryText.getText();
-			IStatus categoryPathStringValid = CategoryUtil.isCategoryPathStringValid(this.parentCategoryText.getText());
+			IStatus categoryPathStringValid = CategoryUtil
+					.isCategoryPathStringValid(this.parentCategoryText.getText());
 			if (categoryPathStringValid.getSeverity() != IStatus.OK) {
-				setErrorMessage(categoryPathStringValid.getMessage());
-				setPageComplete(false);
-				return;
+				if (showErrorMessage) {
+					setErrorMessage(categoryPathStringValid.getMessage());
+				}
+				return false;
 			}
 		}
 		if (this.nameText != null) {
 			IStatus categoryNameValid = CategoryUtil.isCategoryNameValid(this.nameText.getText());
 			if (categoryNameValid.getSeverity() != IStatus.OK) {
-				setErrorMessage(categoryNameValid.getMessage());
-				setPageComplete(false);
-				return;
+				if (showErrorMessage) {
+					setErrorMessage(categoryNameValid.getMessage());
+				}
+				return false;
 			}
 		}
 		setErrorMessage(null);
-		setPageComplete(true);
-
+		return true;
 	}
 
 	protected void presetValues() {
@@ -208,27 +216,29 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter{
 			this.unit = unit;
 		}
 	}
+
 	protected void initDatabinding() {
 		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
-		IObservableValue emfName = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
-		this.ctx.bindValue(swtName, emfName, new UpdateValueStrategy() {
-			@Override
-			public Object convert(final Object value) {
-				validatePage();
-				return super.convert(value);
-			}
-		}, null);
+		IObservableValue emfName = EMFObservables.observeValue(this.unit,
+				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
+		this.ctx.bindValue(swtName, emfName, null, null);
 		ISWTObservableValue swtKeyWords = SWTObservables.observeText(this.keywordsText, SWT.Modify);
-		IObservableValue emfKeywords = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS);
+		IObservableValue emfKeywords = EMFObservables.observeValue(this.unit,
+				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS);
 		this.ctx.bindValue(swtKeyWords, emfKeywords, null, null);
-		ISWTObservableValue swtDescription = SWTObservables.observeText(this.descriptionText, SWT.Modify);
-		IObservableValue emfDescription = EMFObservables.observeValue(this.unit, InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
+		ISWTObservableValue swtDescription = SWTObservables.observeText(this.descriptionText,
+				SWT.Modify);
+		IObservableValue emfDescription = EMFObservables.observeValue(this.unit,
+				InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
 		this.ctx.bindValue(swtDescription, emfDescription, null, null);
 	}
+
 	public void setCategory(final Category category) {
 		this.category = category;
 	}
+
 	public void setCategoryString(final String categoryString) {
 		this.categoryString = categoryString;
 	}
+
 }

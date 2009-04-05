@@ -59,8 +59,8 @@ import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar 
-implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
+public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
+		ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 
 	private TreeViewer viewer;
 	private RemoteRepositoryContextMenu actionBar;
@@ -87,16 +87,18 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	private Composite descriptionText;
 	private Composite mainComp;
 	private RepositoryCollection repositories;
-	
+
 	public RemoteRepositoriesButtonBar() {
 		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 	}
 
 	protected void checkRepositories() {
-		if (this.repositories.getRepositories().size() == 0 && this.stackLayout.topControl != this.descriptionText) {
+		if (this.repositories.getRepositories().size() == 0
+				&& this.stackLayout.topControl != this.descriptionText) {
 			this.stackLayout.topControl = this.descriptionText;
 			this.mainComp.layout(true);
-		} else if (this.repositories.getRepositories().size() != 0 && this.stackLayout.topControl != this.viewer.getControl()){
+		} else if (this.repositories.getRepositories().size() != 0
+				&& this.stackLayout.topControl != this.viewer.getControl()) {
 			this.stackLayout.topControl = this.viewer.getControl();
 			this.mainComp.layout(true);
 		}
@@ -104,13 +106,14 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 
 	@Override
 	public void createControl(final Composite parent) {
-		
+
 		this.mainComp = new Composite(parent, SWT.NONE);
 		this.mainComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.mainComp.setLayout(this.stackLayout = new StackLayout());
-		
+
 		this.descriptionText = new Composite(this.mainComp, SWT.NONE);
-		this.descriptionText.setBackground(getViewSite().getShell().getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+		this.descriptionText.setBackground(getViewSite().getShell().getDisplay().getSystemColor(
+				SWT.COLOR_LIST_BACKGROUND));
 		this.descriptionText.setLayout(new GridLayout());
 		Link link = new Link(this.descriptionText, SWT.WRAP);
 		link.setBackground(this.descriptionText.getBackground());
@@ -124,12 +127,12 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 				RemoteRepositoriesButtonBar.this.addRepAction.run();
 			}
 		});
-		
+
 		Tree tree = new Tree(this.mainComp, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.viewer = new TreeViewer(tree);
 		setControl(this.mainComp);
-		
+
 		initProvider();
 		initInput();
 		initOpen();
@@ -140,7 +143,7 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 
 	private void hookActions() {
 		this.addRepAction = new AddRemoteRepositoryAction();
-		
+
 	}
 
 	private void initOpen() {
@@ -148,30 +151,32 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 			public void open(final OpenEvent event) {
 				Object object = ((IStructuredSelection) event.getSelection()).getFirstElement();
 				if (object instanceof RemoteRepository) {
-					
+
 				}
 			}
 
 		});
-		
+
 	}
 
 	private void initInput() {
-		this.repositories = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositories();
+		this.repositories = UIPlugin.getDefault().getService(IRepositoryService.class)
+				.getRepositories();
 		this.repositories.eAdapters().add(this.checkRepositoryCountAdapter);
 		this.viewer.setInput(this.repositories);
 	}
 
 	private void initProvider() {
-		IStructuredContentProvider contentProvider = new DeferredContentProvider(EditingUtil.getInstance().getAdapterFactory(),getViewSite());
-		LabelProvider labelProvider = new DecoratingLabelProvider(
-				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()),
-				PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
+		IStructuredContentProvider contentProvider = new DeferredContentProvider(EditingUtil
+				.getInstance().getAdapterFactory(), getViewSite());
+		LabelProvider labelProvider = new DecoratingLabelProvider(new AdapterFactoryLabelProvider(
+				EditingUtil.getInstance().getAdapterFactory()), PlatformUI.getWorkbench()
+				.getDecoratorManager().getLabelDecorator());
 		this.viewer.setContentProvider(contentProvider);
 		this.viewer.setLabelProvider(labelProvider);
 		getViewSite().setSelectionProvider(this.viewer);
 	}
-	
+
 	/**
 	 * @param viewer2
 	 */
@@ -185,10 +190,11 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 		contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
 		this.viewer.getControl().setMenu(menu);
-		getViewSite().registerContextMenu(getId(), contextMenu, new UnwrappingSelectionProvider(this));
+		getViewSite().registerContextMenu(getId(), contextMenu,
+				new UnwrappingSelectionProvider(this));
 
 	}
-	
+
 	@Override
 	public void initToolbar(final IToolBarManager toolbarManager) {
 		toolbarManager.add(this.addRepAction);
@@ -197,29 +203,29 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 
 	public void addSelectionChangedListener(final ISelectionChangedListener listener) {
 		this.viewer.addSelectionChangedListener(listener);
-		
+
 	}
 
 	public ISelection getSelection() {
 		return this.viewer.getSelection();
 	}
 
-	public void removeSelectionChangedListener(
-			final ISelectionChangedListener listener) {
+	public void removeSelectionChangedListener(final ISelectionChangedListener listener) {
 		this.viewer.removeSelectionChangedListener(listener);
-		
+
 	}
-	
+
 	@Override
 	public void dispose() {
-		this.viewer.removeSelectionChangedListener(this.actionBar);
-		this.repositories.eAdapters().remove(this.checkRepositoryCountAdapter);
-		super.dispose();
+		if (this.viewer != null) {
+			this.viewer.removeSelectionChangedListener(this.actionBar);
+			this.repositories.eAdapters().remove(this.checkRepositoryCountAdapter);
+		}
 	}
 
 	public void setSelection(final ISelection selection) {
 		this.viewer.setSelection(selection);
-		
+
 	}
 
 	public EditingDomain getEditingDomain() {
@@ -229,33 +235,29 @@ implements ISelectionProvider, IEditingDomainProvider, IViewerProvider {
 	public Viewer getViewer() {
 		return this.viewer;
 	}
-	
+
 	private class AddRemoteRepositoryAction extends Action {
 		public static final String CMD_ID = "org.remus.infomngmnt.ui.newRepository"; //$NON-NLS-1$
 		private IHandlerService service;
-		
+
 		AddRemoteRepositoryAction() {
 			setToolTipText("Add new repository");
-			setImageDescriptor(
-					ResourceManager.getPluginImageDescriptor(
-							UIPlugin.getDefault(), 
-							"icons/iconexperience/16/server_new.png"));
+			setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
+					"icons/iconexperience/16/server_new.png"));
 		}
-		
+
 		@Override
 		public void run() {
 			if (this.service == null) {
-				this.service = (IHandlerService) getViewSite().getService(
-						IHandlerService.class);
+				this.service = (IHandlerService) getViewSite().getService(IHandlerService.class);
 			}
 			try {
 				this.service.executeCommand(CMD_ID, null);
 			} catch (Exception e) {
-				ErrorDialog.openError(
-						getViewSite().getShell(), 
-						"Error executing command", "Error creating new repository", null);
+				ErrorDialog.openError(getViewSite().getShell(), "Error executing command",
+						"Error creating new repository", null);
 			}
-			
+
 		}
 	}
 

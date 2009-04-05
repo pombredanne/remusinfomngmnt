@@ -18,9 +18,11 @@ import java.util.Comparator;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -29,9 +31,13 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.model.CategoryUtil;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -40,12 +46,19 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 
 	public static final String SECTION_DIALOG = "ds_infounitselectiondialog"; //$NON-NLS-1$
 	public static final String SELECTION_MEMENTO = "memento_infounitselectiondialog"; //$NON-NLS-1$
+	private IInputValidator validator;
 
 	public InfoUnitSelectionDialog(final Shell shell, final boolean multi) {
 		super(shell, multi);
 		setSelectionHistory(new ItemSelectionHistory());
 		// setMessage("Select an information item to open" + getMessage());
 		setTitle("Open Information Item");
+	}
+
+	public InfoUnitSelectionDialog(final Shell shell, final boolean multi,
+			final IInputValidator validator) {
+		this(shell, multi);
+		this.validator = validator;
 	}
 
 	class ItemSelectionHistory extends SelectionHistory {
@@ -166,6 +179,28 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 		};
 	}
 
+	public static InfoUnitSelectionDialog create(final Shell shell, final IInputValidator validator) {
+		InfoUnitSelectionDialog diag = new InfoUnitSelectionDialog(shell, false, validator);
+		diag.setListLabelProvider(new NavigatorDecoratingLabelProvider(
+				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory())));
+		diag.setDetailsLabelProvider(new NavigatorDecoratingLabelProvider(
+				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory())) {
+			@Override
+			public String getText(final Object element) {
+				InformationUnitListItem adapter = ((InformationUnitListItem) ((IAdaptable) element)
+						.getAdapter(InformationUnitListItem.class));
+				if (adapter != null) {
+					return CategoryUtil.categoryToString((Category) adapter.eContainer()) + "/"
+							+ adapter.getLabel();
+				} else {
+					return ((AbstractInformationUnit) element).getLabel();
+				}
+
+			}
+		});
+		return diag;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -175,6 +210,9 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 	 */
 	@Override
 	protected IStatus validateItem(final Object item) {
+		if (this.validator != null) {
+			return this.validator.validate(item);
+		}
 		return Status.OK_STATUS;
 	}
 

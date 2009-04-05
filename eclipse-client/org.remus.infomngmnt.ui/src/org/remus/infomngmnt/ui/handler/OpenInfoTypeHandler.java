@@ -25,28 +25,37 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
-import org.remus.infomngmnt.ui.provider.NavigationCellLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class OpenInfoTypeHandler extends AbstractHandler {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
+	 * ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InfoUnitSelectionDialog diag = new InfoUnitSelectionDialog(HandlerUtil.getActiveShell(event),false);
-		diag.setListLabelProvider(new NavigationCellLabelProvider());
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
+		InfoUnitSelectionDialog diag = InfoUnitSelectionDialog.create(HandlerUtil
+				.getActiveShell(event), null);
 		if (diag.open() == IDialogConstants.OK_ID) {
 			Object[] result = diag.getResult();
 			for (Object object : result) {
 				if (object instanceof InformationUnitListItem) {
 					try {
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-								new InformationEditorInput((InformationUnitListItem) object), InformationEditor.ID);
+						PlatformUI
+								.getWorkbench()
+								.getActiveWorkbenchWindow()
+								.getActivePage()
+								.openEditor(
+										new InformationEditorInput((InformationUnitListItem) object),
+										InformationEditor.ID);
 					} catch (PartInitException e) {
-						ErrorDialog.openError(HandlerUtil.getActiveShell(event), "Error opening element", "Error opening element", e.getStatus());
+						ErrorDialog.openError(HandlerUtil.getActiveShell(event),
+								"Error opening element", "Error opening element", e.getStatus());
 					}
 				}
 			}
@@ -54,5 +63,4 @@ public class OpenInfoTypeHandler extends AbstractHandler {
 		}
 		return null;
 	}
-
 }

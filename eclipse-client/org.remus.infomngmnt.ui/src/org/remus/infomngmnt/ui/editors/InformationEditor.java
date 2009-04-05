@@ -62,6 +62,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.ISaveablePart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
@@ -77,6 +78,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
+import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
@@ -474,7 +476,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				ISaveParticipant.BEFORE_SAVE, this.primaryModel);
 		for (int i = 0; i < this.pages.size(); i++) {
 			if (this.pages.get(i) != null) {
-				((IFormPage) this.pages.get(i)).doSave(progressMonitor);
+				((ISaveablePart) this.pages.get(i)).doSave(progressMonitor);
 				progressMonitor.internalWorked(i);
 			}
 		}
@@ -766,15 +768,14 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	public Diagnostic analyzeResourceProblems(final Resource resource, final Exception exception) {
 		if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty()) {
 			final BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR,
-					"net.remus.infobroker.core.editor", 0, getString(
-							"_UI_CreateModelError_message", resource.getURI()),
-					new Object[] { exception == null ? (Object) resource : exception });
+					CorePlugin.PLUGIN_ID, 0, getString("_UI_CreateModelError_message", resource
+							.getURI()), new Object[] { exception == null ? (Object) resource
+							: exception });
 			basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
 			return basicDiagnostic;
 		} else if (exception != null) {
-			return new BasicDiagnostic(Diagnostic.ERROR, "net.remus.infobroker.core.editor", 0,
-					getString("_UI_CreateModelError_message", resource.getURI()),
-					new Object[] { exception });
+			return new BasicDiagnostic(Diagnostic.ERROR, CorePlugin.PLUGIN_ID, 0, getString(
+					"_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
 		} else {
 			return Diagnostic.OK_INSTANCE;
 		}

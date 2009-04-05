@@ -40,8 +40,6 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
-import org.remus.infomngmnt.LinkType;
-import org.remus.infomngmnt.LinkTypeCollection;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RecentlyUsedKeywords;
 import org.remus.infomngmnt.RemoteContainer;
@@ -61,288 +59,231 @@ import org.remus.infomngmnt.Usage;
 import org.remus.infomngmnt.core.remote.IRepository;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Package</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!--
+ * end-user-doc -->
  * @generated
  */
 public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPackage {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass informationUnitEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass usageEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass categoryEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass abstractInformationUnitEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass informationUnitListItemEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass applicationRootEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass annotationEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass linkEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass linkTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass adapterEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass linkTypeCollectionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass stringToLinkTypeMapEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass recentlyUsedKeywordsEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass newElementRulesEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass ruleValueEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass availableRuleDefinitionsEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass remusTransferTypeEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass ruleActionEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass ruleResultEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass remoteRepositoryEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass remoteObjectEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass remoteContainerEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass repositoryCollectionEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass synchronizationMetadataEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass changeSetEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass changeSetItemEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass categoryToSynchronizationActionMapEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass informationUnitListItemToInformationUnitMapEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass synchronizableObjectToSynchronizationActionMapEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass tagEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass availableTagsEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass synchronizableObjectEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass calenderEntryEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EEnum synchronizationStateEEnum = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EEnum synchronizationActionEEnum = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EEnum calendarEntryTypeEEnum = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EDataType objectEDataType = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EDataType iRepositoryEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-	 * package URI value.
-	 * <p>Note: the correct way to create the package is via the static
-	 * factory method {@link #init init()}, which also performs
-	 * initialization of the package, or returns the registered package,
-	 * if one already exists.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the
+	 * package package URI value.
+	 * <p>
+	 * Note: the correct way to create the package is via the static factory
+	 * method {@link #init init()}, which also performs initialization of the
+	 * package, or returns the registered package, if one already exists. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.remus.infomngmnt.InfomngmntPackage#eNS_URI
 	 * @see #init()
@@ -353,8 +294,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -374,8 +314,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * those of another.
 	 * <p>Invocation of this method will not affect any packages that have
 	 * already been initialized.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -402,8 +341,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getInformationUnit() {
@@ -411,8 +349,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_StringValue() {
@@ -420,8 +357,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_LongValue() {
@@ -429,8 +365,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_BoolValue() {
@@ -438,8 +373,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_BinaryValue() {
@@ -447,8 +381,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_DateValue() {
@@ -456,8 +389,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getInformationUnit_ChildValues() {
@@ -465,8 +397,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getInformationUnit_References() {
@@ -474,8 +405,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getInformationUnit_Links() {
@@ -483,8 +413,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_CreationDate() {
@@ -492,8 +421,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getInformationUnit_UsageData() {
@@ -501,8 +429,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_Description() {
@@ -510,8 +437,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_Keywords() {
@@ -519,8 +445,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getInformationUnit_CalendarEntry() {
@@ -528,8 +453,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getUsage() {
@@ -537,8 +461,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getUsage_LastAccess() {
@@ -546,8 +469,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getUsage_AccessCount() {
@@ -555,8 +477,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getCategory() {
@@ -564,8 +485,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCategory_Id() {
@@ -573,8 +493,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCategory_Label() {
@@ -582,8 +501,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getCategory_Children() {
@@ -591,8 +509,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getCategory_InformationUnit() {
@@ -600,8 +517,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCategory_Description() {
@@ -609,8 +525,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getAbstractInformationUnit() {
@@ -618,8 +533,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getAbstractInformationUnit_Id() {
@@ -627,8 +541,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getAbstractInformationUnit_Label() {
@@ -636,8 +549,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getAbstractInformationUnit_Type() {
@@ -645,8 +557,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getInformationUnitListItem() {
@@ -654,8 +565,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getInformationUnitListItem_WorkspacePath() {
@@ -663,8 +573,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getApplicationRoot() {
@@ -672,8 +581,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getApplicationRoot_RootCategories() {
@@ -681,8 +589,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getApplicationRoot_AvailableTags() {
@@ -690,8 +597,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getAnnotation() {
@@ -699,8 +605,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getAnnotation_Description() {
@@ -708,8 +613,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getLink() {
@@ -717,8 +621,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getLink_Target() {
@@ -726,62 +629,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getLink_Linktype() {
-		return (EReference)linkEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getLinkType() {
-		return linkTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLinkType_Description() {
-		return (EAttribute)linkTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLinkType_Id() {
-		return (EAttribute)linkTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLinkType_ImagePath() {
-		return (EAttribute)linkTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLinkType_Editable() {
-		return (EAttribute)linkTypeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getAdapter() {
@@ -789,53 +637,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getLinkTypeCollection() {
-		return linkTypeCollectionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getLinkTypeCollection_AvailableLinkTypes() {
-		return (EReference)linkTypeCollectionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getStringToLinkTypeMap() {
-		return stringToLinkTypeMapEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getStringToLinkTypeMap_Key() {
-		return (EAttribute)stringToLinkTypeMapEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getStringToLinkTypeMap_Value() {
-		return (EReference)stringToLinkTypeMapEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRecentlyUsedKeywords() {
@@ -843,8 +645,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRecentlyUsedKeywords_Maxlength() {
@@ -852,8 +653,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRecentlyUsedKeywords_Keywords() {
@@ -861,8 +661,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getNewElementRules() {
@@ -870,8 +669,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getNewElementRules_TransferTypes() {
@@ -879,8 +677,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getNewElementRules_Name() {
@@ -888,8 +685,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getNewElementRules_Deletable() {
@@ -897,8 +693,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRuleValue() {
@@ -906,8 +701,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getAvailableRuleDefinitions() {
@@ -915,8 +709,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getAvailableRuleDefinitions_NewElementRules() {
@@ -924,8 +717,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRemusTransferType() {
@@ -933,8 +725,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemusTransferType_Name() {
@@ -942,8 +733,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemusTransferType_Id() {
@@ -951,8 +741,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getRemusTransferType_Actions() {
@@ -960,8 +749,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRuleAction() {
@@ -969,8 +757,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRuleAction_Name() {
@@ -978,8 +765,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRuleAction_InfoTypeId() {
@@ -987,8 +773,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getRuleAction_RuleValue() {
@@ -996,8 +781,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRuleResult() {
@@ -1005,8 +789,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRuleResult_Value() {
@@ -1014,8 +797,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getRuleResult_Actions() {
@@ -1023,8 +805,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRuleResult_Description() {
@@ -1032,8 +813,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRemoteRepository() {
@@ -1041,8 +821,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRemoteObject() {
@@ -1050,8 +829,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_PossibleInfoTypeId() {
@@ -1059,8 +837,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_Id() {
@@ -1068,8 +845,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_Url() {
@@ -1077,8 +853,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_Name() {
@@ -1086,8 +861,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_RepositoryTypeId() {
@@ -1095,8 +869,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_RepositoryTypeObjectId() {
@@ -1104,8 +877,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_WrappedObject() {
@@ -1113,8 +885,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRemoteObject_Hash() {
@@ -1122,8 +893,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRemoteContainer() {
@@ -1131,8 +901,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getRemoteContainer_Children() {
@@ -1140,8 +909,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getRemoteContainer_ExclusionChildren() {
@@ -1149,8 +917,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getRepositoryCollection() {
@@ -1158,8 +925,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getRepositoryCollection_Repositories() {
@@ -1167,8 +933,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getSynchronizationMetadata() {
@@ -1176,8 +941,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSynchronizationMetadata_RepositoryId() {
@@ -1185,8 +949,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSynchronizationMetadata_Url() {
@@ -1194,8 +957,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSynchronizationMetadata_Readonly() {
@@ -1203,8 +965,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSynchronizationMetadata_LastSynchronisation() {
@@ -1212,8 +973,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSynchronizationMetadata_Hash() {
@@ -1221,8 +981,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSynchronizationMetadata_SyncState() {
@@ -1230,8 +989,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getChangeSet() {
@@ -1239,8 +997,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSet_TargetCategory() {
@@ -1248,8 +1005,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSet_ChangeSetItems() {
@@ -1257,8 +1013,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSet_Repository() {
@@ -1266,8 +1021,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getChangeSetItem() {
@@ -1275,8 +1029,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSetItem_RemoteConvertedContainer() {
@@ -1284,8 +1037,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSetItem_RemoteOriginalObject() {
@@ -1293,8 +1045,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSetItem_LocalContainer() {
@@ -1302,8 +1053,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSetItem_SyncCategoryActionMap() {
@@ -1311,8 +1061,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSetItem_SyncObjectActionMap() {
@@ -1320,8 +1069,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getChangeSetItem_RemoteFullObjectMap() {
@@ -1329,8 +1077,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getCategoryToSynchronizationActionMap() {
@@ -1338,8 +1085,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getCategoryToSynchronizationActionMap_Key() {
@@ -1347,8 +1093,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCategoryToSynchronizationActionMap_Value() {
@@ -1356,8 +1101,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getInformationUnitListItemToInformationUnitMap() {
@@ -1365,8 +1109,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getInformationUnitListItemToInformationUnitMap_Key() {
@@ -1374,8 +1117,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getInformationUnitListItemToInformationUnitMap_Value() {
@@ -1383,8 +1125,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getSynchronizableObjectToSynchronizationActionMap() {
@@ -1392,8 +1133,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getSynchronizableObjectToSynchronizationActionMap_Key() {
@@ -1401,8 +1141,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSynchronizableObjectToSynchronizationActionMap_Value() {
@@ -1410,8 +1149,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getTag() {
@@ -1419,8 +1157,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getTag_InfoUnits() {
@@ -1428,8 +1165,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getTag_Name() {
@@ -1437,8 +1173,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getAvailableTags() {
@@ -1446,8 +1181,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getAvailableTags_Tags() {
@@ -1455,8 +1189,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getSynchronizableObject() {
@@ -1464,8 +1197,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getSynchronizableObject_SynchronizationMetaData() {
@@ -1473,8 +1205,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getSynchronizableObject_MarkedAsDeleteItems() {
@@ -1482,8 +1213,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getCalenderEntry() {
@@ -1491,8 +1221,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCalenderEntry_Start() {
@@ -1500,8 +1229,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCalenderEntry_End() {
@@ -1509,8 +1237,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCalenderEntry_EntryType() {
@@ -1518,8 +1245,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCalenderEntry_Reminder() {
@@ -1527,8 +1253,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EEnum getSynchronizationState() {
@@ -1536,8 +1261,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EEnum getSynchronizationAction() {
@@ -1545,8 +1269,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EEnum getCalendarEntryType() {
@@ -1554,8 +1277,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EDataType getObject() {
@@ -1563,8 +1285,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EDataType getIRepository() {
@@ -1572,8 +1293,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public InfomngmntFactory getInfomngmntFactory() {
@@ -1581,8 +1301,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -1642,22 +1361,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		linkEClass = createEClass(LINK);
 		createEReference(linkEClass, LINK__TARGET);
-		createEReference(linkEClass, LINK__LINKTYPE);
-
-		linkTypeEClass = createEClass(LINK_TYPE);
-		createEAttribute(linkTypeEClass, LINK_TYPE__DESCRIPTION);
-		createEAttribute(linkTypeEClass, LINK_TYPE__ID);
-		createEAttribute(linkTypeEClass, LINK_TYPE__IMAGE_PATH);
-		createEAttribute(linkTypeEClass, LINK_TYPE__EDITABLE);
 
 		adapterEClass = createEClass(ADAPTER);
-
-		linkTypeCollectionEClass = createEClass(LINK_TYPE_COLLECTION);
-		createEReference(linkTypeCollectionEClass, LINK_TYPE_COLLECTION__AVAILABLE_LINK_TYPES);
-
-		stringToLinkTypeMapEClass = createEClass(STRING_TO_LINK_TYPE_MAP);
-		createEAttribute(stringToLinkTypeMapEClass, STRING_TO_LINK_TYPE_MAP__KEY);
-		createEReference(stringToLinkTypeMapEClass, STRING_TO_LINK_TYPE_MAP__VALUE);
 
 		recentlyUsedKeywordsEClass = createEClass(RECENTLY_USED_KEYWORDS);
 		createEAttribute(recentlyUsedKeywordsEClass, RECENTLY_USED_KEYWORDS__MAXLENGTH);
@@ -1768,17 +1473,16 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model.  This
-	 * method is guarded to have no affect on any invocation but its first.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Complete the initialization of the package and its meta-model. This
+	 * method is guarded to have no affect on any invocation but its first. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents() {
@@ -1854,22 +1558,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLink_Target(), this.getInformationUnit(), null, "target", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLink_Linktype(), this.getLinkType(), null, "linktype", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(linkTypeEClass, LinkType.class, "LinkType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLinkType_Description(), ecorePackage.getEString(), "description", null, 0, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLinkType_Id(), ecorePackage.getEString(), "id", null, 1, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLinkType_ImagePath(), ecorePackage.getEString(), "imagePath", null, 0, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLinkType_Editable(), ecorePackage.getEBoolean(), "editable", null, 0, 1, LinkType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(adapterEClass, Adapter.class, "Adapter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(linkTypeCollectionEClass, LinkTypeCollection.class, "LinkTypeCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getLinkTypeCollection_AvailableLinkTypes(), this.getStringToLinkTypeMap(), null, "availableLinkTypes", null, 0, -1, LinkTypeCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToLinkTypeMapEClass, Map.Entry.class, "StringToLinkTypeMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToLinkTypeMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToLinkTypeMap_Value(), this.getLinkType(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(recentlyUsedKeywordsEClass, RecentlyUsedKeywords.class, "RecentlyUsedKeywords", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRecentlyUsedKeywords_Maxlength(), ecorePackage.getEInt(), "maxlength", "100", 0, 1, RecentlyUsedKeywords.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2004,4 +1694,4 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createResource(eNS_URI);
 	}
 
-} //InfomngmntPackageImpl
+} // InfomngmntPackageImpl

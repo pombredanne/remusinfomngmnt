@@ -14,7 +14,6 @@
  */
 package org.remus.infomngmnt.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -36,19 +35,19 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.AbstractInformationUnit} object.
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * This is the item provider adapter for a
+ * {@link org.remus.infomngmnt.AbstractInformationUnit} object. <!--
+ * begin-user-doc --> <!-- end-user-doc -->
+ * 
  * @generated
  */
-public class AbstractInformationUnitItemProvider
-extends AdapterItemProvider
-implements
-IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
+public class AbstractInformationUnitItemProvider extends AdapterItemProvider implements
+		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+		IItemLabelProvider, IItemPropertySource, IItemColorProvider {
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This constructs an instance from a factory and a notifier. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public AbstractInformationUnitItemProvider(AdapterFactory adapterFactory) {
@@ -56,30 +55,27 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	}
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
+	 * This returns the property descriptors for the adapted class. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
-			if (((InformationUnitListItem) object).getSynchronizationMetaData() != null) {
-				
-			}
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
 	 * This adds a property descriptor for the Id feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void addIdPropertyDescriptor(Object object) {
@@ -99,9 +95,9 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	}
 
 	/**
-	 * This adds a property descriptor for the Label feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This adds a property descriptor for the Label feature. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addLabelPropertyDescriptor(Object object) {
@@ -122,8 +118,8 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 
 	/**
 	 * This adds a property descriptor for the Type feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void addTypePropertyDescriptor(Object object) {
@@ -144,8 +140,8 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 
 	/**
 	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -159,8 +155,8 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	/**
 	 * This handles model notifications by calling {@link #updateChildren} to update any cached
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -178,10 +174,10 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 	}
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s
+	 * describing the children that can be created under this object. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

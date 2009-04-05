@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import org.remus.infomngmnt.*;
 import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableRuleDefinitions;
@@ -37,8 +38,6 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
-import org.remus.infomngmnt.LinkType;
-import org.remus.infomngmnt.LinkTypeCollection;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RecentlyUsedKeywords;
 import org.remus.infomngmnt.RemoteContainer;
@@ -57,16 +56,15 @@ import org.remus.infomngmnt.Tag;
 import org.remus.infomngmnt.Usage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
  * @generated
  */
 public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFactory {
 	/**
 	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static InfomngmntFactory init() {
@@ -84,8 +82,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 
 	/**
 	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public InfomngmntFactoryImpl() {
@@ -93,8 +91,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -107,9 +104,6 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.APPLICATION_ROOT: return createApplicationRoot();
 			case InfomngmntPackage.ANNOTATION: return createAnnotation();
 			case InfomngmntPackage.LINK: return createLink();
-			case InfomngmntPackage.LINK_TYPE: return createLinkType();
-			case InfomngmntPackage.LINK_TYPE_COLLECTION: return createLinkTypeCollection();
-			case InfomngmntPackage.STRING_TO_LINK_TYPE_MAP: return (EObject)createStringToLinkTypeMap();
 			case InfomngmntPackage.RECENTLY_USED_KEYWORDS: return createRecentlyUsedKeywords();
 			case InfomngmntPackage.NEW_ELEMENT_RULES: return createNewElementRules();
 			case InfomngmntPackage.RULE_VALUE: return createRuleValue();
@@ -136,8 +130,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -157,8 +150,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -178,8 +170,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public InformationUnit createInformationUnit() {
@@ -188,8 +179,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Usage createUsage() {
@@ -198,8 +188,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Category createCategory() {
@@ -208,8 +197,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public InformationUnitListItem createInformationUnitListItem() {
@@ -218,8 +206,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ApplicationRoot createApplicationRoot() {
@@ -228,8 +215,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Annotation createAnnotation() {
@@ -238,8 +224,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Link createLink() {
@@ -248,38 +233,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public LinkType createLinkType() {
-		LinkTypeImpl linkType = new LinkTypeImpl();
-		return linkType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public LinkTypeCollection createLinkTypeCollection() {
-		LinkTypeCollectionImpl linkTypeCollection = new LinkTypeCollectionImpl();
-		return linkTypeCollection;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Map.Entry<String, LinkType> createStringToLinkTypeMap() {
-		StringToLinkTypeMapImpl stringToLinkTypeMap = new StringToLinkTypeMapImpl();
-		return stringToLinkTypeMap;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RecentlyUsedKeywords createRecentlyUsedKeywords() {
@@ -288,8 +242,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NewElementRules createNewElementRules() {
@@ -298,8 +251,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RuleValue createRuleValue() {
@@ -308,8 +260,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public AvailableRuleDefinitions createAvailableRuleDefinitions() {
@@ -318,8 +269,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RemusTransferType createRemusTransferType() {
@@ -328,8 +278,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RuleAction createRuleAction() {
@@ -338,8 +287,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RuleResult createRuleResult() {
@@ -348,8 +296,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RemoteRepository createRemoteRepository() {
@@ -358,8 +305,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RemoteObject createRemoteObject() {
@@ -368,8 +314,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RemoteContainer createRemoteContainer() {
@@ -378,8 +323,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RepositoryCollection createRepositoryCollection() {
@@ -388,8 +332,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public SynchronizationMetadata createSynchronizationMetadata() {
@@ -398,8 +341,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ChangeSet createChangeSet() {
@@ -408,8 +350,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ChangeSetItem createChangeSetItem() {
@@ -418,8 +359,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<Category, SynchronizationAction> createCategoryToSynchronizationActionMap() {
@@ -428,8 +368,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<InformationUnitListItem, InformationUnit> createInformationUnitListItemToInformationUnitMap() {
@@ -438,8 +377,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<SynchronizableObject, SynchronizationAction> createSynchronizableObjectToSynchronizationActionMap() {
@@ -448,8 +386,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Tag createTag() {
@@ -458,8 +395,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public AvailableTags createAvailableTags() {
@@ -468,8 +404,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public CalenderEntry createCalenderEntry() {
@@ -478,8 +413,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public SynchronizationState createSynchronizationStateFromString(EDataType eDataType, String initialValue) {
@@ -489,8 +423,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertSynchronizationStateToString(EDataType eDataType, Object instanceValue) {
@@ -498,8 +431,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public SynchronizationAction createSynchronizationActionFromString(EDataType eDataType, String initialValue) {
@@ -509,8 +441,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertSynchronizationActionToString(EDataType eDataType, Object instanceValue) {
@@ -518,8 +449,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public CalendarEntryType createCalendarEntryTypeFromString(EDataType eDataType, String initialValue) {
@@ -529,8 +459,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertCalendarEntryTypeToString(EDataType eDataType, Object instanceValue) {
@@ -538,8 +467,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Object createObjectFromString(EDataType eDataType, String initialValue) {
@@ -547,8 +475,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertObjectToString(EDataType eDataType, Object instanceValue) {
@@ -556,8 +483,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public InfomngmntPackage getInfomngmntPackage() {
@@ -565,8 +491,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @deprecated
 	 * @generated
 	 */
@@ -575,4 +500,4 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 		return InfomngmntPackage.eINSTANCE;
 	}
 
-} //InfomngmntFactoryImpl
+} // InfomngmntFactoryImpl

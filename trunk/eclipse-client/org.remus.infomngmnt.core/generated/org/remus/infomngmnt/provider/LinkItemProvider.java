@@ -20,7 +20,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -42,7 +44,12 @@ import org.remus.infomngmnt.InfomngmntPackage;
 public class LinkItemProvider
 	extends ItemProviderAdapter
 	implements
-		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource,
+		IItemColorProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -65,7 +72,6 @@ public class LinkItemProvider
 			super.getPropertyDescriptors(object);
 
 			addTargetPropertyDescriptor(object);
-			addLinktypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -84,28 +90,6 @@ public class LinkItemProvider
 				 getString("_UI_Link_target_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Link_target_feature", "_UI_Link_type"),
 				 InfomngmntPackage.Literals.LINK__TARGET,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Linktype feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addLinktypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Link_linktype_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Link_linktype_feature", "_UI_Link_type"),
-				 InfomngmntPackage.Literals.LINK__LINKTYPE,
 				 true,
 				 false,
 				 true,

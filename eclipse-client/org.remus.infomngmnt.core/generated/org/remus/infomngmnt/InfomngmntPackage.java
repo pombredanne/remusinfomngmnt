@@ -77,7 +77,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAdapter()
 	 * @generated
 	 */
-	int ADAPTER = 9;
+	int ADAPTER = 8;
 
 	/**
 	 * The number of structural features of the '<em>Adapter</em>' class.
@@ -342,7 +342,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObject()
 	 * @generated
 	 */
-	int SYNCHRONIZABLE_OBJECT = 31;
+	int SYNCHRONIZABLE_OBJECT = 28;
 
 	/**
 	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
@@ -614,144 +614,13 @@ public interface InfomngmntPackage extends EPackage {
 	int LINK__TARGET = 0;
 
 	/**
-	 * The feature id for the '<em><b>Linktype</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK__LINKTYPE = 1;
-
-	/**
 	 * The number of structural features of the '<em>Link</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LINK_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.remus.infomngmnt.impl.LinkTypeImpl <em>Link Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.remus.infomngmnt.impl.LinkTypeImpl
-	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkType()
-	 * @generated
-	 */
-	int LINK_TYPE = 8;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_TYPE__DESCRIPTION = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_TYPE__ID = 1;
-
-	/**
-	 * The feature id for the '<em><b>Image Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_TYPE__IMAGE_PATH = 2;
-
-	/**
-	 * The feature id for the '<em><b>Editable</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_TYPE__EDITABLE = 3;
-
-	/**
-	 * The number of structural features of the '<em>Link Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_TYPE_FEATURE_COUNT = 4;
-
-
-	/**
-	 * The meta object id for the '{@link org.remus.infomngmnt.impl.LinkTypeCollectionImpl <em>Link Type Collection</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.remus.infomngmnt.impl.LinkTypeCollectionImpl
-	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkTypeCollection()
-	 * @generated
-	 */
-	int LINK_TYPE_COLLECTION = 10;
-
-	/**
-	 * The feature id for the '<em><b>Available Link Types</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_TYPE_COLLECTION__AVAILABLE_LINK_TYPES = 0;
-
-	/**
-	 * The number of structural features of the '<em>Link Type Collection</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_TYPE_COLLECTION_FEATURE_COUNT = 1;
-
-	/**
-	 * The meta object id for the '{@link org.remus.infomngmnt.impl.StringToLinkTypeMapImpl <em>String To Link Type Map</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.remus.infomngmnt.impl.StringToLinkTypeMapImpl
-	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getStringToLinkTypeMap()
-	 * @generated
-	 */
-	int STRING_TO_LINK_TYPE_MAP = 11;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_LINK_TYPE_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_LINK_TYPE_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Link Type Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_LINK_TYPE_MAP_FEATURE_COUNT = 2;
-
+	int LINK_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RecentlyUsedKeywordsImpl <em>Recently Used Keywords</em>}' class.
@@ -761,7 +630,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRecentlyUsedKeywords()
 	 * @generated
 	 */
-	int RECENTLY_USED_KEYWORDS = 12;
+	int RECENTLY_USED_KEYWORDS = 9;
 
 	/**
 	 * The feature id for the '<em><b>Maxlength</b></em>' attribute.
@@ -798,7 +667,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNewElementRules()
 	 * @generated
 	 */
-	int NEW_ELEMENT_RULES = 13;
+	int NEW_ELEMENT_RULES = 10;
 
 	/**
 	 * The feature id for the '<em><b>Transfer Types</b></em>' containment reference list.
@@ -844,7 +713,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleValue()
 	 * @generated
 	 */
-	int RULE_VALUE = 14;
+	int RULE_VALUE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1008,7 +877,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAvailableRuleDefinitions()
 	 * @generated
 	 */
-	int AVAILABLE_RULE_DEFINITIONS = 15;
+	int AVAILABLE_RULE_DEFINITIONS = 12;
 
 	/**
 	 * The feature id for the '<em><b>New Element Rules</b></em>' containment reference list.
@@ -1037,7 +906,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemusTransferType()
 	 * @generated
 	 */
-	int REMUS_TRANSFER_TYPE = 16;
+	int REMUS_TRANSFER_TYPE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1083,7 +952,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleAction()
 	 * @generated
 	 */
-	int RULE_ACTION = 17;
+	int RULE_ACTION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1130,7 +999,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleResult()
 	 * @generated
 	 */
-	int RULE_RESULT = 18;
+	int RULE_RESULT = 15;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1176,7 +1045,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteRepository()
 	 * @generated
 	 */
-	int REMOTE_REPOSITORY = 19;
+	int REMOTE_REPOSITORY = 16;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteObjectImpl <em>Remote Object</em>}' class.
@@ -1186,7 +1055,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteObject()
 	 * @generated
 	 */
-	int REMOTE_OBJECT = 20;
+	int REMOTE_OBJECT = 17;
 
 	/**
 	 * The feature id for the '<em><b>Possible Info Type Id</b></em>' attribute list.
@@ -1277,7 +1146,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteContainer()
 	 * @generated
 	 */
-	int REMOTE_CONTAINER = 21;
+	int REMOTE_CONTAINER = 18;
 
 	/**
 	 * The feature id for the '<em><b>Possible Info Type Id</b></em>' attribute list.
@@ -1485,7 +1354,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRepositoryCollection()
 	 * @generated
 	 */
-	int REPOSITORY_COLLECTION = 22;
+	int REPOSITORY_COLLECTION = 19;
 
 	/**
 	 * The feature id for the '<em><b>Repositories</b></em>' containment reference list.
@@ -1513,7 +1382,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationMetadata()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_METADATA = 23;
+	int SYNCHRONIZATION_METADATA = 20;
 
 	/**
 	 * The feature id for the '<em><b>Repository Id</b></em>' attribute.
@@ -1586,7 +1455,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSet()
 	 * @generated
 	 */
-	int CHANGE_SET = 24;
+	int CHANGE_SET = 21;
 
 	/**
 	 * The feature id for the '<em><b>Target Category</b></em>' reference.
@@ -1632,7 +1501,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSetItem()
 	 * @generated
 	 */
-	int CHANGE_SET_ITEM = 25;
+	int CHANGE_SET_ITEM = 22;
 
 	/**
 	 * The feature id for the '<em><b>Remote Converted Container</b></em>' containment reference.
@@ -1705,7 +1574,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCategoryToSynchronizationActionMap()
 	 * @generated
 	 */
-	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP = 26;
+	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP = 23;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1742,7 +1611,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToInformationUnitMap()
 	 * @generated
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP = 27;
+	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP = 24;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1779,7 +1648,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObjectToSynchronizationActionMap()
 	 * @generated
 	 */
-	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP = 28;
+	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP = 25;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1816,7 +1685,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTag()
 	 * @generated
 	 */
-	int TAG = 29;
+	int TAG = 26;
 
 	/**
 	 * The feature id for the '<em><b>Info Units</b></em>' reference list.
@@ -1853,7 +1722,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAvailableTags()
 	 * @generated
 	 */
-	int AVAILABLE_TAGS = 30;
+	int AVAILABLE_TAGS = 27;
 
 	/**
 	 * The feature id for the '<em><b>Tags</b></em>' containment reference list.
@@ -1881,7 +1750,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalenderEntry()
 	 * @generated
 	 */
-	int CALENDER_ENTRY = 32;
+	int CALENDER_ENTRY = 29;
 
 	/**
 	 * The feature id for the '<em><b>Start</b></em>' attribute.
@@ -1936,7 +1805,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 33;
+	int SYNCHRONIZATION_STATE = 30;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -1946,7 +1815,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 34;
+	int SYNCHRONIZATION_ACTION = 31;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.CalendarEntryType <em>Calendar Entry Type</em>}' enum.
@@ -1956,7 +1825,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntryType()
 	 * @generated
 	 */
-	int CALENDAR_ENTRY_TYPE = 35;
+	int CALENDAR_ENTRY_TYPE = 32;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -1966,7 +1835,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 36;
+	int OBJECT = 33;
 
 
 	/**
@@ -1977,7 +1846,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
 	 * @generated
 	 */
-	int IREPOSITORY = 37;
+	int IREPOSITORY = 34;
 
 
 	/**
@@ -2369,71 +2238,6 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getLink_Target();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.Link#getLinktype <em>Linktype</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Linktype</em>'.
-	 * @see org.remus.infomngmnt.Link#getLinktype()
-	 * @see #getLink()
-	 * @generated
-	 */
-	EReference getLink_Linktype();
-
-	/**
-	 * Returns the meta object for class '{@link org.remus.infomngmnt.LinkType <em>Link Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Link Type</em>'.
-	 * @see org.remus.infomngmnt.LinkType
-	 * @generated
-	 */
-	EClass getLinkType();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#getDescription <em>Description</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see org.remus.infomngmnt.LinkType#getDescription()
-	 * @see #getLinkType()
-	 * @generated
-	 */
-	EAttribute getLinkType_Description();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.remus.infomngmnt.LinkType#getId()
-	 * @see #getLinkType()
-	 * @generated
-	 */
-	EAttribute getLinkType_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#getImagePath <em>Image Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Image Path</em>'.
-	 * @see org.remus.infomngmnt.LinkType#getImagePath()
-	 * @see #getLinkType()
-	 * @generated
-	 */
-	EAttribute getLinkType_ImagePath();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.LinkType#isEditable <em>Editable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Editable</em>'.
-	 * @see org.remus.infomngmnt.LinkType#isEditable()
-	 * @see #getLinkType()
-	 * @generated
-	 */
-	EAttribute getLinkType_Editable();
-
-	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.Adapter <em>Adapter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2442,61 +2246,6 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getAdapter();
-
-	/**
-	 * Returns the meta object for class '{@link org.remus.infomngmnt.LinkTypeCollection <em>Link Type Collection</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Link Type Collection</em>'.
-	 * @see org.remus.infomngmnt.LinkTypeCollection
-	 * @generated
-	 */
-	EClass getLinkTypeCollection();
-
-	/**
-	 * Returns the meta object for the map '{@link org.remus.infomngmnt.LinkTypeCollection#getAvailableLinkTypes <em>Available Link Types</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Available Link Types</em>'.
-	 * @see org.remus.infomngmnt.LinkTypeCollection#getAvailableLinkTypes()
-	 * @see #getLinkTypeCollection()
-	 * @generated
-	 */
-	EReference getLinkTypeCollection_AvailableLinkTypes();
-
-	/**
-	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Link Type Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>String To Link Type Map</em>'.
-	 * @see java.util.Map.Entry
-	 * @model keyDataType="org.eclipse.emf.ecore.EString"
-	 *        valueType="org.remus.infomngmnt.LinkType" valueContainment="true"
-	 * @generated
-	 */
-	EClass getStringToLinkTypeMap();
-
-	/**
-	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Key</em>'.
-	 * @see java.util.Map.Entry
-	 * @see #getStringToLinkTypeMap()
-	 * @generated
-	 */
-	EAttribute getStringToLinkTypeMap_Key();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Value</em>'.
-	 * @see java.util.Map.Entry
-	 * @see #getStringToLinkTypeMap()
-	 * @generated
-	 */
-	EReference getStringToLinkTypeMap_Value();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RecentlyUsedKeywords <em>Recently Used Keywords</em>}'.
@@ -3709,56 +3458,6 @@ public interface InfomngmntPackage extends EPackage {
 		EReference LINK__TARGET = eINSTANCE.getLink_Target();
 
 		/**
-		 * The meta object literal for the '<em><b>Linktype</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LINK__LINKTYPE = eINSTANCE.getLink_Linktype();
-
-		/**
-		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.LinkTypeImpl <em>Link Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.remus.infomngmnt.impl.LinkTypeImpl
-		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkType()
-		 * @generated
-		 */
-		EClass LINK_TYPE = eINSTANCE.getLinkType();
-
-		/**
-		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LINK_TYPE__DESCRIPTION = eINSTANCE.getLinkType_Description();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LINK_TYPE__ID = eINSTANCE.getLinkType_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Image Path</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LINK_TYPE__IMAGE_PATH = eINSTANCE.getLinkType_ImagePath();
-
-		/**
-		 * The meta object literal for the '<em><b>Editable</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LINK_TYPE__EDITABLE = eINSTANCE.getLinkType_Editable();
-
-		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.AdapterImpl <em>Adapter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3767,50 +3466,6 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ADAPTER = eINSTANCE.getAdapter();
-
-		/**
-		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.LinkTypeCollectionImpl <em>Link Type Collection</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.remus.infomngmnt.impl.LinkTypeCollectionImpl
-		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLinkTypeCollection()
-		 * @generated
-		 */
-		EClass LINK_TYPE_COLLECTION = eINSTANCE.getLinkTypeCollection();
-
-		/**
-		 * The meta object literal for the '<em><b>Available Link Types</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LINK_TYPE_COLLECTION__AVAILABLE_LINK_TYPES = eINSTANCE.getLinkTypeCollection_AvailableLinkTypes();
-
-		/**
-		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.StringToLinkTypeMapImpl <em>String To Link Type Map</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.remus.infomngmnt.impl.StringToLinkTypeMapImpl
-		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getStringToLinkTypeMap()
-		 * @generated
-		 */
-		EClass STRING_TO_LINK_TYPE_MAP = eINSTANCE.getStringToLinkTypeMap();
-
-		/**
-		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute STRING_TO_LINK_TYPE_MAP__KEY = eINSTANCE.getStringToLinkTypeMap_Key();
-
-		/**
-		 * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference STRING_TO_LINK_TYPE_MAP__VALUE = eINSTANCE.getStringToLinkTypeMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RecentlyUsedKeywordsImpl <em>Recently Used Keywords</em>}' class.

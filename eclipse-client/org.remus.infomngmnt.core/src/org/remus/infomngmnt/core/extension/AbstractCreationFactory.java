@@ -20,13 +20,24 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 
 /**
- * @author Tom Seidel <toms@tomosch.de>
+ * The Creation Factory is a class which describes how to create special
+ * information unit objects.
  * 
+ * 
+ * @author Tom Seidel <toms@tomosch.de>
+ * @since 1.0
  */
 public abstract class AbstractCreationFactory {
 
 	protected EditingDomain editingDomain;
 
+	/**
+	 * Creates a new Information unit. At this place you have to create the
+	 * structure to create a minimalistic information object which matches the
+	 * corresponding information type. Per Default the creation date is set.
+	 * 
+	 * @return the newly created information object.
+	 */
 	public InformationUnit createNewObject() {
 		InformationUnit newInfoObject = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		newInfoObject.setCreationDate(new Date());

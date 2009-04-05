@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.Link#getTarget <em>Target</em>}</li>
- *   <li>{@link org.remus.infomngmnt.Link#getLinktype <em>Linktype</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,31 +58,5 @@ public interface Link extends EObject {
 	 * @generated
 	 */
 	void setTarget(InformationUnit value);
-
-	/**
-	 * Returns the value of the '<em><b>Linktype</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Linktype</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Linktype</em>' reference.
-	 * @see #setLinktype(LinkType)
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getLink_Linktype()
-	 * @model required="true"
-	 * @generated
-	 */
-	LinkType getLinktype();
-
-	/**
-	 * Sets the value of the '{@link org.remus.infomngmnt.Link#getLinktype <em>Linktype</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Linktype</em>' reference.
-	 * @see #getLinktype()
-	 * @generated
-	 */
-	void setLinktype(LinkType value);
 
 } // Link

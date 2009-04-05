@@ -246,75 +246,6 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.LinkType} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected LinkTypeItemProvider linkTypeItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.remus.infomngmnt.LinkType}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createLinkTypeAdapter() {
-		if (linkTypeItemProvider == null) {
-			linkTypeItemProvider = new LinkTypeItemProvider(this);
-		}
-
-		return linkTypeItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.LinkTypeCollection} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected LinkTypeCollectionItemProvider linkTypeCollectionItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.remus.infomngmnt.LinkTypeCollection}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createLinkTypeCollectionAdapter() {
-		if (linkTypeCollectionItemProvider == null) {
-			linkTypeCollectionItemProvider = new LinkTypeCollectionItemProvider(this);
-		}
-
-		return linkTypeCollectionItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected StringToLinkTypeMapItemProvider stringToLinkTypeMapItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link java.util.Map.Entry}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createStringToLinkTypeMapAdapter() {
-		if (stringToLinkTypeMapItemProvider == null) {
-			stringToLinkTypeMapItemProvider = new StringToLinkTypeMapItemProvider(this);
-		}
-
-		return stringToLinkTypeMapItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.RecentlyUsedKeywords} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -880,9 +811,6 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (applicationRootItemProvider != null) applicationRootItemProvider.dispose();
 		if (annotationItemProvider != null) annotationItemProvider.dispose();
 		if (linkItemProvider != null) linkItemProvider.dispose();
-		if (linkTypeItemProvider != null) linkTypeItemProvider.dispose();
-		if (linkTypeCollectionItemProvider != null) linkTypeCollectionItemProvider.dispose();
-		if (stringToLinkTypeMapItemProvider != null) stringToLinkTypeMapItemProvider.dispose();
 		if (recentlyUsedKeywordsItemProvider != null) recentlyUsedKeywordsItemProvider.dispose();
 		if (newElementRulesItemProvider != null) newElementRulesItemProvider.dispose();
 		if (ruleValueItemProvider != null) ruleValueItemProvider.dispose();

@@ -97,24 +97,6 @@ public interface InfomngmntFactory extends EFactory {
 	Link createLink();
 
 	/**
-	 * Returns a new object of class '<em>Link Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Link Type</em>'.
-	 * @generated
-	 */
-	LinkType createLinkType();
-
-	/**
-	 * Returns a new object of class '<em>Link Type Collection</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Link Type Collection</em>'.
-	 * @generated
-	 */
-	LinkTypeCollection createLinkTypeCollection();
-
-	/**
 	 * Returns a new object of class '<em>Recently Used Keywords</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
+import org.remus.infomngmnt.*;
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
@@ -34,8 +35,6 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
-import org.remus.infomngmnt.LinkType;
-import org.remus.infomngmnt.LinkTypeCollection;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RecentlyUsedKeywords;
 import org.remus.infomngmnt.RemoteContainer;
@@ -53,26 +52,24 @@ import org.remus.infomngmnt.Tag;
 import org.remus.infomngmnt.Usage;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Adapter Factory</b> for the model.
- * It provides an adapter <code>createXXX</code> method for each class of the model.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides
+ * an adapter <code>createXXX</code> method for each class of the model. <!--
+ * end-user-doc -->
  * @see org.remus.infomngmnt.InfomngmntPackage
  * @generated
  */
 public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected static InfomngmntPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public InfomngmntAdapterFactory() {
@@ -83,9 +80,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Returns whether this factory is applicable for the type of the object.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This implementation returns <code>true</code> if
+	 * the object is either the model's package or is an instance object of the
+	 * model. <!-- end-user-doc -->
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -101,13 +98,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * The switch that delegates to the <code>createXXX</code> methods.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The switch that delegates to the <code>createXXX</code> methods. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected InfomngmntSwitch<Adapter> modelSwitch =
-		new InfomngmntSwitch<Adapter>() {
+	protected InfomngmntSwitch<Adapter> modelSwitch = new InfomngmntSwitch<Adapter>() {
 			@Override
 			public Adapter caseInformationUnit(InformationUnit object) {
 				return createInformationUnitAdapter();
@@ -141,20 +137,8 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createLinkAdapter();
 			}
 			@Override
-			public Adapter caseLinkType(LinkType object) {
-				return createLinkTypeAdapter();
-			}
-			@Override
 			public Adapter caseAdapter(org.remus.infomngmnt.Adapter object) {
 				return createAdapterAdapter();
-			}
-			@Override
-			public Adapter caseLinkTypeCollection(LinkTypeCollection object) {
-				return createLinkTypeCollectionAdapter();
-			}
-			@Override
-			public Adapter caseStringToLinkTypeMap(Map.Entry<String, LinkType> object) {
-				return createStringToLinkTypeMapAdapter();
 			}
 			@Override
 			public Adapter caseRecentlyUsedKeywords(RecentlyUsedKeywords object) {
@@ -259,13 +243,11 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
-
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.InformationUnit <em>Information Unit</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This default implementation returns null so that
+	 * we can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.InformationUnit
 	 * @generated
@@ -276,10 +258,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Usage <em>Usage</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> This default implementation returns null so that we can easily ignore
+	 * cases; it's useful to ignore a case when inheritance will catch all the
+	 * cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.Usage
 	 * @generated
@@ -289,11 +271,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Category <em>Category</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.Category <em>Category</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.Category
 	 * @generated
@@ -304,10 +287,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.AbstractInformationUnit <em>Abstract Information Unit</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This
+	 * default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases
+	 * anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.AbstractInformationUnit
 	 * @generated
@@ -318,10 +301,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.InformationUnitListItem <em>Information Unit List Item</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This
+	 * default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases
+	 * anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.InformationUnitListItem
 	 * @generated
@@ -332,10 +315,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.ApplicationRoot <em>Application Root</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This default implementation returns null so that
+	 * we can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.ApplicationRoot
 	 * @generated
@@ -345,11 +327,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Annotation <em>Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.Annotation <em>Annotation</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.Annotation
 	 * @generated
@@ -361,9 +344,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Link <em>Link</em>}'.
 	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * This default implementation returns null so that we can easily ignore
+	 * cases; it's useful to ignore a case when inheritance will catch all the
+	 * cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.Link
 	 * @generated
@@ -373,25 +356,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.LinkType <em>Link Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.remus.infomngmnt.LinkType
-	 * @generated
-	 */
-	public Adapter createLinkTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Adapter <em>Adapter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.Adapter <em>Adapter</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.Adapter
 	 * @generated
@@ -401,38 +371,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.LinkTypeCollection <em>Link Type Collection</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.remus.infomngmnt.LinkTypeCollection
-	 * @generated
-	 */
-	public Adapter createLinkTypeCollectionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Link Type Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see java.util.Map.Entry
-	 * @generated
-	 */
-	public Adapter createStringToLinkTypeMapAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RecentlyUsedKeywords <em>Recently Used Keywords</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- begin-user-doc --> This default
+	 * implementation returns null so that we can easily ignore cases; it's
+	 * useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RecentlyUsedKeywords
@@ -444,10 +386,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.NewElementRules <em>New Element Rules</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This default implementation returns null so that
+	 * we can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.NewElementRules
 	 * @generated
@@ -457,11 +398,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RuleValue <em>Rule Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.RuleValue <em>Rule Value</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RuleValue
 	 * @generated
@@ -472,10 +414,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.AvailableRuleDefinitions <em>Available Rule Definitions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This
+	 * default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases
+	 * anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.AvailableRuleDefinitions
 	 * @generated
@@ -486,9 +428,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemusTransferType <em>Remus Transfer Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- begin-user-doc --> This default
+	 * implementation returns null so that we can easily ignore cases; it's
+	 * useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RemusTransferType
@@ -499,11 +441,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RuleAction <em>Rule Action</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.RuleAction <em>Rule Action</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RuleAction
 	 * @generated
@@ -513,11 +456,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RuleResult <em>Rule Result</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.RuleResult <em>Rule Result</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RuleResult
 	 * @generated
@@ -528,10 +472,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemoteRepository <em>Remote Repository</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This default implementation returns null so
+	 * that we can easily ignore cases; it's useful to ignore a case when
+	 * inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RemoteRepository
 	 * @generated
@@ -541,11 +484,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemoteObject <em>Remote Object</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.RemoteObject <em>Remote Object</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RemoteObject
 	 * @generated
@@ -556,10 +500,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RemoteContainer <em>Remote Container</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This default implementation returns null so that
+	 * we can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RemoteContainer
 	 * @generated
@@ -570,9 +513,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.RepositoryCollection <em>Repository Collection</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- begin-user-doc --> This default
+	 * implementation returns null so that we can easily ignore cases; it's
+	 * useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.RepositoryCollection
@@ -584,9 +527,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.SynchronizationMetadata <em>Synchronization Metadata</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- begin-user-doc --> This default
+	 * implementation returns null so that we can easily ignore cases; it's
+	 * useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.SynchronizationMetadata
@@ -597,11 +540,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.ChangeSet <em>Change Set</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.ChangeSet <em>Change Set</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.ChangeSet
 	 * @generated
@@ -612,10 +556,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.ChangeSetItem <em>Change Set Item</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This default implementation returns null so that
+	 * we can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.ChangeSetItem
 	 * @generated
@@ -626,10 +569,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Category To Synchronization Action Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> This default implementation returns null so that we can easily ignore
+	 * cases; it's useful to ignore a case when inheritance will catch all the
+	 * cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see java.util.Map.Entry
 	 * @generated
@@ -639,11 +582,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Information Unit List Item To Information Unit Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry
+	 * <em>Information Unit List Item To Information Unit Map</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see java.util.Map.Entry
 	 * @generated
@@ -653,11 +597,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Synchronizable Object To Synchronization Action Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry
+	 * <em>Synchronizable Object To Synchronization Action Map</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see java.util.Map.Entry
 	 * @generated
@@ -669,9 +614,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Tag <em>Tag</em>}'.
 	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * This default implementation returns null so that we can easily ignore
+	 * cases; it's useful to ignore a case when inheritance will catch all the
+	 * cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.Tag
 	 * @generated
@@ -681,11 +626,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.AvailableTags <em>Available Tags</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.AvailableTags <em>Available Tags</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.AvailableTags
 	 * @generated
@@ -696,9 +642,9 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.SynchronizableObject <em>Synchronizable Object</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- begin-user-doc --> This default
+	 * implementation returns null so that we can easily ignore cases; it's
+	 * useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.SynchronizableObject
@@ -709,11 +655,12 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.CalenderEntry <em>Calender Entry</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.remus.infomngmnt.CalenderEntry <em>Calender Entry</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.remus.infomngmnt.CalenderEntry
 	 * @generated
@@ -724,9 +671,8 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for the default case.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This
+	 * default implementation returns null. <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @generated
 	 */
@@ -734,4 +680,4 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //InfomngmntAdapterFactory
+} // InfomngmntAdapterFactory

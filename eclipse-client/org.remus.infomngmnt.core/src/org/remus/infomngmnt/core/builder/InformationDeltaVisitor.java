@@ -20,6 +20,7 @@ import java.io.InputStream;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
@@ -77,11 +78,14 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				case IResourceDelta.REPLACED:
 				case IResourceDelta.ADDED:
 				case IResourceDelta.CHANGED:
+
 					if (resourceDelta.getResource().exists() && objectFromFile != null
 							&& objectFromFile.getId() != null) {
+
 						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta
 								.getResource());
 					}
+
 					break;
 				case IResourceDelta.REMOVED:
 					break;
@@ -93,7 +97,9 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	void buildSingleInfoUnit(final InformationUnit objectFromFile, final IInfoType infoTypeByType,
 			final IFile resource) {
+
 		try {
+			resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 			File createTempFile = null;
 			AbstractInformationRepresentation informationRepresentation = infoTypeByType
 					.getInformationRepresentation();
@@ -165,11 +171,18 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 					createTempFile.delete();
 				}
 			}
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			try {
+				IMarker createMarker = resource.createMarker(IMarker.PROBLEM);
+				createMarker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+				createMarker.setAttribute(IMarker.LOCATION, objectFromFile.getLabel());
+				createMarker.setAttribute(IMarker.MESSAGE, "Error while saving the inormation "
+						+ objectFromFile.getLabel());
+			} catch (CoreException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
-
 	}
 
 	public void setMonitor(final IProgressMonitor monitor) {

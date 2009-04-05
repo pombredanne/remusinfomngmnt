@@ -43,20 +43,24 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 	private final InformationUnitListItem createInformationUnitListItem;
 	private final IFile newFile;
 
-	public CreateInfoTypeCommand(final InformationUnit newInformationUnit, final Category parentCategory) {
+	public CreateInfoTypeCommand(final InformationUnit newInformationUnit,
+			final Category parentCategory) {
 		this.newInformationUnit = newInformationUnit;
 		this.parentCategory = parentCategory;
 		newInformationUnit.setId(new UniversalUniqueIdentifier().toString());
 
-		this.createInformationUnitListItem = InfomngmntFactory.eINSTANCE.createInformationUnitListItem();
-		this.newFile = CategoryUtil.getProjectByCategory(parentCategory).getFile(newInformationUnit.getId() + ".info");
+		this.createInformationUnitListItem = InfomngmntFactory.eINSTANCE
+				.createInformationUnitListItem();
+		this.newFile = CategoryUtil.getProjectByCategory(parentCategory).getFile(
+				newInformationUnit.getId() + ".info");
 
 		/*
-		 * if the parent category is under remote control, we
-		 * have to prepare this item for adding to the repository.
+		 * if the parent category is under remote control, we have to prepare
+		 * this item for adding to the repository.
 		 */
 		if (parentCategory.getSynchronizationMetaData() != null) {
-			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE.createSynchronizationMetadata();
+			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
+					.createSynchronizationMetadata();
 			metadata.setRepositoryId(parentCategory.getSynchronizationMetaData().getRepositoryId());
 			metadata.setSyncState(SynchronizationState.NOT_ADDED);
 			this.createInformationUnitListItem.setSynchronizationMetaData(metadata);
@@ -65,12 +69,11 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 		this.createInformationUnitListItem.setId(newInformationUnit.getId());
 		this.createInformationUnitListItem.setLabel(newInformationUnit.getLabel());
 		this.createInformationUnitListItem.setType(newInformationUnit.getType());
-		this.createInformationUnitListItem.setWorkspacePath(this.newFile.getFullPath().toOSString());
+		this.createInformationUnitListItem
+				.setWorkspacePath(this.newFile.getFullPath().toOSString());
 
-		append(new CreateChildCommand(
-				EditingUtil.getInstance().getNavigationEditingDomain(),
-				parentCategory,
-				InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
+		append(new CreateChildCommand(EditingUtil.getInstance().getNavigationEditingDomain(),
+				parentCategory, InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
 				this.createInformationUnitListItem, Collections.EMPTY_LIST));
 
 	}
@@ -95,7 +98,8 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 
 	@Override
 	public String getLabel() {
-		return NLS.bind("New {0} - {1}",this.newInformationUnit.getType(),this.newInformationUnit.getLabel());
+		return NLS.bind("New {0} - {1}", this.newInformationUnit.getType(), this.newInformationUnit
+				.getLabel());
 	}
 
 	private void postExcecute() {
@@ -105,7 +109,8 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 	private void postUndo() {
 		try {
 			// Save the current state.
-			this.newInformationUnit = EditingUtil.getInstance().getObjectFromFile(this.newFile, InfomngmntPackage.Literals.INFORMATION_UNIT);
+			this.newInformationUnit = EditingUtil.getInstance().getObjectFromFile(this.newFile,
+					InfomngmntPackage.Literals.INFORMATION_UNIT);
 			this.newFile.delete(true, new NullProgressMonitor());
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block

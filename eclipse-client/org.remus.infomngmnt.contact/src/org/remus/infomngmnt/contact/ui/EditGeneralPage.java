@@ -21,9 +21,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
-public class EditContactPage extends AbstractInformationFormPage {
+public class EditGeneralPage extends AbstractInformationFormPage {
 
-	public EditContactPage() {
+	public EditGeneralPage() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -37,10 +37,6 @@ public class EditContactPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(body);
 
 		new GeneralSectionUI(body, toolkit);
-		new DetailsSectionUI(body, toolkit);
-		new EncryptionSectionUI(body, toolkit);
-		new MiscellaneousSectionUI(body, toolkit);
-		new UserDefinedSectionUI(body, toolkit, getSite().getShell(), getModelObject(), EditContactPage.this.editingDomain);
 		doCreateSemanticSection(body, toolkit);
 	}
 }

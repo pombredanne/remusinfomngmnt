@@ -32,7 +32,7 @@ public class DetailsSectionUI {
 
 	public DetailsSectionUI(Composite body, FormToolkit toolkit) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE);
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		section_1.setText("Details");
 		
@@ -44,8 +44,11 @@ public class DetailsSectionUI {
 		section_1.setClient(compositeGeneral);
 
 		createGroupGeneral(compositeGeneral, toolkit);
+//		createSeparator(compositeGeneral, true, 1);
 		createGroupPerson(compositeGeneral, toolkit);
+//		createSeparator(compositeGeneral, true, 1);
 		createGroupNote(compositeGeneral, toolkit);
+		createSeparator(compositeGeneral, true, 1);
 		createGroupButtons(compositeGeneral, toolkit);
 	}
 
@@ -160,5 +163,14 @@ public class DetailsSectionUI {
 		final Text tx_Title = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_Title.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 	}
-
+	private void createSeparator(Composite compositeGeneral, boolean isHorizontal, int span) {
+		final Label lb_Separator = new Label(compositeGeneral, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		if (isHorizontal) {
+			gd_text.horizontalSpan = span;
+		}else
+			gd_text.verticalSpan = span;
+			
+		lb_Separator.setLayoutData(gd_text);		
+	}
 }

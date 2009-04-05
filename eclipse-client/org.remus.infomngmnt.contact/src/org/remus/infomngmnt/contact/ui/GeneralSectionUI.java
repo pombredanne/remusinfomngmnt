@@ -48,6 +48,7 @@ public class GeneralSectionUI {
 		createGroupPhoneNumbers(compositeGeneral, toolkit);		
 		createGroupAddress(compositeGeneral, toolkit);
 		createGroupInternet(compositeGeneral, toolkit);
+		createSeparator(compositeGeneral, true, 2);
 		new Label(compositeGeneral, SWT.NONE);
 		createGroupButtons(compositeGeneral, toolkit);
 	}
@@ -213,5 +214,15 @@ private void createGroupPerson(Composite compositeGeneral, FormToolkit toolkit) 
 		
 		final Button bt_EditImAddress = toolkit.createButton(group_Internet, "Edit IM-Address ...", SWT.NONE);
 		bt_EditImAddress.setLayoutData(gd_SpanHorizontal2);
+	}
+	private void createSeparator(Composite compositeGeneral, boolean isHorizontal, int span) {
+		final Label lb_Separator = new Label(compositeGeneral, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		if (isHorizontal) {
+			gd_text.horizontalSpan = span;
+		}else
+			gd_text.verticalSpan = span;
+			
+		lb_Separator.setLayoutData(gd_text);		
 	}
 }

@@ -38,9 +38,9 @@ public class GeneralSectionUI {
 		section_1.setText("General");
 		
 		final Composite compositeGeneral = toolkit.createComposite(section_1, SWT.BORDER);
-		final GridLayout gridLayoutAdditional = new GridLayout();
-		gridLayoutAdditional.numColumns = 2;
-		compositeGeneral.setLayout(gridLayoutAdditional);
+		final GridLayout gridLayoutGeneral = new GridLayout();
+		gridLayoutGeneral.numColumns = 2;
+		compositeGeneral.setLayout(gridLayoutGeneral);
 		toolkit.paintBordersFor(compositeGeneral);
 		section_1.setClient(compositeGeneral);
 

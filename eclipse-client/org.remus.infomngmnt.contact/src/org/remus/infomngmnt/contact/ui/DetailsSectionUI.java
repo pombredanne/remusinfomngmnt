@@ -44,9 +44,7 @@ public class DetailsSectionUI {
 		section_1.setClient(compositeGeneral);
 
 		createGroupGeneral(compositeGeneral, toolkit);
-//		createSeparator(compositeGeneral, true, 1);
 		createGroupPerson(compositeGeneral, toolkit);
-//		createSeparator(compositeGeneral, true, 1);
 		createGroupNote(compositeGeneral, toolkit);
 		createSeparator(compositeGeneral, true, 1);
 		createGroupButtons(compositeGeneral, toolkit);

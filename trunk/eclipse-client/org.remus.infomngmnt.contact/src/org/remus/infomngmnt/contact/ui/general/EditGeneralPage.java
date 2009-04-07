@@ -9,16 +9,23 @@
  * Contributors:
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.general;
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
  */
+import java.io.ByteArrayInputStream;
+
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 public class EditGeneralPage extends AbstractInformationFormPage {
@@ -34,9 +41,8 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
-		toolkit.paintBordersFor(body);
 
-		new GeneralSectionUI(body, toolkit);
+		GeneralSection gs = new GeneralSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
 		doCreateSemanticSection(body, toolkit);
 	}
 }

@@ -14,6 +14,7 @@ package org.remus.infomngmnt.contact.core;
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
  */
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
@@ -26,7 +27,17 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 	@Override
 	public InformationUnit createNewObject() {
 		InformationUnit returnValue = super.createNewObject();
+				
+		returnValue.setType(ContactActivator.TYPE_ID);
+		InformationUnit rawData = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		rawData.setType(ContactActivator.NODE_NAME_RAWDATA);
+		InformationUnit origFilePath = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		origFilePath.setType(ContactActivator.ORIGINAL_FILEPATH);
+
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
+		returnValue.getChildValues().add(rawData);
+		returnValue.getChildValues().add(origFilePath);
+		
 		return returnValue;
 	}
 }

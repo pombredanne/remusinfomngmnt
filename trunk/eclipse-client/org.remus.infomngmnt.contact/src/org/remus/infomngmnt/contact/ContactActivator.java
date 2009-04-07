@@ -24,6 +24,14 @@ public class ContactActivator extends AbstractUIPlugin {
 
 	public static String PASSWORD_INFO_ID = "CONTACT";
 	
+	public static final String TYPE_ID = "IMAGE"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_RAWDATA = "imageData"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_EXIF = "exifdata"; //$NON-NLS-1$
+	
+	public static final String ORIGINAL_FILEPATH = "originFilePath"; //$NON-NLS-1$
+	
 	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact";

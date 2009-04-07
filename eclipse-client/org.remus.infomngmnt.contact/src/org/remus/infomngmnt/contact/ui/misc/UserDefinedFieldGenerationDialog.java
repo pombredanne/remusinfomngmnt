@@ -1,4 +1,4 @@
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.misc;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.InformationUnit;
 
-public class UserDefinedFieldGenerationDialogUI extends TitleAreaDialog {
+public class UserDefinedFieldGenerationDialog extends TitleAreaDialog {
 
 
 	private final InformationUnit contact;
@@ -24,7 +24,7 @@ public class UserDefinedFieldGenerationDialogUI extends TitleAreaDialog {
 	private Button bt_Ok;
 	private Composite area;
 
-	public UserDefinedFieldGenerationDialogUI(Shell parentShell, InformationUnit contact, AdapterFactoryEditingDomain editingDomain) {
+	public UserDefinedFieldGenerationDialog(Shell parentShell, InformationUnit contact, AdapterFactoryEditingDomain editingDomain) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.contact = contact;

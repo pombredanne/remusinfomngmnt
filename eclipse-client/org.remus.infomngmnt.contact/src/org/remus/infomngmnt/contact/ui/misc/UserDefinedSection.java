@@ -9,7 +9,7 @@
  * Contributors:
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.misc;
 
  /**
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
@@ -31,9 +31,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InformationUnit;
 
-public class UserDefinedSectionUI {
+public class UserDefinedSection {
 
-	public UserDefinedSectionUI(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain adapterFactoryEditingDomain) {
+	public UserDefinedSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain adapterFactoryEditingDomain) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -79,14 +79,14 @@ public class UserDefinedSectionUI {
 		bt_CreateField.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
-				UserDefinedFieldGenerationDialogUI dialog = new UserDefinedFieldGenerationDialogUI(shell, informationUnit, adapterFactoryEditingDomain);
+				UserDefinedFieldGenerationDialog dialog = new UserDefinedFieldGenerationDialog(shell, informationUnit, adapterFactoryEditingDomain);
 				dialog.open();
 			}
 		});	
 		bt_DeleteField.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
-				UserDefinedFieldDeletionDialogUI dialog = new UserDefinedFieldDeletionDialogUI(shell, informationUnit, adapterFactoryEditingDomain);
+				UserDefinedFieldDeletionDialog dialog = new UserDefinedFieldDeletionDialog(shell, informationUnit, adapterFactoryEditingDomain);
 				dialog.open();
 			}
 		});

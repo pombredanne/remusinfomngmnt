@@ -8,28 +8,28 @@
             creationFactory="org.remus.infomngmnt.contact.core.ContactCreationFactory"
             icon="icons/iconexperience/contact.png"
             name="Contact"
-            presentation="org.remus.infomngmnt.contact.AbstractInformationRepresentation"
+            presentation="org.remus.infomngmnt.contact.ContactInformationRepresentation"
             type="CONTACT">
       </information>
    </extension>
    <extension
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
-            editpage="org.remus.infomngmnt.contact.ui.EditGeneralPage"
+            editpage="org.remus.infomngmnt.contact.ui.general.EditGeneralPage"
             icon="icons/iconexperience/contact.png"
             id="org.remus.infomngmnt.contact.editGeneralPage"
             label="General"
             type="CONTACT">
       </editPage>
       <editPage
-            editpage="org.remus.infomngmnt.contact.ui.EditDetailPage"
+            editpage="org.remus.infomngmnt.contact.ui.detail.EditDetailPage"
             icon="icons/iconexperience/contact.png"
             id="org.remus.infomngmnt.contact.editDetailPage"
             label="Details"
             type="CONTACT">
       </editPage>
       <editPage
-            editpage="org.remus.infomngmnt.contact.ui.EditMiscPage"
+            editpage="org.remus.infomngmnt.contact.ui.misc.EditMiscPage"
             icon="icons/iconexperience/contact.png"
             id="org.remus.infomngmnt.contact.editMiscPage"
             label="Miscellaneous"

@@ -9,12 +9,13 @@
  * Contributors:
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.detail;
 
  /**
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
   * 
   */
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
@@ -23,14 +24,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.InformationUnit;
 
-public class DetailsSectionUI {
+public class DetailsSection {
 
-	public DetailsSectionUI(Composite body, FormToolkit toolkit) {
+	public DetailsSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));

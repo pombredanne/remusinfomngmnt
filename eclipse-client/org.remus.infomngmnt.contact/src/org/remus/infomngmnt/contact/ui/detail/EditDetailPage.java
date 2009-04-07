@@ -1,4 +1,4 @@
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.detail;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -21,7 +21,7 @@ public class EditDetailPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		new DetailsSectionUI(body, toolkit);
+		new DetailsSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
 		doCreateSemanticSection(body, toolkit);
 	}
 }

@@ -9,29 +9,56 @@
  * Contributors:
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.general;
 
  /**
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
   * 
   */
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.core.model.InformationUtil;
 
-public class GeneralSectionUI {
+public class GeneralSection {
 
-	public GeneralSectionUI(Composite body, FormToolkit toolkit) {
+	private Label lb_Image;
+	private Button bt_EditName;
+	
+	public GeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain){		
+		
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -44,13 +71,13 @@ public class GeneralSectionUI {
 		toolkit.paintBordersFor(compositeGeneral);
 		section_1.setClient(compositeGeneral);
 
-		createGroupPerson(compositeGeneral, toolkit);	
+		createGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
 		createGroupPhoneNumbers(compositeGeneral, toolkit);		
 		createGroupAddress(compositeGeneral, toolkit);
 		createGroupInternet(compositeGeneral, toolkit);
 		createSeparator(compositeGeneral, true, 2);
 		new Label(compositeGeneral, SWT.NONE);
-		createGroupButtons(compositeGeneral, toolkit);
+		createGroupButtons(compositeGeneral, toolkit);		
 	}
 
 	private void createGroupButtons(Composite compositeGeneral,
@@ -69,7 +96,7 @@ public class GeneralSectionUI {
 		final Button bt_Apply = toolkit.createButton(composite_CreateDetailButtons, "Apply", SWT.NONE);
 		final Button bt_Cancel = toolkit.createButton(composite_CreateDetailButtons, "Cancel", SWT.NONE);
 	}
-private void createGroupPerson(Composite compositeGeneral, FormToolkit toolkit) {
+	private void createGroupPerson(Composite compositeGeneral, FormToolkit toolkit,  Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain) {
 		
 		final Group group_Person = new Group(compositeGeneral, SWT.NONE);
 	    final GridData gd_Person= new GridData();
@@ -79,10 +106,17 @@ private void createGroupPerson(Composite compositeGeneral, FormToolkit toolkit) 
 	    gd_Person.horizontalAlignment = GridData.FILL;
 	    group_Person.setLayoutData(gd_Person);
 		final GridLayout gl_PersonGroup = new GridLayout();
-		gl_PersonGroup.numColumns = 2;
+		gl_PersonGroup.numColumns = 3;
 		group_Person.setLayout(gl_PersonGroup);
 		
-		final Button bt_EditName = toolkit.createButton(group_Person, "Edit Name...", SWT.NONE);
+		lb_Image = toolkit.createLabel(group_Person, "dummyimage", SWT.BORDER);
+		lb_Image.setSize(100, 200);
+		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, false, true);
+		gd_text.verticalSpan = 4;
+		gd_text.verticalAlignment = GridData.FILL;
+		lb_Image.setLayoutData(gd_text);
+		
+		bt_EditName = toolkit.createButton(group_Person, "Edit Name...", SWT.NONE);
 		String tx_EditNameValue = null;
 		final Text tx_EditName = toolkit.createText(group_Person, tx_EditNameValue, SWT.BORDER);
 		tx_EditName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
@@ -100,7 +134,77 @@ private void createGroupPerson(Composite compositeGeneral, FormToolkit toolkit) 
 		tx_FormattedName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		tx_FormattedName.setEditable(false);
 		tx_FormattedName.setEnabled(false);
+		
+		createListener(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
+		
+		InformationUnit rawData = InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_RAWDATA);
+		if(rawData != null && rawData.getBinaryValue() != null) {
+			ByteArrayInputStream bais = new ByteArrayInputStream(rawData.getBinaryValue());
+			ImageData imageData = new ImageData(bais);
+			ImageData imageScaled = ScaleImageToTarget.scale(imageData, lb_Image.getSize().x, lb_Image.getSize().y);
+			Image image = new Image(null, imageScaled);
+			lb_Image.setImage(image);
+		}
 	}
+
+	private void createListener(final Composite compositeGeneral, final FormToolkit toolkit,  final Shell shell, final InformationUnit informationUnit, final AdapterFactoryEditingDomain editingDomain) {
+		lb_Image.addMouseListener(new MouseListener(){
+
+			public void mouseDoubleClick(MouseEvent e) {
+				
+				FileDialog fd = new FileDialog(shell);
+				fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" });
+				fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
+				String open = fd.open();
+				
+				if (open != null) {
+					LoadImageRunnable loadImage = new LoadImageRunnable();
+					loadImage.setImagePath(open);
+					loadImage.setImageNode(informationUnit);
+					loadImage.setDomain(editingDomain);
+					ProgressMonitorDialog pmd = new ProgressMonitorDialog(shell);
+					try {
+						pmd.run(true, false, loadImage);
+					} catch (InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					ImageData imageData = new ImageData(loadImage.getFile().getPath());
+					ImageData imageScaled = ScaleImageToTarget.scale(imageData, lb_Image.getSize().x, lb_Image.getSize().y);
+					Image image = new Image(null, imageScaled);
+					lb_Image.setImage(image);
+				}
+			}
+
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		bt_EditName.addSelectionListener(new SelectionListener(){
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				EditContactDialog ecd = new EditContactDialog(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
+				ecd.open();
+				
+			}});
+	
+	}
+
 	private void createGroupPhoneNumbers(Composite compositeGeneral, FormToolkit toolkit) {
 			
 		final Group group_PhoneNumbers = new Group(compositeGeneral, SWT.NONE);

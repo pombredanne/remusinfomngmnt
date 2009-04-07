@@ -9,7 +9,7 @@
  * Contributors:
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.misc;
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 
-public class UserDefinedFieldDeletionDialogUI extends TitleAreaDialog {
+public class UserDefinedFieldDeletionDialog extends TitleAreaDialog {
 
 	private final InformationUnit contact;
 	private final AdapterFactoryEditingDomain editingDomain;
@@ -44,7 +44,7 @@ public class UserDefinedFieldDeletionDialogUI extends TitleAreaDialog {
 	private TableViewer tv_ExistingFields;
 	private Button bt_Ok;
 
-	public UserDefinedFieldDeletionDialogUI(Shell parentShell, InformationUnit contact, AdapterFactoryEditingDomain editingDomain) {
+	public UserDefinedFieldDeletionDialog(Shell parentShell, InformationUnit contact, AdapterFactoryEditingDomain editingDomain) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.contact = contact;

@@ -1,4 +1,4 @@
-package org.remus.infomngmnt.contact.ui;
+package org.remus.infomngmnt.contact.ui.misc;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -22,9 +22,9 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		new EncryptionSectionUI(body, toolkit);
-		new MiscellaneousSectionUI(body, toolkit);
-		new UserDefinedSectionUI(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
+		new EncryptionSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
+		new MiscellaneousSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
+		new UserDefinedSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
 		doCreateSemanticSection(body, toolkit);
 	}
 }

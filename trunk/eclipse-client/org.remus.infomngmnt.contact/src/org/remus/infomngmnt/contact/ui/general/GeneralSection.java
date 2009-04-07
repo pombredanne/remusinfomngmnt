@@ -16,14 +16,8 @@ package org.remus.infomngmnt.contact.ui.general;
   * 
   */
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
@@ -34,7 +28,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -178,31 +171,23 @@ public class GeneralSection {
 					lb_Image.setImage(image);
 				}
 			}
-
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub	
 			}
-
 			public void mouseUp(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
-			}
-			
+			}			
 		});
 		bt_EditName.addSelectionListener(new SelectionListener(){
 
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub				
 			}
 
 			public void widgetSelected(SelectionEvent e) {
 				EditContactDialog ecd = new EditContactDialog(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
 				ecd.open();
-				
 			}});
-	
 	}
 
 	private void createGroupPhoneNumbers(Composite compositeGeneral, FormToolkit toolkit) {
@@ -224,7 +209,6 @@ public class GeneralSection {
 		String[] comboValue = new String[]{"Home", "Work", "Messanger", "Voice", "Fax", "Mobile", "Video", "Mailbox","Modem", "Car","ISDN","PCS","Pager","Others..."} ;
 		
 		comboAndText(composite_Numbers, comboValue, 4);
-
 
 		final Composite composite_CreateDeleteButtons = toolkit.createComposite(group_PhoneNumbers, SWT.NONE);
 		final GridLayout gl_CreateDeleteButtons = new GridLayout();

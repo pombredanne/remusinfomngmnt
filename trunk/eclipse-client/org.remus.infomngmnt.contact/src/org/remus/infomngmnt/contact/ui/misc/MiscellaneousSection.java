@@ -16,8 +16,14 @@ package org.remus.infomngmnt.contact.ui.misc;
   * 
   */
 
+import java.io.ByteArrayInputStream;
+
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -30,6 +36,9 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.core.ImageManipulation;
+import org.remus.infomngmnt.core.model.InformationUtil;
 
 public class MiscellaneousSection {
 
@@ -46,7 +55,7 @@ public class MiscellaneousSection {
 		toolkit.paintBordersFor(compositeGeneral);
 		section_1.setClient(compositeGeneral);
 
-		createGroupImage("Logo", compositeGeneral, toolkit);
+		createGroupImage("Logo", compositeGeneral, toolkit, shell, informationUnit, editingDomain);
 		createGroupGeoDatas(compositeGeneral, toolkit);
 		createSeparator(compositeGeneral, true, 2);
 		new Label(compositeGeneral, SWT.NONE);
@@ -101,7 +110,7 @@ public class MiscellaneousSection {
 	}
 
 	private void createGroupImage(String name, Composite compositeGeneral,
-			FormToolkit toolkit) {
+			FormToolkit toolkit, final Shell shell, final InformationUnit informationUnit, final AdapterFactoryEditingDomain editingDomain) {
 
 		final Group group_Images = new Group(compositeGeneral, SWT.NONE);
 	    final GridData gd_Images= new GridData();
@@ -120,7 +129,36 @@ public class MiscellaneousSection {
 		gd_text.horizontalAlignment = SWT.CENTER;
 		lb_Image.setLayoutData(gd_text);
 		
-		final Button bt_Image = toolkit.createButton(group_Images, "dummyimage", SWT.IMAGE_UNDEFINED);
+		final Label bt_Image = toolkit.createLabel(group_Images, "double click me ...", SWT.BORDER);
+		bt_Image.setSize(100, 300);
+		GridData gd_Image = new GridData(SWT.TOP, SWT.FILL, false, true);
+		gd_Image.verticalSpan = 5;
+		bt_Image.setLayoutData(gd_Image);
+		
+		bt_Image.addMouseListener(new MouseListener(){
+
+			public void mouseDoubleClick(MouseEvent e) {
+				bt_Image.setImage(ImageManipulation.selectImageFromDialog(shell, informationUnit, ContactActivator.NODE_NAME_RAWDATA_LOGO, editingDomain, lb_Image.getSize().x, lb_Image.getSize().y));
+			}
+
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		InformationUnit rawData = InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_RAWDATA_LOGO);
+		if(rawData != null && rawData.getBinaryValue() != null) {
+			ByteArrayInputStream bais = new ByteArrayInputStream(rawData.getBinaryValue());
+			ImageData imageData = new ImageData(bais);
+			ImageData imageScaled = ImageManipulation.scaleImageToTarget(imageData, bt_Image.getSize().x, bt_Image.getSize().y);
+			Image image = new Image(null, imageScaled);
+			bt_Image.setImage(image);
+		}
 	}
 	private void createGroupButtons(Composite compositeGeneral,
 			FormToolkit toolkit) {

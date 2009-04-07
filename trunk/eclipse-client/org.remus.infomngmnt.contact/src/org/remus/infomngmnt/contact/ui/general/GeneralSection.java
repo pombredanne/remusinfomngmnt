@@ -18,6 +18,7 @@ package org.remus.infomngmnt.contact.ui.general;
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
@@ -41,8 +42,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
 public class GeneralSection {
@@ -102,7 +105,7 @@ public class GeneralSection {
 		gl_PersonGroup.numColumns = 3;
 		group_Person.setLayout(gl_PersonGroup);
 		
-		lb_Image = toolkit.createLabel(group_Person, "dummyimage", SWT.BORDER);
+		lb_Image = toolkit.createLabel(group_Person, "double click me ...", SWT.BORDER);
 		lb_Image.setSize(100, 200);
 		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, false, true);
 		gd_text.verticalSpan = 4;
@@ -130,11 +133,11 @@ public class GeneralSection {
 		
 		createListener(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
 		
-		InformationUnit rawData = InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_RAWDATA);
+		InformationUnit rawData = InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_RAWDATA_IMAGE);
 		if(rawData != null && rawData.getBinaryValue() != null) {
 			ByteArrayInputStream bais = new ByteArrayInputStream(rawData.getBinaryValue());
 			ImageData imageData = new ImageData(bais);
-			ImageData imageScaled = ScaleImageToTarget.scale(imageData, lb_Image.getSize().x, lb_Image.getSize().y);
+			ImageData imageScaled = ImageManipulation.scaleImageToTarget(imageData, lb_Image.getSize().x, lb_Image.getSize().y);
 			Image image = new Image(null, imageScaled);
 			lb_Image.setImage(image);
 		}
@@ -144,33 +147,9 @@ public class GeneralSection {
 		lb_Image.addMouseListener(new MouseListener(){
 
 			public void mouseDoubleClick(MouseEvent e) {
-				
-				FileDialog fd = new FileDialog(shell);
-				fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" });
-				fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
-				String open = fd.open();
-				
-				if (open != null) {
-					LoadImageRunnable loadImage = new LoadImageRunnable();
-					loadImage.setImagePath(open);
-					loadImage.setImageNode(informationUnit);
-					loadImage.setDomain(editingDomain);
-					ProgressMonitorDialog pmd = new ProgressMonitorDialog(shell);
-					try {
-						pmd.run(true, false, loadImage);
-					} catch (InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					ImageData imageData = new ImageData(loadImage.getFile().getPath());
-					ImageData imageScaled = ScaleImageToTarget.scale(imageData, lb_Image.getSize().x, lb_Image.getSize().y);
-					Image image = new Image(null, imageScaled);
-					lb_Image.setImage(image);
-				}
+				lb_Image.setImage(ImageManipulation.selectImageFromDialog(shell, informationUnit, ContactActivator.NODE_NAME_RAWDATA_IMAGE, editingDomain, lb_Image.getSize().x, lb_Image.getSize().y));
 			}
+
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub	
 			}
@@ -189,7 +168,7 @@ public class GeneralSection {
 				ecd.open();
 			}});
 	}
-
+	
 	private void createGroupPhoneNumbers(Composite compositeGeneral, FormToolkit toolkit) {
 			
 		final Group group_PhoneNumbers = new Group(compositeGeneral, SWT.NONE);

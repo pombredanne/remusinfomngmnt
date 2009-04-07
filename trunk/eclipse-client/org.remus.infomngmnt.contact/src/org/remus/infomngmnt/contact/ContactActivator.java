@@ -26,7 +26,9 @@ public class ContactActivator extends AbstractUIPlugin {
 	
 	public static final String TYPE_ID = "IMAGE"; //$NON-NLS-1$
 	
-	public static final String NODE_NAME_RAWDATA = "imageData"; //$NON-NLS-1$
+	public static final String NODE_NAME_RAWDATA_IMAGE = "imageData"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_RAWDATA_LOGO = "logoData"; //$NON-NLS-1$
 	
 	public static final String NODE_NAME_EXIF = "exifdata"; //$NON-NLS-1$
 	

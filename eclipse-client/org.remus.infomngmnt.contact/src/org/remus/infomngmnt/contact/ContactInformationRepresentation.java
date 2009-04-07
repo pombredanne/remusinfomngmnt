@@ -37,7 +37,7 @@ public class ContactInformationRepresentation extends
 	@Override
 	public void handlePreBuild(final IProgressMonitor monitor) {
 		InformationUnit rawDataNode = InformationUtil.getChildByType(getValue(),
-				ContactActivator.NODE_NAME_RAWDATA);
+				ContactActivator.NODE_NAME_RAWDATA_IMAGE);
 		if (rawDataNode != null && rawDataNode.getBinaryValue() != null) {
 			monitor.setTaskName("Extracting image...");
 		}

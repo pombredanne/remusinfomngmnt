@@ -29,13 +29,16 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit returnValue = super.createNewObject();
 				
 		returnValue.setType(ContactActivator.TYPE_ID);
-		InformationUnit rawData = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		rawData.setType(ContactActivator.NODE_NAME_RAWDATA);
+		InformationUnit rawDataImage = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		rawDataImage.setType(ContactActivator.NODE_NAME_RAWDATA_IMAGE);
+		InformationUnit rawDataLogo = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		rawDataLogo.setType(ContactActivator.NODE_NAME_RAWDATA_LOGO);
 		InformationUnit origFilePath = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		origFilePath.setType(ContactActivator.ORIGINAL_FILEPATH);
 
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
-		returnValue.getChildValues().add(rawData);
+		returnValue.getChildValues().add(rawDataImage);
+		returnValue.getChildValues().add(rawDataLogo);
 		returnValue.getChildValues().add(origFilePath);
 		
 		return returnValue;

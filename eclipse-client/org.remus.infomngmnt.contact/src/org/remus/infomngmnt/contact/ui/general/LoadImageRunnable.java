@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -51,10 +50,10 @@ public class LoadImageRunnable extends CancelableRunnable {
 						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, FileUtil
 								.getBytesFromFile(this.file, monitor)));
 				
-				InformationUnit childByType = InformationUtil.getChildByType(this.infoUnit,	ContactActivator.NODE_NAME_RAWDATA);				
+				InformationUnit childByType = InformationUtil.getChildByType(this.infoUnit,	ContactActivator.NODE_NAME_RAWDATA_IMAGE);				
 			
 				childByType = InfomngmntFactory.eINSTANCE.createInformationUnit();
-				childByType.setType(ContactActivator.NODE_NAME_RAWDATA);
+				childByType.setType(ContactActivator.NODE_NAME_RAWDATA_IMAGE);
 				
 				cc.append(new AddCommand(this.domain, this.infoUnit.getChildValues(),
 						Collections.singleton(childByType)));
@@ -85,10 +84,9 @@ public class LoadImageRunnable extends CancelableRunnable {
 		return StatusCreator.newStatus("File not exisits or is not accessible");
 	}
 
-	public void setImageNode(final InformationUnit infoUnit) {
+	public void setImageNode(final InformationUnit infoUnit, String string) {
 		this.infoUnit = infoUnit;
-		this.rawImageDataNode = InformationUtil.getChildByType(infoUnit,
-				ContactActivator.NODE_NAME_RAWDATA);
+		this.rawImageDataNode = InformationUtil.getChildByType(infoUnit, string);
 	}
 
 	public void setFile(final File file) {

@@ -280,7 +280,7 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__KEYWORDS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 11;
 
 	/**
-	 * The feature id for the '<em><b>Calendar Entry</b></em>' containment reference.
+	 * The feature id for the '<em><b>Calendar Entry</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -851,7 +851,7 @@ public interface InfomngmntPackage extends EPackage {
 	int RULE_VALUE__KEYWORDS = INFORMATION_UNIT__KEYWORDS;
 
 	/**
-	 * The feature id for the '<em><b>Calendar Entry</b></em>' containment reference.
+	 * The feature id for the '<em><b>Calendar Entry</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1743,14 +1743,23 @@ public interface InfomngmntPackage extends EPackage {
 	int AVAILABLE_TAGS_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CalenderEntryImpl <em>Calender Entry</em>}' class.
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CalendarEntryImpl <em>Calendar Entry</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.remus.infomngmnt.impl.CalenderEntryImpl
-	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalenderEntry()
+	 * @see org.remus.infomngmnt.impl.CalendarEntryImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntry()
 	 * @generated
 	 */
-	int CALENDER_ENTRY = 29;
+	int CALENDAR_ENTRY = 29;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALENDAR_ENTRY__ID = 0;
 
 	/**
 	 * The feature id for the '<em><b>Start</b></em>' attribute.
@@ -1759,7 +1768,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALENDER_ENTRY__START = 0;
+	int CALENDAR_ENTRY__START = 1;
 
 	/**
 	 * The feature id for the '<em><b>End</b></em>' attribute.
@@ -1768,7 +1777,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALENDER_ENTRY__END = 1;
+	int CALENDAR_ENTRY__END = 2;
 
 	/**
 	 * The feature id for the '<em><b>Entry Type</b></em>' attribute.
@@ -1777,7 +1786,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALENDER_ENTRY__ENTRY_TYPE = 2;
+	int CALENDAR_ENTRY__ENTRY_TYPE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Reminder</b></em>' attribute.
@@ -1786,16 +1795,25 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALENDER_ENTRY__REMINDER = 3;
+	int CALENDAR_ENTRY__REMINDER = 4;
 
 	/**
-	 * The number of structural features of the '<em>Calender Entry</em>' class.
+	 * The feature id for the '<em><b>Title</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CALENDER_ENTRY_FEATURE_COUNT = 4;
+	int CALENDAR_ENTRY__TITLE = 5;
+
+	/**
+	 * The number of structural features of the '<em>Calendar Entry</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALENDAR_ENTRY_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
@@ -1992,10 +2010,10 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getInformationUnit_Keywords();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.InformationUnit#getCalendarEntry <em>Calendar Entry</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.InformationUnit#getCalendarEntry <em>Calendar Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Calendar Entry</em>'.
+	 * @return the meta object for the containment reference list '<em>Calendar Entry</em>'.
 	 * @see org.remus.infomngmnt.InformationUnit#getCalendarEntry()
 	 * @see #getInformationUnit()
 	 * @generated
@@ -3026,58 +3044,80 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getSynchronizableObject_MarkedAsDeleteItems();
 
 	/**
-	 * Returns the meta object for class '{@link org.remus.infomngmnt.CalenderEntry <em>Calender Entry</em>}'.
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.CalendarEntry <em>Calendar Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Calender Entry</em>'.
-	 * @see org.remus.infomngmnt.CalenderEntry
+	 * @return the meta object for class '<em>Calendar Entry</em>'.
+	 * @see org.remus.infomngmnt.CalendarEntry
 	 * @generated
 	 */
-	EClass getCalenderEntry();
+	EClass getCalendarEntry();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalenderEntry#getStart <em>Start</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalendarEntry#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.remus.infomngmnt.CalendarEntry#getId()
+	 * @see #getCalendarEntry()
+	 * @generated
+	 */
+	EAttribute getCalendarEntry_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalendarEntry#getStart <em>Start</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Start</em>'.
-	 * @see org.remus.infomngmnt.CalenderEntry#getStart()
-	 * @see #getCalenderEntry()
+	 * @see org.remus.infomngmnt.CalendarEntry#getStart()
+	 * @see #getCalendarEntry()
 	 * @generated
 	 */
-	EAttribute getCalenderEntry_Start();
+	EAttribute getCalendarEntry_Start();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalenderEntry#getEnd <em>End</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalendarEntry#getEnd <em>End</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>End</em>'.
-	 * @see org.remus.infomngmnt.CalenderEntry#getEnd()
-	 * @see #getCalenderEntry()
+	 * @see org.remus.infomngmnt.CalendarEntry#getEnd()
+	 * @see #getCalendarEntry()
 	 * @generated
 	 */
-	EAttribute getCalenderEntry_End();
+	EAttribute getCalendarEntry_End();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalenderEntry#getEntryType <em>Entry Type</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalendarEntry#getEntryType <em>Entry Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Entry Type</em>'.
-	 * @see org.remus.infomngmnt.CalenderEntry#getEntryType()
-	 * @see #getCalenderEntry()
+	 * @see org.remus.infomngmnt.CalendarEntry#getEntryType()
+	 * @see #getCalendarEntry()
 	 * @generated
 	 */
-	EAttribute getCalenderEntry_EntryType();
+	EAttribute getCalendarEntry_EntryType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalenderEntry#getReminder <em>Reminder</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalendarEntry#getReminder <em>Reminder</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Reminder</em>'.
-	 * @see org.remus.infomngmnt.CalenderEntry#getReminder()
-	 * @see #getCalenderEntry()
+	 * @see org.remus.infomngmnt.CalendarEntry#getReminder()
+	 * @see #getCalendarEntry()
 	 * @generated
 	 */
-	EAttribute getCalenderEntry_Reminder();
+	EAttribute getCalendarEntry_Reminder();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.CalendarEntry#getTitle <em>Title</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Title</em>'.
+	 * @see org.remus.infomngmnt.CalendarEntry#getTitle()
+	 * @see #getCalendarEntry()
+	 * @generated
+	 */
+	EAttribute getCalendarEntry_Title();
 
 	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
@@ -3260,7 +3300,7 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute INFORMATION_UNIT__KEYWORDS = eINSTANCE.getInformationUnit_Keywords();
 
 		/**
-		 * The meta object literal for the '<em><b>Calendar Entry</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Calendar Entry</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -4084,14 +4124,22 @@ public interface InfomngmntPackage extends EPackage {
 		EReference SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS = eINSTANCE.getSynchronizableObject_MarkedAsDeleteItems();
 
 		/**
-		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.CalenderEntryImpl <em>Calender Entry</em>}' class.
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.CalendarEntryImpl <em>Calendar Entry</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.remus.infomngmnt.impl.CalenderEntryImpl
-		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalenderEntry()
+		 * @see org.remus.infomngmnt.impl.CalendarEntryImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntry()
 		 * @generated
 		 */
-		EClass CALENDER_ENTRY = eINSTANCE.getCalenderEntry();
+		EClass CALENDAR_ENTRY = eINSTANCE.getCalendarEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CALENDAR_ENTRY__ID = eINSTANCE.getCalendarEntry_Id();
 
 		/**
 		 * The meta object literal for the '<em><b>Start</b></em>' attribute feature.
@@ -4099,7 +4147,7 @@ public interface InfomngmntPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CALENDER_ENTRY__START = eINSTANCE.getCalenderEntry_Start();
+		EAttribute CALENDAR_ENTRY__START = eINSTANCE.getCalendarEntry_Start();
 
 		/**
 		 * The meta object literal for the '<em><b>End</b></em>' attribute feature.
@@ -4107,7 +4155,7 @@ public interface InfomngmntPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CALENDER_ENTRY__END = eINSTANCE.getCalenderEntry_End();
+		EAttribute CALENDAR_ENTRY__END = eINSTANCE.getCalendarEntry_End();
 
 		/**
 		 * The meta object literal for the '<em><b>Entry Type</b></em>' attribute feature.
@@ -4115,7 +4163,7 @@ public interface InfomngmntPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CALENDER_ENTRY__ENTRY_TYPE = eINSTANCE.getCalenderEntry_EntryType();
+		EAttribute CALENDAR_ENTRY__ENTRY_TYPE = eINSTANCE.getCalendarEntry_EntryType();
 
 		/**
 		 * The meta object literal for the '<em><b>Reminder</b></em>' attribute feature.
@@ -4123,7 +4171,15 @@ public interface InfomngmntPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CALENDER_ENTRY__REMINDER = eINSTANCE.getCalenderEntry_Reminder();
+		EAttribute CALENDAR_ENTRY__REMINDER = eINSTANCE.getCalendarEntry_Reminder();
+
+		/**
+		 * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CALENDAR_ENTRY__TITLE = eINSTANCE.getCalendarEntry_Title();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.

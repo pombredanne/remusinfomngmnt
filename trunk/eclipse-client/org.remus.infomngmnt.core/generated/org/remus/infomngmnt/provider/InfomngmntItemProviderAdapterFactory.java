@@ -683,26 +683,26 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.CalenderEntry} instances.
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.CalendarEntry} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CalenderEntryItemProvider calenderEntryItemProvider;
+	protected CalendarEntryItemProvider calendarEntryItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.remus.infomngmnt.CalenderEntry}.
+	 * This creates an adapter for a {@link org.remus.infomngmnt.CalendarEntry}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createCalenderEntryAdapter() {
-		if (calenderEntryItemProvider == null) {
-			calenderEntryItemProvider = new CalenderEntryItemProvider(this);
+	public Adapter createCalendarEntryAdapter() {
+		if (calendarEntryItemProvider == null) {
+			calendarEntryItemProvider = new CalendarEntryItemProvider(this);
 		}
 
-		return calenderEntryItemProvider;
+		return calendarEntryItemProvider;
 	}
 
 	/**
@@ -830,7 +830,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (synchronizableObjectToSynchronizationActionMapItemProvider != null) synchronizableObjectToSynchronizationActionMapItemProvider.dispose();
 		if (tagItemProvider != null) tagItemProvider.dispose();
 		if (availableTagsItemProvider != null) availableTagsItemProvider.dispose();
-		if (calenderEntryItemProvider != null) calenderEntryItemProvider.dispose();
+		if (calendarEntryItemProvider != null) calendarEntryItemProvider.dispose();
 	}
 
 }

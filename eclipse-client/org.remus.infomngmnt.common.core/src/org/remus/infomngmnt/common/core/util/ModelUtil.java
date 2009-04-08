@@ -31,8 +31,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class ModelUtil {
 
-
-	public static List getFeatureList(final EList<? extends EObject> list, final EAttribute attribute) {
+	public static List getFeatureList(final EList<? extends EObject> list,
+			final EAttribute attribute) {
 		List returnValue = new ArrayList();
 		for (EObject object : list) {
 			Object get = object.eGet(attribute);
@@ -43,18 +43,20 @@ public class ModelUtil {
 		return returnValue;
 	}
 
-	public static Map<String, ? extends EObject> buildMap(final EList<? extends EObject> list, final EAttribute decisionAtt) {
+	public static Map<String, ? extends EObject> buildMap(final EList<? extends EObject> list,
+			final EAttribute decisionAtt) {
 		Map<String, EObject> returnValue = new HashMap<String, EObject>();
 		for (EObject object : list) {
 			Object get = object.eGet(decisionAtt);
 			if (get != null && get instanceof String) {
-				returnValue.put((String)get, object);
+				returnValue.put((String) get, object);
 			}
 		}
 		return returnValue;
 	}
 
-	public static void copyObject(final EObject src, final EObject target, final EStructuralFeature[] featuresToSet, final EStructuralFeature[] featuresToCopy) {
+	public static void copyObject(final EObject src, final EObject target,
+			final EStructuralFeature[] featuresToSet, final EStructuralFeature[] featuresToCopy) {
 		if (src.getClass() == target.getClass()) {
 			for (EStructuralFeature eStructuralFeature : featuresToSet) {
 				Object eGet = src.eGet(eStructuralFeature);
@@ -69,7 +71,8 @@ public class ModelUtil {
 		}
 	}
 
-	public static boolean hasEqualAttribute(final List<? extends EObject> list, final EAttribute attribute) {
+	public static boolean hasEqualAttribute(final List<? extends EObject> list,
+			final EAttribute attribute) {
 		if (list.size() <= 1) {
 			return true;
 		}
@@ -94,7 +97,8 @@ public class ModelUtil {
 		return true;
 	}
 
-	public static boolean containsParent(final List<? extends EObject> elements2check, final EObject element) {
+	public static boolean containsParent(final List<? extends EObject> elements2check,
+			final EObject element) {
 		EObject element2resolve = element;
 		while (element2resolve.eContainer() != null) {
 			if (elements2check.contains(element2resolve.eContainer())) {
@@ -118,5 +122,15 @@ public class ModelUtil {
 		return returnValue;
 	}
 
+	public static EObject getItemByValue(final EList<? extends EObject> list,
+			final EStructuralFeature feature, final Object value) {
+		for (EObject object : list) {
+			Object eGet = object.eGet(feature);
+			if (eGet.equals(value)) {
+				return object;
+			}
+		}
+		return null;
+	}
 
 }

@@ -32,6 +32,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="cleared" eType="#//ClearedEvent"
         containment="true" resolveProxies="false" eOpposite="#//ClearedEvent/task"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="progress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClearedEvent" eSuperTypes="#//CEvent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task" transient="true"

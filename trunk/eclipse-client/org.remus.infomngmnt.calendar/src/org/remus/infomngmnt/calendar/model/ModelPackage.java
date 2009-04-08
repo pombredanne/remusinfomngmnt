@@ -242,13 +242,22 @@ public interface ModelPackage extends EPackage {
 	int TASK__PROGRESS = 8;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__ID = 9;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 9;
+	int TASK_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.calendar.model.impl.ClearedEventImpl <em>Cleared Event</em>}' class.
@@ -887,6 +896,17 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTask_Progress();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.calendar.model.Task#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.remus.infomngmnt.calendar.model.Task#getId()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_Id();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.calendar.model.ClearedEvent <em>Cleared Event</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1168,6 +1188,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK__PROGRESS = eINSTANCE.getTask_Progress();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__ID = eINSTANCE.getTask_Id();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.calendar.model.impl.ClearedEventImpl <em>Cleared Event</em>}' class.

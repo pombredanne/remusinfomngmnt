@@ -321,6 +321,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTask_Id() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getClearedEvent() {
 		return clearedEventEClass;
 	}
@@ -454,6 +463,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(taskEClass, TASK__DUE);
 		createEReference(taskEClass, TASK__CLEARED);
 		createEAttribute(taskEClass, TASK__PROGRESS);
+		createEAttribute(taskEClass, TASK__ID);
 
 		clearedEventEClass = createEClass(CLEARED_EVENT);
 		createEReference(clearedEventEClass, CLEARED_EVENT__TASK);
@@ -525,6 +535,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getTask_Due(), this.getDueEvent(), this.getDueEvent_Task(), "due", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Cleared(), this.getClearedEvent(), this.getClearedEvent_Task(), "cleared", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Progress(), ecorePackage.getEDouble(), "progress", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_Id(), ecorePackage.getEString(), "id", null, 1, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(clearedEventEClass, ClearedEvent.class, "ClearedEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getClearedEvent_Task(), this.getTask(), this.getTask_Cleared(), "task", null, 0, 1, ClearedEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

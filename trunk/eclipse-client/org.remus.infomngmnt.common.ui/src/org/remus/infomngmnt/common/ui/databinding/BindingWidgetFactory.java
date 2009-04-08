@@ -15,6 +15,8 @@ package org.remus.infomngmnt.common.ui.databinding;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
+import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
@@ -97,6 +99,20 @@ public class BindingWidgetFactory {
 			final IEMFEditBindingProvider provider) {
 		return createRichText(control, provider.getDatabindingContext(), provider
 				.getEditingDomain());
+	}
+
+	public static CalendarComboBindingWidget createDateCombo(final CalendarCombo control,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		CalendarComboBindingWidget bindingWidget = new CalendarComboBindingWidget();
+		initControl(bindingWidget, ctx, domain, control);
+		return bindingWidget;
+	}
+
+	public static CDateTimeBindingWidget createCDateTime(final CDateTime control,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		CDateTimeBindingWidget bindingWidget = new CDateTimeBindingWidget();
+		initControl(bindingWidget, ctx, domain, control);
+		return bindingWidget;
 	}
 
 	private static void initControl(final AbstractBindingWidget widget,

@@ -22,11 +22,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.databinding;bundle-version="1.2.0";visibility:=reexport,
  org.eclipse.nebula.widgets.collapsiblebuttons;bundle-version="1.0.0";visibility:=reexport,
  de.spiritlink.richhtml4eclipse;bundle-version="1.0.0";visibility:=reexport,
- org.eclipse.core.databinding.beans;bundle-version="1.2.0"
+ org.eclipse.core.databinding.beans;bundle-version="1.2.0",
+ org.eclipse.nebula.widgets.cdatetime;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.nebula.widgets.calendarcombo,
- org.eclipse.swt.nebula.widgets.cdatetime,
  org.remus.infomngmnt.common.fieldassist,
  org.remus.infomngmnt.common.service,
  org.remus.infomngmnt.common.ui,
@@ -44,5 +44,4 @@ Export-Package: org.eclipse.nebula.widgets.calendarcombo,
  org.remus.infomngmnt.common.ui.wizards,
  org.remus.infomngmt.common.ui.uimodel,
  org.remus.infomngmt.common.ui.uimodel.provider
-Bundle-ClassPath: lib/nebula_cdatetime_0.9.0.jar,
- .
+Bundle-ClassPath: .

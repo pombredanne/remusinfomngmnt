@@ -21,7 +21,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -34,16 +36,16 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.remus.infomngmnt.CalenderEntry;
+import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntPackage;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.CalenderEntry} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.CalendarEntry} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class CalenderEntryItemProvider
+public class CalendarEntryItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -58,7 +60,7 @@ public class CalenderEntryItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CalenderEntryItemProvider(AdapterFactory adapterFactory) {
+	public CalendarEntryItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -73,12 +75,36 @@ public class CalenderEntryItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addIdPropertyDescriptor(object);
 			addStartPropertyDescriptor(object);
 			addEndPropertyDescriptor(object);
 			addEntryTypePropertyDescriptor(object);
 			addReminderPropertyDescriptor(object);
+			addTitlePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Id feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_CalendarEntry_id_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalendarEntry_id_feature", "_UI_CalendarEntry_type"),
+				 InfomngmntPackage.Literals.CALENDAR_ENTRY__ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -92,9 +118,9 @@ public class CalenderEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CalenderEntry_start_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_start_feature", "_UI_CalenderEntry_type"),
-				 InfomngmntPackage.Literals.CALENDER_ENTRY__START,
+				 getString("_UI_CalendarEntry_start_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalendarEntry_start_feature", "_UI_CalendarEntry_type"),
+				 InfomngmntPackage.Literals.CALENDAR_ENTRY__START,
 				 true,
 				 false,
 				 false,
@@ -114,9 +140,9 @@ public class CalenderEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CalenderEntry_end_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_end_feature", "_UI_CalenderEntry_type"),
-				 InfomngmntPackage.Literals.CALENDER_ENTRY__END,
+				 getString("_UI_CalendarEntry_end_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalendarEntry_end_feature", "_UI_CalendarEntry_type"),
+				 InfomngmntPackage.Literals.CALENDAR_ENTRY__END,
 				 true,
 				 false,
 				 false,
@@ -136,9 +162,9 @@ public class CalenderEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CalenderEntry_entryType_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_entryType_feature", "_UI_CalenderEntry_type"),
-				 InfomngmntPackage.Literals.CALENDER_ENTRY__ENTRY_TYPE,
+				 getString("_UI_CalendarEntry_entryType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalendarEntry_entryType_feature", "_UI_CalendarEntry_type"),
+				 InfomngmntPackage.Literals.CALENDAR_ENTRY__ENTRY_TYPE,
 				 true,
 				 false,
 				 false,
@@ -158,9 +184,9 @@ public class CalenderEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CalenderEntry_reminder_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CalenderEntry_reminder_feature", "_UI_CalenderEntry_type"),
-				 InfomngmntPackage.Literals.CALENDER_ENTRY__REMINDER,
+				 getString("_UI_CalendarEntry_reminder_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalendarEntry_reminder_feature", "_UI_CalendarEntry_type"),
+				 InfomngmntPackage.Literals.CALENDAR_ENTRY__REMINDER,
 				 true,
 				 false,
 				 false,
@@ -170,14 +196,36 @@ public class CalenderEntryItemProvider
 	}
 
 	/**
-	 * This returns CalenderEntry.gif.
+	 * This adds a property descriptor for the Title feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTitlePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_CalendarEntry_title_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CalendarEntry_title_feature", "_UI_CalendarEntry_type"),
+				 InfomngmntPackage.Literals.CALENDAR_ENTRY__TITLE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This returns CalendarEntry.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CalenderEntry"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CalendarEntry"));
 	}
 
 	/**
@@ -188,11 +236,10 @@ public class CalenderEntryItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		Date labelValue = ((CalenderEntry)object).getStart();
-		String label = labelValue == null ? null : labelValue.toString();
+		String label = ((CalendarEntry)object).getId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_CalenderEntry_type") :
-			getString("_UI_CalenderEntry_type") + " " + label;
+			getString("_UI_CalendarEntry_type") :
+			getString("_UI_CalendarEntry_type") + " " + label;
 	}
 
 	/**
@@ -206,11 +253,13 @@ public class CalenderEntryItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(CalenderEntry.class)) {
-			case InfomngmntPackage.CALENDER_ENTRY__START:
-			case InfomngmntPackage.CALENDER_ENTRY__END:
-			case InfomngmntPackage.CALENDER_ENTRY__ENTRY_TYPE:
-			case InfomngmntPackage.CALENDER_ENTRY__REMINDER:
+		switch (notification.getFeatureID(CalendarEntry.class)) {
+			case InfomngmntPackage.CALENDAR_ENTRY__ID:
+			case InfomngmntPackage.CALENDAR_ENTRY__START:
+			case InfomngmntPackage.CALENDAR_ENTRY__END:
+			case InfomngmntPackage.CALENDAR_ENTRY__ENTRY_TYPE:
+			case InfomngmntPackage.CALENDAR_ENTRY__REMINDER:
+			case InfomngmntPackage.CALENDAR_ENTRY__TITLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

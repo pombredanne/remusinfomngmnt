@@ -28,8 +28,8 @@ import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.AvailableTags;
+import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.CalendarEntryType;
-import org.remus.infomngmnt.CalenderEntry;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -123,7 +123,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP: return (EObject)createSynchronizableObjectToSynchronizationActionMap();
 			case InfomngmntPackage.TAG: return createTag();
 			case InfomngmntPackage.AVAILABLE_TAGS: return createAvailableTags();
-			case InfomngmntPackage.CALENDER_ENTRY: return createCalenderEntry();
+			case InfomngmntPackage.CALENDAR_ENTRY: return createCalendarEntry();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -404,12 +404,13 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CalenderEntry createCalenderEntry() {
-		CalenderEntryImpl calenderEntry = new CalenderEntryImpl();
-		return calenderEntry;
+	public CalendarEntry createCalendarEntry() {
+		CalendarEntryImpl calendarEntry = new CalendarEntryImpl();
+		return calendarEntry;
 	}
 
 	/**

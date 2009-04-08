@@ -241,13 +241,13 @@ public interface InfomngmntFactory extends EFactory {
 	AvailableTags createAvailableTags();
 
 	/**
-	 * Returns a new object of class '<em>Calender Entry</em>'.
+	 * Returns a new object of class '<em>Calendar Entry</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Calender Entry</em>'.
+	 * @return a new object of class '<em>Calendar Entry</em>'.
 	 * @generated
 	 */
-	CalenderEntry createCalenderEntry();
+	CalendarEntry createCalendarEntry();
 
 	/**
 	 * Returns the package supported by this factory.

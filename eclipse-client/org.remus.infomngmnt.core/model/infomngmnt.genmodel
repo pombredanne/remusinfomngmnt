@@ -79,22 +79,8 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//Link">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Link/target"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Link/linktype"/>
-    </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//LinkType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/description"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/imagePath"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//LinkType/editable"/>
     </genClasses>
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//Adapter"/>
-    <genClasses ecoreClass="infomngmnt.ecore#//LinkTypeCollection">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//LinkTypeCollection/availableLinkTypes"/>
-    </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//StringToLinkTypeMap">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//StringToLinkTypeMap/key"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//StringToLinkTypeMap/value"/>
-    </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RecentlyUsedKeywords">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RecentlyUsedKeywords/maxlength"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RecentlyUsedKeywords/keywords"/>
@@ -187,11 +173,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/synchronizationMetaData"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/markedAsDeleteItems"/>
     </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//CalenderEntry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/start"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/end"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/entryType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalenderEntry/reminder"/>
+    <genClasses ecoreClass="infomngmnt.ecore#//CalendarEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/start"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/end"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/entryType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/reminder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/title"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

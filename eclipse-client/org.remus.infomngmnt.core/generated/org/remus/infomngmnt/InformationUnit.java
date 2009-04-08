@@ -330,29 +330,19 @@ public interface InformationUnit extends AbstractInformationUnit {
 	void setKeywords(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Calendar Entry</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Calendar Entry</b></em>' containment reference list.
+	 * The list contents are of type {@link org.remus.infomngmnt.CalendarEntry}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Calendar Entry</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Calendar Entry</em>' containment reference.
-	 * @see #setCalendarEntry(CalenderEntry)
+	 * @return the value of the '<em>Calendar Entry</em>' containment reference list.
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_CalendarEntry()
 	 * @model containment="true"
 	 * @generated
 	 */
-	CalenderEntry getCalendarEntry();
-
-	/**
-	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getCalendarEntry <em>Calendar Entry</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Calendar Entry</em>' containment reference.
-	 * @see #getCalendarEntry()
-	 * @generated
-	 */
-	void setCalendarEntry(CalenderEntry value);
+	EList<CalendarEntry> getCalendarEntry();
 
 } // InformationUnit

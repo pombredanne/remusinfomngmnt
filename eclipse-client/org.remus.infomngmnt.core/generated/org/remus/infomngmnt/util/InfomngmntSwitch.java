@@ -27,7 +27,7 @@ import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.AvailableTags;
-import org.remus.infomngmnt.CalenderEntry;
+import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -317,9 +317,9 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case InfomngmntPackage.CALENDER_ENTRY: {
-				CalenderEntry calenderEntry = (CalenderEntry)theEObject;
-				T result = caseCalenderEntry(calenderEntry);
+			case InfomngmntPackage.CALENDAR_ENTRY: {
+				CalendarEntry calendarEntry = (CalendarEntry)theEObject;
+				T result = caseCalendarEntry(calendarEntry);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -749,16 +749,17 @@ public class InfomngmntSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Calender Entry</em>'.
-	 * <!-- begin-user-doc --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Calendar Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Calender Entry</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Calendar Entry</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCalenderEntry(CalenderEntry object) {
+	public T caseCalendarEntry(CalendarEntry object) {
 		return null;
 	}
 

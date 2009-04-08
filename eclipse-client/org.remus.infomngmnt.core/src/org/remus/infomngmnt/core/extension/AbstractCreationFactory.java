@@ -41,7 +41,6 @@ public abstract class AbstractCreationFactory {
 	public InformationUnit createNewObject() {
 		InformationUnit newInfoObject = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		newInfoObject.setCreationDate(new Date());
-		newInfoObject.setCalendarEntry(InfomngmntFactory.eINSTANCE.createCalenderEntry());
 		return newInfoObject;
 	}
 

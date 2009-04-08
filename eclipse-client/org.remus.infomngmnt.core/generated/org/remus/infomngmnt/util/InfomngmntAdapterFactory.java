@@ -27,7 +27,7 @@ import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.AvailableTags;
-import org.remus.infomngmnt.CalenderEntry;
+import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -221,8 +221,8 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createSynchronizableObjectAdapter();
 			}
 			@Override
-			public Adapter caseCalenderEntry(CalenderEntry object) {
-				return createCalenderEntryAdapter();
+			public Adapter caseCalendarEntry(CalendarEntry object) {
+				return createCalendarEntryAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -655,17 +655,16 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.remus.infomngmnt.CalenderEntry <em>Calender Entry</em>}'. <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.CalendarEntry <em>Calendar Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.remus.infomngmnt.CalenderEntry
+	 * @see org.remus.infomngmnt.CalendarEntry
 	 * @generated
 	 */
-	public Adapter createCalenderEntryAdapter() {
+	public Adapter createCalendarEntryAdapter() {
 		return null;
 	}
 

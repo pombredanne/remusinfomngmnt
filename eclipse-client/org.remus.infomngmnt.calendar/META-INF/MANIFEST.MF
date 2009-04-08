@@ -26,4 +26,6 @@ Export-Package: org.aspencloud.calypso.ui.calendar,
  org.remus.infomngmnt.calendar.model.impl,
  org.remus.infomngmnt.calendar.model.util,
  org.remus.infomngmnt.ccalendar,
- org.remus.infomngmnt.ccalendar.actions
+ org.remus.infomngmnt.ccalendar.actions,
+ org.remus.infomngmnt.ccalendar.service
+Bundle-Activator: org.remus.infomngmnt.calendar.CalendarPlugin

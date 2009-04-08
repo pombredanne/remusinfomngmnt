@@ -33,12 +33,17 @@ import org.aspencloud.calypso.ui.calendar.tasksCalendar.TasksCalendarPart;
 import org.aspencloud.calypso.ui.workbench.views.calendar.actions.CreateAction;
 import org.aspencloud.calypso.util.CButton;
 import org.aspencloud.calypso.util.CalypsoEdit;
+import org.aspencloud.calypso.util.TimeSpan;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.RangeModel;
 import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.geometry.PrecisionDimension;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalViewer;
@@ -65,6 +70,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Listener;
@@ -72,7 +78,13 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.calendar.CalendarPlugin;
+import org.remus.infomngmnt.calendar.model.CEvent;
+import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
+import org.remus.infomngmnt.ccalendar.service.ICalendarChangeSupport;
+import org.remus.infomngmnt.ccalendar.service.ICalendarService;
+import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
 
 public class CCalendar extends Composite implements PropertyChangeListener,
 		ISelectionChangedListener, ISelectionProvider {
@@ -130,6 +142,41 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 	private Image prevWeekImage;
 	private Image prevDayImage;
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.calendar";
+
+	private final Adapter taskNotification = new EContentAdapter() {
+		@Override
+		public void notifyChanged(final Notification msg) {
+			if (msg.getNotifier() instanceof CEvent && msg.getEventType() == Notification.SET) {
+				CCalendar.this.calendarService.updateTask((Task) ((EObject) msg.getNotifier())
+						.eContainer());
+			}
+		};
+	};
+
+	private final IDirtyTimespanListener listener = new IDirtyTimespanListener() {
+
+		@Override
+		public void handleDirtyTimeSpan(final TimeSpan timespan) {
+			Date start = CCalendar.this.dates[0];
+			Date end = CCalendar.this.dates[CCalendar.this.dates.length - 1];
+			TimeSpan newTimeSpan = new TimeSpan(start, end);
+			if (newTimeSpan.contains(timespan.getStartDate())
+					|| newTimeSpan.contains(timespan.getEndDate())) {
+				Display.getDefault().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						updateInput();
+					}
+
+				});
+			}
+		}
+
+	};
+
+	private final ICalendarService calendarService;
+
+	private final ICalendarChangeSupport calendarChangeSupport;
 
 	private class CalendarLayout extends Layout {
 
@@ -253,6 +300,10 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 
 		setLayout(new CalendarLayout());
 		initImages();
+		this.calendarService = CalendarPlugin.getDefault().getService(ICalendarService.class);
+		this.calendarChangeSupport = CalendarPlugin.getDefault().getService(
+				ICalendarChangeSupport.class);
+		this.calendarChangeSupport.addTimeSpanListener(this.listener);
 		createContents();
 
 		this.acViewer.addSelectionChangedListener(this);
@@ -643,6 +694,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 
 	@Override
 	public void dispose() {
+		this.calendarChangeSupport.removeTimeSpanListener(this.listener);
 		this.acModel.dispose();
 		this.tcModel.dispose();
 		this.dailyImage.dispose();
@@ -753,6 +805,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 			if (this.buttons[i].getSelection()) {
 				if (i == 0) {
 					if (setDetailType(TYPE_LIST)) {
+						updateInput();
 						updateActivitiesCalendar();
 						updateTasksCalendar();
 						break;
@@ -760,6 +813,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 				} else {
 					// TODO: will buttons.length always be 1 > dates.length?
 					if (setDetailDate(i - 1) && setDetailType(TYPE_SINGLETON)) {
+						updateInput();
 						updateActivitiesCalendar();
 						updateTasksCalendar();
 						break;
@@ -781,7 +835,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 			tmpcal.add(field, amount);
 			this.dates[i] = tmpcal.getTime();
 		}
-
+		updateInput();
 		updateHeader();
 		updateButtons();
 		updateActivitiesCalendar();
@@ -929,6 +983,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 				setDetailDate(0);
 			}
 
+			updateInput();
 			updateHeader();
 			updateButtons();
 			updateActivitiesCalendar();
@@ -1158,5 +1213,29 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 		this.acViewer.getControl().setRedraw(redraw);
 		this.tcViewer.getControl().setRedraw(redraw);
 		this.footer.setRedraw(redraw);
+	}
+
+	public void updateInput() {
+		Date startDate = this.dates[0];
+		Date endDate = this.dates[this.dates.length - 1];
+		TimeSpan ts = new TimeSpan(startDate, endDate);
+
+		if (this.calendarService != null) {
+			Tasklist input = this.tcModel.getInput();
+			if (input != null) {
+				EList<Task> tasks = input.getTasks();
+				for (Task task : tasks) {
+					task.eAdapters().remove(this.taskNotification);
+				}
+			}
+			setInput(this.calendarService.getTasksForTimespan(ts));
+			input = this.tcModel.getInput();
+			if (input != null) {
+				EList<Task> tasks = input.getTasks();
+				for (Task task : tasks) {
+					task.eAdapters().add(this.taskNotification);
+				}
+			}
+		}
 	}
 }

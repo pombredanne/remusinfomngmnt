@@ -36,6 +36,7 @@ import org.remus.infomngmnt.calendar.model.Tasklist;
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getDue <em>Due</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getCleared <em>Cleared</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getProgress <em>Progress</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -171,6 +172,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected double progress = PROGRESS_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String id = ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -512,6 +533,27 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setId(String newId) {
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TASK__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -588,6 +630,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getCleared();
 			case ModelPackage.TASK__PROGRESS:
 				return new Double(getProgress());
+			case ModelPackage.TASK__ID:
+				return getId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -626,6 +670,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case ModelPackage.TASK__PROGRESS:
 				setProgress(((Double)newValue).doubleValue());
+				return;
+			case ModelPackage.TASK__ID:
+				setId((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -666,6 +713,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case ModelPackage.TASK__PROGRESS:
 				setProgress(PROGRESS_EDEFAULT);
 				return;
+			case ModelPackage.TASK__ID:
+				setId(ID_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -696,6 +746,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return cleared != null;
 			case ModelPackage.TASK__PROGRESS:
 				return progress != PROGRESS_EDEFAULT;
+			case ModelPackage.TASK__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -718,6 +770,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(details);
 		result.append(", progress: ");
 		result.append(progress);
+		result.append(", id: ");
+		result.append(id);
 		result.append(')');
 		return result.toString();
 	}

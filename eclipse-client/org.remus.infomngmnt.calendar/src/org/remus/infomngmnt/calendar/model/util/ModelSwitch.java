@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.remus.infomngmnt.calendar.model.*;
 import org.remus.infomngmnt.calendar.model.CEvent;
 import org.remus.infomngmnt.calendar.model.ClearedEvent;
 import org.remus.infomngmnt.calendar.model.DueEvent;

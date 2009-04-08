@@ -529,5 +529,19 @@
             type="org.remus.infomngmnt.SynchronizableObject">
       </propertyTester>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.core.postProjectHandle">
+      <projectHandle
+            handle="org.remus.infomngmnt.ui.calendar.CalendarIndexingHandle">
+      </projectHandle>
+   </extension>
+   <extension
+         id="calendarEntryBuilder"
+         point="org.eclipse.core.resources.builders">
+      <builder>
+         <run
+               class="org.remus.infomngmnt.ui.calendar.CalendarBuilder">
+         </run></builder>
+   </extension>
 
 </plugin>

@@ -88,7 +88,7 @@ public class CalendarPage extends InformationFormPage {
 		this.calendar = new CCalendar(body, SWT.BORDER);
 		this.calendar.setContentProvider(new CalendarContentProvider());
 		this.calendar.setCalendarToWeekContaining(new Date());
-		// this.calendar.setInput(CalypsoManager.getOwner());
+
 		this.calendar.addOpenListener(new Listener() {
 			public void handleEvent(final Event event) {
 				Task task = (Task) event.data;

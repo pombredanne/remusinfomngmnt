@@ -321,15 +321,17 @@ public class EditingUtil {
 			resource.getContents().add(object);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			resource.save(baos, Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(baos.toByteArray());
+			baos.flush();
+			baos.close();
 			String scheme = target.getLocationURI().getScheme();
 			boolean keepHistory = FILEHISTORYKEEPINGSCHEME.equals(scheme);
 			if (target.exists()) {
-				target.setContents(new ByteArrayInputStream(baos.toByteArray()), true, keepHistory,
-						new NullProgressMonitor());
+				target.setContents(inputStream, true, keepHistory, new NullProgressMonitor());
 			} else {
-				target.create(new ByteArrayInputStream(baos.toByteArray()), true,
-						new NullProgressMonitor());
+				target.create(inputStream, true, new NullProgressMonitor());
 			}
+			inputStream.close();
 			// target.refreshLocal(IResource.DEPTH_INFINITE, new
 			// NullProgressMonitor());
 		} catch (final IOException e) {

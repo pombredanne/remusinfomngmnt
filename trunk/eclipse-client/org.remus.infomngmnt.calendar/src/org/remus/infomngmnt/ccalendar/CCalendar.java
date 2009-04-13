@@ -41,6 +41,7 @@ import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.geometry.PrecisionDimension;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
@@ -153,9 +154,17 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 		};
 	};
 
+	private final Adapter taskDeleteNotification = new AdapterImpl() {
+		@Override
+		public void notifyChanged(final Notification msg) {
+			if (msg.getEventType() == Notification.REMOVE) {
+				CCalendar.this.calendarService.deleteTask((Task) msg.getOldValue());
+			}
+		};
+	};
+
 	private final IDirtyTimespanListener listener = new IDirtyTimespanListener() {
 
-		@Override
 		public void handleDirtyTimeSpan(final TimeSpan timespan) {
 			Date start = CCalendar.this.dates[0];
 			Date end = CCalendar.this.dates[CCalendar.this.dates.length - 1];
@@ -163,7 +172,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 			if (newTimeSpan.contains(timespan.getStartDate())
 					|| newTimeSpan.contains(timespan.getEndDate())) {
 				Display.getDefault().asyncExec(new Runnable() {
-					@Override
+
 					public void run() {
 						updateInput();
 					}
@@ -337,7 +346,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 							eObjects.add(model);
 						}
 					}
-					// CalypsoEdit.delete(eObjects);
+					CalypsoEdit.delete(eObjects);
 				}
 				return super.keyPressed(event);
 			}
@@ -912,7 +921,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 			Date[] dates = new Date[5];
 
 			tmpcal.setTime(date);
-			tmpcal.set(Calendar.DAY_OF_WEEK, 2);
+			tmpcal.add(Calendar.DATE, 2 + tmpcal.get(Calendar.DAY_OF_WEEK) * -1);
 			tmpcal.set(Calendar.HOUR_OF_DAY, 0);
 			tmpcal.set(Calendar.MINUTE, 0);
 			tmpcal.set(Calendar.SECOND, 0);
@@ -932,7 +941,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 			Date[] dates = new Date[7];
 
 			tmpcal.setTime(date);
-			tmpcal.set(Calendar.DAY_OF_WEEK, 1);
+			tmpcal.add(Calendar.DATE, 1 + tmpcal.get(Calendar.DAY_OF_WEEK) * -1);
 			tmpcal.set(Calendar.HOUR_OF_DAY, 0);
 			tmpcal.set(Calendar.MINUTE, 0);
 			tmpcal.set(Calendar.SECOND, 0);
@@ -1217,12 +1226,16 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 
 	public void updateInput() {
 		Date startDate = this.dates[0];
-		Date endDate = this.dates[this.dates.length - 1];
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(this.dates[this.dates.length - 1]);
+		calendar.add(Calendar.DATE, 1);
+		Date endDate = calendar.getTime();
 		TimeSpan ts = new TimeSpan(startDate, endDate);
 
 		if (this.calendarService != null) {
 			Tasklist input = this.tcModel.getInput();
 			if (input != null) {
+				input.eAdapters().remove(this.taskDeleteNotification);
 				EList<Task> tasks = input.getTasks();
 				for (Task task : tasks) {
 					task.eAdapters().remove(this.taskNotification);
@@ -1231,6 +1244,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 			setInput(this.calendarService.getTasksForTimespan(ts));
 			input = this.tcModel.getInput();
 			if (input != null) {
+				input.eAdapters().add(this.taskDeleteNotification);
 				EList<Task> tasks = input.getTasks();
 				for (Task task : tasks) {
 					task.eAdapters().add(this.taskNotification);

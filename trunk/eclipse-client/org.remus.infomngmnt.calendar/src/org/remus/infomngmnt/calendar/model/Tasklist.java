@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Tasklist extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Tasks</b></em>' reference list.
+	 * Returns the value of the '<em><b>Tasks</b></em>' containment reference list.
 	 * The list contents are of type {@link org.remus.infomngmnt.calendar.model.Task}.
 	 * It is bidirectional and its opposite is '{@link org.remus.infomngmnt.calendar.model.Task#getOwner <em>Owner</em>}'.
 	 * <!-- begin-user-doc -->
@@ -36,10 +36,10 @@ public interface Tasklist extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tasks</em>' reference list.
+	 * @return the value of the '<em>Tasks</em>' containment reference list.
 	 * @see org.remus.infomngmnt.calendar.model.ModelPackage#getTasklist_Tasks()
 	 * @see org.remus.infomngmnt.calendar.model.Task#getOwner
-	 * @model opposite="owner"
+	 * @model opposite="owner" containment="true"
 	 * @generated
 	 */
 	EList<Task> getTasks();

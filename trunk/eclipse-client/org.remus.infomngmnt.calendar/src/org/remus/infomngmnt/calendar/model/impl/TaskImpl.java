@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.remus.infomngmnt.calendar.model.ClearedEvent;
 import org.remus.infomngmnt.calendar.model.DueEvent;
 import org.remus.infomngmnt.calendar.model.EndEvent;
@@ -102,16 +103,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected String details = DETAILS_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getOwner() <em>Owner</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwner()
-	 * @generated
-	 * @ordered
-	 */
-	protected Tasklist owner;
 
 	/**
 	 * The cached value of the '{@link #getStart() <em>Start</em>}' containment reference.
@@ -281,24 +272,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated
 	 */
 	public Tasklist getOwner() {
-		if (owner != null && owner.eIsProxy()) {
-			InternalEObject oldOwner = (InternalEObject)owner;
-			owner = (Tasklist)eResolveProxy(oldOwner);
-			if (owner != oldOwner) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.TASK__OWNER, oldOwner, owner));
-			}
-		}
-		return owner;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Tasklist basicGetOwner() {
-		return owner;
+		if (eContainerFeatureID != ModelPackage.TASK__OWNER) return null;
+		return (Tasklist)eContainer();
 	}
 
 	/**
@@ -307,12 +282,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated
 	 */
 	public NotificationChain basicSetOwner(Tasklist newOwner, NotificationChain msgs) {
-		Tasklist oldOwner = owner;
-		owner = newOwner;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.TASK__OWNER, oldOwner, newOwner);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newOwner, ModelPackage.TASK__OWNER, msgs);
 		return msgs;
 	}
 
@@ -322,10 +292,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated
 	 */
 	public void setOwner(Tasklist newOwner) {
-		if (newOwner != owner) {
+		if (newOwner != eInternalContainer() || (eContainerFeatureID != ModelPackage.TASK__OWNER && newOwner != null)) {
+			if (EcoreUtil.isAncestor(this, newOwner))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (owner != null)
-				msgs = ((InternalEObject)owner).eInverseRemove(this, ModelPackage.TASKLIST__TASKS, Tasklist.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwner != null)
 				msgs = ((InternalEObject)newOwner).eInverseAdd(this, ModelPackage.TASKLIST__TASKS, Tasklist.class, msgs);
 			msgs = basicSetOwner(newOwner, msgs);
@@ -558,8 +530,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ModelPackage.TASK__OWNER:
-				if (owner != null)
-					msgs = ((InternalEObject)owner).eInverseRemove(this, ModelPackage.TASKLIST__TASKS, Tasklist.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwner((Tasklist)otherEnd, msgs);
 			case ModelPackage.TASK__START:
 				if (start != null)
@@ -609,6 +581,20 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID) {
+			case ModelPackage.TASK__OWNER:
+				return eInternalContainer().eInverseRemove(this, ModelPackage.TASKLIST__TASKS, Tasklist.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.TASK__NAME:
@@ -618,8 +604,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case ModelPackage.TASK__DETAILS:
 				return getDetails();
 			case ModelPackage.TASK__OWNER:
-				if (resolve) return getOwner();
-				return basicGetOwner();
+				return getOwner();
 			case ModelPackage.TASK__START:
 				return getStart();
 			case ModelPackage.TASK__END:
@@ -735,7 +720,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case ModelPackage.TASK__DETAILS:
 				return DETAILS_EDEFAULT == null ? details != null : !DETAILS_EDEFAULT.equals(details);
 			case ModelPackage.TASK__OWNER:
-				return owner != null;
+				return getOwner() != null;
 			case ModelPackage.TASK__START:
 				return start != null;
 			case ModelPackage.TASK__END:

@@ -11,6 +11,7 @@
 
 package org.aspencloud.calypso.ui.workbench.views.calendar.actions;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
@@ -53,16 +54,29 @@ public class CreateAction extends Action {
 					ICalendarService service = CalendarPlugin.getDefault().getService(
 							ICalendarService.class);
 					if (service != null) {
-						Date date = new Date();
+						Date startDate = new Date();
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(startDate);
+						calendar.add(Calendar.MINUTE, 30);
+						Date endDate = calendar.getTime();
 						if (getTargetEditPart() instanceof ActivitiesCalendarPart) {
-							date = ((ActivitiesCalendarPart) getTargetEditPart()).getDateFromPoint(
-									getStartLocation(), true);
+							startDate = ((ActivitiesCalendarPart) getTargetEditPart())
+									.getDateFromPoint(getStartLocation(), true);
+							endDate = ((ActivitiesCalendarPart) getTargetEditPart())
+									.getDateFromPoint(getLocation(), true);
+							calendar = Calendar.getInstance();
+							calendar.setTime(endDate);
+							calendar.add(Calendar.DATE, 1);
+							// calendar.add(Calendar.MINUTE, -1);
+							endDate = calendar.getTime();
 
 						} else if (getTargetEditPart() instanceof TasksCalendarPart) {
-							date = ((TasksCalendarPart) getTargetEditPart())
+							startDate = ((TasksCalendarPart) getTargetEditPart())
 									.getDateFromPoint(getStartLocation());
+							endDate = ((TasksCalendarPart) getTargetEditPart())
+									.getDateFromPoint(getLocation());
 						}
-						service.createTask(date);
+						service.createTask(startDate, endDate);
 
 					}
 					super.performCreation(button);

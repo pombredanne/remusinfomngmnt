@@ -43,7 +43,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit()
- * @model
+ * @model extendedMetaData="InformationUnit='value' kind='mixed'"
  * @generated
  */
 public interface InformationUnit extends AbstractInformationUnit {
@@ -136,7 +136,7 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @return the value of the '<em>Binary Value</em>' attribute.
 	 * @see #setBinaryValue(byte[])
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_BinaryValue()
-	 * @model
+	 * @model extendedMetaData="name='value' kind='element'"
 	 * @generated
 	 */
 	byte[] getBinaryValue();

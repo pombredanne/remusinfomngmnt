@@ -75,13 +75,15 @@ public abstract class LuceneStore {
 
 	protected final synchronized void readAndWait(final IIndexSearchOperation operation) {
 		final boolean[] ready = new boolean[] { false };
-
+		System.out.println("ENTER");
 		Job job = new Job("") {
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
+				monitor.beginTask("Executing Read Operation", IProgressMonitor.UNKNOWN);
 				IndexSearcher indexSearcher2 = getIndexSearcher();
 				operation.read(indexSearcher2);
 				relaseIndexSearcher();
+				monitor.done();
 				return Status.OK_STATUS;
 			}
 		};
@@ -93,14 +95,17 @@ public abstract class LuceneStore {
 				ready[0] = true;
 			}
 		});
-		while (!ready[0]) {
+		int i = 0;
+		while (!ready[0] && i < 20) {
 			try {
 				Thread.sleep(100);
+				i++;
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		System.out.println("EXIT");
 	}
 
 	protected final void write(final IIndexWriteOperation operation) {

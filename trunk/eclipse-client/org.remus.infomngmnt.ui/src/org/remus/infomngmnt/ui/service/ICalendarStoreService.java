@@ -14,7 +14,6 @@ package org.remus.infomngmnt.ui.service;
 
 import org.aspencloud.calypso.util.TimeSpan;
 
-import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 
@@ -23,13 +22,9 @@ import org.remus.infomngmnt.calendar.model.Tasklist;
  */
 public interface ICalendarStoreService {
 
-	void add(final InformationUnit unit, final CalendarEntry entry);
-
 	void removeInfoUnit(final String informationUnitId);
 
-	void removeCalendarEntry(final CalendarEntry entry);
-
-	void update(final InformationUnit unit, final CalendarEntry entry);
+	void update(final InformationUnit unit);
 
 	Tasklist getItems(final TimeSpan timespan);
 

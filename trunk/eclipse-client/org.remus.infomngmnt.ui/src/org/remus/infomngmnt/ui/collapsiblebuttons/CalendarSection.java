@@ -39,6 +39,8 @@ public class CalendarSection extends CollapsibleButtonBar {
 
 	private static final int SECTION_STYLE = ExpandableComposite.TITLE_BAR
 			| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED;
+	private CalendarComposite cc;
+	private CalendarSelectionDelegate calendarSelectionDelegate;
 
 	/**
 	 * 
@@ -76,15 +78,16 @@ public class CalendarSection extends CollapsibleButtonBar {
 			}
 
 		};
-		CalendarComposite cc = new CalendarComposite(calendarComposite, null, null, null,
-				colorManager, settings, false, null, null);
+		this.cc = new CalendarComposite(calendarComposite, null, null, null, colorManager,
+				settings, false, null, null);
 		GridData gridData = new GridData(SWT.CENTER, SWT.BEGINNING, true, false);
 		gridData.widthHint = settings.getCalendarWidth();
 		gridData.heightHint = settings.getCalendarHeight();
-		cc.setLayoutData(gridData);
-		cc.setVisible(true);
+		this.cc.setLayoutData(gridData);
+		this.cc.setVisible(true);
+		this.calendarSelectionDelegate = new CalendarSelectionDelegate(this.cc);
 
-		getToolkit().adapt(cc);
+		getToolkit().adapt(this.cc);
 
 		final Section today = getToolkit().createSection(comp, SECTION_STYLE);
 		today.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -123,7 +126,14 @@ public class CalendarSection extends CollapsibleButtonBar {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getViewSite().setSelectionProvider(this.calendarSelectionDelegate);
 		super.handleSelect();
+	}
+
+	@Override
+	public void dispose() {
+		this.calendarSelectionDelegate.dispose();
+		super.dispose();
 	}
 
 }

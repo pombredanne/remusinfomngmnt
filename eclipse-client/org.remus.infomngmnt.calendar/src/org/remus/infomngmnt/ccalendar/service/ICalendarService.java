@@ -28,7 +28,7 @@ import org.remus.infomngmnt.calendar.model.Tasklist;
  */
 public interface ICalendarService {
 
-	Task createTask(Date startingTime);
+	Task createTask(Date startingTime, Date endDate);
 
 	void deleteTask(Task task);
 

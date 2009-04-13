@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.remus.infomngmnt.calendar.model.ModelPackage;
@@ -34,7 +35,7 @@ import org.remus.infomngmnt.calendar.model.Tasklist;
  */
 public class TasklistImpl extends EObjectImpl implements Tasklist {
 	/**
-	 * The cached value of the '{@link #getTasks() <em>Tasks</em>}' reference list.
+	 * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getTasks()
@@ -69,7 +70,7 @@ public class TasklistImpl extends EObjectImpl implements Tasklist {
 	 */
 	public EList<Task> getTasks() {
 		if (tasks == null) {
-			tasks = new EObjectWithInverseResolvingEList<Task>(Task.class, this, ModelPackage.TASKLIST__TASKS, ModelPackage.TASK__OWNER);
+			tasks = new EObjectContainmentWithInverseEList<Task>(Task.class, this, ModelPackage.TASKLIST__TASKS, ModelPackage.TASK__OWNER);
 		}
 		return tasks;
 	}

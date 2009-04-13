@@ -113,7 +113,7 @@ public interface Task extends EObject {
 	void setDetails(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Owner</b></em>' reference.
+	 * Returns the value of the '<em><b>Owner</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.remus.infomngmnt.calendar.model.Tasklist#getTasks <em>Tasks</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -121,20 +121,20 @@ public interface Task extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owner</em>' reference.
+	 * @return the value of the '<em>Owner</em>' container reference.
 	 * @see #setOwner(Tasklist)
 	 * @see org.remus.infomngmnt.calendar.model.ModelPackage#getTask_Owner()
 	 * @see org.remus.infomngmnt.calendar.model.Tasklist#getTasks
-	 * @model opposite="tasks"
+	 * @model opposite="tasks" transient="false"
 	 * @generated
 	 */
 	Tasklist getOwner();
 
 	/**
-	 * Sets the value of the '{@link org.remus.infomngmnt.calendar.model.Task#getOwner <em>Owner</em>}' reference.
+	 * Sets the value of the '{@link org.remus.infomngmnt.calendar.model.Task#getOwner <em>Owner</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owner</em>' reference.
+	 * @param value the new value of the '<em>Owner</em>' container reference.
 	 * @see #getOwner()
 	 * @generated
 	 */

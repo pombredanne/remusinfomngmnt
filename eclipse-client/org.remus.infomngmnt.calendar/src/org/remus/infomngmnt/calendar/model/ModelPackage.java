@@ -188,7 +188,7 @@ public interface ModelPackage extends EPackage {
 	int TASK__DETAILS = 2;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' reference.
+	 * The feature id for the '<em><b>Owner</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -370,7 +370,7 @@ public interface ModelPackage extends EPackage {
 	int TASKLIST = 3;
 
 	/**
-	 * The feature id for the '<em><b>Tasks</b></em>' reference list.
+	 * The feature id for the '<em><b>Tasks</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -830,10 +830,10 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTask_Details();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.calendar.model.Task#getOwner <em>Owner</em>}'.
+	 * Returns the meta object for the container reference '{@link org.remus.infomngmnt.calendar.model.Task#getOwner <em>Owner</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Owner</em>'.
+	 * @return the meta object for the container reference '<em>Owner</em>'.
 	 * @see org.remus.infomngmnt.calendar.model.Task#getOwner()
 	 * @see #getTask()
 	 * @generated
@@ -938,10 +938,10 @@ public interface ModelPackage extends EPackage {
 	EClass getTasklist();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.calendar.model.Tasklist#getTasks <em>Tasks</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.calendar.model.Tasklist#getTasks <em>Tasks</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Tasks</em>'.
+	 * @return the meta object for the containment reference list '<em>Tasks</em>'.
 	 * @see org.remus.infomngmnt.calendar.model.Tasklist#getTasks()
 	 * @see #getTasklist()
 	 * @generated
@@ -1142,7 +1142,7 @@ public interface ModelPackage extends EPackage {
 		EAttribute TASK__DETAILS = eINSTANCE.getTask_Details();
 
 		/**
-		 * The meta object literal for the '<em><b>Owner</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Owner</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1226,7 +1226,7 @@ public interface ModelPackage extends EPackage {
 		EClass TASKLIST = eINSTANCE.getTasklist();
 
 		/**
-		 * The meta object literal for the '<em><b>Tasks</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Tasks</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

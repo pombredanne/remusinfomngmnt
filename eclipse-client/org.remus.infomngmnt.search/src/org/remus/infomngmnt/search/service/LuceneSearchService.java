@@ -21,6 +21,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.TopFieldDocs;
+import org.apache.lucene.search.highlight.Highlighter;
+import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -53,24 +69,6 @@ import org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
 import org.remus.infomngmnt.search.save.SavedSearchesHandler;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.TopFieldDocs;
-import org.apache.lucene.search.highlight.Highlighter;
-import org.apache.lucene.search.highlight.QueryScorer;
-import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
-
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -90,7 +88,6 @@ public class LuceneSearchService {
 	public static final String SEARCHINDEX_CREATIONDATE = "document_creationdate"; //$NON-NLS-1$
 	public static final String SEARCHINDEX_PROJECT = "document_project"; //$NON-NLS-1$
 
-
 	public static LuceneSearchService getInstance() {
 		if (LuceneSearchService.INSTANCE == null) {
 			synchronized (LuceneSearchService.class) {
@@ -101,6 +98,7 @@ public class LuceneSearchService {
 		}
 		return LuceneSearchService.INSTANCE;
 	}
+
 	private final WriteQueueJob writeQueueJob;
 
 	private final Map<IProject, IndexSearcher> projectToSearcherMap = new HashMap<IProject, IndexSearcher>();
@@ -110,15 +108,13 @@ public class LuceneSearchService {
 		this.writeQueueJob.schedule();
 	}
 
-	private class WriteQueueJob extends Job
-	{
+	private class WriteQueueJob extends Job {
 		IFolder indexLockFolder;
 
 		private final Map<IProject, List<IFile>> indexQueue = new HashMap<IProject, List<IFile>>();
 		private final Map<IProject, List<IFile>> removIndexQueue = new HashMap<IProject, List<IFile>>();
 
-		public WriteQueueJob()
-		{
+		public WriteQueueJob() {
 			super("Writing queue to index");
 			setSystem(true);
 		}
@@ -131,22 +127,25 @@ public class LuceneSearchService {
 
 		private boolean writeImmediately = false;
 
-		/* (non-Javadoc)
-		 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @seeorg.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.
+		 * IProgressMonitor)
 		 */
 		@Override
 		protected IStatus run(final IProgressMonitor monitor) {
 			if (((System.currentTimeMillis() - this.lastAdding > this.maxNonWriteTime && this.currentSize > 0)
-					|| this.currentSize > 100000
-					|| (this.writeImmediately && this.currentSize > 0)
-					|| (Job.getJobManager().find(ResourcesPlugin.FAMILY_AUTO_BUILD).length == 0 && this.currentSize > 0))) {
+					|| this.currentSize > 100000 || (this.writeImmediately && this.currentSize > 0) || (Job
+					.getJobManager().find(ResourcesPlugin.FAMILY_AUTO_BUILD).length == 0 && this.currentSize > 0))) {
 				final Job writeIndexQueue = new Job("Write queue") {
 					@Override
-					protected IStatus run(final IProgressMonitor monitor)
-					{
-						final Map<IProject, List<IFile>> clonedMap = new HashMap<IProject, List<IFile>>(WriteQueueJob.this.indexQueue);
+					protected IStatus run(final IProgressMonitor monitor) {
+						final Map<IProject, List<IFile>> clonedMap = new HashMap<IProject, List<IFile>>(
+								WriteQueueJob.this.indexQueue);
 						WriteQueueJob.this.indexQueue.clear();
-						final Map<IProject, List<IFile>> clonedDeleteMap = new HashMap<IProject, List<IFile>>(WriteQueueJob.this.removIndexQueue);
+						final Map<IProject, List<IFile>> clonedDeleteMap = new HashMap<IProject, List<IFile>>(
+								WriteQueueJob.this.removIndexQueue);
 						WriteQueueJob.this.removIndexQueue.clear();
 						int newCurrentSize = WriteQueueJob.this.currentSize;
 						WriteQueueJob.this.currentSize = 0;
@@ -155,16 +154,19 @@ public class LuceneSearchService {
 
 						IndexReader reader = null;
 						if (deleteKeySet.size() > 0) {
-							monitor.beginTask("Deleting obsolete entries from index...", IProgressMonitor.UNKNOWN);
+							monitor.beginTask("Deleting obsolete entries from index...",
+									IProgressMonitor.UNKNOWN);
 							try {
 								for (final IProject project : deleteKeySet) {
-									reader = IndexReader.open(getSearchService().getIndexDirectory(project));
+									reader = IndexReader.open(getSearchService().getIndexDirectory(
+											project));
 									final List<IFile> list = clonedDeleteMap.get(project);
 									for (final IFile path : list) {
-										String id = path.getFullPath().removeFileExtension().lastSegment();
-										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"",id));
-										final Term term = new Term(SEARCHINDEX_ITEM_ID,
-												id);
+										String id = path.getFullPath().removeFileExtension()
+												.lastSegment();
+										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"",
+												id));
+										final Term term = new Term(SEARCHINDEX_ITEM_ID, id);
 										reader.deleteDocuments(term);
 									}
 								}
@@ -177,34 +179,40 @@ public class LuceneSearchService {
 										reader.flush();
 										reader.close();
 									} catch (final IOException e) {
-										//we've done our best...
+										// we've done our best...
 									}
 								}
 							}
 						}
-						monitor.beginTask("Queued documents: {0}", newCurrentSize);
-						for (final IProject project : keySet)
-						{
+						monitor.beginTask(NLS.bind("Queued documents: {0}", newCurrentSize),
+								newCurrentSize);
+						for (final IProject project : keySet) {
 							IndexWriter writer = null;
-							try
-							{
+							try {
 								final List<IFile> list = clonedMap.get(project);
 								final long timeMillis = System.currentTimeMillis();
-								if (list.size() > 0)
-								{
+								if (list.size() > 0) {
 									relaseIndexSearcher(project);
-									writer = new IndexWriter(getSearchService().getIndexDirectory(project),
-											getSearchService().getAnalyser());
+									if (IndexReader.isLocked(getSearchService().getIndexDirectory(
+											project))) {
+										IndexReader.unlock(getSearchService().getIndexDirectory(
+												project));
+									}
+									writer = new IndexWriter(getSearchService().getIndexDirectory(
+											project), getSearchService().getAnalyser());
 									writer.setUseCompoundFile(false);
-									for (final IFile path : list)
-									{
+									for (final IFile path : list) {
 										try {
-											final InformationUnit infoUnit = EditingUtil.getInstance().getObjectFromFile(path, InfomngmntPackage.Literals.INFORMATION_UNIT,false);
-											monitor.setTaskName(NLS.bind(
-													"Adding {0} to queue",
+											final InformationUnit infoUnit = EditingUtil
+													.getInstance()
+													.getObjectFromFile(
+															path,
+															InfomngmntPackage.Literals.INFORMATION_UNIT,
+															false);
+											monitor.setTaskName(NLS.bind("Adding {0} to queue",
 													infoUnit.getLabel()));
-											writer.addDocument(getSearchService().getLuceneDocument(infoUnit,
-													project, monitor));
+											writer.addDocument(getSearchService()
+													.getLuceneDocument(infoUnit, project, monitor));
 											infoUnit.eResource().unload();
 											monitor.worked(1);
 										} catch (final Exception e) {
@@ -215,30 +223,25 @@ public class LuceneSearchService {
 										}
 									}
 									if (WriteQueueJob.this.currentSize > 0) {
-										monitor.setTaskName(NLS.bind(
-												"Still queued: {0} documents",
+										monitor.setTaskName(NLS.bind("Still queued: {0} documents",
 												WriteQueueJob.this.currentSize));
 									} else {
 										monitor.setTaskName("Done");
 									}
 									final IStatus status = StatusCreator.newStatus(NLS.bind(
-											"Indexed {0} documents in {1} ms",
-											list.size(), (System.currentTimeMillis() - timeMillis) ));
+											"Indexed {0} documents in {1} ms", list.size(), (System
+													.currentTimeMillis() - timeMillis)));
 									SearchPlugin.getPlugin().getLog().log(status);
-									newCurrentSize-= list.size();
+									newCurrentSize -= list.size();
 									WriteQueueJob.this.writeImmediately = false;
 								}
-							}
-							catch (final Exception e)
-							{
+							} catch (final Exception e) {
 								e.printStackTrace();
-							}
-							finally
-							{
+							} finally {
 								if (writer != null) {
 									try {
 										writer.flush();
-										//writer.optimize();
+										// writer.optimize();
 										writer.close();
 									} catch (final Exception e) {
 										// do nothing. we've done our best.
@@ -259,7 +262,8 @@ public class LuceneSearchService {
 			return Status.OK_STATUS;
 		}
 
-		public void addToQueue(final List<IFile> removeDocuments, final List<IFile> addDocuments, final IProject project) {
+		public void addToQueue(final List<IFile> removeDocuments, final List<IFile> addDocuments,
+				final IProject project) {
 			this.lastAdding = System.currentTimeMillis();
 			if (this.indexQueue.get(project) == null) {
 				this.indexQueue.put(project, new ArrayList<IFile>());
@@ -269,10 +273,8 @@ public class LuceneSearchService {
 				this.removIndexQueue.put(project, new ArrayList<IFile>());
 			}
 			this.removIndexQueue.get(project).addAll(removeDocuments);
-			this.currentSize+=addDocuments.size();
+			this.currentSize += addDocuments.size();
 		}
-
-
 
 	}
 
@@ -283,7 +285,8 @@ public class LuceneSearchService {
 		}
 		return service;
 	}
-	protected void relaseIndexSearcher(IProject project) {
+
+	protected void relaseIndexSearcher(final IProject project) {
 		IndexSearcher indexSearcher = this.projectToSearcherMap.get(project);
 		if (indexSearcher != null) {
 			try {
@@ -297,7 +300,7 @@ public class LuceneSearchService {
 
 	}
 
-	protected IndexSearcher acquireIndexSearcher(IProject project) {
+	protected IndexSearcher acquireIndexSearcher(final IProject project) {
 		IndexSearcher indexSearcher = this.projectToSearcherMap.get(project);
 		if (indexSearcher == null) {
 			try {
@@ -314,27 +317,29 @@ public class LuceneSearchService {
 		return indexSearcher;
 	}
 
-
-	public void addToIndex(List<IFile> filesTodeleteFromIndex,
-			List<IFile> filesToAddToIndex, IProject project) {
+	public void addToIndex(final List<IFile> filesTodeleteFromIndex,
+			final List<IFile> filesToAddToIndex, final IProject project) {
 		this.writeQueueJob.addToQueue(filesTodeleteFromIndex, filesToAddToIndex, project);
 
 	}
-	public String search(Search currentSearch, boolean openEditor) {
+
+	public String search(final Search currentSearch, final boolean openEditor) {
 		return search(currentSearch, openEditor, true, null);
 	}
 
-	public String search(Search currentSearch, boolean openEditor, boolean saveAsFile) {
+	public String search(final Search currentSearch, final boolean openEditor,
+			final boolean saveAsFile) {
 		return search(currentSearch, openEditor, saveAsFile, null);
 	}
 
-	public String search(Search currentSearch, boolean openEditor, boolean save,
-			ISearchCallBack callback) {
+	public String search(final Search currentSearch, final boolean openEditor, final boolean save,
+			final ISearchCallBack callback) {
 		SearchJob newSearch = new SearchJob(currentSearch, openEditor, save, callback);
 		newSearch.schedule();
 		return newSearch.getTicket();
 	}
-	private class SearchJob extends CancelableJob  {
+
+	private class SearchJob extends CancelableJob {
 		private final Search currentSearch;
 		private final boolean openEditor;
 		private final boolean saveAsFile;
@@ -344,12 +349,12 @@ public class LuceneSearchService {
 			return this.currentSearch.getId();
 		}
 
-		public SearchJob(Search currentSearch, boolean openEditor) {
+		public SearchJob(final Search currentSearch, final boolean openEditor) {
 			this(currentSearch, openEditor, true, null);
 		}
 
-		public SearchJob(Search currentSearch, boolean openEditor,
-				boolean saveAsFile, ISearchCallBack callback) {
+		public SearchJob(final Search currentSearch, final boolean openEditor,
+				final boolean saveAsFile, final ISearchCallBack callback) {
 			super(NLS.bind("Search \"{0}\"", currentSearch.getSearchString()));
 			this.callback = callback;
 			currentSearch.setId(String.valueOf(System.currentTimeMillis()));
@@ -359,12 +364,12 @@ public class LuceneSearchService {
 		}
 
 		@Override
-		public boolean belongsTo(Object family) {
+		public boolean belongsTo(final Object family) {
 			return JOB_FAMILY == family;
 		}
 
 		@Override
-		protected IStatus runCancelable(IProgressMonitor monitor) {
+		protected IStatus runCancelable(final IProgressMonitor monitor) {
 			BooleanQuery.setMaxClauseCount(4096);
 			if (this.callback != null) {
 				this.callback.beforeSearch(monitor, this.currentSearch);
@@ -372,16 +377,18 @@ public class LuceneSearchService {
 			if (this.currentSearch != null) {
 				this.currentSearch.getResult().clear();
 			}
-			Query queryStringFromSearchQuery =
-				getSearchService().getQueryStringFromSearchQuery(this.currentSearch, monitor);
-			IProject[] projectsToSearch = getSearchService().getProjectsToSearch(this.currentSearch);
+			Query queryStringFromSearchQuery = getSearchService().getQueryStringFromSearchQuery(
+					this.currentSearch, monitor);
+			IProject[] projectsToSearch = getSearchService()
+					.getProjectsToSearch(this.currentSearch);
 			for (IProject project : projectsToSearch) {
 				try {
 					TopFieldDocs search = acquireIndexSearcher(project).search(
-							queryStringFromSearchQuery,null,getSearchService().getMaxResults(),new Sort());
-					Highlighter highlighter = new Highlighter(
-							new SimpleHTMLFormatter("{highlight-start}","{highlight-end}"),
-							new QueryScorer(queryStringFromSearchQuery));
+							queryStringFromSearchQuery, null, getSearchService().getMaxResults(),
+							new Sort());
+					Highlighter highlighter = new Highlighter(new SimpleHTMLFormatter(
+							"{highlight-start}", "{highlight-end}"), new QueryScorer(
+							queryStringFromSearchQuery));
 					final ScoreDoc[] scoreDocs = search.scoreDocs;
 					for (ScoreDoc scoreDoc : scoreDocs) {
 						Document doc = acquireIndexSearcher(project).doc(scoreDoc.doc);
@@ -395,11 +402,11 @@ public class LuceneSearchService {
 				this.callback.afterSearch(monitor, this.currentSearch);
 			}
 			if (this.saveAsFile) {
-				final IPath savePath = SearchPlugin.getPlugin().getStateLocation()
-				.append(SearchPlugin.getPlugin().getPreferenceStore().getString(SearchPreferenceInitializer.LOCAL_SEARCH_FOLDER))
-				.append(this.currentSearch.getId());
-				new SavedSearchesHandler().saveObjectToResource(
-						savePath , this.currentSearch);
+				final IPath savePath = SearchPlugin.getPlugin().getStateLocation().append(
+						SearchPlugin.getPlugin().getPreferenceStore().getString(
+								SearchPreferenceInitializer.LOCAL_SEARCH_FOLDER)).append(
+						this.currentSearch.getId());
+				new SavedSearchesHandler().saveObjectToResource(savePath, this.currentSearch);
 				SearchPlugin.getPlugin().getSearchHistory().getSearch().add(this.currentSearch);
 				if (this.openEditor) {
 					Display.getDefault().asyncExec(new Runnable() {
@@ -407,9 +414,13 @@ public class LuceneSearchService {
 							try {
 								SearchPlugin.getPlugin().getSearchContext().deactivate();
 								PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-								.getActivePage().openEditor(new URIEditorInput(URI.createFileURI(savePath.toOSString())), SearchResultEditor.class.getName());
+										.getActivePage().openEditor(
+												new URIEditorInput(URI.createFileURI(savePath
+														.toOSString())),
+												SearchResultEditor.class.getName());
 							} catch (PartInitException e) {
-								SearchPlugin.getPlugin().getLog().log(StatusCreator.newStatus("Error opening search-result", e));
+								SearchPlugin.getPlugin().getLog().log(
+										StatusCreator.newStatus("Error opening search-result", e));
 							}
 						}
 					});
@@ -420,21 +431,25 @@ public class LuceneSearchService {
 
 	}
 
-	public SearchResult createSearchResult(Document doc, Highlighter highlighter) {
+	public SearchResult createSearchResult(final Document doc, final Highlighter highlighter) {
 		SearchResult newSearchResult = SearchFactory.eINSTANCE.createSearchResult();
 		newSearchResult.setInfoId(doc.getField(SEARCHINDEX_ITEM_ID).stringValue());
 		newSearchResult.setInfoType(doc.getField(SEARCHINDEX_INFOTYPE_ID).stringValue());
 		String text = doc.get(SEARCHINDEX_CONTENT);
-		TokenStream tokenStream = getSearchService().getAnalyser().tokenStream(SEARCHINDEX_CONTENT, new StringReader(text));
+		TokenStream tokenStream = getSearchService().getAnalyser().tokenStream(SEARCHINDEX_CONTENT,
+				new StringReader(text));
 		try {
-			String bestFragments = highlighter.getBestFragments(tokenStream,text, 2, "...");
+			String bestFragments = highlighter.getBestFragments(tokenStream, text, 2, "...");
 			if (bestFragments.trim().length() != 0) {
 				newSearchResult.setText(bestFragments);
-				newSearchResult.getHighlightAttributes().add(SearchPackage.Literals.SEARCH_RESULT__TEXT);
+				newSearchResult.getHighlightAttributes().add(
+						SearchPackage.Literals.SEARCH_RESULT__TEXT);
 			} else {
 				String additionalString = doc.get(SEARCHINDEX_ADDITIONALS);
-				TokenStream additionTokenStream = getSearchService().getAnalyser().tokenStream(SEARCHINDEX_ADDITIONALS, new StringReader(additionalString));
-				String additionalBestFragments = highlighter.getBestFragments(additionTokenStream, additionalString, 2, "...");
+				TokenStream additionTokenStream = getSearchService().getAnalyser().tokenStream(
+						SEARCHINDEX_ADDITIONALS, new StringReader(additionalString));
+				String additionalBestFragments = highlighter.getBestFragments(additionTokenStream,
+						additionalString, 2, "...");
 				if (additionalBestFragments.trim().length() != 0) {
 					newSearchResult.setText(additionalBestFragments);
 				} else {
@@ -450,14 +465,16 @@ public class LuceneSearchService {
 			e1.printStackTrace();
 		}
 
-
 		newSearchResult.setTitle(doc.getField(SEARCHINDEX_LABEL).stringValue());
 		newSearchResult.setKeywords(doc.getField(SEARCHINDEX_KEYWORDS).stringValue());
 
-		newSearchResult.setPath(ResourcesPlugin.getWorkspace().getRoot().getProject(doc.getField(SEARCHINDEX_PROJECT).stringValue()).getFile(
-				new Path(doc.getField(SEARCHINDEX_ITEM_ID).stringValue()).addFileExtension(ResourceUtil.FILE_EXTENSION)).getFullPath().toString());
+		newSearchResult.setPath(ResourcesPlugin.getWorkspace().getRoot().getProject(
+				doc.getField(SEARCHINDEX_PROJECT).stringValue()).getFile(
+				new Path(doc.getField(SEARCHINDEX_ITEM_ID).stringValue())
+						.addFileExtension(ResourceUtil.FILE_EXTENSION)).getFullPath().toString());
 		try {
-			newSearchResult.setDate(getSearchService().getDateFormat().parse(doc.getField(SEARCHINDEX_CREATIONDATE).stringValue()));
+			newSearchResult.setDate(getSearchService().getDateFormat().parse(
+					doc.getField(SEARCHINDEX_CREATIONDATE).stringValue()));
 		} catch (ParseException e) {
 			// do nothing
 		}

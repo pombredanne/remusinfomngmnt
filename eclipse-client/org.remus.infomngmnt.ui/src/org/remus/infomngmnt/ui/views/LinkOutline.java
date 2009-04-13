@@ -144,6 +144,7 @@ public class LinkOutline extends ContentOutlinePage {
 	private StackLayout stackLayout;
 	private Composite container;
 	private FormToolkit toolkit;
+	private StackLayout eventStackLayout;
 
 	@Override
 	public Control getControl() {
@@ -169,6 +170,9 @@ public class LinkOutline extends ContentOutlinePage {
 		layoutData.heightHint = 100;
 		eventSection.setLayoutData(layoutData);
 		eventSection.setText("Associated Event");
+
+		this.eventStackLayout = new StackLayout();
+		eventSection.setLayout(this.eventStackLayout);
 
 		final Composite eventComposite = this.toolkit.createComposite(eventSection, SWT.NONE);
 		this.toolkit.paintBordersFor(eventComposite);

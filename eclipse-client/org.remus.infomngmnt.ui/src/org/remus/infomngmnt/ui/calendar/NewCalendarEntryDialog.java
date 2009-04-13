@@ -47,9 +47,7 @@ import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
-import org.remus.infomngmnt.ui.service.ICalendarStoreService;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -67,15 +65,19 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 	private CalendarEntry createCalendarEntry;
 	private InformationUnitListItem selectedObject;
 	private CDateTime endTime;
+	private final Date enddate;
 
 	/**
 	 * Create the dialog
 	 * 
 	 * @param parentShell
+	 * @param x
 	 */
-	public NewCalendarEntryDialog(final Shell parentShell, final Date startingDate) {
+	public NewCalendarEntryDialog(final Shell parentShell, final Date startingDate,
+			final Date enddate) {
 		super(parentShell);
 		this.startingDate = startingDate;
+		this.enddate = enddate;
 		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		this.ctx = new EMFDataBindingContext();
 	}
@@ -174,6 +176,9 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		if (this.startingDate != null) {
 			this.createCalendarEntry.setStart(this.startingDate);
 		}
+		if (this.enddate != null) {
+			this.createCalendarEntry.setEnd(this.enddate);
+		}
 		TextBindingWidget createTextBinding = BindingWidgetFactory.createTextBinding(this.nameText,
 				this.ctx, this.editingDomain);
 		createTextBinding.bindModel(this.createCalendarEntry,
@@ -206,9 +211,6 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 			EditingUtil.getInstance().saveObjectToResource((IFile) adapter.getAdapter(IFile.class),
 					adapter);
 		}
-		ICalendarStoreService service = UIPlugin.getDefault().getService(
-				ICalendarStoreService.class);
-		service.add(adapter, this.createCalendarEntry);
 		super.okPressed();
 	}
 

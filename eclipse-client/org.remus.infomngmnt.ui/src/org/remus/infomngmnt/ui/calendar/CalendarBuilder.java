@@ -176,9 +176,7 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 		public void buildSingleInfoUnit(final InformationUnit objectFromFile,
 				final IInfoType infoTypeByType, final IFile resource) {
 			EList<CalendarEntry> calendarEntry = objectFromFile.getCalendarEntry();
-			for (CalendarEntry calendarEntry2 : calendarEntry) {
-				this.storeService.update(objectFromFile, calendarEntry2);
-			}
+			this.storeService.update(objectFromFile);
 		}
 
 		public void setMonitor(final IProgressMonitor monitor) {

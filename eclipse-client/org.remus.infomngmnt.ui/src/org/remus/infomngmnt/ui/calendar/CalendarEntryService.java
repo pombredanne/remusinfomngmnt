@@ -31,6 +31,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.aspencloud.calypso.util.TimeSpan;
+import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InformationUnit;
@@ -114,7 +115,6 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 			public void write(final IndexWriter indexWriter) {
 				try {
 					indexWriter.addDocument(returnValue);
-					fireDirtyTimeSpan(new TimeSpan(entry.getStart(), entry.getEnd()));
 				} catch (CorruptIndexException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -167,9 +167,58 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 		});
 	}
 
-	public void update(final InformationUnit unit, final CalendarEntry entry) {
-		removeCalendarEntry(entry);
-		add(unit, entry);
+	public void update(final InformationUnit unit) {
+		final List<TimeSpan> timespansForInfoUnitId = getTimespansForInfoUnitId(unit.getId());
+		final Term term = new Term(INFOID, unit.getId());
+		write(new IIndexWriteOperation() {
+			public void write(final IndexWriter indexWriter) {
+				indexWriter.setUseCompoundFile(false);
+				try {
+					indexWriter.deleteDocuments(term);
+				} catch (CorruptIndexException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		EList<CalendarEntry> calendarEntry = unit.getCalendarEntry();
+		for (CalendarEntry calendarEntry2 : calendarEntry) {
+			add(unit, calendarEntry2);
+			timespansForInfoUnitId.add(new TimeSpan(calendarEntry2.getStart(), calendarEntry2
+					.getEnd()));
+		}
+
+		// If we're ready with updating the index we have to fire an event to
+		// the listeners with a timespan from the earliest start date to the
+		// latest end date. So we throw only on event with a larger timepsan
+		// instead of many small timespan events.
+		fireDirtyTimeSpan(calculateBiggestTimeSpan(timespansForInfoUnitId));
+	}
+
+	private TimeSpan calculateBiggestTimeSpan(final List<TimeSpan> timespansForInfoUnitId) {
+		Date earliestStart = null;
+		Date latestEnd = null;
+		for (TimeSpan timeSpan : timespansForInfoUnitId) {
+			if (earliestStart == null) {
+				earliestStart = timeSpan.getStartDate();
+			} else {
+				if (earliestStart.compareTo(timeSpan.getStartDate()) > 0) {
+					earliestStart = timeSpan.getStartDate();
+				}
+			}
+			if (latestEnd == null) {
+				latestEnd = timeSpan.getEndDate();
+			} else {
+				if (latestEnd.compareTo(timeSpan.getEndDate()) < 0) {
+					latestEnd = timeSpan.getEndDate();
+				}
+			}
+		}
+		return new TimeSpan(earliestStart, latestEnd);
+
 	}
 
 	private List<TimeSpan> getTimespansForInfoUnitId(final String infoUnitId) {

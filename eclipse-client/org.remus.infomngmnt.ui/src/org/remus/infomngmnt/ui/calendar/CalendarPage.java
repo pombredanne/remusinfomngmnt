@@ -19,6 +19,8 @@ import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ZoomInAction;
 import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ZoomOutAction;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.layout.GridData;
@@ -28,6 +30,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -103,6 +108,23 @@ public class CalendarPage extends InformationFormPage {
 		createContextMenu();
 		this.calendar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		getSite().setSelectionProvider(this.calendar);
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addSelectionListener(
+				new ISelectionListener() {
+
+					public void selectionChanged(final IWorkbenchPart part,
+							final ISelection selection) {
+						if (selection instanceof IStructuredSelection) {
+							Object firstElement = ((IStructuredSelection) selection)
+									.getFirstElement();
+							if (firstElement instanceof Date) {
+								CalendarPage.this.calendar
+										.setCalendarToWeekContaining((Date) firstElement);
+							}
+						}
+
+					}
+
+				});
 
 		// CalypsoManager.getManager().addPropertyChangeListener(new
 		// PropertyChangeListener() {

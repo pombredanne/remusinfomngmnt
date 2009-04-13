@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.dialogs.IDialogConstants;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -49,14 +48,10 @@ public class CalendarServiceImpl implements ICalendarService {
 	 * org.remus.infomngmnt.ccalendar.service.ICalendarService#createTask(java
 	 * .sql.Date)
 	 */
-	public Task createTask(final Date startingTime) {
+	public Task createTask(final Date startingTime, final Date endTime) {
 		NewCalendarEntryDialog dialog = new NewCalendarEntryDialog(UIUtil.getDisplay()
-				.getActiveShell(), startingTime);
-		if (dialog.open() == IDialogConstants.OK_ID) {
-			TimeSpan ts = new TimeSpan(dialog.getNewObject().getStart(), dialog.getNewObject()
-					.getEnd());
-
-		}
+				.getActiveShell(), startingTime, endTime);
+		dialog.open();
 		return null;
 	}
 
@@ -68,7 +63,29 @@ public class CalendarServiceImpl implements ICalendarService {
 	 * .remus.infomngmnt.calendar.model.Task)
 	 */
 	public void deleteTask(final Task task) {
-		// TODO Auto-generated method stub
+		Job job = new Job("Deleting Task") {
+
+			@Override
+			protected IStatus run(final IProgressMonitor monitor) {
+				String id = task.getId();
+				String[] split = id.split("_");
+				String infoId = split[0];
+				String entryId = split[1];
+				InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
+						infoId, monitor);
+				InformationUnit adapter = (InformationUnit) itemById
+						.getAdapter(InformationUnit.class);
+				EObject itemByValue = ModelUtil.getItemByValue(adapter.getCalendarEntry(),
+						InfomngmntPackage.Literals.CALENDAR_ENTRY__ID, entryId);
+				if (itemByValue != null && itemByValue instanceof CalendarEntry) {
+					adapter.getCalendarEntry().remove(itemByValue);
+					EditingUtil.getInstance().saveObjectToResource(
+							(IFile) adapter.getAdapter(IFile.class), adapter);
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.schedule();
 
 	}
 
@@ -98,8 +115,6 @@ public class CalendarServiceImpl implements ICalendarService {
 				String[] split = id.split("_");
 				String infoId = split[0];
 				String entryId = split[1];
-				ICalendarStoreService calendarStoreService = UIPlugin.getDefault().getService(
-						ICalendarStoreService.class);
 				InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
 						infoId, monitor);
 				InformationUnit adapter = (InformationUnit) itemById
@@ -107,7 +122,6 @@ public class CalendarServiceImpl implements ICalendarService {
 				EObject itemByValue = ModelUtil.getItemByValue(adapter.getCalendarEntry(),
 						InfomngmntPackage.Literals.CALENDAR_ENTRY__ID, entryId);
 				if (itemByValue != null && itemByValue instanceof CalendarEntry) {
-					calendarStoreService.update(adapter, (CalendarEntry) itemByValue);
 					((CalendarEntry) itemByValue).setStart(task.getStart().getDate());
 					((CalendarEntry) itemByValue).setEnd(task.getEnd().getDate());
 					EditingUtil.getInstance().saveObjectToResource(

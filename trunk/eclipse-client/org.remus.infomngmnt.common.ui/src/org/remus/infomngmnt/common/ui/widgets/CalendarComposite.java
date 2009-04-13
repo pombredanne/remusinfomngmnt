@@ -118,8 +118,6 @@ public class CalendarComposite extends Canvas implements MouseListener, MouseMov
 
 	private final ISettings mSettings;
 
-	private ICalendarListener mMainListener;
-
 	private final Calendar mDisallowBeforeDate;
 
 	private final Calendar mDisallowAfterDate;
@@ -764,9 +762,6 @@ public class CalendarComposite extends Canvas implements MouseListener, MouseMov
 	}
 
 	private void notifyClose() {
-		// notify ourselves first or dates will not be equal on the fired event
-		// and the getDate() on the combo itself
-		this.mMainListener.popupClosed();
 
 		for (int i = 0; i < this.mListeners.size(); i++) {
 			ICalendarListener l = (ICalendarListener) this.mListeners.get(i);
@@ -775,12 +770,6 @@ public class CalendarComposite extends Canvas implements MouseListener, MouseMov
 	}
 
 	private void notifyListeners(final Calendar date) {
-		// notify ourselves first
-		if (this.mDateRange) {
-			this.mMainListener.dateRangeChanged(this.mMouseDownDay, this.mMouseUpDay);
-		} else {
-			this.mMainListener.dateChanged(date);
-		}
 
 		for (int i = 0; i < this.mListeners.size(); i++) {
 			ICalendarListener l = (ICalendarListener) this.mListeners.get(i);
@@ -795,10 +784,6 @@ public class CalendarComposite extends Canvas implements MouseListener, MouseMov
 
 	private void notifyListeners() {
 		notifyListeners(this.mSelectedDay);
-	}
-
-	void addMainCalendarListener(final ICalendarListener listener) {
-		this.mMainListener = listener;
 	}
 
 	public void addCalendarListener(final ICalendarListener listener) {

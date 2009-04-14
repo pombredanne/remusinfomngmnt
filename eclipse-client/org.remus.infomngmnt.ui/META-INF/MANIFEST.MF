@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.compare.match;bundle-version="0.8.1",
  org.eclipse.emf.compare.diff.edit;bundle-version="0.8.1",
  org.eclipse.emf.compare;bundle-version="0.8.1",
- org.remus.infomngmnt.calendar;bundle-version="1.0.0"
+ org.remus.infomngmnt.calendar;bundle-version="1.0.0",
+ org.apache.commons.lang;bundle-version="2.3.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.ui,

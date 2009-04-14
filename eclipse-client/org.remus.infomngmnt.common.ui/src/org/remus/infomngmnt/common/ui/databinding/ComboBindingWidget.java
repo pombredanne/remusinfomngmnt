@@ -21,9 +21,9 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Combo;
@@ -34,6 +34,8 @@ import org.eclipse.swt.widgets.Combo;
 public class ComboBindingWidget extends AbstractBindingWidget {
 
 	private WritableList input;
+
+	private LabelProvider labelProvider = new LabelProvider();
 
 	@SuppressWarnings("unchecked")
 	public void setInput(final Collection input) {
@@ -57,9 +59,9 @@ public class ComboBindingWidget extends AbstractBindingWidget {
 			throw new IllegalStateException("Input is not set. Set the input via #setInput()");
 		}
 		ccViewer.setContentProvider(new ObservableListContentProvider());
-		ccViewer.setLabelProvider(new LabelProvider());
+		ccViewer.setLabelProvider(this.labelProvider);
 		ccViewer.setInput(this.input);
-		ISWTObservableValue swtType = SWTObservables.observeText(getWrappedControl());
+		IViewerObservableValue swtType = ViewersObservables.observeSingleSelection(ccViewer);
 		IObservableValue emfType = EMFEditObservables.observeValue(getEditingDomain(), object,
 				feature);
 		setBinding(getBindingContext().bindValue(swtType, emfType, model2target, target2Model));
@@ -74,6 +76,14 @@ public class ComboBindingWidget extends AbstractBindingWidget {
 	@Override
 	protected void updateReadOnly() {
 		getWrappedControl().setEnabled(isReadonly());
+	}
+
+	/**
+	 * @param labelProvider
+	 *            the labelProvider to set
+	 */
+	public void setLabelProvider(final LabelProvider labelProvider) {
+		this.labelProvider = labelProvider;
 	}
 
 }

@@ -824,6 +824,10 @@ public class CalendarComposite extends Canvas implements MouseListener, MouseMov
 		return this.mMonthSelectorOpen;
 	}
 
+	public Calendar getSelectedDay() {
+		return this.mSelectedDay;
+	}
+
 	class ButtonSectionLayout extends Layout {
 
 		@Override

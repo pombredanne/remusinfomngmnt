@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.remus.infomngmnt.ui.calendar;
 
-import java.util.Date;
-
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -36,11 +33,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.CalendarEntryType;
 import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -48,9 +47,12 @@ import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
+import org.remus.infomngmnt.ui.editors.EditorUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -62,13 +64,13 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 	private Combo typeCombo;
 	private Combo notificationCombo;
 	private CDateTime startTime;
-	private final Date startingDate;
 	private final EditingDomain editingDomain;
 	private final EMFDataBindingContext ctx;
-	private CalendarEntry createCalendarEntry;
+	private final CalendarEntry createCalendarEntry;
 	private InformationUnitListItem selectedObject;
 	private CDateTime endTime;
-	private final Date enddate;
+	private ImageHyperlink hyperlink;
+	private final InformationUnit parentElement;
 
 	/**
 	 * Create the dialog
@@ -76,12 +78,12 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 	 * @param parentShell
 	 * @param x
 	 */
-	public NewCalendarEntryDialog(final Shell parentShell, final Date startingDate,
-			final Date enddate) {
+	public NewCalendarEntryDialog(final Shell parentShell, final CalendarEntry entry,
+			final EditingDomain editingDomain, final InformationUnit parentElement) {
 		super(parentShell);
-		this.startingDate = startingDate;
-		this.enddate = enddate;
-		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		this.createCalendarEntry = entry;
+		this.editingDomain = editingDomain;
+		this.parentElement = parentElement;
 		this.ctx = new EMFDataBindingContext();
 	}
 
@@ -147,20 +149,30 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		informationunitGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		informationunitGroup.setText("Information-Unit");
 
-		this.text_5 = new Text(informationunitGroup, SWT.BORDER);
-		this.text_5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		this.text_5.setEnabled(false);
+		if (this.parentElement == null) {
+			this.text_5 = new Text(informationunitGroup, SWT.BORDER);
+			this.text_5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+			this.text_5.setEnabled(false);
 
-		final Button browseButton = new Button(informationunitGroup, SWT.NONE);
-		browseButton.setText("B&rowse...");
-		browseButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(final Event event) {
-				InfoUnitSelectionDialog diag = InfoUnitSelectionDialog.create(getShell(), null);
-				if (diag.open() == IDialogConstants.OK_ID) {
-					setTargetObject(((InformationUnitListItem) diag.getFirstResult()));
+			final Button browseButton = new Button(informationunitGroup, SWT.NONE);
+			browseButton.setText("B&rowse...");
+			browseButton.addListener(SWT.Selection, new Listener() {
+				public void handleEvent(final Event event) {
+					InfoUnitSelectionDialog diag = InfoUnitSelectionDialog.create(getShell(), null);
+					if (diag.open() == IDialogConstants.OK_ID) {
+						setTargetObject(((InformationUnitListItem) diag.getFirstResult()));
+					}
 				}
-			}
-		});
+			});
+		} else {
+			this.hyperlink = new ImageHyperlink(informationunitGroup, SWT.NONE);
+			GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
+			gridData.horizontalSpan = 2;
+			this.hyperlink.setLayoutData(gridData);
+
+			setTargetObject((InformationUnitListItem) this.parentElement
+					.getAdapter(InformationUnitListItem.class));
+		}
 		//
 
 		bindValuesToUi();
@@ -170,20 +182,30 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 
 	protected void setTargetObject(final InformationUnitListItem informationUnit) {
 		this.selectedObject = informationUnit;
-		this.text_5.setText(CategoryUtil.categoryToString((Category) informationUnit.eContainer())
-				+ "/" + informationUnit.getLabel());
+		String text = CategoryUtil.categoryToString((Category) informationUnit.eContainer()) + "/"
+				+ informationUnit.getLabel();
+		if (this.parentElement == null) {
+			this.text_5.setText(text);
+		} else {
+			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+					this.selectedObject.getType());
+			if (infoTypeByType != null) {
+				this.hyperlink.setImage(infoTypeByType.getImage());
+				this.hyperlink.setText(text);
+				this.hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
+					@Override
+					public void linkActivated(final HyperlinkEvent e) {
+						EditorUtil.openInfoUnit(NewCalendarEntryDialog.this.selectedObject.getId());
+						cancelPressed();
+					}
+				});
+			}
+		}
 
 	}
 
 	private void bindValuesToUi() {
-		this.createCalendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
-		this.createCalendarEntry.setId(new UniversalUniqueIdentifier().toString());
-		if (this.startingDate != null) {
-			this.createCalendarEntry.setStart(this.startingDate);
-		}
-		if (this.enddate != null) {
-			this.createCalendarEntry.setEnd(this.enddate);
-		}
+
 		TextBindingWidget createTextBinding = BindingWidgetFactory.createTextBinding(this.nameText,
 				this.ctx, this.editingDomain);
 		createTextBinding.bindModel(this.createCalendarEntry,
@@ -216,12 +238,15 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
-		InformationUnit adapter = (InformationUnit) this.selectedObject
-				.getAdapter(InformationUnit.class);
-		if (adapter != null) {
-			adapter.getCalendarEntry().add(this.createCalendarEntry);
-			EditingUtil.getInstance().saveObjectToResource((IFile) adapter.getAdapter(IFile.class),
-					adapter);
+		if (this.parentElement == null) {
+			InformationUnit adapter = (InformationUnit) this.selectedObject
+					.getAdapter(InformationUnit.class);
+			if (adapter != null) {
+				adapter.getCalendarEntry().add(this.createCalendarEntry);
+				EditingUtil.getInstance().saveObjectToResource(
+						(IFile) adapter.getAdapter(IFile.class), adapter);
+			}
+
 		}
 		super.okPressed();
 	}

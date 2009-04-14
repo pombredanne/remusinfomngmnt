@@ -21,6 +21,7 @@ import org.aspencloud.calypso.ui.workbench.views.calendar.actions.ZoomOutAction;
 import org.aspencloud.calypso.util.CalypsoEdit;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -40,6 +41,7 @@ import org.eclipse.ui.actions.BaseSelectionListenerAction;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 
 import org.remus.infomgmnt.provider.CalendarContentProvider;
@@ -47,6 +49,7 @@ import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.ccalendar.CCalendar;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.editors.EditorUtil;
 import org.remus.infomngmnt.ui.editors.InformationFormPage;
 
 /**
@@ -62,6 +65,8 @@ public class CalendarPage extends InformationFormPage {
 	private ShowGridAction gridAction;
 	private IAction createAction;
 	private BaseSelectionListenerAction removeAction;
+	private BaseSelectionListenerAction openInfoUnitAction;
+	private BaseSelectionListenerAction editAction;
 
 	public CalendarPage(final FormEditor editor, final String id, final String title) {
 		super(editor, id, title);
@@ -160,7 +165,40 @@ public class CalendarPage extends InformationFormPage {
 		this.removeAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		this.removeAction.setId("org.eclipse.ui.edit.delete");
+
+		this.openInfoUnitAction = new BaseSelectionListenerAction("Open information unit") {
+			@Override
+			protected boolean updateSelection(final IStructuredSelection selection) {
+				return !selection.isEmpty();
+			}
+
+			@Override
+			public void run() {
+				List list = getStructuredSelection().toList();
+				for (Object object : list) {
+					if (object instanceof Task) {
+						String taskId = ((Task) object).getId();
+						String infoId = taskId.split("_")[0];
+						EditorUtil.openInfoUnit(infoId);
+					}
+				}
+			}
+		};
+		this.editAction = new BaseSelectionListenerAction(WorkbenchMessages.Edit) {
+			@Override
+			protected boolean updateSelection(final IStructuredSelection selection) {
+				return selection.toList().size() == 1;
+			}
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				super.run();
+			}
+		};
+
 		this.calendar.addSelectionChangedListener(this.removeAction);
+		this.calendar.addSelectionChangedListener(this.openInfoUnitAction);
 
 	}
 
@@ -172,6 +210,9 @@ public class CalendarPage extends InformationFormPage {
 				Menu menu = manager.createContextMenu(control);
 				control.setMenu(menu);
 				manager.add(this.createAction);
+				manager.add(new Separator());
+				manager.add(this.openInfoUnitAction);
+				manager.add(new Separator());
 				manager.add(this.removeAction);
 			}
 		}

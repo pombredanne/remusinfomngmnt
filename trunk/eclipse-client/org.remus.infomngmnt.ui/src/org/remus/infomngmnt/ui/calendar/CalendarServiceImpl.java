@@ -15,14 +15,17 @@ package org.remus.infomngmnt.ui.calendar;
 import java.util.Date;
 
 import org.aspencloud.calypso.util.TimeSpan;
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.CalendarEntry;
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -49,8 +52,14 @@ public class CalendarServiceImpl implements ICalendarService {
 	 * .sql.Date)
 	 */
 	public Task createTask(final Date startingTime, final Date endTime) {
+		CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
+		calendarEntry.setId(new UniversalUniqueIdentifier().toString());
+		calendarEntry.setStart(startingTime);
+		calendarEntry.setEnd(endTime);
+		calendarEntry.setReminder(-1);
+		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		NewCalendarEntryDialog dialog = new NewCalendarEntryDialog(UIUtil.getDisplay()
-				.getActiveShell(), startingTime, endTime);
+				.getActiveShell(), calendarEntry, editingDomain, null);
 		dialog.open();
 		return null;
 	}

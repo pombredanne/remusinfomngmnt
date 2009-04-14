@@ -19,6 +19,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -26,20 +30,31 @@ import org.remus.infomngmnt.resources.util.ResourceUtil;
  */
 public class EditorUtil {
 
-	public static String computeBinFileLocation(IFileEditorInput input) {
+	public static String computeBinFileLocation(final IFileEditorInput input) {
 		IFile file = input.getFile();
-		IPath binPath = file.getProject().getLocation().append(new Path(ResourceUtil.BIN_FOLDER + File.separator + file.getProjectRelativePath()));
-		return Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(binPath.toOSString()).replaceFirst(ResourceUtil.HTML_EXTENSION);
+		IPath binPath = file.getProject().getLocation().append(
+				new Path(ResourceUtil.BIN_FOLDER + File.separator + file.getProjectRelativePath()));
+		return Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(binPath.toOSString())
+				.replaceFirst(ResourceUtil.HTML_EXTENSION);
 	}
 
-	public static IFile getBinFile(IFileEditorInput input) {
+	public static IFile getBinFile(final IFileEditorInput input) {
 		IFile file = input.getFile();
-		return file.getProject()
-		.getFile(new Path(ResourceUtil.BIN_FOLDER).append(Pattern.compile(ResourceUtil.FILE_EXTENSION + "$").matcher(file.getName()).replaceFirst(ResourceUtil.HTML_EXTENSION)));
+		return file.getProject().getFile(
+				new Path(ResourceUtil.BIN_FOLDER).append(Pattern.compile(
+						ResourceUtil.FILE_EXTENSION + "$").matcher(file.getName()).replaceFirst(
+						ResourceUtil.HTML_EXTENSION)));
 	}
 
-
-
-
+	public static void openInfoUnit(final String id) {
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
+					new InformationEditorInput(ApplicationModelPool.getInstance().getItemById(id,
+							null)), InformationEditor.ID);
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

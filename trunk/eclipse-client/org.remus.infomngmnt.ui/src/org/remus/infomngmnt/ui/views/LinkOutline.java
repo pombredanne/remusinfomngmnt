@@ -2,14 +2,23 @@ package org.remus.infomngmnt.ui.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CreateChildCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -54,6 +63,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.commands.CommandFactory;
@@ -61,6 +71,7 @@ import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
+import org.remus.infomngmnt.ui.calendar.NewCalendarEntryDialog;
 import org.remus.infomngmnt.ui.dnd.CustomDropTargetListener;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
@@ -139,7 +150,17 @@ public class LinkOutline extends ContentOutlinePage {
 	private final AdapterImpl linkListChangeAdapter = new AdapterImpl() {
 		@Override
 		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
-			buildList();
+			if (msg.getFeature() instanceof Link) {
+				buildList();
+			}
+		}
+	};
+	private final AdapterImpl eventListChangeAdapter = new AdapterImpl() {
+		@Override
+		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
+			if (msg.getFeature() == InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY) {
+				buildEventList();
+			}
 		}
 	};
 
@@ -156,6 +177,7 @@ public class LinkOutline extends ContentOutlinePage {
 	private final EditingDomain adapterFactoryEditingDomain;
 
 	private Section linkSection;
+	private Section eventSection;
 
 	@Override
 	public Control getControl() {
@@ -247,13 +269,12 @@ public class LinkOutline extends ContentOutlinePage {
 	}
 
 	private void createEventSection(final ScrolledForm sform, final FormToolkit toolkit) {
-		final Section eventSection = toolkit.createSection(sform.getBody(),
-				ExpandableComposite.TWISTIE | ExpandableComposite.TITLE_BAR
-						| ExpandableComposite.EXPANDED);
+		this.eventSection = toolkit.createSection(sform.getBody(), ExpandableComposite.TWISTIE
+				| ExpandableComposite.TITLE_BAR | ExpandableComposite.EXPANDED);
 
-		eventSection.setActiveToggleColor(toolkit.getHyperlinkGroup().getActiveForeground());
-		eventSection.setToggleColor(toolkit.getColors().getColor(IFormColors.SEPARATOR));
-		eventSection.addExpansionListener(new ExpansionAdapter() {
+		this.eventSection.setActiveToggleColor(toolkit.getHyperlinkGroup().getActiveForeground());
+		this.eventSection.setToggleColor(toolkit.getColors().getColor(IFormColors.SEPARATOR));
+		this.eventSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(final ExpansionEvent e) {
 				sform.reflow(false);
@@ -263,24 +284,67 @@ public class LinkOutline extends ContentOutlinePage {
 		TableWrapData td = new TableWrapData();
 		td.align = TableWrapData.FILL;
 		td.grabHorizontal = true;
-		eventSection.setLayoutData(td);
-		eventSection.setText("Associated Events (0)");
+		this.eventSection.setLayoutData(td);
 
-		this.eventFormText = toolkit.createFormText(eventSection, false);
+		this.eventFormText = toolkit.createFormText(this.eventSection, false);
 		this.eventFormText.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.TOP));
 		this.eventFormText.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
-				NewLinkWizardPage newLinkWizardPage = new NewLinkWizardPage(getSite().getShell(),
-						LinkOutline.this.info, LinkOutline.this.adapterFactoryEditingDomain);
-				int open = newLinkWizardPage.open();
-				if (open == IDialogConstants.OK_ID) {
-					performResult(newLinkWizardPage.getResult());
+				String string = e.getHref().toString();
+				if ("addEvent".equals(string)) {
+					CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
+					calendarEntry.setId(new UniversalUniqueIdentifier().toString());
+					calendarEntry.setStart(new Date());
+					calendarEntry.setEnd(new Date(calendarEntry.getStart().getTime()
+							+ (15 * 60 * 1000)));
+					calendarEntry.setReminder(-1);
+					NewCalendarEntryDialog diag = new NewCalendarEntryDialog(getSite().getShell(),
+							calendarEntry, LinkOutline.this.adapterFactoryEditingDomain,
+							LinkOutline.this.info);
+					if (diag.open() == IDialogConstants.OK_ID) {
+						Command create = AddCommand.create(
+								LinkOutline.this.adapterFactoryEditingDomain,
+								LinkOutline.this.info,
+								InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY, diag
+										.getNewObject());
+						LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(
+								create);
+					}
+				} else if ("openCalendar".equals(string)) {
+					// TODO open calendar.
+				} else {
+					EObject itemByValue = ModelUtil.getItemByValue(LinkOutline.this.info
+							.getCalendarEntry(), InfomngmntPackage.Literals.CALENDAR_ENTRY__ID,
+							string);
+					if (itemByValue != null) {
+						NewCalendarEntryDialog diag = new NewCalendarEntryDialog(getSite()
+								.getShell(), (CalendarEntry) EcoreUtil.copy(itemByValue),
+								EditingUtil.getInstance().createNewEditingDomain(),
+								LinkOutline.this.info);
+						if (diag.open() == IDialogConstants.OK_ID) {
+							CompoundCommand cc = new CompoundCommand();
+							cc.append(new RemoveCommand(
+									LinkOutline.this.adapterFactoryEditingDomain,
+									LinkOutline.this.info,
+									InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
+									Collections.singleton(itemByValue)));
+							cc.append(new CreateChildCommand(
+									LinkOutline.this.adapterFactoryEditingDomain,
+									LinkOutline.this.info,
+									InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
+									diag.getNewObject(), Collections.EMPTY_LIST));
+							cc.setLabel("Edit Calendar-Entry");
+							LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(
+									cc);
+						}
+					}
 				}
 			}
 		});
+		this.info.eAdapters().add(this.eventListChangeAdapter);
 		buildEventList();
-		eventSection.setClient(this.eventFormText);
+		this.eventSection.setClient(this.eventFormText);
 
 	}
 
@@ -351,7 +415,15 @@ public class LinkOutline extends ContentOutlinePage {
 	}
 
 	private void buildEventList() {
-		EList<CalendarEntry> calendarEntry = this.info.getCalendarEntry();
+		List<CalendarEntry> calendarEntry = new ArrayList<CalendarEntry>(this.info
+				.getCalendarEntry());
+		Collections.sort(calendarEntry, new Comparator<CalendarEntry>() {
+
+			public int compare(final CalendarEntry o1, final CalendarEntry o2) {
+				return o1.getStart().compareTo(o2.getStart());
+			}
+		});
+		this.eventSection.setText(NLS.bind("Associated Events ({0})", calendarEntry.size()));
 		if (calendarEntry.size() == 0) {
 			this.eventFormText
 					.setText(

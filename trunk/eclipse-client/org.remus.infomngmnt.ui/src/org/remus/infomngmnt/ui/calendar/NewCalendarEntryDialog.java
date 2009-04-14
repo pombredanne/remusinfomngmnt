@@ -19,6 +19,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.nebula.widgets.cdatetime.CDT;
 import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 import org.eclipse.swt.SWT;
@@ -38,6 +39,7 @@ import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.CalendarEntryType;
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -46,6 +48,7 @@ import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
 
@@ -113,14 +116,14 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		startdateLabel.setText("Start-Date");
 
 		this.startTime = new CDateTime(dateTimeGroup, CDT.BORDER | CDT.DROP_DOWN);
-		this.startTime.setPattern("yyyy EEEE, MMMM d '@' HH:mm");
+		this.startTime.setPattern("yyyy-MM-dd '@' hh:mm a");
 		this.startTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label enddateLabel = new Label(dateTimeGroup, SWT.NONE);
 		enddateLabel.setText("End-Date");
 
 		this.endTime = new CDateTime(dateTimeGroup, CDT.BORDER | CDT.DROP_DOWN);
-		this.endTime.setPattern("yyyy EEEE, MMMM d '@' HH:mm");
+		this.endTime.setPattern("yyyy-MM-dd '@' hh:mm a");
 		this.endTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label notificationLabel = new Label(dateTimeGroup, SWT.NONE);
@@ -167,7 +170,9 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 
 	protected void setTargetObject(final InformationUnitListItem informationUnit) {
 		this.selectedObject = informationUnit;
-		this.text_5.setText(this.selectedObject.getLabel());
+		this.text_5.setText(CategoryUtil.categoryToString((Category) informationUnit.eContainer())
+				+ "/" + informationUnit.getLabel());
+
 	}
 
 	private void bindValuesToUi() {
@@ -197,6 +202,13 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		ComboBindingWidget createComboBinding = BindingWidgetFactory.createComboBinding(
 				this.typeCombo, this.ctx, this.editingDomain);
 		createComboBinding.setInput(CalendarEntryType.VALUES);
+		createComboBinding.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(final Object element) {
+				return CalendarEntryTypeStrings
+						.getStringByCalendarEntryType((CalendarEntryType) element);
+			}
+		});
 		createComboBinding.bindModel(this.createCalendarEntry,
 				InfomngmntPackage.Literals.CALENDAR_ENTRY__ENTRY_TYPE);
 

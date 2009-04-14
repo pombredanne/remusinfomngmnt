@@ -42,6 +42,7 @@ public class CalendarSelectionDelegate extends CalendarListenerAdapter implement
 	public CalendarSelectionDelegate(final CalendarComposite calendarComposite) {
 		this.calendarComposite = calendarComposite;
 		calendarComposite.addCalendarListener(this);
+		// this.currentDate = calendarComposite.getSelectedDay().getTime();
 		this.listenerList = new ArrayList<ISelectionChangedListener>();
 	}
 
@@ -71,6 +72,9 @@ public class CalendarSelectionDelegate extends CalendarListenerAdapter implement
 	}
 
 	public ISelection getSelection() {
+		if (this.currentDate == null) {
+			return StructuredSelection.EMPTY;
+		}
 		return new StructuredSelection(this.currentDate);
 	}
 

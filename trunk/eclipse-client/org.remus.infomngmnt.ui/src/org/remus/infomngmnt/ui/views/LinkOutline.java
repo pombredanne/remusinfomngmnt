@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -18,8 +19,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetEvent;
@@ -29,18 +29,26 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.forms.IFormColors;
+import org.eclipse.ui.forms.ManagedForm;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
+import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -52,6 +60,7 @@ import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
 import org.remus.infomngmnt.ui.dnd.CustomDropTargetListener;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
@@ -121,14 +130,6 @@ public class LinkOutline extends ContentOutlinePage {
 		}
 	}
 
-	public static final String ID = "org.remus.infomngmnt.ui.views.Test"; //$NON-NLS-1$
-	private final InformationUnit info;
-
-	private Composite noLinkComposite;
-	private Composite linkListingComposite;
-	private FormText linkListingForm;
-	private final EditingDomain adapterFactoryEditingDomain;
-
 	public LinkOutline(final InformationUnit info, final EditingDomain adapterFactoryEditingDomain) {
 		this.info = info;
 		this.adapterFactoryEditingDomain = adapterFactoryEditingDomain;
@@ -141,14 +142,24 @@ public class LinkOutline extends ContentOutlinePage {
 			buildList();
 		}
 	};
-	private StackLayout stackLayout;
-	private Composite container;
-	private FormToolkit toolkit;
-	private StackLayout eventStackLayout;
+
+	public static final String ID = "org.remus.infomngmnt.ui.views.Test"; //$NON-NLS-1$
+
+	private final InformationUnit info;
+
+	private ScrolledForm sform;
+
+	private FormText eventFormText;
+
+	private FormText linkFormText;
+
+	private final EditingDomain adapterFactoryEditingDomain;
+
+	private Section linkSection;
 
 	@Override
 	public Control getControl() {
-		return this.container;
+		return this.sform;
 	}
 
 	/**
@@ -159,46 +170,105 @@ public class LinkOutline extends ContentOutlinePage {
 	@Override
 	public void createControl(final Composite parent) {
 
-		this.toolkit = new FormToolkit(Display.getCurrent());
+		FormToolkit toolkit = new FormToolkit(parent.getDisplay());
+		this.sform = toolkit.createScrolledForm(parent);
+		this.sform.setLayoutData(new GridData(GridData.FILL_BOTH));
+		ManagedForm managedForm = new ManagedForm(toolkit, this.sform);
 
-		this.container = this.toolkit.createComposite(parent, SWT.NONE);
-		this.container.setLayout(new GridLayout());
-		this.toolkit.paintBordersFor(this.container);
+		TableWrapLayout layout = new TableWrapLayout();
+		layout.leftMargin = 10;
+		layout.rightMargin = 10;
+		this.sform.getBody().setLayout(layout);
 
-		final Section eventSection = this.toolkit.createSection(this.container, Section.TITLE_BAR);
-		GridData layoutData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		layoutData.heightHint = 100;
-		eventSection.setLayoutData(layoutData);
-		eventSection.setText("Associated Event");
+		createEventSection(this.sform, toolkit);
+		createLinkSection(this.sform, toolkit);
 
-		this.eventStackLayout = new StackLayout();
-		eventSection.setLayout(this.eventStackLayout);
+	}
 
-		final Composite eventComposite = this.toolkit.createComposite(eventSection, SWT.NONE);
-		this.toolkit.paintBordersFor(eventComposite);
-		eventSection.setClient(eventComposite);
+	private void createLinkSection(final ScrolledForm sform2, final FormToolkit toolkit) {
 
-		final Section section = this.toolkit.createSection(this.container, Section.TITLE_BAR);
-		section.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		section.setText("Links");
-		initializeToolBar(section);
+		this.linkSection = toolkit.createSection(this.sform.getBody(), ExpandableComposite.TWISTIE
+				| ExpandableComposite.TITLE_BAR | ExpandableComposite.EXPANDED);
 
-		final Composite composite = this.toolkit.createComposite(section, SWT.NONE);
-		this.toolkit.paintBordersFor(composite);
-		section.setClient(composite);
+		this.linkSection.setActiveToggleColor(toolkit.getHyperlinkGroup().getActiveForeground());
+		this.linkSection.setToggleColor(toolkit.getColors().getColor(IFormColors.SEPARATOR));
+		this.linkSection.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(final ExpansionEvent e) {
+				LinkOutline.this.sform.reflow(false);
+			}
+		});
 
-		this.stackLayout = new StackLayout();
-		composite.setLayout(this.stackLayout);
+		TableWrapData td = new TableWrapData();
+		td.align = TableWrapData.FILL;
+		td.grabHorizontal = true;
+		this.linkSection.setLayoutData(td);
 
-		this.noLinkComposite = this.toolkit.createComposite(composite);
-		this.noLinkComposite.setLayout(new TableWrapLayout());
+		this.linkFormText = toolkit.createFormText(this.linkSection, false);
+		this.linkFormText.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(final HyperlinkEvent e) {
+				String string = e.getHref().toString();
+				if ("addLink".equals(string)) {
+					NewLinkWizardPage newLinkWizardPage = new NewLinkWizardPage(getSite()
+							.getShell(), LinkOutline.this.info,
+							LinkOutline.this.adapterFactoryEditingDomain);
+					int open = newLinkWizardPage.open();
+					if (open == IDialogConstants.OK_ID) {
+						performResult(newLinkWizardPage.getResult());
+					}
+				} else {
+					try {
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+								.openEditor(
+										new InformationEditorInput(ApplicationModelPool
+												.getInstance().getItemById(e.getHref().toString(),
+														null)), InformationEditor.ID);
+					} catch (PartInitException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 
-		FormText formText = new FormText(this.noLinkComposite, SWT.NONE);
-		formText
-				.setText(
-						"<form><p>No Links attached. You can <a href=\"addLink\">add a new Link</a> or drop a link target into this part.</p></form>",
-						true, false);
-		formText.addHyperlinkListener(new HyperlinkAdapter() {
+		this.linkSection.setClient(this.linkFormText);
+		buildList();
+
+		this.info.eAdapters().add(this.linkListChangeAdapter);
+
+		//
+		createActions();
+		initializeToolBar(this.linkSection, toolkit);
+		initializeLinkMenu();
+		initDrop();
+		bindValuesToUi();
+
+	}
+
+	private void createEventSection(final ScrolledForm sform, final FormToolkit toolkit) {
+		final Section eventSection = toolkit.createSection(sform.getBody(),
+				ExpandableComposite.TWISTIE | ExpandableComposite.TITLE_BAR
+						| ExpandableComposite.EXPANDED);
+
+		eventSection.setActiveToggleColor(toolkit.getHyperlinkGroup().getActiveForeground());
+		eventSection.setToggleColor(toolkit.getColors().getColor(IFormColors.SEPARATOR));
+		eventSection.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(final ExpansionEvent e) {
+				sform.reflow(false);
+			}
+		});
+
+		TableWrapData td = new TableWrapData();
+		td.align = TableWrapData.FILL;
+		td.grabHorizontal = true;
+		eventSection.setLayoutData(td);
+		eventSection.setText("Associated Events (0)");
+
+		this.eventFormText = toolkit.createFormText(eventSection, false);
+		this.eventFormText.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.TOP));
+		this.eventFormText.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				NewLinkWizardPage newLinkWizardPage = new NewLinkWizardPage(getSite().getShell(),
@@ -209,21 +279,9 @@ public class LinkOutline extends ContentOutlinePage {
 				}
 			}
 		});
-		this.stackLayout.topControl = this.noLinkComposite;
+		buildEventList();
+		eventSection.setClient(this.eventFormText);
 
-		this.linkListingComposite = this.toolkit.createComposite(composite);
-		this.linkListingComposite.setLayout(new TableWrapLayout());
-
-		this.linkListingForm = this.toolkit.createFormText(this.linkListingComposite, true);
-		buildList();
-		this.info.eAdapters().add(this.linkListChangeAdapter);
-
-		//
-		createActions();
-
-		initializeMenu();
-		initDrop();
-		bindValuesToUi();
 	}
 
 	protected void performResult(final Collection result) {
@@ -247,24 +305,23 @@ public class LinkOutline extends ContentOutlinePage {
 	private void initDrop() {
 		final int dndOperations = DND.DROP_MOVE | DND.DROP_LINK | DND.DROP_COPY;
 		final Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
-		DropTarget abstractDropZone = new DropTarget(this.noLinkComposite, dndOperations);
+		DropTarget abstractDropZone = new DropTarget(this.linkFormText, dndOperations);
 		abstractDropZone.setTransfer(transfers);
 		abstractDropZone
 				.addDropListener(new CustomDropTargetListenerExtension(this.info.getLinks()));
 
-		DropTarget abstractDropZone2 = new DropTarget(this.linkListingComposite, dndOperations);
-		abstractDropZone2.setTransfer(transfers);
-		abstractDropZone2.addDropListener(new CustomDropTargetListenerExtension(this.info
-				.getLinks()));
 	}
 
 	protected void buildList() {
 		List<String> addedImages = new ArrayList<String>();
 		EList<Link> links = this.info.getLinks();
-		if (links.size() > 0) {
-			this.stackLayout.topControl = this.linkListingComposite;
-		} else {
-			this.stackLayout.topControl = this.noLinkComposite;
+		this.linkSection.setText(NLS.bind("Links ({0})", links.size()));
+		if (links.size() == 0) {
+			this.linkFormText
+					.setText(
+							"<form><p>No Links attached. You can <a href=\"addLink\">add a new Link</a> or drop a link target into this part.</p></form>",
+							true, false);
+			return;
 		}
 		StringBuilder sw = new StringBuilder();
 		sw.append("<form>");
@@ -273,7 +330,7 @@ public class LinkOutline extends ContentOutlinePage {
 			// sw.append("<li>");
 			sw.append("<img href=\"").append(link.getTarget().getType()).append("\" /> ");
 			sw.append("<a href=\"").append(link.getTarget().getId()).append("\">");
-			sw.append(link.getTarget().getLabel());
+			sw.append(StringEscapeUtils.escapeXml(link.getTarget().getLabel()));
 			sw.append("</a>");
 			sw.append("<br />");
 			// sw.append("</li>");
@@ -282,31 +339,42 @@ public class LinkOutline extends ContentOutlinePage {
 						.adapt(link.getTarget(), IItemLabelProvider.class)).getImage(link
 						.getTarget());
 				if (image2 instanceof Image) {
-					this.linkListingForm.setImage(link.getTarget().getType(), (Image) image2);
+					this.linkFormText.setImage(link.getTarget().getType(), (Image) image2);
 					addedImages.add(link.getTarget().getType());
 				}
 			}
 			sw.append("</p>");
 		}
 		sw.append("</form>");
-		this.linkListingForm.setText(sw.toString(), true, false);
-		this.linkListingForm.addHyperlinkListener(new HyperlinkAdapter() {
-			@Override
-			public void linkActivated(final HyperlinkEvent e) {
-				try {
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-							.openEditor(
-									new InformationEditorInput(ApplicationModelPool.getInstance()
-											.getItemById(e.getHref().toString(), null)),
-									InformationEditor.ID);
-				} catch (PartInitException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				super.linkActivated(e);
-			}
-		});
-		this.container.layout(true, true);
+		this.linkFormText.setText(sw.toString(), true, false);
+		this.sform.reflow(false);
+	}
+
+	private void buildEventList() {
+		EList<CalendarEntry> calendarEntry = this.info.getCalendarEntry();
+		if (calendarEntry.size() == 0) {
+			this.eventFormText
+					.setText(
+							"<form><p>No Events associated. You can <a href=\"addEvent\">add a new Event</a> or use the <a href=\"openCalendar\">Calendar</a> to create new events.</p></form>",
+							true, false);
+			return;
+		}
+		this.eventFormText.setImage("alarm", ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				"icons/iconexperience/16/alarmclock.png"));
+		this.eventFormText.setImage("refresh", ResourceManager.getPluginImage(
+				UIPlugin.getDefault(), "icons/iconexperience/16/refresh.png"));
+		StringBuilder sw = new StringBuilder();
+		sw.append("<form>");
+		for (CalendarEntry entry : calendarEntry) {
+			sw.append("<p>");
+			// sw.append("<li>");
+			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, true));
+			// sw.append("</li>");
+			sw.append("</p>");
+		}
+		sw.append("</form>");
+		this.eventFormText.setText(sw.toString(), true, false);
+		this.sform.reflow(false);
 	}
 
 	/**
@@ -319,9 +387,9 @@ public class LinkOutline extends ContentOutlinePage {
 	/**
 	 * Initialize the toolbar
 	 */
-	private void initializeToolBar(final Section section) {
+	private void initializeToolBar(final Section section, final FormToolkit toolkit) {
 
-		UIUtil.createSectionToolbar(section, this.toolkit, new Action("Edit Links") {
+		UIUtil.createSectionToolbar(section, toolkit, new Action("Edit Links") {
 			@Override
 			public void run() {
 				NewLinkWizardPage page = new NewLinkWizardPage(getSite().getShell(),
@@ -340,10 +408,22 @@ public class LinkOutline extends ContentOutlinePage {
 
 	}
 
+	protected Layout createScrolledFormLayout() {
+		final GridLayout layout = new GridLayout();
+
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+
+		layout.horizontalSpacing = 0;
+		layout.verticalSpacing = 0;
+
+		return layout;
+	}
+
 	/**
 	 * Initialize the menu
 	 */
-	private void initializeMenu() {
+	private void initializeLinkMenu() {
 		IMenuManager manager = getSite().getActionBars().getMenuManager();
 	}
 

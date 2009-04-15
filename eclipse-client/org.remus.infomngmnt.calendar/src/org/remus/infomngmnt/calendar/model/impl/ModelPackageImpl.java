@@ -8,6 +8,7 @@ package org.remus.infomngmnt.calendar.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -19,6 +20,7 @@ import org.remus.infomngmnt.calendar.model.ModelFactory;
 import org.remus.infomngmnt.calendar.model.ModelPackage;
 import org.remus.infomngmnt.calendar.model.StartEvent;
 import org.remus.infomngmnt.calendar.model.Task;
+import org.remus.infomngmnt.calendar.model.TaskType;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 
 /**
@@ -76,6 +78,13 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	private EClass startEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum taskTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -330,6 +339,24 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTask_Type() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTask_Notification() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getClearedEvent() {
 		return clearedEventEClass;
 	}
@@ -420,6 +447,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getTaskType() {
+		return taskTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ModelFactory getModelFactory() {
 		return (ModelFactory)getEFactoryInstance();
 	}
@@ -464,6 +500,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(taskEClass, TASK__CLEARED);
 		createEAttribute(taskEClass, TASK__PROGRESS);
 		createEAttribute(taskEClass, TASK__ID);
+		createEAttribute(taskEClass, TASK__TYPE);
+		createEAttribute(taskEClass, TASK__NOTIFICATION);
 
 		clearedEventEClass = createEClass(CLEARED_EVENT);
 		createEReference(clearedEventEClass, CLEARED_EVENT__TASK);
@@ -479,6 +517,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
 		startEventEClass = createEClass(START_EVENT);
 		createEReference(startEventEClass, START_EVENT__TASK);
+
+		// Create enums
+		taskTypeEEnum = createEEnum(TASK_TYPE);
 	}
 
 	/**
@@ -536,6 +577,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getTask_Cleared(), this.getClearedEvent(), this.getClearedEvent_Task(), "cleared", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Progress(), ecorePackage.getEDouble(), "progress", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Id(), ecorePackage.getEString(), "id", null, 1, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_Type(), this.getTaskType(), "type", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_Notification(), ecorePackage.getEInt(), "notification", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(clearedEventEClass, ClearedEvent.class, "ClearedEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getClearedEvent_Task(), this.getTask(), this.getTask_Cleared(), "task", null, 0, 1, ClearedEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -551,6 +594,14 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
 		initEClass(startEventEClass, StartEvent.class, "StartEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getStartEvent_Task(), this.getTask(), this.getTask_Start(), "task", null, 0, 1, StartEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(taskTypeEEnum, TaskType.class, "TaskType");
+		addEEnumLiteral(taskTypeEEnum, TaskType.ONE_TIME);
+		addEEnumLiteral(taskTypeEEnum, TaskType.WEEKLY);
+		addEEnumLiteral(taskTypeEEnum, TaskType.TWO_WEEK);
+		addEEnumLiteral(taskTypeEEnum, TaskType.MONTHLY);
+		addEEnumLiteral(taskTypeEEnum, TaskType.ANNUAL);
 
 		// Create resource
 		createResource(eNS_URI);

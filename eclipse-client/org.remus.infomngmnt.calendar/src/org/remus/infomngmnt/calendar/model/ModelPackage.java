@@ -8,6 +8,7 @@ package org.remus.infomngmnt.calendar.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -251,13 +252,31 @@ public interface ModelPackage extends EPackage {
 	int TASK__ID = 9;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__TYPE = 10;
+
+	/**
+	 * The feature id for the '<em><b>Notification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__NOTIFICATION = 11;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 10;
+	int TASK_FEATURE_COUNT = 12;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.calendar.model.impl.ClearedEventImpl <em>Cleared Event</em>}' class.
@@ -689,6 +708,17 @@ public interface ModelPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.calendar.model.TaskType <em>Task Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.calendar.model.TaskType
+	 * @see org.remus.infomngmnt.calendar.model.impl.ModelPackageImpl#getTaskType()
+	 * @generated
+	 */
+	int TASK_TYPE = 7;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.calendar.model.CEvent <em>CEvent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -907,6 +937,28 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTask_Id();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.calendar.model.Task#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.remus.infomngmnt.calendar.model.Task#getType()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.calendar.model.Task#getNotification <em>Notification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Notification</em>'.
+	 * @see org.remus.infomngmnt.calendar.model.Task#getNotification()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_Notification();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.calendar.model.ClearedEvent <em>Cleared Event</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1010,6 +1062,16 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getStartEvent_Task();
+
+	/**
+	 * Returns the meta object for enum '{@link org.remus.infomngmnt.calendar.model.TaskType <em>Task Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Task Type</em>'.
+	 * @see org.remus.infomngmnt.calendar.model.TaskType
+	 * @generated
+	 */
+	EEnum getTaskType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1198,6 +1260,22 @@ public interface ModelPackage extends EPackage {
 		EAttribute TASK__ID = eINSTANCE.getTask_Id();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__TYPE = eINSTANCE.getTask_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Notification</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__NOTIFICATION = eINSTANCE.getTask_Notification();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.calendar.model.impl.ClearedEventImpl <em>Cleared Event</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1286,6 +1364,16 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference START_EVENT__TASK = eINSTANCE.getStartEvent_Task();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.calendar.model.TaskType <em>Task Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.calendar.model.TaskType
+		 * @see org.remus.infomngmnt.calendar.model.impl.ModelPackageImpl#getTaskType()
+		 * @generated
+		 */
+		EEnum TASK_TYPE = eINSTANCE.getTaskType();
 
 	}
 

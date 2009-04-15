@@ -34,6 +34,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="progress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TaskType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notification" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClearedEvent" eSuperTypes="#//CEvent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task" transient="true"
@@ -54,5 +56,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="StartEvent" eSuperTypes="#//CEvent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task" transient="true"
         eOpposite="#//Task/start"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TaskType">
+    <eLiterals name="ONE_TIME"/>
+    <eLiterals name="WEEKLY" value="1"/>
+    <eLiterals name="TWO_WEEK" value="2"/>
+    <eLiterals name="MONTHLY" value="3"/>
+    <eLiterals name="ANNUAL" value="4"/>
   </eClassifiers>
 </ecore:EPackage>

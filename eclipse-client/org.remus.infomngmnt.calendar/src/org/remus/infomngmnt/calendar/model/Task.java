@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getCleared <em>Cleared</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getProgress <em>Progress</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getType <em>Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getNotification <em>Notification</em>}</li>
  * </ul>
  * </p>
  *
@@ -303,5 +305,60 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void setId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.remus.infomngmnt.calendar.model.TaskType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see org.remus.infomngmnt.calendar.model.TaskType
+	 * @see #setType(TaskType)
+	 * @see org.remus.infomngmnt.calendar.model.ModelPackage#getTask_Type()
+	 * @model
+	 * @generated
+	 */
+	TaskType getType();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.calendar.model.Task#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see org.remus.infomngmnt.calendar.model.TaskType
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(TaskType value);
+
+	/**
+	 * Returns the value of the '<em><b>Notification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Notification</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Notification</em>' attribute.
+	 * @see #setNotification(int)
+	 * @see org.remus.infomngmnt.calendar.model.ModelPackage#getTask_Notification()
+	 * @model
+	 * @generated
+	 */
+	int getNotification();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.calendar.model.Task#getNotification <em>Notification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Notification</em>' attribute.
+	 * @see #getNotification()
+	 * @generated
+	 */
+	void setNotification(int value);
 
 } // Task

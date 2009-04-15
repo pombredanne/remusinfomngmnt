@@ -19,6 +19,7 @@ import org.remus.infomngmnt.calendar.model.EndEvent;
 import org.remus.infomngmnt.calendar.model.ModelPackage;
 import org.remus.infomngmnt.calendar.model.StartEvent;
 import org.remus.infomngmnt.calendar.model.Task;
+import org.remus.infomngmnt.calendar.model.TaskType;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 
 /**
@@ -38,6 +39,8 @@ import org.remus.infomngmnt.calendar.model.Tasklist;
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getCleared <em>Cleared</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getProgress <em>Progress</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getNotification <em>Notification</em>}</li>
  * </ul>
  * </p>
  *
@@ -183,6 +186,46 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected String id = ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final TaskType TYPE_EDEFAULT = TaskType.ONE_TIME;
+
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected TaskType type = TYPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getNotification() <em>Notification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNotification()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int NOTIFICATION_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getNotification() <em>Notification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNotification()
+	 * @generated
+	 * @ordered
+	 */
+	protected int notification = NOTIFICATION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -526,6 +569,48 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TaskType getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(TaskType newType) {
+		TaskType oldType = type;
+		type = newType == null ? TYPE_EDEFAULT : newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TASK__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getNotification() {
+		return notification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNotification(int newNotification) {
+		int oldNotification = notification;
+		notification = newNotification;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TASK__NOTIFICATION, oldNotification, notification));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -617,6 +702,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return new Double(getProgress());
 			case ModelPackage.TASK__ID:
 				return getId();
+			case ModelPackage.TASK__TYPE:
+				return getType();
+			case ModelPackage.TASK__NOTIFICATION:
+				return new Integer(getNotification());
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -658,6 +747,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case ModelPackage.TASK__ID:
 				setId((String)newValue);
+				return;
+			case ModelPackage.TASK__TYPE:
+				setType((TaskType)newValue);
+				return;
+			case ModelPackage.TASK__NOTIFICATION:
+				setNotification(((Integer)newValue).intValue());
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -701,6 +796,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case ModelPackage.TASK__ID:
 				setId(ID_EDEFAULT);
 				return;
+			case ModelPackage.TASK__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
+			case ModelPackage.TASK__NOTIFICATION:
+				setNotification(NOTIFICATION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -733,6 +834,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return progress != PROGRESS_EDEFAULT;
 			case ModelPackage.TASK__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case ModelPackage.TASK__TYPE:
+				return type != TYPE_EDEFAULT;
+			case ModelPackage.TASK__NOTIFICATION:
+				return notification != NOTIFICATION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -757,6 +862,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(progress);
 		result.append(", id: ");
 		result.append(id);
+		result.append(", type: ");
+		result.append(type);
+		result.append(", notification: ");
+		result.append(notification);
 		result.append(')');
 		return result.toString();
 	}

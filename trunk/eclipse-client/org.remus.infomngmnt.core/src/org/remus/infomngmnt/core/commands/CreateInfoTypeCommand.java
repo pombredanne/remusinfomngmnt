@@ -14,7 +14,6 @@ package org.remus.infomngmnt.core.commands;
 
 import java.util.Collections;
 
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -31,6 +30,7 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -47,7 +47,7 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 			final Category parentCategory) {
 		this.newInformationUnit = newInformationUnit;
 		this.parentCategory = parentCategory;
-		newInformationUnit.setId(new UniversalUniqueIdentifier().toString());
+		newInformationUnit.setId(IdFactory.createNewId(null));
 
 		this.createInformationUnitListItem = InfomngmntFactory.eINSTANCE
 				.createInformationUnitListItem();

@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.remus.infomngmnt.ui.calendar;
 
+import java.text.NumberFormat;
+import java.util.Arrays;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -234,6 +237,19 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		createComboBinding.bindModel(this.createCalendarEntry,
 				InfomngmntPackage.Literals.CALENDAR_ENTRY__ENTRY_TYPE);
 
+		ComboBindingWidget notificationBinding = BindingWidgetFactory.createComboBinding(
+				this.notificationCombo, this.ctx, this.editingDomain);
+		notificationBinding.setInput(Arrays.asList(new Integer[] { -1, 0, 5, 10, 15, 20, 30, 45,
+				60, 90, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660, 720 }));
+		notificationBinding.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(final Object element) {
+				return getReminderString((Integer) element);
+			}
+		});
+		notificationBinding.bindModel(this.createCalendarEntry,
+				InfomngmntPackage.Literals.CALENDAR_ENTRY__REMINDER);
+
 	}
 
 	@Override
@@ -272,6 +288,21 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 	@Override
 	protected Point getInitialSize() {
 		return new Point(500, 375);
+	}
+
+	private static String getReminderString(final int minutes) {
+		NumberFormat instance = NumberFormat.getInstance();
+		instance.setMaximumFractionDigits(2);
+		if (minutes < 0) {
+			return "Without reminder";
+		} else if (minutes < 60) {
+			return minutes + " Minutes";
+		} else if (minutes < 1440) {
+			return instance.format(((double) minutes / 60)) + " Hours";
+		} else if (minutes < 10800) {
+			return instance.format((double) minutes / 1440) + " Days";
+		}
+		return minutes + " Minutes";
 	}
 
 }

@@ -21,6 +21,8 @@ import org.aspencloud.calypso.util.TimeSpan;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.CalendarEntryType;
+import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.calendar.model.Task;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -65,6 +67,22 @@ public class CalendarEntryUtil {
 			sw.append("<br />");
 		}
 		return sw.toString();
+	}
+
+	public static String setFormTextRepresentation(final Task entry, final boolean printEvents) {
+		CalendarEntry calendarEntry = convert(entry);
+		return setFormTextRepresentation(calendarEntry, printEvents);
+	}
+
+	private static CalendarEntry convert(final Task entry) {
+		CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
+		calendarEntry.setStart(entry.getStart().getDate());
+		calendarEntry.setEnd(entry.getEnd().getDate());
+		calendarEntry.setReminder(entry.getNotification());
+		calendarEntry.setTitle(entry.getName());
+		calendarEntry.setId(entry.getId().split("_")[1]);
+		calendarEntry.setEntryType(CalendarEntryTypeStrings.convert(entry.getType()));
+		return calendarEntry;
 	}
 
 }

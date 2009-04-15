@@ -7,6 +7,13 @@
   <foreignModel>calypso.ecore</foreignModel>
   <genPackages prefix="Model" basePackage="org.remus.infomngmnt.calendar" disposableProviderFactory="true"
       ecorePackage="calypso.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="calypso.ecore#//TaskType">
+      <genEnumLiterals ecoreEnumLiteral="calypso.ecore#//TaskType/ONE_TIME"/>
+      <genEnumLiterals ecoreEnumLiteral="calypso.ecore#//TaskType/WEEKLY"/>
+      <genEnumLiterals ecoreEnumLiteral="calypso.ecore#//TaskType/TWO_WEEK"/>
+      <genEnumLiterals ecoreEnumLiteral="calypso.ecore#//TaskType/MONTHLY"/>
+      <genEnumLiterals ecoreEnumLiteral="calypso.ecore#//TaskType/ANNUAL"/>
+    </genEnums>
     <genClasses ecoreClass="calypso.ecore#//CEvent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//CEvent/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//CEvent/dateAbsolute"/>
@@ -28,6 +35,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference calypso.ecore#//Task/cleared"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/progress"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/notification"/>
     </genClasses>
     <genClasses ecoreClass="calypso.ecore#//ClearedEvent">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference calypso.ecore#//ClearedEvent/task"/>

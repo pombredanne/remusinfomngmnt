@@ -24,13 +24,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
@@ -60,74 +54,30 @@ public abstract class LuceneStore {
 	}
 
 	protected final void read(final IIndexSearchOperation operation) {
-		Job job = new Job("") {
-			@Override
-			protected IStatus run(final IProgressMonitor monitor) {
-				IndexSearcher indexSearcher2 = getIndexSearcher();
-				operation.read(indexSearcher2);
-				relaseIndexSearcher();
-				return Status.OK_STATUS;
-			}
-		};
-		job.setRule(this.mutexRule);
-		job.schedule();
+		IndexSearcher indexSearcher2 = getIndexSearcher();
+		operation.read(indexSearcher2);
 	}
 
 	protected final synchronized void readAndWait(final IIndexSearchOperation operation) {
-		final boolean[] ready = new boolean[] { false };
-		System.out.println("ENTER");
-		Job job = new Job("") {
-			@Override
-			protected IStatus run(final IProgressMonitor monitor) {
-				monitor.beginTask("Executing Read Operation", IProgressMonitor.UNKNOWN);
-				IndexSearcher indexSearcher2 = getIndexSearcher();
-				operation.read(indexSearcher2);
-				relaseIndexSearcher();
-				monitor.done();
-				return Status.OK_STATUS;
-			}
-		};
-		job.setRule(this.mutexRule);
-		job.schedule();
-		job.addJobChangeListener(new JobChangeAdapter() {
-			@Override
-			public void done(final IJobChangeEvent event) {
-				ready[0] = true;
-			}
-		});
-		int i = 0;
-		while (!ready[0] && i < 20) {
-			try {
-				Thread.sleep(100);
-				i++;
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		System.out.println("EXIT");
+		// job.schedule();
+		IndexSearcher indexSearcher2 = getIndexSearcher();
+		operation.read(indexSearcher2);
+
 	}
 
 	protected final void write(final IIndexWriteOperation operation) {
-		Job job = new Job("") {
-			@Override
-			protected IStatus run(final IProgressMonitor monitor) {
-				IndexWriter indexWriter = getIndexWriter();
-				operation.write(indexWriter);
-				try {
-					indexWriter.flush();
-				} catch (CorruptIndexException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.setRule(this.mutexRule);
-		job.schedule();
+		IndexWriter indexWriter = getIndexWriter();
+		operation.write(indexWriter);
+		try {
+			indexWriter.flush();
+		} catch (CorruptIndexException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		relaseIndexSearcher();
 	}
 
 	public IndexSearcher getIndexSearcher() {
@@ -168,7 +118,7 @@ public abstract class LuceneStore {
 	protected IndexWriter getIndexWriter() {
 		if (this.writer == null) {
 			try {
-				relaseIndexSearcher();
+
 				if (IndexReader.isLocked(getIndexDirectory())) {
 					IndexReader.unlock(getIndexDirectory());
 				}

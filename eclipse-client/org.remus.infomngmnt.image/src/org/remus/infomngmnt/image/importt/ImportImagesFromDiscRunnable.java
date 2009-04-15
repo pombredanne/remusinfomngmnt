@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -35,6 +34,7 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
@@ -96,7 +96,7 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 			}).length > 0) {
 				if (this.obj.isCreateFolderStructure()) {
 					Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
-					createCategory.setId(new UniversalUniqueIdentifier().toString());
+					createCategory.setId(IdFactory.createNewId(null));
 					createCategory.setLabel(file.getName());
 					Command command = CommandFactory.CREATE_CATEGORY(cat, createCategory,
 							this.editingDomain);

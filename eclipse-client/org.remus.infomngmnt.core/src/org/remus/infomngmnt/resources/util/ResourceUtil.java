@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -29,6 +28,7 @@ import org.remus.infomngmnt.core.builder.InformationBuilder;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.IdFactory;
 
 public class ResourceUtil {
 
@@ -263,7 +263,7 @@ public class ResourceUtil {
 		Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file,
 				InfomngmntPackage.eINSTANCE.getCategory(), true);
 		rootCategory.setLabel(newProject.getName());
-		rootCategory.setId(new UniversalUniqueIdentifier().toString());
+		rootCategory.setId(IdFactory.createNewId(null));
 		rootCategory.setDescription(description);
 		EditingUtil.getInstance().saveObjectToResource(rootCategory);
 

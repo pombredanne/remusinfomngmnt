@@ -15,7 +15,6 @@ package org.remus.infomngmnt.core.sync;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -43,6 +42,7 @@ import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
@@ -59,32 +59,49 @@ public class ChangeSetExecutor {
 
 	/**
 	 * Performs a checkout.
+	 * 
 	 * @param ownedElements
 	 */
-	public void performCheckout(final EList<DiffElement> ownedElements, final IProgressMonitor monitor) {
+	public void performCheckout(final EList<DiffElement> ownedElements,
+			final IProgressMonitor monitor) {
 		for (DiffElement diffElement : ownedElements) {
 			if (diffElement instanceof AddModelElement) {
 				EObject rightElement = ((AddModelElement) diffElement).getRightElement();
 				EList<ChangeSetItem> changeSetItems = this.changeSet.getChangeSetItems();
 				for (ChangeSetItem changeSetItem : changeSetItems) {
-					if (changeSetItem.getRemoteConvertedContainer().getId().equals(((Category) rightElement).getId())) {
-						Category remoteConvertedContainer = changeSetItem.getRemoteConvertedContainer();
-						this.changeSet.getTargetCategory().getChildren().add(remoteConvertedContainer);
-						List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(remoteConvertedContainer, InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
+					if (changeSetItem.getRemoteConvertedContainer().getId().equals(
+							((Category) rightElement).getId())) {
+						Category remoteConvertedContainer = changeSetItem
+								.getRemoteConvertedContainer();
+						this.changeSet.getTargetCategory().getChildren().add(
+								remoteConvertedContainer);
+						List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(
+								remoteConvertedContainer,
+								InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 						for (InformationUnitListItem informationUnitListItem : allChildren) {
-							InformationUnit informationUnit2 = changeSetItem.getRemoteFullObjectMap().get(informationUnitListItem);
+							InformationUnit informationUnit2 = changeSetItem
+									.getRemoteFullObjectMap().get(informationUnitListItem);
 							if (informationUnit2 == null) {
-								informationUnit2 = this.changeSet.getRepository().getRepositoryImplementation().getFullObject(informationUnitListItem);
+								informationUnit2 = this.changeSet.getRepository()
+										.getRepositoryImplementation().getFullObject(
+												informationUnitListItem);
 							}
 							informationUnit2.setId(informationUnitListItem.getId());
 							informationUnit2.setType(informationUnitListItem.getType());
-							IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(informationUnit2.getType());
-							infoTypeByType.getCreationFactory().handlePreSaving(informationUnit2, monitor);
-							IFile newFile = CategoryUtil.getProjectByCategory(remoteConvertedContainer).getFile(informationUnitListItem.getId() + ".info");
-							EditingUtil.getInstance().saveObjectToResource(newFile, informationUnit2);
-							informationUnitListItem.setWorkspacePath(newFile.getFullPath().toOSString());
-							InfomngmntEditPlugin.getPlugin().getService(ISaveParticipantExtensionService.class)
-							.fireEvent(ISaveParticipant.CREATED, informationUnit2);
+							IInfoType infoTypeByType = InformationExtensionManager.getInstance()
+									.getInfoTypeByType(informationUnit2.getType());
+							infoTypeByType.getCreationFactory().handlePreSaving(informationUnit2,
+									monitor);
+							IFile newFile = CategoryUtil.getProjectByCategory(
+									remoteConvertedContainer).getFile(
+									informationUnitListItem.getId() + ".info");
+							EditingUtil.getInstance().saveObjectToResource(newFile,
+									informationUnit2);
+							informationUnitListItem.setWorkspacePath(newFile.getFullPath()
+									.toOSString());
+							InfomngmntEditPlugin.getPlugin().getService(
+									ISaveParticipantExtensionService.class).fireEvent(
+									ISaveParticipant.CREATED, informationUnit2);
 						}
 					}
 				}
@@ -101,7 +118,6 @@ public class ChangeSetExecutor {
 		this.changeSet = changeSet;
 	}
 
-
 	public void prepareDiff(final Category pLocalTargetCateogory) {
 		Category localTargetCategory = InfomngmntFactory.eINSTANCE.createCategory();
 		Category tmpRemoteRootCategory = CategoryUtil.copyBlankObject(localTargetCategory);
@@ -109,30 +125,34 @@ public class ChangeSetExecutor {
 
 		EList<ChangeSetItem> changeSetItems = this.changeSet.getChangeSetItems();
 		for (ChangeSetItem changeSetItem2 : changeSetItems) {
-			tmpRemoteRootCategory.getChildren().add((Category) EcoreUtil.copy(changeSetItem2.getRemoteConvertedContainer()));
+			tmpRemoteRootCategory.getChildren().add(
+					(Category) EcoreUtil.copy(changeSetItem2.getRemoteConvertedContainer()));
 		}
 
 		this.remotePath = InfomngmntEditPlugin.getPlugin().getStateLocation()
-		.append(COMPARE_FOLDER).append(new UniversalUniqueIdentifier().toString()).addFileExtension("xml");
+				.append(COMPARE_FOLDER).append(IdFactory.createNewId(null)).addFileExtension("xml");
 
-		this.localPath = InfomngmntEditPlugin.getPlugin().getStateLocation()
-		.append(COMPARE_FOLDER).append(new UniversalUniqueIdentifier().toString()).addFileExtension("xml");
+		this.localPath = InfomngmntEditPlugin.getPlugin().getStateLocation().append(COMPARE_FOLDER)
+				.append(IdFactory.createNewId(null)).addFileExtension("xml");
 
-		EditingUtil.getInstance().saveObjectToResource(
-				tmpRemoteRootCategory, 
+		EditingUtil.getInstance().saveObjectToResource(tmpRemoteRootCategory,
 				this.remotePath.toOSString());
 
-		EditingUtil.getInstance().saveObjectToResource(
-				localTargetCategory, 
+		EditingUtil.getInstance().saveObjectToResource(localTargetCategory,
 				this.localPath.toOSString());
 	}
 
 	public DiffModel makeDiff() {
 		MatchModel match;
 		try {
-			EObject localObject = EditingUtil.getInstance().getObjectFromFileUri(URI.createFileURI(this.localPath.toOSString()), InfomngmntPackage.Literals.CATEGORY, null);
-			EObject remoteObject = EditingUtil.getInstance().getObjectFromFileUri(URI.createFileURI(this.remotePath.toOSString()), InfomngmntPackage.Literals.CATEGORY, null);
-			match = MatchService.doMatch(localObject ,remoteObject, Collections.<String, Object> emptyMap());
+			EObject localObject = EditingUtil.getInstance().getObjectFromFileUri(
+					URI.createFileURI(this.localPath.toOSString()),
+					InfomngmntPackage.Literals.CATEGORY, null);
+			EObject remoteObject = EditingUtil.getInstance().getObjectFromFileUri(
+					URI.createFileURI(this.remotePath.toOSString()),
+					InfomngmntPackage.Literals.CATEGORY, null);
+			match = MatchService.doMatch(localObject, remoteObject, Collections
+					.<String, Object> emptyMap());
 			this.diffModel = DiffService.doDiff(match, false);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

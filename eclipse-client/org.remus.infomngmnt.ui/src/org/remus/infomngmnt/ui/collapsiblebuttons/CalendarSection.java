@@ -71,6 +71,8 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 
 	private FormText thisWeekFormText;
 
+	private FormText nextWeekFormText;
+
 	/**
 	 * 
 	 */
@@ -123,6 +125,10 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		td.align = TableWrapData.FILL;
 		td.grabHorizontal = true;
 		nextWeek.setLayoutData(td);
+
+		this.nextWeekFormText = getToolkit().createFormText(nextWeek, false);
+		nextWeek.setClient(this.nextWeekFormText);
+		buildNextWeekList();
 
 	}
 
@@ -283,16 +289,54 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		this.sform.reflow(false);
 	}
 
+	private void buildNextWeekList() {
+		ICalendarStoreService storeService = UIPlugin.getDefault().getService(
+				ICalendarStoreService.class);
+
+		Tasklist items = storeService.getItems(getNextWeekTimeSpan());
+		List<Task> calendarEntry = new ArrayList<Task>(items.getTasks());
+		Collections.sort(calendarEntry, new Comparator<Task>() {
+			public int compare(final Task o1, final Task o2) {
+				return o1.getStart().getDate().compareTo(o2.getStart().getDate());
+			}
+		});
+		if (calendarEntry.size() == 0) {
+			this.nextWeekFormText.setText("<form><p>No Events</p></form>", true, false);
+			return;
+		}
+		this.nextWeekFormText.setImage("alarm", ResourceManager.getPluginImage(UIPlugin
+				.getDefault(), "icons/iconexperience/16/alarmclock.png"));
+		this.nextWeekFormText.setImage("refresh", ResourceManager.getPluginImage(UIPlugin
+				.getDefault(), "icons/iconexperience/16/refresh.png"));
+		StringBuilder sw = new StringBuilder();
+		sw.append("<form>");
+		for (Task entry : calendarEntry) {
+			sw.append("<p>");
+			// sw.append("<li>");
+			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false));
+			// sw.append("</li>");
+			sw.append("</p>");
+		}
+		sw.append("</form>");
+		this.nextWeekFormText.setText(sw.toString(), true, false);
+		this.sform.reflow(false);
+	}
+
 	public void handleDirtyTimeSpan(final TimeSpan timespan) {
 		getViewSite().getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				TimeSpan todaytimeSpan = getTodaytimeSpan();
-				if (timespan.contains(todaytimeSpan) || todaytimeSpan.overlaps(timespan)) {
+				if (timespan.contains(todaytimeSpan) || todaytimeSpan.overlaps(timespan)
+						|| todaytimeSpan.contains(timespan)) {
 					buildTodayList();
 				}
 				TimeSpan thisWeekTimeSpan = getThisWeekTimeSpan();
 				if (timespan.contains(thisWeekTimeSpan) || thisWeekTimeSpan.overlaps(timespan)) {
 					buildThisWeekList();
+				}
+				TimeSpan nextWeekTimeSpan = getNextWeekTimeSpan();
+				if (timespan.contains(nextWeekTimeSpan) || nextWeekTimeSpan.overlaps(timespan)) {
+					buildNextWeekList();
 				}
 			}
 		});
@@ -330,7 +374,29 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		Calendar endDate = Calendar.getInstance();
 		endDate.setTime(now);
 		// endDate.add(Calendar.WEEK_OF_YEAR, 1);
-		endDate.set(Calendar.DAY_OF_WEEK, 7);
+		endDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		endDate.set(Calendar.HOUR, 11);
+		endDate.set(Calendar.MINUTE, 59);
+		endDate.set(Calendar.SECOND, 59);
+		endDate.set(Calendar.AM_PM, Calendar.PM);
+		return new TimeSpan(startDate.getTime(), endDate.getTime());
+	}
+
+	private TimeSpan getNextWeekTimeSpan() {
+		Date now = new Date();
+		Calendar startDate = Calendar.getInstance();
+		startDate.setTime(now);
+		startDate.add(Calendar.WEEK_OF_YEAR, 1);
+		startDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		startDate.set(Calendar.HOUR, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		startDate.set(Calendar.AM_PM, Calendar.AM);
+
+		Calendar endDate = Calendar.getInstance();
+		endDate.setTime(now);
+		endDate.add(Calendar.WEEK_OF_YEAR, 1);
+		endDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		endDate.set(Calendar.HOUR, 11);
 		endDate.set(Calendar.MINUTE, 59);
 		endDate.set(Calendar.SECOND, 59);

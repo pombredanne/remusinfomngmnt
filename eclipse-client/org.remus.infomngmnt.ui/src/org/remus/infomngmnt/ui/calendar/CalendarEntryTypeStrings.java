@@ -18,6 +18,7 @@ import java.util.Date;
 import org.aspencloud.calypso.util.TimeSpan;
 
 import org.remus.infomngmnt.CalendarEntryType;
+import org.remus.infomngmnt.calendar.model.TaskType;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -65,6 +66,40 @@ public class CalendarEntryTypeStrings {
 			break;
 		}
 		return originalDate;
+	}
+
+	public static CalendarEntryType convert(final TaskType type) {
+		switch (type) {
+		case ONE_TIME:
+			return CalendarEntryType.ONE_TIME;
+		case WEEKLY:
+			return CalendarEntryType.WEEKLY;
+		case TWO_WEEK:
+			return CalendarEntryType.TWO_WEEK;
+		case MONTHLY:
+			return CalendarEntryType.MONTHLY;
+		case ANNUAL:
+			return CalendarEntryType.ANNUAL;
+		default:
+			return CalendarEntryType.ONE_TIME;
+		}
+	}
+
+	public static TaskType convert(final CalendarEntryType type) {
+		switch (type) {
+		case ONE_TIME:
+			return TaskType.ONE_TIME;
+		case WEEKLY:
+			return TaskType.WEEKLY;
+		case TWO_WEEK:
+			return TaskType.TWO_WEEK;
+		case MONTHLY:
+			return TaskType.MONTHLY;
+		case ANNUAL:
+			return TaskType.ANNUAL;
+		default:
+			return TaskType.ONE_TIME;
+		}
 	}
 
 	public static Date getNextEndDate(final TimeSpan ts, final Date newStartDate) {

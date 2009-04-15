@@ -34,6 +34,7 @@ import org.aspencloud.calypso.util.TimeSpan;
 import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.CalendarEntry;
+import org.remus.infomngmnt.CalendarEntryType;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.calendar.model.EndEvent;
 import org.remus.infomngmnt.calendar.model.ModelFactory;
@@ -62,6 +63,8 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 	public static final String NAME = "NAME"; //$NON-NLS-1$
 	public static final String TYPE = "TYPE"; //$NON-NLS-1$
 	public static final String DESCRIPTION = "DESCRIPTION"; //$NON-NLS-1$
+	public static final String NOTIFICATION = "NOTIFICATION"; //$NON-NLS-1$
+	public static final String TASKTYPE = "TASKTYPE"; //$NON-NLS-1$
 
 	public static final String DATEPATTERN = "yyyyMMddHHmmss"; //$NON-NLS-1$
 
@@ -106,6 +109,15 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 
 		Field nameField = new Field(NAME, entry.getTitle(), Field.Store.YES, Field.Index.TOKENIZED);
 		returnValue.add(nameField);
+
+		Field notificationField = new Field(NOTIFICATION, String.valueOf(entry.getReminder()),
+				Field.Store.YES, Field.Index.TOKENIZED);
+		returnValue.add(notificationField);
+
+		Field tasktypeField = new Field(TASKTYPE, entry.getEntryType().getLiteral(),
+				Field.Store.YES, Field.Index.TOKENIZED);
+
+		returnValue.add(tasktypeField);
 
 		Field entryIdFiled = new Field(ENTRYID, entry.getId(), Field.Store.YES,
 				Field.Index.TOKENIZED);
@@ -170,11 +182,27 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 	public void update(final InformationUnit unit) {
 		final List<TimeSpan> timespansForInfoUnitId = getTimespansForInfoUnitId(unit.getId());
 		final Term term = new Term(INFOID, unit.getId());
+
 		write(new IIndexWriteOperation() {
 			public void write(final IndexWriter indexWriter) {
 				indexWriter.setUseCompoundFile(false);
 				try {
 					indexWriter.deleteDocuments(term);
+					// If we're ready with updating the index we have to fire an
+					// event to
+					// the listeners with a timespan from the earliest start
+					// date to the
+					// latest end date. So we throw only on event with a larger
+					// timepsan
+					// instead of many small timespan events.
+					EList<CalendarEntry> calendarEntry = unit.getCalendarEntry();
+					for (CalendarEntry calendarEntry2 : calendarEntry) {
+						add(unit, calendarEntry2);
+						timespansForInfoUnitId.add(new TimeSpan(calendarEntry2.getStart(),
+								calendarEntry2.getEnd()));
+
+					}
+					fireDirtyTimeSpan(calculateBiggestTimeSpan(timespansForInfoUnitId));
 				} catch (CorruptIndexException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -184,18 +212,7 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 				}
 			}
 		});
-		EList<CalendarEntry> calendarEntry = unit.getCalendarEntry();
-		for (CalendarEntry calendarEntry2 : calendarEntry) {
-			add(unit, calendarEntry2);
-			timespansForInfoUnitId.add(new TimeSpan(calendarEntry2.getStart(), calendarEntry2
-					.getEnd()));
-		}
 
-		// If we're ready with updating the index we have to fire an event to
-		// the listeners with a timespan from the earliest start date to the
-		// latest end date. So we throw only on event with a larger timepsan
-		// instead of many small timespan events.
-		fireDirtyTimeSpan(calculateBiggestTimeSpan(timespansForInfoUnitId));
 	}
 
 	private TimeSpan calculateBiggestTimeSpan(final List<TimeSpan> timespansForInfoUnitId) {
@@ -271,7 +288,7 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 		return returnValue;
 	}
 
-	public Tasklist getItems(final TimeSpan timespan) {
+	public synchronized Tasklist getItems(final TimeSpan timespan) {
 		final Tasklist taskList = ModelFactory.eINSTANCE.createTasklist();
 		List<String> termList = new ArrayList<String>();
 		List<String> fieldList = new ArrayList<String>();
@@ -297,6 +314,7 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 
 				public void read(final IndexSearcher reader) {
 					try {
+
 						TopDocs search = reader.search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
@@ -312,6 +330,13 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 								task.setId(doc.get(INFOID) + "_" + doc.get(ENTRYID));
 								task.setDetails(doc.get(DESCRIPTION));
 								task.setStart(createStartEvent);
+								task.setType(CalendarEntryTypeStrings.convert(CalendarEntryType
+										.get(doc.get(TASKTYPE))));
+								try {
+									task.setNotification(Integer.parseInt(doc.get(NOTIFICATION)));
+								} catch (NumberFormatException e) {
+									// do nothing
+								}
 								task.setEnd(createEndEvent);
 								taskList.getTasks().add(task);
 							} catch (CorruptIndexException e) {

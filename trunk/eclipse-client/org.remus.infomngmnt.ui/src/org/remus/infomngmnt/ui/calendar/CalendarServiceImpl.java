@@ -15,7 +15,6 @@ package org.remus.infomngmnt.ui.calendar;
 import java.util.Date;
 
 import org.aspencloud.calypso.util.TimeSpan;
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -36,6 +35,7 @@ import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.service.ICalendarStoreService;
 
@@ -53,7 +53,7 @@ public class CalendarServiceImpl implements ICalendarService {
 	 */
 	public Task createTask(final Date startingTime, final Date endTime) {
 		CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
-		calendarEntry.setId(new UniversalUniqueIdentifier().toString());
+		calendarEntry.setId(IdFactory.createNewId(null));
 		calendarEntry.setStart(startingTime);
 		calendarEntry.setEnd(endTime);
 		calendarEntry.setReminder(-1);

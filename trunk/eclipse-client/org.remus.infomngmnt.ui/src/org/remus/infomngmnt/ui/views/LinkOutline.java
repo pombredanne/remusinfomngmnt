@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -69,6 +68,7 @@ import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
 import org.remus.infomngmnt.ui.calendar.NewCalendarEntryDialog;
@@ -294,7 +294,7 @@ public class LinkOutline extends ContentOutlinePage {
 				String string = e.getHref().toString();
 				if ("addEvent".equals(string)) {
 					CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
-					calendarEntry.setId(new UniversalUniqueIdentifier().toString());
+					calendarEntry.setId(IdFactory.createNewId(null));
 					calendarEntry.setStart(new Date());
 					calendarEntry.setEnd(new Date(calendarEntry.getStart().getTime()
 							+ (15 * 60 * 1000)));

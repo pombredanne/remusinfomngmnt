@@ -1,6 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2008 Tom Seidel, Remus Software
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *
+ * Contributors:
+ *     Tom Seidel - initial API and implementation
+ *******************************************************************************/
 package org.remus.infomngmnt.ui.views;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,6 +39,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
@@ -40,6 +53,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
@@ -77,6 +91,9 @@ import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.link.NewLinkWizardPage;
 
+/**
+ * @author Tom Seidel <tom.seidel@remus-software.org>
+ */
 public class LinkOutline extends ContentOutlinePage {
 
 	private final class CustomDropTargetListenerExtension extends CustomDropTargetListener {
@@ -261,7 +278,7 @@ public class LinkOutline extends ContentOutlinePage {
 
 		//
 		createActions();
-		initializeToolBar(this.linkSection, toolkit);
+		initializeLinkToolBar(this.linkSection, toolkit);
 		initializeLinkMenu();
 		initDrop();
 		bindValuesToUi();
@@ -343,6 +360,7 @@ public class LinkOutline extends ContentOutlinePage {
 			}
 		});
 		this.info.eAdapters().add(this.eventListChangeAdapter);
+		initializeEventToolBar(this.eventSection, toolkit);
 		buildEventList();
 		this.eventSection.setClient(this.eventFormText);
 
@@ -459,7 +477,7 @@ public class LinkOutline extends ContentOutlinePage {
 	/**
 	 * Initialize the toolbar
 	 */
-	private void initializeToolBar(final Section section, final FormToolkit toolkit) {
+	private void initializeLinkToolBar(final Section section, final FormToolkit toolkit) {
 
 		UIUtil.createSectionToolbar(section, toolkit, new Action("Edit Links") {
 			@Override
@@ -475,6 +493,53 @@ public class LinkOutline extends ContentOutlinePage {
 			public ImageDescriptor getImageDescriptor() {
 				return ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
 						"icons/iconexperience/16/edit.png");
+			}
+		});
+
+	}
+
+	/**
+	 * Initialize the toolbar
+	 */
+	private void initializeEventToolBar(final Section section, final FormToolkit toolkit) {
+
+		UIUtil.createSectionToolbar(section, toolkit, new Action("Remove calendar entries") {
+			@Override
+			public void run() {
+				LabelProvider labelProvider = new LabelProvider() {
+					@Override
+					public Image getImage(final Object object) {
+						return ResourceManager.getPluginImage(UIPlugin.getDefault(),
+								"icons/iconexperience/16/calendar.png");
+					}
+
+					@Override
+					public String getText(final Object object) {
+						return ((CalendarEntry) object).getTitle();
+					}
+
+				};
+				ListSelectionDialog diag = new ListSelectionDialog(getSite().getShell(),
+						LinkOutline.this.info.getCalendarEntry(), UIUtil
+								.getArrayContentProviderInstance(), labelProvider,
+						"Select the entries to delete");
+				if (diag.open() == IDialogConstants.OK_ID) {
+					Command create = RemoveCommand.create(
+							LinkOutline.this.adapterFactoryEditingDomain, LinkOutline.this.info,
+							InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY, Arrays
+									.asList(diag.getResult()));
+					LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(create);
+				}
+			}
+
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				Image baseImage = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+						"icons/iconexperience/16/calendar.png");
+				Image decoratorImage = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+						"icons/iconexperience/decorator/delete.png");
+				return ImageDescriptor.createFromImage(ResourceManager.decorateImage(baseImage,
+						decoratorImage, ResourceManager.TOP_RIGHT));
 			}
 		});
 

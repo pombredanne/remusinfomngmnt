@@ -30,8 +30,10 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.ParallelMultiSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.Searchable;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.highlight.Highlighter;
@@ -41,6 +43,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -64,6 +67,7 @@ import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.SearchResult;
+import org.remus.infomngmnt.search.builder.SearchBuilder;
 import org.remus.infomngmnt.search.editor.SearchResultEditor;
 import org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
@@ -381,23 +385,33 @@ public class LuceneSearchService {
 					this.currentSearch, monitor);
 			IProject[] projectsToSearch = getSearchService()
 					.getProjectsToSearch(this.currentSearch);
-			for (IProject project : projectsToSearch) {
+			Searchable[] searchables = new Searchable[projectsToSearch.length];
+			for (int i = 0, n = projectsToSearch.length; i < n; i++) {
 				try {
-					TopFieldDocs search = acquireIndexSearcher(project).search(
-							queryStringFromSearchQuery, null, getSearchService().getMaxResults(),
-							new Sort());
-					Highlighter highlighter = new Highlighter(new SimpleHTMLFormatter(
-							"{highlight-start}", "{highlight-end}"), new QueryScorer(
-							queryStringFromSearchQuery));
-					final ScoreDoc[] scoreDocs = search.scoreDocs;
-					for (ScoreDoc scoreDoc : scoreDocs) {
-						Document doc = acquireIndexSearcher(project).doc(scoreDoc.doc);
-						this.currentSearch.getResult().add(createSearchResult(doc, highlighter));
+					if (ResourceUtil.hasBuilder(projectsToSearch[i].getDescription(),
+							SearchBuilder.BUILDER_ID)) {
+						searchables[i] = acquireIndexSearcher(projectsToSearch[i]);
 					}
-				} catch (Exception e) {
-					// do nothign...we continue..
+				} catch (CoreException e) {
+					// do nothing.
 				}
 			}
+			try {
+				ParallelMultiSearcher searcher = new ParallelMultiSearcher(searchables);
+				TopFieldDocs search = searcher.search(queryStringFromSearchQuery, null,
+						getSearchService().getMaxResults(), new Sort());
+				Highlighter highlighter = new Highlighter(new SimpleHTMLFormatter(
+						"{highlight-start}", "{highlight-end}"), new QueryScorer(
+						queryStringFromSearchQuery));
+				final ScoreDoc[] scoreDocs = search.scoreDocs;
+				for (ScoreDoc scoreDoc : scoreDocs) {
+					Document doc = searcher.doc(scoreDoc.doc);
+					this.currentSearch.getResult().add(createSearchResult(doc, highlighter));
+				}
+			} catch (Exception e) {
+				// do nothing...we continue..
+			}
+
 			if (this.callback != null) {
 				this.callback.afterSearch(monitor, this.currentSearch);
 			}

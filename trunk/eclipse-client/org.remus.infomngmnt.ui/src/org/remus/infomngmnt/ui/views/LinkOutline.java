@@ -167,7 +167,7 @@ public class LinkOutline extends ContentOutlinePage {
 	private final AdapterImpl linkListChangeAdapter = new AdapterImpl() {
 		@Override
 		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
-			if (msg.getFeature() instanceof Link) {
+			if (msg.getFeature() == InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS) {
 				buildList();
 			}
 		}

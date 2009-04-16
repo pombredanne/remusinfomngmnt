@@ -256,6 +256,15 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getSearch_IdSearch() {
+		return (EAttribute)searchEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSearchResult() {
 		return searchResultEClass;
 	}
@@ -530,6 +539,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		createEAttribute(searchEClass, SEARCH__SCOPE);
 		createEReference(searchEClass, SEARCH__RESULT);
 		createEAttribute(searchEClass, SEARCH__ID);
+		createEAttribute(searchEClass, SEARCH__ID_SEARCH);
 
 		searchResultEClass = createEClass(SEARCH_RESULT);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__INFO_ID);
@@ -607,6 +617,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		initEAttribute(getSearch_Scope(), this.getSearchScope(), "scope", "0", 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSearch_Result(), this.getSearchResult(), null, "result", null, 0, -1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearch_Id(), ecorePackage.getEString(), "id", null, 1, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearch_IdSearch(), ecorePackage.getEBoolean(), "idSearch", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(searchResultEClass, SearchResult.class, "SearchResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSearchResult_InfoId(), ecorePackage.getEString(), "infoId", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

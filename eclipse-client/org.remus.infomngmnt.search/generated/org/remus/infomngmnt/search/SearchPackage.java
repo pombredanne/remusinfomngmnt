@@ -143,13 +143,22 @@ public interface SearchPackage extends EPackage {
 	int SEARCH__ID = 6;
 
 	/**
+	 * The feature id for the '<em><b>Id Search</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEARCH__ID_SEARCH = 7;
+
+	/**
 	 * The number of structural features of the '<em>Search</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SEARCH_FEATURE_COUNT = 7;
+	int SEARCH_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SearchResultImpl <em>Result</em>}' class.
@@ -548,6 +557,17 @@ public interface SearchPackage extends EPackage {
 	EAttribute getSearch_Id();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.search.Search#isIdSearch <em>Id Search</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id Search</em>'.
+	 * @see org.remus.infomngmnt.search.Search#isIdSearch()
+	 * @see #getSearch()
+	 * @generated
+	 */
+	EAttribute getSearch_IdSearch();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.SearchResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -924,6 +944,14 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SEARCH__ID = eINSTANCE.getSearch_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Id Search</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SEARCH__ID_SEARCH = eINSTANCE.getSearch_IdSearch();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SearchResultImpl <em>Result</em>}' class.

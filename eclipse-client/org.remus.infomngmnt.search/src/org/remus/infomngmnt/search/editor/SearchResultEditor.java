@@ -45,7 +45,6 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 
 	public final static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
-
 	/**
 	 * 
 	 */
@@ -53,13 +52,15 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
 	 */
 	@Override
 	protected void addPages() {
 		try {
-			addPage(this.page1 = new SearchResultPage(this,this.model));
+			addPage(this.page1 = new SearchResultPage(this, this.model));
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,33 +69,38 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 	}
 
 	@Override
-	protected void createPages()
-	{
+	protected void createPages() {
 		super.createPages();
-		if ( getPageCount() == 1 && getContainer() instanceof CTabFolder )
-		{
-			( (CTabFolder) getContainer() ).setTabHeight( 0 );
+		if (getPageCount() == 1 && getContainer() instanceof CTabFolder) {
+			((CTabFolder) getContainer()).setTabHeight(0);
 		}
 	}
 
 	@Override
-	protected void createHeaderContents(IManagedForm headerForm) {
+	protected void createHeaderContents(final IManagedForm headerForm) {
 		headerForm.getForm().setText(getTitleLabel());
-		headerForm.getForm().setImage(AbstractUIPlugin.imageDescriptorFromPlugin(SearchPlugin.PLUGIN_ID, "images/text_find.png").createImage());
+		headerForm.getForm().setImage(
+				AbstractUIPlugin.imageDescriptorFromPlugin(SearchPlugin.PLUGIN_ID,
+						"images/text_find.png").createImage());
 		getToolkit().decorateFormHeading(headerForm.getForm().getForm());
-		//headerForm.getForm().getToolBarManager().add(action)
+		// headerForm.getForm().getToolBarManager().add(action)
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.
+	 * IProgressMonitor)
 	 */
 	@Override
-	public void doSave(IProgressMonitor monitor) {
+	public void doSave(final IProgressMonitor monitor) {
 		// save not allowed.
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.EditorPart#doSaveAs()
 	 */
 	@Override
@@ -103,7 +109,9 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
 	 */
 	@Override
@@ -112,10 +120,10 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 	}
 
 	@Override
-	public void init(IEditorSite site, IEditorInput input)
-	throws PartInitException {
+	public void init(final IEditorSite site, final IEditorInput input) throws PartInitException {
 		if (input instanceof URIEditorInput) {
-			this.model = new SavedSearchesHandler().getObjectFromUri(((URIEditorInput)input).getURI(), SearchPackage.Literals.SEARCH);
+			this.model = new SavedSearchesHandler().getObjectFromUri(((URIEditorInput) input)
+					.getURI(), SearchPackage.Literals.SEARCH);
 		}
 		setPartName(getTitleLabel());
 		super.init(site, input);
@@ -128,14 +136,21 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 	}
 
 	private String getTitleLabel() {
-		String returnValue = this.model.getSearchString()== null || this.model.getSearchString().length() == 0 ? "Empty" : "\'" + this.model.getSearchString() + "\'";
-		returnValue += " \u00AD " + SDF.format(new Date(Long.parseLong(this.model.getId())));
-		returnValue += " \u00AD " + "Search results";
+		String returnValue;
+		if (this.model.isIdSearch()) {
+			returnValue = "Predefined search";
+		} else {
+			returnValue = this.model.getSearchString() == null
+					|| this.model.getSearchString().length() == 0 ? "Empty" : "\'"
+					+ this.model.getSearchString() + "\'";
+			returnValue += " \u00AD " + SDF.format(new Date(Long.parseLong(this.model.getId())));
+			returnValue += " \u00AD " + "Search results";
+		}
 		return returnValue;
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public Object getAdapter(final Class adapter) {
 		if (adapter.equals(IContentOutlinePage.class)) {
 			return getContentOutline();
 		}
@@ -146,14 +161,14 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 		if (this.contentOutlinePage == null) {
 			this.contentOutlinePage = new SearchOutline(this.model) {
 				@Override
-				public void setActionBars(IActionBars actionBars) {
+				public void setActionBars(final IActionBars actionBars) {
 					super.setActionBars(actionBars);
-					//getActionBarContributor().shareGlobalActions(this, actionBars);
+					// getActionBarContributor().shareGlobalActions(this,
+					// actionBars);
 				}
 			};
 		}
 		return this.contentOutlinePage;
 	}
-
 
 }

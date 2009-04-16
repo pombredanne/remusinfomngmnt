@@ -385,19 +385,20 @@ public class LuceneSearchService {
 					this.currentSearch, monitor);
 			IProject[] projectsToSearch = getSearchService()
 					.getProjectsToSearch(this.currentSearch);
-			Searchable[] searchables = new Searchable[projectsToSearch.length];
+			List<Searchable> searchables = new ArrayList<Searchable>();
 			for (int i = 0, n = projectsToSearch.length; i < n; i++) {
 				try {
 					if (ResourceUtil.hasBuilder(projectsToSearch[i].getDescription(),
 							SearchBuilder.BUILDER_ID)) {
-						searchables[i] = acquireIndexSearcher(projectsToSearch[i]);
+						searchables.add(acquireIndexSearcher(projectsToSearch[i]));
 					}
 				} catch (CoreException e) {
 					// do nothing.
 				}
 			}
 			try {
-				ParallelMultiSearcher searcher = new ParallelMultiSearcher(searchables);
+				ParallelMultiSearcher searcher = new ParallelMultiSearcher(searchables
+						.toArray(new Searchable[searchables.size()]));
 				TopFieldDocs search = searcher.search(queryStringFromSearchQuery, null,
 						getSearchService().getMaxResults(), new Sort());
 				Highlighter highlighter = new Highlighter(new SimpleHTMLFormatter(

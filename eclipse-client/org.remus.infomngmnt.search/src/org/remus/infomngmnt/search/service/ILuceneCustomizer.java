@@ -14,22 +14,22 @@ package org.remus.infomngmnt.search.service;
 
 import java.text.SimpleDateFormat;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.store.Directory;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.search.Search;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.store.Directory;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface ILuceneCustomizer {
 
+	public static final String ID_SEPARATOR = ";"; //$NON-NLS-1$
 
 	Document getLuceneDocument(InformationUnit document, IProject project, IProgressMonitor monitor);
 

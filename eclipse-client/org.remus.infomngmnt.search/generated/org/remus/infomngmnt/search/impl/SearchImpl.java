@@ -47,6 +47,7 @@ import org.remus.infomngmnt.search.SearchScope;
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#isIdSearch <em>Id Search</em>}</li>
  * </ul>
  * </p>
  *
@@ -172,6 +173,26 @@ public class SearchImpl extends EObjectImpl implements Search {
 	 * @ordered
 	 */
 	protected String id = ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isIdSearch() <em>Id Search</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIdSearch()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ID_SEARCH_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIdSearch() <em>Id Search</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIdSearch()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean idSearch = ID_SEARCH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -326,6 +347,27 @@ public class SearchImpl extends EObjectImpl implements Search {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIdSearch() {
+		return idSearch;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIdSearch(boolean newIdSearch) {
+		boolean oldIdSearch = idSearch;
+		idSearch = newIdSearch;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SearchPackage.SEARCH__ID_SEARCH, oldIdSearch, idSearch));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -357,6 +399,8 @@ public class SearchImpl extends EObjectImpl implements Search {
 				return getResult();
 			case SearchPackage.SEARCH__ID:
 				return getId();
+			case SearchPackage.SEARCH__ID_SEARCH:
+				return isIdSearch() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -393,6 +437,9 @@ public class SearchImpl extends EObjectImpl implements Search {
 			case SearchPackage.SEARCH__ID:
 				setId((String)newValue);
 				return;
+			case SearchPackage.SEARCH__ID_SEARCH:
+				setIdSearch(((Boolean)newValue).booleanValue());
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -426,6 +473,9 @@ public class SearchImpl extends EObjectImpl implements Search {
 			case SearchPackage.SEARCH__ID:
 				setId(ID_EDEFAULT);
 				return;
+			case SearchPackage.SEARCH__ID_SEARCH:
+				setIdSearch(ID_SEARCH_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -452,6 +502,8 @@ public class SearchImpl extends EObjectImpl implements Search {
 				return result != null && !result.isEmpty();
 			case SearchPackage.SEARCH__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case SearchPackage.SEARCH__ID_SEARCH:
+				return idSearch != ID_SEARCH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -478,6 +530,8 @@ public class SearchImpl extends EObjectImpl implements Search {
 		result.append(scope);
 		result.append(", id: ");
 		result.append(id);
+		result.append(", idSearch: ");
+		result.append(idSearch);
 		result.append(')');
 		return result.toString();
 	}

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Jeremy Dowdall <aspencloud@users.sourceforge.net> - initial API and implementation
+ *    Tom Seidel - minor changes to fit in the project.
  *****************************************************************************/
 
 package org.remus.infomngmnt.ccalendar;

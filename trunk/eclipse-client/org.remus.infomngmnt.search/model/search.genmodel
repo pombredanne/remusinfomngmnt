@@ -24,6 +24,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/scope"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference search.ecore#//Search/result"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//Search/idSearch"/>
     </genClasses>
     <genClasses ecoreClass="search.ecore#//SearchResult">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute search.ecore#//SearchResult/infoId"/>

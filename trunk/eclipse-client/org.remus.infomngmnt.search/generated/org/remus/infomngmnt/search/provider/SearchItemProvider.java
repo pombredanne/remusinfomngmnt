@@ -78,6 +78,7 @@ public class SearchItemProvider
 			addInfoTypePropertyDescriptor(object);
 			addScopePropertyDescriptor(object);
 			addIdPropertyDescriptor(object);
+			addIdSearchPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -215,6 +216,28 @@ public class SearchItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Id Search feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIdSearchPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Search_idSearch_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Search_idSearch_feature", "_UI_Search_type"),
+				 SearchPackage.Literals.SEARCH__ID_SEARCH,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -287,6 +310,7 @@ public class SearchItemProvider
 			case SearchPackage.SEARCH__INFO_TYPE:
 			case SearchPackage.SEARCH__SCOPE:
 			case SearchPackage.SEARCH__ID:
+			case SearchPackage.SEARCH__ID_SEARCH:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case SearchPackage.SEARCH__RESULT:

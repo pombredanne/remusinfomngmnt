@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.search.Search#getScope <em>Scope</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.Search#getResult <em>Result</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.Search#getId <em>Id</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#isIdSearch <em>Id Search</em>}</li>
  * </ul>
  * </p>
  *
@@ -207,5 +208,31 @@ public interface Search extends EObject {
 	 * @generated
 	 */
 	void setId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Id Search</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Id Search</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Id Search</em>' attribute.
+	 * @see #setIdSearch(boolean)
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_IdSearch()
+	 * @model
+	 * @generated
+	 */
+	boolean isIdSearch();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.search.Search#isIdSearch <em>Id Search</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Id Search</em>' attribute.
+	 * @see #isIdSearch()
+	 * @generated
+	 */
+	void setIdSearch(boolean value);
 
 } // Search

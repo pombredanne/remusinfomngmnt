@@ -43,7 +43,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit()
- * @model extendedMetaData="InformationUnit='value' kind='mixed'"
+ * @model
  * @generated
  */
 public interface InformationUnit extends AbstractInformationUnit {

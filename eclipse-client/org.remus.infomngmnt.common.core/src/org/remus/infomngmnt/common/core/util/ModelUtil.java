@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.common.core.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -131,6 +132,16 @@ public class ModelUtil {
 			}
 		}
 		return null;
+	}
+
+	public static Collection<EObject> convertFromArray(final Object[] array) {
+		Collection<EObject> returnValue = new ArrayList<EObject>();
+		for (Object object : array) {
+			if (object instanceof EObject) {
+				returnValue.add((EObject) object);
+			}
+		}
+		return returnValue;
 	}
 
 }

@@ -23,4 +23,6 @@ public interface IReferencedUnitStore {
 
 	void delete(String informationId);
 
+	public String[] getReferencedInfoUnitIds(final String informationUnitId);
+
 }

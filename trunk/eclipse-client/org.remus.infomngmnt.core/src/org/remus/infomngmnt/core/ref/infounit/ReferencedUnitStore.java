@@ -22,11 +22,19 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.core.ref.IIndexSearchOperation;
 import org.remus.infomngmnt.core.ref.IIndexWriteOperation;
 import org.remus.infomngmnt.core.ref.LuceneStore;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
@@ -158,6 +166,55 @@ public class ReferencedUnitStore extends LuceneStore implements IReferencedUnitS
 				}
 			}
 		});
+	}
+
+	public String[] getReferencedInfoUnitIds(final String informationUnitId) {
+		final List<String> returnValue = new ArrayList<String>();
+		List<String> termList = new ArrayList<String>();
+		List<String> fieldList = new ArrayList<String>();
+		List<Occur> flagList = new ArrayList<Occur>();
+
+		fieldList.add(REFINFOID);
+		termList.add(informationUnitId);
+		flagList.add(Occur.SHOULD);
+
+		try {
+			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
+					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
+					.toArray(new Occur[flagList.size()]), getAnalyser());
+			IIndexSearchOperation operation = new IIndexSearchOperation() {
+
+				public void read(final IndexSearcher reader) {
+					try {
+
+						TopDocs search = reader.search(tagQuery, null, 1000);
+						ScoreDoc[] docs = search.scoreDocs;
+						for (ScoreDoc scoreDoc : docs) {
+							try {
+								Document doc = getIndexSearcher().doc(scoreDoc.doc);
+								returnValue.add(doc.get(INFOID));
+							} catch (CorruptIndexException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
+			};
+			readAndWait(operation);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return returnValue.toArray(new String[returnValue.size()]);
 	}
 
 }

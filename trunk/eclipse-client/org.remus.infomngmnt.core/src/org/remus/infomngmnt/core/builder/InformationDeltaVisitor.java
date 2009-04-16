@@ -37,6 +37,8 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.services.IReferencedUnitStore;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -44,7 +46,12 @@ import org.remus.infomngmnt.resources.util.ResourceUtil;
  */
 public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
+	public InformationDeltaVisitor() {
+		this.service = InfomngmntEditPlugin.getPlugin().getService(IReferencedUnitStore.class);
+	}
+
 	private IProgressMonitor monitor;
+	private final IReferencedUnitStore service;
 
 	public boolean visit(final IResourceDelta delta) throws CoreException {
 		visitRecursively(delta);
@@ -84,10 +91,13 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta
 								.getResource());
+
 					}
 
 					break;
 				case IResourceDelta.REMOVED:
+					this.service.delete(resourceDelta.getResource().getFullPath()
+							.removeFileExtension().lastSegment());
 					break;
 				}
 			}
@@ -183,6 +193,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				e1.printStackTrace();
 			}
 		}
+		this.service.update(objectFromFile);
 	}
 
 	public void setMonitor(final IProgressMonitor monitor) {

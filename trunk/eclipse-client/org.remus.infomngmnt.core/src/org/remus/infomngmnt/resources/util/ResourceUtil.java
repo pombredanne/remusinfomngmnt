@@ -97,13 +97,7 @@ public class ResourceUtil {
 		final ICommand[] commands = desc.getBuildSpec();
 
 		// Determine if builder already associated
-		boolean found = false;
-		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(builder)) {
-				found = true;
-				break;
-			}
-		}
+		boolean found = hasBuilder(desc, builder);
 
 		// Add builder if not already in project
 		if (!found) {
@@ -119,6 +113,19 @@ public class ResourceUtil {
 			desc.setBuildSpec(newCommands);
 		}
 
+	}
+
+	public static boolean hasBuilder(final IProjectDescription desc, final String builder) {
+		// Determine if builder already associated
+		final ICommand[] commands = desc.getBuildSpec();
+		boolean found = false;
+		for (int i = 0; i < commands.length; ++i) {
+			if (commands[i].getBuilderName().equals(builder)) {
+				found = true;
+				break;
+			}
+		}
+		return found;
 	}
 
 	public static void removeBuilder(final IProject project, final String builder)

@@ -1735,13 +1735,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	protected void createExtendedMetaDataAnnotations() {
 		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";		
 		addAnnotation
-		  (informationUnitEClass, 
-		   source, 
-		   new String[] {
-			 "InformationUnit", "value",
-			 "kind", "mixed"
-		   });		
-		addAnnotation
 		  (getInformationUnit_BinaryValue(), 
 		   source, 
 		   new String[] {

@@ -39,10 +39,9 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 
 /**
- * This is the item provider adapter for a
- * {@link org.remus.infomngmnt.InformationUnit} object. <!-- begin-user-doc -->
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.InformationUnit} object.
+ * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class InformationUnitItemProvider extends AbstractInformationUnitItemProvider implements
@@ -54,7 +53,7 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	public InformationUnitItemProvider(final AdapterFactory adapterFactory) {
+	public InformationUnitItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -65,8 +64,8 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addStringValuePropertyDescriptor(object);
@@ -80,9 +79,8 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 			addUsageDataPropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
 			addKeywordsPropertyDescriptor(object);
-			addCalendarEntryPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -91,14 +89,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addStringValuePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_stringValue_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_stringValue_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addStringValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_stringValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_stringValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -107,14 +111,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addLongValuePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_longValue_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_longValue_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, true, false, false,
-				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+	protected void addLongValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_longValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_longValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -123,14 +133,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addBoolValuePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_boolValue_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_boolValue_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE, true, false, false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+	protected void addBoolValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_boolValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_boolValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -139,14 +155,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addBinaryValuePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_binaryValue_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_binaryValue_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addBinaryValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_binaryValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_binaryValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -155,14 +177,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addDateValuePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_dateValue_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_dateValue_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addDateValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_dateValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_dateValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -171,14 +199,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addReferencesPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_references_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_references_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__REFERENCES, true, false, true, null,
-				null, null));
+	protected void addReferencesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_references_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_references_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__REFERENCES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -187,14 +221,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addLinksPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_links_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_InformationUnit_links_feature",
-						"_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS, true, false, true, null, null,
-				null));
+	protected void addLinksPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_links_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_links_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -203,14 +243,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addCreationDatePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_creationDate_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_creationDate_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__CREATION_DATE, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addCreationDatePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_creationDate_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_creationDate_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__CREATION_DATE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -219,14 +265,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addUsageDataPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_usageData_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_usageData_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__USAGE_DATA, true, false, true, null,
-				null, null));
+	protected void addUsageDataPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_usageData_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_usageData_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__USAGE_DATA,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -235,14 +287,20 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addDescriptionPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_description_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_description_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addDescriptionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_description_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -251,60 +309,46 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * 
 	 * @generated
 	 */
-	protected void addKeywordsPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_keywords_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_keywords_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addKeywordsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_keywords_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_keywords_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Calendar Entry feature. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addCalendarEntryPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_InformationUnit_calendarEntry_feature"),
-				getString("_UI_PropertyDescriptor_description",
-						"_UI_InformationUnit_calendarEntry_feature", "_UI_InformationUnit_type"),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY, true, false, true,
-				null, null, null));
-	}
-
-	/**
-	 * This specifies how to implement {@link #getChildren} and is used to
-	 * deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand},
-	 * {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in
-	 * {@link #createCommand}. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
-		if (this.childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES);
+			childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES);
+			childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
-		// Check the type of the specified child object and return the proper
-		// feature to use for
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
 		return super.getChildFeature(object, child);
@@ -327,46 +371,45 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	}
 
 	/**
-	 * This returns the label text for the adapted class. <!-- begin-user-doc
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		String label = ((InformationUnit) object).getLabel();
-		return label == null || label.length() == 0 ? getString("_UI_InformationUnit_type")
-				: getString("_UI_InformationUnit_type") + " " + label;
+	public String getText(Object object) {
+		String label = ((InformationUnit)object).getLabel();
+		return label == null || label.length() == 0 ?
+			getString("_UI_InformationUnit_type") :
+			getString("_UI_InformationUnit_type") + " " + label;
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to
-	 * update any cached children and by creating a viewer notification, which
-	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(InformationUnit.class)) {
-		case InfomngmntPackage.INFORMATION_UNIT__STRING_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__LONG_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
-		case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
-		case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
-		case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-					false, true));
-			return;
-		case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-					true, false));
-			return;
+			case InfomngmntPackage.INFORMATION_UNIT__STRING_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__LONG_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
+			case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
+			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
+			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -379,17 +422,23 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors,
-			final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(
-				InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
-				InfomngmntFactory.eINSTANCE.createInformationUnit()));
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
+				 InfomngmntFactory.eINSTANCE.createInformationUnit()));
 
-		newChildDescriptors.add(createChildParameter(
-				InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
-				InfomngmntFactory.eINSTANCE.createRuleValue()));
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
+				 InfomngmntFactory.eINSTANCE.createRuleValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
+				 InfomngmntFactory.eINSTANCE.createCalendarEntry()));
 	}
 
 }

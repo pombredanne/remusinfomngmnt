@@ -310,24 +310,7 @@ public class LinkOutline extends ContentOutlinePage {
 			public void linkActivated(final HyperlinkEvent e) {
 				String string = e.getHref().toString();
 				if ("addEvent".equals(string)) {
-					CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
-					calendarEntry.setId(IdFactory.createNewId(null));
-					calendarEntry.setStart(new Date());
-					calendarEntry.setEnd(new Date(calendarEntry.getStart().getTime()
-							+ (15 * 60 * 1000)));
-					calendarEntry.setReminder(-1);
-					NewCalendarEntryDialog diag = new NewCalendarEntryDialog(getSite().getShell(),
-							calendarEntry, LinkOutline.this.adapterFactoryEditingDomain,
-							LinkOutline.this.info);
-					if (diag.open() == IDialogConstants.OK_ID) {
-						Command create = AddCommand.create(
-								LinkOutline.this.adapterFactoryEditingDomain,
-								LinkOutline.this.info,
-								InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY, diag
-										.getNewObject());
-						LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(
-								create);
-					}
+					openNewCalendarEntryDialog();
 				} else if ("openCalendar".equals(string)) {
 					// TODO open calendar.
 				} else {
@@ -358,6 +341,7 @@ public class LinkOutline extends ContentOutlinePage {
 					}
 				}
 			}
+
 		});
 		this.info.eAdapters().add(this.eventListChangeAdapter);
 		initializeEventToolBar(this.eventSection, toolkit);
@@ -377,8 +361,24 @@ public class LinkOutline extends ContentOutlinePage {
 
 	}
 
-	protected void fillCalendarEntries() {
-
+	/**
+	 * 
+	 */
+	private void openNewCalendarEntryDialog() {
+		CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
+		calendarEntry.setId(IdFactory.createNewId(null));
+		calendarEntry.setStart(new Date());
+		calendarEntry.setEnd(new Date(calendarEntry.getStart().getTime() + (15 * 60 * 1000)));
+		calendarEntry.setReminder(-1);
+		NewCalendarEntryDialog diag = new NewCalendarEntryDialog(getSite().getShell(),
+				calendarEntry, LinkOutline.this.adapterFactoryEditingDomain, LinkOutline.this.info);
+		if (diag.open() == IDialogConstants.OK_ID) {
+			Command create = AddCommand.create(LinkOutline.this.adapterFactoryEditingDomain,
+					LinkOutline.this.info,
+					InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY, diag
+							.getNewObject());
+			LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(create);
+		}
 	}
 
 	/**
@@ -503,7 +503,22 @@ public class LinkOutline extends ContentOutlinePage {
 	 */
 	private void initializeEventToolBar(final Section section, final FormToolkit toolkit) {
 
-		UIUtil.createSectionToolbar(section, toolkit, new Action("Remove calendar entries") {
+		UIUtil.createSectionToolbar(section, toolkit, new Action("Add calendar entry") {
+			@Override
+			public void run() {
+				openNewCalendarEntryDialog();
+			}
+
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				Image baseImage = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+						"icons/iconexperience/16/calendar.png");
+				Image decoratorImage = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+						"icons/iconexperience/decorator/new_decorator.png");
+				return ImageDescriptor.createFromImage(ResourceManager.decorateImage(baseImage,
+						decoratorImage, ResourceManager.TOP_RIGHT));
+			}
+		}, new Action("Remove calendar entries") {
 			@Override
 			public void run() {
 				LabelProvider labelProvider = new LabelProvider() {

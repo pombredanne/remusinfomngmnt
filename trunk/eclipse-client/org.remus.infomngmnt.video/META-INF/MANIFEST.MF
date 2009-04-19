@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Video Plug-in
+Bundle-SymbolicName: org.remus.infomngmnt.video;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.remus.infomngmnt.video.VideoActivator
+Bundle-Vendor: Tom Seidel - Remus Software
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.remus.infomngmnt.core;bundle-version="1.0.0",
+ org.remus.infomngmnt.jslib;bundle-version="1.0.0",
+ org.remus.infomngmnt.mediaplayer;bundle-version="1.0.0",
+ org.remus.infomngmnt.ui;bundle-version="1.0.0",
+ org.remus.infomngmnt.common.ui;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy

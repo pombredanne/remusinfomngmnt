@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            buildHtml="true"
+            creationFactory="org.remus.infomngmnt.video.internal.VideoCreationFactory"
+            icon="icons/iconexperience/film.png"
+            name="Video"
+            presentation="org.remus.infomngmnt.video.internal.VideoRepresentation"
+            type="VIDEO">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.video.editor.VideoEditPage"
+            icon="icons/iconexperience/film.png"
+            id="org.remus.infomngmnt.video.editPage"
+            label="Edit Video"
+            type="VIDEO">
+      </editPage>
+   </extension>
+
+</plugin>

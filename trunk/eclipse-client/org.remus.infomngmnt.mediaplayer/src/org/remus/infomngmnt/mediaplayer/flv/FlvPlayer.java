@@ -43,12 +43,18 @@ public class FlvPlayer extends AbstractMediaPlayer {
 	 */
 	public String buildHtml(final IPath mediaFilePath, final int widht, final int height,
 			final Map<String, String> options) {
-		String htmlString = "<div id=\"flvplayer\"></div>\r\n"
-				+ "<script type=\"text/javascript\">\r\n" + "	var so = new SWFObject(\""
-				+ CheckResourceReferenceJob.map.get(REF_RES_1) + "\", \"swfplayer\", \""
-				+ (widht == 0 ? 300 : widht) + "\", \"" + (height == 0 ? 300 : height)
-				+ "\", \"9\", \"#000000\");\r\n" + "	so.addVariable(\"flv\", \""
-				+ mediaFilePath.toOSString().replaceAll("\\\\", "\\\\\\\\") + "\");\r\n"
+		String htmlString = "<div id=\"flvplayer\" style=\"margin-top:10px;text-align: center\"></div>\r\n"
+				+ "<script type=\"text/javascript\">\r\n"
+				+ "	var so = new SWFObject(\""
+				+ CheckResourceReferenceJob.map.get(REF_RES_1)
+				+ "\", \"swfplayer\", \""
+				+ (widht == 0 ? 480 : widht)
+				+ "\", \""
+				+ (height == 0 ? 300 : height)
+				+ "\", \"9\", \"#000000\");\r\n"
+				+ "	so.addVariable(\"flv\", \""
+				+ mediaFilePath.toOSString().replaceAll("\\\\", "\\\\\\\\")
+				+ "\");\r\n"
 				+ "	//so.addVariable(\"autoplay\",\"true\");\r\n"
 				+ "	so.addParam(\"allowFullScreen\",\"true\");\r\n"
 				+ "	so.write(\"flvplayer\");\r\n" + "</script>";

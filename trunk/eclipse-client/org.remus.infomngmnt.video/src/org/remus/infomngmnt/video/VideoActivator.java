@@ -14,6 +14,8 @@ public class VideoActivator extends AbstractUIPlugin {
 	// The shared instance
 	private static VideoActivator plugin;
 
+	public static String TYPE_ID = "VIDEO";
+
 	public static final String NODE_NAME_RAWDATA = "videoData"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_WIDTH = "width"; //$NON-NLS-1$

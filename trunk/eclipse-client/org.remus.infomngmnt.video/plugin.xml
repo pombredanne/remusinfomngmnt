@@ -19,11 +19,32 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.video.editor.VideoEditPage"
-            icon="icons/iconexperience/film.png"
+            icon="icons/iconexperience/film_edit.png"
             id="org.remus.infomngmnt.video.editPage"
             label="Edit Video"
             type="VIDEO">
       </editPage>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="true"
+            class="org.remus.infomngmnt.video.newwizard.NewVideoWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            hasPages="true"
+            icon="icons/iconexperience/film_new.png"
+            id="org.remus.infomngmnt.video.newWizard"
+            name="Video">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.video.newWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

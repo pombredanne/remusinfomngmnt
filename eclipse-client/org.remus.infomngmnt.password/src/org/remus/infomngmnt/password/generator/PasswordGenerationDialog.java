@@ -14,12 +14,14 @@ package org.remus.infomngmnt.password.generator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -39,7 +41,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.password.PasswordPlugin;
@@ -92,11 +93,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
-		PasswordGenerationDialog.this.password
-				.setStringValue(PasswordGenerationDialog.this.selectedPassword);
-		new SetCommand(this.editingDomain, this.password,
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
-				PasswordGenerationDialog.this.selectedPassword);
 		super.okPressed();
 	}
 
@@ -155,15 +151,29 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.tv_GeneratedPasswords.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(final SelectionChangedEvent event) {
-				int i = PasswordGenerationDialog.this.tv_GeneratedPasswords.getTable()
-						.getSelectionIndex();
+				if (event.getSelection().isEmpty()) {
+					PasswordGenerationDialog.this.selectedPassword = null;
+				}
+				Object firstElement = ((IStructuredSelection) event.getSelection())
+						.getFirstElement();
 				try {
-					PasswordGenerationDialog.this.selectedPassword = PasswordGenerationDialog.this.generatedPasswords
-							.get(i);
+					PasswordGenerationDialog.this.selectedPassword = firstElement.toString();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
-				PasswordGenerationDialog.this.bt_SaveProporties.setEnabled(true);
+				validatePage();
+
+			}
+		});
+		this.tv_GeneratedPasswords.addOpenListener(new IOpenListener() {
+			public void open(final OpenEvent event) {
+				Object firstElement = ((IStructuredSelection) event.getSelection())
+						.getFirstElement();
+				PasswordGenerationDialog.this.selectedPassword = firstElement.toString();
+				validatePage();
+				if (getButton(OK).isEnabled()) {
+					okPressed();
+				}
 			}
 		});
 	}
@@ -294,12 +304,8 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 			PasswordGenerationDialog.this.comboDefaultPasswordLength.setEnabled(false);
 			PasswordGenerationDialog.this.bt_GeneratePasswords.setEnabled(false);
 
-			List<String> l = new ArrayList<String>(PGSettings.QUANTITY_PASSWORDS);
-			for (int i = 1; i < PGSettings.QUANTITY_PASSWORDS; i++) {
-				l.add("");
-			}
-			this.tv_GeneratedPasswords.setInput(l);
-			this.tv_GeneratedPasswords.getTable().setEnabled(false);
+			this.tv_GeneratedPasswords.getTable().setEnabled(
+					this.tv_GeneratedPasswords.getInput() != null);
 			this.tx_additionalCharacters.setEnabled(false);
 
 		}
@@ -387,6 +393,9 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 					.setInput(PasswordGenerationDialog.this.generatedPasswords);
 			PasswordGenerationDialog.this.group_Passwords.setEnabled(true);
 			PasswordGenerationDialog.this.tv_GeneratedPasswords.getTable().setEnabled(true);
+		}
+		if (this.selectedPassword != null) {
+			this.bt_SaveProporties.setEnabled(true);
 		}
 	}
 
@@ -618,5 +627,12 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 				this.comboDefaultPasswordLength.getEnabled());
 		PasswordPlugin.getDefault().getDialogSettings().put(PGSettings.AC_SP_PASSWORD_LENGTH,
 				this.sp_PasswordLength.getSelection());
+	}
+
+	/**
+	 * @return the selectedPassword
+	 */
+	public String getSelectedPassword() {
+		return this.selectedPassword;
 	}
 }

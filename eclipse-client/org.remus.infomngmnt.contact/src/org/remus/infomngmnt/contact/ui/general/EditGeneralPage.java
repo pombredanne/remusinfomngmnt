@@ -35,7 +35,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 
-		new GeneralSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
+		new GeneralSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain, dataBindingContext);
 		doCreateSemanticSection(body, toolkit);
 	}
 }

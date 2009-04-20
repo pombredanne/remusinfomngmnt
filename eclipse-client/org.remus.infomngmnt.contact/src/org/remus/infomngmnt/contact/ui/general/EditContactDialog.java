@@ -93,4 +93,7 @@ public class EditContactDialog extends TitleAreaDialog {
 		
 		return this.area;
 	}
+	public AdapterFactoryEditingDomain getEditingDomain() {
+		return editingDomain;
+	}
 }

@@ -12,4 +12,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/mediaplayerextension.xml
-Export-Package: org.remus.infomngmnt.mediaplayer.extension
+Export-Package: org.remus.infomngmnt.mediaplayer,
+ org.remus.infomngmnt.mediaplayer.extension,
+ org.remus.infomngmnt.mediaplayer.flv,
+ org.remus.infomngmnt.mediaplayer.internal

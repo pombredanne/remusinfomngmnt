@@ -27,7 +27,7 @@ public interface IMediaPlayerExtensionService {
 
 	public static final String NAME_ATT = "name"; //$NON-NLS-1$
 
-	public static final String CLASS_ATT = "CLASS_ATT"; //$NON-NLS-1$
+	public static final String CLASS_ATT = "class"; //$NON-NLS-1$
 
 	public IMediaPlayer getPlayerById(final String id);
 

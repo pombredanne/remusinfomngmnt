@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.remus.infomngmnt.password;
 
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.GridData;
@@ -101,9 +103,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
-				if (EditPasswordPage.this.textUrl.getText().contentEquals("http://")) {
-					Program.launch(EditPasswordPage.this.textUrl.getText());
-				}
+				Program.launch(EditPasswordPage.this.textUrl.getText());
 			}
 		});
 	}
@@ -117,7 +117,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
+		gridLayout.numColumns = 3;
 		composite.setLayout(gridLayout);
 		toolkit.paintBordersFor(composite);
 		generalSection.setClient(composite);
@@ -126,7 +126,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		toolkit.createLabel(composite, "Username:", SWT.NONE);
 
 		this.textUsername = toolkit.createText(composite, null, SWT.NONE);
-		this.textUsername.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.textUsername.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
 				this.textUsername, this);
@@ -160,25 +160,35 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 
 		toolkit.paintBordersFor(compositePassword);
 
-		// create the button that will open an password generation dialog
-		final Button generatePasswordButton = toolkit.createButton(composite, "generate password",
-				SWT.NONE);
-		generatePasswordButton.addListener(SWT.Selection, new Listener() {
-
-			public void handleEvent(final Event event) {
-				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
-						getSite().getShell(), getModelObject(), EditPasswordPage.this.editingDomain);
-				dialog.open();
-			}
-		});
-
 		// create the button that will switch between the pages
-		final Button pageButton = toolkit.createButton(composite, "switch", SWT.NONE);
+		final Button pageButton = toolkit.createButton(composite, "*****", SWT.TOGGLE);
+		pageButton.setSelection(true);
 		pageButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				layout.topControl = EditPasswordPage.this.textPassword.isVisible() ? EditPasswordPage.this.textPasswordDecrypted
 						: EditPasswordPage.this.textPassword;
 				compositePassword.layout();
+			}
+		});
+		new Label(composite, SWT.NONE);
+
+		// create the button that will open an password generation dialog
+		final Button generatePasswordButton = toolkit.createButton(composite, "Ge&nerate Password",
+				SWT.NONE);
+		generatePasswordButton
+				.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
+		generatePasswordButton.addListener(SWT.Selection, new Listener() {
+
+			public void handleEvent(final Event event) {
+				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
+						getSite().getShell(), getModelObject(), EditPasswordPage.this.editingDomain);
+				if (dialog.open() == IDialogConstants.OK_ID) {
+					SetCommand command = new SetCommand(EditPasswordPage.this.editingDomain,
+							getModelObject(),
+							InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, dialog
+									.getSelectedPassword());
+					EditPasswordPage.this.editingDomain.getCommandStack().execute(command);
+				}
 			}
 		});
 	}

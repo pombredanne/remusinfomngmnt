@@ -28,7 +28,7 @@
 	          autoPad: true
 	      }
 	
-	      var myBoxObject = new curvyCorners(settings,"imageRep");
+	      var myBoxObject = new curvyCorners(settings,"videoPlayer");
 	      
 	      myBoxObject.applyCornersToAll();
 	 }
@@ -75,9 +75,9 @@
   		<div class="videoPlayer" style="margin: 0 position:relative; auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
   			<span class="systemfont" style="font-weight:bold;">Videoplayer</span>
   		</div>
-  		<div style="position:relative;margin:10px;">
+  		
   			${additionals.mediaplayer}
-  		</div>
+  		
   	</div>
 </body>
 </html>

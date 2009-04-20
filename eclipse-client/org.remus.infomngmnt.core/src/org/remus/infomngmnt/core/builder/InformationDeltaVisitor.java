@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
@@ -219,11 +220,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			throw e;
 		} finally {
 			if (handleHtmlGeneration != null) {
-				try {
-					handleHtmlGeneration.close();
-				} catch (Exception e) {
-					// do nothing.. we've done our best.
-				}
+				StreamCloser.closeStreams(handleHtmlGeneration);
 			}
 		}
 	}

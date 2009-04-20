@@ -29,7 +29,7 @@ import org.remus.infomngmnt.core.model.InformationUtil;
 public class ContactInformationRepresentation extends
 		AbstractInformationRepresentation {
 
-	private String imageHref;
+//	private String imageHref;
 
 	public ContactInformationRepresentation() {
 		// TODO Auto-generated constructor stub
@@ -50,7 +50,7 @@ public class ContactInformationRepresentation extends
 			}
 			IFile file = getBuildFolder().getFile(
 					new Path(getValue().getId()).addFileExtension(fileExtension));
-			this.imageHref = file.getLocation().toOSString();
+//			this.imageHref = file.getLocation().toOSString();
 			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
 			try {
 				file.create(bais, true, monitor);

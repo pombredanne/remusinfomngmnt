@@ -17,13 +17,14 @@ package org.remus.infomngmnt.contact.ui.general;
  */
 import java.io.ByteArrayInputStream;
 
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
@@ -38,7 +39,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
-
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
@@ -48,9 +48,9 @@ public class GeneralSection {
 
 	private Label lb_Image;
 	private Button bt_EditName;
-
-	public GeneralSection(final Composite body, final FormToolkit toolkit, final Shell shell,
-			final InformationUnit informationUnit, final AdapterFactoryEditingDomain editingDomain) {
+	
+	public GeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain, EMFDataBindingContext ctx){		
+		
 
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -65,7 +65,7 @@ public class GeneralSection {
 		section_1.setClient(compositeGeneral);
 
 		createGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
-		createGroupPhoneNumbers(compositeGeneral, toolkit);
+		createGroupPhoneNumbers(compositeGeneral, toolkit, informationUnit, editingDomain, ctx);		
 		createGroupAddress(compositeGeneral, toolkit);
 		createGroupInternet(compositeGeneral, toolkit);
 		createSeparator(compositeGeneral, true, 2);
@@ -151,10 +151,11 @@ public class GeneralSection {
 		this.lb_Image.addMouseListener(new MouseListener() {
 
 			public void mouseDoubleClick(final MouseEvent e) {
-				GeneralSection.this.lb_Image.setImage(ImageManipulation.selectImageFromDialog(
+				Image image = ImageManipulation.selectImageFromDialog(
 						shell, informationUnit, ContactActivator.NODE_NAME_RAWDATA_IMAGE,
 						editingDomain, GeneralSection.this.lb_Image.getSize().x,
-						GeneralSection.this.lb_Image.getSize().y));
+						GeneralSection.this.lb_Image.getSize().y);
+				if(image != null) GeneralSection.this.lb_Image.setImage(image);
 			}
 
 			public void mouseDown(final MouseEvent e) {
@@ -165,11 +166,8 @@ public class GeneralSection {
 				// TODO Auto-generated method stub
 			}
 		});
-		this.bt_EditName.addSelectionListener(new SelectionListener() {
 
-			public void widgetDefaultSelected(final SelectionEvent e) {
-				// TODO Auto-generated method stub
-			}
+		bt_EditName.addSelectionListener(new SelectionAdapter(){
 
 			public void widgetSelected(final SelectionEvent e) {
 				EditContactDialog ecd = new EditContactDialog(compositeGeneral, toolkit, shell,
@@ -178,55 +176,18 @@ public class GeneralSection {
 			}
 		});
 	}
-
-	private void createGroupPhoneNumbers(final Composite compositeGeneral, final FormToolkit toolkit) {
-
+	
+	private void createGroupPhoneNumbers(Composite compositeGeneral, FormToolkit toolkit, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain, EMFDataBindingContext ctx) {
+		
 		final Group group_PhoneNumbers = new Group(compositeGeneral, SWT.NONE);
-		group_PhoneNumbers.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true));
-
+		group_PhoneNumbers.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+	
 		final GridLayout gl_PhoneNumbersGroup = new GridLayout();
 		gl_PhoneNumbersGroup.numColumns = 1;
 		group_PhoneNumbers.setLayout(gl_PhoneNumbersGroup);
 
-		final Composite composite_Numbers = toolkit.createComposite(group_PhoneNumbers, SWT.BORDER);
-		composite_Numbers.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-		final GridLayout gl_Numbers = new GridLayout();
-		gl_Numbers.numColumns = 3;
-		composite_Numbers.setLayout(gl_Numbers);
-
-		String[] comboValue = new String[] { "Home", "Work", "Messanger", "Voice", "Fax", "Mobile",
-				"Video", "Mailbox", "Modem", "Car", "ISDN", "PCS", "Pager", "Others..." };
-
-		comboAndText(composite_Numbers, comboValue, 4);
-
-		final Composite composite_CreateDeleteButtons = toolkit.createComposite(group_PhoneNumbers,
-				SWT.NONE);
-		final GridLayout gl_CreateDeleteButtons = new GridLayout();
-		gl_CreateDeleteButtons.numColumns = 4;
-		composite_CreateDeleteButtons.setLayoutData(new GridData(SWT.FILL, SWT.END, true, false));
-		composite_CreateDeleteButtons.setLayout(gl_CreateDeleteButtons);
-
-		final Label lb = new Label(composite_CreateDeleteButtons, SWT.NONE);
-		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		gd_text.horizontalSpan = 2;
-		lb.setLayoutData(gd_text);
-		final Button bt_AddComboAndText = toolkit.createButton(composite_CreateDeleteButtons,
-				"Add", SWT.NONE);
-		final Button bt_DeleteComboAndText = toolkit.createButton(composite_CreateDeleteButtons,
-				"Delete", SWT.NONE);
-
-	}
-
-	private void comboAndText(final Composite composite_Numbers, final String[] comboValue,
-			final int quantity) {
-		for (int i = 0; i < quantity; i++) {
-			final Combo cb = new Combo(composite_Numbers, SWT.DROP_DOWN | SWT.READ_ONLY);
-			cb.setItems(comboValue);
-			cb.setText(comboValue[i]);
-			final Text tx = new Text(composite_Numbers, SWT.BORDER);
-			GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-			gd_text.horizontalSpan = 2;
-			tx.setLayoutData(gd_text);
+		for (int i = 0; i < 3; i++) {
+			new PhoneNumbersComposite(group_PhoneNumbers,SWT.NONE, toolkit, i, informationUnit, ctx, editingDomain);
 		}
 	}
 

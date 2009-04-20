@@ -33,6 +33,21 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_NAME_EXIF = "exifdata"; //$NON-NLS-1$
 	
 	public static final String ORIGINAL_FILEPATH = "originFilePath"; //$NON-NLS-1$
+
+	public static final String NODE_NAME_PN_HOME = "pnHome"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_WORK = "pnWork"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_MESSANGER = "pnMessanger"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_VOICE = "pnVoice"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_FAX = "pnFAX"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_MOBILE = "pnMobile"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_MAILBOX = "pnMailbox"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_MODEM = "pnModem"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_CAR = "pnCar"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_ISDN = "pnIsdn"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_VIDEO = "pnVideo"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_PCS = "pnPcs"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_PAGER = "pnPager"; //$NON-NLS-1$
+	public static final String NODE_NAME_PN_OTHERS = "pnOthers"; //$NON-NLS-1$
 	
 	
 	// The plug-in ID

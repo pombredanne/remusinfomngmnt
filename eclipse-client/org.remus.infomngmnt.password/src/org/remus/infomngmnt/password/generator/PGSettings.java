@@ -36,4 +36,6 @@ public class PGSettings {
 	public static final String AC_SP_PASSWORD_LENGTH = "sppwdlen";
 	public static final String AC_TX_ADDITIONAL_CHARACTERS_ENABLED = "txaddcharen";
 	public static final String AC_USER_SETTINGS = "defsettings";
+	public static final String AC_TV_PASSWORDS_ENABLED = "tvpwden";
+	public static final String AC_BT_GENERATE_PASSWORDS_ENABLED = "btgenpwden";
 }

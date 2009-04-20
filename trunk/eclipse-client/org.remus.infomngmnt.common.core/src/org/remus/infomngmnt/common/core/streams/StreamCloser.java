@@ -19,12 +19,13 @@ import java.io.InputStream;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class StreamCloser {
-	
+
 	public static void closeStreams(final InputStream... streams) {
 		for (InputStream inputStream : streams) {
 			try {
 				if (inputStream != null) {
 					inputStream.close();
+					inputStream = null;
 				}
 			} catch (IOException e) {
 				// do nothing.

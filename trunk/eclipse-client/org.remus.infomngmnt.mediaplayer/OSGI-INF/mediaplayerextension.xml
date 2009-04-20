@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component immediate="true" name="mediaplayerextension">
+<component name="mediaplayerextension">
    <implementation class="org.remus.infomngmnt.mediaplayer.internal.MediaPlayerExtensionService"/>
    <service>
       <provide interface="org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService"/>

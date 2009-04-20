@@ -24,8 +24,8 @@ import org.remus.infomngmnt.mediaplayer.extension.AbstractMediaPlayer;
  */
 public class FlvPlayer extends AbstractMediaPlayer {
 
-	public static final String REF_RES_1 = "org.remus.infomngmnt.mediaplayer.swfobjects"; //$NON-NLS-1$
-	public static final String REF_RES_2 = "org.remus.infomngmnt.jslib.browserReferenceResource"; //$NON-NLS-1$
+	public static final String REF_RES_1 = "org_remus_infomngmnt_mediaplayer_playerFlashSWF"; //$NON-NLS-1$
+	public static final String REF_RES_2 = "org_remus_infomngmnt_mediaplayer_swfobjects"; //$NON-NLS-1$
 
 	/**
 	 * 
@@ -45,10 +45,10 @@ public class FlvPlayer extends AbstractMediaPlayer {
 			final Map<String, String> options) {
 		String htmlString = "<div id=\"flvplayer\"></div>\r\n"
 				+ "<script type=\"text/javascript\">\r\n" + "	var so = new SWFObject(\""
-				+ CheckResourceReferenceJob.map.get(REF_RES_2) + "\", \"swfplayer\", \"" + widht
-				+ "\", \"" + height + "\", \"9\", \"#000000\");\r\n"
-				+ "	so.addVariable(\"flv\", \"" + mediaFilePath.toOSString() + "\");\r\n"
-				+ "	so.addVariable(\"jpg\",\"imagen.jpg\");\r\n"
+				+ CheckResourceReferenceJob.map.get(REF_RES_1) + "\", \"swfplayer\", \""
+				+ (widht == 0 ? 300 : widht) + "\", \"" + (height == 0 ? 300 : height)
+				+ "\", \"9\", \"#000000\");\r\n" + "	so.addVariable(\"flv\", \""
+				+ mediaFilePath.toOSString().replaceAll("\\\\", "\\\\\\\\") + "\");\r\n"
 				+ "	//so.addVariable(\"autoplay\",\"true\");\r\n"
 				+ "	so.addParam(\"allowFullScreen\",\"true\");\r\n"
 				+ "	so.write(\"flvplayer\");\r\n" + "</script>";
@@ -57,7 +57,7 @@ public class FlvPlayer extends AbstractMediaPlayer {
 
 	@Override
 	public String buildHeaderScript() {
-		return "<script src=\"" + CheckResourceReferenceJob.map.get(REF_RES_1)
+		return "<script src=\"" + CheckResourceReferenceJob.map.get(REF_RES_2)
 				+ "\" type=\"text/javascript\"></script>";
 	}
 }

@@ -28,7 +28,6 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
-
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ui.general.LoadImageRunnable;
@@ -90,10 +89,9 @@ public class ImageManipulation {
 					imageTargetX, imageTargetY);
 			loader.data[0] = imageScaled;
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			loader.save(baos, SWT.IMAGE_JPEG);
+			loader.save(baos, SWT.IMAGE_PNG);
 
 			Image image = new Image(null, imageScaled);
-			// lb_Image.setImage(image);
 
 			InformationUnit childByType = InformationUtil.getChildByType(informationUnit, nodeName);
 			SetCommand setCommand = new SetCommand(editingDomain, childByType,

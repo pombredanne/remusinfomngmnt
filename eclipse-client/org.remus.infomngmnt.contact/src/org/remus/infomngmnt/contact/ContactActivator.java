@@ -34,6 +34,18 @@ public class ContactActivator extends AbstractUIPlugin {
 	
 	public static final String ORIGINAL_FILEPATH = "originFilePath"; //$NON-NLS-1$
 
+	// group person
+	public static final String NODE_NAME_PERS_NAME_TITLE = "persTitle"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_FIRST = "persFirst"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_ADDITIONAL = "persAdditional"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_LAST = "persLast"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_TITLE_AFTER = "persTitleAfter"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_FORMATTED = "persFormatted"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_ROLE = "persRole"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_ORGANISATION = "persOrganisation"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_COMPLETE = "persComplete"; //$NON-NLS-1$
+	
+	// group phone number
 	public static final String NODE_NAME_PN_HOME = "pnHome"; //$NON-NLS-1$
 	public static final String NODE_NAME_PN_WORK = "pnWork"; //$NON-NLS-1$
 	public static final String NODE_NAME_PN_MESSANGER = "pnMessanger"; //$NON-NLS-1$

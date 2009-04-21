@@ -84,10 +84,11 @@ public class ChangeSetExecutor {
 							if (informationUnit2 == null) {
 								informationUnit2 = this.changeSet.getRepository()
 										.getRepositoryImplementation().getFullObject(
-												informationUnitListItem);
+												informationUnitListItem, monitor);
 							}
 							informationUnit2.setId(informationUnitListItem.getId());
 							informationUnit2.setType(informationUnitListItem.getType());
+							informationUnit2.setLabel(informationUnitListItem.getLabel());
 							IInfoType infoTypeByType = InformationExtensionManager.getInstance()
 									.getInfoTypeByType(informationUnit2.getType());
 							infoTypeByType.getCreationFactory().handlePreSaving(informationUnit2,

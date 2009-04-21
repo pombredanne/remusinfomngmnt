@@ -71,16 +71,21 @@ public class LoadFromFileRunnable extends CancelableRunnable {
 			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file
 					.length());
 			try {
-				final CompoundCommand cc = new CompoundCommand();
-				cc.append(new SetCommand(this.domain, this.rawDataNode,
-						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, FileUtil
-								.getBytesFromFile(this.file, monitor)));
-				cc.setLabel("Set new bytes");
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						LoadFromFileRunnable.this.domain.getCommandStack().execute(cc);
-					}
-				});
+				if (this.domain != null) {
+					final CompoundCommand cc = new CompoundCommand();
+					cc.append(new SetCommand(this.domain, this.rawDataNode,
+							InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, FileUtil
+									.getBytesFromFile(this.file, monitor)));
+					cc.setLabel("Set new bytes");
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							LoadFromFileRunnable.this.domain.getCommandStack().execute(cc);
+						}
+					});
+
+				} else {
+					this.rawDataNode.setBinaryValue(FileUtil.getBytesFromFile(this.file, monitor));
+				}
 			} catch (IOException e) {
 				return StatusCreator.newStatus("File not exisits or is not accessible");
 			}

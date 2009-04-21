@@ -9,6 +9,7 @@
 
    <launcherArgs>
       <programArgs>-consoleLog</programArgs>
+      <vmArgs>-Xmx256M</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 

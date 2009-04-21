@@ -59,7 +59,6 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	MD5 md5 = new MD5();
 
-
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
 			reset();
@@ -70,11 +69,11 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		public boolean isConflicting(final ISchedulingRule rule) {
 			return rule == DelicicousRepository.this.mutexRule;
 		}
+
 		public boolean contains(final ISchedulingRule rule) {
 			return rule == DelicicousRepository.this.mutexRule;
 		}
 	};
-
 
 	public RemoteObject[] getChildren(final IProgressMonitor monitor,
 			final RemoteContainer container, final boolean showOnlyContainer) {
@@ -83,11 +82,12 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			IProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
 			List<Tag> tags = getApi().getTags();
 			for (Tag tag : tags) {
-				RemoteContainer remoteContainer = buildRemoteContainer(tag, container.getRepositoryTypeId());
+				RemoteContainer remoteContainer = buildRemoteContainer(tag, container
+						.getRepositoryTypeId());
 				returnValue.add(remoteContainer);
 			}
 
-		} else if (!showOnlyContainer){
+		} else if (!showOnlyContainer) {
 			List<Post> posts = getApi().getAllPosts(container.getName());
 			for (Post post : posts) {
 				RemoteObject remoteObject = buildRemoteObject(post, container.getRepositoryTypeId());
@@ -115,7 +115,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	private RemoteContainer buildRemoteContainer(final Tag tag, final String repositoryTypeId) {
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteContainer.setId(tag.getTag());
-		this.md5.Update(getRepositoryUrl()+tag.getTag());
+		this.md5.Update(getRepositoryUrl() + tag.getTag());
 		remoteContainer.setRepositoryTypeObjectId(KEY_TAG);
 		remoteContainer.setName(tag.getTag());
 		remoteContainer.setUrl(getRepositoryUrl() + tag.getTag());
@@ -125,34 +125,33 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		return remoteContainer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#getRepositoryUrl()
 	 */
 	public String getRepositoryUrl() {
 		return DeliciousConstants.API_ENDPOINT;
 	}
 
-
 	private Delicious getApi() {
 		System.out.println("CONTACTING API");
 
 		if (this.api == null) {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
-			this.api = new Delicious(
-					getCredentialProvider().getUserName(),
-					getCredentialProvider().getPassword());
+			this.api = new Delicious(getCredentialProvider().getUserName(), getCredentialProvider()
+					.getPassword());
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
 		return this.api;
 	}
-
 
 	public IStatus validate() {
 		try {
 			getApi().getRecentPosts();
 			return Status.OK_STATUS;
 		} catch (Exception e) {
-			return StatusCreator.newStatus("Error connecting...",e);
+			return StatusCreator.newStatus("Error connecting...", e);
 		}
 	}
 
@@ -166,8 +165,6 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		getCredentialProvider().removePropertyChangeListener(this.credentialsMovedListener);
 	}
 
-
-
 	public ISchedulingRule getRule() {
 		return this.mutexRule;
 	}
@@ -178,7 +175,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
 		if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
-			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(LinkActivator.LINK_INFO_ID);
+			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+					LinkActivator.LINK_INFO_ID);
 			InformationUnit newObject = infoTypeByType.getCreationFactory().createNewObject();
 			Post post = (Post) remoteObject.getWrappedObject();
 			newObject.setLabel(remoteObject.getName());
@@ -192,57 +190,55 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	}
 
-	public InformationUnit getFullObject(
-			final InformationUnitListItem informationUnitListItem) {
+	public InformationUnit getFullObject(final InformationUnitListItem informationUnitListItem,
+			final IProgressMonitor monitor) {
 		/*
-		 * We're getting all objects while browsing through
-		 * the repository. So an additional request to 
-		 * the repository is not necessary. See #getPrefetchedChildren 
+		 * We're getting all objects while browsing through the repository. So
+		 * an additional request to the repository is not necessary. See
+		 * #getPrefetchedChildren
 		 */
 		return null;
 	}
 
-
 	/**
 	 * <p>
-	 * Commits an item to the delicious repository. Committing a 
-	 * {@link Category} has no effect, because the categories are
-	 * determinated by the keywords of the {@link InformationUnit}.
-	 * This has an important side-effect. If you're editing the 
-	 * Keywords of the {@link InformationUnit} and commit the link
-	 * on the next synchronize it could be that this link is not
-	 * anymore in the {@link RemoteContainer} of the synced 
-	 * {@link Category}.
-	 *  </p>
-	 *  <p>
+	 * Commits an item to the delicious repository. Committing a
+	 * {@link Category} has no effect, because the categories are determinated
+	 * by the keywords of the {@link InformationUnit}. This has an important
+	 * side-effect. If you're editing the Keywords of the
+	 * {@link InformationUnit} and commit the link on the next synchronize it
+	 * could be that this link is not anymore in the {@link RemoteContainer} of
+	 * the synced {@link Category}.
+	 * </p>
+	 * <p>
 	 * {@inheritDoc}
 	 * </p>
 	 */
-	private void _commit(final SynchronizableObject item2commit,
-			final IProgressMonitor monitor) {
+	private void _commit(final SynchronizableObject item2commit, final IProgressMonitor monitor) {
 		if (item2commit instanceof InformationUnitListItem) {
-			if (LinkActivator.LINK_INFO_ID.equals(((InformationUnitListItem) item2commit).getType())) {
-				InformationUnit adapter = (InformationUnit) item2commit.getAdapter(InformationUnit.class);
+			if (LinkActivator.LINK_INFO_ID
+					.equals(((InformationUnitListItem) item2commit).getType())) {
+				InformationUnit adapter = (InformationUnit) item2commit
+						.getAdapter(InformationUnit.class);
 				if (adapter != null) {
 					/*
-					 * This deletion+adding on committing an edited
-					 * link is necessary due to the restrictions of
-					 * the delicious API. It's not possible to replace
-					 * an delicious entry which URL has changed. The 
-					 * hash value, which should be the identifier cannot
-					 * be appended to a replace call.
+					 * This deletion+adding on committing an edited link is
+					 * necessary due to the restrictions of the delicious API.
+					 * It's not possible to replace an delicious entry which URL
+					 * has changed. The hash value, which should be the
+					 * identifier cannot be appended to a replace call.
 					 */
-					SynchronizationMetadata adapter2 = (SynchronizationMetadata) item2commit.getAdapter(SynchronizationMetadata.class);
+					SynchronizationMetadata adapter2 = (SynchronizationMetadata) item2commit
+							.getAdapter(SynchronizationMetadata.class);
 					List<Post> postForUrl = getApi().getPostsForHash(adapter2.getHash());
 					boolean replace = postForUrl.size() > 0;
 					if (replace) {
 						Post post = postForUrl.get(0);
 						getApi().deletePost(post.getHref());
 					}
-					
+
 					/*
-					 * We will manually add before committing
-					 * the keywords.
+					 * We will manually add before committing the keywords.
 					 */
 					String keywords = adapter.getKeywords();
 					String categoryLabel = ((Category) item2commit.eContainer()).getLabel();
@@ -263,32 +259,26 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 							keywords = categoryLabel;
 						}
 					}
-					boolean commit = getApi().addPost(
-							adapter.getStringValue(), 
-							adapter.getLabel(),
-							adapter.getDescription(), 
-							keywords, 
-							adapter.getCreationDate(), 
-							false, true);
-					
-					
+					boolean commit = getApi().addPost(adapter.getStringValue(), adapter.getLabel(),
+							adapter.getDescription(), keywords, adapter.getCreationDate(), false,
+							true);
+
 				}
 			}
 		}
 	}
-	
-	public String commit(final SynchronizableObject item2commit,
-			final IProgressMonitor monitor) {
+
+	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor) {
 		RemoteObject addToRepository = addToRepository(item2commit, monitor);
 		return addToRepository.getHash();
 	}
-
 
 	public RemoteObject addToRepository(final SynchronizableObject item,
 			final IProgressMonitor monitor) {
 		if (item instanceof InformationUnitListItem) {
 			_commit(item, monitor);
-			List postForUrl = getApi().getPostForURL(((InformationUnit) item.getAdapter(InformationUnit.class)).getStringValue());
+			List postForUrl = getApi().getPostForURL(
+					((InformationUnit) item.getAdapter(InformationUnit.class)).getStringValue());
 			if (postForUrl.size() > 0) {
 				Post newPost = (Post) postForUrl.get(0);
 				RemoteObject returnValue = InfomngmntFactory.eINSTANCE.createRemoteObject();
@@ -298,10 +288,11 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				returnValue.setRepositoryTypeObjectId(KEY_LINK);
 				returnValue.setHash(newPost.getHash());
 				returnValue.setWrappedObject(newPost);
-				returnValue.setRepositoryTypeId(item.getSynchronizationMetaData().getRepositoryId());
+				returnValue
+						.setRepositoryTypeId(item.getSynchronizationMetaData().getRepositoryId());
 				return returnValue;
 			}
-			
+
 		}
 		return null;
 	}

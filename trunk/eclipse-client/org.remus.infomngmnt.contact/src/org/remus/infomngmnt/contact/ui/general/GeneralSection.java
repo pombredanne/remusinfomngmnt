@@ -17,7 +17,6 @@ package org.remus.infomngmnt.contact.ui.general;
  */
 import java.io.ByteArrayInputStream;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -39,8 +38,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.databinding.AbstractBindingWidget;
+import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.core.ContactSettings;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
@@ -48,8 +51,14 @@ public class GeneralSection {
 
 	private Label lb_Image;
 	private Button bt_EditName;
+	private Text tx_EditName;
+	private Text tx_Role;
+	private Text tx_Organisation;
+	private Text tx_FormattedName;
 	
-	public GeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain, EMFDataBindingContext ctx){		
+	private AbstractBindingWidget createTextBindingWidget;
+	
+	public GeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage){		
 		
 
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
@@ -64,8 +73,8 @@ public class GeneralSection {
 		toolkit.paintBordersFor(compositeGeneral);
 		section_1.setClient(compositeGeneral);
 
-		createGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
-		createGroupPhoneNumbers(compositeGeneral, toolkit, informationUnit, editingDomain, ctx);		
+		createGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
+		createGroupPhoneNumbers(compositeGeneral, toolkit, informationUnit, editGeneralPage);		
 		createGroupAddress(compositeGeneral, toolkit);
 		createGroupInternet(compositeGeneral, toolkit);
 		createSeparator(compositeGeneral, true, 2);
@@ -93,8 +102,7 @@ public class GeneralSection {
 	}
 
 	private void createGroupPerson(final Composite compositeGeneral, final FormToolkit toolkit,
-			final Shell shell, final InformationUnit informationUnit,
-			final AdapterFactoryEditingDomain editingDomain) {
+			final Shell shell, final InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
 
 		final Group group_Person = new Group(compositeGeneral, SWT.NONE);
 		final GridData gd_Person = new GridData();
@@ -115,26 +123,27 @@ public class GeneralSection {
 		this.lb_Image.setLayoutData(gd_text);
 
 		this.bt_EditName = toolkit.createButton(group_Person, "Edit Name...", SWT.NONE);
-		String tx_EditNameValue = null;
-		final Text tx_EditName = toolkit.createText(group_Person, tx_EditNameValue, SWT.BORDER);
+		tx_EditName = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_EditName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		tx_EditName.setEditable(false);
 
 		final Label lb_Role = toolkit.createLabel(group_Person, "Role:");
-		final Text tx_Role = toolkit.createText(group_Person, null, SWT.BORDER);
+		tx_Role = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_Role.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-
+		
 		final Label lb_Organisation = toolkit.createLabel(group_Person, "Organisation:");
-		final Text tx_Organisation = toolkit.createText(group_Person, null, SWT.BORDER);
+		tx_Organisation = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_Organisation.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-
+		
 		final Label lb_FormattedName = toolkit.createLabel(group_Person, "Formatted Name:");
-		final Text tx_FormattedName = toolkit.createText(group_Person, null, SWT.BORDER);
+		tx_FormattedName = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_FormattedName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		tx_FormattedName.setEditable(false);
 		tx_FormattedName.setEnabled(false);
 
-		createListener(compositeGeneral, toolkit, shell, informationUnit, editingDomain);
-
+		createListenerGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
+		createTextValueBindingsGroupPerson(informationUnit, editGeneralPage);
+		
 		InformationUnit rawData = InformationUtil.getChildByType(informationUnit,
 				ContactActivator.NODE_NAME_RAWDATA_IMAGE);
 		if (rawData != null && rawData.getBinaryValue() != null) {
@@ -145,15 +154,34 @@ public class GeneralSection {
 		}
 	}
 
-	private void createListener(final Composite compositeGeneral, final FormToolkit toolkit,
-			final Shell shell, final InformationUnit informationUnit,
-			final AdapterFactoryEditingDomain editingDomain) {
+	private void createTextValueBindingsGroupPerson(InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
+		
+		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_EditName, editGeneralPage);
+		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_COMPLETE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Role, editGeneralPage);
+		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ROLE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Organisation, editGeneralPage);
+		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		if (tx_Organisation.getText().length() >=1 && ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX.equals("ganisation")) {
+			createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
+			createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		}else{
+			createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
+			createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		}
+	}
+
+	private void createListenerGroupPerson(final Composite compositeGeneral, final FormToolkit toolkit,
+			final Shell shell, final InformationUnit informationUnit, final EditGeneralPage editGeneralPage) {
 		this.lb_Image.addMouseListener(new MouseListener() {
 
 			public void mouseDoubleClick(final MouseEvent e) {
+				
 				Image image = ImageManipulation.selectImageFromDialog(
 						shell, informationUnit, ContactActivator.NODE_NAME_RAWDATA_IMAGE,
-						editingDomain, GeneralSection.this.lb_Image.getSize().x,
+						(AdapterFactoryEditingDomain) editGeneralPage.getEditingDomain() , GeneralSection.this.lb_Image.getSize().x,
 						GeneralSection.this.lb_Image.getSize().y);
 				if(image != null) GeneralSection.this.lb_Image.setImage(image);
 			}
@@ -170,14 +198,18 @@ public class GeneralSection {
 		bt_EditName.addSelectionListener(new SelectionAdapter(){
 
 			public void widgetSelected(final SelectionEvent e) {
-				EditContactDialog ecd = new EditContactDialog(compositeGeneral, toolkit, shell,
-						informationUnit, editingDomain);
+				EditContactDialog ecd = new EditContactDialog(compositeGeneral, toolkit, shell,	informationUnit, editGeneralPage);
 				ecd.open();
-			}
+//				if (ecd.open() == IDialogConstants.OK_ID) {
+//					SetCommand command = new SetCommand(editGeneralPage.getEditingDomain(),	informationUnit, InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, ecd.getFormatedName);
+//					editGeneralPage.getEditingDomain().getCommandStack().execute(command);
+				}
+				
+			
 		});
 	}
 	
-	private void createGroupPhoneNumbers(Composite compositeGeneral, FormToolkit toolkit, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain, EMFDataBindingContext ctx) {
+	private void createGroupPhoneNumbers(Composite compositeGeneral, FormToolkit toolkit, InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
 		
 		final Group group_PhoneNumbers = new Group(compositeGeneral, SWT.NONE);
 		group_PhoneNumbers.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
@@ -187,7 +219,7 @@ public class GeneralSection {
 		group_PhoneNumbers.setLayout(gl_PhoneNumbersGroup);
 
 		for (int i = 0; i < 3; i++) {
-			new PhoneNumbersComposite(group_PhoneNumbers,SWT.NONE, toolkit, i, informationUnit, ctx, editingDomain);
+			new PhoneNumbersComposite(group_PhoneNumbers,SWT.NONE, toolkit, i, informationUnit, editGeneralPage);
 		}
 	}
 

@@ -48,6 +48,9 @@ public class ContactInformationRepresentation extends
 			if (origFileName.getStringValue() != null) {
 				fileExtension = new Path(origFileName.getStringValue()).getFileExtension();
 			}
+			
+			// TODO, createabstractbuildfolder überschreiben...
+			
 			IFile file = getBuildFolder().getFile(
 					new Path(getValue().getId()).addFileExtension(fileExtension));
 //			this.imageHref = file.getLocation().toOSString();

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -32,7 +30,7 @@ public class PhoneNumbersComposite extends Composite {
 
 	private Binding currentBinding;
 	private TextBindingWidget createTextBindingWidget;
-	public PhoneNumbersComposite(Composite parent, int style, FormToolkit toolkit, int iTextValue, final InformationUnit informationUnit, EMFDataBindingContext ctx, AdapterFactoryEditingDomain editingDomain) {
+	public PhoneNumbersComposite(Composite parent, int style, FormToolkit toolkit, int iTextValue, final InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
 		super(parent, style);
 
 		final Group group_PhoneNumbers = new Group(parent, style);
@@ -85,7 +83,7 @@ public class PhoneNumbersComposite extends Composite {
 				}
 			}
 		});
-		createTextBindingWidget = BindingWidgetFactory.createTextBinding(tx, ctx, editingDomain);
+		createTextBindingWidget = BindingWidgetFactory.createTextBinding(tx, editGeneralPage.getDatabindingContext(), editGeneralPage.getEditingDomain());
 		comboViewer.setSelection(new StructuredSelection(values.get(iTextValue)));
 	}
 	private static class KeyValueObject {

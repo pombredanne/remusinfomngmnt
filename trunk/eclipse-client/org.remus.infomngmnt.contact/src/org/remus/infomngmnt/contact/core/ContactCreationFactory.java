@@ -36,6 +36,26 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit origFilePath = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		origFilePath.setType(ContactActivator.ORIGINAL_FILEPATH);		
 		InformationUnit pnHome = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		// group person
+		InformationUnit persTitle = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persTitle.setType(ContactActivator.NODE_NAME_PERS_NAME_TITLE);
+		InformationUnit persFirst = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persFirst.setType(ContactActivator.NODE_NAME_PERS_NAME_FIRST);
+		InformationUnit persAdditional = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persAdditional.setType(ContactActivator.NODE_NAME_PERS_NAME_ADDITIONAL);
+		InformationUnit persLast = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persLast.setType(ContactActivator.NODE_NAME_PERS_NAME_LAST);
+		InformationUnit persTitleAfter = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persTitleAfter.setType(ContactActivator.NODE_NAME_PERS_NAME_TITLE_AFTER);
+		InformationUnit persFormatted = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persFormatted.setType(ContactActivator.NODE_NAME_PERS_NAME_FORMATTED);
+		InformationUnit persRole = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persRole.setType(ContactActivator.NODE_NAME_PERS_ROLE);
+		InformationUnit persOrganisation = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persOrganisation.setType(ContactActivator.NODE_NAME_PERS_ORGANISATION);
+		InformationUnit persComplete = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		persComplete.setType(ContactActivator.NODE_NAME_PERS_NAME_COMPLETE);
+		// group phone number
 		pnHome.setType(ContactActivator.NODE_NAME_PN_HOME);
 		InformationUnit pnWork = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		pnWork.setType(ContactActivator.NODE_NAME_PN_WORK);
@@ -67,7 +87,18 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
 		returnValue.getChildValues().add(rawDataImage);
 		returnValue.getChildValues().add(rawDataLogo);
-		returnValue.getChildValues().add(origFilePath);		
+		returnValue.getChildValues().add(origFilePath);
+		// group person
+		returnValue.getChildValues().add(persAdditional);
+		returnValue.getChildValues().add(persComplete);
+		returnValue.getChildValues().add(persFirst);
+		returnValue.getChildValues().add(persFormatted);
+		returnValue.getChildValues().add(persLast);
+		returnValue.getChildValues().add(persOrganisation);
+		returnValue.getChildValues().add(persRole);
+		returnValue.getChildValues().add(persTitle);
+		returnValue.getChildValues().add(persTitleAfter);
+		// group phone number
 		returnValue.getChildValues().add(pnCar);
 		returnValue.getChildValues().add(pnFax);
 		returnValue.getChildValues().add(pnHome);

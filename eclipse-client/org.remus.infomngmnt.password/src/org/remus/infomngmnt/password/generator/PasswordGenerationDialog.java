@@ -14,7 +14,6 @@ package org.remus.infomngmnt.password.generator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -73,14 +72,10 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	private int currentPasswordLength;
 	private List<String> generatedPasswords;
 
-	private final AdapterFactoryEditingDomain editingDomain;
-
-	public PasswordGenerationDialog(final Shell parentShell, final InformationUnit password,
-			final AdapterFactoryEditingDomain editingDomain) {
+	public PasswordGenerationDialog(final Shell parentShell, final InformationUnit password) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.password = password;
-		this.editingDomain = editingDomain;
 	}
 
 	@Override
@@ -89,11 +84,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 				"Apply Selected Password", true);
 		this.bt_SaveProporties.setEnabled(false);
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-	}
-
-	@Override
-	protected void okPressed() {
-		super.okPressed();
 	}
 
 	@Override

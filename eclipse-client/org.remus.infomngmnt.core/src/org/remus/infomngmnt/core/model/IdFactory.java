@@ -38,4 +38,8 @@ public class IdFactory {
 		return string;
 	}
 
+	public static String createId() {
+		return new UniversalUniqueIdentifier().toString();
+	}
+
 }

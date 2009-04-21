@@ -212,7 +212,6 @@ public class ChangeSetManager {
 			if (prefetchedInformationUnit != null) {
 				prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
 			}
-			prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
 			changeSetItem.getSyncObjectActionMap().put(createInformationUnitListItem,
 					SynchronizationAction.ADD_LOCAL);
 		}

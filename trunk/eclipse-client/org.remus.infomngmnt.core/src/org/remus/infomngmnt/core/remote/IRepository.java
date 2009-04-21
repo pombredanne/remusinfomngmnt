@@ -82,7 +82,8 @@ public interface IRepository {
 
 	InformationUnit getPrefetchedInformationUnit(RemoteObject remoteObject);
 
-	InformationUnit getFullObject(InformationUnitListItem informationUnitListItem);
+	InformationUnit getFullObject(InformationUnitListItem informationUnitListItem,
+			IProgressMonitor monitor);
 
 	/**
 	 * Commits a {@link SynchronizableObject}.

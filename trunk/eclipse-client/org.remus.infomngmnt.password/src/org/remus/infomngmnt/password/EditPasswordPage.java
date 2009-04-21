@@ -181,7 +181,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 
 			public void handleEvent(final Event event) {
 				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
-						getSite().getShell(), getModelObject(), EditPasswordPage.this.editingDomain);
+						getSite().getShell(), getModelObject());
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					SetCommand command = new SetCommand(EditPasswordPage.this.editingDomain,
 							getModelObject(),

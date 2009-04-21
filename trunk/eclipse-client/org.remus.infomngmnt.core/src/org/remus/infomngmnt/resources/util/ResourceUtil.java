@@ -1,5 +1,6 @@
 package org.remus.infomngmnt.resources.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
@@ -23,6 +25,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.builder.InformationBuilder;
 import org.remus.infomngmnt.core.commands.CommandFactory;
@@ -43,6 +46,8 @@ public class ResourceUtil {
 	public static final String HTML_EXTENSION = "html";
 
 	public static final String SHEMAPREFIX_ENCRYPTED_PROJECTS = "encrypted"; //$NON-NLS-1$
+
+	public static final String PROJECT_NAME_TMP = "__tmp"; //$NON-NLS-1$
 
 	/**
 	 * Checks for presence of the {@link InformationBuilder#BUILDER_ID} builder.
@@ -279,6 +284,36 @@ public class ResourceUtil {
 		editingDomain.getCommandStack().execute(createCommand);
 		ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
 
+	}
+
+	public static IFile createTempFile() {
+		NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT_NAME_TMP);
+		IFile file = null;
+		if (!project.exists()) {
+			try {
+				project.create(nullProgressMonitor);
+				project.open(nullProgressMonitor);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		file = project.getFile(IdFactory.createId());
+		if (!file.exists()) {
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(new byte[0]);
+			try {
+				file.create(inputStream, true, nullProgressMonitor);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				StreamCloser.closeStreams(inputStream);
+			}
+		} else {
+			throw new IllegalArgumentException("tmp file already exisits.");
+		}
+		return file;
 	}
 
 }

@@ -45,7 +45,7 @@ import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactSettings;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
-public class EditContactDialog extends TitleAreaDialog {
+public class EditContactPersonDialog extends TitleAreaDialog {
 
 	private final InformationUnit contact;
 	private Button bt_Ok;
@@ -65,7 +65,7 @@ public class EditContactDialog extends TitleAreaDialog {
 	private ArrayList<String> valuesFormatted;
 	private String currentFormattedName = "";
 	
-	public EditContactDialog(Composite body, FormToolkit toolkit, Shell parentShell, InformationUnit contact, EditGeneralPage editGeneralPage) {
+	public EditContactPersonDialog(Composite body, FormToolkit toolkit, Shell parentShell, InformationUnit contact, EditGeneralPage editGeneralPage) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.contact = contact;

@@ -18,4 +18,5 @@ public class ContactSettings {
 	public static final String AC_COMBO_NAME_FORMATTED_INDEX = "cbnaforind";
 	public static final String AC_USER_SETTINGS = "usersettings";
 	public static final String[] AC_COMBO_NAME_FORMATTED_ITEMS = {"Common Name", "Complete Name", "Converse Name, Comma Separated"};
+	public static final String[] AC_COMBO_ADDRESS_CHOOSER = {"Home", "Work", "International", "Postal", "Parcel", "Domestic", "Other"};
 }

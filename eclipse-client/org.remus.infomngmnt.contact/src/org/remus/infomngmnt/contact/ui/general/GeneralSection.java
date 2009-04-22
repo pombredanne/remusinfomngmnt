@@ -43,6 +43,7 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.databinding.AbstractBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.core.ContactSettings;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
@@ -56,6 +57,7 @@ public class GeneralSection {
 	private Text tx_FormattedName;
 	
 	private AbstractBindingWidget createTextBindingWidget;
+	private Button bt_EditAddress;
 	
 	public GeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage){		
 		
@@ -74,7 +76,7 @@ public class GeneralSection {
 
 		createGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
 		createGroupPhoneNumbers(compositeGeneral, toolkit, informationUnit, editGeneralPage);		
-		createGroupAddress(compositeGeneral, toolkit);
+		createGroupAddress(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
 		createGroupInternet(compositeGeneral, toolkit);
 		createSeparator(compositeGeneral, true, 2);
 		new Label(compositeGeneral, SWT.NONE);
@@ -197,7 +199,7 @@ public class GeneralSection {
 		bt_EditName.addSelectionListener(new SelectionAdapter(){
 
 			public void widgetSelected(final SelectionEvent e) {
-				EditContactDialog ecd = new EditContactDialog(compositeGeneral, toolkit, shell,	informationUnit, editGeneralPage);
+				EditContactPersonDialog ecd = new EditContactPersonDialog(compositeGeneral, toolkit, shell,	informationUnit, editGeneralPage);
 				ecd.open();
 				}			
 		});
@@ -217,7 +219,7 @@ public class GeneralSection {
 		}
 	}
 
-	private void createGroupAddress(final Composite compositeGeneral, final FormToolkit toolkit) {
+	private void createGroupAddress(final Composite compositeGeneral, final FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
 		final Group group_Address = new Group(compositeGeneral, SWT.NONE);
 		final GridData gd_GroupAddress = new GridData();
 		gd_GroupAddress.grabExcessVerticalSpace = true;
@@ -230,12 +232,11 @@ public class GeneralSection {
 		gl_Address.numColumns = 1;
 		group_Address.setLayout(gl_Address);
 
-		String[] comboValue = new String[] { "Home", "Work" };
 		final Combo cb_AddressChooser = new Combo(group_Address, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_AddressChooser = new GridData(SWT.FILL, SWT.BEGINNING, true, true);
 		cb_AddressChooser.setLayoutData(gd_AddressChooser);
-		cb_AddressChooser.setItems(comboValue);
-		cb_AddressChooser.setText(comboValue[0]);
+		cb_AddressChooser.setItems(ContactSettings.AC_COMBO_ADDRESS_CHOOSER);
+		//cb_AddressChooser.setText(ContactActivator.getDefault().NODE_ADDRESS_CURRENT_SEL);
 
 		final StyledText stx_Address = new StyledText(group_Address, SWT.BORDER);
 		GridData gd_Address = new GridData();
@@ -244,15 +245,27 @@ public class GeneralSection {
 		gd_Address.grabExcessHorizontalSpace = true;
 		gd_Address.horizontalAlignment = GridData.FILL;
 		gd_Address.heightHint = 90;
+		stx_Address.setEditable(false);
 		stx_Address.setLayoutData(gd_Address);
 
-		final Button bt_EditAddress = toolkit.createButton(group_Address, "Edit Address ...",
+		bt_EditAddress = toolkit.createButton(group_Address, "Edit Address ...",
 				SWT.NONE);
 		GridData gd_EditAddress = new GridData(SWT.FILL, SWT.BEGINNING, true, true);
 		bt_EditAddress.setLayoutData(gd_EditAddress);
+		
+		createListenerGroupAddress(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
 
 	}
+	private void createListenerGroupAddress(final Composite compositeGeneral, final FormToolkit toolkit,
+			final Shell shell, final InformationUnit informationUnit, final EditGeneralPage editGeneralPage) {
 
+		bt_EditAddress.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(final SelectionEvent e) {
+				EditContactAddressDialog ecd = new EditContactAddressDialog(compositeGeneral, toolkit, shell,	informationUnit, editGeneralPage);
+				ecd.open();
+				}
+		});
+	}
 	private void createGroupInternet(final Composite compositeGeneral, final FormToolkit toolkit) {
 		final Group group_Internet = new Group(compositeGeneral, SWT.NONE);
 		group_Internet.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));

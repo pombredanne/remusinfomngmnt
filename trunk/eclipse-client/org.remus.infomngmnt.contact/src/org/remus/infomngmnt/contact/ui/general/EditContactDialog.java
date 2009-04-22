@@ -142,7 +142,7 @@ public class EditContactDialog extends TitleAreaDialog {
 			setContactProportiesFromActivatorToGenerationDialog();
 		}
 
-		//validatePage();
+		validatePage();
 		
 		return this.area;
 	}
@@ -177,6 +177,16 @@ public class EditContactDialog extends TitleAreaDialog {
 			}			
 		});
 		tx_FirstName.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				validatePage();				
+			}			
+		});
+		tx_AdditionalName.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				validatePage();				
+			}			
+		});
+		tx_TitleAfterName.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
 				validatePage();				
 			}			
@@ -240,9 +250,11 @@ public class EditContactDialog extends TitleAreaDialog {
 		InformationUtil.getChildByType(contact, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED).setStringValue(currentFormattedName);
 		tx_FormattedName.setText(currentFormattedName);
 		try {
-			if(tx_FirstName.getText().length() >= 1 || tx_LastName.getText().length() >= 1)
-				bt_Ok.setEnabled(true);
-			else bt_Ok.setEnabled(false);			
+			if (bt_Ok != null){
+				if(tx_FirstName.getText().length() >= 1 || tx_LastName.getText().length() >= 1)
+					bt_Ok.setEnabled(true);
+				else bt_Ok.setEnabled(false);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

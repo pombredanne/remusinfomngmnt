@@ -43,7 +43,6 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.databinding.AbstractBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.contact.core.ContactSettings;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
@@ -164,13 +163,13 @@ public class GeneralSection {
 		
 		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Organisation, editGeneralPage);
 		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		if (tx_Organisation.getText().length() >=1 && ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX.equals("ganisation")) {
-			createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
-			createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		}else{
-			createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
-			createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		}
+//		if (tx_Organisation.getText().length() >=1 && ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX.equals("ganisation")) {
+//			createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
+//			createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+//		}else{
+		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
+		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+//		}
 	}
 
 	private void createListenerGroupPerson(final Composite compositeGeneral, final FormToolkit toolkit,
@@ -200,12 +199,7 @@ public class GeneralSection {
 			public void widgetSelected(final SelectionEvent e) {
 				EditContactDialog ecd = new EditContactDialog(compositeGeneral, toolkit, shell,	informationUnit, editGeneralPage);
 				ecd.open();
-//				if (ecd.open() == IDialogConstants.OK_ID) {
-//					SetCommand command = new SetCommand(editGeneralPage.getEditingDomain(),	informationUnit, InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, ecd.getFormatedName);
-//					editGeneralPage.getEditingDomain().getCommandStack().execute(command);
-				}
-				
-			
+				}			
 		});
 	}
 	

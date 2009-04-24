@@ -16,7 +16,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -49,6 +50,15 @@ import org.remus.infomngmnt.provider.InfomngmntItemProviderAdapterFactory;
 public class EditingUtil {
 
 	private static EditingUtil INSTANCE;
+
+	private static Map<String, Object> SAVE_OPTIONS;
+
+	static {
+		SAVE_OPTIONS = new HashMap<String, Object>();
+		SAVE_OPTIONS.put(XMLResource.OPTION_ENCODING, "UTF-8");
+		SAVE_OPTIONS.put(XMLResource.OPTION_FLUSH_THRESHOLD, 4096);
+		SAVE_OPTIONS.put(XMLResource.OPTION_USE_FILE_BUFFER, true);
+	}
 
 	public static final String FILEHISTORYKEEPINGSCHEME = "file"; //$NON-NLS-1$
 
@@ -120,7 +130,7 @@ public class EditingUtil {
 			resource = resourceSet.createResource(uri);
 			resource.getContents().add(create);
 			try {
-				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+				resource.save(SAVE_OPTIONS);
 			} catch (final IOException e) {
 				// FIXME What to do here?
 			}
@@ -245,7 +255,7 @@ public class EditingUtil {
 						new Path(object.eResource().getURI().toPlatformString(true)));
 				saveObjectToResource(file, object);
 			} else {
-				object.eResource().save(Collections.EMPTY_MAP);
+				object.eResource().save(SAVE_OPTIONS);
 			}
 		} catch (final IOException e) {
 			// FIXME Error-Handling
@@ -275,7 +285,7 @@ public class EditingUtil {
 		}
 		resource.getContents().add(object);
 		try {
-			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			resource.save(SAVE_OPTIONS);
 		} catch (final IOException e) {
 			// FIXME What to do here?
 		}
@@ -299,7 +309,7 @@ public class EditingUtil {
 			resource.getContents();
 		}
 		try {
-			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			resource.save(SAVE_OPTIONS);
 		} catch (final IOException e) {
 			// FIXME What to do here?
 		}
@@ -320,7 +330,7 @@ public class EditingUtil {
 			Resource resource = resourceSet.createResource(createURI);
 			resource.getContents().add(object);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			resource.save(baos, Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			resource.save(baos, SAVE_OPTIONS);
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(baos.toByteArray());
 			baos.flush();
 			baos.close();

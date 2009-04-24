@@ -189,7 +189,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		remoteVideo.setHash(videoEntry.getId());
 		remoteVideo.setId(SiteInspector.getId(videoEntry.getHtmlLink().getHref()));
 		remoteVideo.setName(videoEntry.getTitle().getPlainText());
-		remoteVideo.setWrappedObject(remoteVideo);
+		remoteVideo.setWrappedObject(videoEntry);
 		remoteVideo.setUrl(videoEntry.getHtmlLink().getHref());
 		return remoteVideo;
 	}
@@ -352,7 +352,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	private URL getDownloadUrl(final String id, final String hash) {
-		String url = "http://www.youtube.com/get_video?video_id=" + id + "&t=" + hash + "&fmt=18";
+		String url = "http://www.youtube.com/get_video?video_id=" + id + "&t=" + hash + "&fmt=22";
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {

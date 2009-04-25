@@ -17,6 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
@@ -39,8 +40,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
 
 /**
@@ -51,11 +52,12 @@ public class GeneralImagePage extends GeneralPage {
 	private Text fileNameText;
 	private Button browseButton;
 	protected String tmpText;
-	protected LoadImageRunnable loadImageJob;
+	protected LoadFileToTmpFromPathRunnable loadImageJob;
+	private IFile tmpFile;
 
 	public GeneralImagePage(final Category category) {
 		super(category);
-		this.loadImageJob = new LoadImageRunnable();
+		this.loadImageJob = new LoadFileToTmpFromPathRunnable();
 
 	}
 
@@ -83,12 +85,7 @@ public class GeneralImagePage extends GeneralPage {
 		gd_nameText.horizontalSpan = 2;
 		this.nameText.setLayoutData(gd_nameText);
 
-		/*
-		 * we check if we have already set data.
-		 */
-		InformationUnit rawData = InformationUtil.getChildByType(this.unit,
-				ImagePlugin.NODE_NAME_RAWDATA);
-		if (rawData.getBinaryValue() == null) {
+		if (this.tmpFile == null) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
 			this.fileNameText = new Text(group, SWT.BORDER);
@@ -134,12 +131,13 @@ public class GeneralImagePage extends GeneralPage {
 				public void handleValueChange(final ValueChangeEvent event) {
 					String newValue = (String) event.getObservableValue().getValue();
 					try {
-						GeneralImagePage.this.loadImageJob.setImagePath(newValue);
-						GeneralImagePage.this.loadImageJob.setImageNode(GeneralImagePage.this.unit);
+						GeneralImagePage.this.loadImageJob.setFilePath(newValue);
 						getContainer().run(true, true, GeneralImagePage.this.loadImageJob);
 						GeneralImagePage.this.nameText.setText(new Path(
-								GeneralImagePage.this.loadImageJob.getFile().getAbsolutePath())
-								.removeFileExtension().lastSegment());
+								GeneralImagePage.this.fileNameText.getText()).removeFileExtension()
+								.lastSegment());
+						GeneralImagePage.this.tmpFile = GeneralImagePage.this.loadImageJob
+								.getTmpFile();
 					} catch (InvocationTargetException e) {
 						setErrorMessage(e.getCause().getMessage());
 					} catch (InterruptedException e) {
@@ -152,6 +150,21 @@ public class GeneralImagePage extends GeneralPage {
 			this.ctx.bindValue(swtUrl, emfUrl, null, null);
 		}
 
+	}
+
+	/**
+	 * @param tmpFile
+	 *            the tmpFile to set
+	 */
+	public void setTmpFile(final IFile tmpFile) {
+		this.tmpFile = tmpFile;
+	}
+
+	/**
+	 * @return the tmpFile
+	 */
+	public IFile getTmpFile() {
+		return this.tmpFile;
 	}
 
 }

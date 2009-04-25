@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.osgi.util.NLS;
@@ -35,6 +36,7 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
+import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
@@ -71,17 +73,24 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 		for (File file : listFiles) {
 			Path path = new Path(file.getAbsolutePath());
 			if (isValidImageExtension(path)) {
+				LoadFileToTmpFromPathRunnable copy2Tmp = new LoadFileToTmpFromPathRunnable();
+				copy2Tmp.setFilePath(file.getAbsolutePath());
+				copy2Tmp.run(new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+
 				monitor.setTaskName(NLS.bind("Adding image \"{0}\"", path.lastSegment()));
 				InformationUnit createNewObject = this.typeByType.getCreationFactory()
 						.createNewObject();
-				LoadImageRunnable loadImageRunnable = new LoadImageRunnable();
-				loadImageRunnable.setImagePath(file.getAbsolutePath());
+				LoadImageRunnable loadImageRunnable = new LoadImageRunnable(true);
+				loadImageRunnable.setImagePath(copy2Tmp.getTmpFile().getLocation().toOSString());
 				loadImageRunnable.setDomain(this.editingDomain);
 				loadImageRunnable.setImageNode(createNewObject);
 				// loadImageRunnable.setExecuteOnEditingDomain(false);
 				loadImageRunnable.run(new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
 				createNewObject.setLabel(file.getName());
-				Command createInfotype = CommandFactory.CREATE_INFOTYPE(createNewObject, cat);
+				CompoundCommand createInfotype = CommandFactory.CREATE_INFOTYPE(createNewObject,
+						cat, monitor);
+				createInfotype.append(CommandFactory.addFileToInfoUnit(copy2Tmp.getTmpFile(),
+						createNewObject, this.editingDomain));
 				createInfotype.execute();
 				this.editingDomain.getCommandStack().execute(createInfotype);
 				this.editingDomain.getCommandStack().flush();

@@ -30,6 +30,7 @@ import org.remus.infomngmnt.Annotation;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableRuleDefinitions;
 import org.remus.infomngmnt.AvailableTags;
+import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.CalendarEntryType;
 import org.remus.infomngmnt.Category;
@@ -69,6 +70,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EClass informationUnitEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass binaryReferenceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -451,6 +459,51 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EReference getInformationUnit_CalendarEntry() {
 		return (EReference)informationUnitEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInformationUnit_BinaryReferences() {
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBinaryReference() {
+		return binaryReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBinaryReference_Id() {
+		return (EAttribute)binaryReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBinaryReference_ProjectRelativePath() {
+		return (EAttribute)binaryReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBinaryReference_Dirty() {
+		return (EAttribute)binaryReferenceEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1356,6 +1409,12 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__DESCRIPTION);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__KEYWORDS);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__CALENDAR_ENTRY);
+		createEReference(informationUnitEClass, INFORMATION_UNIT__BINARY_REFERENCES);
+
+		binaryReferenceEClass = createEClass(BINARY_REFERENCE);
+		createEAttribute(binaryReferenceEClass, BINARY_REFERENCE__ID);
+		createEAttribute(binaryReferenceEClass, BINARY_REFERENCE__PROJECT_RELATIVE_PATH);
+		createEAttribute(binaryReferenceEClass, BINARY_REFERENCE__DIRTY);
 
 		usageEClass = createEClass(USAGE);
 		createEAttribute(usageEClass, USAGE__LAST_ACCESS);
@@ -1555,6 +1614,12 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getInformationUnit_Description(), ecorePackage.getEString(), "description", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_Keywords(), ecorePackage.getEString(), "keywords", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_CalendarEntry(), this.getCalendarEntry(), null, "calendarEntry", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInformationUnit_BinaryReferences(), this.getBinaryReference(), null, "binaryReferences", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(binaryReferenceEClass, BinaryReference.class, "BinaryReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBinaryReference_Id(), ecorePackage.getEString(), "id", null, 1, 1, BinaryReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBinaryReference_ProjectRelativePath(), ecorePackage.getEString(), "projectRelativePath", "", 1, 1, BinaryReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBinaryReference_Dirty(), ecorePackage.getEBoolean(), "dirty", null, 0, 1, BinaryReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(usageEClass, Usage.class, "Usage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUsage_LastAccess(), ecorePackage.getEDate(), "lastAccess", null, 0, 1, Usage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

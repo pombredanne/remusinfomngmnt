@@ -18,6 +18,8 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.diff.metamodel.AddModelElement;
@@ -28,6 +30,7 @@ import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
@@ -37,9 +40,8 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
@@ -86,20 +88,23 @@ public class ChangeSetExecutor {
 										.getRepositoryImplementation().getFullObject(
 												informationUnitListItem, monitor);
 							}
-							informationUnit2.setId(informationUnitListItem.getId());
-							informationUnit2.setType(informationUnitListItem.getType());
 							informationUnit2.setLabel(informationUnitListItem.getLabel());
-							IInfoType infoTypeByType = InformationExtensionManager.getInstance()
-									.getInfoTypeByType(informationUnit2.getType());
-							infoTypeByType.getCreationFactory().handlePreSaving(informationUnit2,
-									monitor);
-							IFile newFile = CategoryUtil.getProjectByCategory(
-									remoteConvertedContainer).getFile(
-									informationUnitListItem.getId() + ".info");
-							EditingUtil.getInstance().saveObjectToResource(newFile,
-									informationUnit2);
-							informationUnitListItem.setWorkspacePath(newFile.getFullPath()
-									.toOSString());
+							EditingDomain tempEditingDomain = EditingUtil.getInstance()
+									.createNewEditingDomain();
+							CompoundCommand command = CommandFactory
+									.CREATE_INFOTYPE_FROM_EXISTING_LISTITEM(informationUnit2,
+											(Category) informationUnitListItem.eContainer(),
+											monitor, informationUnitListItem);
+
+							IFile[] binaryReferences = this.changeSet.getRepository()
+									.getRepositoryImplementation().getBinaryReferences();
+							for (IFile iFile : binaryReferences) {
+								Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile,
+										informationUnit2, tempEditingDomain);
+								command.append(addFileCommand);
+							}
+							tempEditingDomain.getCommandStack().execute(command);
+							tempEditingDomain.getCommandStack().flush();
 							InfomngmntEditPlugin.getPlugin().getService(
 									ISaveParticipantExtensionService.class).fireEvent(
 									ISaveParticipant.CREATED, informationUnit2);

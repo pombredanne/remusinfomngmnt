@@ -43,6 +43,15 @@ public interface InfomngmntFactory extends EFactory {
 	InformationUnit createInformationUnit();
 
 	/**
+	 * Returns a new object of class '<em>Binary Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Binary Reference</em>'.
+	 * @generated
+	 */
+	BinaryReference createBinaryReference();
+
+	/**
 	 * Returns a new object of class '<em>Usage</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

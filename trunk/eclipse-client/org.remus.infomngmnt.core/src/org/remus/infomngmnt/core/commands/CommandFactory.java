@@ -15,6 +15,8 @@ package org.remus.infomngmnt.core.commands;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.CreateChildCommand;
@@ -108,9 +110,20 @@ public class CommandFactory {
 		return compoundCommand;
 	}
 
-	public static Command CREATE_INFOTYPE(final InformationUnit newItem,
+	public static CompoundCommand CREATE_INFOTYPE(final InformationUnit newItem,
 			final Category parentCategory) {
-		return new CreateInfoTypeCommand(newItem, parentCategory);
+		return CREATE_INFOTYPE(newItem, parentCategory, null);
+	}
+
+	public static CompoundCommand CREATE_INFOTYPE(final InformationUnit newItem,
+			final Category parentCategory, final IProgressMonitor monitor) {
+		return new CreateInfoTypeCommand(newItem, parentCategory, monitor);
+	}
+
+	public static CompoundCommand CREATE_INFOTYPE_FROM_EXISTING_LISTITEM(
+			final InformationUnit newItem, final Category parentCategory,
+			final IProgressMonitor monitor, final InformationUnitListItem alreadyCreatedListItem) {
+		return new CreateInfoTypeCommand(newItem, parentCategory, monitor, alreadyCreatedListItem);
 	}
 
 	public static Command SET_WORKSPACEPATH(final InformationUnitListItem item,
@@ -134,4 +147,8 @@ public class CommandFactory {
 		return new DeleteCategoryCommand(category, domain);
 	}
 
+	public static Command addFileToInfoUnit(final IFile file, final InformationUnit targetInfoUnit,
+			final EditingDomain domain) {
+		return new CreateBinaryReferenceCommand(file, targetInfoUnit, domain);
+	}
 }

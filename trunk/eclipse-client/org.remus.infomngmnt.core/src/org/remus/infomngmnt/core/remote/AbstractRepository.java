@@ -12,29 +12,45 @@
 
 package org.remus.infomngmnt.core.remote;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class AbstractRepository implements IRepository {
-	
+
 	private String label;
-	
+
 	private Image image;
-	
+
 	private String id;
-	
+
 	private String localRepositoryId;
-	
+
 	private ICredentialProvider credentialProvider;
-	
+
+	final ISchedulingRule mutexRule = new ISchedulingRule() {
+		public boolean isConflicting(final ISchedulingRule rule) {
+			return rule == AbstractRepository.this.mutexRule;
+		}
+
+		public boolean contains(final ISchedulingRule rule) {
+			return rule == AbstractRepository.this.mutexRule;
+		}
+	};
+
 	public IStatus validate(final IProgressMonitor monitor) {
 		return Status.OK_STATUS;
-		
+
+	}
+
+	public ISchedulingRule getRule() {
+		return this.mutexRule;
 	}
 
 	public String getLabel() {
@@ -61,6 +77,10 @@ public abstract class AbstractRepository implements IRepository {
 		this.credentialProvider = credentialProvider;
 	}
 
+	public IFile[] getBinaryReferences() {
+		return new IFile[0];
+	}
+
 	public String getId() {
 		return this.id;
 	}
@@ -76,6 +96,5 @@ public abstract class AbstractRepository implements IRepository {
 	public void setLocalRepositoryId(final String localRepositoryId) {
 		this.localRepositoryId = localRepositoryId;
 	}
-
 
 }

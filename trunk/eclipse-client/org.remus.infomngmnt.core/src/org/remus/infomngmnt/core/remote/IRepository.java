@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.core.remote;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -84,6 +85,11 @@ public interface IRepository {
 
 	InformationUnit getFullObject(InformationUnitListItem informationUnitListItem,
 			IProgressMonitor monitor);
+
+	/**
+	 * @return
+	 */
+	IFile[] getBinaryReferences();
 
 	/**
 	 * Commits a {@link SynchronizableObject}.

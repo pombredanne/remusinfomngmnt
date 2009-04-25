@@ -16,7 +16,9 @@ import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.osgi.util.NLS;
@@ -28,53 +30,80 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-@SuppressWarnings("restriction")
 public class CreateInfoTypeCommand extends CompoundCommand {
 
 	private InformationUnit newInformationUnit;
 	private final Category parentCategory;
 	private final InformationUnitListItem createInformationUnitListItem;
 	private final IFile newFile;
+	private final IProgressMonitor monitor;
 
 	public CreateInfoTypeCommand(final InformationUnit newInformationUnit,
-			final Category parentCategory) {
+			final Category parentCategory, final IProgressMonitor monitor) {
+		this(newInformationUnit, parentCategory, monitor, null);
+	}
+
+	public CreateInfoTypeCommand(final InformationUnit newInformationUnit,
+			final Category parentCategory, final IProgressMonitor monitor,
+			final InformationUnitListItem alreadyCreatedElement) {
 		this.newInformationUnit = newInformationUnit;
 		this.parentCategory = parentCategory;
-		newInformationUnit.setId(IdFactory.createNewId(null));
-
-		this.createInformationUnitListItem = InfomngmntFactory.eINSTANCE
-				.createInformationUnitListItem();
-		this.newFile = CategoryUtil.getProjectByCategory(parentCategory).getFile(
-				newInformationUnit.getId() + ".info");
-
-		/*
-		 * if the parent category is under remote control, we have to prepare
-		 * this item for adding to the repository.
-		 */
-		if (parentCategory.getSynchronizationMetaData() != null) {
-			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
-					.createSynchronizationMetadata();
-			metadata.setRepositoryId(parentCategory.getSynchronizationMetaData().getRepositoryId());
-			metadata.setSyncState(SynchronizationState.NOT_ADDED);
-			this.createInformationUnitListItem.setSynchronizationMetaData(metadata);
+		if (monitor == null) {
+			this.monitor = new NullProgressMonitor();
+		} else {
+			this.monitor = monitor;
 		}
-		// transfer the needed information
-		this.createInformationUnitListItem.setId(newInformationUnit.getId());
-		this.createInformationUnitListItem.setLabel(newInformationUnit.getLabel());
-		this.createInformationUnitListItem.setType(newInformationUnit.getType());
+
+		if (alreadyCreatedElement == null) {
+			this.createInformationUnitListItem = InfomngmntFactory.eINSTANCE
+					.createInformationUnitListItem();
+			newInformationUnit.setId(IdFactory.createNewId(monitor));
+
+			/*
+			 * if the parent category is under remote control, we have to
+			 * prepare this item for adding to the repository.
+			 */
+			if (parentCategory.getSynchronizationMetaData() != null) {
+				SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
+						.createSynchronizationMetadata();
+				metadata.setRepositoryId(parentCategory.getSynchronizationMetaData()
+						.getRepositoryId());
+				metadata.setSyncState(SynchronizationState.NOT_ADDED);
+				this.createInformationUnitListItem.setSynchronizationMetaData(metadata);
+			}
+			// transfer the needed information
+			this.createInformationUnitListItem.setId(newInformationUnit.getId());
+			this.createInformationUnitListItem.setLabel(newInformationUnit.getLabel());
+			this.createInformationUnitListItem.setType(newInformationUnit.getType());
+
+			append(new CreateChildCommand(EditingUtil.getInstance().getNavigationEditingDomain(),
+					parentCategory, InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
+					this.createInformationUnitListItem, Collections.EMPTY_LIST));
+		} else {
+			this.createInformationUnitListItem = alreadyCreatedElement;
+			newInformationUnit.setId(alreadyCreatedElement.getId());
+
+		}
+
+		this.newFile = CategoryUtil.getProjectByCategory(parentCategory).getFile(
+				newInformationUnit.getId() + ResourceUtil.DOT_FILE_EXTENSION);
 		this.createInformationUnitListItem
 				.setWorkspacePath(this.newFile.getFullPath().toOSString());
-
-		append(new CreateChildCommand(EditingUtil.getInstance().getNavigationEditingDomain(),
-				parentCategory, InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
-				this.createInformationUnitListItem, Collections.EMPTY_LIST));
+		IInfoType type = InformationExtensionManager.getInstance().getInfoTypeByType(
+				newInformationUnit.getType());
+		if (type != null) {
+			type.getCreationFactory().handlePreSaving(newInformationUnit, this.monitor);
+		}
 
 	}
 
@@ -82,6 +111,29 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 	public void execute() {
 		super.execute();
 		postExcecute();
+	}
+
+	@Override
+	protected boolean prepare() {
+		if (this.commandList.isEmpty()) {
+			return true;
+		} else {
+			for (Command command : this.commandList) {
+				if (!command.canExecute()) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+	}
+
+	@Override
+	public void append(final Command command) {
+		super.append(command);
+		if (command instanceof ICompoundableCreateCommand) {
+			((ICompoundableCreateCommand) command).setTarget(this.newFile);
+		}
 	}
 
 	@Override

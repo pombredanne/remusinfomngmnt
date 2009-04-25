@@ -129,6 +129,12 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case InfomngmntPackage.BINARY_REFERENCE: {
+				BinaryReference binaryReference = (BinaryReference)theEObject;
+				T result = caseBinaryReference(binaryReference);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case InfomngmntPackage.USAGE: {
 				Usage usage = (Usage)theEObject;
 				T result = caseUsage(usage);
@@ -338,6 +344,21 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseInformationUnit(InformationUnit object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Binary Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Binary Reference</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBinaryReference(BinaryReference object) {
 		return null;
 	}
 

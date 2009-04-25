@@ -48,6 +48,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/keywords"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/calendarEntry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/binaryReferences"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//BinaryReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//BinaryReference/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//BinaryReference/projectRelativePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//BinaryReference/dirty"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//Usage">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Usage/lastAccess"/>

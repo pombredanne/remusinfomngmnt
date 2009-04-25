@@ -98,6 +98,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case InfomngmntPackage.INFORMATION_UNIT: return createInformationUnit();
+			case InfomngmntPackage.BINARY_REFERENCE: return createBinaryReference();
 			case InfomngmntPackage.USAGE: return createUsage();
 			case InfomngmntPackage.CATEGORY: return createCategory();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM: return createInformationUnitListItem();
@@ -176,6 +177,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public InformationUnit createInformationUnit() {
 		InformationUnitImpl informationUnit = new InformationUnitImpl();
 		return informationUnit;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BinaryReference createBinaryReference() {
+		BinaryReferenceImpl binaryReference = new BinaryReferenceImpl();
+		return binaryReference;
 	}
 
 	/**

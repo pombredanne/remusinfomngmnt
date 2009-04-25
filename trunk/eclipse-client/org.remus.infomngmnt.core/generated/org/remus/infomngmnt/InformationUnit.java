@@ -39,6 +39,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getKeywords <em>Keywords</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getCalendarEntry <em>Calendar Entry</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnit#getBinaryReferences <em>Binary References</em>}</li>
  * </ul>
  * </p>
  *
@@ -344,5 +345,21 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @generated
 	 */
 	EList<CalendarEntry> getCalendarEntry();
+
+	/**
+	 * Returns the value of the '<em><b>Binary References</b></em>' containment reference list.
+	 * The list contents are of type {@link org.remus.infomngmnt.BinaryReference}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Binary References</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Binary References</em>' containment reference list.
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_BinaryReferences()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<BinaryReference> getBinaryReferences();
 
 } // InformationUnit

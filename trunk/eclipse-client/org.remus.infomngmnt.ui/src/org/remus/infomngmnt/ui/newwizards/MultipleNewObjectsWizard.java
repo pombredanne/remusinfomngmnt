@@ -27,13 +27,13 @@ import org.remus.infomngmnt.core.model.EditingUtil;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
-	
+
 	protected EList<InformationUnit> newObjects;
-	
+
 	public MultipleNewObjectsWizard() {
 		setNeedsProgressMonitor(true);
 	}
-	
+
 	@Override
 	public IWizardPage getStartingPage() {
 		IWizardPage startingPage = super.getStartingPage();
@@ -42,6 +42,7 @@ public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
 		}
 		return startingPage;
 	}
+
 	@Override
 	public IWizardPage getNextPage(final IWizardPage page) {
 		IWizardPage nextPage = super.getNextPage(page);
@@ -50,8 +51,10 @@ public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
 		}
 		return nextPage;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override
@@ -59,13 +62,19 @@ public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
 		Job job = new Job("Creating new items") {
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
-				monitor.beginTask("Creating new items", MultipleNewObjectsWizard.this.newObjects.size());
+				monitor.beginTask("Creating new items", MultipleNewObjectsWizard.this.newObjects
+						.size());
 				for (InformationUnit newElement : MultipleNewObjectsWizard.this.newObjects) {
 					EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
-					.execute(CommandFactory.CREATE_INFOTYPE(newElement, findCategory()));
-					// we also reveal the created list-item, that can be found in the navigation
-//					UIUtil.selectAndReveal(newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-//					UIUtil.selectAndReveal(newElement, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+							.execute(
+									CommandFactory.CREATE_INFOTYPE(newElement, findCategory(),
+											monitor));
+					// we also reveal the created list-item, that can be found
+					// in the navigation
+					// UIUtil.selectAndReveal(newElement.getAdapter(InformationUnitListItem.class),
+					// PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+					// UIUtil.selectAndReveal(newElement,
+					// PlatformUI.getWorkbench().getActiveWorkbenchWindow());
 					monitor.worked(1);
 				}
 				return Status.OK_STATUS;
@@ -75,8 +84,11 @@ public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard#getInfoTypeId()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard#getInfoTypeId()
 	 */
 	@Override
 	protected String getInfoTypeId() {

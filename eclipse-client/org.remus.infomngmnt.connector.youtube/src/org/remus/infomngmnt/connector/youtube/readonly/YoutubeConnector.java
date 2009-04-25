@@ -13,7 +13,6 @@
 package org.remus.infomngmnt.connector.youtube.readonly;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -56,7 +55,6 @@ import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
-import org.remus.infomngmnt.core.operation.LoadFromFileRunnable;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.video.VideoActivator;
@@ -101,6 +99,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	 * The URL suffix of the test user's favorites feed
 	 */
 	public static final String FAVORITES_FEED_SUFFIX = "/favorites";
+
+	private IFile tmpVideoFile;
 
 	/**
 	 * @return the youtubeService
@@ -264,9 +264,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			downloadWebsiteJob.run(monitor);
 			String hash = SiteInspector.getHash(tempFile);
 			String youtTubeId = SiteInspector.getId(url);
-			IFile tmpVideoFile = ResourceUtil.createTempFile();
+			this.tmpVideoFile = ResourceUtil.createTempFile("flv");
 			DownloadFileJob downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash),
-					tmpVideoFile, getFileReceiveAdapter());
+					this.tmpVideoFile, getFileReceiveAdapter());
 			downloadVidJob.run(monitor);
 			AbstractCreationFactory abstractCreationFactory = InformationExtensionManager
 					.getInstance().getInfoTypeByType(VideoActivator.TYPE_ID).getCreationFactory();
@@ -274,13 +274,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			InformationUtil.getChildByType(createNewObject, VideoActivator.NODE_NAME_MEDIATYPE)
 					.setStringValue("flv");
 
-			InformationUnit childByType = InformationUtil.getChildByType(createNewObject,
-					VideoActivator.NODE_NAME_RAWDATA);
-			LoadFromFileRunnable runnable = new LoadFromFileRunnable(tmpVideoFile.getLocation()
-					.toOSString(), childByType, null);
-			runnable.run(monitor);
+			// runnable.run(monitor);
 			tempFile.delete(true, monitor);
-			tmpVideoFile.delete(true, monitor);
 			return createNewObject;
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -291,14 +286,13 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public IFile[] getBinaryReferences() {
+		return new IFile[] { this.tmpVideoFile };
 	}
 
 	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
@@ -318,6 +312,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 				+ YoutubeConnector.PLAYLISTS_FEED_SUFFIX;
 	}
 
+	@Override
 	public ISchedulingRule getRule() {
 		return null;
 	}

@@ -81,7 +81,7 @@ public class EditContactPersonDialog extends TitleAreaDialog {
 	}
 	@Override
 	public boolean close() {
-		setContactProportiesFromGenerationDialogToActivator();
+		setDialogUserSettingssetContactProportiesFromGenerationDialogToActivator();
 		return super.close();
 	}
 	@Override
@@ -121,7 +121,7 @@ public class EditContactPersonDialog extends TitleAreaDialog {
 		
 		final Label lb_FormattedName = toolkit.createLabel(group_Properties, "Formatted Name:");
 		cb_FormattedName = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
-		cb_FormattedName.setItems(ContactSettings.AC_COMBO_NAME_FORMATTED_ITEMS);
+		cb_FormattedName.setItems(ContactSettings.DEFAULT_ITEMS_COMBO_NAME_FORMATTED);
 		
 		tx_FormattedName = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_FormattedName.setEnabled(false);
@@ -152,14 +152,14 @@ public class EditContactPersonDialog extends TitleAreaDialog {
 	}
 	private void setContactProportiesFromActivatorToGenerationDialog() {
 
-		try {
-			cb_FormattedName.select(ContactActivator.getDefault().getDialogSettings().getInt(ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX));
-		} catch (Exception e) {
-			// TODO: log4j
-			e.printStackTrace();
-		}
+//		try {
+//			cb_FormattedName.select(ContactActivator.getDefault().getDialogSettings().getInt(ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX));
+//		} catch (Exception e) {
+//			// TODO: log4j
+//			e.printStackTrace();
+//		}
 	}
-	private void setContactProportiesFromGenerationDialogToActivator() {
+	private void setDialogUserSettingssetContactProportiesFromGenerationDialogToActivator() {
 		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX, cb_FormattedName.getSelectionIndex());
 		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_USER_SETTINGS, true);
 	}
@@ -174,7 +174,7 @@ public class EditContactPersonDialog extends TitleAreaDialog {
 		tx_LastName.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
 				validatePage();				
-			}			
+			}
 		});
 		tx_FirstName.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {

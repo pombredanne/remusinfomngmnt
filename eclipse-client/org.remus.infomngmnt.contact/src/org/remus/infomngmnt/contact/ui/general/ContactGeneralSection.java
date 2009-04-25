@@ -10,7 +10,6 @@
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
 package org.remus.infomngmnt.contact.ui.general;
-
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
@@ -19,7 +18,8 @@ import java.io.ByteArrayInputStream;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -40,14 +40,14 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.databinding.AbstractBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactSettings;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
-public class GeneralSection {
+public class ContactGeneralSection {
 
 	private Label lb_Image;
 	private Button bt_EditName;
@@ -56,10 +56,11 @@ public class GeneralSection {
 	private Text tx_Organisation;
 	private Text tx_FormattedName;
 	
-	private AbstractBindingWidget createTextBindingWidget;
 	private Button bt_EditAddress;
+	private Combo combo_AddressChooser;
+	private Text tx_Address;
 	
-	public GeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage){		
+	public ContactGeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage){		
 		
 
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
@@ -157,20 +158,20 @@ public class GeneralSection {
 
 	private void createTextValueBindingsGroupPerson(InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
 		
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_EditName, editGeneralPage);
-		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_COMPLETE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(tx_EditName, editGeneralPage);
+		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_COMPLETE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Role, editGeneralPage);
-		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ROLE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(tx_Role, editGeneralPage);
+		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ROLE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Organisation, editGeneralPage);
-		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBindingWidget(tx_Organisation, editGeneralPage);
+		createTextBindingWidget3.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 //		if (tx_Organisation.getText().length() >=1 && ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX.equals("ganisation")) {
 //			createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
 //			createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 //		}else{
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
-		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		TextBindingWidget createTextBindingWidget4 = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
+		createTextBindingWidget4.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 //		}
 	}
 
@@ -182,9 +183,9 @@ public class GeneralSection {
 				
 				Image image = ImageManipulation.selectImageFromDialog(
 						shell, informationUnit, ContactActivator.NODE_NAME_RAWDATA_IMAGE,
-						(AdapterFactoryEditingDomain) editGeneralPage.getEditingDomain() , GeneralSection.this.lb_Image.getSize().x,
-						GeneralSection.this.lb_Image.getSize().y);
-				if(image != null) GeneralSection.this.lb_Image.setImage(image);
+						(AdapterFactoryEditingDomain) editGeneralPage.getEditingDomain() , ContactGeneralSection.this.lb_Image.getSize().x,
+						ContactGeneralSection.this.lb_Image.getSize().y);
+				if(image != null) ContactGeneralSection.this.lb_Image.setImage(image);
 			}
 
 			public void mouseDown(final MouseEvent e) {
@@ -232,39 +233,139 @@ public class GeneralSection {
 		gl_Address.numColumns = 1;
 		group_Address.setLayout(gl_Address);
 
-		final Combo cb_AddressChooser = new Combo(group_Address, SWT.DROP_DOWN | SWT.READ_ONLY);
+		combo_AddressChooser = new Combo(group_Address, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_AddressChooser = new GridData(SWT.FILL, SWT.BEGINNING, true, true);
-		cb_AddressChooser.setLayoutData(gd_AddressChooser);
-		cb_AddressChooser.setItems(ContactSettings.AC_COMBO_ADDRESS_CHOOSER);
+		combo_AddressChooser.setLayoutData(gd_AddressChooser);
+		combo_AddressChooser.setItems(ContactSettings.DEFAULT_ITMES_COMBO_ADDRESS_CHOOSER);
 		//cb_AddressChooser.setText(ContactActivator.getDefault().NODE_ADDRESS_CURRENT_SEL);
 
-		final StyledText stx_Address = new StyledText(group_Address, SWT.BORDER);
+		tx_Address = toolkit.createText(group_Address, null, SWT.BORDER | SWT.MULTI |SWT.V_SCROLL | SWT.H_SCROLL);
 		GridData gd_Address = new GridData();
 		gd_Address.grabExcessVerticalSpace = true;
 		gd_Address.verticalAlignment = GridData.FILL;
 		gd_Address.grabExcessHorizontalSpace = true;
 		gd_Address.horizontalAlignment = GridData.FILL;
 		gd_Address.heightHint = 90;
-		stx_Address.setEditable(false);
-		stx_Address.setLayoutData(gd_Address);
+		tx_Address.setEditable(false);
+		tx_Address.setLayoutData(gd_Address);
 
 		bt_EditAddress = toolkit.createButton(group_Address, "Edit Address ...",
 				SWT.NONE);
 		GridData gd_EditAddress = new GridData(SWT.FILL, SWT.BEGINNING, true, true);
 		bt_EditAddress.setLayoutData(gd_EditAddress);
 		
-		createListenerGroupAddress(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
+		//createTextValueBindings();
+		
+		createListenerGroupAddress(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);		
+		
+		if (!ContactActivator.getDefault().getDialogSettings().getBoolean(ContactSettings.AC_USER_SETTINGS)) {
+			setContactProportiesFromActivatorToDefault();
+			setContactProportiesFromActivatorToGenerationDialog();
+		} else {
+			setContactProportiesFromActivatorToGenerationDialog();
+		}
+		
+		validateAddressGroupPage();
 
+	}
+
+	private void setContactProportiesFromActivatorToGenerationDialog() {
+		try {
+			combo_AddressChooser.select(ContactActivator.getDefault().getDialogSettings().getInt(ContactSettings.AC_COMBO_DEFAULT_ADDRESS_INDEX));
+		} catch (Exception e) {
+			// TODO: log4j
+			e.printStackTrace();
+		}
+	}
+	private void setContactProportiesFromActivatorToDefault() {
+		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_DEFAULT_ADDRESS_INDEX, 0);
+		//ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX, 0);
+		//ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_USER_SETTINGS, false);		
+	}
+	private void setContactProportiesFromGenerationDialogToActivator() {
+		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_USER_SETTINGS, true);
+		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_DEFAULT_ADDRESS_INDEX, combo_AddressChooser.getSelectionIndex());
+
+	}
+	private void validateAddressGroupPage() {
+		//setContactProportiesFromGenerationDialogToActivator();
+		//cb_Combo.setSelection(InformationUtil.getChildByType(contact, ContactSettings.getd);
+		
 	}
 	private void createListenerGroupAddress(final Composite compositeGeneral, final FormToolkit toolkit,
 			final Shell shell, final InformationUnit informationUnit, final EditGeneralPage editGeneralPage) {
 
 		bt_EditAddress.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(final SelectionEvent e) {
-				EditContactAddressDialog ecd = new EditContactAddressDialog(compositeGeneral, toolkit, shell,	informationUnit, editGeneralPage);
+				setContactProportiesFromGenerationDialogToActivator();
+				EditContactAddressDialog ecd = new EditContactAddressDialog(toolkit, shell, informationUnit, editGeneralPage);
 				ecd.open();
-				}
+				setTextForAddressBox(informationUnit);
+				setContactProportiesFromActivatorToGenerationDialog();
+			}
 		});
+		combo_AddressChooser.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_DEFAULT_ADDRESS_INDEX, combo_AddressChooser.getSelectionIndex());
+				setTextForAddressBox(informationUnit);
+				//setContactProportiesFromActivatorToGenerationDialog();
+			}		
+		});
+	}
+	private void setTextForAddressBox(InformationUnit informationUnit) {		
+		AddressComboChooser acc = new AddressComboChooser(combo_AddressChooser, ContactSettings.DEFAULT_ITMES_COMBO_ADDRESS_CHOOSER);
+		
+		String street = "";
+		try {
+			if (InformationUtil.getChildByType(informationUnit, acc.getCurStreet()).getStringValue() != null)
+				street = InformationUtil.getChildByType(informationUnit, acc.getCurStreet()).getStringValue();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		String postal = "";
+		try {
+			if (InformationUtil.getChildByType(informationUnit, acc.getCurPostal()).getStringValue() != null)
+				postal = InformationUtil.getChildByType(informationUnit, acc.getCurPostal()).getStringValue();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		String region = "";
+		try {
+			if (InformationUtil.getChildByType(informationUnit, acc.getCurRegion()).getStringValue() != null)
+				region = InformationUtil.getChildByType(informationUnit, acc.getCurRegion()).getStringValue();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		String locality = "";
+		try {
+			if (InformationUtil.getChildByType(informationUnit, acc.getCurLocality()).getStringValue() != null)
+				locality = InformationUtil.getChildByType(informationUnit, acc.getCurLocality()).getStringValue();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		String country = "";
+		try {
+			if (InformationUtil.getChildByType(informationUnit, acc.getCurCountry()).getStringValue() != null)
+				country = InformationUtil.getChildByType(informationUnit, acc.getCurCountry()).getStringValue();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		String pob = "";
+		try {
+			if (InformationUtil.getChildByType(informationUnit, acc.getCurPob()).getStringValue() != null)
+				pob = InformationUtil.getChildByType(informationUnit, acc.getCurPob()).getStringValue();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		tx_Address.setText(
+				street+"\n"+
+				postal+"\n"+
+				locality+"\n"+
+				region+"\n"+
+				country+"\n"+
+				pob
+				);
 	}
 	private void createGroupInternet(final Composite compositeGeneral, final FormToolkit toolkit) {
 		final Group group_Internet = new Group(compositeGeneral, SWT.NONE);

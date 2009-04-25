@@ -21,7 +21,7 @@ public class EditDetailPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		new DetailsSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
+		new ContactDetailsSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
 		doCreateSemanticSection(body, toolkit);
 	}
 }

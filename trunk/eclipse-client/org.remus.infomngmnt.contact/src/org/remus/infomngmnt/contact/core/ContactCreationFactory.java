@@ -166,6 +166,18 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit addDomesticCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addDomesticCountry.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_COUNTRY);
 		
+		InformationUnit addOtherStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherStreet.setType(ContactActivator.NODE_ADDRESS_OTHER_STREET);
+		InformationUnit addOtherPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherPob.setType(ContactActivator.NODE_ADDRESS_OTHER_POST_OFFICE_BOX);
+		InformationUnit addOtherLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherLocality.setType(ContactActivator.NODE_ADDRESS_OTHER_LOCALITY);
+		InformationUnit addOtherRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherRegion.setType(ContactActivator.NODE_ADDRESS_OTHER_REGION);
+		InformationUnit addOtherPostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherPostal.setType(ContactActivator.NODE_ADDRESS_OTHER_POSTAL);
+		InformationUnit addOtherCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherCountry.setType(ContactActivator.NODE_ADDRESS_OTHER_COUNTRY);
 		
 		// general
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
@@ -243,6 +255,13 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addDomesticRegion);
 		returnValue.getChildValues().add(addDomesticStreet);
 
+		returnValue.getChildValues().add(addOtherCountry);
+		returnValue.getChildValues().add(addOtherLocality);
+		returnValue.getChildValues().add(addOtherPob);
+		returnValue.getChildValues().add(addOtherPostal);
+		returnValue.getChildValues().add(addOtherRegion);
+		returnValue.getChildValues().add(addOtherStreet);
+		
 		return returnValue;
 	}
 }

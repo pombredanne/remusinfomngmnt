@@ -56,7 +56,7 @@ public class ImageManipulation {
 		}
 		return imageScaled;
 	}
-
+	
 	public static Image selectImageFromDialog(final Shell shell,
 			final InformationUnit informationUnit, final String nodeName,
 			final AdapterFactoryEditingDomain editingDomain, final int imageTargetX,

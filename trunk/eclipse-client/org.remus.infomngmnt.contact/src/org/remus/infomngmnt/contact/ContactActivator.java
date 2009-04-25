@@ -115,7 +115,6 @@ public class ContactActivator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact";
 
-
 	// The shared instance
 	private static ContactActivator plugin;
 	

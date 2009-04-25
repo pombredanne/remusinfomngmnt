@@ -17,7 +17,6 @@ package org.remus.infomngmnt.contact.ui.detail;
   */
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -31,9 +30,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InformationUnit;
 
-public class DetailsSection {
+public class ContactDetailsSection {
 
-	public DetailsSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain) {
+	public ContactDetailsSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -85,14 +84,14 @@ public class DetailsSection {
 		final Label lb_Notes = toolkit.createLabel(group_Note, "Notes");
 		lb_Notes.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, true));
 		
-		final StyledText stx_Note = new StyledText(group_Note, SWT.BORDER);
+		final Text tx_Note = toolkit.createText(group_Note, null, SWT.BORDER | SWT.MULTI);
 		GridData gd_Address = new GridData();		
 		gd_Address.grabExcessVerticalSpace = true;
 		gd_Address.verticalAlignment = GridData.FILL;
 		gd_Address.grabExcessHorizontalSpace = true;
 		gd_Address.horizontalAlignment = GridData.FILL; 
 		gd_Address.heightHint = 260;
-		stx_Note.setLayoutData(gd_Address);
+		tx_Note.setLayoutData(gd_Address);
 	}
 
 	private void createGroupPerson(Composite compositeGeneral,

@@ -18,6 +18,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -41,14 +43,13 @@ import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 
 /**
  * <p>
- * This class provides some basic key-features of
- * the wizard which can be used for creating new
- * information units.
+ * This class provides some basic key-features of the wizard which can be used
+ * for creating new information units.
  * </p>
  * <p>
- * This class will create a new {@link InformationUnit} object,
- * a {@link GeneralPage} and will 
- * try to create a new information unit within the workspace.
+ * This class will create a new {@link InformationUnit} object, a
+ * {@link GeneralPage} and will try to create a new information unit within the
+ * workspace.
  * </p>
  * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -73,12 +74,13 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 	}
 
 	/**
-	 * Creates the new information object with the text values created
-	 * from
+	 * Creates the new information object with the text values created from
+	 * 
 	 * @return
 	 */
 	protected InformationUnit createNewInformationUnit() {
-		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(getInfoTypeId());
+		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+				getInfoTypeId());
 		if (infoTypeByType != null) {
 			return infoTypeByType.getCreationFactory().createNewObject();
 		}
@@ -86,8 +88,9 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 	}
 
 	/**
-	 * Returns the {@link Category} object based
-	 * on the {@link GeneralPage#getCategoryString()}
+	 * Returns the {@link Category} object based on the
+	 * {@link GeneralPage#getCategoryString()}
+	 * 
 	 * @return the category
 	 */
 	protected Category findCategory() {
@@ -95,18 +98,24 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		return CategoryUtil.findCategory(parentCategoryValue, true);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override
 	public boolean performFinish() {
-		final IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(getInfoTypeId());
+		final CompoundCommand[] createInfotype = new CompoundCommand[1];
 		try {
 			getContainer().run(true, true, new CancelableRunnable() {
 				@Override
 				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-					infoTypeByType.getCreationFactory()
-						.handlePreSaving(NewInfoObjectWizard.this.newElement, monitor);
+					createInfotype[0] = CommandFactory.CREATE_INFOTYPE(
+							NewInfoObjectWizard.this.newElement, findCategory(), monitor);
+					Command additionalCommands = getAdditionalCommands();
+					if (additionalCommands != null) {
+						createInfotype[0].append(additionalCommands);
+					}
 					return Status.OK_STATUS;
 				}
 			});
@@ -117,19 +126,24 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
-		.execute(CommandFactory.CREATE_INFOTYPE(this.newElement, findCategory()));
+		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().execute(
+				createInfotype[0]);
 		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)), InformationEditor.ID);
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
+					new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)),
+					InformationEditor.ID);
 		} catch (Exception e) {
 			// will come soon.
 		}
-		// we also reveal the created list-item, that can be found in the navigation
-		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class), PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+		// we also reveal the created list-item, that can be found in the
+		// navigation
+		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class),
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow());
 		return true;
 	}
+
 	@Override
 	public IWizardPage getStartingPage() {
 		IWizardPage startingPage = super.getStartingPage();
@@ -138,6 +152,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		}
 		return startingPage;
 	}
+
 	@Override
 	public IWizardPage getNextPage(final IWizardPage page) {
 		IWizardPage nextPage = super.getNextPage(page);
@@ -147,14 +162,20 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		return nextPage;
 	}
 
-    /**
-     * initializes the wizard with the Workbench selection.
-     * At this time the Wizard pages are created with the 
-     * selected objects.
-     *
-     * @param workbench the current workbench
-     * @param selection the current object selection
-     */
+	protected Command getAdditionalCommands() {
+		// does nothing by default
+		return null;
+	}
+
+	/**
+	 * initializes the wizard with the Workbench selection. At this time the
+	 * Wizard pages are created with the selected objects.
+	 * 
+	 * @param workbench
+	 *            the current workbench
+	 * @param selection
+	 *            the current object selection
+	 */
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
@@ -162,7 +183,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		} else if (firstElement instanceof InformationUnitListItem) {
 			this.page1 = new GeneralPage((InformationUnitListItem) firstElement);
 		} else {
-			this.page1 = new GeneralPage((Category)null);
+			this.page1 = new GeneralPage((Category) null);
 		}
 
 	}

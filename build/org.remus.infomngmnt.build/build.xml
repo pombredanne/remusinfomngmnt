@@ -10,6 +10,11 @@
 
 
 <project name="project" default="build">
+	
+	<property name="jar.location" location="C:/IDEs/eclipse_buildtest/runtime/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar"/>
+	<property name="pde.build.location" location="C:/IDEs/eclipse_buildtest/runtime/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/scripts/productBuild/productBuild.xml"/>
+	<property name="build.dir.location" location="C:/IDEs/eclipse_remus_3_5_2/eclipse/workspace/org.remus.infomngmnt.build"/>
+
 
 	<tstamp>
 		<format property="today.date" pattern="yyyy-MM-dd_HH_mm" />
@@ -30,12 +35,12 @@
           target: test              
          ================================= -->
 	<target name="build" description="description">
-		<java failonerror="true" fork="true" jar="C:/IDEs/eclipse_buildtest/runtime/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar">
+		<java failonerror="true" fork="true" jar="${jar.location}">
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
-			<arg value="C:/IDEs/eclipse_buildtest/runtime/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/scripts/productBuild/productBuild.xml" />
-			<arg value="-Dbuilder=C:\IDEs\eclipse_remus_3_5_2\eclipse\workspace\org.remus.infomngmnt.build_obsolete" />
+			<arg value="${pde.build.location}" />
+			<arg value="-Dbuilder=${build.dir.location}" />
 		</java>
 		<!-- <exec executable="pdeBuild.bat" /> -->
 	</target>

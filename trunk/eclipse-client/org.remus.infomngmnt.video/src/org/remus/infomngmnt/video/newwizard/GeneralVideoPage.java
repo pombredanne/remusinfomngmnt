@@ -2,6 +2,7 @@ package org.remus.infomngmnt.video.newwizard;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
@@ -25,7 +26,7 @@ import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.operation.LoadFromFileRunnable;
+import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -40,6 +41,7 @@ public class GeneralVideoPage extends GeneralPage {
 	private Text fileNameText;
 	private Button browseButton;
 	protected String tmpText;
+	private IFile tmpFile;
 
 	private EditingDomain editingDomain;
 	private Text mediaTypeText;
@@ -82,12 +84,8 @@ public class GeneralVideoPage extends GeneralPage {
 		gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_nameText.horizontalSpan = 2;
 		this.mediaTypeText.setLayoutData(gd_nameText);
-		/*
-		 * we check if we have already set data.
-		 */
-		InformationUnit rawData = InformationUtil.getChildByType(this.unit,
-				VideoActivator.NODE_NAME_RAWDATA);
-		if (rawData.getBinaryValue() == null) {
+
+		if (this.unit.getBinaryReferences().size() == 0) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
 			this.fileNameText = new Text(group, SWT.BORDER);
@@ -106,12 +104,11 @@ public class GeneralVideoPage extends GeneralPage {
 					String open = fd.open();
 					if (open != null) {
 						GeneralVideoPage.this.fileNameText.setText(open);
-						LoadFromFileRunnable lffr = new LoadFromFileRunnable(open, InformationUtil
-								.getChildByType(GeneralVideoPage.this.unit,
-										VideoActivator.NODE_NAME_RAWDATA),
-								GeneralVideoPage.this.editingDomain);
+						LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
+						runnable.setFilePath(open);
 						try {
-							getContainer().run(true, true, lffr);
+							getContainer().run(true, true, runnable);
+							GeneralVideoPage.this.tmpFile = runnable.getTmpFile();
 						} catch (InvocationTargetException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -161,5 +158,20 @@ public class GeneralVideoPage extends GeneralPage {
 			}
 		});
 
+	}
+
+	/**
+	 * @return the tmpFile
+	 */
+	public IFile getTmpFile() {
+		return this.tmpFile;
+	}
+
+	/**
+	 * @param tmpFile
+	 *            the tmpFile to set
+	 */
+	public void setTmpFile(final IFile tmpFile) {
+		this.tmpFile = tmpFile;
 	}
 }

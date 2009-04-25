@@ -44,7 +44,6 @@ import com.drew.metadata.exif.ExifDirectory;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.streams.FileUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
@@ -58,11 +57,19 @@ import org.remus.infomngmnt.image.ImagePlugin;
 public class LoadImageRunnable extends CancelableRunnable {
 
 	private String imagePath;
-	private InformationUnit rawImageDataNode;
 	private InformationUnit widhtImageNode;
 	private InformationUnit heightImageNode;
 	private EditingDomain domain;
 	private boolean executeOnEditingDomain = true;
+	private final boolean setName;
+
+	public LoadImageRunnable(final boolean setName) {
+		this.setName = setName;
+	}
+
+	public LoadImageRunnable() {
+		this(false);
+	}
 
 	public void setDomain(final EditingDomain domain) {
 		this.domain = domain;
@@ -70,10 +77,6 @@ public class LoadImageRunnable extends CancelableRunnable {
 
 	private File file;
 	private InformationUnit infoUnit;
-
-	public File getFile() {
-		return this.file;
-	}
 
 	public void setImagePath(final String imagePath) {
 		this.imagePath = imagePath;
@@ -92,9 +95,6 @@ public class LoadImageRunnable extends CancelableRunnable {
 				}
 
 				final CompoundCommand cc = new CompoundCommand();
-				cc.append(new SetCommand(this.domain, this.rawImageDataNode,
-						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, FileUtil
-								.getBytesFromFile(this.file, monitor)));
 				boolean isJpgeg = Pattern.compile("^.*\\.jpe?g$", Pattern.CASE_INSENSITIVE)
 						.matcher(this.imagePath).matches();
 				Metadata metadata = null;
@@ -162,9 +162,12 @@ public class LoadImageRunnable extends CancelableRunnable {
 						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Long
 								.valueOf(imageData.height)));
 
-				cc.append(new SetCommand(this.domain, InformationUtil.getChildByType(this.infoUnit,
-						ImagePlugin.ORIGINAL_FILEPATH),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, this.imagePath));
+				if (this.setName) {
+					cc.append(new SetCommand(this.domain, InformationUtil.getChildByType(
+							this.infoUnit, ImagePlugin.ORIGINAL_FILEPATH),
+							InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+							this.imagePath));
+				}
 				//				
 				cc.setLabel("Set new image");
 				UIUtil.getDisplay().asyncExec(new Runnable() {
@@ -188,8 +191,6 @@ public class LoadImageRunnable extends CancelableRunnable {
 
 	public void setImageNode(final InformationUnit infoUnit) {
 		this.infoUnit = infoUnit;
-		this.rawImageDataNode = InformationUtil.getChildByType(infoUnit,
-				ImagePlugin.NODE_NAME_RAWDATA);
 		this.widhtImageNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_WIDTH);
 		this.heightImageNode = InformationUtil.getChildByType(infoUnit,
 				ImagePlugin.NODE_NAME_HEIGHT);

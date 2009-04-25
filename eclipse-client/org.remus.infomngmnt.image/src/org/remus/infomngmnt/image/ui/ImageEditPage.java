@@ -21,10 +21,10 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
@@ -55,7 +55,9 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.core.commands.ChangeBinaryReference;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
@@ -70,6 +72,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 	private Text text;
 	private boolean keepRatio = true;
 	private float ratio = 0;
+	private IFile newTmpFile;
 	private final Action keepRationAction = new Action("", IAction.AS_CHECK_BOX) {
 		@Override
 		public ImageDescriptor getImageDescriptor() {
@@ -126,15 +129,10 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		openImageWithExternalApp.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
-				IFile adapter = (IFile) getModelObject().getAdapter(IFile.class);
-				IFolder folder = adapter.getParent().getFolder(new Path(getModelObject().getId()));
-				if (folder.exists()) {
-					InformationUnit origString = InformationUtil.getChildByType(getModelObject(),
-							ImagePlugin.ORIGINAL_FILEPATH);
-					IPath path = new Path(origString.getStringValue());
-					IFile imageFile = folder.getFile(new Path(getModelObject().getId())
-							.addFileExtension(path.getFileExtension()));
-					Program.launch(imageFile.getLocation().toOSString());
+				IFile firstBinaryReferenceFile = InformationUtil
+						.getFirstBinaryReferenceFile(getModelObject());
+				if (firstBinaryReferenceFile != null) {
+					Program.launch(firstBinaryReferenceFile.getLocation().toOSString());
 				}
 			}
 		});
@@ -164,13 +162,21 @@ public class ImageEditPage extends AbstractInformationFormPage {
 				fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
 				String open = fd.open();
 				if (open != null) {
-					LoadImageRunnable loadImage = new LoadImageRunnable();
-					loadImage.setImagePath(open);
-					loadImage.setImageNode(getModelObject());
-					loadImage.setDomain(ImageEditPage.this.editingDomain);
+					LoadImageRunnable loadImageRunnable = new LoadImageRunnable();
+					loadImageRunnable.setDomain(ImageEditPage.this.editingDomain);
+					loadImageRunnable.setImagePath(open);
+					loadImageRunnable.setImageNode(getModelObject());
+					LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
+					runnable.setFilePath(open);
 					ProgressMonitorDialog pmd = new ProgressMonitorDialog(getSite().getShell());
 					try {
-						pmd.run(true, false, loadImage);
+						pmd.run(true, false, runnable);
+						pmd.run(true, false, loadImageRunnable);
+						ImageEditPage.this.newTmpFile = runnable.getTmpFile();
+						Command command = SetCommand.create(getEditingDomain(), getModelObject()
+								.getBinaryReferences().get(0),
+								InfomngmntPackage.Literals.BINARY_REFERENCE__DIRTY, true);
+						getEditingDomain().getCommandStack().execute(command);
 					} catch (InvocationTargetException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -247,6 +253,16 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		bindValuesToUi();
 
 	}
+
+	@Override
+	public void doSave(final IProgressMonitor monitor) {
+		if (getModelObject().getBinaryReferences().get(0).isDirty()) {
+			ChangeBinaryReference command = new ChangeBinaryReference(getModelObject()
+					.getBinaryReferences().get(0), this.newTmpFile,
+					ImageEditPage.this.editingDomain);
+			getEditingDomain().getCommandStack().execute(command);
+		}
+	};
 
 	protected void setCurrentRatio() {
 		long width = InformationUtil.getChildByType(getModelObject(), ImagePlugin.NODE_NAME_WIDTH)

@@ -13,25 +13,21 @@ public class ImagePlugin extends AbstractUIPlugin {
 
 	// The shared instance
 	private static ImagePlugin plugin;
-	
+
 	public static final String TYPE_ID = "IMAGE"; //$NON-NLS-1$
-	
-	public static final String NODE_NAME_RAWDATA = "imageData"; //$NON-NLS-1$
-	
+
 	public static final String NODE_NAME_EXIF = "exifdata"; //$NON-NLS-1$
-	
+
 	public static final String ORIGINAL_FILEPATH = "originFilePath"; //$NON-NLS-1$
-	
+
 	public static final String NODE_NAME_WIDTH = "width"; //$NON-NLS-1$
-	
+
 	public static final String NODE_NAME_HEIGHT = "height"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_LINKS = "links";
 
 	public static final String NODE_NAME_LINK = "link";
-	
-	
-	
+
 	/**
 	 * The constructor
 	 */
@@ -40,7 +36,10 @@ public class ImagePlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	@Override
 	public void start(final BundleContext context) throws Exception {
@@ -50,7 +49,10 @@ public class ImagePlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
 	@Override
 	public void stop(final BundleContext context) throws Exception {
@@ -60,7 +62,7 @@ public class ImagePlugin extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static ImagePlugin getDefault() {

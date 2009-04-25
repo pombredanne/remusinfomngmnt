@@ -12,9 +12,13 @@
 
 package org.remus.infomngmnt.image.ui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -25,8 +29,12 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.operation.LoadImageRunnable;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
@@ -42,6 +50,32 @@ public class NewImageWizard extends NewInfoObjectWizard {
 		setNeedsProgressMonitor(true);
 		setWindowTitle("New photo/graphic");
 
+	}
+
+	@Override
+	protected Command getAdditionalCommands() {
+		IFile tmpFile = ((GeneralImagePage) this.page1).getTmpFile();
+
+		if (tmpFile != null) {
+			EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+			LoadImageRunnable loadImageRunnable = new LoadImageRunnable();
+			loadImageRunnable.setImagePath(tmpFile.getLocation().toOSString());
+			loadImageRunnable.setImageNode(this.newElement);
+			loadImageRunnable.setDomain(editingDomain);
+			editingDomain.getCommandStack().flush();
+			try {
+				getContainer().run(true, false, loadImageRunnable);
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return CommandFactory.addFileToInfoUnit(tmpFile, this.newElement, EditingUtil
+					.getInstance().getNavigationEditingDomain());
+		}
+		return super.getAdditionalCommands();
 	}
 
 	/*
@@ -76,43 +110,27 @@ public class NewImageWizard extends NewInfoObjectWizard {
 
 	public void setDefaults(final Object value, final RuleValue ruleValue) {
 		if (value instanceof ImageData) {
-			InformationUnit rawDataNode = InformationUtil.getChildByType(this.newElement,
-					ImagePlugin.NODE_NAME_RAWDATA);
 			ImageLoader loader = new ImageLoader();
 			loader.data = new ImageData[] { (ImageData) value };
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			loader.save(baos, SWT.IMAGE_BMP);
-			rawDataNode.setBinaryValue(baos.toByteArray());
+			IFile tmpFile = ResourceUtil.createTempFile("png");
+			loader.save(tmpFile.getLocation().toOSString(), SWT.IMAGE_PNG);
 			try {
-				baos.close();
-			} catch (IOException e) {
+				tmpFile.refreshLocal(IResource.DEPTH_INFINITE, null);
+			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			((GeneralImagePage) this.page1).setTmpFile(tmpFile);
+
 			InformationUnit width = InformationUtil.getChildByType(this.newElement,
 					ImagePlugin.NODE_NAME_WIDTH);
 			width.setLongValue(((ImageData) value).width);
 			InformationUnit height = InformationUtil.getChildByType(this.newElement,
 					ImagePlugin.NODE_NAME_HEIGHT);
 			height.setLongValue(((ImageData) value).height);
-			int type = ((ImageData) value).type;
-			String extension = "bmp";
-			switch (type) {
-			case SWT.IMAGE_GIF:
-				extension = "gif";
-				break;
-			case SWT.IMAGE_JPEG:
-				extension = "jpg";
-				break;
-			case SWT.IMAGE_PNG:
-				extension = "png";
-				break;
-			default:
-				break;
-			}
 			InformationUnit origFilePath = InformationUtil.getChildByType(this.newElement,
 					ImagePlugin.ORIGINAL_FILEPATH);
-			origFilePath.setStringValue("clipboard." + extension);
+			origFilePath.setStringValue("clipboard.png");
 
 		}
 		InformationUnit predefinedCategory = InformationUtil.getChildByType(ruleValue,

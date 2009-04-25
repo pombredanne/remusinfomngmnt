@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,6 +34,7 @@ import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.gef.ShapableInfoDelegate;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -44,52 +44,6 @@ public class ImageInformationRepresentation extends AbstractInformationRepresent
 	private String imageHref;
 
 	public static final String IMAGE_SECTION_NAME = "imageSection"; //$NON-NLS-1$
-
-	/**
-	 * <p>
-	 * Before we can extract the general values from the information-object we
-	 * have to extract the raw image data, and store them within the workspace.
-	 * After a successful creation of a new image file, we have to remember the
-	 * location of the extracted image which is linked within the generated html
-	 * content.
-	 * </p> {@inheritDoc}
-	 * 
-	 * @see #imageHref
-	 * @see #handleHtmlGeneration(IProgressMonitor)
-	 */
-	@Override
-	public void handlePreBuild(final IProgressMonitor monitor) {
-		InformationUnit rawDataNode = InformationUtil.getChildByType(getValue(),
-				ImagePlugin.NODE_NAME_RAWDATA);
-		if (rawDataNode != null && rawDataNode.getBinaryValue() != null) {
-			monitor.setTaskName("Extracting image...");
-		}
-		InformationUnit origFileName = InformationUtil.getChildByType(getValue(),
-				ImagePlugin.ORIGINAL_FILEPATH);
-		if (origFileName != null) {
-			String fileExtension = "bmp";
-			if (origFileName.getStringValue() != null) {
-				fileExtension = new Path(origFileName.getStringValue()).getFileExtension();
-			}
-			IFile file = getBuildFolder().getFile(
-					new Path(getValue().getId()).addFileExtension(fileExtension));
-			this.imageHref = file.getLocation().toOSString();
-			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
-			try {
-				file.create(bais, true, monitor);
-			} catch (CoreException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} finally {
-				try {
-					bais.close();
-				} catch (IOException e) {
-					// do nothing... we've done our best.
-				}
-			}
-		}
-
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -139,11 +93,6 @@ public class ImageInformationRepresentation extends AbstractInformationRepresent
 		return sb.toString();
 	}
 
-	@Override
-	public boolean createFolderOnBuild() {
-		return true;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -154,6 +103,9 @@ public class ImageInformationRepresentation extends AbstractInformationRepresent
 	@Override
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
+		this.imageHref = getFile().getProject().getLocation().append(ResourceUtil.BINARY_FOLDER)
+				.append(getValue().getBinaryReferences().get(0).getProjectRelativePath())
+				.toOSString();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {

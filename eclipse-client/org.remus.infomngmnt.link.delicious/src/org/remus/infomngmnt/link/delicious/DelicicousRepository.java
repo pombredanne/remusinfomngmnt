@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.emf.common.util.URI;
 
 import del.icio.us.Delicious;
@@ -62,16 +61,6 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
 			reset();
-		}
-	};
-
-	final ISchedulingRule mutexRule = new ISchedulingRule() {
-		public boolean isConflicting(final ISchedulingRule rule) {
-			return rule == DelicicousRepository.this.mutexRule;
-		}
-
-		public boolean contains(final ISchedulingRule rule) {
-			return rule == DelicicousRepository.this.mutexRule;
 		}
 	};
 
@@ -163,10 +152,6 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	public void reset() {
 		this.api = null;
 		getCredentialProvider().removePropertyChangeListener(this.credentialsMovedListener);
-	}
-
-	public ISchedulingRule getRule() {
-		return this.mutexRule;
 	}
 
 	public String getTypeIdByObject(final RemoteObject remoteObject) {

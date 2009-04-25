@@ -77,7 +77,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAdapter()
 	 * @generated
 	 */
-	int ADAPTER = 8;
+	int ADAPTER = 9;
 
 	/**
 	 * The number of structural features of the '<em>Adapter</em>' class.
@@ -96,7 +96,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAbstractInformationUnit()
 	 * @generated
 	 */
-	int ABSTRACT_INFORMATION_UNIT = 3;
+	int ABSTRACT_INFORMATION_UNIT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -289,13 +289,68 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__CALENDAR_ENTRY = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 12;
 
 	/**
+	 * The feature id for the '<em><b>Binary References</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT__BINARY_REFERENCES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 13;
+
+	/**
 	 * The number of structural features of the '<em>Information Unit</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 13;
+	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 14;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.BinaryReferenceImpl <em>Binary Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.BinaryReferenceImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getBinaryReference()
+	 * @generated
+	 */
+	int BINARY_REFERENCE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINARY_REFERENCE__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Project Relative Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINARY_REFERENCE__PROJECT_RELATIVE_PATH = 1;
+
+	/**
+	 * The feature id for the '<em><b>Dirty</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINARY_REFERENCE__DIRTY = 2;
+
+	/**
+	 * The number of structural features of the '<em>Binary Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINARY_REFERENCE_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.UsageImpl <em>Usage</em>}' class.
@@ -305,7 +360,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getUsage()
 	 * @generated
 	 */
-	int USAGE = 1;
+	int USAGE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Last Access</b></em>' attribute.
@@ -342,7 +397,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObject()
 	 * @generated
 	 */
-	int SYNCHRONIZABLE_OBJECT = 28;
+	int SYNCHRONIZABLE_OBJECT = 29;
 
 	/**
 	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
@@ -379,7 +434,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCategory()
 	 * @generated
 	 */
-	int CATEGORY = 2;
+	int CATEGORY = 3;
 
 	/**
 	 * The feature id for the '<em><b>Synchronization Meta Data</b></em>' containment reference.
@@ -461,7 +516,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItem()
 	 * @generated
 	 */
-	int INFORMATION_UNIT_LIST_ITEM = 4;
+	int INFORMATION_UNIT_LIST_ITEM = 5;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -535,7 +590,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getApplicationRoot()
 	 * @generated
 	 */
-	int APPLICATION_ROOT = 5;
+	int APPLICATION_ROOT = 6;
 
 	/**
 	 * The feature id for the '<em><b>Root Categories</b></em>' reference list.
@@ -573,7 +628,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAnnotation()
 	 * @generated
 	 */
-	int ANNOTATION = 6;
+	int ANNOTATION = 7;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -602,7 +657,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getLink()
 	 * @generated
 	 */
-	int LINK = 7;
+	int LINK = 8;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -630,7 +685,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRecentlyUsedKeywords()
 	 * @generated
 	 */
-	int RECENTLY_USED_KEYWORDS = 9;
+	int RECENTLY_USED_KEYWORDS = 10;
 
 	/**
 	 * The feature id for the '<em><b>Maxlength</b></em>' attribute.
@@ -667,7 +722,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNewElementRules()
 	 * @generated
 	 */
-	int NEW_ELEMENT_RULES = 10;
+	int NEW_ELEMENT_RULES = 11;
 
 	/**
 	 * The feature id for the '<em><b>Transfer Types</b></em>' containment reference list.
@@ -713,7 +768,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleValue()
 	 * @generated
 	 */
-	int RULE_VALUE = 11;
+	int RULE_VALUE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -860,6 +915,15 @@ public interface InfomngmntPackage extends EPackage {
 	int RULE_VALUE__CALENDAR_ENTRY = INFORMATION_UNIT__CALENDAR_ENTRY;
 
 	/**
+	 * The feature id for the '<em><b>Binary References</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_VALUE__BINARY_REFERENCES = INFORMATION_UNIT__BINARY_REFERENCES;
+
+	/**
 	 * The number of structural features of the '<em>Rule Value</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -877,7 +941,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAvailableRuleDefinitions()
 	 * @generated
 	 */
-	int AVAILABLE_RULE_DEFINITIONS = 12;
+	int AVAILABLE_RULE_DEFINITIONS = 13;
 
 	/**
 	 * The feature id for the '<em><b>New Element Rules</b></em>' containment reference list.
@@ -906,7 +970,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemusTransferType()
 	 * @generated
 	 */
-	int REMUS_TRANSFER_TYPE = 13;
+	int REMUS_TRANSFER_TYPE = 14;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -952,7 +1016,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleAction()
 	 * @generated
 	 */
-	int RULE_ACTION = 14;
+	int RULE_ACTION = 15;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -999,7 +1063,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRuleResult()
 	 * @generated
 	 */
-	int RULE_RESULT = 15;
+	int RULE_RESULT = 16;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1045,7 +1109,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteRepository()
 	 * @generated
 	 */
-	int REMOTE_REPOSITORY = 16;
+	int REMOTE_REPOSITORY = 17;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteObjectImpl <em>Remote Object</em>}' class.
@@ -1055,7 +1119,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteObject()
 	 * @generated
 	 */
-	int REMOTE_OBJECT = 17;
+	int REMOTE_OBJECT = 18;
 
 	/**
 	 * The feature id for the '<em><b>Possible Info Type Id</b></em>' attribute list.
@@ -1146,7 +1210,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRemoteContainer()
 	 * @generated
 	 */
-	int REMOTE_CONTAINER = 18;
+	int REMOTE_CONTAINER = 19;
 
 	/**
 	 * The feature id for the '<em><b>Possible Info Type Id</b></em>' attribute list.
@@ -1354,7 +1418,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRepositoryCollection()
 	 * @generated
 	 */
-	int REPOSITORY_COLLECTION = 19;
+	int REPOSITORY_COLLECTION = 20;
 
 	/**
 	 * The feature id for the '<em><b>Repositories</b></em>' containment reference list.
@@ -1382,7 +1446,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationMetadata()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_METADATA = 20;
+	int SYNCHRONIZATION_METADATA = 21;
 
 	/**
 	 * The feature id for the '<em><b>Repository Id</b></em>' attribute.
@@ -1455,7 +1519,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSet()
 	 * @generated
 	 */
-	int CHANGE_SET = 21;
+	int CHANGE_SET = 22;
 
 	/**
 	 * The feature id for the '<em><b>Target Category</b></em>' reference.
@@ -1501,7 +1565,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getChangeSetItem()
 	 * @generated
 	 */
-	int CHANGE_SET_ITEM = 22;
+	int CHANGE_SET_ITEM = 23;
 
 	/**
 	 * The feature id for the '<em><b>Remote Converted Container</b></em>' containment reference.
@@ -1574,7 +1638,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCategoryToSynchronizationActionMap()
 	 * @generated
 	 */
-	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP = 23;
+	int CATEGORY_TO_SYNCHRONIZATION_ACTION_MAP = 24;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1611,7 +1675,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationUnitListItemToInformationUnitMap()
 	 * @generated
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP = 24;
+	int INFORMATION_UNIT_LIST_ITEM_TO_INFORMATION_UNIT_MAP = 25;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1648,7 +1712,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizableObjectToSynchronizationActionMap()
 	 * @generated
 	 */
-	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP = 25;
+	int SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP = 26;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1685,7 +1749,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTag()
 	 * @generated
 	 */
-	int TAG = 26;
+	int TAG = 27;
 
 	/**
 	 * The feature id for the '<em><b>Info Units</b></em>' reference list.
@@ -1722,7 +1786,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getAvailableTags()
 	 * @generated
 	 */
-	int AVAILABLE_TAGS = 27;
+	int AVAILABLE_TAGS = 28;
 
 	/**
 	 * The feature id for the '<em><b>Tags</b></em>' containment reference list.
@@ -1750,7 +1814,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntry()
 	 * @generated
 	 */
-	int CALENDAR_ENTRY = 29;
+	int CALENDAR_ENTRY = 30;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1823,7 +1887,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 30;
+	int SYNCHRONIZATION_STATE = 31;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -1833,7 +1897,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 31;
+	int SYNCHRONIZATION_ACTION = 32;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.CalendarEntryType <em>Calendar Entry Type</em>}' enum.
@@ -1843,7 +1907,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntryType()
 	 * @generated
 	 */
-	int CALENDAR_ENTRY_TYPE = 32;
+	int CALENDAR_ENTRY_TYPE = 33;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -1853,7 +1917,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 33;
+	int OBJECT = 34;
 
 
 	/**
@@ -1864,7 +1928,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
 	 * @generated
 	 */
-	int IREPOSITORY = 34;
+	int IREPOSITORY = 35;
 
 
 	/**
@@ -2019,6 +2083,60 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getInformationUnit_CalendarEntry();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.InformationUnit#getBinaryReferences <em>Binary References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Binary References</em>'.
+	 * @see org.remus.infomngmnt.InformationUnit#getBinaryReferences()
+	 * @see #getInformationUnit()
+	 * @generated
+	 */
+	EReference getInformationUnit_BinaryReferences();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.BinaryReference <em>Binary Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Binary Reference</em>'.
+	 * @see org.remus.infomngmnt.BinaryReference
+	 * @generated
+	 */
+	EClass getBinaryReference();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.BinaryReference#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.remus.infomngmnt.BinaryReference#getId()
+	 * @see #getBinaryReference()
+	 * @generated
+	 */
+	EAttribute getBinaryReference_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.BinaryReference#getProjectRelativePath <em>Project Relative Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Project Relative Path</em>'.
+	 * @see org.remus.infomngmnt.BinaryReference#getProjectRelativePath()
+	 * @see #getBinaryReference()
+	 * @generated
+	 */
+	EAttribute getBinaryReference_ProjectRelativePath();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.BinaryReference#isDirty <em>Dirty</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Dirty</em>'.
+	 * @see org.remus.infomngmnt.BinaryReference#isDirty()
+	 * @see #getBinaryReference()
+	 * @generated
+	 */
+	EAttribute getBinaryReference_Dirty();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.Usage <em>Usage</em>}'.
@@ -3306,6 +3424,48 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INFORMATION_UNIT__CALENDAR_ENTRY = eINSTANCE.getInformationUnit_CalendarEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Binary References</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INFORMATION_UNIT__BINARY_REFERENCES = eINSTANCE.getInformationUnit_BinaryReferences();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.BinaryReferenceImpl <em>Binary Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.BinaryReferenceImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getBinaryReference()
+		 * @generated
+		 */
+		EClass BINARY_REFERENCE = eINSTANCE.getBinaryReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BINARY_REFERENCE__ID = eINSTANCE.getBinaryReference_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Project Relative Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BINARY_REFERENCE__PROJECT_RELATIVE_PATH = eINSTANCE.getBinaryReference_ProjectRelativePath();
+
+		/**
+		 * The meta object literal for the '<em><b>Dirty</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BINARY_REFERENCE__DIRTY = eINSTANCE.getBinaryReference_Dirty();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.UsageImpl <em>Usage</em>}' class.

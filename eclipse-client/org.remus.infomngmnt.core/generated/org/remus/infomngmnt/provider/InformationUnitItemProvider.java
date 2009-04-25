@@ -338,6 +338,7 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES);
 			childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY);
+			childrenFeatures.add(InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_REFERENCES);
 		}
 		return childrenFeatures;
 	}
@@ -408,6 +409,7 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -439,6 +441,11 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 			(createChildParameter
 				(InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
 				 InfomngmntFactory.eINSTANCE.createCalendarEntry()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_REFERENCES,
+				 InfomngmntFactory.eINSTANCE.createBinaryReference()));
 	}
 
 }

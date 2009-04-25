@@ -109,6 +109,10 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createInformationUnitAdapter();
 			}
 			@Override
+			public Adapter caseBinaryReference(BinaryReference object) {
+				return createBinaryReferenceAdapter();
+			}
+			@Override
 			public Adapter caseUsage(Usage object) {
 				return createUsageAdapter();
 			}
@@ -253,6 +257,20 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createInformationUnitAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.BinaryReference <em>Binary Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.BinaryReference
+	 * @generated
+	 */
+	public Adapter createBinaryReferenceAdapter() {
 		return null;
 	}
 

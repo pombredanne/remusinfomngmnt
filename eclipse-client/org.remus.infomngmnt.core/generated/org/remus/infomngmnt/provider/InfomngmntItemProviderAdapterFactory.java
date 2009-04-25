@@ -108,6 +108,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.BinaryReference} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BinaryReferenceItemProvider binaryReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.BinaryReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createBinaryReferenceAdapter() {
+		if (binaryReferenceItemProvider == null) {
+			binaryReferenceItemProvider = new BinaryReferenceItemProvider(this);
+		}
+
+		return binaryReferenceItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Usage} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -805,6 +828,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	 */
 	public void dispose() {
 		if (informationUnitItemProvider != null) informationUnitItemProvider.dispose();
+		if (binaryReferenceItemProvider != null) binaryReferenceItemProvider.dispose();
 		if (usageItemProvider != null) usageItemProvider.dispose();
 		if (categoryItemProvider != null) categoryItemProvider.dispose();
 		if (informationUnitListItemItemProvider != null) informationUnitListItemItemProvider.dispose();

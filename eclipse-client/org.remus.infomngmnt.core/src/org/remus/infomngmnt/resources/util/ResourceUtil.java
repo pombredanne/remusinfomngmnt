@@ -37,9 +37,15 @@ public class ResourceUtil {
 
 	public static final String FILE_EXTENSION = "info";
 
+	public static final String DOT_FILE_EXTENSION = ".info";
+
 	public static final String PRIMARY_CONTENT_FILE = "primaryContent.info"; //$NON-NLS-1$
 
 	public static final String SETTINGS_FOLDER = ".settings"; //$NON-NLS-1$
+
+	public static final String BINARY_FOLDER = ".binary"; //$NON-NLS-1$
+
+	public static final String CMDSTACK_FOLDER = ".commandstack"; //$NON-NLS-1$
 
 	public static final String BIN_FOLDER = "bin"; //$NON-NLS-1$
 
@@ -267,9 +273,21 @@ public class ResourceUtil {
 	 */
 	public static void createNewProject(final IProject newProject, final IProgressMonitor monitor,
 			final String description) throws CoreException {
+		// At first we have to create the folder for the primary-content file
 		IFolder folder = newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
 		if (!folder.exists()) {
 			folder.create(true, true, monitor);
+		}
+		// We're creating the folder where all binary data is located.
+		IFolder binaryFolder = newProject.getFolder(ResourceUtil.BINARY_FOLDER);
+		if (!binaryFolder.exists()) {
+			binaryFolder.create(true, true, monitor);
+		}
+		// This is the folder for keeping binary references of objects that are
+		// obsolete but still on some commandstack.
+		IFolder cmdFolder = newProject.getFolder(ResourceUtil.CMDSTACK_FOLDER);
+		if (!cmdFolder.exists()) {
+			cmdFolder.create(true, true, monitor);
 		}
 		IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
 		Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file,
@@ -286,7 +304,7 @@ public class ResourceUtil {
 
 	}
 
-	public static IFile createTempFile() {
+	public static IFile createTempFile(final String extension) {
 		NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT_NAME_TMP);
 		IFile file = null;
@@ -299,7 +317,11 @@ public class ResourceUtil {
 				e.printStackTrace();
 			}
 		}
-		file = project.getFile(IdFactory.createId());
+		if (extension != null) {
+			file = project.getFile(new Path(IdFactory.createId()).addFileExtension(extension));
+		} else {
+			file = project.getFile(IdFactory.createId());
+		}
 		if (!file.exists()) {
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(new byte[0]);
 			try {
@@ -314,6 +336,10 @@ public class ResourceUtil {
 			throw new IllegalArgumentException("tmp file already exisits.");
 		}
 		return file;
+	}
+
+	public static IFile createTempFile() {
+		return createTempFile(null);
 	}
 
 }

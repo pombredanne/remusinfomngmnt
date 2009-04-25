@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -53,6 +54,7 @@ import org.remus.infomngmnt.Usage;
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getKeywords <em>Keywords</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getCalendarEntry <em>Calendar Entry</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getBinaryReferences <em>Binary References</em>}</li>
  * </ul>
  * </p>
  *
@@ -268,6 +270,16 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @ordered
 	 */
 	protected EList<CalendarEntry> calendarEntry;
+
+	/**
+	 * The cached value of the '{@link #getBinaryReferences() <em>Binary References</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBinaryReferences()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<BinaryReference> binaryReferences;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -547,6 +559,18 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<BinaryReference> getBinaryReferences() {
+		if (binaryReferences == null) {
+			binaryReferences = new EObjectContainmentEList<BinaryReference>(BinaryReference.class, this, InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES);
+		}
+		return binaryReferences;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -556,6 +580,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return ((InternalEList<?>)getLinks()).basicRemove(otherEnd, msgs);
 			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
 				return ((InternalEList<?>)getCalendarEntry()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
+				return ((InternalEList<?>)getBinaryReferences()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -595,6 +621,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return getKeywords();
 			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
 				return getCalendarEntry();
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
+				return getBinaryReferences();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -651,6 +679,10 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				getCalendarEntry().clear();
 				getCalendarEntry().addAll((Collection<? extends CalendarEntry>)newValue);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
+				getBinaryReferences().clear();
+				getBinaryReferences().addAll((Collection<? extends BinaryReference>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -702,6 +734,9 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
 				getCalendarEntry().clear();
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
+				getBinaryReferences().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -740,6 +775,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return KEYWORDS_EDEFAULT == null ? keywords != null : !KEYWORDS_EDEFAULT.equals(keywords);
 			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
 				return calendarEntry != null && !calendarEntry.isEmpty();
+			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
+				return binaryReferences != null && !binaryReferences.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

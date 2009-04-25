@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.diff.metamodel.AttributeChange;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
@@ -27,13 +28,14 @@ import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EAttribute;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class InformationUtil {
 
-	public static InformationUnit getChildByType(InformationUnit unit, String type) {
+	public static InformationUnit getChildByType(final InformationUnit unit, final String type) {
 		InformationUnit returnValue = null;
 		if (unit != null) {
 			EList<InformationUnit> childValues = unit.getChildValues();
@@ -47,12 +49,23 @@ public class InformationUtil {
 		return returnValue;
 	}
 
-	public static List<DiffElement> computeDiffs(InformationUnit obj1, InformationUnit obj2) {
+	public static IFile getFirstBinaryReferenceFile(final InformationUnit unit) {
+		IFile infoFile = (IFile) unit.getAdapter(IFile.class);
+		if (infoFile != null && unit.getBinaryReferences().size() > 0) {
+			return infoFile.getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
+					unit.getBinaryReferences().get(0).getProjectRelativePath());
+		}
+		return null;
+	}
+
+	public static List<DiffElement> computeDiffs(final InformationUnit obj1,
+			final InformationUnit obj2) {
 		// Matching model elements
 		try {
-			MatchModel match = MatchService.doMatch(obj1, obj2, Collections.<String, Object>  emptyMap());
+			MatchModel match = MatchService.doMatch(obj1, obj2, Collections
+					.<String, Object> emptyMap());
 			// Computing differences
-			DiffModel diff = DiffService.  doDiff(match, false);
+			DiffModel diff = DiffService.doDiff(match, false);
 
 			// Merges all differences from model1 to model2
 			return new ArrayList<DiffElement>(diff.getOwnedElements());
@@ -61,16 +74,19 @@ public class InformationUtil {
 		}
 	}
 
-	public static AttributeChange getAttributeChange(InformationUnit obj1, InformationUnit obj2, EAttribute attribute) {
+	public static AttributeChange getAttributeChange(final InformationUnit obj1,
+			final InformationUnit obj2, final EAttribute attribute) {
 		List<DiffElement> computeDiffs = computeDiffs(obj1, obj2);
 		return getAttributeChange(computeDiffs, attribute);
 	}
 
-	public static AttributeChange getAttributeChange(List<DiffElement> elements, EAttribute attributeToCompare) {
+	public static AttributeChange getAttributeChange(final List<DiffElement> elements,
+			final EAttribute attributeToCompare) {
 		for (DiffElement diffElement : elements) {
 			if (diffElement instanceof DiffGroup) {
 				EList<DiffElement> subDiffElements = diffElement.getSubDiffElements();
-				AttributeChange attributeChange = getAttributeChange(subDiffElements, attributeToCompare);
+				AttributeChange attributeChange = getAttributeChange(subDiffElements,
+						attributeToCompare);
 				if (attributeChange != null) {
 					return attributeChange;
 				}

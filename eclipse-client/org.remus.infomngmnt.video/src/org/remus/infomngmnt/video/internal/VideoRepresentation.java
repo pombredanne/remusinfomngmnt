@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -37,6 +36,7 @@ import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.video.VideoActivator;
 
 /**
@@ -91,6 +91,8 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 				.getLongValue();
 		long height = InformationUtil.getChildByType(getValue(), VideoActivator.NODE_NAME_HEIGHT)
 				.getLongValue();
+		this.videoHref = getFile().getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
+				getValue().getBinaryReferences().get(0).getProjectRelativePath()).getLocation();
 		/*
 		 * Next: build the html snippet for displaying the media and put them
 		 * into a collection This collection will be passed to freemark. The
@@ -120,41 +122,6 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}
 		return new ByteArrayInputStream(returnValue.toByteArray());
-	}
-
-	@Override
-	public boolean createFolderOnBuild() {
-		return true;
-	}
-
-	@Override
-	public void handlePreBuild(final IProgressMonitor monitor) {
-		InformationUnit rawDataNode = InformationUtil.getChildByType(getValue(),
-				VideoActivator.NODE_NAME_RAWDATA);
-		if (rawDataNode != null && rawDataNode.getBinaryValue() != null) {
-			monitor.setTaskName("Extracting video...");
-		}
-		InformationUnit origFileName = InformationUtil.getChildByType(getValue(),
-				VideoActivator.NODE_NAME_MEDIATYPE);
-		if (origFileName != null) {
-			String fileExtension = "avi";
-			if (origFileName.getStringValue() != null) {
-				fileExtension = origFileName.getStringValue();
-			}
-			IFile file = getBuildFolder().getFile(
-					new Path(getValue().getId()).addFileExtension(fileExtension));
-			this.videoHref = file.getLocation();
-			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
-			try {
-				file.create(bais, true, monitor);
-			} catch (CoreException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} finally {
-				StreamCloser.closeStreams(bais);
-			}
-		}
-
 	}
 
 }

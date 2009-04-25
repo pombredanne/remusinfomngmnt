@@ -11,11 +11,15 @@
  *******************************************************************************/
 package org.remus.infomngmnt.video.newwizard;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 import org.remus.infomngmnt.video.VideoActivator;
 
@@ -50,6 +54,16 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 			this.page1 = new GeneralVideoPage((Category) null);
 		}
 
+	}
+
+	@Override
+	protected Command getAdditionalCommands() {
+		IFile tmpFile = ((GeneralVideoPage) this.page1).getTmpFile();
+		if (tmpFile != null) {
+			return CommandFactory.addFileToInfoUnit(tmpFile, this.newElement, EditingUtil
+					.getInstance().getNavigationEditingDomain());
+		}
+		return super.getAdditionalCommands();
 	}
 
 	/*

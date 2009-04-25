@@ -41,14 +41,11 @@ public class VideoCreationFactory extends AbstractCreationFactory {
 		mediaType.setType(VideoActivator.NODE_NAME_MEDIATYPE);
 		InformationUnit cuePoints = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		cuePoints.setType(VideoActivator.NODE_NAME_CUEPOINTS);
-		InformationUnit rawData = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		rawData.setType(VideoActivator.NODE_NAME_RAWDATA);
 
 		newObject.getChildValues().add(width);
 		newObject.getChildValues().add(height);
 		newObject.getChildValues().add(mediaType);
 		newObject.getChildValues().add(cuePoints);
-		newObject.getChildValues().add(rawData);
 
 		return newObject;
 	}

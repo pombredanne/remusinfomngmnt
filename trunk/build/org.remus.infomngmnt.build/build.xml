@@ -30,9 +30,9 @@
     </description>
 
 	<target name="rename">
-		<move file="N.RIM/RIM-linux.gtk.x86_64.zip" tofile="N.RIM/RIM-linux.gtk.x86_64.tar.gz"></move>
-		<move file="N.RIM/RIM-linux.gtk.x86.zip" tofile="N.RIM/RIM-linux.gtk.x86.tar.gz"></move>
-		<move file="N.RIM/RIM-macosx.carbon.ppc.zip" tofile="N.RIM/RIM-macosx.carbon.ppc.tar.gz"></move>
+		<move file="N.RIM/RIM-linux.gtk.x86_64.zip" failonerror="false" tofile="N.RIM/RIM-linux.gtk.x86_64.tar.gz"></move>
+		<move file="N.RIM/RIM-linux.gtk.x86.zip" failonerror="false" tofile="N.RIM/RIM-linux.gtk.x86.tar.gz"></move>
+		<move file="N.RIM/RIM-macosx.carbon.ppc.zip" failonerror="false" tofile="N.RIM/RIM-macosx.carbon.ppc.tar.gz"></move>
 	</target>
 
 	<!-- ================================= 

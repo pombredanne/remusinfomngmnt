@@ -45,6 +45,7 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.FadeJob;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.IFadeListener;
@@ -120,22 +121,22 @@ public abstract class AbstractNotificationPopup extends Window {
 
 		public void handleEvent(final Event event) {
 			if (isMouseOver(getShell())) {
-				AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(AbstractNotificationPopup.this.shell, new IFadeListener() {
-					public void faded(final Shell shell, final int alpha) {
-						if (shell.isDisposed()) {
-							return;
-						}
+				AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(
+						AbstractNotificationPopup.this.shell, new IFadeListener() {
+							public void faded(final Shell shell, final int alpha) {
+								if (shell.isDisposed()) {
+									return;
+								}
 
-						if (alpha == 255) {
-							scheduleAutoClose();
-						}
-					}
-				});
+								if (alpha == 255) {
+									scheduleAutoClose();
+								}
+							}
+						});
 			}
 
 		}
 	};
-
 
 	private final boolean respectDisplayBounds = true;
 
@@ -152,7 +153,7 @@ public abstract class AbstractNotificationPopup extends Window {
 	protected int yOffset;
 
 	public AbstractNotificationPopup(final Display display) {
-		this(display, SWT.NO_TRIM | SWT.ON_TOP | SWT.NO_FOCUS);
+		this(display, SWT.NO_TRIM | SWT.ON_TOP | SWT.NO_FOCUS | SWT.TOOL);
 	}
 
 	public AbstractNotificationPopup(final Display display, final int style) {
@@ -175,9 +176,11 @@ public abstract class AbstractNotificationPopup extends Window {
 	}
 
 	/**
-	 * Override to return a customized name. Default is to return the name of the product, specified by the -name (e.g.
-	 * "Eclipse SDK") command line parameter that's associated with the product ID (e.g. "org.eclipse.sdk.ide"). Strips
-	 * the trailing "SDK" for any name, since this part of the label is considered visual noise.
+	 * Override to return a customized name. Default is to return the name of
+	 * the product, specified by the -name (e.g. "Eclipse SDK") command line
+	 * parameter that's associated with the product ID (e.g.
+	 * "org.eclipse.sdk.ide"). Strips the trailing "SDK" for any name, since
+	 * this part of the label is considered visual noise.
 	 * 
 	 * @return the name to be used in the title of the popup.
 	 */
@@ -211,7 +214,8 @@ public abstract class AbstractNotificationPopup extends Window {
 
 				Image[] images = getShell().getImages();
 				if (images != null && images.length > 0) {
-					// find the icon that is closest in size, but not larger than maximumHeight
+					// find the icon that is closest in size, but not larger
+					// than maximumHeight
 					for (Image image2 : images) {
 						int newDiff = maximumHeight - image2.getBounds().height;
 						if (newDiff >= 0 && newDiff <= diff) {
@@ -242,8 +246,6 @@ public abstract class AbstractNotificationPopup extends Window {
 	protected void createTitleArea(final Composite parent) {
 		((GridData) parent.getLayoutData()).heightHint = TITLE_HEIGHT;
 
-
-
 		Label titleImageLabel = new Label(parent, SWT.NONE);
 		titleImageLabel.setImage(getPopupShellImage(TITLE_HEIGHT));
 
@@ -260,6 +262,7 @@ public abstract class AbstractNotificationPopup extends Window {
 				AbstractNotificationPopup.this.yOffset = e.y;
 				AbstractNotificationPopup.this.moveMode = true;
 			}
+
 			@Override
 			public void mouseUp(final MouseEvent e) {
 				AbstractNotificationPopup.this.moveMode = false;
@@ -268,8 +271,11 @@ public abstract class AbstractNotificationPopup extends Window {
 		titleTextLabel.addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(final MouseEvent e) {
 				if (AbstractNotificationPopup.this.moveMode) {
-					Point cursorLocation = AbstractNotificationPopup.this.display.getCursorLocation();
-					getShell().setLocation(cursorLocation.x - AbstractNotificationPopup.this.xOffset -20, cursorLocation.y - AbstractNotificationPopup.this.yOffset -5);
+					Point cursorLocation = AbstractNotificationPopup.this.display
+							.getCursorLocation();
+					getShell().setLocation(
+							cursorLocation.x - AbstractNotificationPopup.this.xOffset - 20,
+							cursorLocation.y - AbstractNotificationPopup.this.yOffset - 5);
 					saveLocation(getShell());
 				}
 
@@ -277,16 +283,19 @@ public abstract class AbstractNotificationPopup extends Window {
 
 		});
 		final Label button = new Label(parent, SWT.NONE);
-		button.setImage(CommonImageRegistry.getInstance().get(CommonImageRegistry.NOTIFICATION_CLOSE));
+		button.setImage(CommonImageRegistry.getInstance().get(
+				CommonImageRegistry.NOTIFICATION_CLOSE));
 		button.addMouseTrackListener(new MouseTrackAdapter() {
 			@Override
 			public void mouseEnter(final MouseEvent e) {
-				button.setImage(CommonImageRegistry.getInstance().get(CommonImageRegistry.NOTIFICATION_CLOSE_HOVER));
+				button.setImage(CommonImageRegistry.getInstance().get(
+						CommonImageRegistry.NOTIFICATION_CLOSE_HOVER));
 			}
 
 			@Override
 			public void mouseExit(final MouseEvent e) {
-				button.setImage(CommonImageRegistry.getInstance().get(CommonImageRegistry.NOTIFICATION_CLOSE));
+				button.setImage(CommonImageRegistry.getInstance().get(
+						CommonImageRegistry.NOTIFICATION_CLOSE));
 			}
 		});
 		button.addMouseListener(new MouseAdapter() {
@@ -357,7 +366,6 @@ public abstract class AbstractNotificationPopup extends Window {
 		region.subtract(s.x - 3, s.y - 2, 3, 1);
 		region.subtract(s.x - 4, s.y - 1, 4, 1);
 		region.subtract(s.x - 5, s.y - 1, 5, 1);
-
 
 		/* Dispose old first */
 		if (shell.getRegion() != null) {
@@ -430,8 +438,6 @@ public abstract class AbstractNotificationPopup extends Window {
 		((GridLayout) parent.getLayout()).marginWidth = 1;
 		((GridLayout) parent.getLayout()).marginHeight = 1;
 
-
-
 		/* Outer Composite holding the controls */
 		final Composite outerCircle = new Composite(parent, SWT.NO_FOCUS);
 		outerCircle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -460,7 +466,8 @@ public abstract class AbstractNotificationPopup extends Window {
 			@Override
 			public void controlResized(final ControlEvent e) {
 				Rectangle clArea = titleCircle.getClientArea();
-				AbstractNotificationPopup.this.lastUsedBgImage = new Image(titleCircle.getDisplay(), clArea.width, clArea.height);
+				AbstractNotificationPopup.this.lastUsedBgImage = new Image(
+						titleCircle.getDisplay(), clArea.width, clArea.height);
 				GC gc = new GC(AbstractNotificationPopup.this.lastUsedBgImage);
 
 				/* Gradient */
@@ -468,7 +475,6 @@ public abstract class AbstractNotificationPopup extends Window {
 
 				/* Fix Region Shape */
 				fixRegion(gc, clArea);
-
 
 				gc.dispose();
 
@@ -502,7 +508,6 @@ public abstract class AbstractNotificationPopup extends Window {
 				gc.drawPoint(clArea.width - 2, 1);
 				gc.drawPoint(clArea.width - 1, 2);
 				gc.drawPoint(clArea.width - 1, 3);
-
 
 			}
 		});
@@ -545,9 +550,6 @@ public abstract class AbstractNotificationPopup extends Window {
 		layout.marginWidth = 0;
 		layout.marginHeight = 5;
 
-
-
-
 		innerContentCircle.setLayout(layout);
 
 		((GridLayout) innerContentCircle.getLayout()).marginLeft = 5;
@@ -557,10 +559,11 @@ public abstract class AbstractNotificationPopup extends Window {
 			@Override
 			public void controlResized(final ControlEvent e) {
 				Rectangle clArea = middleContentCircle.getClientArea();
-				Image image = new Image(middleContentCircle.getDisplay(), clArea.width, clArea.height);
+				Image image = new Image(middleContentCircle.getDisplay(), clArea.width,
+						clArea.height);
 				GC gc = new GC(image);
 				gc.setForeground(AbstractNotificationPopup.this.color.getBorder());
-				gc.drawLine(0,0,clArea.width,0);
+				gc.drawLine(0, 0, clArea.width, 0);
 
 				/* Fill Bottom Left */
 				gc.drawPoint(0, clArea.height - 4);
@@ -595,14 +598,15 @@ public abstract class AbstractNotificationPopup extends Window {
 		int width = Math.min(initialSize.x, MAX_WIDTH);
 
 		Point size = new Point(width, height);
-		this.shell.setLocation(clArea.width + clArea.x - size.x - PADDING_EDGE, clArea.height + clArea.y - size.y
-				- PADDING_EDGE);
+		this.shell.setLocation(clArea.width + clArea.x - size.x - PADDING_EDGE, clArea.height
+				+ clArea.y - size.y - PADDING_EDGE);
 		this.shell.setSize(size);
 	}
 
 	private Rectangle getPrimaryClientArea() {
 		Monitor primaryMonitor = this.shell.getDisplay().getPrimaryMonitor();
-		return (primaryMonitor != null) ? primaryMonitor.getClientArea() : this.shell.getDisplay().getClientArea();
+		return (primaryMonitor != null) ? primaryMonitor.getClientArea() : this.shell.getDisplay()
+				.getClientArea();
 	}
 
 	public void closeFade() {
@@ -619,17 +623,18 @@ public abstract class AbstractNotificationPopup extends Window {
 							if (AbstractNotificationPopup.this.fadeJob != null) {
 								AbstractNotificationPopup.this.fadeJob.cancelAndWait(false);
 							}
-							AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(shell, new IFadeListener() {
-								public void faded(final Shell shell, final int alpha) {
-									if (shell.isDisposed()) {
-										return;
-									}
+							AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(shell,
+									new IFadeListener() {
+										public void faded(final Shell shell, final int alpha) {
+											if (shell.isDisposed()) {
+												return;
+											}
 
-									if (alpha == 255) {
-										scheduleAutoClose();
-									}
-								}
-							});
+											if (alpha == 255) {
+												scheduleAutoClose();
+											}
+										}
+									});
 						}
 					}
 				}

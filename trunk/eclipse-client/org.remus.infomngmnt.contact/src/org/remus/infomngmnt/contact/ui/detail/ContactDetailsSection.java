@@ -163,7 +163,7 @@ public class ContactDetailsSection {
 		final Text tx_Title = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_Title.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 	}
-	private void createSeparator(Composite compositeGeneral, boolean isHorizontal, int span) {
+	public void createSeparator(Composite compositeGeneral, boolean isHorizontal, int span) {
 		final Label lb_Separator = new Label(compositeGeneral, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		if (isHorizontal) {

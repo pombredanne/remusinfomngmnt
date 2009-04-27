@@ -31,6 +31,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -59,9 +60,23 @@ public class ContactGeneralSection {
 	private Button bt_EditAddress;
 	private Combo combo_AddressChooser;
 	private Text tx_Address;
+	private Button bt_EditImAddress;
+	private Text tx_ImAddress;
+	private Control tx_BlogFeed;
+	private Control tx_Frontpage;
+	private Button bt_EditEmail;
+	private Text tx_Email;
+	private FormToolkit toolkit;
+	private Shell shell;
+	private InformationUnit informationUnit;
+	private EditGeneralPage editGeneralPage;
 	
 	public ContactGeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage){		
 		
+		this.toolkit = toolkit;
+		this.shell = shell;
+		this.informationUnit = informationUnit;
+		this.editGeneralPage = editGeneralPage;
 
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -75,16 +90,16 @@ public class ContactGeneralSection {
 		toolkit.paintBordersFor(compositeGeneral);
 		section_1.setClient(compositeGeneral);
 
-		createGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
-		createGroupPhoneNumbers(compositeGeneral, toolkit, informationUnit, editGeneralPage);		
-		createGroupAddress(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
-		createGroupInternet(compositeGeneral, toolkit);
+		createGroupPerson(compositeGeneral);
+		createGroupPhoneNumbers(compositeGeneral);		
+		createGroupAddress(compositeGeneral);
+		createGroupInternet(compositeGeneral);
 		createSeparator(compositeGeneral, true, 2);
 		new Label(compositeGeneral, SWT.NONE);
-		createGroupButtons(compositeGeneral, toolkit);
+		createGroupButtons(compositeGeneral);
 	}
 
-	private void createGroupButtons(final Composite compositeGeneral, final FormToolkit toolkit) {
+	private void createGroupButtons(final Composite compositeGeneral) {
 		final Composite composite_CreateDetailButtons = toolkit.createComposite(compositeGeneral,
 				SWT.NONE);
 		final GridLayout gl_CreateDetailButtons = new GridLayout();
@@ -103,8 +118,7 @@ public class ContactGeneralSection {
 				SWT.NONE);
 	}
 
-	private void createGroupPerson(final Composite compositeGeneral, final FormToolkit toolkit,
-			final Shell shell, final InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
+	private void createGroupPerson(Composite compositeGeneral) {
 
 		final Group group_Person = new Group(compositeGeneral, SWT.NONE);
 		final GridData gd_Person = new GridData();
@@ -200,13 +214,13 @@ public class ContactGeneralSection {
 		bt_EditName.addSelectionListener(new SelectionAdapter(){
 
 			public void widgetSelected(final SelectionEvent e) {
-				EditContactPersonDialog ecd = new EditContactPersonDialog(compositeGeneral, toolkit, shell,	informationUnit, editGeneralPage);
+				EditContactPersonDialog ecd = new EditContactPersonDialog(toolkit, shell,	informationUnit, editGeneralPage);
 				ecd.open();
 				}			
 		});
 	}
 	
-	private void createGroupPhoneNumbers(Composite compositeGeneral, FormToolkit toolkit, InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
+	private void createGroupPhoneNumbers(Composite compositeGeneral) {
 		
 		final Group group_PhoneNumbers = new Group(compositeGeneral, SWT.NONE);
 		group_PhoneNumbers.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
@@ -220,7 +234,7 @@ public class ContactGeneralSection {
 		}
 	}
 
-	private void createGroupAddress(final Composite compositeGeneral, final FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
+	private void createGroupAddress(final Composite compositeGeneral) {
 		final Group group_Address = new Group(compositeGeneral, SWT.NONE);
 		final GridData gd_GroupAddress = new GridData();
 		gd_GroupAddress.grabExcessVerticalSpace = true;
@@ -367,7 +381,7 @@ public class ContactGeneralSection {
 				pob
 				);
 	}
-	private void createGroupInternet(final Composite compositeGeneral, final FormToolkit toolkit) {
+	private void createGroupInternet(final Composite compositeGeneral) {
 		final Group group_Internet = new Group(compositeGeneral, SWT.NONE);
 		group_Internet.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
@@ -378,29 +392,55 @@ public class ContactGeneralSection {
 		gl_Internet.numColumns = 2;
 		group_Internet.setLayout(gl_Internet);
 
-		final Label lb_Email = toolkit.createLabel(group_Internet, "E-Mail:");
-		final Text tx_Email = toolkit.createText(group_Internet, null, SWT.BORDER);
+		toolkit.createLabel(group_Internet, "E-Mail:");
+		tx_Email = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_Email.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		final Button bt_EditEmail = toolkit.createButton(group_Internet, "Edit E-Mail-Address ...",
-				SWT.NONE);
+		bt_EditEmail = toolkit.createButton(group_Internet, "Edit E-Mail-Address ...", SWT.NONE);
 		bt_EditEmail.setLayoutData(gd_SpanHorizontal2);
 
-		final Label lb_Frontpage = toolkit.createLabel(group_Internet, "Frontpage:");
-		final Text tx_Frontpage = toolkit.createText(group_Internet, null, SWT.BORDER);
+		createSeparator(group_Internet, true, 3);
+		
+		toolkit.createLabel(group_Internet, "Frontpage:");
+		tx_Frontpage = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_Frontpage.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		final Label lb_BlogFeed = toolkit.createLabel(group_Internet, "Blog Feed:");
-		final Text tx_BlogFeed = toolkit.createText(group_Internet, null, SWT.BORDER);
+		toolkit.createLabel(group_Internet, "Blog Feed:");
+		tx_BlogFeed = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_BlogFeed.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		final Label lb_ImAddress = toolkit.createLabel(group_Internet, "IM-Address:");
-		final Text tx_ImAddress = toolkit.createText(group_Internet, null, SWT.BORDER);
+		toolkit.createLabel(group_Internet, "IM-Address:");
+		tx_ImAddress = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_ImAddress.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		final Button bt_EditImAddress = toolkit.createButton(group_Internet, "Edit IM-Address ...",
-				SWT.NONE);
+		bt_EditImAddress = toolkit.createButton(group_Internet, "Edit IM-Address ...", SWT.NONE);
 		bt_EditImAddress.setLayoutData(gd_SpanHorizontal2);
+		
+		createListener();
+		createTextValueBindings();
+		
+		setContactProportiesFromActivatorToGenerationDialog();
+	}
+
+	private void createTextValueBindings() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void createListener() {
+		bt_EditEmail.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(final SelectionEvent e) {
+				EditContactEmailDialog ecd = new EditContactEmailDialog(toolkit, shell, informationUnit, editGeneralPage);
+				ecd.open();
+			}			
+		});
+		bt_EditImAddress.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(final SelectionEvent e) {
+				EditContactIMDialog ecd = new EditContactIMDialog(toolkit, shell, informationUnit, editGeneralPage);
+				ecd.open();
+			}			
+		});
+		
 	}
 
 	private void createSeparator(final Composite compositeGeneral, final boolean isHorizontal,

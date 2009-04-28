@@ -34,6 +34,8 @@ import org.eclipse.ecf.filetransfer.identity.FileIDFactory;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.osgi.util.NLS;
 
+import org.remus.infomngmnt.core.model.StatusCreator;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -130,9 +132,9 @@ public class DownloadFileJob extends Job {
 					this.adapter.getRetrieveNamespace(), this.source), listener, null);
 
 		} catch (final IncomingFileTransferException e) {
-			e.printStackTrace();
+			return StatusCreator.newStatus("Error while downloading", e);
 		} catch (final FileCreateException e) {
-			e.printStackTrace();
+			return StatusCreator.newStatus("Error while downloading", e);
 		} finally {
 			try {
 				if (out != null) {

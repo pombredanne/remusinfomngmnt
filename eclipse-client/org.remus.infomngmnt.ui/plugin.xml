@@ -87,6 +87,13 @@
             id="org.remus.infomngmnt.ui.calendar.CalendarEditor"
             name="Calendar">
       </editor>
+      <editor
+            class="org.remus.infomngmnt.welcome.WelcomeEditor2"
+            default="false"
+            icon="icons/iconexperience/16/earth.png"
+            id="org.remus.infomngmnt.welcome.WelcomeEditor"
+            name="Welcome to RIM!">
+      </editor>
    </extension>
    <extension
          point="org.eclipse.equinox.preferences.preferences">
@@ -186,6 +193,11 @@
       <command
             id="org.remus.infomngmnt.ui.replaceCommand"
             name="Replace with Repository Content">
+      </command>
+      <command
+            defaultHandler="org.remus.infomngmnt.ui.handler.OpenWelcomeHandler"
+            id="org.remus.infomngmnt.ui.openWelcome"
+            name="Welcome">
       </command>
    </extension>
    <extension
@@ -472,6 +484,14 @@
                </visibleWhen>
             </command>
          </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:help?after=help-primary-additions-start">
+         <command
+               commandId="org.remus.infomngmnt.ui.openWelcome"
+               icon="icons/iconexperience/16/earth.png"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension

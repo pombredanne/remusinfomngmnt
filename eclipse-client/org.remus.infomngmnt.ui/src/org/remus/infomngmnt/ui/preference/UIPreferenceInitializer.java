@@ -29,6 +29,12 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 	public static final String TRAY_ON_CLOSE = "TRAY_ON_CLOSE"; //$NON-NLS-1$
 	public static final String TRAY_ON_START = "TRAY_ON_START"; //$NON-NLS-1$
 	public static final String DESKTOP_LOCATION = "DESKTOP_LOCATION"; //$NON-NLS-1$
+	public static final String SHOW_WELCOME = "SHOW_WELCOME"; //$NON-NLS-1$
+
+	public static final String FAQ_LINK = "FAQ_LINK"; //$NON-NLS-1$
+	public static final String USER_DOCUMENTATION_LINK = "USER_DOCUMENTATION_LINK"; //$NON-NLS-1$
+	public static final String VIDEO_LINK = "VIDEO_LINK"; //$NON-NLS-1$
+
 	/**
 	 * 
 	 */
@@ -36,15 +42,24 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 		this.store = UIPlugin.getDefault().getPreferenceStore();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#
+	 * initializeDefaultPreferences()
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
 		this.store.setDefault(TRAY_ON_MINIMIZE, true);
 		this.store.setDefault(TRAY_ON_CLOSE, false);
 		this.store.setDefault(TRAY_ON_START, false);
-		PreferenceConverter.setDefault(this.store, DESKTOP_LOCATION, new Point(10000,10000));
+		this.store.setDefault(SHOW_WELCOME, true);
+		this.store.setDefault(FAQ_LINK, "http://remus-software.org/faq");
+		this.store.setDefault(USER_DOCUMENTATION_LINK,
+				"http://remus-software.org/user-documentation");
+		this.store.setDefault(VIDEO_LINK,
+				"http://remus-software.org/media/screencasts/getting-started/video.html");
+		PreferenceConverter.setDefault(this.store, DESKTOP_LOCATION, new Point(10000, 10000));
 	}
 
 }

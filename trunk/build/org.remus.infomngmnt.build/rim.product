@@ -3,7 +3,6 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
-
    <configIni use="default">
       <linux>/org.remus.infomngmnt.application/config.ini</linux>
       <macosx>/org.remus.infomngmnt.application/config.ini</macosx>
@@ -16,18 +15,17 @@
 
    <windowImages i16="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
 
-
    <launcher name="rim">
+      <linux icon="/org.remus.infomngmnt.build/xpm/cabinet_open.xpm"/>
       <solaris/>
-      <win useIco="false">
+      <win useIco="true">
+         <ico path="/org.remus.infomngmnt.build/ico/cabinet_open.ico"/>
          <bmp/>
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="com.ibm.icu"/>

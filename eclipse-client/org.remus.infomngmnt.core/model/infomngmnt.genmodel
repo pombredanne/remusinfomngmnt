@@ -109,6 +109,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/infoTypeId"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RuleAction/ruleValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/groovyMatcher"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RuleResult">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/value"/>

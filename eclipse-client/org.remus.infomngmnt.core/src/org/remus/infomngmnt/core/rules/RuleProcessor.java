@@ -12,6 +12,9 @@
 
 package org.remus.infomngmnt.core.rules;
 
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,19 +57,45 @@ public class RuleProcessor {
 		List<RuleResult> returnValue = new ArrayList<RuleResult>();
 		EList<RemusTransferType> transferTypes = rules.getTransferTypes();
 		for (RemusTransferType remusTransferType : transferTypes) {
-			TransferWrapper transferTypeById = InfomngmntEditPlugin.getPlugin().getService(IRuleExtensionService.class).getTransferTypeById(remusTransferType.getId());
+			TransferWrapper transferTypeById = InfomngmntEditPlugin.getPlugin().getService(
+					IRuleExtensionService.class).getTransferTypeById(remusTransferType.getId());
 			if (transferTypeById != null
 					&& transferTypeById.getTransfer().isSupportedType(event.currentDataType)
 					&& remusTransferType.getActions().size() > 0) {
 				EList<RuleAction> actions = remusTransferType.getActions();
 				RuleResult ruleResult = InfomngmntFactory.eINSTANCE.createRuleResult();
 				ruleResult.setValue(transferTypeById.nativeToJava(event.currentDataType));
-				ruleResult.getActions().addAll(EcoreUtil.copyAll(actions));
-				ruleResult.setDescription(transferTypeById.getName());
-				returnValue.add(ruleResult);
+				List<RuleAction> performGroovyCheck = performGroovyCheck(ruleResult, actions);
+				if (performGroovyCheck.size() > 0) {
+					ruleResult.getActions().addAll(performGroovyCheck);
+					ruleResult.setDescription(transferTypeById.getName());
+					returnValue.add(ruleResult);
+				}
 			}
 		}
 		return returnValue;
+	}
+
+	private List<RuleAction> performGroovyCheck(final RuleResult ruleResult,
+			final EList<RuleAction> actions) {
+		List<RuleAction> returnValue = new ArrayList<RuleAction>();
+		for (RuleAction ruleAction : actions) {
+			try {
+				String groovyMatcher = ruleAction.getGroovyMatcher();
+				Binding binding = new Binding();
+				binding.setVariable("input", ruleResult.getValue());
+				GroovyShell gse = new GroovyShell(binding);
+				Object evaluate = gse.evaluate(groovyMatcher);
+				if (evaluate instanceof Boolean && (Boolean) evaluate) {
+					returnValue.add((RuleAction) EcoreUtil.copy(ruleAction));
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return returnValue;
+
 	}
 
 	public List<RuleResult> process(final Clipboard clipboared, final NewElementRules rules) {
@@ -74,18 +103,23 @@ public class RuleProcessor {
 		EList<RemusTransferType> transferTypes = rules.getTransferTypes();
 		List<TransferData> listOfAvailableTypes = Arrays.asList(clipboared.getAvailableTypes());
 		for (RemusTransferType remusTransferType : transferTypes) {
-			TransferWrapper transferTypeById = InfomngmntEditPlugin.getPlugin().getService(IRuleExtensionService.class).getTransferTypeById(remusTransferType.getId());
+			TransferWrapper transferTypeById = InfomngmntEditPlugin.getPlugin().getService(
+					IRuleExtensionService.class).getTransferTypeById(remusTransferType.getId());
 			if (transferTypeById != null) {
 				TransferData[] supportedTypes = transferTypeById.getTransfer().getSupportedTypes();
 				for (TransferData transferData : supportedTypes) {
-					if (supportsTransferData(listOfAvailableTypes,transferData)
+					if (supportsTransferData(listOfAvailableTypes, transferData)
 							&& remusTransferType.getActions().size() > 0) {
 						EList<RuleAction> actions = remusTransferType.getActions();
 						RuleResult ruleResult = InfomngmntFactory.eINSTANCE.createRuleResult();
 						ruleResult.setValue(clipboared.getContents(transferTypeById.getTransfer()));
-						ruleResult.getActions().addAll(EcoreUtil.copyAll(actions));
-						ruleResult.setDescription(transferTypeById.getName());
-						returnValue.add(ruleResult);
+						List<RuleAction> performGroovyCheck = performGroovyCheck(ruleResult,
+								actions);
+						if (performGroovyCheck.size() > 0) {
+							ruleResult.getActions().addAll(performGroovyCheck);
+							ruleResult.setDescription(transferTypeById.getName());
+							returnValue.add(ruleResult);
+						}
 						break;
 					}
 				}
@@ -94,7 +128,8 @@ public class RuleProcessor {
 		return returnValue;
 	}
 
-	private boolean supportsTransferData(final List<TransferData> availableData, final TransferData data) {
+	private boolean supportsTransferData(final List<TransferData> availableData,
+			final TransferData data) {
 		for (TransferData transferData : availableData) {
 			if (transferData.type == data.type) {
 				return true;

@@ -1046,13 +1046,22 @@ public interface InfomngmntPackage extends EPackage {
 	int RULE_ACTION__RULE_VALUE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Groovy Matcher</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_ACTION__GROOVY_MATCHER = 3;
+
+	/**
 	 * The number of structural features of the '<em>Rule Action</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ACTION_FEATURE_COUNT = 3;
+	int RULE_ACTION_FEATURE_COUNT = 4;
 
 
 	/**
@@ -2576,6 +2585,17 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getRuleAction_RuleValue();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RuleAction#getGroovyMatcher <em>Groovy Matcher</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Groovy Matcher</em>'.
+	 * @see org.remus.infomngmnt.RuleAction#getGroovyMatcher()
+	 * @see #getRuleAction()
+	 * @generated
+	 */
+	EAttribute getRuleAction_GroovyMatcher();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RuleResult <em>Rule Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3822,6 +3842,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RULE_ACTION__RULE_VALUE = eINSTANCE.getRuleAction_RuleValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Groovy Matcher</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE_ACTION__GROOVY_MATCHER = eINSTANCE.getRuleAction_GroovyMatcher();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RuleResultImpl <em>Rule Result</em>}' class.

@@ -35,6 +35,7 @@ import org.remus.infomngmnt.RuleValue;
  *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getInfoTypeId <em>Info Type Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getRuleValue <em>Rule Value</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getGroovyMatcher <em>Groovy Matcher</em>}</li>
  * </ul>
  * </p>
  *
@@ -90,6 +91,26 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	 * @ordered
 	 */
 	protected RuleValue ruleValue;
+
+	/**
+	 * The default value of the '{@link #getGroovyMatcher() <em>Groovy Matcher</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroovyMatcher()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String GROOVY_MATCHER_EDEFAULT = "return true";
+
+	/**
+	 * The cached value of the '{@link #getGroovyMatcher() <em>Groovy Matcher</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroovyMatcher()
+	 * @generated
+	 * @ordered
+	 */
+	protected String groovyMatcher = GROOVY_MATCHER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -200,6 +221,27 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getGroovyMatcher() {
+		return groovyMatcher;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGroovyMatcher(String newGroovyMatcher) {
+		String oldGroovyMatcher = groovyMatcher;
+		groovyMatcher = newGroovyMatcher;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER, oldGroovyMatcher, groovyMatcher));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -223,6 +265,8 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 				return getInfoTypeId();
 			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
 				return getRuleValue();
+			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
+				return getGroovyMatcher();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -243,6 +287,9 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 				return;
 			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
 				setRuleValue((RuleValue)newValue);
+				return;
+			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
+				setGroovyMatcher((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -265,6 +312,9 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
 				setRuleValue((RuleValue)null);
 				return;
+			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
+				setGroovyMatcher(GROOVY_MATCHER_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -283,6 +333,8 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 				return INFO_TYPE_ID_EDEFAULT == null ? infoTypeId != null : !INFO_TYPE_ID_EDEFAULT.equals(infoTypeId);
 			case InfomngmntPackage.RULE_ACTION__RULE_VALUE:
 				return ruleValue != null;
+			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
+				return GROOVY_MATCHER_EDEFAULT == null ? groovyMatcher != null : !GROOVY_MATCHER_EDEFAULT.equals(groovyMatcher);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -301,6 +353,8 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 		result.append(name);
 		result.append(", infoTypeId: ");
 		result.append(infoTypeId);
+		result.append(", groovyMatcher: ");
+		result.append(groovyMatcher);
 		result.append(')');
 		return result.toString();
 	}

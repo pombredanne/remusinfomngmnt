@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.RuleAction#getName <em>Name</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RuleAction#getInfoTypeId <em>Info Type Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RuleAction#getRuleValue <em>Rule Value</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RuleAction#getGroovyMatcher <em>Groovy Matcher</em>}</li>
  * </ul>
  * </p>
  *
@@ -112,5 +113,32 @@ public interface RuleAction extends EObject {
 	 * @generated
 	 */
 	void setRuleValue(RuleValue value);
+
+	/**
+	 * Returns the value of the '<em><b>Groovy Matcher</b></em>' attribute.
+	 * The default value is <code>"return true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Groovy Matcher</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Groovy Matcher</em>' attribute.
+	 * @see #setGroovyMatcher(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRuleAction_GroovyMatcher()
+	 * @model default="return true"
+	 * @generated
+	 */
+	String getGroovyMatcher();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RuleAction#getGroovyMatcher <em>Groovy Matcher</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Groovy Matcher</em>' attribute.
+	 * @see #getGroovyMatcher()
+	 * @generated
+	 */
+	void setGroovyMatcher(String value);
 
 } // RuleAction

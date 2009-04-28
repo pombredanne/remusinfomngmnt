@@ -136,7 +136,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 		InformationUnit predefinedCategory = InformationUtil.getChildByType(ruleValue,
 				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
 		InformationUnit predefinedName = InformationUtil.getChildByType(ruleValue,
-				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+				AbstractCreationPreferencePage.NODENAME_PREDEFINED_NAME);
 		if (predefinedCategory != null) {
 			this.page1.setCategoryString(predefinedCategory.getStringValue());
 		}

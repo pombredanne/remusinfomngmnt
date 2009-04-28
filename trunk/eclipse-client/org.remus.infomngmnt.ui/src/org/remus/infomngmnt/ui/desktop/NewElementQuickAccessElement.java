@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.ui.desktop;
 
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 import org.remus.infomngmnt.RuleAction;
@@ -20,6 +21,7 @@ import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.extension.AbstractCreationTrigger;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 
@@ -32,20 +34,25 @@ public class NewElementQuickAccessElement extends QuickAccessElement {
 	private final IInfoType infoTypeByType;
 	private final Object value;
 
-	public NewElementQuickAccessElement(QuickAccessProvider provider, RuleAction action, Object value) {
+	public NewElementQuickAccessElement(final QuickAccessProvider provider,
+			final RuleAction action, final Object value) {
 		super(provider);
 		this.action = action;
 		this.value = value;
-		this.infoTypeByType = InformationExtensionManager.getInstance()
-		.getInfoTypeByType(action.getInfoTypeId());
+		this.infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+				action.getInfoTypeId());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#execute()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#execute()
 	 */
 	@Override
 	public void execute() {
-		final AbstractCreationTrigger trigger = UIExtensionManager.getInstance().getCreationTriggerByTypeId(this.infoTypeByType.getType());
+		final AbstractCreationTrigger trigger = UIExtensionManager.getInstance()
+				.getCreationTriggerByTypeId(this.infoTypeByType.getType());
 		if (trigger != null) {
 			trigger.setValue(this.value);
 			trigger.setRuleValue(this.action.getRuleValue());
@@ -58,28 +65,39 @@ public class NewElementQuickAccessElement extends QuickAccessElement {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#getId()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#getId()
 	 */
 	@Override
 	public String getId() {
 		return this.action.getInfoTypeId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#getImageDescriptor()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#
+	 * getImageDescriptor()
 	 */
 	@Override
 	public ImageDescriptor getImageDescriptor() {
 		return this.infoTypeByType.getImageDescriptor();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#getLabel()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement#getLabel()
 	 */
 	@Override
 	public String getLabel() {
-		return this.infoTypeByType.getName();
+		IItemLabelProvider adapt = (IItemLabelProvider) EditingUtil.getInstance()
+				.getAdapterFactory().adapt(this.action, IItemLabelProvider.class);
+		return adapt.getText(this.action);
 	}
 
 }

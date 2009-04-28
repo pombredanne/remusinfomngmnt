@@ -45,6 +45,7 @@ import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
@@ -81,33 +82,39 @@ public class ChangeSetExecutor {
 								remoteConvertedContainer,
 								InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 						for (InformationUnitListItem informationUnitListItem : allChildren) {
-							InformationUnit informationUnit2 = changeSetItem
-									.getRemoteFullObjectMap().get(informationUnitListItem);
-							if (informationUnit2 == null) {
-								informationUnit2 = this.changeSet.getRepository()
-										.getRepositoryImplementation().getFullObject(
-												informationUnitListItem, monitor);
-							}
-							informationUnit2.setLabel(informationUnitListItem.getLabel());
-							EditingDomain tempEditingDomain = EditingUtil.getInstance()
-									.createNewEditingDomain();
-							CompoundCommand command = CommandFactory
-									.CREATE_INFOTYPE_FROM_EXISTING_LISTITEM(informationUnit2,
-											(Category) informationUnitListItem.eContainer(),
-											monitor, informationUnitListItem);
+							try {
+								InformationUnit informationUnit2 = changeSetItem
+										.getRemoteFullObjectMap().get(informationUnitListItem);
+								if (informationUnit2 == null) {
+									informationUnit2 = this.changeSet.getRepository()
+											.getRepositoryImplementation().getFullObject(
+													informationUnitListItem, monitor);
+								}
+								informationUnit2.setLabel(informationUnitListItem.getLabel());
+								EditingDomain tempEditingDomain = EditingUtil.getInstance()
+										.createNewEditingDomain();
+								CompoundCommand command = CommandFactory
+										.CREATE_INFOTYPE_FROM_EXISTING_LISTITEM(informationUnit2,
+												(Category) informationUnitListItem.eContainer(),
+												monitor, informationUnitListItem);
 
-							IFile[] binaryReferences = this.changeSet.getRepository()
-									.getRepositoryImplementation().getBinaryReferences();
-							for (IFile iFile : binaryReferences) {
-								Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile,
-										informationUnit2, tempEditingDomain);
-								command.append(addFileCommand);
+								IFile[] binaryReferences = this.changeSet.getRepository()
+										.getRepositoryImplementation().getBinaryReferences();
+								for (IFile iFile : binaryReferences) {
+									Command addFileCommand = CommandFactory.addFileToInfoUnit(
+											iFile, informationUnit2, tempEditingDomain);
+									command.append(addFileCommand);
+								}
+								tempEditingDomain.getCommandStack().execute(command);
+								tempEditingDomain.getCommandStack().flush();
+								InfomngmntEditPlugin.getPlugin().getService(
+										ISaveParticipantExtensionService.class).fireEvent(
+										ISaveParticipant.CREATED, informationUnit2);
+							} catch (Exception e) {
+								InfomngmntEditPlugin.getPlugin().getLog().log(
+										StatusCreator.newStatus(
+												"Error checking out online-element", e));
 							}
-							tempEditingDomain.getCommandStack().execute(command);
-							tempEditingDomain.getCommandStack().flush();
-							InfomngmntEditPlugin.getPlugin().getService(
-									ISaveParticipantExtensionService.class).fireEvent(
-									ISaveParticipant.CREATED, informationUnit2);
 						}
 					}
 				}

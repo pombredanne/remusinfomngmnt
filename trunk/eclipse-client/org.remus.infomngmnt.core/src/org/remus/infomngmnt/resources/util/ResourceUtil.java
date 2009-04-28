@@ -55,6 +55,8 @@ public class ResourceUtil {
 
 	public static final String PROJECT_NAME_TMP = "__tmp"; //$NON-NLS-1$
 
+	public static final String PROJECT_NAME_INTERN = "__intern"; //$NON-NLS-1$
+
 	/**
 	 * Checks for presence of the {@link InformationBuilder#BUILDER_ID} builder.
 	 * 
@@ -334,6 +336,38 @@ public class ResourceUtil {
 			}
 		} else {
 			throw new IllegalArgumentException("tmp file already exisits.");
+		}
+		return file;
+	}
+
+	public static IFile getInternalFile(final String name, final boolean createIfnotexist) {
+		NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT_NAME_INTERN);
+		IFile file = null;
+		if (!project.exists()) {
+			try {
+				project.create(nullProgressMonitor);
+				project.open(nullProgressMonitor);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (name != null) {
+			file = project.getFile(name);
+		} else {
+			file = project.getFile(IdFactory.createId());
+		}
+		if (!file.exists() && createIfnotexist) {
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(new byte[0]);
+			try {
+				file.create(inputStream, true, nullProgressMonitor);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				StreamCloser.closeStreams(inputStream);
+			}
 		}
 		return file;
 	}

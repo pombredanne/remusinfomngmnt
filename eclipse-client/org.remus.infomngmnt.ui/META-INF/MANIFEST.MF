@@ -23,8 +23,8 @@ Require-Bundle: org.eclipse.ui,
  org.remus.infomngmnt.calendar;bundle-version="1.0.0",
  org.apache.commons.lang;bundle-version="2.3.0",
  org.eclipse.ui.forms,
- org.eclipse.ecf.filetransfer;bundle-version="2.1.0",
- org.eclipse.ecf;bundle-version="2.0.1"
+ org.eclipse.ecf.filetransfer,
+ org.eclipse.ecf
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.ui,

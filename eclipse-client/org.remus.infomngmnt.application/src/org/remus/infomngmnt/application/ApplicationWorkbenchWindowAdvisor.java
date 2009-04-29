@@ -84,6 +84,7 @@ import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.desktop.DesktopWindow;
 import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
+import org.remus.infomngmnt.welcome.WelcomeEditor;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor implements
 		ITrayService {
@@ -259,7 +260,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		// show the shortcut bar and progress indicator, which are hidden by
 		// default
 
-		configurer.setInitialSize(new Point(1024, 768));
+		configurer.setInitialSize(new Point(1150, 768));
 		configurer.setShowCoolBar(true);
 		configurer.setShowStatusLine(true);
 		configurer.setShowMenuBar(true);
@@ -297,6 +298,24 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				ApplicationPlugin.getDefault().getLog().log(null);
 
 			}
+		});
+		SafeRunner.run(new ISafeRunnable() {
+
+			public void handleException(final Throwable exception) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void run() throws Exception {
+				if (UIPlugin.getDefault().getPreferenceStore().getBoolean(
+						UIPreferenceInitializer.SHOW_WELCOME)) {
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+							.openEditor(new org.remus.infomngmnt.welcome.WelcomeEditorInput(),
+									WelcomeEditor.EDITOR_ID);
+				}
+
+			}
+
 		});
 	}
 

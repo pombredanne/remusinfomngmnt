@@ -58,10 +58,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction cleanAction;
 
 	/**
-	 * Constructs a new action builder which contributes actions
-	 * to the given window.
+	 * Constructs a new action builder which contributes actions to the given
+	 * window.
 	 * 
-	 * @param configurer the action bar configurer for the window
+	 * @param configurer
+	 *            the action bar configurer for the window
 	 */
 	public ApplicationActionBarAdvisor(final IActionBarConfigurer configurer) {
 		super(configurer);
@@ -84,7 +85,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		// Registering also provides automatic disposal of the actions when
 		// the window is closed.
 
-
 		this.saveAction = ActionFactory.SAVE.create(window);
 		register(this.saveAction);
 
@@ -103,8 +103,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		this.closeAllAction = ActionFactory.CLOSE_ALL.create(window);
 		register(this.closeAllAction);
 
-		this.openWorkspaceAction = IDEActionFactory.OPEN_WORKSPACE
-		.create(window);
+		this.openWorkspaceAction = IDEActionFactory.OPEN_WORKSPACE.create(window);
 		register(this.openWorkspaceAction);
 
 		this.preferenceAction = ActionFactory.PREFERENCES.create(window);
@@ -132,7 +131,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		this.cleanAction = IDEActionFactory.BUILD_CLEAN.create(window);
 		register(this.cleanAction);
 
-
 	}
 
 	@Override
@@ -140,6 +138,18 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		menuBar.add(createFileMenu());
 		menuBar.add(createEditMenu());
 		menuBar.add(createExtraMenu());
+		menuBar.add(createHelpMenu());
+	}
+
+	private MenuManager createHelpMenu() {
+		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_help,
+				IWorkbenchActionConstants.M_HELP);
+		menu.add(new GroupMarker("help-primary-additions-start"));
+		menu.add(new GroupMarker("help-primary-additions-end"));
+		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		menu.add(new Separator());
+
+		return menu;
 	}
 
 	private MenuManager createExtraMenu() {
@@ -163,10 +173,12 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	 * Creates and returns the File menu.
 	 */
 	private MenuManager createFileMenu() {
-		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_file, IWorkbenchActionConstants.M_FILE);
+		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_file,
+				IWorkbenchActionConstants.M_FILE);
 		menu.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
 		{
-			// create the New submenu, using the same id for it as the New action
+			// create the New submenu, using the same id for it as the New
+			// action
 			String newText = IDEWorkbenchMessages.Workbench_new;
 			String newId = ActionFactory.NEW.getId();
 			MenuManager newMenu = new MenuManager(newText, newId);
@@ -183,7 +195,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 		menu.add(this.closeAction);
 		menu.add(this.closeAllAction);
-		//		menu.add(closeAllSavedAction);
+		// menu.add(closeAllSavedAction);
 		menu.add(new GroupMarker(IWorkbenchActionConstants.CLOSE_EXT));
 		menu.add(new Separator());
 		menu.add(this.saveAction);
@@ -192,7 +204,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		menu.add(new Separator());
 		menu.add(getMoveItem());
 		menu.add(getRenameItem());
-
 
 		menu.add(new GroupMarker(IWorkbenchActionConstants.SAVE_EXT));
 		menu.add(new Separator());
@@ -229,7 +240,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	 * Creates and returns the Edit menu.
 	 */
 	private MenuManager createEditMenu() {
-		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_edit, IWorkbenchActionConstants.M_EDIT);
+		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_edit,
+				IWorkbenchActionConstants.M_EDIT);
 		menu.add(new GroupMarker(IWorkbenchActionConstants.EDIT_START));
 
 		menu.add(this.undoAction);
@@ -251,7 +263,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		menu.add(new GroupMarker(IWorkbenchActionConstants.FIND_EXT));
 		menu.add(new Separator());
 
-
 		menu.add(new GroupMarker(IWorkbenchActionConstants.ADD_EXT));
 
 		menu.add(new GroupMarker(IWorkbenchActionConstants.EDIT_END));
@@ -260,31 +271,24 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	private IContributionItem getCutItem() {
-		return getItem(
-				ActionFactory.CUT.getId(),
+		return getItem(ActionFactory.CUT.getId(),
 				"org.eclipse.ui.edit.cut", //$NON-NLS-1$
-				ISharedImages.IMG_TOOL_CUT,
-				ISharedImages.IMG_TOOL_CUT_DISABLED,
-				WorkbenchMessages.Workbench_cut,
-				WorkbenchMessages.Workbench_cutToolTip, null);
+				ISharedImages.IMG_TOOL_CUT, ISharedImages.IMG_TOOL_CUT_DISABLED,
+				WorkbenchMessages.Workbench_cut, WorkbenchMessages.Workbench_cutToolTip, null);
 	}
 
 	private IContributionItem getCopyItem() {
-		return getItem(
-				ActionFactory.COPY.getId(),
+		return getItem(ActionFactory.COPY.getId(),
 				"org.eclipse.ui.edit.copy", //$NON-NLS-1$
-				ISharedImages.IMG_TOOL_COPY,
-				ISharedImages.IMG_TOOL_COPY_DISABLED,
-				WorkbenchMessages.Workbench_copy,
-				WorkbenchMessages.Workbench_copyToolTip, null);
+				ISharedImages.IMG_TOOL_COPY, ISharedImages.IMG_TOOL_COPY_DISABLED,
+				WorkbenchMessages.Workbench_copy, WorkbenchMessages.Workbench_copyToolTip, null);
 	}
 
 	private IContributionItem getPasteItem() {
 		return getItem(
 				ActionFactory.PASTE.getId(),
 				"org.eclipse.ui.edit.paste", ISharedImages.IMG_TOOL_PASTE, //$NON-NLS-1$
-				ISharedImages.IMG_TOOL_PASTE_DISABLED,
-				WorkbenchMessages.Workbench_paste,
+				ISharedImages.IMG_TOOL_PASTE_DISABLED, WorkbenchMessages.Workbench_paste,
 				WorkbenchMessages.Workbench_pasteToolTip, null);
 	}
 
@@ -292,75 +296,63 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		return getItem(
 				ActionFactory.PRINT.getId(),
 				"org.eclipse.ui.file.print", ISharedImages.IMG_ETOOL_PRINT_EDIT, //$NON-NLS-1$
-				ISharedImages.IMG_ETOOL_PRINT_EDIT_DISABLED,
-				WorkbenchMessages.Workbench_print,
+				ISharedImages.IMG_ETOOL_PRINT_EDIT_DISABLED, WorkbenchMessages.Workbench_print,
 				WorkbenchMessages.Workbench_printToolTip, null);
 	}
 
 	private IContributionItem getSelectAllItem() {
-		return getItem(
-				ActionFactory.SELECT_ALL.getId(),
+		return getItem(ActionFactory.SELECT_ALL.getId(),
 				"org.eclipse.ui.edit.selectAll", //$NON-NLS-1$
 				null, null, WorkbenchMessages.Workbench_selectAll,
 				WorkbenchMessages.Workbench_selectAllToolTip, null);
 	}
 
 	private IContributionItem getFindItem() {
-		return getItem(
-				ActionFactory.FIND.getId(),
+		return getItem(ActionFactory.FIND.getId(),
 				"org.eclipse.ui.edit.findReplace", //$NON-NLS-1$
 				null, null, WorkbenchMessages.Workbench_findReplace,
 				WorkbenchMessages.Workbench_findReplaceToolTip, null);
 	}
 
 	private IContributionItem getDeleteItem() {
-		return getItem(ActionFactory.DELETE.getId(),
+		return getItem(
+				ActionFactory.DELETE.getId(),
 				"org.eclipse.ui.edit.delete", //$NON-NLS-1$
-				ISharedImages.IMG_TOOL_DELETE,
-				ISharedImages.IMG_TOOL_DELETE_DISABLED,
-				WorkbenchMessages.Workbench_delete,
-				WorkbenchMessages.Workbench_deleteToolTip,
+				ISharedImages.IMG_TOOL_DELETE, ISharedImages.IMG_TOOL_DELETE_DISABLED,
+				WorkbenchMessages.Workbench_delete, WorkbenchMessages.Workbench_deleteToolTip,
 				IWorkbenchHelpContextIds.DELETE_RETARGET_ACTION);
 	}
 
 	private IContributionItem getMoveItem() {
-		return getItem(ActionFactory.MOVE.getId(), "org.eclipse.ui.edit.move", //$NON-NLS-1$
+		return getItem(ActionFactory.MOVE.getId(),
+				"org.eclipse.ui.edit.move", //$NON-NLS-1$
 				null, null, WorkbenchMessages.Workbench_move,
 				WorkbenchMessages.Workbench_moveToolTip, null);
 	}
 
 	private IContributionItem getRenameItem() {
-		return getItem(ActionFactory.RENAME.getId(),
-				"org.eclipse.ui.edit.rename", null, null, //$NON-NLS-1$
-				WorkbenchMessages.Workbench_rename,
-				WorkbenchMessages.Workbench_renameToolTip, null);
+		return getItem(ActionFactory.RENAME.getId(), "org.eclipse.ui.edit.rename", null, null, //$NON-NLS-1$
+				WorkbenchMessages.Workbench_rename, WorkbenchMessages.Workbench_renameToolTip, null);
 	}
 
-
-
 	private IContributionItem getItem(final String actionId, final String commandId,
-			final String image, final String disabledImage, final String label, final String tooltip, final String helpContextId) {
-		ISharedImages sharedImages = getWindow().getWorkbench()
-		.getSharedImages();
+			final String image, final String disabledImage, final String label,
+			final String tooltip, final String helpContextId) {
+		ISharedImages sharedImages = getWindow().getWorkbench().getSharedImages();
 
-		IActionCommandMappingService acms = (IActionCommandMappingService) getWindow()
-		.getService(IActionCommandMappingService.class);
+		IActionCommandMappingService acms = (IActionCommandMappingService) getWindow().getService(
+				IActionCommandMappingService.class);
 		acms.map(actionId, commandId);
 
 		CommandContributionItemParameter commandParm = new CommandContributionItemParameter(
-				getWindow(), actionId, commandId, null, sharedImages
-				.getImageDescriptor(image), sharedImages
-				.getImageDescriptor(disabledImage), null, label, null,
-				tooltip, CommandContributionItem.STYLE_PUSH, null, false);
+				getWindow(), actionId, commandId, null, sharedImages.getImageDescriptor(image),
+				sharedImages.getImageDescriptor(disabledImage), null, label, null, tooltip,
+				CommandContributionItem.STYLE_PUSH, null, false);
 		return new CommandContributionItem(commandParm);
 	}
-	
+
 	private BundleContext getBundleById(final String id) {
 		return Platform.getBundle(id).getBundleContext();
 	}
-
-
-
-
 
 }

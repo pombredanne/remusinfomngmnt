@@ -18,10 +18,10 @@
 
 
    <launcher name="rim">
-      <linux icon="/org.remus.infomngmnt.build/xpm/cabinet_open.xpm"/>
+      <linux icon="/org.remus.infomngmnt.application/launchericons/xpm/cabinet_open.xpm"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/org.remus.infomngmnt.build/ico/cabinet_open.ico"/>
+         <ico path="/org.remus.infomngmnt.application/launchericons/ico/cabinet_open.ico"/>
          <bmp/>
       </win>
    </launcher>

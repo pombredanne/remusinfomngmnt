@@ -91,12 +91,12 @@ public class ContactGeneralSection {
 		section_1.setClient(compositeGeneral);
 
 		createGroupPerson(compositeGeneral);
-		createGroupPhoneNumbers(compositeGeneral);		
+		createGroupPhoneNumbers(compositeGeneral);
 		createGroupAddress(compositeGeneral);
 		createGroupInternet(compositeGeneral);
-		createSeparator(compositeGeneral, true, 2);
-		new Label(compositeGeneral, SWT.NONE);
-		createGroupButtons(compositeGeneral);
+//		createSeparator(compositeGeneral, true, 2);
+//		new Label(compositeGeneral, SWT.NONE);
+//		createGroupButtons(compositeGeneral);
 	}
 
 	private void createGroupButtons(final Composite compositeGeneral) {
@@ -143,15 +143,15 @@ public class ContactGeneralSection {
 		tx_EditName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		tx_EditName.setEditable(false);
 
-		final Label lb_Role = toolkit.createLabel(group_Person, "Role:");
+		toolkit.createLabel(group_Person, "Role:");
 		tx_Role = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_Role.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_Organisation = toolkit.createLabel(group_Person, "Organisation:");
+		toolkit.createLabel(group_Person, "Organisation:");
 		tx_Organisation = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_Organisation.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_FormattedName = toolkit.createLabel(group_Person, "Formatted Name:");
+		toolkit.createLabel(group_Person, "Formatted Name:");
 		tx_FormattedName = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_FormattedName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		tx_FormattedName.setEditable(false);

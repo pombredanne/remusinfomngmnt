@@ -179,6 +179,53 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit addOtherCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addOtherCountry.setType(ContactActivator.NODE_ADDRESS_OTHER_COUNTRY);
 		
+		//group email and instant messaging
+		InformationUnit mail1 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail1.setType(ContactActivator.NODE_MAIL_1);
+		InformationUnit mail2 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail2.setType(ContactActivator.NODE_MAIL_2);
+		InformationUnit mail3 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail3.setType(ContactActivator.NODE_MAIL_3);
+		InformationUnit mail4 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail4.setType(ContactActivator.NODE_MAIL_4);
+		InformationUnit mail5 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail5.setType(ContactActivator.NODE_MAIL_5);
+		InformationUnit mail6 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail6.setType(ContactActivator.NODE_MAIL_6);
+		InformationUnit mail7 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail7.setType(ContactActivator.NODE_MAIL_7);
+		InformationUnit mail8 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail8.setType(ContactActivator.NODE_MAIL_8);
+		InformationUnit mail9 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail9.setType(ContactActivator.NODE_MAIL_9);
+		InformationUnit mail10 = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mail10.setType(ContactActivator.NODE_MAIL_10);
+		InformationUnit mailDef = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mailDef.setType(ContactActivator.NODE_MAIL_DEF);
+
+		InformationUnit imAim = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imAim.setType(ContactActivator.NODE_INSTMESS_AIM);
+		InformationUnit imGadu = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imGadu.setType(ContactActivator.NODE_INSTMESS_GADU);
+		InformationUnit imGw = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imGw.setType(ContactActivator.NODE_INSTMESS_GROUPWISE);
+		InformationUnit imIcq = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imIcq.setType(ContactActivator.NODE_INSTMESS_ICQ);
+		InformationUnit imIrc = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imIrc.setType(ContactActivator.NODE_INSTMESS_IRC);
+		InformationUnit imJabber = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imJabber.setType(ContactActivator.NODE_INSTMESS_JABBER);
+		InformationUnit imMsn = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imMsn.setType(ContactActivator.NODE_INSTMESS_MSN);
+		InformationUnit imMw = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imMw.setType(ContactActivator.NODE_INSTMESS_MEANWHILE);
+		InformationUnit imSkype = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imSkype.setType(ContactActivator.NODE_INSTMESS_SKYPE);
+		InformationUnit imYahoo = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imYahoo.setType(ContactActivator.NODE_INSTMESS_YAHOO);
+		InformationUnit imDefault = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		imDefault.setType(ContactActivator.NODE_INSTMESS_DEFAULT);
+		
 		// general
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
 		returnValue.getChildValues().add(rawDataImage);
@@ -261,6 +308,31 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addOtherPostal);
 		returnValue.getChildValues().add(addOtherRegion);
 		returnValue.getChildValues().add(addOtherStreet);
+		
+		//group email and instant messaging
+		returnValue.getChildValues().add(mail1);
+		returnValue.getChildValues().add(mail2);
+		returnValue.getChildValues().add(mail3);
+		returnValue.getChildValues().add(mail4);
+		returnValue.getChildValues().add(mail5);
+		returnValue.getChildValues().add(mail6);
+		returnValue.getChildValues().add(mail7);
+		returnValue.getChildValues().add(mail8);
+		returnValue.getChildValues().add(mail9);
+		returnValue.getChildValues().add(mail10);
+		returnValue.getChildValues().add(mailDef);
+		
+		returnValue.getChildValues().add(imAim);
+		returnValue.getChildValues().add(imDefault);
+		returnValue.getChildValues().add(imGadu);
+		returnValue.getChildValues().add(imGw);
+		returnValue.getChildValues().add(imIcq);
+		returnValue.getChildValues().add(imIrc);
+		returnValue.getChildValues().add(imJabber);
+		returnValue.getChildValues().add(imMsn);
+		returnValue.getChildValues().add(imMw);
+		returnValue.getChildValues().add(imSkype);
+		returnValue.getChildValues().add(imYahoo);
 		
 		return returnValue;
 	}

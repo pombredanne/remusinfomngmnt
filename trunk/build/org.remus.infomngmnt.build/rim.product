@@ -3,6 +3,7 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
+
    <configIni use="default">
       <linux>/org.remus.infomngmnt.application/config.ini</linux>
       <macosx>/org.remus.infomngmnt.application/config.ini</macosx>
@@ -15,6 +16,7 @@
 
    <windowImages i16="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
 
+
    <launcher name="rim">
       <linux icon="/org.remus.infomngmnt.build/xpm/cabinet_open.xpm"/>
       <solaris/>
@@ -23,6 +25,7 @@
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
@@ -71,6 +74,7 @@
       <plugin id="org.eclipse.ecf"/>
       <plugin id="org.eclipse.ecf.filetransfer"/>
       <plugin id="org.eclipse.ecf.identity"/>
+      <plugin id="org.eclipse.ecf.provider.filetransfer"/>
       <plugin id="org.eclipse.ecf.ssl" fragment="true"/>
       <plugin id="org.eclipse.emf"/>
       <plugin id="org.eclipse.emf.common"/>

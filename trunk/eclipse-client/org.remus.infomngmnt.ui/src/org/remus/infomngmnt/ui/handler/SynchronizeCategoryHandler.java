@@ -17,6 +17,7 @@ import java.util.Collections;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -39,28 +40,38 @@ import org.remus.infomngmnt.ui.remote.SynchronizationWizard;
  */
 public class SynchronizeCategoryHandler extends AbstractHandler {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
+	 * ExecutionEvent)
 	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 		if (currentSelection instanceof IStructuredSelection
 				&& ((IStructuredSelection) currentSelection).getFirstElement() instanceof Category
-				&& ((Category) ((IStructuredSelection) currentSelection).getFirstElement()).getSynchronizationMetaData() != null) {
+				&& ((Category) ((IStructuredSelection) currentSelection).getFirstElement())
+						.getSynchronizationMetaData() != null) {
 			ChangeSetManager manager = new ChangeSetManager();
 			Category cat = (Category) ((IStructuredSelection) currentSelection).getFirstElement();
 			SynchronizationMetadata metaData = cat.getSynchronizationMetaData();
-			RemoteRepository remoteRepository = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(metaData.getRepositoryId());
-			RemoteObject remoteObject = remoteRepository.getRepositoryImplementation().getRemoteObjectBySynchronizableObject(cat);
+			RemoteRepository remoteRepository = UIPlugin.getDefault().getService(
+					IRepositoryService.class).getRepositoryById(metaData.getRepositoryId());
+			RemoteObject remoteObject = remoteRepository.getRepositoryImplementation()
+					.getRemoteObjectBySynchronizableObject(cat, new NullProgressMonitor());
 			if (remoteObject != null && remoteObject instanceof RemoteContainer) {
-				ChangeSet changeSet = manager.createCheckOutChangeSet(cat, Collections.<RemoteContainer> singletonList((RemoteContainer)remoteObject), remoteRepository);
-				SynchronizationWizard synchronizationWizard = new SynchronizationWizard(SynchronizationWizard.SYNCMODE);
+				ChangeSet changeSet = manager.createCheckOutChangeSet(cat, Collections
+						.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
+						remoteRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE);
+				SynchronizationWizard synchronizationWizard = new SynchronizationWizard(
+						SynchronizationWizard.SYNCMODE);
 				synchronizationWizard.init(changeSet);
-				WizardDialog wz = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), synchronizationWizard);
-				wz.open();				
+				WizardDialog wz = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
+						synchronizationWizard);
+				wz.open();
 			}
-			
-			
+
 		}
 		return null;
 	}

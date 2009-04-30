@@ -22,12 +22,13 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.remus.infomngmnt.common.ui.extension.ITraySectionDefinition;
 import org.remus.infomngmnt.common.ui.extension.TraySectionManager;
+import org.remus.infomngmnt.core.services.IRuleService;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.tray.DropSectionPreferencePage;
 import org.remus.infomngmt.common.ui.uimodel.TraySection;
 import org.remus.infomngmt.common.ui.uimodel.TraySectionCollection;
 import org.remus.infomngmt.common.ui.uimodel.UIModelFactory;
 import org.remus.infomngmt.common.ui.uimodel.UIModelPackage;
-
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -59,18 +60,19 @@ public class TrayConfigurationManager {
 	}
 
 	private void init() {
-		IPath target = UIPlugin.getDefault().getStateLocation().append(new Path(PATH_TO_TRAY_CONFIG_FILE));
-		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createFileURI(target.toString());
+		IPath target = UIPlugin.getDefault().getStateLocation().append(
+				new Path(PATH_TO_TRAY_CONFIG_FILE));
+		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI
+				.createFileURI(target.toString());
 		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getPackageRegistry().put
-		(UIModelPackage.eNS_URI,
-				UIModelPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(UIModelPackage.eNS_URI, UIModelPackage.eINSTANCE);
 		File file = new File(createURI.toFileString());
 		if (file.exists()) {
-			Resource resource = resourceSet.getResource(createURI,true);
+			Resource resource = resourceSet.getResource(createURI, true);
 			this.traySections = (TraySectionCollection) resource.getContents().get(0);
 			for (TraySection traySection : this.traySections.getSections()) {
-				ITraySectionDefinition sectionDefinitionById = TraySectionManager.getInstance().getSectionDefinitionById(traySection.getTemplateId());
+				ITraySectionDefinition sectionDefinitionById = TraySectionManager.getInstance()
+						.getSectionDefinitionById(traySection.getTemplateId());
 				traySection.setImplementation(sectionDefinitionById.getImplementation());
 			}
 		} else {
@@ -84,7 +86,8 @@ public class TrayConfigurationManager {
 		TraySectionCollection returnValue = UIModelFactory.eINSTANCE.createTraySectionCollection();
 
 		// Search-Box.
-		ITraySectionDefinition sectionDefinitionById = TraySectionManager.getInstance().getSectionDefinitionById(SEARCH_BOX_ID);
+		ITraySectionDefinition sectionDefinitionById = TraySectionManager.getInstance()
+				.getSectionDefinitionById(SEARCH_BOX_ID);
 		TraySection searchTraySection = UIModelFactory.eINSTANCE.createTraySection();
 		searchTraySection.setImage(sectionDefinitionById.getImage());
 		searchTraySection.setImplementation(sectionDefinitionById.getImplementation());
@@ -92,12 +95,15 @@ public class TrayConfigurationManager {
 		searchTraySection.setTemplateId(sectionDefinitionById.getId());
 		returnValue.getSections().add(searchTraySection);
 		// Drop-Box
-		ITraySectionDefinition dropBoxDefinition = TraySectionManager.getInstance().getSectionDefinitionById(DROP_BOX_ID);
+		ITraySectionDefinition dropBoxDefinition = TraySectionManager.getInstance()
+				.getSectionDefinitionById(DROP_BOX_ID);
 		TraySection dropTraySection = UIModelFactory.eINSTANCE.createTraySection();
 		dropTraySection.setImage(dropBoxDefinition.getImage());
 		dropTraySection.setImplementation(dropBoxDefinition.getImplementation());
 		dropTraySection.setName(dropBoxDefinition.getLabel());
 		dropTraySection.setTemplateId(dropBoxDefinition.getId());
+		dropTraySection.getPreferenceOptions().put(DropSectionPreferencePage.RULESET_KEY,
+				IRuleService.DEFAULT_RULENAME);
 		returnValue.getSections().add(dropTraySection);
 
 		return returnValue;

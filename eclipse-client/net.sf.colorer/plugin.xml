@@ -3,6 +3,7 @@
 <plugin>
 
 <!-- Editors with Syntax Highlighting definitions -->
+<!--
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -40,9 +41,9 @@
             id="net.sf.colorer.eclipse.editors.ColorerEditor.XML">
       </editor>
    </extension>
-
+-->
    <!-- Preferences pages -->
-
+<!--
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
@@ -68,9 +69,10 @@
             label="%preferenceKeywords.FileTypePreferencePage"
             id="net.sf.colorer.eclipse.ftpp.FileTypePreferencePage"/>
    </extension>
-   
+   -->
 
    <!-- HRC Regions tree list View -->
+   <!--
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -85,13 +87,14 @@
             id="net.sf.colorer.eclipse.view.HRCRegionsTreeView">
       </view>
    </extension>
-
+-->
 <!-- Editor Commands  -->
 <!--   NOTE:
 M1 = CTRL/COMMAND
 M2 = SHIFT
 M3 = ALT
 M4 = Platform-specific fourth key -->
+<!--
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -165,6 +168,7 @@ M4 = Platform-specific fourth key -->
           commandId="net.sf.colorer.eclipse.editors.hrcupdate"
           schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
+      -->
 <!--
       <key
           sequence=""
@@ -173,6 +177,7 @@ M4 = Platform-specific fourth key -->
           schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
 -->
+<!--
       <key
           sequence="M3+["
           contextId="net.sf.colorer.eclipse.ColorerScope"
@@ -199,8 +204,9 @@ M4 = Platform-specific fourth key -->
       </key>
 
    </extension>
-
+-->
 <!-- Context menu for Navigator and Package-Explorer -->
+<!--
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
@@ -237,7 +243,7 @@ M4 = Platform-specific fourth key -->
          </description>
       </fontDefinition>
    </extension>
-
+-->
 <!-- Eclipse Help Topic
    <extension
          point="org.eclipse.help.toc">

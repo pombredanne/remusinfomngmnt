@@ -12,7 +12,6 @@
 
 package org.remus.infomngmnt.ui.extension;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -85,7 +84,7 @@ public class CollapsibleButtonExtensionService extends PluginRegistryDynamic imp
 		}
 	}
 
-	public Collection<CollapsibleButtonBar> getAllItems() {
+	public List<CollapsibleButtonBar> getAllItems() {
 		final List<CollapsibleButtonBar> itemsAsList = new LinkedList<CollapsibleButtonBar>(
 				this.items.values());
 		Collections.sort(itemsAsList, new Comparator<CollapsibleButtonBar>() {

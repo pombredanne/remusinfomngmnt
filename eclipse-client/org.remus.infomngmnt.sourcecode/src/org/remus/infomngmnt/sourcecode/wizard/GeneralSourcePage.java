@@ -47,17 +47,17 @@ public class GeneralSourcePage extends GeneralPage {
 	private Collection<String> values;
 	private IDialogSettings settings;
 
-	public GeneralSourcePage(InformationUnitListItem selection) {
+	public GeneralSourcePage(final InformationUnitListItem selection) {
 		super(selection);
 
 	}
 
-	public GeneralSourcePage(Category category) {
+	public GeneralSourcePage(final Category category) {
 		super(category);
 	}
 
 	@Override
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
 
@@ -79,29 +79,31 @@ public class GeneralSourcePage extends GeneralPage {
 		doCreatePropertiesGroup(container);
 		initDatabinding();
 		presetValues();
-		setPageComplete(false);
+		initValidation();
 		setControl(container);
 	}
-
-
 
 	@Override
 	protected void initDatabinding() {
 		this.settings = SourceCodePlugin.getDefault().getDialogSettings();
 		super.initDatabinding();
 		ISWTObservableValue swtType = SWTObservables.observeText(this.typeCombo);
-		IObservableValue emfType = EMFObservables.observeValue(InformationUtil.getChildByType(this.unit, SourceCodePlugin.SRCTYPE_NAME), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		IObservableValue emfType = EMFObservables.observeValue(InformationUtil.getChildByType(
+				this.unit, SourceCodePlugin.SRCTYPE_NAME),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		this.ctx.bindValue(swtType, emfType, new UpdateValueStrategy() {
 			@Override
-			public Object convert(Object value) {
+			public Object convert(final Object value) {
 				if (value != null && value.toString().length() > 0) {
-					UIUtil.getDialogSettings(SECTION_NAME, GeneralSourcePage.this.settings).put(SECTION_KEY, GeneralSourcePage.this.typeCombo.getSelectionIndex());
+					UIUtil.getDialogSettings(SECTION_NAME, GeneralSourcePage.this.settings).put(
+							SECTION_KEY, GeneralSourcePage.this.typeCombo.getSelectionIndex());
 				}
 				return super.convert(value);
 			}
 		}, null);
 		try {
-			this.typeCombo.select(UIUtil.getDialogSettings(SECTION_NAME, this.settings).getInt(SECTION_KEY));
+			this.typeCombo.select(UIUtil.getDialogSettings(SECTION_NAME, this.settings).getInt(
+					SECTION_KEY));
 		} catch (NumberFormatException e) {
 			this.typeCombo.select(0);
 		}

@@ -162,10 +162,7 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 				((RuleAction) object).getInfoTypeId());
 		String returnValue = ((RuleAction) object).getName();
 		if (returnValue == null || returnValue.length() == 0) {
-			returnValue = "Empty name";
-		}
-		if (infoTypeByType != null) {
-			returnValue += " (" + infoTypeByType.getName() + ")";
+			returnValue = infoTypeByType.getName();
 		}
 		return returnValue;
 	}

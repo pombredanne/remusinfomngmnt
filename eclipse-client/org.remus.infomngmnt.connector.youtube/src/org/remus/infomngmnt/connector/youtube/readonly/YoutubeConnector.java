@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
@@ -74,6 +73,10 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	public static final String KEY_PLAYLIST = "KEY_PLAYLIST"; //$NON-NLS-1$
 
+	public static final String KEY_VIDEO = "KEY_VIDEO"; //$NON-NLS-1$
+
+	public static final String INTERNAL_PROTOCOL = "http"; //$NON-NLS-1$
+
 	MD5 md5 = new MD5();
 
 	private IContainer container;
@@ -84,6 +87,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	 * The name of the server hosting the YouTube GDATA feeds
 	 */
 	public static final String YOUTUBE_GDATA_SERVER = "http://gdata.youtube.com";
+
+	public static final String VIDEO_HTML_URL = "http://www.youtube.com/watch?v="; //$NON-NLS-1$
 
 	/**
 	 * The prefix of the User Feeds
@@ -108,7 +113,6 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	public YouTubeService getYoutubeService() {
 		if (this.youtubeService == null) {
 			this.youtubeService = new YouTubeService("gdataSample-YouTube-1");
-			getCredentialProvider().setIdentifier(getLocalRepositoryId());
 		}
 		return this.youtubeService;
 	}
@@ -132,6 +136,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			RemoteContainer favoritesFeed = buildFavoritesFeed();
 			RemoteContainer playListFeed = buildPlayListFeed();
 			RemoteContainer subscriptionFeed = buildSubscriptionFeed();
+			setInternalUrl(favoritesFeed, container);
+			setInternalUrl(playListFeed, container);
+			setInternalUrl(subscriptionFeed, container);
 			return new RemoteContainer[] { favoritesFeed, playListFeed, subscriptionFeed };
 		} else if (container instanceof RemoteContainer) {
 			if (KEY_PLAYLIST_FOLDER.equals(container.getId())) {
@@ -151,7 +158,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 						VideoFeed.class);
 				List<VideoEntry> videoEntries = videoFeed.getEntries();
 				for (VideoEntry videoEntry : videoEntries) {
-					returnValue.add(createRemoteObject(videoEntry));
+					returnValue.add(createRemoteObject(videoEntry, container));
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -167,7 +174,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 						new URL(wrappedObject.getFeedUrl()), PlaylistFeed.class);
 				List<PlaylistEntry> entries = playlistFeed.getEntries();
 				for (PlaylistEntry playlistEntry : entries) {
-					returnValue.add(createRemoteObject(playlistEntry));
+					returnValue.add(createRemoteObject(playlistEntry, container));
 				}
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -184,13 +191,15 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	}
 
-	private RemoteObject createRemoteObject(final VideoEntry videoEntry) {
+	private RemoteObject createRemoteObject(final VideoEntry videoEntry,
+			final RemoteContainer container) {
 		RemoteObject remoteVideo = InfomngmntFactory.eINSTANCE.createRemoteObject();
 		remoteVideo.setHash(videoEntry.getId());
 		remoteVideo.setId(SiteInspector.getId(videoEntry.getHtmlLink().getHref()));
 		remoteVideo.setName(videoEntry.getTitle().getPlainText());
+		remoteVideo.setRepositoryTypeObjectId(KEY_VIDEO);
 		remoteVideo.setWrappedObject(videoEntry);
-		remoteVideo.setUrl(videoEntry.getHtmlLink().getHref());
+		setInternalUrl(remoteVideo, container);
 		return remoteVideo;
 	}
 
@@ -207,7 +216,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 				playListEntryContainer.setName(playlistLinkEntry.getTitle().getPlainText());
 				playListEntryContainer.setRepositoryTypeObjectId(KEY_PLAYLIST);
 				playListEntryContainer.setWrappedObject(playlistLinkEntry);
-				playListEntryContainer.setUrl(getPlaylistUrl().toString());
+				setInternalUrl(playListEntryContainer, container);
 				returnValue.add(playListEntryContainer);
 			}
 		} catch (IOException e) {
@@ -256,7 +265,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			final IProgressMonitor monitor) {
 		SynchronizationMetadata adapter = (SynchronizationMetadata) informationUnitListItem
 				.getAdapter(SynchronizationMetadata.class);
-		String url = adapter.getUrl();
+		String url = VIDEO_HTML_URL + getVideoIdFromUrl(adapter.getUrl());
 		IFile tempFile = ResourceUtil.createTempFile();
 		try {
 			DownloadFileJob downloadWebsiteJob = new DownloadFileJob(new URL(url), tempFile,
@@ -290,31 +299,137 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		return null;
 	}
 
+	private void setInternalUrl(final RemoteObject remoteObject, final RemoteContainer parentObject) {
+		String url = null;
+		if (parentObject != null && !(parentObject instanceof RemoteRepository)) {
+			url = parentObject.getUrl();
+		} else {
+			url = INTERNAL_PROTOCOL + "://youtube/";
+		}
+		if (KEY_FAVORITES_FOLDER.equals(remoteObject.getRepositoryTypeObjectId())) {
+			url += KEY_FAVORITES_FOLDER + "/";
+		} else if (KEY_PLAYLIST_FOLDER.equals(remoteObject.getRepositoryTypeObjectId())) {
+			url += KEY_PLAYLIST_FOLDER + "/";
+		} else if (KEY_SUBSCRIPTION_FOLDER.equals(remoteObject.getRepositoryTypeObjectId())) {
+			url += KEY_PLAYLIST_FOLDER + "/";
+		} else if (KEY_PLAYLIST.equals(remoteObject.getRepositoryTypeObjectId())) {
+			url += remoteObject.getName() + "/";
+		} else if (KEY_VIDEO.equals(remoteObject.getRepositoryTypeObjectId())) {
+			url += "?" + remoteObject.getId();
+		}
+		remoteObject.setUrl(url);
+	}
+
+	private String getVideoIdFromUrl(final String url) {
+		try {
+			return new URL(url).getQuery();
+		} catch (MalformedURLException e) {
+
+		}
+		return null;
+	}
+
+	private String getExternalUrl(final String url) {
+		try {
+			URL url2 = new URL(url);
+			String path = url2.getPath();
+			String[] split = path.split("/");
+			if (split.length > 0) {
+				String string = split[0];
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	@Override
 	public IFile[] getBinaryReferences() {
 		return new IFile[] { this.tmpVideoFile };
 	}
 
-	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
-		return null;
-	}
-
 	/**
 	 * 
 	 */
-	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object) {
-		// TODO Auto-generated method stub
+	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
+			final IProgressMonitor monitor) {
+		String url = object.getSynchronizationMetaData().getUrl();
+		try {
+			URL url2 = new URL(url);
+			String path = url2.getPath();
+			String[] origSplit = path.split("/");
+			String[] split = new String[origSplit.length - 1];
+			System.arraycopy(origSplit, 1, split, 0, origSplit.length - 1);
+			if (KEY_PLAYLIST_FOLDER.equals(split[0])) {
+				RemoteContainer buildPlayListFeed = buildPlayListFeed();
+				setInternalUrl(buildPlayListFeed, getRepositoryById(object
+						.getSynchronizationMetaData().getRepositoryId()));
+				if (split.length > 1) {
+					String playListName = split[1];
+					RemoteObject[] children = getChildren(monitor, buildPlayListFeed, false);
+					for (RemoteObject remoteObject : children) {
+						if (remoteObject.getName().equals(playListName)) {
+							if (url2.getQuery() != null) {
+								RemoteObject[] children2 = getChildren(monitor,
+										(RemoteContainer) remoteObject, false);
+								for (RemoteObject remoteObject2 : children2) {
+									if (remoteObject2.getId().equals(url2.getQuery())) {
+										return remoteObject2;
+									}
+								}
+								return null;
+							} else {
+								return remoteObject;
+							}
+						} else {
+							return null;
+						}
+					}
+				} else {
+					return buildPlayListFeed;
+				}
+			} else if (KEY_FAVORITES_FOLDER.equals(split[0])) {
+				RemoteContainer buildFavoritesFeed = buildFavoritesFeed();
+				setInternalUrl(buildFavoritesFeed, getRepositoryById(object
+						.getSynchronizationMetaData().getRepositoryId()));
+				if (url2.getQuery() != null) {
+					RemoteObject[] children2 = getChildren(monitor, buildFavoritesFeed, false);
+					for (RemoteObject remoteObject2 : children2) {
+						if (remoteObject2.getId().equals(url2.getQuery())) {
+							return remoteObject2;
+						}
+					}
+					return null;
+				} else {
+					return buildFavoritesFeed;
+				}
+			} else if (KEY_SUBSCRIPTION_FOLDER.equals(split[0])) {
+				RemoteContainer buildSubscriptionFeed = buildSubscriptionFeed();
+				setInternalUrl(buildSubscriptionFeed, getRepositoryById(object
+						.getSynchronizationMetaData().getRepositoryId()));
+				if (url2.getQuery() != null) {
+					RemoteObject[] children2 = getChildren(monitor, buildSubscriptionFeed, false);
+					for (RemoteObject remoteObject2 : children2) {
+						if (remoteObject2.getId().equals(url2.getQuery())) {
+							return remoteObject2;
+						}
+					}
+					return null;
+				} else {
+					return buildSubscriptionFeed;
+				}
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	public String getRepositoryUrl() {
 		return YoutubeConnector.USER_FEED_PREFIX + getCredentialProvider().getUserName()
 				+ YoutubeConnector.PLAYLISTS_FEED_SUFFIX;
-	}
-
-	@Override
-	public ISchedulingRule getRule() {
-		return null;
 	}
 
 	public String getTypeIdByObject(final RemoteObject remoteObject) {

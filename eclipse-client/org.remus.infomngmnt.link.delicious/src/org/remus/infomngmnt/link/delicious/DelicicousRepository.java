@@ -158,6 +158,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		return LinkActivator.LINK_INFO_ID;
 	}
 
+	@Override
 	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
 		if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
 			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
@@ -282,7 +283,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		return null;
 	}
 
-	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object) {
+	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
+			final IProgressMonitor monitor) {
 		SynchronizationMetadata synchronizationMetaData = object.getSynchronizationMetaData();
 		URI uri = URI.createURI(synchronizationMetaData.getUrl());
 		if (synchronizationMetaData != null) {

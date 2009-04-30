@@ -45,22 +45,29 @@ public class RuleUtil implements IRuleService {
 			IPath append = InfomngmntEditPlugin.getPlugin().getStateLocation().append(RULE_PATH);
 			boolean createDefaultValues = !append.toFile().exists();
 			this.rules = EditingUtil.getInstance().getObjectFromFileUri(
-					URI.createFileURI(append.toOSString()), InfomngmntPackage.Literals.AVAILABLE_RULE_DEFINITIONS,null);
+					URI.createFileURI(append.toOSString()),
+					InfomngmntPackage.Literals.AVAILABLE_RULE_DEFINITIONS, null);
 			if (createDefaultValues) {
-				NewElementRules createNewElementRules = InfomngmntFactory.eINSTANCE.createNewElementRules();
-				createNewElementRules.setName("Default Ruleset");
+				NewElementRules createNewElementRules = InfomngmntFactory.eINSTANCE
+						.createNewElementRules();
+				createNewElementRules.setName(DEFAULT_RULENAME);
 				createNewElementRules.setDeletable(false);
 				this.rules.getNewElementRules().add(createNewElementRules);
-				Map<String, TransferWrapper> allTransferTypes = InfomngmntEditPlugin.getPlugin().getService(IRuleExtensionService.class).getAllTransferTypes();
+				Map<String, TransferWrapper> allTransferTypes = InfomngmntEditPlugin.getPlugin()
+						.getService(IRuleExtensionService.class).getAllTransferTypes();
 				for (String transferWrapperIds : allTransferTypes.keySet()) {
-					RemusTransferType createRemusTransferType = InfomngmntFactory.eINSTANCE.createRemusTransferType();
+					RemusTransferType createRemusTransferType = InfomngmntFactory.eINSTANCE
+							.createRemusTransferType();
 					createRemusTransferType.setId(transferWrapperIds);
-					createRemusTransferType.setName(allTransferTypes.get(transferWrapperIds).getName());
+					createRemusTransferType.setName(allTransferTypes.get(transferWrapperIds)
+							.getName());
 					// Default behavior: add all valid types
-					Collection<IInfoType> types = InformationExtensionManager.getInstance().getTypes();
+					Collection<IInfoType> types = InformationExtensionManager.getInstance()
+							.getTypes();
 					for (IInfoType infoType : types) {
 						if (infoType.getValidTransferTypeIds().contains(transferWrapperIds)) {
-							RuleAction createRuleAction = InfomngmntFactory.eINSTANCE.createRuleAction();
+							RuleAction createRuleAction = InfomngmntFactory.eINSTANCE
+									.createRuleAction();
 							createRuleAction.setInfoTypeId(infoType.getType());
 							createRemusTransferType.getActions().add(createRuleAction);
 						}

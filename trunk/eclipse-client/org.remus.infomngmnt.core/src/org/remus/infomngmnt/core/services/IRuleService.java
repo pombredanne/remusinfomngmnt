@@ -19,9 +19,11 @@ import org.remus.infomngmnt.NewElementRules;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface IRuleService {
-	
+
 	AvailableRuleDefinitions getElementRules();
-	
+
 	NewElementRules getRuleByName(final String name);
+
+	public static final String DEFAULT_RULENAME = "Default"; //$NON-NLS-1$
 
 }

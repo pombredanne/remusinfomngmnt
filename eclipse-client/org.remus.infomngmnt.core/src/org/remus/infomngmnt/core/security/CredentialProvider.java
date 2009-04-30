@@ -12,8 +12,10 @@
 
 package org.remus.infomngmnt.core.security;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
 
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
@@ -25,27 +27,39 @@ import org.remus.infomngmnt.core.remote.ICredentialProvider;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class CredentialProvider implements ICredentialProvider {
-	
+
 	public static final String USER_NAME = "userName";
-	
+
 	public static final String PASSWORD = "password"; //$NON-NLS-1$
-	
+
 	public static final String GROUP = "group"; //$NON-NLS-1$
-	
+
 	public static final String IDENTIFIER = "identifier"; //$NON-NLS-1$
 
 	protected final ISecurePreferences preferences;
-	
+
 	protected transient PropertyChangeSupport listeners = new PropertyChangeSupport(this);
-	
+
 	private String identifier;
-	
+
 	private String group;
 
 	public CredentialProvider() {
 		this.preferences = SecurePreferencesFactory.getDefault();
+		addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(final PropertyChangeEvent arg0) {
+				try {
+					CredentialProvider.this.preferences.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		});
 	}
-	
+
 	protected ISecurePreferences getNode() {
 		if (this.identifier == null) {
 			throw new IllegalArgumentException("Identifier not set.");
@@ -55,7 +69,7 @@ public abstract class CredentialProvider implements ICredentialProvider {
 		}
 		return this.preferences.node(this.identifier);
 	}
-	
+
 	public String getUserName() {
 		try {
 			return getNode().get(USER_NAME, "");
@@ -63,7 +77,7 @@ public abstract class CredentialProvider implements ICredentialProvider {
 			throw new SecurityException(e);
 		}
 	}
-	
+
 	public void setUserName(final String username) {
 		try {
 			String oldValue = getUserName();
@@ -73,7 +87,7 @@ public abstract class CredentialProvider implements ICredentialProvider {
 			throw new SecurityException(e);
 		}
 	}
-	
+
 	public String getPassword() {
 		try {
 			return getNode().get(PASSWORD, "");
@@ -81,7 +95,7 @@ public abstract class CredentialProvider implements ICredentialProvider {
 			throw new SecurityException(e);
 		}
 	}
-	
+
 	public void setPassword(final String password) {
 		try {
 			String oldValue = getPassword();
@@ -97,22 +111,22 @@ public abstract class CredentialProvider implements ICredentialProvider {
 		this.identifier = identifier;
 		firePropertyChange(IDENTIFIER, oldValue, identifier);
 	}
-	
+
 	public void removeCredentials() {
 		getNode().removeNode();
 	}
 
 	public void addPropertyChangeListener(final PropertyChangeListener listener) {
 		this.listeners.addPropertyChangeListener(listener);
-		
+
 	}
-	
+
 	public void removePropertyChangeListener(final PropertyChangeListener listener) {
 		this.listeners.removePropertyChangeListener(listener);
-		
+
 	}
-	
-	protected void firePropertyChange(final String prop, final Object old, final Object newValue){
+
+	protected void firePropertyChange(final String prop, final Object old, final Object newValue) {
 		if (this.listeners.hasListeners(prop)) {
 			this.listeners.firePropertyChange(prop, old, newValue);
 		}

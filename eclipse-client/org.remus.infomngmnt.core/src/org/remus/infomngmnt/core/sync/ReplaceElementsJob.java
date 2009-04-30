@@ -51,39 +51,53 @@ public class ReplaceElementsJob extends Job {
 		this.objects = objects;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.
+	 * IProgressMonitor)
 	 */
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		List<SynchronizableObject> filteredList = CollectionUtils.filter(this.objects, new CollectionFilter<SynchronizableObject>() {
-			public boolean select(final SynchronizableObject item) {
-				return !ModelUtil.containsParent(ReplaceElementsJob.this.objects, item);
-			}
-		});
-		monitor.beginTask(getName(), this.objects.size() == 1 ? IProgressMonitor.UNKNOWN : this.objects.size());
+		List<SynchronizableObject> filteredList = CollectionUtils.filter(this.objects,
+				new CollectionFilter<SynchronizableObject>() {
+					public boolean select(final SynchronizableObject item) {
+						return !ModelUtil.containsParent(ReplaceElementsJob.this.objects, item);
+					}
+				});
+		monitor.beginTask(getName(), this.objects.size() == 1 ? IProgressMonitor.UNKNOWN
+				: this.objects.size());
 		for (SynchronizableObject synchronizableObject : filteredList) {
 
-			monitor.setTaskName(NLS.bind("Try to download \'{0}\' from remote-repository", synchronizableObject.getSynchronizationMetaData().getHash()));
-			String repositoryId = synchronizableObject.getSynchronizationMetaData().getRepositoryId();
-			RemoteRepository localRepository = InfomngmntEditPlugin.getPlugin().getService(IRepositoryService.class).getRepositoryById(repositoryId);
+			monitor.setTaskName(NLS.bind("Try to download \'{0}\' from remote-repository",
+					synchronizableObject.getSynchronizationMetaData().getUrl()));
+			String repositoryId = synchronizableObject.getSynchronizationMetaData()
+					.getRepositoryId();
+			RemoteRepository localRepository = InfomngmntEditPlugin.getPlugin().getService(
+					IRepositoryService.class).getRepositoryById(repositoryId);
 			RemoteObject remoteObject = localRepository.getRepositoryImplementation()
-			.getRemoteObjectBySynchronizableObject(synchronizableObject);
+					.getRemoteObjectBySynchronizableObject(synchronizableObject, monitor);
 			if (remoteObject == null) {
-				
+
 				/*
-				 *  something went wrong. Show a notification here.
-				 *  It's the best to do a synchronization at this
-				 *  time.
+				 * something went wrong. Show a notification here. It's the best
+				 * to do a synchronization at this time.
 				 */
 
-			}
-			else if (remoteObject instanceof RemoteContainer && synchronizableObject instanceof Category) {
-				monitor.setTaskName(NLS.bind("Found object in repository. Preparing replace for \'{0}\'", remoteObject.getName()));
+			} else if (remoteObject instanceof RemoteContainer
+					&& synchronizableObject instanceof Category) {
+				monitor.setTaskName(NLS.bind(
+						"Found object in repository. Preparing replace for \'{0}\'", remoteObject
+								.getName()));
 				Category targetCategory = ((Category) synchronizableObject.eContainer());
-				ChangeSet changeSet = new ChangeSetManager().createCheckOutChangeSet(targetCategory, Collections.<RemoteContainer> singletonList((RemoteContainer)remoteObject), localRepository);
-				EditingDomain navigationEditingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
-				Command deleteCategory = CommandFactory.DELETE_CATEGORY((Category) synchronizableObject, navigationEditingDomain);
+				ChangeSet changeSet = new ChangeSetManager().createCheckOutChangeSet(
+						targetCategory, Collections
+								.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
+						localRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE);
+				EditingDomain navigationEditingDomain = EditingUtil.getInstance()
+						.getNavigationEditingDomain();
+				Command deleteCategory = CommandFactory.DELETE_CATEGORY(
+						(Category) synchronizableObject, navigationEditingDomain);
 				System.out.println(deleteCategory.canExecute());
 				navigationEditingDomain.getCommandStack().execute(deleteCategory);
 				ChangeSetExecutor changeSetExecutor = new ChangeSetExecutor();
@@ -93,8 +107,9 @@ public class ReplaceElementsJob extends Job {
 				DiffModel makeDiff = changeSetExecutor.makeDiff();
 				monitor.setTaskName("Getting data from repository...");
 				changeSetExecutor.performCheckout(makeDiff.getOwnedElements(), monitor);
-				
-			} else if (remoteObject instanceof RemoteObject && synchronizableObject instanceof InformationUnitListItem) {
+
+			} else if (remoteObject instanceof RemoteObject
+					&& synchronizableObject instanceof InformationUnitListItem) {
 				// TODO implement replacement of single info units.
 			}
 			monitor.worked(1);
@@ -103,5 +118,4 @@ public class ReplaceElementsJob extends Job {
 		monitor.done();
 		return Status.OK_STATUS;
 	}
-
 }

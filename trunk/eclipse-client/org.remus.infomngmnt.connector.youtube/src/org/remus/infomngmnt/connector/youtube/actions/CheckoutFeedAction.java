@@ -37,7 +37,7 @@ public class CheckoutFeedAction extends BaseSelectionListenerAction {
 	@Override
 	public void run() {
 		ChangeSetManager manager = new ChangeSetManager();
-		ChangeSet changeSet = manager.createCheckOutChangeSet(null, getStructuredSelection().toList(), null);
+		ChangeSet changeSet = manager.createCheckOutChangeSet(null, getStructuredSelection().toList(), null, ChangeSetManager.MODE_CHECKOUT_REPLACE);
 		if (changeSet != null) {
 			SynchronizationWizard synchronizationWizard = new SynchronizationWizard(SynchronizationWizard.CHECKOUTMODE);
 			synchronizationWizard.init(changeSet);

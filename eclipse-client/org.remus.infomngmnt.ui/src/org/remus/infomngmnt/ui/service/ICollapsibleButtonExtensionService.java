@@ -12,7 +12,7 @@
 
 package org.remus.infomngmnt.ui.service;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
@@ -41,6 +41,6 @@ public interface ICollapsibleButtonExtensionService {
 
 	public static final String CONTEXT_ID_ATT = "contextId"; //$NON-NLS-1$
 
-	Collection<CollapsibleButtonBar> getAllItems();
+	List<CollapsibleButtonBar> getAllItems();
 
 }

@@ -13,7 +13,6 @@
 package org.remus.infomngmnt.ui.views;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +66,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 
 	private static final String ACTIVE_BAR = "activeBar";
 
-	private final Collection<CollapsibleButtonBar> items;
+	private final List<CollapsibleButtonBar> items;
 
 	private StackLayout stackLayout;
 
@@ -202,25 +201,31 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 			}
 
 		}
-		this.cb.addPaintListener(new PaintListener() {
-			public void paintControl(final PaintEvent e) {
-				if (!created.getObject()) {
-					MainViewPart.this.cb.layout(true);
-					created.setObject(true);
-					if (firstSelection.getObject() != null) {
-						handleSelection(firstSelection.getObject());
-						// MainViewPart.this.cb.selectItem(firstSelection.getObject());
-					}
-				}
-
-			}
-		});
 		this.cb.addButtonListener(new ButtonListenerAdapter() {
 			@Override
 			public void buttonClicked(final CustomButton button, final MouseEvent e) {
 				handleSelection((CollapsibleButtonBar) button.getData());
 			}
 		});
+		this.cb.addPaintListener(new PaintListener() {
+			public void paintControl(final PaintEvent e) {
+				if (!created.getObject()) {
+					MainViewPart.this.cb.layout(true);
+					created.setObject(true);
+					if (firstSelection.getObject() != null) {
+						int indexOf = MainViewPart.this.items.indexOf(firstSelection.getObject());
+						MainViewPart.this.cb.selectItemAndLoad((CustomButton) MainViewPart.this.cb
+								.getItems().get(indexOf));
+					} else {
+						MainViewPart.this.cb.selectItemAndLoad((CustomButton) MainViewPart.this.cb
+								.getItems().get(0));
+					}
+					MainViewPart.this.cb.removePaintListener(this);
+				}
+
+			}
+		});
+
 		// this.cb.setLayoutData(new GridData(GridData.GRAB_VERTICAL |
 		// GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
 		GridData gridData = new GridData(SWT.FILL, SWT.END, true, false);
@@ -232,7 +237,9 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 	@Override
 	public void dispose() {
 		for (CollapsibleButtonBar item : this.items) {
-			item.dispose();
+			if (this.renderedItems.contains(item.getId())) {
+				item.dispose();
+			}
 		}
 		this.renderedItems.clear();
 		super.dispose();
@@ -263,11 +270,13 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 	@Override
 	public void saveState(final IMemento memento) {
 		for (CollapsibleButtonBar item : this.items) {
-			IMemento child = memento.getChild(item.getId());
-			if (child == null) {
-				child = memento.createChild(item.getId());
+			if (this.renderedItems.contains(item.getId())) {
+				IMemento child = memento.getChild(item.getId());
+				if (child == null) {
+					child = memento.createChild(item.getId());
+				}
+				item.saveState(child);
 			}
-			item.saveState(child);
 		}
 		memento.putString(ACTIVE_BAR, this.activeButtonBar.getId());
 		memento.putInteger(VISIBLE_BUTTONS, this.cb.getNumVisibleButtons());

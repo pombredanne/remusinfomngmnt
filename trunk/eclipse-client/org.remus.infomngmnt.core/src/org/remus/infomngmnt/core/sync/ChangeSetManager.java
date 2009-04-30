@@ -53,8 +53,12 @@ import org.remus.infomngmnt.core.remote.RemoteUtil;
  */
 public class ChangeSetManager {
 
+	public static final int MODE_SYNC = 1;
+	public static final int MODE_CHECKOUT_REPLACE = 2;
+
 	public ChangeSet createCheckOutChangeSet(final Category localContainer,
-			final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository) {
+			final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository,
+			final int mode) {
 
 		/*
 		 * At first we make sure that all elements are located within the same
@@ -135,7 +139,7 @@ public class ChangeSetManager {
 						false);
 				for (RemoteObject remoteObject2 : children) {
 					fillRemoteContainer(createChangeSetItem, remoteObject2, repository,
-							createCategory);
+							createCategory, mode);
 				}
 			}
 			return createChangeSet;
@@ -154,10 +158,11 @@ public class ChangeSetManager {
 	 * @param remoteObject2
 	 * @param remoteRepository
 	 * @param parentCategory
+	 * @param mode
 	 */
 	public void fillRemoteContainer(final ChangeSetItem changeSetItem,
 			final RemoteObject remoteObject2, final RemoteRepository remoteRepository,
-			final Category parentCategory) {
+			final Category parentCategory, final int mode) {
 		if (remoteObject2 instanceof RemoteContainer) {
 			Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
 
@@ -180,7 +185,8 @@ public class ChangeSetManager {
 			RemoteObject[] children = remoteRepository.getRepositoryImplementation().getChildren(
 					new NullProgressMonitor(), (RemoteContainer) remoteObject2, false);
 			for (RemoteObject newChildren : children) {
-				fillRemoteContainer(changeSetItem, newChildren, remoteRepository, createCategory);
+				fillRemoteContainer(changeSetItem, newChildren, remoteRepository, createCategory,
+						mode);
 			}
 		} else {
 			InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE

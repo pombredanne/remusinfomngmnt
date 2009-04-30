@@ -18,9 +18,14 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.RemoteObject;
+import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.remote.AbstractRepository;
 import org.remus.infomngmnt.core.remote.ICredentialProvider;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -28,51 +33,58 @@ import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 public abstract class AbstractExtensionRepository extends AbstractRepository {
 
 	private IConfigurationElement element;
-	
+
 	private String contributor;
-	
+
 	private String imagePath;
-	
-	
+
 	@Override
 	public Image getImage() {
 		if (super.getImage() == null && this.imagePath != null) {
-			ImageDescriptor imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(this.contributor, this.imagePath);
+			ImageDescriptor imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(
+					this.contributor, this.imagePath);
 			if (imageDescriptor != null) {
 				setImage(imageDescriptor.createImage());
-			}	
+			}
 		}
 		return super.getImage();
 	}
 
-
 	public void setElement(final IConfigurationElement element) {
 		this.element = element;
 	}
-	
+
 	@Override
 	public ICredentialProvider getCredentialProvider() {
 		if (super.getCredentialProvider() == null) {
 			try {
-				ICredentialProvider createExecutableExtension = (ICredentialProvider) this.element.createExecutableExtension(IRepositoryExtensionService.CREDENTIALPROVIDER_ATT);
+				ICredentialProvider createExecutableExtension = (ICredentialProvider) this.element
+						.createExecutableExtension(IRepositoryExtensionService.CREDENTIALPROVIDER_ATT);
+				createExecutableExtension.setIdentifier(getLocalRepositoryId());
 				setCredentialProvider(createExecutableExtension);
+
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 			}
 		}
 		return super.getCredentialProvider();
 	}
-	
-	
 
+	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
+		return null;
+	}
 
 	public void setContributor(final String contributor) {
 		this.contributor = contributor;
 	}
 
+	public RemoteRepository getRepositoryById(final String id) {
+		return InfomngmntEditPlugin.getPlugin().getService(IRepositoryService.class)
+				.getRepositoryById(id);
+	}
 
 	public void setImagePath(final String imagePath) {
 		this.imagePath = imagePath;
 	}
-	
+
 }

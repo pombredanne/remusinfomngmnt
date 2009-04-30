@@ -101,6 +101,7 @@ public interface IRepository {
 
 	RemoteObject addToRepository(SynchronizableObject item, IProgressMonitor monitor);
 
-	RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object);
+	RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
+			IProgressMonitor monitor);
 
 }

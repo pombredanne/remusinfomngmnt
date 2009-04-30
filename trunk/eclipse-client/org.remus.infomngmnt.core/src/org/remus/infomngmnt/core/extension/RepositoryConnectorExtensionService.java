@@ -24,15 +24,13 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.core.remote.ICredentialProvider;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class RepositoryConnectorExtensionService extends PluginRegistryDynamic implements IRepositoryExtensionService {
-
-
+public class RepositoryConnectorExtensionService extends PluginRegistryDynamic implements
+		IRepositoryExtensionService {
 
 	private Map<String, IConfigurationElement> items;
 
@@ -46,8 +44,10 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 	public void init() {
 		this.items = new HashMap<String, IConfigurationElement>();
 		this.instances = new HashMap<String, AbstractExtensionRepository>();
-		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
-		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+				EXTENSION_POINT);
+		final IConfigurationElement[] configurationElements = extensionPoint
+				.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
 			if (configurationElement.getName().equals(CONNECTOR_NODENAME)) {
 				try {
@@ -63,20 +63,21 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 	private AbstractExtensionRepository createNew(final String id) throws CoreException {
 		if (this.items.get(id) != null) {
 			IConfigurationElement configurationElement = this.items.get(id);
-			AbstractExtensionRepository repository = (AbstractExtensionRepository) configurationElement.createExecutableExtension(CLASS_ATT);
+			AbstractExtensionRepository repository = (AbstractExtensionRepository) configurationElement
+					.createExecutableExtension(CLASS_ATT);
 			repository.setContributor(configurationElement.getContributor().getName());
 			repository.setLabel(configurationElement.getAttribute(NAME_ATT));
 			repository.setImagePath(configurationElement.getAttribute(ICON_ATT));
 			repository.setId(configurationElement.getAttribute(ID_ATT));
-			repository.setCredentialProvider((ICredentialProvider) configurationElement.createExecutableExtension(CREDENTIALPROVIDER_ATT));
+			repository.setElement(configurationElement);
 			return repository;
 		}
 		return null;
 	}
 
-	public AbstractExtensionRepository getItemByRepository(final RemoteRepository repository) throws CoreException {
+	public AbstractExtensionRepository getItemByRepository(final RemoteRepository repository)
+			throws CoreException {
 		if (this.instances.get(repository.getId()) == null) {
-
 
 			AbstractExtensionRepository newInstance = createNew(repository.getRepositoryTypeId());
 			newInstance.setLocalRepositoryId(repository.getId());
@@ -89,9 +90,8 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 	public ImageDescriptor getImageByRepositoryId(final String id) {
 		if (this.items.get(id) != null) {
 			IConfigurationElement iConfigurationElement = this.items.get(id);
-			return AbstractUIPlugin.imageDescriptorFromPlugin(
-					iConfigurationElement.getContributor().getName(), 
-					iConfigurationElement.getAttribute(ICON_ATT));
+			return AbstractUIPlugin.imageDescriptorFromPlugin(iConfigurationElement
+					.getContributor().getName(), iConfigurationElement.getAttribute(ICON_ATT));
 		}
 		return null;
 	}
@@ -103,7 +103,5 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 		}
 		return null;
 	}
-
-
 
 }

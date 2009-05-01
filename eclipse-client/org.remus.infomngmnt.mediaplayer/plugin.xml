@@ -26,6 +26,20 @@
                name="mp4">
          </supportedmediatype>
       </mediaplayer>
+      <mediaplayer
+            class="org.remus.infomngmnt.mediaplayer.avi.AviPlayer"
+            id="org.remus.infomngmnt.mediaplayer.aviPlayer"
+            name="AVI Player">
+         <supportedmediatype
+               name="avi">
+         </supportedmediatype>
+         <supportedmediatype
+               name="mpg">
+         </supportedmediatype>
+         <supportedmediatype
+               name="mpeg">
+         </supportedmediatype>
+      </mediaplayer>
    </extension>
 
 </plugin>

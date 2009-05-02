@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -33,6 +32,7 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -54,91 +54,67 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 
 	@Override
 	public void handlePreBuild(final IProgressMonitor monitor) {
-		InformationUnit rawDataNode = InformationUtil.getChildByType(getValue(), LinkActivator.NODE_WEBSHOTIMAGE_DATA);
-		this.imageHref = getWebShotFile().getLocation().toOSString();
-		ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
-		try {
-			if (getWebShotFile().exists()) {
-				getWebShotFile().setContents(bais, true,false, monitor);
-			} else {
-				getWebShotFile().create(bais, true, monitor);
-			}
-		} catch (CoreException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} finally {
-			try {
-				bais.close();
-			} catch (IOException e) {
-				// do nothing... we've done our best.
-			}
+		if (getValue().getBinaryReferences().size() > 0) {
+			this.imageHref = getFile().getProject().getLocation()
+					.append(ResourceUtil.BINARY_FOLDER).append(
+							getValue().getBinaryReferences().get(0).getProjectRelativePath())
+					.toOSString();
 		}
-		
 	}
 
-	@Override
-	public boolean createFolderOnBuild() {
-		return true;
-	}
-	
-	private IFile getWebShotFile() {
-		IFile file = getBuildFolder().getFile("webshot.png");
-		return file;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getAdditionalsForIndexing(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #getAdditionalsForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getAdditionalsForIndexing(final IProgressMonitor monitor)
-	throws CoreException {
-		InformationUnit childByType = InformationUtil.getChildByType(getValue(), LinkActivator.NODE_INDEX);
+	public String getAdditionalsForIndexing(final IProgressMonitor monitor) throws CoreException {
+		InformationUnit childByType = InformationUtil.getChildByType(getValue(),
+				LinkActivator.NODE_INDEX);
 		if (childByType.eIsSet(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE)) {
 			return childByType.getStringValue();
 		}
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor)
-	throws CoreException {
+	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
 		return getValue().getStringValue();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getTitleForIndexing(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public String getTitleForIndexing(final IProgressMonitor monitor)
-	throws CoreException {
-		return getValue().getLabel();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
-	throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {
-			templateIs = FileLocator.openStream(
-					Platform.getBundle(LinkActivator.PLUGIN_ID), 
+			templateIs = FileLocator.openStream(Platform.getBundle(LinkActivator.PLUGIN_ID),
 					new Path("template/htmlserialization.flt"), false);
 			FreemarkerRenderer.getInstance().process(
 					LinkActivator.PLUGIN_ID,
 					templateIs,
 					contentsIs,
-					returnValue, 
-					Collections.<String,String> singletonMap("imageHref", URI.createFileURI(this.imageHref).toString()));
+					returnValue,
+					Collections.<String, String> singletonMap("imageHref", URI.createFileURI(
+							this.imageHref).toString()));
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus(
-					"Error reading locations",e));
+			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}

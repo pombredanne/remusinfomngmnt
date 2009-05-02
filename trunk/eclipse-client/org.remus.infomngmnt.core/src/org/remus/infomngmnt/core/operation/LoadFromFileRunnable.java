@@ -27,13 +27,20 @@ import org.eclipse.swt.widgets.Display;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.streams.FileUtil;
+import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
+ * @deprecated Setting a binary value to the information unit causes memory
+ *             leaks. Use {@link InformationUnit#getBinaryReferences()} instead.
+ *             See
+ *             {@link CommandFactory#addFileToInfoUnit(org.eclipse.core.resources.IFile, InformationUnit, EditingDomain)}
+ *             for usage.
  */
+@Deprecated
 public class LoadFromFileRunnable extends CancelableRunnable {
 
 	private final String filePath;

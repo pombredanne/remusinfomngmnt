@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.extension;
 import java.util.Date;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -44,8 +45,14 @@ public abstract class AbstractCreationFactory {
 		return newInfoObject;
 	}
 
-	public void handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
+	/**
+	 * @param unit
+	 * @param monitor
+	 * @return
+	 */
+	public Command handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
 		// does nothing by default.
+		return null;
 	}
 
 }

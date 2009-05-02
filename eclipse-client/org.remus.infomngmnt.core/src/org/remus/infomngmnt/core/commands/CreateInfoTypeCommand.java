@@ -102,7 +102,11 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 		IInfoType type = InformationExtensionManager.getInstance().getInfoTypeByType(
 				newInformationUnit.getType());
 		if (type != null) {
-			type.getCreationFactory().handlePreSaving(newInformationUnit, this.monitor);
+			Command handlePreSavingCommand = type.getCreationFactory().handlePreSaving(
+					newInformationUnit, this.monitor);
+			if (handlePreSavingCommand != null) {
+				append(handlePreSavingCommand);
+			}
 		}
 
 	}

@@ -390,7 +390,10 @@ public class LuceneSearchService {
 				try {
 					if (ResourceUtil.hasBuilder(projectsToSearch[i].getDescription(),
 							SearchBuilder.BUILDER_ID)) {
-						searchables.add(acquireIndexSearcher(projectsToSearch[i]));
+						IndexSearcher acquireIndexSearcher = acquireIndexSearcher(projectsToSearch[i]);
+						if (acquireIndexSearcher != null) {
+							searchables.add(acquireIndexSearcher);
+						}
 					}
 				} catch (CoreException e) {
 					// do nothing.

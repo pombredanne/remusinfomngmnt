@@ -40,11 +40,12 @@ import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactSettings;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
-public class PhoneNumbersComposite extends Composite {
-
+public class InstantMessagingComposite extends Composite {
+	
 	private Binding currentBinding;
 	private TextBindingWidget createTextBindingWidget;
-	public PhoneNumbersComposite(Composite parent, int style, FormToolkit toolkit, int iTextValue, final InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
+	
+	public InstantMessagingComposite(Composite parent, int style, FormToolkit toolkit, int iTextValue, final InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
 		super(parent, style);
 
 		final GridLayout gl_Numbers = new GridLayout();
@@ -53,21 +54,18 @@ public class PhoneNumbersComposite extends Composite {
 		this.setLayout(gl_Numbers);
 
 		List<KeyValueObject> values = new ArrayList<KeyValueObject>();
-		String[] str = 	ContactSettings.DEFAULT_ITEMS_COMBO_PHONENUMBER_CHOOSER;
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_HOME, str[0]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_WORK, str[1]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MESSANGER, str[2]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_VOICE, str[3]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_FAX, str[4]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MOBILE, str[5]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_VIDEO, str[6]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MAILBOX, str[7]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MODEM, str[7]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_CAR, str[8]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_ISDN, str[9]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_PCS, str[10]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_PAGER, str[11]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_OTHERS, str[12]));
+		String[] str = ContactSettings.DEFAULT_ITMES_COMBO_IM_ADDRESS_CHOOSER;
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_AIM, str[0]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_GADU, str[1]));		
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_GROUPWISE, str[2]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_ICQ, str[3]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_IRC, str[4]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_JABBER, str[5]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_MSN, str[6]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_MEANWHILE, str[7]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_SMS, str[8]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_SKYPE, str[9]));
+		values.add(new KeyValueObject(ContactActivator.NODE_INSTMESS_YAHOO, str[10]));
 		
 		final Combo cb = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
 		ComboViewer comboViewer = new ComboViewer(cb);

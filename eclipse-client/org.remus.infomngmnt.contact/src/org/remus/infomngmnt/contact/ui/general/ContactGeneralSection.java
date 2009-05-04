@@ -28,6 +28,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -35,8 +36,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -59,8 +63,6 @@ public class ContactGeneralSection {
 	private Button bt_EditAddress;
 	private Combo combo_AddressChooser;
 	private Text tx_Address;
-	private Button bt_EditImAddress;
-	private Text tx_ImAddress;
 	private Text tx_BlogFeed;
 	private Text tx_Frontpage;
 	private Button bt_EditEmail;
@@ -69,6 +71,7 @@ public class ContactGeneralSection {
 	private Shell shell;
 	private InformationUnit informationUnit;
 	private EditGeneralPage editGeneralPage;
+	private Hyperlink hl_Email;
 	
 	public ContactGeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage){		
 		
@@ -93,29 +96,7 @@ public class ContactGeneralSection {
 		createGroupPhoneNumbers(compositeGeneral);
 		createGroupAddress(compositeGeneral);
 		createGroupInternet(compositeGeneral);
-//		createSeparator(compositeGeneral, true, 2);
-//		new Label(compositeGeneral, SWT.NONE);
-//		createGroupButtons(compositeGeneral);
 	}
-
-//	private void createGroupButtons(final Composite compositeGeneral) {
-//		final Composite composite_CreateDetailButtons = toolkit.createComposite(compositeGeneral,
-//				SWT.NONE);
-//		final GridLayout gl_CreateDetailButtons = new GridLayout();
-//		gl_CreateDetailButtons.numColumns = 5;
-//		composite_CreateDetailButtons.setLayoutData(new GridData(SWT.FILL, SWT.END, true, false));
-//		composite_CreateDetailButtons.setLayout(gl_CreateDetailButtons);
-//
-//		final Label lb = new Label(composite_CreateDetailButtons, SWT.NONE);
-//		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-//		gd_text.horizontalSpan = 2;
-//		lb.setLayoutData(gd_text);
-//		final Button bt_Ok = toolkit.createButton(composite_CreateDetailButtons, "OK", SWT.NONE);
-//		final Button bt_Apply = toolkit.createButton(composite_CreateDetailButtons, "Apply",
-//				SWT.NONE);
-//		final Button bt_Cancel = toolkit.createButton(composite_CreateDetailButtons, "Cancel",
-//				SWT.NONE);
-//	}
 
 	private void createGroupPerson(Composite compositeGeneral) {
 
@@ -160,8 +141,7 @@ public class ContactGeneralSection {
 		createListenerGroupPerson(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);
 		createTextValueBindingsGroupPerson(informationUnit, editGeneralPage);
 		
-		InformationUnit rawData = InformationUtil.getChildByType(informationUnit,
-				ContactActivator.NODE_NAME_RAWDATA_IMAGE);
+		InformationUnit rawData = InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_RAWDATA_IMAGE);
 		if (rawData != null && rawData.getBinaryValue() != null) {
 			ByteArrayInputStream bais = new ByteArrayInputStream(rawData.getBinaryValue());
 			ImageData imageData = new ImageData(bais);
@@ -183,7 +163,6 @@ public class ContactGeneralSection {
 
 		TextBindingWidget createTextBindingWidget4 = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
 		createTextBindingWidget4.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-//		}
 	}
 
 	private void createListenerGroupPerson(final Composite compositeGeneral, final FormToolkit toolkit,
@@ -213,7 +192,7 @@ public class ContactGeneralSection {
 			public void widgetSelected(final SelectionEvent e) {
 				EditContactPersonDialog ecd = new EditContactPersonDialog(toolkit, shell,	informationUnit, editGeneralPage);
 				ecd.open();
-				}			
+			}			
 		});
 	}
 	
@@ -265,8 +244,6 @@ public class ContactGeneralSection {
 		GridData gd_EditAddress = new GridData(SWT.FILL, SWT.BEGINNING, true, true);
 		bt_EditAddress.setLayoutData(gd_EditAddress);
 		
-		//createTextValueBindings();
-		
 		createListenerGroupAddress(compositeGeneral, toolkit, shell, informationUnit, editGeneralPage);		
 		
 		if (!ContactActivator.getDefault().getDialogSettings().getBoolean(ContactSettings.AC_USER_SETTINGS)) {
@@ -275,9 +252,6 @@ public class ContactGeneralSection {
 		} else {
 			setContactProportiesFromActivatorToGenerationDialog();
 		}
-		
-		validateAddressGroupPage();
-
 	}
 
 	private void setContactProportiesFromActivatorToGenerationDialog() {
@@ -290,18 +264,11 @@ public class ContactGeneralSection {
 	}
 	private void setContactProportiesFromActivatorToDefault() {
 		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_DEFAULT_ADDRESS_INDEX, 0);
-		//ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX, 0);
-		//ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_USER_SETTINGS, false);		
 	}
 	private void setContactProportiesFromGenerationDialogToActivator() {
 		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_USER_SETTINGS, true);
 		ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_DEFAULT_ADDRESS_INDEX, combo_AddressChooser.getSelectionIndex());
 
-	}
-	private void validateAddressGroupPage() {
-		//setContactProportiesFromGenerationDialogToActivator();
-		//cb_Combo.setSelection(InformationUtil.getChildByType(contact, ContactSettings.getd);
-		
 	}
 	private void createListenerGroupAddress(final Composite compositeGeneral, final FormToolkit toolkit,
 			final Shell shell, final InformationUnit informationUnit, final EditGeneralPage editGeneralPage) {
@@ -319,7 +286,6 @@ public class ContactGeneralSection {
 			public void modifyText(ModifyEvent e) {
 				ContactActivator.getDefault().getDialogSettings().put(ContactSettings.AC_COMBO_DEFAULT_ADDRESS_INDEX, combo_AddressChooser.getSelectionIndex());
 				setTextForAddressBox(informationUnit);
-				//setContactProportiesFromActivatorToGenerationDialog();
 			}		
 		});
 	}
@@ -389,7 +355,9 @@ public class ContactGeneralSection {
 		gl_Internet.numColumns = 2;
 		group_Internet.setLayout(gl_Internet);
 
-		toolkit.createLabel(group_Internet, "E-Mail:");
+		//Label lb_Email = toolkit.createLabel(group_Internet, "E-Mail:");
+		hl_Email = toolkit.createHyperlink(group_Internet, "E-Mail", SWT.NONE);
+
 		tx_Email = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_Email.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		tx_Email.setEditable(false);
@@ -409,13 +377,8 @@ public class ContactGeneralSection {
 		tx_BlogFeed.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
 		toolkit.createLabel(group_Internet, "IM-Address:");
-		tx_ImAddress = toolkit.createText(group_Internet, null, SWT.BORDER);
-		tx_ImAddress.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-		tx_ImAddress.setEditable(false);
-		tx_ImAddress.setEnabled(false);
 
-		bt_EditImAddress = toolkit.createButton(group_Internet, "Edit IM-Address ...", SWT.NONE);
-		bt_EditImAddress.setLayoutData(gd_SpanHorizontal2);
+		new InstantMessagingComposite(group_Internet, SWT.NONE, toolkit, 1, informationUnit, editGeneralPage);
 		
 		createListener();
 		createTextValueBindingsGroupInternet();
@@ -430,8 +393,6 @@ public class ContactGeneralSection {
 		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_FRONTPAGE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(tx_BlogFeed, editGeneralPage);
 		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_BLOG_FEED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBindingWidget(tx_ImAddress, editGeneralPage);
-		createTextBindingWidget3.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_INSTMESS_DEFAULT), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 	}
 
 	private void createListener() {
@@ -441,13 +402,16 @@ public class ContactGeneralSection {
 				ecd.open();
 			}			
 		});
-		bt_EditImAddress.addSelectionListener(new SelectionAdapter(){
-			public void widgetSelected(final SelectionEvent e) {
-				EditContactIMDialog ecd = new EditContactIMDialog(toolkit, shell, informationUnit, editGeneralPage);
-				ecd.open();
-			}			
+		hl_Email.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(final HyperlinkEvent e) {
+				try {
+					Program.launch("mailto:"+tx_Email.getText());					
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
 		});
-		
 	}
 
 	private void createSeparator(final Composite compositeGeneral, final boolean isHorizontal,

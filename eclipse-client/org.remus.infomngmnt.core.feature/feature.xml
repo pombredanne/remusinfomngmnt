@@ -156,6 +156,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32"
+         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -178,6 +180,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32" 
+         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -201,6 +205,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32" 
+         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -561,6 +567,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32" 
+         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -667,6 +675,9 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32" 
+         ws="win32"
+         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -717,6 +728,7 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32" 
          unpack="false"/>
 
    <plugin
@@ -863,6 +875,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="linux" 
+		 arch="x86"
          unpack="false"/>
 
    <plugin
@@ -871,6 +885,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="linux" 
+		 arch="x86_64"
          unpack="false"/>
 
    <plugin
@@ -879,6 +895,7 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="macosx"
          unpack="false"/>
 
    <plugin
@@ -887,6 +904,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="linux" 
+	     arch="x86"
          unpack="false"/>
 
    <plugin
@@ -895,6 +914,7 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="macosx"
          unpack="false"/>
 
    <plugin
@@ -903,6 +923,8 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="macosx" 
+         ws="carbon"
          unpack="false"/>
 
    <plugin
@@ -911,6 +933,9 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="linux"
+         ws="gtk"
+         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -919,6 +944,9 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="linux"
+         ws="gtk"
+         arch="x86_64"
          unpack="false"/>
 
    <plugin
@@ -927,6 +955,9 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
          unpack="false"/>
 
    <plugin
@@ -935,6 +966,9 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         os="win32"
+         ws="wpf"
+         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -943,6 +977,7 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         ws="carbon"
          unpack="false"/>
 
 </feature>

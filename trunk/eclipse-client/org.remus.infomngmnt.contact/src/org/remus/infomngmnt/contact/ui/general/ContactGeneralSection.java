@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.widgets.AbstractHyperlink;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
@@ -64,7 +65,7 @@ public class ContactGeneralSection {
 	private Combo combo_AddressChooser;
 	private Text tx_Address;
 	private Text tx_BlogFeed;
-	private Text tx_Frontpage;
+	private Text tx_Homepage;
 	private Button bt_EditEmail;
 	private Text tx_Email;
 	private FormToolkit toolkit;
@@ -72,6 +73,7 @@ public class ContactGeneralSection {
 	private InformationUnit informationUnit;
 	private EditGeneralPage editGeneralPage;
 	private Hyperlink hl_Email;
+	private AbstractHyperlink tl_Homepage;
 	
 	public ContactGeneralSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditGeneralPage editGeneralPage){		
 		
@@ -355,8 +357,7 @@ public class ContactGeneralSection {
 		gl_Internet.numColumns = 2;
 		group_Internet.setLayout(gl_Internet);
 
-		//Label lb_Email = toolkit.createLabel(group_Internet, "E-Mail:");
-		hl_Email = toolkit.createHyperlink(group_Internet, "E-Mail", SWT.NONE);
+		hl_Email = toolkit.createHyperlink(group_Internet, "E-Mail:", SWT.NONE);
 
 		tx_Email = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_Email.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
@@ -368,9 +369,10 @@ public class ContactGeneralSection {
 
 		createSeparator(group_Internet, true, 3);
 		
-		toolkit.createLabel(group_Internet, "Frontpage:");
-		tx_Frontpage = toolkit.createText(group_Internet, null, SWT.BORDER);
-		tx_Frontpage.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		tl_Homepage = toolkit.createHyperlink(group_Internet, "Homepage:", SWT.NONE);
+		
+		tx_Homepage = toolkit.createText(group_Internet, null, SWT.BORDER);
+		tx_Homepage.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
 		toolkit.createLabel(group_Internet, "Blog Feed:");
 		tx_BlogFeed = toolkit.createText(group_Internet, null, SWT.BORDER);
@@ -389,7 +391,7 @@ public class ContactGeneralSection {
 	private void createTextValueBindingsGroupInternet() {
 		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Email, editGeneralPage);
 		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MAIL_DEF), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);		
-		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(tx_Frontpage, editGeneralPage);
+		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(tx_Homepage, editGeneralPage);
 		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_FRONTPAGE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(tx_BlogFeed, editGeneralPage);
 		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_BLOG_FEED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
@@ -407,6 +409,16 @@ public class ContactGeneralSection {
 			public void linkActivated(final HyperlinkEvent e) {
 				try {
 					Program.launch("mailto:"+tx_Email.getText());					
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		});
+		tl_Homepage.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(final HyperlinkEvent e) {
+				try {
+					Program.launch(tx_Homepage.getText());					
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}

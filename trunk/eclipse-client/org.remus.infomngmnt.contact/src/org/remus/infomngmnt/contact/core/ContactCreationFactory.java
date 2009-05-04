@@ -226,6 +226,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit imDefault = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		imDefault.setType(ContactActivator.NODE_INSTMESS_DEFAULT);
 		
+		InformationUnit blogFeed = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		blogFeed.setType(ContactActivator.NODE_BLOG_FEED);
+		InformationUnit frontpage = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		frontpage.setType(ContactActivator.NODE_FRONTPAGE);
+		
 		// general
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
 		returnValue.getChildValues().add(rawDataImage);
@@ -333,6 +338,9 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(imMw);
 		returnValue.getChildValues().add(imSkype);
 		returnValue.getChildValues().add(imYahoo);
+		
+		returnValue.getChildValues().add(blogFeed);
+		returnValue.getChildValues().add(frontpage);
 		
 		return returnValue;
 	}

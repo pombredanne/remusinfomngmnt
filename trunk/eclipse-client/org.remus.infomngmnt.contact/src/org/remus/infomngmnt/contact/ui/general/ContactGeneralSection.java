@@ -31,7 +31,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -62,8 +61,8 @@ public class ContactGeneralSection {
 	private Text tx_Address;
 	private Button bt_EditImAddress;
 	private Text tx_ImAddress;
-	private Control tx_BlogFeed;
-	private Control tx_Frontpage;
+	private Text tx_BlogFeed;
+	private Text tx_Frontpage;
 	private Button bt_EditEmail;
 	private Text tx_Email;
 	private FormToolkit toolkit;
@@ -142,6 +141,7 @@ public class ContactGeneralSection {
 		tx_EditName = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_EditName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		tx_EditName.setEditable(false);
+		tx_EditName.setEnabled(false);
 
 		toolkit.createLabel(group_Person, "Role:");
 		tx_Role = toolkit.createText(group_Person, null, SWT.BORDER);
@@ -392,6 +392,8 @@ public class ContactGeneralSection {
 		toolkit.createLabel(group_Internet, "E-Mail:");
 		tx_Email = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_Email.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		tx_Email.setEditable(false);
+		tx_Email.setEnabled(false);
 
 		bt_EditEmail = toolkit.createButton(group_Internet, "Edit E-Mail-Address ...", SWT.NONE);
 		bt_EditEmail.setLayoutData(gd_SpanHorizontal2);
@@ -409,6 +411,8 @@ public class ContactGeneralSection {
 		toolkit.createLabel(group_Internet, "IM-Address:");
 		tx_ImAddress = toolkit.createText(group_Internet, null, SWT.BORDER);
 		tx_ImAddress.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		tx_ImAddress.setEditable(false);
+		tx_ImAddress.setEnabled(false);
 
 		bt_EditImAddress = toolkit.createButton(group_Internet, "Edit IM-Address ...", SWT.NONE);
 		bt_EditImAddress.setLayoutData(gd_SpanHorizontal2);
@@ -422,6 +426,12 @@ public class ContactGeneralSection {
 	private void createTextValueBindingsGroupInternet() {
 		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Email, editGeneralPage);
 		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MAIL_DEF), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);		
+		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(tx_Frontpage, editGeneralPage);
+		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_FRONTPAGE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(tx_BlogFeed, editGeneralPage);
+		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_BLOG_FEED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBindingWidget(tx_ImAddress, editGeneralPage);
+		createTextBindingWidget3.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_INSTMESS_DEFAULT), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 	}
 
 	private void createListener() {

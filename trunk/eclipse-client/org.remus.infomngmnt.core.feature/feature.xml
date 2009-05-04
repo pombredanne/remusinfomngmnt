@@ -18,14 +18,7 @@
       [Enter License Description here.]
    </license>
 
-   <plugin
-         id="com.ibm.icu"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
+    <plugin
          id="com.ibm.icu"
          download-size="0"
          install-size="0"
@@ -53,24 +46,11 @@
          unpack="false"/>
 
    <plugin
-         id="javax.servlet"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="javax.xml"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="net.sf.colorer"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="org.apache.commons.codec"
@@ -80,21 +60,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.commons.httpclient"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.commons.lang"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.logging"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -123,13 +89,6 @@
 
    <plugin
          id="org.apache.xml.serializer"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ant.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -252,25 +211,11 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.core.runtime.compatibility.auth"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.runtime.compatibility.registry"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"/>
-
-   <plugin
-         id="org.eclipse.core.variables"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.eclipse.draw2d"
@@ -301,6 +246,13 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.ecf.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.ecf.provider.filetransfer"
          download-size="0"
          install-size="0"
@@ -313,6 +265,13 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ecf.sharedobject"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -388,13 +347,6 @@
 
    <plugin
          id="org.eclipse.emf.ecore"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecore.change"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -718,13 +670,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.team.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.text"
          download-size="0"
          install-size="0"
@@ -790,28 +735,6 @@
 
    <plugin
          id="org.eclipse.update.configurator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.update.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.update.core.win32"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.update.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -893,6 +816,14 @@
          version="0.0.0"/>
 
    <plugin
+         id="org.remus.infomngmnt.log4j"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
          id="org.remus.infomngmnt.mediaplayer"
          download-size="0"
          install-size="0"
@@ -932,6 +863,94 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.filesystem.linux.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.filesystem.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.filesystem.macosx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.net.linux.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.security.macosx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.carbon.macosx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.gtk.linux.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.gtk.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.win32.win32.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.wpf.win32.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.carbon"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
          unpack="false"/>
 
 </feature>

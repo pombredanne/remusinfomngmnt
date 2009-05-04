@@ -28,6 +28,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
@@ -94,9 +96,18 @@ public class EditContactIMDialog extends TitleAreaDialog {
 		comp_Email_Buttons.setLayoutData(gd_comp_Email_Buttons);
 		
 		this.tv_IM = new TableViewer(comp_Email_Table, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		final Table table = tv_IM.getTable();
 		this.tv_IM.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.tv_IM.setLabelProvider(new LabelProvider());
 		this.tv_IM.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		final TableColumn tc_ImType = new TableColumn(table, SWT.NONE);
+		tc_ImType.setWidth(100);
+		tc_ImType.setText("New column");
+
+		final TableColumn tc_ImAddress = new TableColumn(table, SWT.NONE);
+		tc_ImAddress.setWidth(100);
+		tc_ImAddress.setText("New column");
 		
 		bt_AddNew = toolkit.createButton(comp_Email_Buttons, "Add New IM", SWT.BORDER);
 		final GridData gd_bt_AddNew = new GridData(SWT.FILL, SWT.CENTER, true, false);

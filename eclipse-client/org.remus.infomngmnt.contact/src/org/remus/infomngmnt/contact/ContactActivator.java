@@ -135,7 +135,10 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_INSTMESS_SMS = "instMessSms"; //$NON-NLS-1$
 	public static final String NODE_INSTMESS_SKYPE = "instMessSkype"; //$NON-NLS-1$
 	public static final String NODE_INSTMESS_YAHOO = "instMessYahoo"; //$NON-NLS-1$
-	public static final String NODE_INSTMESS_DEFAULT = "instMess_Def"; //$NON-NLS-1$
+	public static final String NODE_INSTMESS_DEFAULT = "instMessDef"; //$NON-NLS-1$
+	
+	public static final String NODE_BLOG_FEED = "blogFeed"; //$NON-NLS-1$
+	public static final String NODE_FRONTPAGE = "frontpage"; //$NON-NLS-1$
 	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact";

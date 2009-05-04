@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Jan Hartwig, FEB Radebeul
+public boolean isDeletionWizard; * Copyright (c) 2009 Jan Hartwig, FEB Radebeul
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.remus.infomngmnt.InformationUnit;
 
-public class EditContactEmailNewDialog extends TitleAreaDialog {
+public class EditContactEmailChangeDialog extends TitleAreaDialog {
 
 	private InformationUnit informationUnit;
 	private FormToolkit toolkit;
@@ -38,27 +38,40 @@ public class EditContactEmailNewDialog extends TitleAreaDialog {
 	private Button bt_Ok;
 	private Composite area;
 	private Text tx_Email;
+	public String curText;
+	protected boolean isDeletionWizard = false;
+	protected boolean isAddNewWizard = false;
+	protected boolean isChangeWizard = false;
+	protected boolean isDeletionSelected = false;
+	private String stringLable;
+	private String selectedEmail;
 
-	public EditContactEmailNewDialog(FormToolkit toolkit, Shell parentShell, InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
+	public EditContactEmailChangeDialog(FormToolkit toolkit, Shell parentShell, InformationUnit informationUnit, EditGeneralPage editGeneralPage, String stringLable, String selectedEmail) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.informationUnit = informationUnit;
 		this.toolkit = toolkit;
 		this.editGeneralPage = editGeneralPage;
+		this.stringLable = stringLable;
+		this.selectedEmail = selectedEmail;
 	}
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
 		this.bt_Ok = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		this.bt_Ok.setEnabled(false);
+		validateEmail();
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 	@Override
 	public boolean close() {
-		//setUserSettings();
+		if(!isDeletionWizard) curText = tx_Email.getText();
 		return super.close();
 	}
 	@Override
 	protected void okPressed(){
+		if (isDeletionWizard) {
+			isDeletionSelected = true;
+		}
 		super.okPressed();
 	}
 	@Override
@@ -71,21 +84,50 @@ public class EditContactEmailNewDialog extends TitleAreaDialog {
 		final Label lb_Email = new Label(area, SWT.NONE);
 		final GridData gd_lb_Email = new GridData();
 		lb_Email.setLayoutData(gd_lb_Email);
-		lb_Email.setText("New E-Mail");
+		lb_Email.setText(stringLable);
 
 		tx_Email = new Text(area, SWT.BORDER);
 		final GridData gd_tx_Email = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		tx_Email.setLayoutData(gd_tx_Email);
+		tx_Email.setLayoutData(gd_tx_Email);		
+		if (selectedEmail != null) {
+			tx_Email.setText(selectedEmail);			
+		}
 		tx_Email.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
 				validateEmail();				
 			}
-		});		
+		});			
+		if(isDeletionWizard) {
+			tx_Email.setEditable(false);
+			tx_Email.setEnabled(false);
+		}
+		
 		return this.area;		
 	}
-		private void validateEmail() {
+		private void validateEmail() {			
 			if (tx_Email.getText().contains("@")) {
 				bt_Ok.setEnabled(true);
 			}else bt_Ok.setEnabled(false);
+		}
+		public String getCurText() {
+			return curText;
+		}
+		public boolean isDeletionWizard() {
+			return isDeletionWizard;
+		}
+		public void setDeletionWizard(boolean isDeletionWizard) {
+			this.isDeletionWizard = isDeletionWizard;
+		}
+		public boolean isAddNewWizard() {
+			return isAddNewWizard;
+		}
+		public void setAddNewWizard(boolean isAddNewWizard) {
+			this.isAddNewWizard = isAddNewWizard;
+		}
+		public boolean isChangeWizard() {
+			return isChangeWizard;
+		}
+		public void setChangeWizard(boolean isChangeWizard) {
+			this.isChangeWizard = isChangeWizard;
 		}
 }

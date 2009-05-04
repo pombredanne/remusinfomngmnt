@@ -88,7 +88,7 @@ public class PhoneNumbersComposite extends Composite {
 			public void selectionChanged(SelectionChangedEvent event) {
 				if (!event.getSelection().isEmpty()) {
 					if (currentBinding != null) {
-						currentBinding.dispose();
+						currentBinding.dispose();						
 					}
 					createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit,
 							((KeyValueObject) ((IStructuredSelection) event.getSelection()).getFirstElement()).getId()),

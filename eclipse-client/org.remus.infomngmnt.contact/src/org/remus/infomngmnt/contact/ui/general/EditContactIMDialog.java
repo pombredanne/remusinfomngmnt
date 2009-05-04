@@ -115,7 +115,7 @@ public class EditContactIMDialog extends TitleAreaDialog {
 		createListener();
 		createTextValueBindings();
 		
-		setContactProportiesFromActivatorToGenerationDialog();
+		setContactProportiesFromActivatorToGenerationDialog();		
 		
 		return this.area;		
 	}

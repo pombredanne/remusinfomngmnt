@@ -99,24 +99,24 @@ public class ContactGeneralSection {
 //		createGroupButtons(compositeGeneral);
 	}
 
-	private void createGroupButtons(final Composite compositeGeneral) {
-		final Composite composite_CreateDetailButtons = toolkit.createComposite(compositeGeneral,
-				SWT.NONE);
-		final GridLayout gl_CreateDetailButtons = new GridLayout();
-		gl_CreateDetailButtons.numColumns = 5;
-		composite_CreateDetailButtons.setLayoutData(new GridData(SWT.FILL, SWT.END, true, false));
-		composite_CreateDetailButtons.setLayout(gl_CreateDetailButtons);
-
-		final Label lb = new Label(composite_CreateDetailButtons, SWT.NONE);
-		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		gd_text.horizontalSpan = 2;
-		lb.setLayoutData(gd_text);
-		final Button bt_Ok = toolkit.createButton(composite_CreateDetailButtons, "OK", SWT.NONE);
-		final Button bt_Apply = toolkit.createButton(composite_CreateDetailButtons, "Apply",
-				SWT.NONE);
-		final Button bt_Cancel = toolkit.createButton(composite_CreateDetailButtons, "Cancel",
-				SWT.NONE);
-	}
+//	private void createGroupButtons(final Composite compositeGeneral) {
+//		final Composite composite_CreateDetailButtons = toolkit.createComposite(compositeGeneral,
+//				SWT.NONE);
+//		final GridLayout gl_CreateDetailButtons = new GridLayout();
+//		gl_CreateDetailButtons.numColumns = 5;
+//		composite_CreateDetailButtons.setLayoutData(new GridData(SWT.FILL, SWT.END, true, false));
+//		composite_CreateDetailButtons.setLayout(gl_CreateDetailButtons);
+//
+//		final Label lb = new Label(composite_CreateDetailButtons, SWT.NONE);
+//		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+//		gd_text.horizontalSpan = 2;
+//		lb.setLayoutData(gd_text);
+//		final Button bt_Ok = toolkit.createButton(composite_CreateDetailButtons, "OK", SWT.NONE);
+//		final Button bt_Apply = toolkit.createButton(composite_CreateDetailButtons, "Apply",
+//				SWT.NONE);
+//		final Button bt_Cancel = toolkit.createButton(composite_CreateDetailButtons, "Cancel",
+//				SWT.NONE);
+//	}
 
 	private void createGroupPerson(Composite compositeGeneral) {
 
@@ -180,10 +180,7 @@ public class ContactGeneralSection {
 		
 		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBindingWidget(tx_Organisation, editGeneralPage);
 		createTextBindingWidget3.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-//		if (tx_Organisation.getText().length() >=1 && ContactSettings.AC_COMBO_NAME_FORMATTED_INDEX.equals("ganisation")) {
-//			createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
-//			createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_ORGANISATION), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-//		}else{
+
 		TextBindingWidget createTextBindingWidget4 = BindingWidgetFactory.createTextBindingWidget(tx_FormattedName, editGeneralPage);
 		createTextBindingWidget4.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_PERS_NAME_FORMATTED), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 //		}
@@ -417,14 +414,14 @@ public class ContactGeneralSection {
 		bt_EditImAddress.setLayoutData(gd_SpanHorizontal2);
 		
 		createListener();
-		createTextValueBindings();
+		createTextValueBindingsGroupInternet();
 		
 		setContactProportiesFromActivatorToGenerationDialog();
 	}
 
-	private void createTextValueBindings() {
-		// TODO Auto-generated method stub
-		
+	private void createTextValueBindingsGroupInternet() {
+		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(tx_Email, editGeneralPage);
+		createTextBindingWidget.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MAIL_DEF), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);		
 	}
 
 	private void createListener() {

@@ -15,11 +15,9 @@ package org.remus.infomngmnt.contact.ui.detail;
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
   * 
   */
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -28,11 +26,28 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.core.model.InformationUtil;
 
 public class ContactDetailsSection {
 
-	public ContactDetailsSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain) {
+	private Text tx_Department;
+	private Text tx_NameManager;
+	private Text tx_Bureau;
+	private Text tx_Assistant;
+	private Text tx_Job;
+	private Text tx_Title;
+	private Text tx_Nickname;
+	private Text tx_Birthday;
+	private Text tx_NamePartner;
+	private Text tx_Jubilee;
+	private Text tx_Note;
+	
+	public ContactDetailsSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditDetailPage editDetailPage ) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -46,27 +61,48 @@ public class ContactDetailsSection {
 		section_1.setClient(compositeGeneral);
 
 		createGroupGeneral(compositeGeneral, toolkit);
-		createGroupPerson(compositeGeneral, toolkit);
-		createGroupNote(compositeGeneral, toolkit);
 		createSeparator(compositeGeneral, true, 1);
-		createGroupButtons(compositeGeneral, toolkit);
+		createGroupPerson(compositeGeneral, toolkit);
+		createSeparator(compositeGeneral, true, 1);
+		createGroupNote(compositeGeneral, toolkit);
+
+		createTextValueBindingsSectionDetails(informationUnit, editDetailPage);
 	}
 
-	private void createGroupButtons(Composite compositeGeneral,
-			FormToolkit toolkit) {
-		final Composite composite_CreateDetailButtons = toolkit.createComposite(compositeGeneral, SWT.NONE);
-		final GridLayout gl_CreateDetailButtons = new GridLayout();
-		gl_CreateDetailButtons.numColumns = 5;
-		composite_CreateDetailButtons.setLayoutData( new GridData(SWT.FILL, SWT.END, true, false));
-		composite_CreateDetailButtons.setLayout(gl_CreateDetailButtons);
+	private void createTextValueBindingsSectionDetails(
+			InformationUnit informationUnit, EditDetailPage editDetailPage) {
+		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(tx_Assistant, editDetailPage);
+		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_NAME_ASSISTANT), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		
-		final Label lb = new Label(composite_CreateDetailButtons, SWT.NONE);
-		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		gd_text.horizontalSpan = 2;
-		lb.setLayoutData(gd_text);
-		final Button bt_Ok = toolkit.createButton(composite_CreateDetailButtons, "OK", SWT.NONE);
-		final Button bt_Apply = toolkit.createButton(composite_CreateDetailButtons, "Apply", SWT.NONE);
-		final Button bt_Cancel = toolkit.createButton(composite_CreateDetailButtons, "Cancel", SWT.NONE);
+		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(tx_Birthday, editDetailPage);
+		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_BIRTHDAY), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBindingWidget(tx_Bureau, editDetailPage);
+		createTextBindingWidget3.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_BUREAU), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+		TextBindingWidget createTextBindingWidget4 = BindingWidgetFactory.createTextBindingWidget(tx_Department, editDetailPage);
+		createTextBindingWidget4.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_DEPARTMENT), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		TextBindingWidget createTextBindingWidget5 = BindingWidgetFactory.createTextBindingWidget(tx_Jubilee, editDetailPage);
+		createTextBindingWidget5.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_JUBILEE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		TextBindingWidget createTextBindingWidget6 = BindingWidgetFactory.createTextBindingWidget(tx_NameManager, editDetailPage);
+		createTextBindingWidget6.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_NAME_MANAGER), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+		TextBindingWidget createTextBindingWidget7 = BindingWidgetFactory.createTextBindingWidget(tx_NamePartner, editDetailPage);
+		createTextBindingWidget7.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_NAME_PARTNER), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		TextBindingWidget createTextBindingWidget8 = BindingWidgetFactory.createTextBindingWidget(tx_Nickname, editDetailPage);
+		createTextBindingWidget8.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_NAME_NICK), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		TextBindingWidget createTextBindingWidget9 = BindingWidgetFactory.createTextBindingWidget(tx_Note, editDetailPage);
+		createTextBindingWidget9.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_NOTES), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+		TextBindingWidget createTextBindingWidget10 = BindingWidgetFactory.createTextBindingWidget(tx_Job, editDetailPage);
+		createTextBindingWidget10.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_JOB), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		TextBindingWidget createTextBindingWidget11 = BindingWidgetFactory.createTextBindingWidget(tx_Title, editDetailPage);
+		createTextBindingWidget11.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_TITLE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 	}
 
 	private void createGroupNote(Composite compositeGeneral, FormToolkit toolkit) {
@@ -84,7 +120,7 @@ public class ContactDetailsSection {
 		final Label lb_Notes = toolkit.createLabel(group_Note, "Notes");
 		lb_Notes.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, true));
 		
-		final Text tx_Note = toolkit.createText(group_Note, null, SWT.BORDER | SWT.MULTI);
+		tx_Note = toolkit.createText(group_Note, null, SWT.BORDER | SWT.MULTI);
 		GridData gd_Address = new GridData();		
 		gd_Address.grabExcessVerticalSpace = true;
 		gd_Address.verticalAlignment = GridData.FILL;
@@ -107,20 +143,20 @@ public class ContactDetailsSection {
 		gl_General.numColumns = 4;
 		group_Person.setLayout(gl_General);
 		
-		final Label lb_Nickname = toolkit.createLabel(group_Person, "Nickname:");
-		final Text tx_Nickname = toolkit.createText(group_Person, null, SWT.BORDER);
+		toolkit.createLabel(group_Person, "Nickname:");
+		tx_Nickname = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_Nickname.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_Birthday = toolkit.createLabel(group_Person, "Birthday:");
-		final Text tx_Birthday = toolkit.createText(group_Person, null, SWT.BORDER);
+		toolkit.createLabel(group_Person, "Birthday:");
+		tx_Birthday = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_Birthday.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_NamePartner = toolkit.createLabel(group_Person, "Name Of Partner:");
-		final Text tx_NamePartner = toolkit.createText(group_Person, null, SWT.BORDER);
+		toolkit.createLabel(group_Person, "Name Of Partner:");
+		tx_NamePartner = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_NamePartner.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_Jubilee = toolkit.createLabel(group_Person, "Jubilee:");
-		final Text tx_Jubilee = toolkit.createText(group_Person, null, SWT.BORDER);
+		toolkit.createLabel(group_Person, "Jubilee:");
+		tx_Jubilee = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_Jubilee.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
 	}
@@ -139,28 +175,28 @@ public class ContactDetailsSection {
 		gl_General.numColumns = 4;
 		group_General.setLayout(gl_General);
 	   
-		final Label lb_Department = toolkit.createLabel(group_General, "Department:");
-		final Text tx_Department = toolkit.createText(group_General, null, SWT.BORDER);
+		toolkit.createLabel(group_General, "Department:");
+		tx_Department = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_Department.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_NameManager = toolkit.createLabel(group_General, "Name Of Manager:");
-		final Text tx_NameManager = toolkit.createText(group_General, null, SWT.BORDER);
+		toolkit.createLabel(group_General, "Name Of Manager:");
+		tx_NameManager = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_NameManager.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_Bureau = toolkit.createLabel(group_General, "Bureau:");
-		final Text tx_Bureau = toolkit.createText(group_General, null, SWT.BORDER);
+		toolkit.createLabel(group_General, "Bureau:");
+		tx_Bureau = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_Bureau.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_NamesAssistant = toolkit.createLabel(group_General, "Name of Assistant:");
-		final Text tx_Assistant = toolkit.createText(group_General, null, SWT.BORDER);
+		toolkit.createLabel(group_General, "Name of Assistant:");
+		tx_Assistant = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_Assistant.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_Job = toolkit.createLabel(group_General, "Job:");
-		final Text tx_Job = toolkit.createText(group_General, null, SWT.BORDER);
+		toolkit.createLabel(group_General, "Job:");
+		tx_Job = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_Job.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		final Label lb_Title = toolkit.createLabel(group_General, "Title:");
-		final Text tx_Title = toolkit.createText(group_General, null, SWT.BORDER);
+		toolkit.createLabel(group_General, "Title:");
+		tx_Title = toolkit.createText(group_General, null, SWT.BORDER);
 		tx_Title.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 	}
 	public void createSeparator(Composite compositeGeneral, boolean isHorizontal, int span) {

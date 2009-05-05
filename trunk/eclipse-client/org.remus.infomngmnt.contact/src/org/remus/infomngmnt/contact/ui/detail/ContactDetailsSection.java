@@ -10,7 +10,6 @@
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
 package org.remus.infomngmnt.contact.ui.detail;
-
  /**
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
   * 

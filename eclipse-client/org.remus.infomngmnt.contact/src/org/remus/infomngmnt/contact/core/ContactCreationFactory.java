@@ -62,8 +62,6 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		pnHome.setType(ContactActivator.NODE_NAME_PN_HOME);
 		InformationUnit pnWork = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		pnWork.setType(ContactActivator.NODE_NAME_PN_WORK);
-		InformationUnit pnMessanger = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		pnMessanger.setType(ContactActivator.NODE_NAME_PN_MESSANGER);
 		InformationUnit pnVoice = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		pnVoice.setType(ContactActivator.NODE_NAME_PN_VOICE);
 		InformationUnit pnFax = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -278,7 +276,6 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(pnHome);
 		returnValue.getChildValues().add(pnIsdn);
 		returnValue.getChildValues().add(pnMailbox);
-		returnValue.getChildValues().add(pnMessanger);
 		returnValue.getChildValues().add(pnMobile);
 		returnValue.getChildValues().add(pnModem);
 		returnValue.getChildValues().add(pnOthers);

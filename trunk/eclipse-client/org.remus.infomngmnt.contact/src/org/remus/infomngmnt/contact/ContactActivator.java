@@ -48,7 +48,6 @@ public class ContactActivator extends AbstractUIPlugin {
 	// group phone number
 	public static final String NODE_NAME_PN_HOME = "pnHome"; //$NON-NLS-1$
 	public static final String NODE_NAME_PN_WORK = "pnWork"; //$NON-NLS-1$
-	public static final String NODE_NAME_PN_MESSANGER = "pnMessanger"; //$NON-NLS-1$
 	public static final String NODE_NAME_PN_VOICE = "pnVoice"; //$NON-NLS-1$
 	public static final String NODE_NAME_PN_FAX = "pnFAX"; //$NON-NLS-1$
 	public static final String NODE_NAME_PN_MOBILE = "pnMobile"; //$NON-NLS-1$

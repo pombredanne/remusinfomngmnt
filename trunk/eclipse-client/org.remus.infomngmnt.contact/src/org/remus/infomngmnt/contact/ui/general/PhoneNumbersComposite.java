@@ -56,12 +56,11 @@ public class PhoneNumbersComposite extends Composite {
 		String[] str = 	ContactSettings.DEFAULT_ITEMS_COMBO_PHONENUMBER_CHOOSER;
 		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_HOME, str[0]));
 		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_WORK, str[1]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MESSANGER, str[2]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_VOICE, str[3]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_FAX, str[4]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MOBILE, str[5]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_VIDEO, str[6]));
-		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MAILBOX, str[7]));
+		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_VOICE, str[2]));
+		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_FAX, str[3]));
+		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MOBILE, str[4]));
+		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_VIDEO, str[5]));
+		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MAILBOX, str[6]));
 		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_MODEM, str[7]));
 		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_CAR, str[8]));
 		values.add(new KeyValueObject(ContactActivator.NODE_NAME_PN_ISDN, str[9]));

@@ -38,23 +38,25 @@ public class AvailableInformationCache {
 
 	/**
 	 * <p>
-	 * Returns all present list-items that are located under
-	 * a category. The project the items are located has to be open.
+	 * Returns all present list-items that are located under a category. The
+	 * project the items are located has to be open.
 	 * </p>
+	 * 
 	 * @param monitor
 	 * @return
 	 */
-	public Map<String, InformationUnitListItem> getAllItems(IProgressMonitor monitor) {
+	public Map<String, InformationUnitListItem> getAllItems(final IProgressMonitor monitor) {
 		if (this.cachedItems == null) {
-			this.cachedItems = new HashMap<String, InformationUnitListItem>();
 			ApplicationRoot model = ApplicationModelPool.getInstance().getModel();
-
-			EObjectCondition condition = new EObjectTypeRelationCondition(InfomngmntPackage.eINSTANCE.getInformationUnitListItem());
+			EObjectCondition condition = new EObjectTypeRelationCondition(
+					InfomngmntPackage.eINSTANCE.getInformationUnitListItem());
 			SELECT select = new SELECT(new FROM(model.getRootCategories()), new WHERE(condition));
 			IQueryResult execute = select.execute();
 			Set<? extends EObject> objects = execute.getEObjects();
+			this.cachedItems = new HashMap<String, InformationUnitListItem>(objects.size());
 			for (EObject object : objects) {
-				this.cachedItems.put(((InformationUnitListItem) object).getId(), (InformationUnitListItem) object);
+				this.cachedItems.put(((InformationUnitListItem) object).getId(),
+						(InformationUnitListItem) object);
 			}
 		}
 		return this.cachedItems;
@@ -65,10 +67,20 @@ public class AvailableInformationCache {
 		this.cachedItems = null;
 	}
 
-	public InformationUnitListItem getItemById(String id, IProgressMonitor monitor) {
+	public InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor) {
 		return getAllItems(monitor).get(id);
 	}
 
+	void addItem(final InformationUnitListItem item) {
+		if (this.cachedItems != null) {
+			this.cachedItems.put(item.getId(), item);
+		}
+	}
 
+	void remove(final String id) {
+		if (this.cachedItems != null) {
+			this.cachedItems.remove(id);
+		}
+	}
 
 }

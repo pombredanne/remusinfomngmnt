@@ -246,7 +246,7 @@ public class CategoryUtil {
 		InformationUnitListItem[] returnValue = new InformationUnitListItem[eObjects.size()];
 		int i = 0;
 		for (EObject informationUnitListItem : eObjects) {
-			returnValue[i++] = (InformationUnitListItem) eObjects;
+			returnValue[i++] = (InformationUnitListItem) informationUnitListItem;
 		}
 		return returnValue;
 	}

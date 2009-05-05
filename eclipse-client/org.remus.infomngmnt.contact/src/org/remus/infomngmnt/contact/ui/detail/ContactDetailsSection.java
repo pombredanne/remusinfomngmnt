@@ -14,8 +14,16 @@ package org.remus.infomngmnt.contact.ui.detail;
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
   * 
   */
+import java.util.Calendar;
+
+import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
+import org.eclipse.nebula.widgets.calendarcombo.CalendarListenerAdapter;
 import org.eclipse.nebula.widgets.calendarcombo.DefaultSettings;
 import org.eclipse.nebula.widgets.calendarcombo.ISettings;
 import org.eclipse.swt.SWT;
@@ -32,6 +40,8 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.CalendarComboModelToTarget;
+import org.remus.infomngmnt.common.ui.databinding.CalendarComboTargetToModel;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.model.InformationUtil;
@@ -54,8 +64,14 @@ public class ContactDetailsSection {
 	private final ISettings calendarSettings = new DefaultSettings();
 	private EMFDataBindingContext ctx;
 	private Search currentSearch;
+	private InformationUnit informationUnit;
+	private EditDetailPage editDetailPage;
 	
 	public ContactDetailsSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditDetailPage editDetailPage ) {
+		
+		this.informationUnit = informationUnit;
+		this.editDetailPage = editDetailPage;
+		
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -74,11 +90,10 @@ public class ContactDetailsSection {
 		createSeparator(compositeGeneral, true, 1);
 		createGroupNote(compositeGeneral, toolkit);
 
-		createTextValueBindingsSectionDetails(informationUnit, editDetailPage);
+		createTextValueBindingsSectionDetails();
 	}
 
-	private void createTextValueBindingsSectionDetails(
-			InformationUnit informationUnit, EditDetailPage editDetailPage) {
+	private void createTextValueBindingsSectionDetails() {
 		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(tx_Assistant, editDetailPage);
 		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_NAME_ASSISTANT), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 				
@@ -105,14 +120,13 @@ public class ContactDetailsSection {
 		
 		TextBindingWidget createTextBindingWidget11 = BindingWidgetFactory.createTextBindingWidget(tx_Title, editDetailPage);
 		createTextBindingWidget11.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_TITLE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+	
+		this.ctx = new EMFDataBindingContext();	
+		IObservableValue mObsBirthday = EMFEditObservables.observeValue(Realm.getDefault(),	editDetailPage.getEditingDomain(), this.currentSearch, InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
+		ISWTObservableValue uObsBirthday = SWTObservables.observeText(calcb_Birthday.getCombo());
+		this.ctx.bindValue(uObsBirthday, mObsBirthday, new CalendarComboTargetToModel(calcb_Birthday,
+				this.calendarSettings), new CalendarComboModelToTarget(calcb_Birthday, this.calendarSettings));
 		
-//		this.ctx = new EMFDataBindingContext();
-//		
-//		IObservableValue mObsBirthday = EMFEditObservables.observeValue(Realm.getDefault(),	editDetailPage.getEditingDomain(), this.currentSearch, InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
-//		ISWTObservableValue uObsBirthday = SWTObservables.observeText(calcb_Birthday.getCombo());
-//		this.ctx.bindValue(uObsBirthday, mObsBirthday, new CalendarComboTargetToModel(calcb_Birthday,
-//				this.calendarSettings), new CalendarComboModelToTarget(calcb_Birthday, this.calendarSettings));
-//		
 //		IObservableValue mObsJubilee = EMFEditObservables.observeValue(Realm.getDefault(),	editDetailPage.getEditingDomain(), this.currentSearch, InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
 //		ISWTObservableValue uObsJubilee = SWTObservables.observeText(calcb_Jubilee.getCombo());
 //		this.ctx.bindValue(uObsJubilee, mObsJubilee, new CalendarComboTargetToModel(calcb_Jubilee,
@@ -164,14 +178,22 @@ public class ContactDetailsSection {
 		
 		toolkit.createLabel(group_Person, "Birthday:");
 		
-//		calcb_Birthday = new CalendarCombo(group_Person, SWT.READ_ONLY, calendarSettings, null, true);
+		calcb_Birthday = new CalendarCombo(group_Person, SWT.READ_ONLY, calendarSettings, null, true);
 //		calcb_Birthday.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		calcb_Birthday = new CalendarCombo(group_Person, SWT.READ_ONLY | SWT.FLAT);
-//		calcb_Birthday.setEnabled(true);
+//		calcb_Birthday = new CalendarCombo(group_Person, SWT.READ_ONLY | SWT.FLAT);
 //		calcb_Birthday.addCalendarListener(new CalendarListenerAdapter() {
 //			public void dateChanged(Calendar date) {
 //				if (date != null) {
 //					System.err.println(date.getTime().toString());
+//				
+//					try {
+//						String str = calcb_Birthday.getCombo().getText();
+//						TextBindingWidget createTextBindingWidget11 = BindingWidgetFactory.createTextBindingWidget(str, editDetailPage);
+//						createTextBindingWidget11.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_BIRTHDAY), InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);						
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//				
 //				}
 //				else {
 //					System.err.println("null");
@@ -179,19 +201,12 @@ public class ContactDetailsSection {
 //			}
 //		});
 		
-	
-
-//		CDateTime cdt = new CDateTime(compositeGeneral, CDT.BORDER | CDT.COMPACT | CDT.DROP_DOWN | CDT.DATE_LONG | CDT.TIME_MEDIUM);
-//		cdt.setSelection(new Date());
-//		cdt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		
 		
 		toolkit.createLabel(group_Person, "Name Of Partner:");
 		tx_NamePartner = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_NamePartner.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
-		toolkit.createLabel(group_Person, "Jubilee:");
+//		toolkit.createLabel(group_Person, "Jubilee:");
 //		calcb_Jubilee = new CalendarCombo(group_Person, SWT.DROP_DOWN, calendarSettings, null, true);
 //		calcb_Jubilee.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		

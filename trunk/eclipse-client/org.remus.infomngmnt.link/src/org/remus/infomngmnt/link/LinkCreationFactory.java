@@ -55,10 +55,13 @@ public class LinkCreationFactory extends AbstractCreationFactory {
 	@Override
 	public Command handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
 		IPreferenceStore preferenceStore = LinkActivator.getDefault().getPreferenceStore();
+		String string = preferenceStore.getString(LinkPreferenceInitializer.SCREENSHOT_CMD);
+
 		final boolean indexWebContent = preferenceStore
 				.getBoolean(LinkPreferenceInitializer.INDEX_DOCUMENT);
 		final boolean makeWebShot = preferenceStore
-				.getBoolean(LinkPreferenceInitializer.MAKE_SCREENSHOT);
+				.getBoolean(LinkPreferenceInitializer.MAKE_SCREENSHOT)
+				&& string.length() > 0;
 		if (indexWebContent) {
 			monitor.beginTask("Indexing web-content", IProgressMonitor.UNKNOWN);
 			IndexWebPageRunnable runnable = new IndexWebPageRunnable(unit.getStringValue());

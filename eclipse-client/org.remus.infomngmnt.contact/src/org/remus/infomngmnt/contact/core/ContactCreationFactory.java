@@ -231,6 +231,30 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit frontpage = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		frontpage.setType(ContactActivator.NODE_FRONTPAGE);
 		
+		// section details
+		InformationUnit detDep = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detDep.setType(ContactActivator.NODE_DETAILS_DEPARTMENT);
+		InformationUnit detBur = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detBur.setType(ContactActivator.NODE_DETAILS_BUREAU);
+		InformationUnit detNaMan = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detNaMan.setType(ContactActivator.NODE_DETAILS_NAME_MANAGER);
+		InformationUnit detNaAss = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detNaAss.setType(ContactActivator.NODE_DETAILS_NAME_ASSISTANT);
+		InformationUnit detJob = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detJob.setType(ContactActivator.NODE_DETAILS_JOB);
+		InformationUnit detTitle = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detTitle.setType(ContactActivator.NODE_DETAILS_TITLE);
+		InformationUnit detNaNick = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detNaNick.setType(ContactActivator.NODE_DETAILS_NAME_NICK);
+		InformationUnit detBirth = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detBirth.setType(ContactActivator.NODE_DETAILS_BIRTHDAY);
+		InformationUnit detJubi = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detJubi.setType(ContactActivator.NODE_DETAILS_JUBILEE);
+		InformationUnit detNaPart = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detNaPart.setType(ContactActivator.NODE_DETAILS_NAME_PARTNER);
+		InformationUnit detNotes = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		detNotes.setType(ContactActivator.NODE_DETAILS_NOTES);
+
 		// general
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
 		returnValue.getChildValues().add(rawDataImage);
@@ -341,6 +365,19 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		
 		returnValue.getChildValues().add(blogFeed);
 		returnValue.getChildValues().add(frontpage);
+		
+		// section details
+		returnValue.getChildValues().add(detBirth);
+		returnValue.getChildValues().add(detBur);
+		returnValue.getChildValues().add(detDep);
+		returnValue.getChildValues().add(detJob);
+		returnValue.getChildValues().add(detJubi);
+		returnValue.getChildValues().add(detNaAss);
+		returnValue.getChildValues().add(detNaMan);
+		returnValue.getChildValues().add(detNaNick);
+		returnValue.getChildValues().add(detNaPart);
+		returnValue.getChildValues().add(detNotes);
+		returnValue.getChildValues().add(detTitle);
 		
 		return returnValue;
 	}

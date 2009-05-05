@@ -140,6 +140,19 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_BLOG_FEED = "blogFeed"; //$NON-NLS-1$
 	public static final String NODE_FRONTPAGE = "frontpage"; //$NON-NLS-1$
 	
+	// section details
+	public static final String NODE_DETAILS_DEPARTMENT = "detDep"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_BUREAU = "detBur"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_NAME_MANAGER = "detNaMan"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_NAME_ASSISTANT = "detNaAss"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_JOB = "detJob"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_TITLE = "detTitle"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_NAME_NICK = "detNaNick"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_BIRTHDAY = "detBirth"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_JUBILEE = "detJubi"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_NAME_PARTNER = "detNaPart"; //$NON-NLS-1$
+	public static final String NODE_DETAILS_NOTES = "detNotes"; //$NON-NLS-1$
+	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact";
 

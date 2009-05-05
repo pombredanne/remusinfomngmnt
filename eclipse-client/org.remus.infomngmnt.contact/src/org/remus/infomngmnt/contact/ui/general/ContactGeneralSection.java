@@ -198,10 +198,15 @@ public class ContactGeneralSection {
 		});
 	}
 	
-	private void createGroupPhoneNumbers(Composite compositeGeneral) {
+	private void createGroupPhoneNumbers(Composite compositeGeneral) {		
 		
 		final Group group_PhoneNumbers = new Group(compositeGeneral, SWT.NONE);
-		group_PhoneNumbers.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		final GridData gd_PhoneNumbers = new GridData();
+		gd_PhoneNumbers.grabExcessVerticalSpace = true;
+		gd_PhoneNumbers.verticalAlignment = GridData.FILL;
+		gd_PhoneNumbers.grabExcessHorizontalSpace = true;
+		gd_PhoneNumbers.horizontalAlignment = GridData.FILL;
+		group_PhoneNumbers.setLayoutData(gd_PhoneNumbers);
 	
 		final GridLayout gl_PhoneNumbersGroup = new GridLayout();
 		gl_PhoneNumbersGroup.numColumns = 1;

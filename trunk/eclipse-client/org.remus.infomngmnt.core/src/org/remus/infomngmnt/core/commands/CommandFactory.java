@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -141,6 +142,11 @@ public class CommandFactory {
 			final EditingDomain domain) {
 		return new SetCommand(domain, synchronizableObject,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA, null);
+	}
+
+	public static Command DELETE_INFOUNIT(final List<InformationUnitListItem> items,
+			final EditingDomain domain) {
+		return new DeleteInformationUnitCommand(items, domain);
 	}
 
 	public static Command DELETE_CATEGORY(final Category category, final EditingDomain domain) {

@@ -54,6 +54,19 @@ public class ApplicationModelPool {
 			if (msg.getNotifier() instanceof ResourceImpl) {
 				return;
 			}
+			if (msg.getEventType() == Notification.SET
+					&& msg.getFeature() == InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL) {
+				ApplicationModelPool.this.cache
+						.addItem((InformationUnitListItem) msg.getNotifier());
+			} else if (msg.getEventType() == Notification.REMOVE
+					&& msg.getOldValue() instanceof InformationUnitListItem) {
+				ApplicationModelPool.this.cache
+						.remove(((InformationUnitListItem) msg.getOldValue()).getId());
+			} else if (msg.getEventType() == Notification.ADD
+					&& msg.getNewValue() instanceof InformationUnitListItem) {
+				ApplicationModelPool.this.cache
+						.addItem((InformationUnitListItem) msg.getNewValue());
+			}
 			EditingUtil.getInstance().saveObjectToResource(this.category);
 			super.notifyChanged(msg);
 		}

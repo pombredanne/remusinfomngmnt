@@ -14,7 +14,7 @@
 	<property name="jar.location" value="/opt/eclipse/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar"/>
 	<property name="pde.build.location" location="/opt/eclipse/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/scripts/productBuild/productBuild.xml"/>
 	<property name="build.dir.location" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-NIGHTLYRCP/build/org.remus.infomngmnt.build"/>
-
+	
 
 	<tstamp>
 		<format property="today.date" pattern="yyyy-MM-dd_HH_mm" />
@@ -35,10 +35,118 @@
 		<move file="N.RIM/RIM-macosx.carbon.ppc.zip" failonerror="false" tofile="N.RIM/RIM-macosx.carbon.ppc.tar.gz"></move>
 	</target>
 
+	<target name="depending">
+	
+		<copy todir="${build.dir.location}/features">
+			<fileset dir="${build.dir.location}/../../eclipse-client/">
+   			 	<include name="*.feature/**"/>
+			</fileset>		
+		</copy>
+		
+		<copy todir="${build.dir.location}/plugins/">
+			<fileset dir="${build.dir.location}/../../eclipse-client/">
+   			 	<exclude name="*.feature/**"/>
+			</fileset>		
+		</copy>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v1_3_4" />
+			<param name="cvs.package" value="org.eclipse.orbit/javax.xml" />
+			<param name="cvs.name" value="javax.xml"  />
+		</antcall>
+		
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v1_2_13" />
+			<param name="cvs.package" value="org.eclipse.orbit/org.apache.log4j" />
+			<param name="cvs.name" value="org.apache.log4j"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v2_9_0" />
+			<param name="cvs.package" value="org.eclipse.orbit/org.apache.xerces" />
+			<param name="cvs.name" value="org.apache.xerces"  />
+
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v1_2_0" />
+			<param name="cvs.package" value="org.eclipse.orbit/org.apache.xml.resolver" />
+			<param name="cvs.name" value="org.apache.xml.resolver"  />
+
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v2_7_1" />
+			<param name="cvs.package" value="org.eclipse.orbit/org.apache.xml.serializer" />
+			<param name="cvs.name" value="org.apache.xml.serializer"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
+			<param name="cvs.tag"  value="v20081124-1800" />
+			<param name="cvs.package" value="org.eclipse.equinox/compendium/bundles/org.eclipse.equinox.ds" />
+			<param name="cvs.name" value="org.eclipse.equinox.ds"  />
+		</antcall>
+		
+
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.equinox/compendium/bundles/org.eclipse.equinox.util" />
+			<param name="cvs.name" value="org.eclipse.equinox.util"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.collapsiblebuttons" />
+			<param name="cvs.name" value="org.eclipse.nebula.widgets.collapsiblebuttons"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v1_1_0" />
+			<param name="cvs.package" value="org.eclipse.orbit/javax.activation" />
+			<param name="cvs.name" value="javax.activation"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v1_4_0" />
+			<param name="cvs.package" value="org.eclipse.orbit/javax.mail" />
+			<param name="cvs.name" value="javax.mail"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.cwt" />
+			<param name="cvs.name" value="org.eclipse.nebula.cwt"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.cdatetime" />
+			<param name="cvs.name" value="org.eclipse.nebula.widgets.cdatetime"  />
+		</antcall>
+		
+		<copy todir="${build.dir.location}/plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
+			<fileset dir="${build.dir.location}/customization/cdateiconreplacement">
+    			<include name="**/*.png"/>
+			</fileset>
+		</copy>
+	</target>
 	<!-- ================================= 
           target: test              
          ================================= -->
-	<target name="build" description="description">
+	<target name="build" description="description" depends="depending">
 		<java failonerror="true" fork="true" jar="${jar.location}">
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
@@ -48,14 +156,32 @@
 		</java>
 		<!-- <exec executable="pdeBuild.bat" /> -->
 	</target>
-
+	<target name="checkoutPackage">
+		<cvs cvsroot="${cvs.root}" tag="${cvs.tag}" package="${cvs.package}" dest="cvscheckout" />
+		<copy todir="plugins/${cvs.name}">
+			<fileset dir="cvscheckout/${cvs.package}">
+		</fileset>
+		</copy>
+	</target>
 
 	<!-- ================================= 
           target: clean              
          ================================= -->
 	<target name="clean" description="Cleaning previous build">
-		<delete failonerror="false" dir="plugins" />
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="." includes="**/*">
+			    <exclude name="customization/**"/>
+				<exclude name="cvscheckout/**"/>
+			    <exclude name="ico/**"/>
+			    <exclude name="xpm/**"/>
+			    <exclude name="build.properties"/>
+			    <exclude name="build.xml"/>
+			    <exclude name="customTargets.xml"/>
+			    <exclude name="rim.product"/>
+			</fileset>
+		</delete>
 	</target>
+
 
 	
 	<!-- ================================= 

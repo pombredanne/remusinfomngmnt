@@ -69,7 +69,7 @@
   			<span class="systemfont" style="font-weight:bold;">Source</span>
   		</div>
   	<pre>
-  	${text}
+${text}
   	</pre>	
   	</div>
  </body>

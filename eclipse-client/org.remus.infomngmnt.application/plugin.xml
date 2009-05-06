@@ -29,6 +29,22 @@
                name="appName"
                value="Remus Information Management">
          </property>
+         <property
+               name="startupProgressRect"
+               value="210,210,270,15">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="FFFFFF">
+         </property>
+         <property
+               name="buildIdLocation"
+               value="305,135">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="210,230,270,15">
+         </property>
       </product>
    </extension>
 

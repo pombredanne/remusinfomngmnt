@@ -147,6 +147,10 @@
           target: test              
          ================================= -->
 	<target name="build" description="description" depends="depending">
+		<!-- Set Build-ID -->
+		<propertyfile file="${build.dir.location}/plugins/org.remus.infomngmnt.application/config.ini">
+		  <entry  key="eclipse.buildId" value="${buildKey}-${buildNumber}"/>
+		</propertyfile>
 		<java failonerror="true" fork="true" jar="${jar.location}">
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />

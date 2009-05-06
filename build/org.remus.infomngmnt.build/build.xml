@@ -54,10 +54,7 @@
           target: clean              
          ================================= -->
 	<target name="clean" description="Cleaning previous build">
-		<delete failonerror="false" dir="${build.root.location}" />
-		<delete failonerror="false" dir="rim" />
-		<cvs>
-		</cvs>
+		<delete failonerror="false" dir="plugins" />
 	</target>
 
 	

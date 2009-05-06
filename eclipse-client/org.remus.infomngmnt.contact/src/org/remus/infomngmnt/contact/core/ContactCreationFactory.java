@@ -252,7 +252,13 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		detNaPart.setType(ContactActivator.NODE_DETAILS_NAME_PARTNER);
 		InformationUnit detNotes = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		detNotes.setType(ContactActivator.NODE_DETAILS_NOTES);
-
+		
+		// section misc
+		InformationUnit miscPubKey = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		miscPubKey.setType(ContactActivator.NODE_MISC_PUBKEY);
+		InformationUnit miscMime = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		miscMime.setType(ContactActivator.NODE_MISC_MIME);
+		
 		// general
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
 		returnValue.getChildValues().add(rawDataImage);
@@ -375,6 +381,10 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(detNaPart);
 		returnValue.getChildValues().add(detNotes);
 		returnValue.getChildValues().add(detTitle);
+		
+		// section misc
+		returnValue.getChildValues().add(miscMime);
+		returnValue.getChildValues().add(miscPubKey);
 		
 		return returnValue;
 	}

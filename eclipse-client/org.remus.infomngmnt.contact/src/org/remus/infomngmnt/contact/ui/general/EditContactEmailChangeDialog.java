@@ -32,9 +32,6 @@ import org.remus.infomngmnt.InformationUnit;
 
 public class EditContactEmailChangeDialog extends TitleAreaDialog {
 
-	private InformationUnit informationUnit;
-	private FormToolkit toolkit;
-	private EditGeneralPage editGeneralPage;
 	private Button bt_Ok;
 	private Composite area;
 	private Text tx_Email;
@@ -49,9 +46,6 @@ public class EditContactEmailChangeDialog extends TitleAreaDialog {
 	public EditContactEmailChangeDialog(FormToolkit toolkit, Shell parentShell, InformationUnit informationUnit, EditGeneralPage editGeneralPage, String stringLable, String selectedEmail) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
-		this.informationUnit = informationUnit;
-		this.toolkit = toolkit;
-		this.editGeneralPage = editGeneralPage;
 		this.stringLable = stringLable;
 		this.selectedEmail = selectedEmail;
 	}

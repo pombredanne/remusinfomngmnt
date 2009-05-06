@@ -40,7 +40,7 @@ import org.remus.infomngmnt.core.model.InformationUtil;
 
 public class MiscellaneousSection {
 
-	public MiscellaneousSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain) {
+	public MiscellaneousSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditMiscPage editMiscPage) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -53,7 +53,7 @@ public class MiscellaneousSection {
 		toolkit.paintBordersFor(compositeGeneral);
 		section_1.setClient(compositeGeneral);
 
-		createGroupImage("Logo", compositeGeneral, toolkit, shell, informationUnit, editingDomain);
+		createGroupImage("Logo", compositeGeneral, toolkit, shell, informationUnit, editMiscPage);
 //		createGroupGeoDatas(compositeGeneral, toolkit);
 	}
 
@@ -94,7 +94,7 @@ public class MiscellaneousSection {
 //	}
 
 	private void createGroupImage(String name, Composite compositeGeneral,
-			FormToolkit toolkit, final Shell shell, final InformationUnit informationUnit, final AdapterFactoryEditingDomain editingDomain) {
+			FormToolkit toolkit, final Shell shell, final InformationUnit informationUnit, final EditMiscPage editMiscPage) {
 
 		final Group group_Images = new Group(compositeGeneral, SWT.NONE);
 	    final GridData gd_Images= new GridData();
@@ -109,28 +109,30 @@ public class MiscellaneousSection {
 		
 		final Label bt_Image = toolkit.createLabel(group_Images, "double click me ...", SWT.BORDER);
 		GridData gd_Image = new GridData(SWT.FILL, SWT.BEGINNING, false, true);
-		gd_Image.widthHint = 150;
-		gd_Image.heightHint = 150;
+		final int sizeX = 150;
+		final int sizeY = 150;
+		gd_Image.widthHint = sizeX;
+		gd_Image.heightHint = sizeY;
 		bt_Image.setLayoutData(gd_Image);
 		
 		bt_Image.addMouseListener(new MouseListener(){
 
 			public void mouseDoubleClick(MouseEvent e) {
-				Image img = ImageManipulation.selectImageFromDialog(shell, informationUnit, ContactActivator.NODE_NAME_RAWDATA_LOGO, editingDomain, lb_Image.getSize().x, lb_Image.getSize().y);
-				bt_Image.setImage(img);
+				Image img = ImageManipulation.selectImageFromDialog(shell, informationUnit, ContactActivator.NODE_NAME_RAWDATA_LOGO, (AdapterFactoryEditingDomain) editMiscPage.getEditingDomain(), sizeX, sizeY);
+				if(img != null) bt_Image.setImage(img);;	
 			}
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub
 			}
 			public void mouseUp(MouseEvent e) {
 				// TODO Auto-generated method stub	
-			}		
+			}
 		});
 		InformationUnit rawData = InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_RAWDATA_LOGO);
 		if(rawData != null && rawData.getBinaryValue() != null) {
 			ByteArrayInputStream bais = new ByteArrayInputStream(rawData.getBinaryValue());
 			ImageData imageData = new ImageData(bais);
-			ImageData imageScaled = ImageManipulation.scaleImageToTarget(imageData, bt_Image.getSize().x, bt_Image.getSize().y);
+			ImageData imageScaled = ImageManipulation.scaleImageToTarget(imageData, sizeX, sizeY);
 			Image image = new Image(null, imageScaled);
 			bt_Image.setImage(image);
 		}

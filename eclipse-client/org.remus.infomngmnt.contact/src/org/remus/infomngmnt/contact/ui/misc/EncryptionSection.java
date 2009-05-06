@@ -15,24 +15,35 @@ package org.remus.infomngmnt.contact.ui.misc;
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
   * 
   */
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.core.model.InformationUtil;
 
 public class EncryptionSection {
 
-	public EncryptionSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, AdapterFactoryEditingDomain editingDomain) {
+	private final InformationUnit informationUnit;
+	private EditMiscPage editMiscPage;
+	private Text tx_OpenGpg;
+	private Text tx_Smime;
+
+	public EncryptionSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditMiscPage editMiscPage) {
+		
+		this.informationUnit = informationUnit;
+		this.editMiscPage = editMiscPage;
+		
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -65,12 +76,21 @@ public class EncryptionSection {
 		gd_text.horizontalAlignment = SWT.FILL;
 		
 		toolkit.createLabel(group_Keys, "Preferred OpenPGP Encryption Key:");
-		final Text tx_OpenGpg = toolkit.createText(group_Keys, null, SWT.BORDER | SWT.FILL);
+		tx_OpenGpg = toolkit.createText(group_Keys, null, SWT.BORDER | SWT.FILL);
 		tx_OpenGpg.setLayoutData(gd_text);
 		toolkit.createLabel(group_Keys, "Preferred S/MIME Encryption Certificate:");
-		final Text tx_Smime = toolkit.createText(group_Keys, null, SWT.BORDER);
+		tx_Smime = toolkit.createText(group_Keys, null, SWT.BORDER);
 		tx_Smime.setLayoutData(gd_text);
 		
+		createTextValueBindingsMisc();
 	}
 
+	private void createTextValueBindingsMisc() {
+		
+		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(tx_Smime, editMiscPage);
+		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MISC_MIME), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		
+		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(tx_OpenGpg, editMiscPage);
+		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MISC_PUBKEY), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+	}
 }

@@ -101,27 +101,27 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		combo_Address.setLayoutData(gd_text_span_2);
 		combo_Address.setItems(ContactSettings.DEFAULT_ITMES_COMBO_ADDRESS_CHOOSER);
 		
-		final Label lb_Street = toolkit.createLabel(group_Properties, "Street:");		
+		toolkit.createLabel(group_Properties, "Street:");		
 		tx_Street = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Street.setLayoutData(gd_text_fill_horizontal);
 		
-		final Label lb_Pob = toolkit.createLabel(group_Properties, "Post Office Box:");
+		toolkit.createLabel(group_Properties, "Post Office Box:");
 		tx_Pob = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Pob.setLayoutData(gd_text_fill_horizontal);
 		
-		final Label lb_Locality = toolkit.createLabel(group_Properties, "Locality:");
+		toolkit.createLabel(group_Properties, "Locality:");
 		tx_Locality = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Locality.setLayoutData(gd_text_fill_horizontal);
 		
-		final Label lb_Region = toolkit.createLabel(group_Properties, "Region:");
+		toolkit.createLabel(group_Properties, "Region:");
 		tx_Region = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Region.setLayoutData(gd_text_fill_horizontal);
 		
-		final Label lb_Postal = toolkit.createLabel(group_Properties, "Postal Code:");
+		toolkit.createLabel(group_Properties, "Postal Code:");
 		tx_Postal = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Postal.setLayoutData(gd_text_fill_horizontal);
 		
-		final Label lb_Country = toolkit.createLabel(group_Properties, "Country:");
+		toolkit.createLabel(group_Properties, "Country:");
 		combo_Country = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
 		combo_Country.setLayoutData(gd_text_span_2);
 		

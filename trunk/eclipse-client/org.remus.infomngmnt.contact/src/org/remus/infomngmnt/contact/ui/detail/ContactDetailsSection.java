@@ -14,13 +14,12 @@ package org.remus.infomngmnt.contact.ui.detail;
   * @author Jan Hartwig <jhartwig@feb-radebeul.de>
   * 
   */
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
-import org.eclipse.nebula.widgets.calendarcombo.DefaultSettings;
-import org.eclipse.nebula.widgets.calendarcombo.ISettings;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -34,8 +33,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.ui.general.CalendarDateChooser;
 import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.search.Search;
 
 public class ContactDetailsSection {
 
@@ -46,21 +45,20 @@ public class ContactDetailsSection {
 	private Text tx_Job;
 	private Text tx_Title;
 	private Text tx_Nickname;
-	private CalendarCombo calcb_Birthday;
+	private Text tx_Birthday;
 	private Text tx_NamePartner;
-	private CalendarCombo calcb_Jubilee;
+	private Text tx_Jubilee;
 	private Text tx_Note;
 	
-	private final ISettings calendarSettings = new DefaultSettings();
-	private EMFDataBindingContext ctx;
-	private Search currentSearch;
 	private InformationUnit informationUnit;
 	private EditDetailPage editDetailPage;
+	private Shell shell;
 	
 	public ContactDetailsSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditDetailPage editDetailPage ) {
 		
 		this.informationUnit = informationUnit;
 		this.editDetailPage = editDetailPage;
+		this.shell = shell;
 		
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -111,16 +109,11 @@ public class ContactDetailsSection {
 		TextBindingWidget createTextBindingWidget11 = BindingWidgetFactory.createTextBindingWidget(tx_Title, editDetailPage);
 		createTextBindingWidget11.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_TITLE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 	
-//		this.ctx = new EMFDataBindingContext();	
-//		IObservableValue mObsBirthday = EMFEditObservables.observeValue(Realm.getDefault(),	editDetailPage.getEditingDomain(), this.currentSearch, InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
-//		ISWTObservableValue uObsBirthday = SWTObservables.observeText(calcb_Birthday.getCombo());
-//		this.ctx.bindValue(uObsBirthday, mObsBirthday, new CalendarComboTargetToModel(calcb_Birthday,
-//				this.calendarSettings), new CalendarComboModelToTarget(calcb_Birthday, this.calendarSettings));
-//		
-//		IObservableValue mObsJubilee = EMFEditObservables.observeValue(Realm.getDefault(),	editDetailPage.getEditingDomain(), this.currentSearch, InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
-//		ISWTObservableValue uObsJubilee = SWTObservables.observeText(calcb_Jubilee.getCombo());
-//		this.ctx.bindValue(uObsJubilee, mObsJubilee, new CalendarComboTargetToModel(calcb_Jubilee,
-//				this.calendarSettings), new CalendarComboModelToTarget(calcb_Jubilee, this.calendarSettings));
+		TextBindingWidget createTextBindingWidget111 = BindingWidgetFactory.createTextBindingWidget(tx_Birthday, editDetailPage);
+		createTextBindingWidget111.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_BIRTHDAY), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+	
+		TextBindingWidget createTextBindingWidget112 = BindingWidgetFactory.createTextBindingWidget(tx_Jubilee, editDetailPage);
+		createTextBindingWidget112.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_JUBILEE), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
 	}
 
@@ -159,7 +152,7 @@ public class ContactDetailsSection {
 	    gd_Person.horizontalAlignment = GridData.FILL;
 	    group_Person.setLayoutData(gd_Person);
 		final GridLayout gl_General = new GridLayout();
-		gl_General.numColumns = 4;
+		gl_General.numColumns = 5;
 		group_Person.setLayout(gl_General);
 		
 		toolkit.createLabel(group_Person, "Nickname:");
@@ -167,40 +160,38 @@ public class ContactDetailsSection {
 		tx_Nickname.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		
 		toolkit.createLabel(group_Person, "Birthday:");
-		
-		calcb_Birthday = new CalendarCombo(group_Person, SWT.READ_ONLY, calendarSettings, null, true);
-//		calcb_Birthday.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-//		calcb_Birthday = new CalendarCombo(group_Person, SWT.READ_ONLY | SWT.FLAT);
-//		calcb_Birthday.addCalendarListener(new CalendarListenerAdapter() {
-//			public void dateChanged(Calendar date) {
-//				if (date != null) {
-//					System.err.println(date.getTime().toString());
-//				
-//					try {
-//						String str = calcb_Birthday.getCombo().getText();
-//						TextBindingWidget createTextBindingWidget11 = BindingWidgetFactory.createTextBindingWidget(str, editDetailPage);
-//						createTextBindingWidget11.bindModel(InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_DETAILS_BIRTHDAY), InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);						
-//					} catch (Exception e) {
-//						// TODO: handle exception
-//					}
-//				
-//				}
-//				else {
-//					System.err.println("null");
-//				}
-//			}
-//		});
-		
+		tx_Birthday = toolkit.createText(group_Person, null);
+
+		Button bt_EditBirthday = toolkit.createButton(group_Person, "Edit", SWT.NONE);
+		bt_EditBirthday.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e) {
+				CalendarDateChooser cdd = new CalendarDateChooser(shell);
+				cdd.open();
+				if (cdd != null) {
+					tx_Birthday.setText(cdd.getSelectedDate());					
+				}
+			}
+		});
 		
 		toolkit.createLabel(group_Person, "Name Of Partner:");
 		tx_NamePartner = toolkit.createText(group_Person, null, SWT.BORDER);
 		tx_NamePartner.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-		
+				
 		toolkit.createLabel(group_Person, "Jubilee:");
-		calcb_Jubilee = new CalendarCombo(group_Person, SWT.READ_ONLY, calendarSettings, null, true);
-		calcb_Jubilee.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		tx_Jubilee = toolkit.createText(group_Person, null);
 		
+		Button bt_EditJubilee = toolkit.createButton(group_Person, "Edit", SWT.NONE);
+		bt_EditJubilee.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e) {
+				CalendarDateChooser cdd = new CalendarDateChooser(shell);
+				cdd.open();
+				if (cdd != null) {
+					tx_Jubilee.setText(cdd.getSelectedDate());					
+				}
+			}
+		});
 	}
+
 
 	private void createGroupGeneral(Composite compositeGeneral,
 			FormToolkit toolkit) {

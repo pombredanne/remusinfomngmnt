@@ -3,6 +3,7 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
+
    <configIni use="default">
       <win32>/org.remus.infomngmnt.application/config.ini</win32>
    </configIni>
@@ -15,12 +16,18 @@
 
    <windowImages i16="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
 
+   <splash
+      location="org.remus.infomngmnt.application"
+      startupProgressRect="210,210,270,15"
+      startupMessageRect="210,230,270,15"
+      startupForegroundColor="FFFFFF" />
    <launcher>
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
@@ -41,7 +48,6 @@
       <plugin id="org.apache.xml.resolver"/>
       <plugin id="org.apache.xml.serializer"/>
       <plugin id="org.eclipse.compare"/>
-      <plugin id="org.eclipse.compare.core"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
@@ -49,9 +55,16 @@
       <plugin id="org.eclipse.core.expressions"/>
       <plugin id="org.eclipse.core.filebuffers"/>
       <plugin id="org.eclipse.core.filesystem"/>
+      <plugin id="org.eclipse.core.filesystem.hpux.ia64_32" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.linux.ppc" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.macosx" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.solaris.sparc" fragment="true"/>
       <plugin id="org.eclipse.core.filesystem.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.core.jobs"/>
       <plugin id="org.eclipse.core.net"/>
+      <plugin id="org.eclipse.core.net.linux.x86" fragment="true"/>
       <plugin id="org.eclipse.core.net.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.core.resources"/>
       <plugin id="org.eclipse.core.resources.compatibility" fragment="true"/>
@@ -64,7 +77,7 @@
       <plugin id="org.eclipse.ecf.identity"/>
       <plugin id="org.eclipse.ecf.provider.filetransfer"/>
       <plugin id="org.eclipse.ecf.provider.filetransfer.httpclient"/>
-      <plugin id="org.eclipse.ecf.provider.filetransfer.httpclient.ssl" fragment="true"/>
+      <plugin id="org.eclipse.ecf.provider.filetransfer.httpclient.ssl"/>
       <plugin id="org.eclipse.ecf.provider.filetransfer.ssl" fragment="true"/>
       <plugin id="org.eclipse.ecf.ssl" fragment="true"/>
       <plugin id="org.eclipse.emf"/>
@@ -94,7 +107,9 @@
       <plugin id="org.eclipse.equinox.preferences"/>
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.equinox.security"/>
+      <plugin id="org.eclipse.equinox.security.macosx" fragment="true"/>
       <plugin id="org.eclipse.equinox.security.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.equinox.transforms.hook" fragment="true"/>
       <plugin id="org.eclipse.equinox.util"/>
       <plugin id="org.eclipse.gef"/>
       <plugin id="org.eclipse.help"/>
@@ -107,9 +122,19 @@
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
       <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.carbon.macosx" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.ppc" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.solaris.sparc" fragment="true"/>
+      <plugin id="org.eclipse.swt.motif.aix.ppc" fragment="true"/>
+      <plugin id="org.eclipse.swt.motif.hpux.ia64_32" fragment="true"/>
       <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.win32.win32.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.swt.wpf.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.text"/>
       <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.carbon" fragment="true"/>
       <plugin id="org.eclipse.ui.editors"/>
       <plugin id="org.eclipse.ui.forms"/>
       <plugin id="org.eclipse.ui.ide"/>

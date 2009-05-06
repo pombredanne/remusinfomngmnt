@@ -30,10 +30,12 @@ public class CalendarDateChooser extends TitleAreaDialog {
 	private Button bt_Ok;
 	private Composite area;
 	private DateTime calendar;
-	public String selectedDate;	
+	public String selectedDate;
+	private String currentDate;	
 	
-	public CalendarDateChooser(Shell parentShell) {
+	public CalendarDateChooser(Shell parentShell, String currentDate) {
 		super(parentShell);
+		this.currentDate = currentDate;
 	}
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
@@ -59,7 +61,12 @@ public class CalendarDateChooser extends TitleAreaDialog {
 		this.area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		calendar = new DateTime (area, SWT.CALENDAR | SWT.BORDER);
-			
+		
+		String[] splittedDate = currentDate.split("/");
+		calendar.setMonth(Integer.valueOf(splittedDate[0])-1);
+		calendar.setDay(Integer.valueOf(splittedDate[1]));
+		calendar.setYear(Integer.valueOf(splittedDate[2]));
+		
 		return area;
 	}
 	public String getSelectedDate() {

@@ -38,8 +38,6 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 
 public class UserDefinedFieldDeletionDialog extends TitleAreaDialog {
 
-	private final InformationUnit contact;
-	private final AdapterFactoryEditingDomain editingDomain;
 	private Composite area;
 	private TableViewer tv_ExistingFields;
 	private Button bt_Ok;
@@ -47,8 +45,6 @@ public class UserDefinedFieldDeletionDialog extends TitleAreaDialog {
 	public UserDefinedFieldDeletionDialog(Shell parentShell, InformationUnit contact, AdapterFactoryEditingDomain editingDomain) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
-		this.contact = contact;
-		this.editingDomain = editingDomain;
 	}
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {

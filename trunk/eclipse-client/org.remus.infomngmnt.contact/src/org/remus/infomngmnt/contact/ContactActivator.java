@@ -152,6 +152,10 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_DETAILS_NAME_PARTNER = "detNaPart"; //$NON-NLS-1$
 	public static final String NODE_DETAILS_NOTES = "detNotes"; //$NON-NLS-1$
 	
+	// section misc
+	public static final String NODE_MISC_PUBKEY = "miscPubKey"; //$NON-NLS-1$
+	public static final String NODE_MISC_MIME = "miscMime"; //$NON-NLS-1$
+	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact";
 

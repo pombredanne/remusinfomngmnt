@@ -31,9 +31,7 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.core.ContactSettings;
 
 public class EditContactIMNewDialog extends TitleAreaDialog {
-	private InformationUnit informationUnit;
-	private FormToolkit toolkit;
-	private EditGeneralPage editGeneralPage;
+
 	private Button bt_Ok;
 	private Composite area;
 	private Combo combo_Protocol;
@@ -42,9 +40,6 @@ public class EditContactIMNewDialog extends TitleAreaDialog {
 	public EditContactIMNewDialog(FormToolkit toolkit, Shell parentShell, InformationUnit informationUnit, EditGeneralPage editGeneralPage) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
-		this.informationUnit = informationUnit;
-		this.toolkit = toolkit;
-		this.editGeneralPage = editGeneralPage;
 	}
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {

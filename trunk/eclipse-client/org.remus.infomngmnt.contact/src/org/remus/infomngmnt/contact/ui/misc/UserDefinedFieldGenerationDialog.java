@@ -18,17 +18,12 @@ import org.remus.infomngmnt.InformationUnit;
 
 public class UserDefinedFieldGenerationDialog extends TitleAreaDialog {
 
-
-	private final InformationUnit contact;
-	private final AdapterFactoryEditingDomain editingDomain;
 	private Button bt_Ok;
 	private Composite area;
 
 	public UserDefinedFieldGenerationDialog(Shell parentShell, InformationUnit contact, AdapterFactoryEditingDomain editingDomain) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
-		this.contact = contact;
-		this.editingDomain = editingDomain;
 	}
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {

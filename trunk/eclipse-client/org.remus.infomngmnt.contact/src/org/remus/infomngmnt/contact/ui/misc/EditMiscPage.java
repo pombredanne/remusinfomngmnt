@@ -22,8 +22,8 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		new EncryptionSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
-		new MiscellaneousSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
+		new EncryptionSection(body, toolkit, getSite().getShell(), getModelObject(), this);
+		new MiscellaneousSection(body, toolkit, getSite().getShell(), getModelObject(), this);
 //		new UserDefinedSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
 		doCreateSemanticSection(body, toolkit);
 	}

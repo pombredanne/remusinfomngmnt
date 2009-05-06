@@ -47,7 +47,6 @@ public class UserDefinedSection {
 		section_1.setClient(compositeGeneral);
 
 		createGroupUserDefined(compositeGeneral, toolkit, shell, informationUnit, adapterFactoryEditingDomain);
-		createGroupButtons(compositeGeneral, toolkit);
 	}
 	private void createGroupUserDefined(Composite compositeGeneral, FormToolkit toolkit, final Shell shell, final InformationUnit informationUnit, final AdapterFactoryEditingDomain adapterFactoryEditingDomain) {
 		
@@ -90,21 +89,5 @@ public class UserDefinedSection {
 				dialog.open();
 			}
 		});
-	}
-	private void createGroupButtons(Composite compositeGeneral,
-			FormToolkit toolkit) {
-		final Composite composite_CreateDetailButtons = toolkit.createComposite(compositeGeneral, SWT.NONE);
-		final GridLayout gl_CreateDetailButtons = new GridLayout();
-		gl_CreateDetailButtons.numColumns = 5;
-		composite_CreateDetailButtons.setLayoutData( new GridData(SWT.FILL, SWT.END, true, false));
-		composite_CreateDetailButtons.setLayout(gl_CreateDetailButtons);
-		
-		final Label lb = new Label(composite_CreateDetailButtons, SWT.NONE);
-		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		gd_text.horizontalSpan = 2;
-		lb.setLayoutData(gd_text);
-		final Button bt_Ok = toolkit.createButton(composite_CreateDetailButtons, "OK", SWT.NONE);
-		final Button bt_Apply = toolkit.createButton(composite_CreateDetailButtons, "Apply", SWT.NONE);
-		final Button bt_Cancel = toolkit.createButton(composite_CreateDetailButtons, "Cancel", SWT.NONE);
 	}
 }

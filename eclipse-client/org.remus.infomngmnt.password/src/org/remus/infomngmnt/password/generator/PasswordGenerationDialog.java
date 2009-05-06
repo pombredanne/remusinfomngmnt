@@ -152,7 +152,6 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 					// TODO: handle exception
 				}
 				validatePage();
-
 			}
 		});
 		this.tv_GeneratedPasswords.addOpenListener(new IOpenListener() {

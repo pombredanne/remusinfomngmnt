@@ -152,12 +152,12 @@
 
    <plugin
          id="org.eclipse.core.filesystem.win32.x86"
+         os="win32"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32"
-         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -176,12 +176,12 @@
 
    <plugin
          id="org.eclipse.core.net.win32.x86"
+         os="win32"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32" 
-         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -201,12 +201,12 @@
 
    <plugin
          id="org.eclipse.core.resources.win32.x86"
+         os="win32"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32" 
-         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -563,12 +563,12 @@
 
    <plugin
          id="org.eclipse.equinox.security.win32.x86"
+         os="win32"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32" 
-         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -671,13 +671,13 @@
 
    <plugin
          id="org.eclipse.swt.win32.win32.x86"
+         os="win32"
+         ws="win32"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32" 
-         ws="win32"
-         arch="x86"
          unpack="false"/>
 
    <plugin
@@ -724,11 +724,11 @@
 
    <plugin
          id="org.eclipse.ui.win32"
+         os="win32"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32" 
          unpack="false"/>
 
    <plugin
@@ -871,113 +871,127 @@
 
    <plugin
          id="org.eclipse.core.filesystem.linux.x86"
+         os="linux"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="linux" 
-		 arch="x86"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.filesystem.linux.x86_64"
+         os="linux"
+         arch="x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="linux" 
-		 arch="x86_64"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.filesystem.macosx"
+         os="macosx"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="macosx"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.net.linux.x86"
+         os="linux"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="linux" 
-	     arch="x86"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.security.macosx"
+         os="macosx"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="macosx"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.swt.carbon.macosx"
+         os="macosx"
+         ws="carbon"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="macosx" 
-         ws="carbon"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.swt.gtk.linux.x86"
+         os="linux"
+         ws="gtk"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="linux"
-         ws="gtk"
-         arch="x86"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.swt.gtk.linux.x86_64"
+         os="linux"
+         ws="gtk"
+         arch="x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="linux"
-         ws="gtk"
-         arch="x86_64"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.swt.win32.win32.x86_64"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32"
-         ws="win32"
-         arch="x86_64"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.swt.wpf.win32.x86"
+         os="win32"
+         ws="wpf"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         os="win32"
-         ws="wpf"
-         arch="x86"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui.carbon"
+         ws="carbon"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         ws="carbon"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.logging"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.httpclient"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

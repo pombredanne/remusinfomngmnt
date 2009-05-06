@@ -45,7 +45,7 @@ public class EncryptionSection {
 		this.editMiscPage = editMiscPage;
 		
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE);
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		section_1.setText("Encryption");
 		

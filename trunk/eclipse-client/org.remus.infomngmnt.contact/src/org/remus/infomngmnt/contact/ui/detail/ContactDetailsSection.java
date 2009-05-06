@@ -161,11 +161,13 @@ public class ContactDetailsSection {
 		
 		toolkit.createLabel(group_Person, "Birthday:");
 		tx_Birthday = toolkit.createText(group_Person, null);
-
+		tx_Birthday.setEditable(false);
+		tx_Birthday.setEnabled(false);
+		
 		Button bt_EditBirthday = toolkit.createButton(group_Person, "Edit", SWT.NONE);
 		bt_EditBirthday.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e) {
-				CalendarDateChooser cdd = new CalendarDateChooser(shell);
+				CalendarDateChooser cdd = new CalendarDateChooser(shell, tx_Birthday.getText());
 				cdd.open();
 				if (cdd != null) {
 					tx_Birthday.setText(cdd.getSelectedDate());					
@@ -179,11 +181,13 @@ public class ContactDetailsSection {
 				
 		toolkit.createLabel(group_Person, "Jubilee:");
 		tx_Jubilee = toolkit.createText(group_Person, null);
+		tx_Jubilee.setEditable(false);
+		tx_Jubilee.setEnabled(false);
 		
 		Button bt_EditJubilee = toolkit.createButton(group_Person, "Edit", SWT.NONE);
 		bt_EditJubilee.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e) {
-				CalendarDateChooser cdd = new CalendarDateChooser(shell);
+				CalendarDateChooser cdd = new CalendarDateChooser(shell, tx_Jubilee.getText());
 				cdd.open();
 				if (cdd != null) {
 					tx_Jubilee.setText(cdd.getSelectedDate());					

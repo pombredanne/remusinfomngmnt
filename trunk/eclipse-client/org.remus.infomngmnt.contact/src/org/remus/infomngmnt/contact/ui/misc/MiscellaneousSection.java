@@ -42,7 +42,7 @@ public class MiscellaneousSection {
 
 	public MiscellaneousSection(Composite body, FormToolkit toolkit, Shell shell, InformationUnit informationUnit, EditMiscPage editMiscPage) {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE);
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		section_1.setText("Miscellaneous");
 		

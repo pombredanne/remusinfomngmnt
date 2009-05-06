@@ -31,12 +31,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -187,12 +192,26 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				IMarker createMarker = resource.createMarker(IMarker.PROBLEM);
 				createMarker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 				createMarker.setAttribute(IMarker.LOCATION, objectFromFile.getLabel());
-				createMarker.setAttribute(IMarker.MESSAGE, "Error while saving the inormation "
-						+ objectFromFile.getLabel());
+				createMarker.setAttribute(IMarker.MESSAGE, StringUtils.join(
+						"Error while saving the inormation unit", objectFromFile.getLabel(), "(", e
+								.getMessage(), ")"));
+
 			} catch (CoreException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+		Object adapter = objectFromFile.getAdapter(InformationUnitListItem.class);
+		if (adapter == null) {
+			Category category = CategoryUtil.findCategory(StringUtils.join(resource.getProject()
+					.getName(), "/", "Orphan"), true);
+			InformationUnitListItem unitListItem = InfomngmntFactory.eINSTANCE
+					.createInformationUnitListItem();
+			unitListItem.setId(objectFromFile.getId());
+			unitListItem.setWorkspacePath(resource.getFullPath().toOSString());
+			unitListItem.setLabel(objectFromFile.getLabel());
+			unitListItem.setType(objectFromFile.getType());
+			category.getInformationUnit().add(unitListItem);
 		}
 		this.service.update(objectFromFile);
 	}

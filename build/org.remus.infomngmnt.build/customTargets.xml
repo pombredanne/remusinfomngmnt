@@ -88,6 +88,9 @@
     			<include name="**/*.png"/>
 			</fileset>
 		</copy>
+		<copy todir="${buildDirectory}/plugins/">
+			<fileset dir="../../eclipse-client/" />
+		</copy>
 	</target>
 
 	<!-- ===================================================================== -->

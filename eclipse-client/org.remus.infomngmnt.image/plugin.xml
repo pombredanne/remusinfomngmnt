@@ -42,7 +42,7 @@
             typeId="IMAGE">
       </transferpreferences>
       <creationUiTrigger
-            class="org.remus.infomngmnt.image.ui.ImageCreationTrigger"
+            class="org.remus.infomngmnt.image.ui.NewImageWizard"
             typeId="IMAGE">
       </creationUiTrigger>
    </extension>

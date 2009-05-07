@@ -48,7 +48,7 @@
             type="SOURCE">
       </editPage>
       <creationUiTrigger
-            class="org.remus.infomngmnt.sourcecode.wizard.SourceCodeCreationTrigger"
+            class="org.remus.infomngmnt.sourcecode.wizard.NewSourceCodeWizard"
             typeId="SOURCE">
       </creationUiTrigger>
       <transferpreferences

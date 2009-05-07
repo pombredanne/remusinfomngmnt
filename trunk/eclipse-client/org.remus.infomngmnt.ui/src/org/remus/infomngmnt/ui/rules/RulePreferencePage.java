@@ -121,6 +121,7 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 	private Binding nameBinding;
 	private RuleAction selectedRuleAction;
 	private Button groovyMatcherButton;
+	private Button postProcessingActionsButton;
 
 	/**
 	 * 
@@ -217,13 +218,13 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 
 		final Group currentRuleConfigurationGroup = new Group(sashForm, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 3;
+		gridLayout.numColumns = 2;
 		currentRuleConfigurationGroup.setLayout(gridLayout);
 		currentRuleConfigurationGroup.setText("Current Rule configuration");
 
 		this.treeViewer = new TreeViewer(currentRuleConfigurationGroup, SWT.BORDER);
 		this.tree = this.treeViewer.getTree();
-		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		this.tree.setLinesVisible(false);
 		this.tree.setHeaderVisible(false);
 
@@ -242,9 +243,23 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 
 		this.ruleName = new Text(currentRuleConfigurationGroup, SWT.BORDER);
 		this.ruleName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		new Label(currentRuleConfigurationGroup, SWT.NONE);
 
-		this.groovyMatcherButton = new Button(currentRuleConfigurationGroup, SWT.NONE);
-		this.groovyMatcherButton.setText("Groovy matcher");
+		final Composite composite_1 = new Composite(currentRuleConfigurationGroup, SWT.NONE);
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		final GridLayout gridLayout_1 = new GridLayout();
+		gridLayout_1.numColumns = 2;
+		gridLayout_1.marginHeight = 0;
+		gridLayout_1.horizontalSpacing = 0;
+		composite_1.setLayout(gridLayout_1);
+
+		final Label editTheConditionLabel = new Label(composite_1, SWT.NONE);
+		editTheConditionLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		editTheConditionLabel.setText("Condition when this rule will be executed:");
+
+		this.groovyMatcherButton = new Button(composite_1, SWT.NONE);
+		this.groovyMatcherButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+		this.groovyMatcherButton.setText("Edit");
 		this.groovyMatcherButton.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
@@ -255,6 +270,30 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 							RulePreferencePage.this.selectedRuleAction,
 							InfomngmntPackage.Literals.RULE_ACTION__GROOVY_MATCHER, diag
 									.getScript());
+					RulePreferencePage.this.editingDomain.getCommandStack().execute(setCommand);
+				}
+			}
+
+		});
+
+		final Label postprocessingActionsLabel = new Label(composite_1, SWT.NONE);
+		postprocessingActionsLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		postprocessingActionsLabel.setText("Post-processing actions");
+
+		this.postProcessingActionsButton = new Button(composite_1, SWT.NONE);
+		this.postProcessingActionsButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+				false));
+		this.postProcessingActionsButton.setText("Edit");
+		this.postProcessingActionsButton.addListener(SWT.Selection, new Listener() {
+
+			public void handleEvent(final Event event) {
+				GroovyScriptTitleAreaDialog diag = new GroovyScriptTitleAreaDialog(getShell(),
+						RulePreferencePage.this.selectedRuleAction.getPostProcessingInstructions());
+				if (diag.open() == IDialogConstants.OK_ID) {
+					Command setCommand = SetCommand.create(RulePreferencePage.this.editingDomain,
+							RulePreferencePage.this.selectedRuleAction,
+							InfomngmntPackage.Literals.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS,
+							diag.getScript());
 					RulePreferencePage.this.editingDomain.getCommandStack().execute(setCommand);
 				}
 			}
@@ -279,6 +318,7 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 		}
 		this.ruleName.setEnabled(element instanceof RuleAction);
 		this.groovyMatcherButton.setEnabled(element instanceof RuleAction);
+		this.postProcessingActionsButton.setEnabled(element instanceof RuleAction);
 		if (element instanceof RuleAction) {
 			this.selectedRuleAction = (RuleAction) element;
 			AbstractCreationPreferencePage preferencePage = UIExtensionManager.getInstance()

@@ -21,8 +21,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -31,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.IInfoType;
@@ -40,6 +43,7 @@ import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
+import org.remus.infomngmnt.ui.rules.ICreationTrigger;
 
 /**
  * <p>
@@ -54,11 +58,17 @@ import org.remus.infomngmnt.ui.editors.InformationEditorInput;
  * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
+public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, ICreationTrigger {
 
 	protected GeneralPage page1;
 
+	private Object value;
+
+	private RuleValue ruleValue;
+
 	protected InformationUnit newElement;
+
+	private String categoryString;
 
 	/**
 	 * 
@@ -185,6 +195,16 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		} else {
 			this.page1 = new GeneralPage((Category) null);
 		}
+		if (this.categoryString != null) {
+			this.page1.setCategoryString(this.categoryString);
+		}
+
+	}
+
+	protected void setCategoryToPage() {
+		if (this.categoryString != null) {
+			this.page1.setCategoryString(this.categoryString);
+		}
 
 	}
 
@@ -193,5 +213,40 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 	@Override
 	public void createPageControls(final Composite pageContainer) {
 		// do nothing
+	}
+
+	public void handleCreationRequest() {
+		init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
+		setDefaults(this.value, this.ruleValue);
+		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), this);
+		wizard.open();
+	}
+
+	protected void setDefaults(final Object value, final RuleValue ruleValue) {
+		// does nothing by default
+
+	}
+
+	public void setNewInformationUnit(final InformationUnit newInformationUnit) {
+		this.newElement = newInformationUnit;
+
+	}
+
+	public void setRuleValue(final RuleValue ruleValue) {
+		this.ruleValue = ruleValue;
+
+	}
+
+	public void setValue(final Object value) {
+		this.value = value;
+
+	}
+
+	/**
+	 * @param categoryString
+	 *            the categoryString to set
+	 */
+	public void setCategoryString(final String categoryString) {
+		this.categoryString = categoryString;
 	}
 }

@@ -29,12 +29,15 @@ public class GroovyScriptTitleAreaDialog extends TitleAreaDialog {
 	 */
 	public GroovyScriptTitleAreaDialog(final Shell parentShell, final String script) {
 		super(parentShell);
+		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.script = script;
 	}
 
 	@Override
 	protected void configureShell(final Shell newShell) {
+
 		super.configureShell(newShell);
+
 		newShell.setText("Enter a groovy script.");
 	}
 
@@ -59,7 +62,7 @@ public class GroovyScriptTitleAreaDialog extends TitleAreaDialog {
 		this.text = new Text(container, SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.text.setFont(ResourceManager.getFont("Courier", 12, SWT.NONE));
-		this.text.setText(this.script);
+		this.text.setText(this.script == null ? "" : this.script);
 
 		setTitle("Enter a groovy script.");
 		setMessage("You can specify if the rule is selectable by the dropped/paste input");

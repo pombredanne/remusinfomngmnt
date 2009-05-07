@@ -94,6 +94,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 		} else {
 			this.page1 = new GeneralImagePage((Category) null);
 		}
+		setCategoryToPage();
 
 	}
 
@@ -108,6 +109,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 		return ImagePlugin.TYPE_ID;
 	}
 
+	@Override
 	public void setDefaults(final Object value, final RuleValue ruleValue) {
 		if (value instanceof ImageData) {
 			ImageLoader loader = new ImageLoader();
@@ -137,10 +139,10 @@ public class NewImageWizard extends NewInfoObjectWizard {
 				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
 		InformationUnit predefinedName = InformationUtil.getChildByType(ruleValue,
 				AbstractCreationPreferencePage.NODENAME_PREDEFINED_NAME);
-		if (predefinedCategory != null) {
+		if (predefinedCategory != null && predefinedCategory.getStringValue() != null) {
 			this.page1.setCategoryString(predefinedCategory.getStringValue());
 		}
-		if (predefinedName != null) {
+		if (predefinedName != null && predefinedName.getStringValue() != null) {
 			this.newElement.setLabel(predefinedName.getStringValue());
 		}
 

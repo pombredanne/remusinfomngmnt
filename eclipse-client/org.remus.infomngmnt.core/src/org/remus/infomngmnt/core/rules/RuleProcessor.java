@@ -15,10 +15,17 @@ package org.remus.infomngmnt.core.rules;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.swt.dnd.Clipboard;
@@ -26,12 +33,20 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
 
 import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RemusTransferType;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleResult;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.streams.StreamUtil;
+import org.remus.infomngmnt.common.core.util.StringUtils;
+import org.remus.infomngmnt.core.CorePlugin;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.services.IRuleExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
@@ -52,6 +67,8 @@ public class RuleProcessor {
 		}
 		return RuleProcessor.INSTANCE;
 	}
+
+	private String groovyStub;
 
 	public List<RuleResult> process(final DropTargetEvent event, final NewElementRules rules) {
 		List<RuleResult> returnValue = new ArrayList<RuleResult>();
@@ -126,6 +143,55 @@ public class RuleProcessor {
 			}
 		}
 		return returnValue;
+	}
+
+	@SuppressWarnings("unchecked")
+	public PostProcessingResult postProcessing(final Object value, final RuleAction ruleAction) {
+		String postProcessingInstructions = ruleAction.getPostProcessingInstructions();
+		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
+				ruleAction.getInfoTypeId());
+		if (infoTypeByType == null) {
+			throw new IllegalArgumentException("Info type must not be null");
+		}
+		InformationUnit createNewObject = infoTypeByType.getCreationFactory().createNewObject();
+		if (postProcessingInstructions != null) {
+			String script = getGroovyStub();
+			String join = StringUtils.join(script, "\n", postProcessingInstructions);
+			Binding binding = new Binding();
+			binding.setVariable("input", value);
+			binding.setVariable("featureMap", new HashMap<String, Object>());
+			binding.setVariable("category", "");
+			GroovyShell gse = new GroovyShell(binding);
+			try {
+				gse.evaluate(join);
+				Map<String, Object> variable = (Map<String, Object>) binding
+						.getVariable("featureMap");
+				RulePostProcessor postProcessing = new RulePostProcessor(createNewObject, variable);
+				postProcessing.process();
+				return new PostProcessingResult(binding.getVariable("category").toString(),
+						createNewObject);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return new PostProcessingResult("", createNewObject);
+	}
+
+	private String getGroovyStub() {
+		if (this.groovyStub == null) {
+			InputStream resourceAsStream;
+			try {
+				resourceAsStream = FileLocator.openStream(Platform.getBundle(CorePlugin.PLUGIN_ID),
+						new Path("script/groovyStub.groovy"), false);
+				this.groovyStub = StreamUtil.convertStreamToString(resourceAsStream);
+				StreamCloser.closeStreams(resourceAsStream);
+			} catch (IOException e) {
+				InfomngmntEditPlugin.getPlugin().getLog().log(
+						StatusCreator.newStatus("Error reading groovyScript", e));
+			}
+		}
+		return this.groovyStub;
 	}
 
 	private boolean supportsTransferData(final List<TransferData> availableData,

@@ -106,6 +106,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="groovyMatcher" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="return true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="postProcessingInstructions"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RuleResult">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="#//Object"/>

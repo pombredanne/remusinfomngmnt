@@ -36,6 +36,7 @@ import org.remus.infomngmnt.RuleValue;
  *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getInfoTypeId <em>Info Type Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getRuleValue <em>Rule Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getGroovyMatcher <em>Groovy Matcher</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RuleActionImpl#getPostProcessingInstructions <em>Post Processing Instructions</em>}</li>
  * </ul>
  * </p>
  *
@@ -111,6 +112,26 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	 * @ordered
 	 */
 	protected String groovyMatcher = GROOVY_MATCHER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getPostProcessingInstructions() <em>Post Processing Instructions</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPostProcessingInstructions()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String POST_PROCESSING_INSTRUCTIONS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPostProcessingInstructions() <em>Post Processing Instructions</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPostProcessingInstructions()
+	 * @generated
+	 * @ordered
+	 */
+	protected String postProcessingInstructions = POST_PROCESSING_INSTRUCTIONS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -242,6 +263,27 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getPostProcessingInstructions() {
+		return postProcessingInstructions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPostProcessingInstructions(String newPostProcessingInstructions) {
+		String oldPostProcessingInstructions = postProcessingInstructions;
+		postProcessingInstructions = newPostProcessingInstructions;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS, oldPostProcessingInstructions, postProcessingInstructions));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -267,6 +309,8 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 				return getRuleValue();
 			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
 				return getGroovyMatcher();
+			case InfomngmntPackage.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS:
+				return getPostProcessingInstructions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -290,6 +334,9 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 				return;
 			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
 				setGroovyMatcher((String)newValue);
+				return;
+			case InfomngmntPackage.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS:
+				setPostProcessingInstructions((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -315,6 +362,9 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
 				setGroovyMatcher(GROOVY_MATCHER_EDEFAULT);
 				return;
+			case InfomngmntPackage.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS:
+				setPostProcessingInstructions(POST_PROCESSING_INSTRUCTIONS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -335,6 +385,8 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 				return ruleValue != null;
 			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
 				return GROOVY_MATCHER_EDEFAULT == null ? groovyMatcher != null : !GROOVY_MATCHER_EDEFAULT.equals(groovyMatcher);
+			case InfomngmntPackage.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS:
+				return POST_PROCESSING_INSTRUCTIONS_EDEFAULT == null ? postProcessingInstructions != null : !POST_PROCESSING_INSTRUCTIONS_EDEFAULT.equals(postProcessingInstructions);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -355,6 +407,8 @@ public class RuleActionImpl extends EObjectImpl implements RuleAction {
 		result.append(infoTypeId);
 		result.append(", groovyMatcher: ");
 		result.append(groovyMatcher);
+		result.append(", postProcessingInstructions: ");
+		result.append(postProcessingInstructions);
 		result.append(')');
 		return result.toString();
 	}

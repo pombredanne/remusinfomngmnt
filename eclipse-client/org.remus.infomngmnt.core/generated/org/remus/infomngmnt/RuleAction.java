@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.RuleAction#getInfoTypeId <em>Info Type Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RuleAction#getRuleValue <em>Rule Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RuleAction#getGroovyMatcher <em>Groovy Matcher</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RuleAction#getPostProcessingInstructions <em>Post Processing Instructions</em>}</li>
  * </ul>
  * </p>
  *
@@ -140,5 +141,31 @@ public interface RuleAction extends EObject {
 	 * @generated
 	 */
 	void setGroovyMatcher(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Post Processing Instructions</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Post Processing Instructions</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Post Processing Instructions</em>' attribute.
+	 * @see #setPostProcessingInstructions(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRuleAction_PostProcessingInstructions()
+	 * @model
+	 * @generated
+	 */
+	String getPostProcessingInstructions();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RuleAction#getPostProcessingInstructions <em>Post Processing Instructions</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Post Processing Instructions</em>' attribute.
+	 * @see #getPostProcessingInstructions()
+	 * @generated
+	 */
+	void setPostProcessingInstructions(String value);
 
 } // RuleAction

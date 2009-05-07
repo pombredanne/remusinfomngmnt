@@ -37,25 +37,27 @@ public class NewSourceCodeWizard extends NewInfoObjectWizard {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
+	@Override
 	public void setDefaults(final Object value, final RuleValue ruleValue) {
 		this.newElement.setStringValue(String.valueOf(value));
-		InformationUnit childByType = InformationUtil.getChildByType(
-				ruleValue, AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
-		if (childByType != null) {
+		InformationUnit childByType = InformationUtil.getChildByType(ruleValue,
+				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+		if (childByType != null && childByType.getStringValue() != null) {
 			this.page1.setCategoryString(childByType.getStringValue());
 		}
-		childByType = InformationUtil.getChildByType(
-				ruleValue, SourceCodeRulePreferencePage.NODENAME_PREDEFINED_SOURCETYPE);
-		if (childByType != null) {
+		childByType = InformationUtil.getChildByType(ruleValue,
+				SourceCodeRulePreferencePage.NODENAME_PREDEFINED_SOURCETYPE);
+		if (childByType != null && childByType.getStringValue() != null) {
 			InformationUtil.getChildByType(this.newElement, SourceCodePlugin.SRCTYPE_NAME)
-			.setStringValue(childByType.getStringValue());
+					.setStringValue(childByType.getStringValue());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
+	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
@@ -65,12 +67,11 @@ public class NewSourceCodeWizard extends NewInfoObjectWizard {
 		} else if (firstElement instanceof InformationUnitListItem) {
 			this.page1 = new GeneralSourcePage((InformationUnitListItem) firstElement);
 		} else {
-			this.page1 = new GeneralSourcePage((Category)null);
+			this.page1 = new GeneralSourcePage((Category) null);
 		}
+		setCategoryToPage();
 
 	}
-
-
 
 	@Override
 	protected String getInfoTypeId() {

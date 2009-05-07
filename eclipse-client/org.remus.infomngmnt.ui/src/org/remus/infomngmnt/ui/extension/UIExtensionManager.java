@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.Platform;
 
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.internal.extension.EditPage;
+import org.remus.infomngmnt.ui.rules.ICreationTrigger;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -33,7 +34,7 @@ public class UIExtensionManager {
 
 	public static final String EXTENSION_POINT = UIPlugin.PLUGIN_ID + ".informationUi"; //$NON-NLS-1$
 
-	/////-----------------------
+	// ///-----------------------
 	public static final String INFORMATION_NODE_NAME = "editPage"; //$NON-NLS-1$
 
 	public static final String ID_ATT = "type"; //$NON-NLS-1$
@@ -46,7 +47,7 @@ public class UIExtensionManager {
 
 	public static final String EDIT_PAGE_ATT = "editpage"; //$NON-NLS-1$
 
-	/////-----------------------
+	// ///-----------------------
 
 	public static final String TRANSFERPREFERENCE_NODE_NAME = "transferpreferences"; //$NON-NLS-1$
 
@@ -56,18 +57,18 @@ public class UIExtensionManager {
 
 	public static final String IMPLEMENTATION_ID_ATT = "implementation"; //$NON-NLS-1$
 
-	/////-----------------------
+	// ///-----------------------
 	public static final String CREATIONTRIGGER_NODE_NAME = "creationUiTrigger"; //$NON-NLS-1$
 
 	public static final String CLASS_ATT = "class"; //$NON-NLS-1$
 
 	private static UIExtensionManager INSTANCE;
 
-	private Map<String,List<IEditPage>> items;
+	private Map<String, List<IEditPage>> items;
 
 	private Map<String, Map<String, AbstractCreationPreferencePage>> preferencePages;
 
-	private Map<String, AbstractCreationTrigger> creationTrigger;
+	private Map<String, IConfigurationElement> creationTrigger;
 
 	public static UIExtensionManager getInstance() {
 		if (INSTANCE == null) {
@@ -85,46 +86,44 @@ public class UIExtensionManager {
 	}
 
 	private void init() {
-		this.items = new HashMap<String,List<IEditPage>>();
-		this.preferencePages = new HashMap<String, Map<String,AbstractCreationPreferencePage>>();
-		this.creationTrigger = new HashMap<String, AbstractCreationTrigger>();
-		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
-		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+		this.items = new HashMap<String, List<IEditPage>>();
+		this.preferencePages = new HashMap<String, Map<String, AbstractCreationPreferencePage>>();
+		this.creationTrigger = new HashMap<String, IConfigurationElement>();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+				EXTENSION_POINT);
+		final IConfigurationElement[] configurationElements = extensionPoint
+				.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
 			if (configurationElement.getName().equals(INFORMATION_NODE_NAME)) {
-				final IEditPage editPage = new EditPage(
-						configurationElement,
-						configurationElement.getContributor().getName(),
-						configurationElement.getAttribute(TYPE_ATT),
-						configurationElement.getAttribute(ID_ATT),
-						configurationElement.getAttribute(LABEL_ATT),
-						configurationElement.getAttribute(ICON_ATT));
+				final IEditPage editPage = new EditPage(configurationElement, configurationElement
+						.getContributor().getName(), configurationElement.getAttribute(TYPE_ATT),
+						configurationElement.getAttribute(ID_ATT), configurationElement
+								.getAttribute(LABEL_ATT), configurationElement
+								.getAttribute(ICON_ATT));
 				if (this.items.get(configurationElement.getAttribute(TYPE_ATT)) == null) {
-					this.items.put(editPage.getType(),new ArrayList<IEditPage>());
+					this.items.put(editPage.getType(), new ArrayList<IEditPage>());
 				}
 				this.items.get(editPage.getType()).add(editPage);
 			} else if (configurationElement.getName().equals(TRANSFERPREFERENCE_NODE_NAME)) {
 				String transferId = configurationElement.getAttribute(TRANSFER_ID_ATT);
 				String typeId = configurationElement.getAttribute(TYPE_ID_ATT);
 				if (this.preferencePages.get(transferId) == null) {
-					this.preferencePages.put(transferId, new HashMap<String, AbstractCreationPreferencePage>());
+					this.preferencePages.put(transferId,
+							new HashMap<String, AbstractCreationPreferencePage>());
 				}
-				Map<String, AbstractCreationPreferencePage> map = this.preferencePages.get(transferId);
+				Map<String, AbstractCreationPreferencePage> map = this.preferencePages
+						.get(transferId);
 				if (map.get(typeId) == null) {
 					try {
-						map.put(typeId, (AbstractCreationPreferencePage) configurationElement.createExecutableExtension(IMPLEMENTATION_ID_ATT));
+						map.put(typeId, (AbstractCreationPreferencePage) configurationElement
+								.createExecutableExtension(IMPLEMENTATION_ID_ATT));
 					} catch (CoreException e) {
 						// TODO: Error-Handling
 					}
 				}
-			} else if(configurationElement.getName().equals(CREATIONTRIGGER_NODE_NAME)) {
-				try {
-					this.creationTrigger.put(configurationElement.getAttribute(TYPE_ID_ATT),
-							(AbstractCreationTrigger) configurationElement.createExecutableExtension(CLASS_ATT));
-				} catch (CoreException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			} else if (configurationElement.getName().equals(CREATIONTRIGGER_NODE_NAME)) {
+				this.creationTrigger.put(configurationElement.getAttribute(TYPE_ID_ATT),
+						configurationElement);
 			}
 		}
 	}
@@ -137,7 +136,8 @@ public class UIExtensionManager {
 		return this.items.get(type);
 	}
 
-	public AbstractCreationPreferencePage getPreferencePageByTransferAndTypeId(String transferId, String typeId) {
+	public AbstractCreationPreferencePage getPreferencePageByTransferAndTypeId(
+			final String transferId, final String typeId) {
 		Map<String, AbstractCreationPreferencePage> map = this.preferencePages.get(transferId);
 		if (map != null) {
 			return map.get(typeId);
@@ -145,8 +145,13 @@ public class UIExtensionManager {
 		return null;
 	}
 
-	public AbstractCreationTrigger getCreationTriggerByTypeId(String typeId) {
-		return this.creationTrigger.get(typeId);
+	public ICreationTrigger getCreationTriggerByTypeId(final String typeId) {
+		try {
+			return (ICreationTrigger) this.creationTrigger.get(typeId).createExecutableExtension(
+					CLASS_ATT);
+		} catch (CoreException e) {
+			return null;
+		}
 	}
 
 }

@@ -12,37 +12,69 @@
 
 package org.remus.infomngmnt.ui.extension;
 
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.ui.rules.ICreationTrigger;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public abstract class AbstractCreationTrigger {
+public abstract class AbstractCreationTrigger implements ICreationTrigger {
 
 	private Object value;
 
 	private RuleValue ruleValue;
 
+	private InformationUnit newInformationUnit;
+
+	private String categoryString;
+
 	public abstract void handleCreationRequest();
 
-	protected Object getValue() {
+	public Object getValue() {
 		return this.value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(final Object value) {
 		this.value = value;
 	}
 
-	protected RuleValue getRuleValue() {
+	public RuleValue getRuleValue() {
 		return this.ruleValue;
 	}
 
-	public void setRuleValue(RuleValue ruleValue) {
+	public void setRuleValue(final RuleValue ruleValue) {
 		this.ruleValue = ruleValue;
 	}
 
+	/**
+	 * @return the newInformationUnit
+	 */
+	public InformationUnit getNewInformationUnit() {
+		return this.newInformationUnit;
+	}
 
+	/**
+	 * @param newInformationUnit
+	 *            the newInformationUnit to set
+	 */
+	public void setNewInformationUnit(final InformationUnit newInformationUnit) {
+		this.newInformationUnit = newInformationUnit;
+	}
 
+	/**
+	 * @return the categoryString
+	 */
+	public String getCategoryString() {
+		return this.categoryString;
+	}
 
+	/**
+	 * @param categoryString
+	 *            the categoryString to set
+	 */
+	public void setCategoryString(final String categoryString) {
+		this.categoryString = categoryString;
+	}
 
 }

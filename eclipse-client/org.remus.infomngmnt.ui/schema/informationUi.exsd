@@ -156,7 +156,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.ui.extension.AbstractCreationTrigger:"/>
+                  <meta.attribute kind="java" basedOn=":org.remus.infomngmnt.ui.rules.ICreationTrigger"/>
                </appinfo>
             </annotation>
          </attribute>

@@ -37,7 +37,7 @@
             typeId="LINK">
       </transferpreferences>
       <creationUiTrigger
-            class="org.remus.infomngmnt.link.LinkCreationTrigger"
+            class="org.remus.infomngmnt.link.ui.NewLinkWizard"
             typeId="LINK">
       </creationUiTrigger>
    </extension>

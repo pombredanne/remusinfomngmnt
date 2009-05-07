@@ -58,9 +58,11 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 		} else {
 			this.page1 = new GeneralLinkPage((Category) null);
 		}
+		setCategoryToPage();
 
 	}
 
+	@Override
 	public void setDefaults(final Object value, final RuleValue ruleValue) {
 		this.newElement.setStringValue(String.valueOf(value));
 		InformationUnit childByType = InformationUtil.getChildByType(ruleValue,

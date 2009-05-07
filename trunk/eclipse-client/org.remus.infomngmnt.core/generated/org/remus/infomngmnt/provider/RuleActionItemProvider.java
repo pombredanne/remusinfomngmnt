@@ -38,10 +38,9 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 
 /**
- * This is the item provider adapter for a
- * {@link org.remus.infomngmnt.RuleAction} object. <!-- begin-user-doc --> <!--
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.RuleAction} object.
+ * <!-- begin-user-doc --> <!--
  * end-user-doc -->
- * 
  * @generated
  */
 public class RuleActionItemProvider extends ItemProviderAdapter implements
@@ -53,7 +52,7 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 	 * 
 	 * @generated
 	 */
-	public RuleActionItemProvider(final AdapterFactory adapterFactory) {
+	public RuleActionItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -64,31 +63,39 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
 			addInfoTypeIdPropertyDescriptor(object);
 			addRuleValuePropertyDescriptor(object);
 			addGroovyMatcherPropertyDescriptor(object);
+			addPostProcessingInstructionsPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature. <!-- begin-user-doc
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_RuleAction_name_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_RuleAction_name_feature",
-						"_UI_RuleAction_type"), InfomngmntPackage.Literals.RULE_ACTION__NAME, true,
-				false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RuleAction_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_name_feature", "_UI_RuleAction_type"),
+				 InfomngmntPackage.Literals.RULE_ACTION__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -97,14 +104,20 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 	 * 
 	 * @generated
 	 */
-	protected void addInfoTypeIdPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_RuleAction_infoTypeId_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_RuleAction_infoTypeId_feature",
-						"_UI_RuleAction_type"),
-				InfomngmntPackage.Literals.RULE_ACTION__INFO_TYPE_ID, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addInfoTypeIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RuleAction_infoTypeId_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_infoTypeId_feature", "_UI_RuleAction_type"),
+				 InfomngmntPackage.Literals.RULE_ACTION__INFO_TYPE_ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -113,13 +126,20 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 	 * 
 	 * @generated
 	 */
-	protected void addRuleValuePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_RuleAction_ruleValue_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_RuleAction_ruleValue_feature",
-						"_UI_RuleAction_type"), InfomngmntPackage.Literals.RULE_ACTION__RULE_VALUE,
-				true, false, true, null, null, null));
+	protected void addRuleValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RuleAction_ruleValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_ruleValue_feature", "_UI_RuleAction_type"),
+				 InfomngmntPackage.Literals.RULE_ACTION__RULE_VALUE,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -128,14 +148,42 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 	 * 
 	 * @generated
 	 */
-	protected void addGroovyMatcherPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_RuleAction_groovyMatcher_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_RuleAction_groovyMatcher_feature", "_UI_RuleAction_type"),
-				InfomngmntPackage.Literals.RULE_ACTION__GROOVY_MATCHER, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addGroovyMatcherPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RuleAction_groovyMatcher_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_groovyMatcher_feature", "_UI_RuleAction_type"),
+				 InfomngmntPackage.Literals.RULE_ACTION__GROOVY_MATCHER,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Post Processing Instructions feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPostProcessingInstructionsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RuleAction_postProcessingInstructions_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleAction_postProcessingInstructions_feature", "_UI_RuleAction_type"),
+				 InfomngmntPackage.Literals.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -168,24 +216,23 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to
-	 * update any cached children and by creating a viewer notification, which
-	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(RuleAction.class)) {
-		case InfomngmntPackage.RULE_ACTION__NAME:
-		case InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID:
-		case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-					false, true));
-			return;
+			case InfomngmntPackage.RULE_ACTION__NAME:
+			case InfomngmntPackage.RULE_ACTION__INFO_TYPE_ID:
+			case InfomngmntPackage.RULE_ACTION__GROOVY_MATCHER:
+			case InfomngmntPackage.RULE_ACTION__POST_PROCESSING_INSTRUCTIONS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -198,8 +245,7 @@ public class RuleActionItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors,
-			final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

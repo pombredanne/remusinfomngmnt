@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -95,27 +96,33 @@ public class EditContactPersonDialog extends TitleAreaDialog {
 
 		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		gd_text.horizontalSpan = 2;
-		toolkit.createLabel(group_Properties, "Title:");
+		final Label lb_Title = new Label(group_Properties, SWT.NONE);
+		lb_Title.setText("Title");
 		cb_Title = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
 		cb_Title.setLayoutData(gd_text);
 
-		toolkit.createLabel(group_Properties, "First Name");
+		final Label lb_FirstName = new Label(group_Properties, SWT.NONE);
+		lb_FirstName.setText("First Name:");
 		tx_FirstName = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_FirstName.setLayoutData(gd_text);
-
-		toolkit.createLabel(group_Properties, "Additional Name");
+		
+		final Label lb_AdditionalName = new Label(group_Properties, SWT.NONE);
+		lb_AdditionalName.setText("Additional Name:");
 		tx_AdditionalName = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_AdditionalName.setLayoutData(gd_text);
 		
-		toolkit.createLabel(group_Properties, "Last Name");
+		final Label lb_LastName = new Label(group_Properties, SWT.NONE);
+		lb_LastName.setText("Last Name:");
 		tx_LastName = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_LastName.setLayoutData(gd_text);
 		
-		toolkit.createLabel(group_Properties, "Title After Name");
+		final Label lb_TitleAfterName = new Label(group_Properties, SWT.NONE);
+		lb_TitleAfterName.setText("Title After Name:");
 		tx_TitleAfterName = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_TitleAfterName.setLayoutData(gd_text);
 		
-		toolkit.createLabel(group_Properties, "Formatted Name:");
+		final Label lb_FormattedName = new Label(group_Properties, SWT.NONE);
+		lb_FormattedName.setText("Formatted Name:");
 		cb_FormattedName = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
 		cb_FormattedName.setItems(ContactSettings.DEFAULT_ITEMS_COMBO_NAME_FORMATTED);
 		

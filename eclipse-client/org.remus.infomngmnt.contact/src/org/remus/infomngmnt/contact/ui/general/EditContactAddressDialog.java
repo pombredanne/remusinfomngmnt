@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -95,7 +96,7 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		this.area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		final Group group_Properties = new Group(this.area, SWT.NONE);
-		group_Properties.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		group_Properties.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		final GridLayout gl_ProportiesGroup = new GridLayout();
 		gl_ProportiesGroup.numColumns = 2;
@@ -109,29 +110,35 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		combo_Address.setLayoutData(gd_text_span_2);
 		combo_Address.setItems(ContactSettings.DEFAULT_ITMES_COMBO_ADDRESS_CHOOSER);
 		
-		toolkit.createLabel(group_Properties, "Street:");		
+		final Label lb_Street = new Label(group_Properties, SWT.NONE);
+		lb_Street.setText("Street:");	
 		tx_Street = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Street.setLayoutData(gd_text_fill_horizontal);
 		
-		toolkit.createLabel(group_Properties, "Post Office Box:");
+		final Label lb_Pob = new Label(group_Properties, SWT.NONE);
+		lb_Pob.setText("Post Office Box:");
 		tx_Pob = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Pob.setLayoutData(gd_text_fill_horizontal);
 		
-		toolkit.createLabel(group_Properties, "Locality:");
+		final Label lb_Locality = new Label(group_Properties, SWT.NONE);
+		lb_Locality.setText("Locality:");
 		tx_Locality = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Locality.setLayoutData(gd_text_fill_horizontal);
 		
-		toolkit.createLabel(group_Properties, "Region:");
+		final Label lb_Region = new Label(group_Properties, SWT.NONE);
+		lb_Region.setText("Region:");
 		tx_Region = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Region.setLayoutData(gd_text_fill_horizontal);
 		
-		toolkit.createLabel(group_Properties, "Postal Code:");
+		final Label lb_Postal = new Label(group_Properties, SWT.NONE);
+		lb_Postal.setText("Postal Code:");
 		tx_Postal = toolkit.createText(group_Properties, null, SWT.BORDER);
 		tx_Postal.setLayoutData(gd_text_fill_horizontal);
 		
-		toolkit.createLabel(group_Properties, "Country:");
+		final Label lb_Country = new Label(group_Properties, SWT.NONE);
+		lb_Country.setText("Country:");
 		combo_Country = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
-		combo_Country.setLayoutData(gd_text_span_2);
+		combo_Country.setLayoutData(gd_text_fill_horizontal);
 		
 		createGeographicalButtons(group_Properties, gd_text_fill_horizontal);
 		
@@ -151,19 +158,21 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		group_Geo.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true));
 
 		final GridLayout gl_GeoGroup = new GridLayout();
-		GridData gd_GeoGroup_span_2 = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		GridData gd_GeoGroup_span_2 = new GridData(SWT.FILL, SWT.BEGINNING, true, true);
 		gd_GeoGroup_span_2.horizontalSpan = 2;
 		gl_GeoGroup.numColumns = 3;
 		group_Geo.setLayoutData(gd_GeoGroup_span_2);
 		group_Geo.setLayout(gl_GeoGroup);
 		
-		toolkit.createLabel(group_Geo, "Latitude:");
+		final Label lb_Latitude = new Label(group_Geo, SWT.NONE);
+		lb_Latitude.setText("Latitude:");
 		tx_Latitude = toolkit.createText(group_Geo, null, SWT.BORDER);
 		tx_Latitude.setLayoutData(gd_text_fill_horizontal);
 		
 		bt_GetCoords = toolkit.createButton(group_Geo, "Get Coords", SWT.NONE);
 		
-		toolkit.createLabel(group_Geo, "Longitude:");
+		final Label lb_Longitude = new Label(group_Geo, SWT.NONE);
+		lb_Longitude.setText("Longitude:");
 		tx_Longitude = toolkit.createText(group_Geo, null, SWT.BORDER);
 		tx_Longitude.setLayoutData(gd_text_fill_horizontal);
 	}

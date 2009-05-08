@@ -180,6 +180,10 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 				//GMapsApi gma = new GMapsApi();
 				try {
 					String curKey = GMapsApi.getApiKey();
+					if (curKey.length() < 1) {
+						showGMapsApiKeyErrorMessageBox();
+						return;
+					}
 					String curSearchValue = tx_Locality.getText()+"+"+tx_Pob.getText()+"+"+tx_Postal.getText()+"+"+tx_Region.getText()+"+"+tx_Street.getText();
 					curSearchValue = curSearchValue.replace(" ", "+");
 					Point2D p2d = GMapsApi.getGeoCoordFromGMaps(curKey, curSearchValue);
@@ -187,10 +191,7 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 					tx_Latitude.setText(String.valueOf(p2d.getY()));
 					
 				} catch (Exception e2) {
-					MessageBox msgb = new MessageBox(new Shell(),SWT.NONE);
-					msgb.setMessage("Please go to Extras -> Preferences -> GeoData -> Google Maps API Key");
-					msgb.setText("False Key Found");
-					msgb.open();
+					showGMapsApiKeyErrorMessageBox();
 				}
 			}
 		});
@@ -220,8 +221,14 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 			}
 		});
 	}
+	private void showGMapsApiKeyErrorMessageBox() {
+		MessageBox msgb = new MessageBox(new Shell(),SWT.NONE);
+		msgb.setMessage("Please go to Extras -> Preferences -> GeoData -> Google Maps API Key");
+		msgb.setText("False Key Found");
+		msgb.open();
+	}
 	private void validatePage() {
-		if (tx_Street.getText().length() > 1 && (tx_Postal.getText().length() > 1 || tx_Region.getText().length() > 1)) {
+		if (tx_Street.getText().length() > 1 && (tx_Postal.getText().length() > 1 || tx_Locality.getText().length() > 1 || combo_Country.getText().length() > 1)) {
 			setGroupGeo(true);
 		}
 		else setGroupGeo(false);		

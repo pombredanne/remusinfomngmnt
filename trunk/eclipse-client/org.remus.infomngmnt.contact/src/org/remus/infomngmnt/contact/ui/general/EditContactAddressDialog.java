@@ -142,8 +142,8 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		
 		createGeographicalButtons(group_Properties, gd_text_fill_horizontal);
 		
-		createTextValueBindings();
 		createListener();
+		createTextValueBindings();
 		
 		setContactProportiesFromActivatorToGenerationDialog();
 		
@@ -178,8 +178,8 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 	}
 
 	private void createListener() {
-		combo_Address.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent e) {
+		combo_Address.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e) {
 				createTextValueBindings();
 				validatePage();
 			}

@@ -29,8 +29,6 @@ import org.remus.infomngmnt.core.model.InformationUtil;
 public class ContactInformationRepresentation extends
 		AbstractInformationRepresentation {
 
-//	private String imageHref;
-
 	public ContactInformationRepresentation() {
 		// TODO Auto-generated constructor stub
 	}

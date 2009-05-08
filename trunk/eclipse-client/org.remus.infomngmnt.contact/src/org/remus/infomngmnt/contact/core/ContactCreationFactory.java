@@ -98,7 +98,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addWorkPostal.setType(ContactActivator.NODE_ADDRESS_WORK_POSTAL);
 		InformationUnit addWorkCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addWorkCountry.setType(ContactActivator.NODE_ADDRESS_WORK_COUNTRY);
-		
+		InformationUnit addWorkLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addWorkLatitude.setType(ContactActivator.NODE_ADDRESS_WORK_LATITUDE);
+		InformationUnit addWorkLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addWorkLongitude.setType(ContactActivator.NODE_ADDRESS_WORK_LONGITUDE);
+				
 		InformationUnit addHomeStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addHomeStreet.setType(ContactActivator.NODE_ADDRESS_HOME_STREET);
 		InformationUnit addHomePob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -111,7 +115,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addHomePostal.setType(ContactActivator.NODE_ADDRESS_HOME_POSTAL);
 		InformationUnit addHomeCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addHomeCountry.setType(ContactActivator.NODE_ADDRESS_HOME_COUNTRY);
-		
+		InformationUnit addHomeLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addHomeLatitude.setType(ContactActivator.NODE_ADDRESS_HOME_LATITUDE);
+		InformationUnit addHomeLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addHomeLongitude.setType(ContactActivator.NODE_ADDRESS_HOME_LONGITUDE);
+
 		InformationUnit addParcelStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addParcelStreet.setType(ContactActivator.NODE_ADDRESS_PARCEL_STREET);
 		InformationUnit addParcelPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -124,7 +132,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addParcelPostal.setType(ContactActivator.NODE_ADDRESS_PARCEL_POSTAL);
 		InformationUnit addParcelCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addParcelCountry.setType(ContactActivator.NODE_ADDRESS_PARCEL_COUNTRY);
-		
+		InformationUnit addParcelLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addParcelLatitude.setType(ContactActivator.NODE_ADDRESS_PARCEL_LATITUDE);
+		InformationUnit addParcelLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addParcelLongitude.setType(ContactActivator.NODE_ADDRESS_PARCEL_LONGITUDE);
+
 		InformationUnit addPostalStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addPostalStreet.setType(ContactActivator.NODE_ADDRESS_POSTAL_STREET);
 		InformationUnit addPostalPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -137,7 +149,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addPostalPostal.setType(ContactActivator.NODE_ADDRESS_POSTAL_POSTAL);
 		InformationUnit addPostalCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addPostalCountry.setType(ContactActivator.NODE_ADDRESS_POSTAL_COUNTRY);
-		
+		InformationUnit addPostalLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addPostalLatitude.setType(ContactActivator.NODE_ADDRESS_POSTAL_LATITUDE);
+		InformationUnit addPostalLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addPostalLongitude.setType(ContactActivator.NODE_ADDRESS_POSTAL_LONGITUDE);
+	
 		InformationUnit addInternatStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addInternatStreet.setType(ContactActivator.NODE_ADDRESS_INTERNAT_STREET);
 		InformationUnit addInternatPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -150,7 +166,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addInternatPostal.setType(ContactActivator.NODE_ADDRESS_INTERNAT_POSTAL);
 		InformationUnit addInternatCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addInternatCountry.setType(ContactActivator.NODE_ADDRESS_INTERNAT_COUNTRY);
-		
+		InformationUnit addInternatLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addInternatLatitude.setType(ContactActivator.NODE_ADDRESS_INTERNAT_LATITUDE);
+		InformationUnit addInternatLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addInternatLongitude.setType(ContactActivator.NODE_ADDRESS_INTERNAT_LONGITUDE);
+
 		InformationUnit addDomesticStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addDomesticStreet.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_STREET);
 		InformationUnit addDomesticPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -163,7 +183,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addDomesticPostal.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_POSTAL);
 		InformationUnit addDomesticCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addDomesticCountry.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_COUNTRY);
-		
+		InformationUnit addDomesticLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addDomesticLatitude.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_LATITUDE);
+		InformationUnit addDomesticLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addDomesticLongitude.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_LONGITUDE);
+
 		InformationUnit addOtherStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addOtherStreet.setType(ContactActivator.NODE_ADDRESS_OTHER_STREET);
 		InformationUnit addOtherPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -176,6 +200,10 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addOtherPostal.setType(ContactActivator.NODE_ADDRESS_OTHER_POSTAL);
 		InformationUnit addOtherCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addOtherCountry.setType(ContactActivator.NODE_ADDRESS_OTHER_COUNTRY);
+		InformationUnit addOtherLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherLatitude.setType(ContactActivator.NODE_ADDRESS_OTHER_LATITUDE);
+		InformationUnit addOtherLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		addOtherLongitude.setType(ContactActivator.NODE_ADDRESS_OTHER_LONGITUDE);
 		
 		//group email and instant messaging
 		InformationUnit mail1 = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -298,34 +326,44 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addWorkPostal);
 		returnValue.getChildValues().add(addWorkRegion);
 		returnValue.getChildValues().add(addWorkStreet);
-
+		returnValue.getChildValues().add(addWorkLatitude);
+		returnValue.getChildValues().add(addWorkLongitude);
+		
 		returnValue.getChildValues().add(addHomeCountry);
 		returnValue.getChildValues().add(addHomeLocality);
 		returnValue.getChildValues().add(addHomePob);
 		returnValue.getChildValues().add(addHomePostal);
 		returnValue.getChildValues().add(addHomeRegion);
 		returnValue.getChildValues().add(addHomeStreet);
-
+		returnValue.getChildValues().add(addHomeLatitude);
+		returnValue.getChildValues().add(addHomeLongitude);
+		
 		returnValue.getChildValues().add(addParcelCountry);
 		returnValue.getChildValues().add(addParcelLocality);
 		returnValue.getChildValues().add(addParcelPob);
 		returnValue.getChildValues().add(addParcelPostal);
 		returnValue.getChildValues().add(addParcelRegion);
 		returnValue.getChildValues().add(addParcelStreet);
-
+		returnValue.getChildValues().add(addParcelLatitude);
+		returnValue.getChildValues().add(addParcelLongitude);
+		
 		returnValue.getChildValues().add(addPostalCountry);
 		returnValue.getChildValues().add(addPostalLocality);
 		returnValue.getChildValues().add(addPostalPob);
 		returnValue.getChildValues().add(addPostalPostal);
 		returnValue.getChildValues().add(addPostalRegion);
 		returnValue.getChildValues().add(addPostalStreet);
-
+		returnValue.getChildValues().add(addPostalLatitude);
+		returnValue.getChildValues().add(addPostalLongitude);
+		
 		returnValue.getChildValues().add(addInternatCountry);
 		returnValue.getChildValues().add(addInternatLocality);
 		returnValue.getChildValues().add(addInternatPob);
 		returnValue.getChildValues().add(addInternatPostal);
 		returnValue.getChildValues().add(addInternatRegion);
 		returnValue.getChildValues().add(addInternatStreet);
+		returnValue.getChildValues().add(addInternatLatitude);
+		returnValue.getChildValues().add(addInternatLongitude);
 		
 		returnValue.getChildValues().add(addDomesticCountry);
 		returnValue.getChildValues().add(addDomesticLocality);
@@ -333,13 +371,17 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addDomesticPostal);
 		returnValue.getChildValues().add(addDomesticRegion);
 		returnValue.getChildValues().add(addDomesticStreet);
-
+		returnValue.getChildValues().add(addDomesticLatitude);
+		returnValue.getChildValues().add(addDomesticLongitude);
+		
 		returnValue.getChildValues().add(addOtherCountry);
 		returnValue.getChildValues().add(addOtherLocality);
 		returnValue.getChildValues().add(addOtherPob);
 		returnValue.getChildValues().add(addOtherPostal);
 		returnValue.getChildValues().add(addOtherRegion);
 		returnValue.getChildValues().add(addOtherStreet);
+		returnValue.getChildValues().add(addOtherLongitude);
+		returnValue.getChildValues().add(addOtherLatitude);
 		
 		//group email and instant messaging
 		returnValue.getChildValues().add(mail1);

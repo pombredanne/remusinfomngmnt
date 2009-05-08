@@ -98,6 +98,43 @@ public class ContactGeneralSection {
 		createGroupPhoneNumbers(compositeGeneral);
 		createGroupAddress(compositeGeneral);
 		createGroupInternet(compositeGeneral);
+		createGrouAddressImage(compositeGeneral);
+	}
+
+	private void createGrouAddressImage(Composite compositeGeneral) {
+		final Group group_Person = new Group(compositeGeneral, SWT.NONE);
+		final GridData gd_Person = new GridData();
+		gd_Person.grabExcessVerticalSpace = true;
+		gd_Person.verticalAlignment = GridData.FILL;
+		gd_Person.grabExcessHorizontalSpace = true;
+		gd_Person.horizontalAlignment = GridData.FILL;
+		group_Person.setLayoutData(gd_Person);
+		final GridLayout gl_PersonGroup = new GridLayout();
+		gl_PersonGroup.numColumns = 3;
+		group_Person.setLayout(gl_PersonGroup);
+
+		this.lb_Image = toolkit.createLabel(group_Person, null, SWT.BORDER);
+		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, false, true);
+		gd_text.verticalSpan = 4;
+		gd_text.verticalAlignment = GridData.FILL;
+		this.lb_Image.setLayoutData(gd_text);
+		
+		
+		//final static String GOOGLE_MAPS_API_KEY_REMUS = "ABQIAAAA2Iee3-LfY8cYhYcH3i65vhS5WyVyGNFqhgudXfVE-5tAedqW1BS5qANHYqlX1vUb1nlffnYhHBmFCQ";
+		
+		//gmaps.getImageFromGMaps();
+		
+		//InformationUnit rawData = 
+			
+			
+			
+			//InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_NAME_RAWDATA_IMAGE);
+//		if (rawData != null && rawData.getBinaryValue() != null) {
+//			ByteArrayInputStream bais = new ByteArrayInputStream(rawData.getBinaryValue());
+//			ImageData imageData = new ImageData(bais);
+//			Image image = new Image(null, imageData);
+//			this.lb_Image.setImage(image);
+//		}
 	}
 
 	private void createGroupPerson(Composite compositeGeneral) {

@@ -26,6 +26,8 @@ public class AddressComboChooser {
 	private String curPob;
 	private String curRegion;
 	private String curPostal;
+	private String curLongitude;
+	private String curLatitude;
 
 	public AddressComboChooser(Combo combo, String[] items) {
 		if (combo.getText().contains(items[0])) {
@@ -34,7 +36,9 @@ public class AddressComboChooser {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LOCALITY, ContactActivator.NODE_ADDRESS_HOME_LOCALITY);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_REGION, ContactActivator.NODE_ADDRESS_HOME_REGION);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_POSTAL, ContactActivator.NODE_ADDRESS_HOME_POSTAL);
-			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_HOME_COUNTRY);	
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_HOME_COUNTRY);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LONGITUDE, ContactActivator.NODE_ADDRESS_HOME_LONGITUDE);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LATITUDE, ContactActivator.NODE_ADDRESS_HOME_LATITUDE);	
 		}
 		else if (combo.getText().contains(items[1])) {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_STREET,ContactActivator.NODE_ADDRESS_WORK_STREET);
@@ -43,6 +47,8 @@ public class AddressComboChooser {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_REGION, ContactActivator.NODE_ADDRESS_WORK_REGION);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_POSTAL, ContactActivator.NODE_ADDRESS_WORK_POSTAL);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_WORK_COUNTRY);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LONGITUDE, ContactActivator.NODE_ADDRESS_WORK_LONGITUDE);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LATITUDE, ContactActivator.NODE_ADDRESS_WORK_LATITUDE);
 		}
 		else if (combo.getText().contains(items[2])) {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_STREET, ContactActivator.NODE_ADDRESS_INTERNAT_STREET);
@@ -51,6 +57,8 @@ public class AddressComboChooser {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_REGION, ContactActivator.NODE_ADDRESS_INTERNAT_REGION);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_POSTAL, ContactActivator.NODE_ADDRESS_INTERNAT_POSTAL);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_INTERNAT_COUNTRY);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LONGITUDE, ContactActivator.NODE_ADDRESS_INTERNAT_LONGITUDE);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LATITUDE, ContactActivator.NODE_ADDRESS_INTERNAT_LATITUDE);
 		}
 		else if (combo.getText().contains(items[3])) {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_STREET, ContactActivator.NODE_ADDRESS_POSTAL_STREET);
@@ -59,6 +67,8 @@ public class AddressComboChooser {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_REGION, ContactActivator.NODE_ADDRESS_POSTAL_REGION);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_POSTAL, ContactActivator.NODE_ADDRESS_POSTAL_POSTAL);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_POSTAL_COUNTRY);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LONGITUDE, ContactActivator.NODE_ADDRESS_POSTAL_LONGITUDE);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LATITUDE, ContactActivator.NODE_ADDRESS_POSTAL_LATITUDE);
 		}
 		else if (combo.getText().contains(items[4])) {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_STREET, ContactActivator.NODE_ADDRESS_PARCEL_STREET);
@@ -67,6 +77,8 @@ public class AddressComboChooser {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_REGION, ContactActivator.NODE_ADDRESS_PARCEL_REGION);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_POSTAL, ContactActivator.NODE_ADDRESS_PARCEL_POSTAL);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_PARCEL_COUNTRY);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LONGITUDE, ContactActivator.NODE_ADDRESS_PARCEL_LONGITUDE);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LATITUDE, ContactActivator.NODE_ADDRESS_PARCEL_LATITUDE);
 		}
 		else if (combo.getText().contains(items[5])) {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_STREET, ContactActivator.NODE_ADDRESS_DOMESTIC_STREET);
@@ -75,6 +87,8 @@ public class AddressComboChooser {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_REGION, ContactActivator.NODE_ADDRESS_DOMESTIC_REGION);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_POSTAL, ContactActivator.NODE_ADDRESS_DOMESTIC_POSTAL);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_DOMESTIC_COUNTRY);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LONGITUDE, ContactActivator.NODE_ADDRESS_DOMESTIC_LONGITUDE);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LATITUDE, ContactActivator.NODE_ADDRESS_DOMESTIC_LATITUDE);
 		}
 		else if (combo.getText().contains(items[6])) {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_STREET, ContactActivator.NODE_ADDRESS_OTHER_STREET);
@@ -83,6 +97,8 @@ public class AddressComboChooser {
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_REGION, ContactActivator.NODE_ADDRESS_OTHER_REGION);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_POSTAL, ContactActivator.NODE_ADDRESS_OTHER_POSTAL);
 			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_COUNTRY, ContactActivator.NODE_ADDRESS_OTHER_COUNTRY);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LONGITUDE, ContactActivator.NODE_ADDRESS_OTHER_LONGITUDE);
+			ContactActivator.getDefault().getDialogSettings().put(ContactSettings.CUR_LATITUDE, ContactActivator.NODE_ADDRESS_OTHER_LATITUDE);
 		}
 		curStreet = ContactActivator.getDefault().getDialogSettings().get(ContactSettings.CUR_STREET);
 		curLocality = ContactActivator.getDefault().getDialogSettings().get(ContactSettings.CUR_LOCALITY);
@@ -90,6 +106,8 @@ public class AddressComboChooser {
 		curPob = ContactActivator.getDefault().getDialogSettings().get(ContactSettings.CUR_POB);
 		curPostal = ContactActivator.getDefault().getDialogSettings().get(ContactSettings.CUR_POSTAL);
 		curRegion = ContactActivator.getDefault().getDialogSettings().get(ContactSettings.CUR_REGION);
+		curLatitude = ContactActivator.getDefault().getDialogSettings().get(ContactSettings.CUR_LATITUDE);
+		curLongitude = ContactActivator.getDefault().getDialogSettings().get(ContactSettings.CUR_LONGITUDE);
 	}
 
 	public String getCurStreet() {
@@ -114,5 +132,13 @@ public class AddressComboChooser {
 
 	public String getCurPostal() {
 		return curPostal;
+	}
+
+	public String getCurLongitude() {
+		return curLongitude;
+	}
+
+	public String getCurLatitude() {
+		return curLatitude;
 	}
 }

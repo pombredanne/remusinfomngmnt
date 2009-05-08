@@ -30,4 +30,6 @@ public class ContactSettings {
 	public static final String CUR_REGION = "curRegion";
 	public static final String CUR_POSTAL = "curPostal";
 	public static final String CUR_COUNTRY = "curCountry";
+	public static final String CUR_LONGITUDE = "curLongitude";
+	public static final String CUR_LATITUDE = "curLatitude";
 }

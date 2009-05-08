@@ -14,6 +14,7 @@ package org.remus.infomngmnt.contact.ui.general;
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
  */
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -30,6 +33,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -41,6 +45,7 @@ import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactSettings;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.geodata.google.GMapsApi;
 
 public class EditContactAddressDialog extends TitleAreaDialog {
 
@@ -56,6 +61,10 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 	private Text tx_Region;
 	private Text tx_Postal;
 	private Combo combo_Country;
+	private Text tx_Latitude;
+	private Text tx_Longitude;
+	private Button bt_GetCoords;
+	private Group group_Geo;
 
 	public EditContactAddressDialog(FormToolkit toolkit, Shell parentShell, InformationUnit contact, EditGeneralPage editGeneralPage) {
 		super(parentShell);
@@ -124,20 +133,104 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		combo_Country = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
 		combo_Country.setLayoutData(gd_text_span_2);
 		
-		createListener();
+		createGeographicalButtons(group_Properties, gd_text_fill_horizontal);
+		
 		createTextValueBindings();
+		createListener();
 		
 		setContactProportiesFromActivatorToGenerationDialog();
 		
-		return this.area;		
+		validatePage();
+		
+		return this.area;
+	}
+
+	private void createGeographicalButtons(Group group_Properties, GridData gd_text_fill_horizontal) {
+		
+		group_Geo = new Group(group_Properties, SWT.BORDER);
+		group_Geo.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true));
+
+		final GridLayout gl_GeoGroup = new GridLayout();
+		GridData gd_GeoGroup_span_2 = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		gd_GeoGroup_span_2.horizontalSpan = 2;
+		gl_GeoGroup.numColumns = 3;
+		group_Geo.setLayoutData(gd_GeoGroup_span_2);
+		group_Geo.setLayout(gl_GeoGroup);
+		
+		toolkit.createLabel(group_Geo, "Latitude:");
+		tx_Latitude = toolkit.createText(group_Geo, null, SWT.BORDER);
+		tx_Latitude.setLayoutData(gd_text_fill_horizontal);
+		
+		bt_GetCoords = toolkit.createButton(group_Geo, "Get Coords", SWT.NONE);
+		
+		toolkit.createLabel(group_Geo, "Longitude:");
+		tx_Longitude = toolkit.createText(group_Geo, null, SWT.BORDER);
+		tx_Longitude.setLayoutData(gd_text_fill_horizontal);
 	}
 
 	private void createListener() {
 		combo_Address.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
 				createTextValueBindings();
+				validatePage();
 			}
 		});
+		bt_GetCoords.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e) {
+				//GMapsApi gma = new GMapsApi();
+				try {
+					String curKey = GMapsApi.getApiKey();
+					Point2D p2d = GMapsApi.getGeoCoordFromGMaps(curKey, "borstrasse+radebeul+01445");
+					tx_Latitude.setText(String.valueOf(p2d.getX()));
+					tx_Longitude.setText(String.valueOf(p2d.getY()));
+					
+				} catch (Exception e2) {
+					MessageBox msgb = new MessageBox(new Shell(),SWT.NONE);
+					msgb.setMessage("Please go to Extras -> Preferences -> GeoData -> Google Maps API Key");
+					msgb.setText("False Key Found");
+					msgb.open();
+				}
+			}
+		});
+		tx_Street.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				validatePage();
+			}
+		});
+		tx_Locality.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				validatePage();
+			}
+		});
+		tx_Pob.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				validatePage();
+			}
+		});
+		tx_Postal.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				validatePage();
+			}
+		});
+		tx_Region.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				validatePage();
+			}
+		});
+	}
+	private void validatePage() {
+		if (tx_Street.getText().length() > 1 && (tx_Postal.getText().length() > 1 || tx_Region.getText().length() > 1)) {
+			setGroupGeo(true);
+		}
+		else setGroupGeo(false);		
+	}
+	private void setGroupGeo(boolean b) {
+		group_Geo.setEnabled(b);
+		tx_Latitude.setEditable(false);
+		tx_Latitude.setEnabled(false);
+		tx_Longitude.setEditable(false);
+		tx_Longitude.setEnabled(false);
+		bt_GetCoords.setEnabled(b);		
 	}
 	private void setContactProportiesFromActivatorToGenerationDialog() {
 		try {
@@ -197,5 +290,17 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}	
+		try {
+			final AbstractBindingWidget createTextBindingWidget6 = BindingWidgetFactory.createTextBindingWidget(tx_Latitude, editGeneralPage);
+			createTextBindingWidget6.bindModel(InformationUtil.getChildByType(contact, acc.getCurLatitude()), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			final AbstractBindingWidget createTextBindingWidget7 = BindingWidgetFactory.createTextBindingWidget(tx_Longitude, editGeneralPage);
+			createTextBindingWidget7.bindModel(InformationUtil.getChildByType(contact, acc.getCurLongitude()), InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

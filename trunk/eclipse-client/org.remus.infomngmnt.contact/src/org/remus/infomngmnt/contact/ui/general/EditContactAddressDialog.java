@@ -180,9 +180,11 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 				//GMapsApi gma = new GMapsApi();
 				try {
 					String curKey = GMapsApi.getApiKey();
-					Point2D p2d = GMapsApi.getGeoCoordFromGMaps(curKey, "borstrasse+radebeul+01445");
-					tx_Latitude.setText(String.valueOf(p2d.getX()));
-					tx_Longitude.setText(String.valueOf(p2d.getY()));
+					String curSearchValue = tx_Locality.getText()+"+"+tx_Pob.getText()+"+"+tx_Postal.getText()+"+"+tx_Region.getText()+"+"+tx_Street.getText();
+					curSearchValue = curSearchValue.replace(" ", "+");
+					Point2D p2d = GMapsApi.getGeoCoordFromGMaps(curKey, curSearchValue);
+					tx_Longitude.setText(String.valueOf(p2d.getX()));
+					tx_Latitude.setText(String.valueOf(p2d.getY()));
 					
 				} catch (Exception e2) {
 					MessageBox msgb = new MessageBox(new Shell(),SWT.NONE);

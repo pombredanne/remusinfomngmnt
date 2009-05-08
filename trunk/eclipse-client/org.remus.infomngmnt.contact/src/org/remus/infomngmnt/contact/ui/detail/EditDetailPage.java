@@ -36,6 +36,5 @@ public class EditDetailPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(body);
 
 		new ContactDetailsSection(body, toolkit, getSite().getShell(), getModelObject(), this);
-		doCreateSemanticSection(body, toolkit);
 	}
 }

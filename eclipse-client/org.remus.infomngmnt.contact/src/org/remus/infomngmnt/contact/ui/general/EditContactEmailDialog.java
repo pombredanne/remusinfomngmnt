@@ -71,12 +71,14 @@ public class EditContactEmailDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
 		this.bt_Ok = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		this.bt_Ok.setEnabled(false);
+		if (InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MAIL_DEF).getStringValue().length() > 1) {
+			bt_Ok.setEnabled(true);
+		}
+		else this.bt_Ok.setEnabled(false);
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 	@Override
 	public boolean close() {
-		//setUserSettings();
 		return super.close();
 	}
 	@Override
@@ -354,6 +356,11 @@ public class EditContactEmailDialog extends TitleAreaDialog {
 				ecend.open();
 				listEmails.add(ecend.getCurText());
 				List<String> curList = removeNullValuesFromList(listEmails);
+				if (curList.size()==1) {
+					selectedEmail = curList.get(0);
+//					InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MAIL_DEF).setStringValue();
+					bt_Ok.setEnabled(true);
+				}
 				tv_Email.setInput(curList);
 				tv_Email.refresh();
 			}

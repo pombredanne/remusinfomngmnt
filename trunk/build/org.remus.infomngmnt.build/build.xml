@@ -17,7 +17,7 @@
 	
 
 	<tstamp>
-		<format property="today.date" pattern="yyyy-MM-dd_HH_mm" />
+		<format property="buildTime" pattern="yyyy-MM-dd_HH_mm" />
 	</tstamp>
 
 	<!-- properties -->
@@ -153,6 +153,7 @@
 		</propertyfile>
 		<propertyfile file="${build.dir.location}/plugins/org.remus.infomngmnt.application/about.mappings">
 		  <entry key="1" value="${buildId}"/>
+		  <entry key="2" value="${buildTime}"/>
 		</propertyfile>
 		<java failonerror="true" fork="true" jar="${jar.location}">
 			<arg value="-application" />

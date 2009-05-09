@@ -151,6 +151,9 @@
 		<propertyfile file="${build.dir.location}/plugins/org.remus.infomngmnt.application/config.ini">
 		  <entry  key="eclipse.buildId" value="${buildId}"/>
 		</propertyfile>
+		<propertyfile file="${build.dir.location}/plugins/org.remus.infomngmnt.application/about.mappings">
+		  <entry key="1" value="${buildId}"/>
+		</propertyfile>
 		<java failonerror="true" fork="true" jar="${jar.location}">
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />

@@ -51,7 +51,7 @@
          </property>
          <property
                name="aboutText"
-               value="Remus Information Management&#x0D;&#x0A;&#x0D;&#x0A;Version: {0}&#x0D;&#x0A;BuildId: {1}&#x0D;&#x0A;&#x0D;&#x0A;(c) Copyright RIM contributors and other 2009. All rights reserverd.&#x0D;&#x0A;Visit http://www.remus-software.org&#x0D;&#x0A;&#x0D;&#x0A;This product uses software developed by the Eclipse Foundation and &#x0D;&#x0A;its members (http://www.eclipse.org), Apache (http://www.apache.org)&#x0D;&#x0A;and others. For a full list see &#x0D;&#x0A;http://www.remus-software.org/integrated-thirdparty-packages">
+               value="Remus Information Management&#x0D;&#x0A;&#x0D;&#x0A;Version: {0}&#x0D;&#x0A;BuildId: {1}&#x0D;&#x0A;Date: {2}&#x0D;&#x0A;&#x0D;&#x0A;(c) Copyright RIM contributors and other 2009. All rights reserverd.&#x0D;&#x0A;Visit http://www.remus-software.org&#x0D;&#x0A;&#x0D;&#x0A;This product uses software developed by the Eclipse Foundation and &#x0D;&#x0A;its members (http://www.eclipse.org), Apache (http://www.apache.org)&#x0D;&#x0A;and others. For a full list see &#x0D;&#x0A;http://www.remus-software.org/integrated-thirdparty-packages">
          </property>
       </product>
    </extension>

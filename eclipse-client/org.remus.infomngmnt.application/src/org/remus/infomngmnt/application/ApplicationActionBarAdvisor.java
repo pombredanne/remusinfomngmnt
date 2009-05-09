@@ -56,6 +56,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction quitAction;
 	private IWorkbenchAction preferenceAction;
 	private IWorkbenchAction cleanAction;
+	private IWorkbenchAction aboutaction;
 
 	/**
 	 * Constructs a new action builder which contributes actions to the given
@@ -131,6 +132,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		this.cleanAction = IDEActionFactory.BUILD_CLEAN.create(window);
 		register(this.cleanAction);
 
+		this.aboutaction = ActionFactory.ABOUT.create(window);
+		register(this.aboutaction);
+
 	}
 
 	@Override
@@ -148,7 +152,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		menu.add(new GroupMarker("help-primary-additions-end"));
 		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		menu.add(new Separator());
-
+		menu.add(this.aboutaction);
 		return menu;
 	}
 

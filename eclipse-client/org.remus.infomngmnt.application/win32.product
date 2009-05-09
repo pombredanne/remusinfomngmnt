@@ -3,6 +3,23 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
 
+   <aboutInfo>
+      <image path="/org.remus.infomngmnt.application/about.png"/>
+      <text>
+         Remus Information Management
+
+Version: {0}
+BuildId: {1}
+
+(c) Copyright RIM contributors and other 2009. All rights reserverd.
+Visit http://www.remus-software.org
+
+This product uses software developed by the Eclipse Foundation and 
+its members (http://www.eclipse.org), Apache (http://www.apache.org)
+and others. For a full list see 
+http://www.remus-software.org/integrated-thirdparty-packages
+      </text>
+   </aboutInfo>
 
    <configIni use="default">
       <win32>/org.remus.infomngmnt.application/config.ini</win32>

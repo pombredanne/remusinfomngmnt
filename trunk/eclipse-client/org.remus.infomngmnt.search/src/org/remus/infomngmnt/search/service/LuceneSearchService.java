@@ -126,7 +126,9 @@ public class LuceneSearchService {
 
 		private long lastAdding;
 
-		private int currentSize = 0;
+		private int currentAddSize = 0;
+
+		private int currentDeleteSize = 0;
 
 		private final long maxNonWriteTime = 20000;
 
@@ -140,9 +142,10 @@ public class LuceneSearchService {
 		 */
 		@Override
 		protected IStatus run(final IProgressMonitor monitor) {
-			if (((System.currentTimeMillis() - this.lastAdding > this.maxNonWriteTime && this.currentSize > 0)
-					|| this.currentSize > 100000 || (this.writeImmediately && this.currentSize > 0) || (Job
-					.getJobManager().find(ResourcesPlugin.FAMILY_AUTO_BUILD).length == 0 && this.currentSize > 0))) {
+			if (((System.currentTimeMillis() - this.lastAdding > this.maxNonWriteTime && (this.currentAddSize > 0 || this.currentDeleteSize > 0))
+					|| this.currentAddSize > 100000
+					|| (this.writeImmediately && (this.currentAddSize > 0 || this.currentDeleteSize > 0)) || (Job
+					.getJobManager().find(ResourcesPlugin.FAMILY_AUTO_BUILD).length == 0 && (this.currentAddSize > 0 || this.currentDeleteSize > 0)))) {
 				final Job writeIndexQueue = new Job("Write queue") {
 					@Override
 					protected IStatus run(final IProgressMonitor monitor) {
@@ -152,8 +155,9 @@ public class LuceneSearchService {
 						final Map<IProject, List<IFile>> clonedDeleteMap = new HashMap<IProject, List<IFile>>(
 								WriteQueueJob.this.removIndexQueue);
 						WriteQueueJob.this.removIndexQueue.clear();
-						int newCurrentSize = WriteQueueJob.this.currentSize;
-						WriteQueueJob.this.currentSize = 0;
+						int newCurrentSize = WriteQueueJob.this.currentAddSize;
+						WriteQueueJob.this.currentAddSize = 0;
+						WriteQueueJob.this.currentDeleteSize = 0;
 						final Set<IProject> keySet = clonedMap.keySet();
 						final Set<IProject> deleteKeySet = clonedDeleteMap.keySet();
 
@@ -197,6 +201,18 @@ public class LuceneSearchService {
 								final List<IFile> list = clonedMap.get(project);
 								final long timeMillis = System.currentTimeMillis();
 								if (list.size() > 0) {
+									reader = IndexReader.open(getSearchService().getIndexDirectory(
+											project));
+									for (final IFile path : list) {
+										String id = path.getFullPath().removeFileExtension()
+												.lastSegment();
+										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"",
+												id));
+										final Term term = new Term(SEARCHINDEX_ITEM_ID, id);
+										reader.deleteDocuments(term);
+									}
+									reader.flush();
+									reader.close();
 									relaseIndexSearcher(project);
 									if (IndexReader.isLocked(getSearchService().getIndexDirectory(
 											project))) {
@@ -227,9 +243,9 @@ public class LuceneSearchService {
 											return Status.CANCEL_STATUS;
 										}
 									}
-									if (WriteQueueJob.this.currentSize > 0) {
+									if (WriteQueueJob.this.currentAddSize > 0) {
 										monitor.setTaskName(NLS.bind("Still queued: {0} documents",
-												WriteQueueJob.this.currentSize));
+												WriteQueueJob.this.currentAddSize));
 									} else {
 										monitor.setTaskName("Done");
 									}
@@ -278,7 +294,8 @@ public class LuceneSearchService {
 				this.removIndexQueue.put(project, new ArrayList<IFile>());
 			}
 			this.removIndexQueue.get(project).addAll(removeDocuments);
-			this.currentSize += addDocuments.size();
+			this.currentAddSize += addDocuments.size();
+			this.currentDeleteSize += removeDocuments.size();
 		}
 
 	}

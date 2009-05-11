@@ -63,7 +63,7 @@ public class SynchronizeCategoryHandler extends AbstractHandler {
 			if (remoteObject != null && remoteObject instanceof RemoteContainer) {
 				ChangeSet changeSet = manager.createCheckOutChangeSet(cat, Collections
 						.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
-						remoteRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE);
+						remoteRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE, null);
 				SynchronizationWizard synchronizationWizard = new SynchronizationWizard(
 						SynchronizationWizard.SYNCMODE);
 				synchronizationWizard.init(changeSet);

@@ -121,7 +121,6 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 								this.saveParticipantService.fireEvent(
 										ISaveParticipantExtensionService.SAVED, objectFromUri,
 										objectFromFile);
-								objectFromUri.eResource().unload();
 							}
 						} catch (CoreException e) {
 							// TODO Auto-generated catch block

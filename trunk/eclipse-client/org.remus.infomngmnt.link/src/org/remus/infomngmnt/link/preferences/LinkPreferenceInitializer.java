@@ -26,6 +26,7 @@ public class LinkPreferenceInitializer extends AbstractPreferenceInitializer {
 	public static final String INDEX_DOCUMENT = "INDEX_DOCUMENT"; //$NON-NLS-1$
 	public static final String MAKE_SCREENSHOT = "MAKE_SCREENSHOT"; //$NON-NLS-1$
 	public static final String SCREENSHOT_CMD = "SCREENSHOT_CMD"; //$NON-NLS-1$
+	public static final String URL_WEBSHOTHELP = "URL_WEBSHOTHELP"; //$NON-NLS-1$
 
 	/**
 	 * 
@@ -44,6 +45,8 @@ public class LinkPreferenceInitializer extends AbstractPreferenceInitializer {
 	public void initializeDefaultPreferences() {
 		this.store.setDefault(INDEX_DOCUMENT, true);
 		this.store.setDefault(MAKE_SCREENSHOT, true);
+		this.store.setDefault(URL_WEBSHOTHELP,
+				"http://remus-software.org/faq/10-why-is-webshotting-diabled");
 		//this.store.setDefault(SCREENSHOT_CMD, "C:\\Downloads\\IECapt.exe --url=\"{URL}\" --out=\"{OUT}\" --silent"); //$NON-NLS-1$
 	}
 

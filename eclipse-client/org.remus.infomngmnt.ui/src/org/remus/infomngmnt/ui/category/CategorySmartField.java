@@ -24,6 +24,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.fieldassist.SmartField;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 
@@ -32,7 +33,9 @@ import org.remus.infomngmnt.core.model.CategoryUtil;
  */
 public class CategorySmartField extends SmartField {
 
-	public CategorySmartField(Control control) {
+	private CollectionFilter<Category> filter;
+
+	public CategorySmartField(final Control control) {
 		super(control, new TextContentAdapter());
 	}
 
@@ -41,7 +44,9 @@ public class CategorySmartField extends SmartField {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.remus.infomngmnt.common.fieldassist.SmartField#isValid()
 	 */
 	@Override
@@ -54,8 +59,9 @@ public class CategorySmartField extends SmartField {
 	protected IContentProposalProvider getContentProposalProvider() {
 		return new IContentProposalProvider() {
 
-			public IContentProposal[] getProposals(String contents, int position) {
-				Category[] findCatetegories = CategoryUtil.findCatetegories(contents, false);
+			public IContentProposal[] getProposals(final String contents, final int position) {
+				Category[] findCatetegories = CategoryUtil.findCatetegories(contents, false,
+						CategorySmartField.this.filter);
 				IContentProposal[] proposals = new IContentProposal[findCatetegories.length];
 				for (int i = 0; i < findCatetegories.length; i++) {
 					final Category category = findCatetegories[i];
@@ -70,18 +76,21 @@ public class CategorySmartField extends SmartField {
 	protected ILabelProvider getLabelProvider() {
 		return new LabelProvider() {
 			@Override
-			public Image getImage(Object element) {
-				return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_DEF_VIEW);
+			public Image getImage(final Object element) {
+				return PlatformUI.getWorkbench().getSharedImages().getImage(
+						ISharedImages.IMG_DEF_VIEW);
 			}
 
 			@Override
-			public String getText(Object element) {
+			public String getText(final Object element) {
 				return ((CategoryContentProposal) element).getCategoryToString();
 			}
 		};
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.remus.infomngmnt.common.fieldassist.SmartField#isWarning()
 	 */
 	@Override
@@ -91,9 +100,10 @@ public class CategorySmartField extends SmartField {
 
 	private static class CategoryContentProposal implements IContentProposal {
 
-		public CategoryContentProposal(Category category) {
+		public CategoryContentProposal(final Category category) {
 			this.category = category;
 		}
+
 		private final Category category;
 
 		private String categoryToString;
@@ -101,15 +111,19 @@ public class CategorySmartField extends SmartField {
 		public String getContent() {
 			return getCategoryToString();
 		}
+
 		public int getCursorPosition() {
 			return getCategoryToString().length();
 		}
+
 		public String getDescription() {
 			return this.category.getDescription();
 		}
+
 		public String getLabel() {
 			return getCategoryToString();
 		}
+
 		public Category getCategory() {
 			return this.category;
 		}
@@ -121,6 +135,14 @@ public class CategorySmartField extends SmartField {
 			return this.categoryToString;
 		}
 
+	}
+
+	/**
+	 * @param filter
+	 *            the filter to set
+	 */
+	public void setFilter(final CollectionFilter<Category> filter) {
+		this.filter = filter;
 	}
 
 }

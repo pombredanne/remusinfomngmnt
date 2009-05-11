@@ -2,10 +2,11 @@ package org.remus.infomngmnt.ui.remote;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -31,8 +32,10 @@ public class RepositoryDialog extends TitleAreaDialog {
 
 	private Table table;
 	protected IRepositoryUI selectedObject;
+
 	/**
 	 * Create the dialog
+	 * 
 	 * @param parentShell
 	 */
 	public RepositoryDialog(final Shell parentShell) {
@@ -41,6 +44,7 @@ public class RepositoryDialog extends TitleAreaDialog {
 
 	/**
 	 * Create contents of the dialog
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -56,7 +60,8 @@ public class RepositoryDialog extends TitleAreaDialog {
 		availableRepositoryconnectorsGroup.setText("Available Repository-connectors");
 		availableRepositoryconnectorsGroup.setLayout(new GridLayout());
 
-		final TableViewer tableViewer = new TableViewer(availableRepositoryconnectorsGroup, SWT.BORDER);
+		final TableViewer tableViewer = new TableViewer(availableRepositoryconnectorsGroup,
+				SWT.BORDER);
 		this.table = tableViewer.getTable();
 		this.table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
@@ -66,7 +71,7 @@ public class RepositoryDialog extends TitleAreaDialog {
 
 		final Label label = new Label(descriptionGroup, SWT.NONE);
 		label.setText("Label");
-		sashForm.setWeights(new int[] {3, 1 });
+		sashForm.setWeights(new int[] { 3, 1 });
 		setTitle("Repository connectors");
 		setMessage("Choose a connector to connect with");
 
@@ -74,21 +79,39 @@ public class RepositoryDialog extends TitleAreaDialog {
 		tableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
-				return UIPlugin.getDefault().getService(org.remus.infomngmnt.core.services.IRepositoryExtensionService.class).getNameByRepositoryId(((IRepositoryUI) element).getRepositoryId());
+				return UIPlugin.getDefault().getService(
+						org.remus.infomngmnt.core.services.IRepositoryExtensionService.class)
+						.getNameByRepositoryId(((IRepositoryUI) element).getRepositoryId());
 			}
+
 			@Override
 			public Image getImage(final Object element) {
-				return UIPlugin.getDefault().getService(org.remus.infomngmnt.core.services.IRepositoryExtensionService.class).getImageByRepositoryId(((IRepositoryUI) element).getRepositoryId()).createImage();
-				
+				return UIPlugin.getDefault().getService(
+						org.remus.infomngmnt.core.services.IRepositoryExtensionService.class)
+						.getImageByRepositoryId(((IRepositoryUI) element).getRepositoryId())
+						.createImage();
+
 			}
 		});
-		tableViewer.setInput(UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getAllItems());
+		tableViewer.setInput(UIPlugin.getDefault().getService(IRepositoryExtensionService.class)
+				.getAllItems());
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent event) {
 				if (!event.getSelection().isEmpty()) {
-					RepositoryDialog.this.selectedObject = (IRepositoryUI) ((IStructuredSelection) event.getSelection()).getFirstElement();
+					RepositoryDialog.this.selectedObject = (IRepositoryUI) ((IStructuredSelection) event
+							.getSelection()).getFirstElement();
 				}
-				
+
+			}
+		});
+		tableViewer.addOpenListener(new IOpenListener() {
+			public void open(final OpenEvent event) {
+				if (!event.getSelection().isEmpty()) {
+					RepositoryDialog.this.selectedObject = (IRepositoryUI) ((IStructuredSelection) event
+							.getSelection()).getFirstElement();
+					okPressed();
+				}
+
 			}
 		});
 		return area;
@@ -96,14 +119,13 @@ public class RepositoryDialog extends TitleAreaDialog {
 
 	/**
 	 * Create contents of the button bar
+	 * 
 	 * @param parent
 	 */
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
-				true);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 
 	/**
@@ -113,6 +135,7 @@ public class RepositoryDialog extends TitleAreaDialog {
 	protected Point getInitialSize() {
 		return new Point(500, 375);
 	}
+
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);

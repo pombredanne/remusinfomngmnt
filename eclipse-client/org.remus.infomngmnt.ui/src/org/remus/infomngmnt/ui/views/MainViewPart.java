@@ -214,8 +214,11 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 					created.setObject(true);
 					if (firstSelection.getObject() != null) {
 						int indexOf = MainViewPart.this.items.indexOf(firstSelection.getObject());
-						MainViewPart.this.cb.selectItemAndLoad((CustomButton) MainViewPart.this.cb
-								.getItems().get(indexOf));
+						CustomButton selection = (CustomButton) MainViewPart.this.cb.getItems()
+								.get(indexOf);
+						if (selection != null) {
+							MainViewPart.this.cb.selectItemAndLoad(selection);
+						}
 					} else {
 						MainViewPart.this.cb.selectItemAndLoad((CustomButton) MainViewPart.this.cb
 								.getItems().get(0));

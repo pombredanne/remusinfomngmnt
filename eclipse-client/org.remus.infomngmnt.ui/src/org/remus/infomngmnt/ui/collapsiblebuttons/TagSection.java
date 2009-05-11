@@ -12,8 +12,11 @@
 
 package org.remus.infomngmnt.ui.collapsiblebuttons;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -22,6 +25,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
@@ -50,18 +54,19 @@ public class TagSection extends CollapsibleButtonBar {
 	@Override
 	public void createControl(final Composite parent) {
 		Tree tree = new Tree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		//tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		// tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		this.viewer = new TreeViewer(tree);
 		initProvider();
 		initInput();
 		initOpen();
-		
+
 		setControl(tree);
 	}
-	
+
 	private void initProvider() {
-		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory()) {
+		this.contentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance()
+				.getAdapterFactory()) {
 			@Override
 			public boolean hasChildren(final Object object) {
 				if (object instanceof InformationUnitListItem) {
@@ -71,18 +76,26 @@ public class TagSection extends CollapsibleButtonBar {
 				}
 				return super.hasChildren(object);
 			}
+
 			@Override
 			public Object[] getChildren(final Object object) {
+
 				if (object instanceof Tag) {
-					return ((Tag) object).getInfoUnits().toArray();
+					EList<String> infoUnitIds = ((Tag) object).getInfoUnits();
+					List<InformationUnitListItem> items = new ArrayList<InformationUnitListItem>(
+							infoUnitIds.size());
+					for (String id : infoUnitIds) {
+						items.add(ApplicationModelPool.getInstance().getItemById(id,
+								new NullProgressMonitor()));
+					}
+					return items.toArray();
 				}
 				return super.getChildren(object);
 			}
 		};
-		
-		this.labelProvider = new NavigatorDecoratingLabelProvider(
-				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory()));
-				
+
+		this.labelProvider = new NavigatorDecoratingLabelProvider(new AdapterFactoryLabelProvider(
+				EditingUtil.getInstance().getAdapterFactory()));
 
 		this.viewer.setContentProvider(this.contentProvider);
 		this.viewer.setLabelProvider(this.labelProvider);
@@ -93,13 +106,14 @@ public class TagSection extends CollapsibleButtonBar {
 				return !(element instanceof SynchronizationMetadata);
 			}
 		});
+		this.viewer.setSorter(new ViewerSorter());
 	}
-	
+
 	private void initInput() {
 		this.viewer.setInput(ApplicationModelPool.getInstance().getModel().getAvailableTags());
 
 	}
-	
+
 	private void initOpen() {
 		this.viewer.addOpenListener(new IOpenListener() {
 			public void open(final OpenEvent event) {
@@ -107,8 +121,11 @@ public class TagSection extends CollapsibleButtonBar {
 				for (Object object : list) {
 					if (object instanceof InformationUnitListItem) {
 						try {
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-									new InformationEditorInput((InformationUnitListItem) object), InformationEditor.ID);
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+									.openEditor(
+											new InformationEditorInput(
+													(InformationUnitListItem) object),
+											InformationEditor.ID);
 						} catch (PartInitException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -120,6 +137,5 @@ public class TagSection extends CollapsibleButtonBar {
 		});
 
 	}
-
 
 }

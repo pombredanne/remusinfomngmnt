@@ -136,6 +136,11 @@
             id="org.remus.infomngmnt.ui.desktop"
             name="Desktop Panel">
       </page>
+      <page
+            class="org.remus.infomngmnt.ui.preference.RemoteRepositoriesPreferencePage"
+            id="org.remus.infomngmnt.ui.repositories"
+            name="Remote Repositories">
+      </page>
    </extension>
    <extension
          point="org.remus.infomngmnt.common.ui.trayAction">

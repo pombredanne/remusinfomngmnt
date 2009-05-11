@@ -18,8 +18,11 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -38,6 +41,10 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.common.core.util.CollectionFilter;
+import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
+import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -45,7 +52,7 @@ import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
 
-public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
+public class ChangeSetWizardPage extends WizardPage implements DiffWizard, IValidatingWizard {
 
 	private Text parentCategoryText;
 	private Category selection;
@@ -56,22 +63,25 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
 
 	/**
 	 * Create the wizard
-	 * @param changeSet2 
+	 * 
+	 * @param changeSet2
 	 */
 	public ChangeSetWizardPage(final ChangeSet changeSet) {
 		super("wizardPage");
 		this.changeSet = changeSet;
 		setTitle("Wizard Page title");
 		setDescription("Wizard Page description");
+
 	}
 
 	/**
 	 * Create contents of the wizard
+	 * 
 	 * @param parent
 	 */
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
-		
+
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
@@ -82,33 +92,37 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
 		parentCategoryLabel.setText("Parent Category");
 
 		this.parentCategoryText = new Text(container, SWT.BORDER);
-		new CategorySmartField(this.parentCategoryText);
+		CategorySmartField smartField = new CategorySmartField(this.parentCategoryText);
+		smartField.setFilter(new CollectionFilter<Category>() {
+			public boolean select(final Category item) {
+				return item.getSynchronizationMetaData() == null;
+			}
+		});
 		this.parentCategoryText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		if (this.selection != null) {
 			this.parentCategoryText.setText(CategoryUtil.categoryToString(this.selection));
 		}
-//		this.parentCategoryText.addListener(SWT.Modify, new Listener() {
-//			public void handleEvent(final Event event) {
-//				validatePage();
-//			}
-//		});
-		
-		ISWTObservableValue observeDelayedValue = SWTObservables.observeDelayedValue(500, SWTObservables.observeText(this.parentCategoryText, SWT.Modify));
+
+		ISWTObservableValue observeDelayedValue = SWTObservables.observeDelayedValue(500,
+				SWTObservables.observeText(this.parentCategoryText, SWT.Modify));
 		observeDelayedValue.addValueChangeListener(new IValueChangeListener() {
 			public void handleValueChange(final ValueChangeEvent event) {
 				String newText = (String) event.getObservableValue().getValue();
 				handleCategoryStringChanged(newText);
 			}
-			
+
 		});
 
 		final Button browseButton = new Button(container, SWT.NONE);
 		browseButton.setText("B&rowse...");
 		browseButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(EditingUtil.getInstance().getAdapterFactory());
-				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory());
-				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),adapterFactoryLabelProvider,adapterFactoryContentProvider);
+				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
+						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
 				dialog.setDoubleClickSelects(true);
 				dialog.setValidator(new ISelectionStatusValidator() {
@@ -116,7 +130,15 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
 						if (selection.length == 0) {
 							return StatusCreator.newStatus("No parent category selected...");
 						}
-						return StatusCreator.newStatus(IStatus.OK, "",null);
+						return StatusCreator.newStatus(IStatus.OK, "", null);
+					}
+				});
+				dialog.addFilter(new ViewerFilter() {
+					@Override
+					public boolean select(final Viewer viewer, final Object parentElement,
+							final Object element) {
+						return element instanceof Category
+								&& ((SynchronizableObject) element).getSynchronizationMetaData() == null;
 					}
 				});
 				dialog.setInput(ApplicationModelPool.getInstance().getModel());
@@ -124,7 +146,8 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();
 					Category selectedCategory = (Category) result[0];
-					ChangeSetWizardPage.this.parentCategoryText.setText(CategoryUtil.categoryToString(selectedCategory));
+					ChangeSetWizardPage.this.parentCategoryText.setText(CategoryUtil
+							.categoryToString(selectedCategory));
 				}
 			}
 
@@ -136,62 +159,69 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
 		changesetLabel.setText("Change-Set");
 
 		this.treeViewer = new TreeViewer(container, SWT.BORDER);
-		
+
 		this.tree = this.treeViewer.getTree();
-		
+
 		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		
-		this.treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(AdapterUtils.getAdapterFactory()));
-		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(AdapterUtils.getAdapterFactory()));
-		
+
+		this.treeViewer.setLabelProvider(new ChangeSetLabelProvider(AdapterUtils
+				.getAdapterFactory()));
+		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(AdapterUtils
+				.getAdapterFactory()));
+
 		this.treeViewer.setInput(this.diffModel);
 		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent event) {
+				Object firstElement = ((IStructuredSelection) event.getSelection())
+						.getFirstElement();
 				System.out.println(event.getSelection());
-				
+
 			}
 		});
-		
+		initValidation();
 		setControl(container);
 	}
 
 	protected void handleCategoryStringChanged(final String newText) {
-		
-		
+
+		setErrorMessage(null);
 		Category localTargetCategory = InfomngmntFactory.eINSTANCE.createCategory();
 		Category tmpRemoteRootCategory = CategoryUtil.copyBlankObject(localTargetCategory);
 		this.changeSet.setTargetCategory(CategoryUtil.findCategory(newText, false));
-		
+
 		EList<ChangeSetItem> changeSetItems = this.changeSet.getChangeSetItems();
 		for (ChangeSetItem changeSetItem2 : changeSetItems) {
-			tmpRemoteRootCategory.getChildren().add((Category) EcoreUtil.copy(changeSetItem2.getRemoteConvertedContainer()));
+			tmpRemoteRootCategory.getChildren().add(
+					(Category) EcoreUtil.copy(changeSetItem2.getRemoteConvertedContainer()));
 		}
 		EditingUtil.getInstance().saveObjectToResource(
-				tmpRemoteRootCategory, 
-				UIPlugin.getDefault().getStateLocation().append("compare").append("remote.xml").toOSString());
+				tmpRemoteRootCategory,
+				UIPlugin.getDefault().getStateLocation().append("compare").append("remote.xml")
+						.toOSString());
 
 		EditingUtil.getInstance().saveObjectToResource(
-				localTargetCategory, 
-				UIPlugin.getDefault().getStateLocation().append("compare").append("local.xml").toOSString());
-		
+				localTargetCategory,
+				UIPlugin.getDefault().getStateLocation().append("compare").append("local.xml")
+						.toOSString());
+
 		MatchModel match;
 		try {
-			match = MatchService.doMatch(localTargetCategory
-					, tmpRemoteRootCategory, Collections.<String, Object> emptyMap());
+			match = MatchService.doMatch(localTargetCategory, tmpRemoteRootCategory, Collections
+					.<String, Object> emptyMap());
 			this.diffModel = DiffService.doDiff(match, false);
 			this.treeViewer.setInput(this.diffModel);
-			//performDiff(ownedElements, changeSetItem);
+			// performDiff(ownedElements, changeSetItem);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// Computing differences
-		
+
 	}
 
-	protected void validatePage() {
-		// TODO Auto-generated method stub
-		
+	protected void initValidation() {
+		setPageComplete(validate(false));
+		WizardValidatingUtil.validateControlsOnModify(this, this.parentCategoryText);
 	}
 
 	public void setChangeSet(final ChangeSet changeSet) {
@@ -200,6 +230,21 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard {
 
 	public DiffModel getDiffModel() {
 		return this.diffModel;
+	}
+
+	public boolean validate(final boolean showErrorMessage) {
+
+		if (CategoryUtil.findCategory(this.parentCategoryText.getText(), false) == null
+				|| CategoryUtil.findCategory(this.parentCategoryText.getText(), false)
+						.getSynchronizationMetaData() != null) {
+			if (showErrorMessage) {
+				setErrorMessage("No valid category");
+			}
+			this.treeViewer.setInput(null);
+			return false;
+		}
+		setErrorMessage(null);
+		return true;
 	}
 
 }

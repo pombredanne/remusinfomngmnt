@@ -30,14 +30,15 @@ public class SynchronizationWizard extends Wizard {
 	private DiffWizard page1;
 	private final ChangeSetExecutor changeSetExecutor;
 
-	public static final int CHECKOUTMODE = 1; 
-	public static final int SHAREMODE = 2; 
-	public static final int SYNCMODE = 3; 
+	public static final int CHECKOUTMODE = 1;
+	public static final int SHAREMODE = 2;
+	public static final int SYNCMODE = 3;
 	private final int mode;
 
 	public SynchronizationWizard(final int mode) {
 		this.mode = mode;
 		this.changeSetExecutor = new ChangeSetExecutor();
+		setWindowTitle("Synchronizing with Remote Repository");
 	}
 
 	@Override
@@ -47,7 +48,8 @@ public class SynchronizationWizard extends Wizard {
 			addPage(this.page1 = new ChangeSetWizardPage(this.changeSetExecutor.getChangeSet()));
 			break;
 		case SYNCMODE:
-			addPage(this.page1 = new SynchronizeChangeSetWizardPage(this.changeSetExecutor.getChangeSet()));
+			addPage(this.page1 = new SynchronizeChangeSetWizardPage(this.changeSetExecutor
+					.getChangeSet()));
 			break;
 		default:
 			break;
@@ -62,34 +64,35 @@ public class SynchronizationWizard extends Wizard {
 	@Override
 	public void createPageControls(final Composite pageContainer) {
 		// TODO Auto-generated method stub
-		//super.createPageControls(pageContainer);
+		// super.createPageControls(pageContainer);
 	}
 
-
-/* (non-Javadoc)
- * @see org.eclipse.jface.wizard.Wizard#performFinish()
- */
-@Override
-public boolean performFinish() {
-	DiffModel diffModel = this.page1.getDiffModel();
-	final EList<DiffElement> ownedElements = diffModel.getOwnedElements();
-	switch (SynchronizationWizard.this.mode) {
-	case CHECKOUTMODE:
-		CheckoutJob checkoutJob = new CheckoutJob(ownedElements, SynchronizationWizard.this.changeSetExecutor);
-		checkoutJob.setUser(true);
-		checkoutJob.schedule();
-		break;
-	case SYNCMODE:
-//			CheckoutJob checkoutJob = new CheckoutJob(ownedElements, SynchronizationWizard.this.changeSetExecutor);
-//			checkoutJob.setUser(true);
-//			checkoutJob.schedule();
-		break;
-	default:
-		break;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
+	 */
+	@Override
+	public boolean performFinish() {
+		DiffModel diffModel = this.page1.getDiffModel();
+		final EList<DiffElement> ownedElements = diffModel.getOwnedElements();
+		switch (SynchronizationWizard.this.mode) {
+		case CHECKOUTMODE:
+			CheckoutJob checkoutJob = new CheckoutJob(ownedElements,
+					SynchronizationWizard.this.changeSetExecutor);
+			checkoutJob.setUser(true);
+			checkoutJob.schedule();
+			break;
+		case SYNCMODE:
+			// CheckoutJob checkoutJob = new CheckoutJob(ownedElements,
+			// SynchronizationWizard.this.changeSetExecutor);
+			// checkoutJob.setUser(true);
+			// checkoutJob.schedule();
+			break;
+		default:
+			break;
+		}
+		return true;
 	}
-	return true;
-}
-
-
 
 }

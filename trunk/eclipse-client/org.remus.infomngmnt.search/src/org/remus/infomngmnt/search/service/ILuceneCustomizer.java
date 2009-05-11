@@ -45,4 +45,6 @@ public interface ILuceneCustomizer {
 
 	SimpleDateFormat getDateFormat();
 
+	void clear(IProject project, IProgressMonitor monitor);
+
 }

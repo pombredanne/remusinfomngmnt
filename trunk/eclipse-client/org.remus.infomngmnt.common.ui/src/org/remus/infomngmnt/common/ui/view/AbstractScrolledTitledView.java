@@ -64,12 +64,16 @@ public abstract class AbstractScrolledTitledView extends ViewPart {
 
 		final Composite client = this.toolkit.createComposite(this.form.getBody(), SWT.WRAP);
 		client.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		client.setLayout(new GridLayout());
+		client.setLayout(createClientLayout());
 		this.toolkit.paintBordersFor(client);
 		createViewContents(client);
 		this.form.layout(true);
 		initializeToolBar();
 
+	}
+
+	protected Layout createClientLayout() {
+		return new GridLayout();
 	}
 
 	/**

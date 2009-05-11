@@ -60,6 +60,8 @@ import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableJob;
@@ -232,8 +234,14 @@ public class LuceneSearchService {
 															false);
 											monitor.setTaskName(NLS.bind("Adding {0} to queue",
 													infoUnit.getLabel()));
-											writer.addDocument(getSearchService()
-													.getLuceneDocument(infoUnit, project, monitor));
+											IInfoType infoTypeByType = InformationExtensionManager
+													.getInstance().getInfoTypeByType(
+															infoUnit.getType());
+											if (!infoTypeByType.isExcludeFromIndex()) {
+												writer.addDocument(getSearchService()
+														.getLuceneDocument(infoUnit, project,
+																monitor));
+											}
 											infoUnit.eResource().unload();
 											monitor.worked(1);
 										} catch (final Exception e) {

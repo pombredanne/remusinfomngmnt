@@ -32,6 +32,8 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.nebula.widgets.calendarcombo.DefaultSettings;
@@ -138,6 +140,14 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.viewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.viewer.setInput(InformationExtensionManager.getInstance().getTypes());
 		this.viewer.setSorter(new ViewerSorter());
+		this.viewer.addFilter(new ViewerFilter() {
+			@Override
+			public boolean select(final Viewer viewer, final Object parentElement,
+					final Object element) {
+				return element instanceof IInfoType && !((IInfoType) element).isExcludeFromIndex();
+			}
+
+		});
 		this.viewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {

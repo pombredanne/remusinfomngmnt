@@ -43,6 +43,8 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 
 	public static final String BUILDHTML_ATT = "buildHtml"; //$NON-NLS-1$
 
+	public static final String EXCLUDE_FROM_INDEX_ATT = "excludeFromIndex"; //$NON-NLS-1$
+
 	public static final String TRANSFERID_ATT = "transferId"; //$NON-NLS-1$
 
 	public static final String CREATION_FACTORY_ATT = "creationFactory"; //$NON-NLS-1$
@@ -88,7 +90,8 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 			final InfoType infoType = new InfoType(configurationElement, configurationElement
 					.getContributor().getName(), configurationElement.getAttribute(NAME_ATT),
 					configurationElement.getAttribute(TYPE_ATT), CREATION_FACTORY_ATT,
-					configurationElement.getAttribute(ICON_ATT), buildHtml);
+					configurationElement.getAttribute(ICON_ATT), buildHtml, Boolean
+							.valueOf(configurationElement.getAttribute(EXCLUDE_FROM_INDEX_ATT)));
 			IConfigurationElement[] children = configurationElement
 					.getChildren(TRANSFER_TYPE_NODENAME);
 			List<String> validTransferIds = new ArrayList<String>();
@@ -99,12 +102,12 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 				validTransferIds.add(configurationElement2.getAttribute(TRANSFERID_ATT));
 			}
 			infoType.setValidTransferTypeIds(validTransferIds);
-			this.items.put(infoType.getType(), infoType);
+			this.items.put(infoType.getType().toUpperCase(), infoType);
 		}
 	}
 
 	public IInfoType getInfoTypeByType(final String type) {
-		return this.items.get(type);
+		return this.items.get(type.toUpperCase());
 
 	}
 

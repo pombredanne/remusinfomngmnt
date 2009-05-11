@@ -47,6 +47,7 @@ public class InfoType implements IInfoType {
 	private List<String> validTransferTypeIds;
 	private final String name;
 	private final boolean buildHtml;
+	private final boolean excludeFromIndex;
 
 	/**
 	 * Creates
@@ -59,7 +60,7 @@ public class InfoType implements IInfoType {
 	 */
 	public InfoType(final IConfigurationElement configurationElement, final String contributor,
 			final String name, final String type, final String createFactoryClass,
-			final String imageFilePath, final boolean buildHtml) {
+			final String imageFilePath, final boolean buildHtml, final boolean excludeFromIndex) {
 		this.configurationElement = configurationElement;
 		this.contributor = contributor;
 		this.name = name;
@@ -67,6 +68,7 @@ public class InfoType implements IInfoType {
 		this.createFactoryClass = createFactoryClass;
 		this.imageFilePath = imageFilePath;
 		this.buildHtml = buildHtml;
+		this.excludeFromIndex = excludeFromIndex;
 
 	}
 
@@ -137,6 +139,10 @@ public class InfoType implements IInfoType {
 	 */
 	public boolean isBuildHtml() {
 		return this.buildHtml;
+	}
+
+	public boolean isExcludeFromIndex() {
+		return this.excludeFromIndex;
 	}
 
 }

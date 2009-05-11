@@ -39,6 +39,7 @@ import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.QueryScorer;
 import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
+import org.apache.lucene.store.LockObtainFailedException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -497,5 +498,26 @@ public class LuceneSearchService {
 			// do nothing
 		}
 		return newSearchResult;
+	}
+
+	public void clean(final IProject project, final IProgressMonitor monitor) {
+		relaseIndexSearcher(project);
+		try {
+			IndexWriter writer = new IndexWriter(getSearchService().getIndexDirectory(project),
+					getSearchService().getAnalyser(), true);
+			writer.optimize();
+			writer.flush();
+			writer.close();
+		} catch (CorruptIndexException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LockObtainFailedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// getSearchService().clear(project, monitor);
 	}
 }

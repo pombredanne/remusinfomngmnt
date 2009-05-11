@@ -95,6 +95,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 				document.getType());
 		AbstractInformationRepresentation informationRepresentation = infoTypeByType
 				.getInformationRepresentation();
+		informationRepresentation.setValue(document);
 		Document returnValue = new Document();
 
 		Field idField = new Field(LuceneSearchService.SEARCHINDEX_ITEM_ID, document.getId(),
@@ -313,6 +314,11 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 	public IProject[] getProjectsToSearch(final org.remus.infomngmnt.search.Search search) {
 		// scope comes later.
 		return ResourceUtil.getRelevantProjects();
+	}
+
+	public void clear(final IProject project, final IProgressMonitor monitor) {
+		File file = Activator.getDefault().getStateLocation().append(project.getName()).toFile();
+		file.delete();
 	}
 
 }

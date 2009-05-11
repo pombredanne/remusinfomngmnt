@@ -9,6 +9,21 @@
             icon="icons/delicious.gif"
             id="org.remus.infomngmnt.link.delicious"
             name="Delicious">
+         <changeDefinition
+               id="org.remus.infomngmnt.link.delicious.linkChange"
+               informationType="LINK">
+            <changeObjectPath
+                  path="@label"></changeObjectPath>
+            <changeObjectPath
+                  path="@keywords">
+            </changeObjectPath>
+            <changeObjectPath
+                  path="@description">
+            </changeObjectPath>
+            <changeObjectPath
+                  path="@stringValue">
+            </changeObjectPath>
+         </changeDefinition>
       </repository-connector>
    </extension>
    <extension
@@ -23,7 +38,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.link.preferencePage"
+            category="org.remus.infomngmnt.ui.repositories"
             class="org.remus.infomngmnt.link.delicious.DeliciousPreferencePage"
             id="org.remus.infomngmnt.link.delicious.preferencePage"
             name="Del.icio.us">

@@ -17,6 +17,8 @@ public class FavoriteSearchActivator extends AbstractUIPlugin {
 	// The shared instance
 	private static FavoriteSearchActivator plugin;
 
+	public static final String TYPE_ID = "FAVSEARCH"; //$NON-NLS-1$
+
 	/**
 	 * The constructor
 	 */

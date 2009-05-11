@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            buildHtml="false"
+            creationFactory="org.remus.infomngmnt.favoritesearch.FavoriteSearchCreationFactory"
+            excludeFromIndex="true"
+            icon="icons/iconexperience/fav_search.png"
+            name="Favorite Search"
+            presentation="org.remus.infomngmnt.favoritesearch.SearchPresentation"
+            type="FAVSEARCH">
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.favoritesearch.ui.SearchResultPage"
+            icon="icons/iconexperience/text_find.png"
+            id="org.remus.infomngmnt.favoritesearch.editPage"
+            label="Latest Search-Results"
+            type="FAVSEARCH">
+      </editPage>
+   </extension>
+
+</plugin>

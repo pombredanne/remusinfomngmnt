@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -58,7 +59,7 @@ public class ChangeSetManager {
 
 	public ChangeSet createCheckOutChangeSet(final Category localContainer,
 			final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository,
-			final int mode) {
+			final int mode, final IProgressMonitor monitor) {
 
 		/*
 		 * At first we make sure that all elements are located within the same
@@ -135,7 +136,7 @@ public class ChangeSetManager {
 				createCategory.setId(findId(createCategory, createChangeSetItem));
 				createChangeSetItem.setRemoteOriginalObject(copiedItem);
 				createChangeSetItem.setRemoteConvertedContainer(createCategory);
-				RemoteObject[] children = repositoryImplementation.getChildren(null, copiedItem,
+				RemoteObject[] children = repositoryImplementation.getChildren(monitor, copiedItem,
 						false);
 				for (RemoteObject remoteObject2 : children) {
 					fillRemoteContainer(createChangeSetItem, remoteObject2, repository,

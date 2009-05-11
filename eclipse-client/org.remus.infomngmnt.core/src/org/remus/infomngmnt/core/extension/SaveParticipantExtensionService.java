@@ -29,16 +29,19 @@ import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
  * @noinstantiate This class is not intended to be instantiated by clients.
  * @since 1.0
  */
-public class SaveParticipantExtensionService extends PluginRegistryDynamic implements ISaveParticipantExtensionService {
-	
+public class SaveParticipantExtensionService extends PluginRegistryDynamic implements
+		ISaveParticipantExtensionService {
+
 	private Collection<ISaveParticipant> items;
 
 	public SaveParticipantExtensionService() {
 		super(EXTENSION_POINT);
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.remus.infomngmnt.core.extension.PluginRegistryDynamic#init()
 	 */
 	@Override
@@ -46,32 +49,54 @@ public class SaveParticipantExtensionService extends PluginRegistryDynamic imple
 		if (this.items == null) {
 			this.items = new ArrayList<ISaveParticipant>();
 		}
-		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
-		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+				EXTENSION_POINT);
+		final IConfigurationElement[] configurationElements = extensionPoint
+				.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
 			try {
-				this.items.add((ISaveParticipant) configurationElement.createExecutableExtension(CLASS_ATT));
+				this.items.add((ISaveParticipant) configurationElement
+						.createExecutableExtension(CLASS_ATT));
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.services.ISaveParticipantExtensionService#fireEvent(int, org.remus.infomngmnt.InformationUnit)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.services.ISaveParticipantExtensionService#fireEvent
+	 * (int, org.remus.infomngmnt.InformationUnit)
 	 */
-	public void fireEvent(final int eventId, final InformationUnit unit) {
+	public void fireEvent(final int eventId, final Object oldValue, final Object newValue) {
 		for (ISaveParticipant element : this.items) {
-			element.handleEvent(eventId, unit);
+			switch (eventId) {
+			case CREATED:
+				if (newValue instanceof InformationUnit) {
+					element.handleCreated((InformationUnit) newValue);
+				}
+				break;
+			case SAVED:
+				if (newValue instanceof InformationUnit && oldValue instanceof InformationUnit) {
+					element.handleChanged((InformationUnit) oldValue, (InformationUnit) newValue);
+				}
+				break;
+			case DELETED:
+				if (oldValue instanceof InformationUnit) {
+					element.handleDeleted(oldValue.toString());
+				}
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
 	public Collection<ISaveParticipant> getAllItems() {
 		return this.items;
 	}
-	
-	
+
 }

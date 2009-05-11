@@ -1770,22 +1770,22 @@ public interface InfomngmntPackage extends EPackage {
 	int TAG = 27;
 
 	/**
-	 * The feature id for the '<em><b>Info Units</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TAG__INFO_UNITS = ADAPTER_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TAG__NAME = ADAPTER_FEATURE_COUNT + 1;
+	int TAG__NAME = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Info Units</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TAG__INFO_UNITS = ADAPTER_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Tag</em>' class.
@@ -3127,15 +3127,15 @@ public interface InfomngmntPackage extends EPackage {
 	EClass getTag();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.Tag#getInfoUnits <em>Info Units</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.remus.infomngmnt.Tag#getInfoUnits <em>Info Units</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Info Units</em>'.
+	 * @return the meta object for the attribute list '<em>Info Units</em>'.
 	 * @see org.remus.infomngmnt.Tag#getInfoUnits()
 	 * @see #getTag()
 	 * @generated
 	 */
-	EReference getTag_InfoUnits();
+	EAttribute getTag_InfoUnits();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Tag#getName <em>Name</em>}'.
@@ -4280,12 +4280,12 @@ public interface InfomngmntPackage extends EPackage {
 		EClass TAG = eINSTANCE.getTag();
 
 		/**
-		 * The meta object literal for the '<em><b>Info Units</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Info Units</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TAG__INFO_UNITS = eINSTANCE.getTag_InfoUnits();
+		EAttribute TAG__INFO_UNITS = eINSTANCE.getTag_InfoUnits();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

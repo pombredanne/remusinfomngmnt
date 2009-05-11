@@ -24,8 +24,8 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.remus.infomngmnt.Tag#getInfoUnits <em>Info Units</em>}</li>
  *   <li>{@link org.remus.infomngmnt.Tag#getName <em>Name</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.Tag#getInfoUnits <em>Info Units</em>}</li>
  * </ul>
  * </p>
  *
@@ -35,20 +35,20 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Tag extends Adapter {
 	/**
-	 * Returns the value of the '<em><b>Info Units</b></em>' reference list.
-	 * The list contents are of type {@link org.remus.infomngmnt.InformationUnitListItem}.
+	 * Returns the value of the '<em><b>Info Units</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Info Units</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Info Units</em>' reference list.
+	 * @return the value of the '<em>Info Units</em>' attribute list.
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getTag_InfoUnits()
-	 * @model ordered="false"
+	 * @model
 	 * @generated
 	 */
-	EList<InformationUnitListItem> getInfoUnits();
+	EList<String> getInfoUnits();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

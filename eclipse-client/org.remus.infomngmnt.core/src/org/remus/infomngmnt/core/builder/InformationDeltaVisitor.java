@@ -13,12 +13,9 @@
 package org.remus.infomngmnt.core.builder;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -44,6 +41,7 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
+import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -52,12 +50,18 @@ import org.remus.infomngmnt.resources.util.ResourceUtil;
  */
 public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
-	public InformationDeltaVisitor() {
-		this.service = InfomngmntEditPlugin.getPlugin().getService(IReferencedUnitStore.class);
-	}
+	private final ISaveParticipantExtensionService saveParticipantService;
 
 	private IProgressMonitor monitor;
-	private final IReferencedUnitStore service;
+
+	private final IReferencedUnitStore referenceService;
+
+	public InformationDeltaVisitor() {
+		this.referenceService = InfomngmntEditPlugin.getPlugin().getService(
+				IReferencedUnitStore.class);
+		this.saveParticipantService = InfomngmntEditPlugin.getPlugin().getService(
+				ISaveParticipantExtensionService.class);
+	}
 
 	public boolean visit(final IResourceDelta delta) throws CoreException {
 		visitRecursively(delta);
@@ -88,8 +92,16 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 				}
 				switch (resourceDelta.getKind()) {
-				case IResourceDelta.REPLACED:
 				case IResourceDelta.ADDED:
+					if (resourceDelta.getResource().exists() && objectFromFile != null
+							&& objectFromFile.getId() != null) {
+						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta
+								.getResource());
+						this.saveParticipantService.fireEvent(
+								ISaveParticipantExtensionService.CREATED, null, objectFromFile);
+					}
+					break;
+				case IResourceDelta.REPLACED:
 				case IResourceDelta.CHANGED:
 
 					if (resourceDelta.getResource().exists() && objectFromFile != null
@@ -97,13 +109,33 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta
 								.getResource());
+						try {
+							File previousVersion = ResourceUtil.getPreviousVersion(
+									(IFile) resourceDelta.getResource(), this.monitor);
+							if (previousVersion != null) {
+								InformationUnit objectFromUri = EditingUtil.getInstance()
+										.getObjectFromUri(
+												new Path(previousVersion.getAbsolutePath()),
+												InfomngmntPackage.Literals.INFORMATION_UNIT, false,
+												null, false);
+								this.saveParticipantService.fireEvent(
+										ISaveParticipantExtensionService.SAVED, objectFromUri,
+										objectFromFile);
+								objectFromUri.eResource().unload();
+							}
+						} catch (CoreException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
 					}
-
 					break;
 				case IResourceDelta.REMOVED:
-					this.service.delete(resourceDelta.getResource().getFullPath()
-							.removeFileExtension().lastSegment());
+					String lastSegment = resourceDelta.getResource().getFullPath()
+							.removeFileExtension().lastSegment();
+					this.referenceService.delete(lastSegment);
+					this.saveParticipantService.fireEvent(ISaveParticipantExtensionService.DELETED,
+							lastSegment, null);
 					break;
 				}
 			}
@@ -116,49 +148,12 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 		try {
 			resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
-			File createTempFile = null;
+
 			AbstractInformationRepresentation informationRepresentation = infoTypeByType
 					.getInformationRepresentation();
 			informationRepresentation.setValue(objectFromFile);
-			IFileState[] history = resource.getHistory(this.monitor);
-			if (history.length > 0) {
-				InputStream contents;
-				FileOutputStream fos = null;
-				contents = history[0].getContents();
-
-				try {
-					createTempFile = File.createTempFile(objectFromFile.getId(),
-							ResourceUtil.FILE_EXTENSION);
-					fos = new FileOutputStream(createTempFile);
-					byte buf[] = new byte[1024];
-					int len;
-					while ((len = contents.read(buf)) > 0) {
-						fos.write(buf, 0, len);
-					}
-
-				} catch (Exception e) {
-					informationRepresentation.setPreviousVersion(null);
-				} finally {
-					if (fos != null) {
-						try {
-							fos.close();
-						} catch (IOException e) {
-							// do nothing. we've done our best.
-						}
-					}
-					if (contents != null) {
-						try {
-							contents.close();
-						} catch (IOException e) {
-							// do nothing. we've done our best.
-						}
-					}
-				}
-				informationRepresentation.setPreviousVersion(createTempFile);
-			} else {
-				informationRepresentation.setPreviousVersion(null);
-			}
-
+			File previousVersionFile = ResourceUtil.getPreviousVersion(resource, this.monitor);
+			informationRepresentation.setPreviousVersion(previousVersionFile);
 			if (informationRepresentation.createFolderOnBuild()) {
 				String folderName = resource.getProjectRelativePath().removeFileExtension()
 						.lastSegment();
@@ -183,8 +178,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				}
 
 				informationRepresentation.handlePostBuild(writeContent, this.monitor);
-				if (createTempFile != null) {
-					createTempFile.delete();
+				if (previousVersionFile != null) {
+					previousVersionFile.delete();
 				}
 			}
 		} catch (Exception e) {
@@ -213,7 +208,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			unitListItem.setType(objectFromFile.getType());
 			category.getInformationUnit().add(unitListItem);
 		}
-		this.service.update(objectFromFile);
+		this.referenceService.update(objectFromFile);
 	}
 
 	public void setMonitor(final IProgressMonitor monitor) {

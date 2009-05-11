@@ -42,7 +42,6 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
@@ -160,7 +159,6 @@ public class DeleteInformationUnitCommand implements Command {
 		this.binaries = new HashMap<IFile, IFile>();
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
 
-			this.service.fireEvent(ISaveParticipant.BEFORE_DELETE, infoUnit2PathMapper.getUnit());
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 					infoUnit2PathMapper.getFullPath());
 			try {
@@ -169,7 +167,6 @@ public class DeleteInformationUnitCommand implements Command {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.service.fireEvent(ISaveParticipant.DELETED, infoUnit2PathMapper.getUnit());
 		}
 		postExecute();
 	}
@@ -217,16 +214,15 @@ public class DeleteInformationUnitCommand implements Command {
 							if (eStructuralFeature == InfomngmntPackage.Literals.LINK__TARGET) {
 								EObject eContainer = referencingEObject.eContainer();
 								ItemProvider itemProvider = new ItemProvider(
-										(Collection<?>) eContainer.eGet(
-												InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS));
+										(Collection<?>) eContainer
+												.eGet(InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS));
 								itemProvider.getChildren().remove(referencingEObject);
 								Command command = SetCommand.create(this.referenceDomain,
 										eContainer,
 										InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS,
 										itemProvider.getChildren());
 								this.referenceDomain.getCommandStack().execute(command);
-								EditingUtil.getInstance().saveObjectToResource(
-										eContainer);
+								EditingUtil.getInstance().saveObjectToResource(eContainer);
 
 							} else {
 								this.referenceDomain.getCommandStack().execute(
@@ -344,7 +340,6 @@ public class DeleteInformationUnitCommand implements Command {
 		this.delegateCommand.redo();
 		Collection<InfoUnit2PathMapper> values = this.map.values();
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
-			this.service.fireEvent(ISaveParticipant.BEFORE_DELETE, infoUnit2PathMapper.getUnit());
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 					infoUnit2PathMapper.getFullPath());
 			try {
@@ -353,7 +348,6 @@ public class DeleteInformationUnitCommand implements Command {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.service.fireEvent(ISaveParticipant.DELETED, infoUnit2PathMapper.getUnit());
 		}
 		postExecute();
 
@@ -372,7 +366,6 @@ public class DeleteInformationUnitCommand implements Command {
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 					infoUnit2PathMapper.getFullPath());
 			EditingUtil.getInstance().saveObjectToResource(file, infoUnit2PathMapper.getUnit());
-			this.service.fireEvent(ISaveParticipant.CREATED, infoUnit2PathMapper.getUnit());
 		}
 		postUndo();
 	}

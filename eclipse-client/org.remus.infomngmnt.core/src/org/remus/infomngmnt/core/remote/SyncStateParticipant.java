@@ -13,9 +13,6 @@
 package org.remus.infomngmnt.core.remote;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.SynchronizationMetadata;
-import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 
 /**
@@ -24,16 +21,34 @@ import org.remus.infomngmnt.core.extension.ISaveParticipant;
 public class SyncStateParticipant implements ISaveParticipant {
 
 	public void handleEvent(final int eventId, final InformationUnit unit) {
-		if (eventId == SAVED) {
-			Object adapter = unit.getAdapter(InformationUnitListItem.class);
-			if (adapter != null && ((InformationUnitListItem) adapter).getSynchronizationMetaData() != null) {
-				SynchronizationMetadata synchronizationMetadata = ((InformationUnitListItem) adapter).getSynchronizationMetaData();
-				if (synchronizationMetadata.getSyncState() != SynchronizationState.NOT_ADDED) {
-					synchronizationMetadata.setSyncState(SynchronizationState.LOCAL_EDITED);
-				}
-			}
-		}
-		
+		// if (eventId == SAVED) {
+		// Object adapter = unit.getAdapter(InformationUnitListItem.class);
+		// if (adapter != null && ((InformationUnitListItem)
+		// adapter).getSynchronizationMetaData() != null) {
+		// SynchronizationMetadata synchronizationMetadata =
+		// ((InformationUnitListItem) adapter).getSynchronizationMetaData();
+		// if (synchronizationMetadata.getSyncState() !=
+		// SynchronizationState.NOT_ADDED) {
+		// synchronizationMetadata.setSyncState(SynchronizationState.LOCAL_EDITED);
+		// }
+		// }
+		// }
+
+	}
+
+	public void handleChanged(final InformationUnit oldValue, final InformationUnit newValue) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void handleCreated(final InformationUnit newValue) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void handleDeleted(final String informationUnitId) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

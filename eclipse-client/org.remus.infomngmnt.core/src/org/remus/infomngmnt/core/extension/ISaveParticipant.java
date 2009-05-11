@@ -18,13 +18,11 @@ import org.remus.infomngmnt.InformationUnit;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface ISaveParticipant {
-	
-	public static final int BEFORE_SAVE = 1;
-	public static final int SAVED = 2;
-	public static final int CREATED = 3;
-	public static final int BEFORE_DELETE = 4;
-	public static final int DELETED = 5;
-	
-	void handleEvent(int eventId, InformationUnit unit);
+
+	void handleCreated(InformationUnit newValue);
+
+	void handleChanged(InformationUnit oldValue, InformationUnit newValue);
+
+	void handleDeleted(String informationUnitId);
 
 }

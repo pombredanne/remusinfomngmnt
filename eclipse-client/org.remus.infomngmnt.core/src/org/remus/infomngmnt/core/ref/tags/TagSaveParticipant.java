@@ -38,57 +38,9 @@ public class TagSaveParticipant implements ISaveParticipant {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.ISaveParticipant#handleEvent(int, org.remus.infomngmnt.InformationUnit)
-	 */
-	public void handleEvent(final int eventId, final InformationUnit unit) {
-		if (unit.getKeywords() != null) {
-			switch (eventId) {
-			case SAVED:
-				handleSaved(unit);
-				break;
-			case BEFORE_DELETE:
-				String[] split = unit.getKeywords().split("\\W+");
-				List<Tag> tags2Delete = new ArrayList<Tag>();
-				for (String string : split) {
-					Tag tagByName = getTagByName(string);
-					tags2Delete.add(tagByName);
-				}
-				handleOldTags(tags2Delete, unit);
-				break;
-			case CREATED:
-				handleNewTags(Arrays.asList(unit.getKeywords().split("\\W+")), unit);
-			default:
-				break;
-			}
-		} else {
-			
-		}
-	}
-	
-	
-	private void handleSaved(final InformationUnit unit) {
-		List<String> split = new ArrayList<String>(Arrays.asList(unit.getKeywords().split("\\W+")));
-		List<String> splitCopy = new ArrayList<String>(split);
-		List<Tag> tagsByInfoUnit = getTagsByInfoUnit(unit);
-		List<Tag> tagsByInfoUnitCopy = new ArrayList<Tag>(tagsByInfoUnit);
-		for (Tag tag : tagsByInfoUnit) {
-			if (split.contains(tag.getName())) {
-				tagsByInfoUnitCopy.remove(tag);
-				splitCopy.remove(tag.getName());
-			}
-		}
-		handleNewTags(splitCopy, unit);
-		handleOldTags(tagsByInfoUnitCopy, unit);
+	private void handleOldTags(final List<Tag> tagsByInfoUnitCopy, final InformationUnit unit) {
 		for (Tag tag : tagsByInfoUnitCopy) {
-			handleEmptyTag(tag);
-		}
-	}
-	
-	private void handleOldTags(final List<Tag> tagsByInfoUnitCopy,
-			final InformationUnit unit) {
-		for (Tag tag : tagsByInfoUnitCopy) {
-			tag.getInfoUnits().remove(unit.getAdapter(InformationUnitListItem.class));
+			tag.getInfoUnits().remove(unit.getId());
 			handleEmptyTag(tag);
 		}
 	}
@@ -100,13 +52,16 @@ public class TagSaveParticipant implements ISaveParticipant {
 			if (tagByName == null) {
 				tagByName = InfomngmntFactory.eINSTANCE.createTag();
 				tagByName.setName(newTag);
-				ApplicationModelPool.getInstance().getModel().getAvailableTags().getTags().add(tagByName);
+				ApplicationModelPool.getInstance().getModel().getAvailableTags().getTags().add(
+						tagByName);
 			}
-			tagByName.getInfoUnits().add((InformationUnitListItem) unit.getAdapter(InformationUnitListItem.class));
+			tagByName.getInfoUnits().add(
+					((InformationUnitListItem) unit.getAdapter(InformationUnitListItem.class))
+							.getId());
 		}
-		
+
 	}
-	
+
 	void handleEmptyTag(final Tag tag) {
 		if (tag.getInfoUnits().size() == 0) {
 			AvailableTags eContainer = (AvailableTags) tag.eContainer();
@@ -118,8 +73,10 @@ public class TagSaveParticipant implements ISaveParticipant {
 
 	private List<Tag> getTagsByInfoUnit(final InformationUnit unit) {
 		List<Tag> returnValue = new ArrayList<Tag>();
-		InformationUnitListItem adapter = (InformationUnitListItem) unit.getAdapter(InformationUnitListItem.class);
-		EList<Tag> availableTags = ApplicationModelPool.getInstance().getModel().getAvailableTags().getTags();
+		InformationUnitListItem adapter = (InformationUnitListItem) unit
+				.getAdapter(InformationUnitListItem.class);
+		EList<Tag> availableTags = ApplicationModelPool.getInstance().getModel().getAvailableTags()
+				.getTags();
 		for (Tag tag : availableTags) {
 			if (tag.getInfoUnits().contains(adapter)) {
 				returnValue.add(tag);
@@ -127,9 +84,10 @@ public class TagSaveParticipant implements ISaveParticipant {
 		}
 		return returnValue;
 	}
-	
+
 	private Tag getTagByName(final String name) {
-		EList<Tag> tags = ApplicationModelPool.getInstance().getModel().getAvailableTags().getTags();
+		EList<Tag> tags = ApplicationModelPool.getInstance().getModel().getAvailableTags()
+				.getTags();
 		for (Tag tag : tags) {
 			if (tag.getName().equals(name)) {
 				return tag;
@@ -138,5 +96,46 @@ public class TagSaveParticipant implements ISaveParticipant {
 		return null;
 	}
 
+	public void handleChanged(final InformationUnit oldValue, final InformationUnit newValue) {
+		List<String> split = new ArrayList<String>(Arrays.asList(newValue.getKeywords().split(
+				"\\W+")));
+		List<String> splitCopy = new ArrayList<String>(split);
+		List<Tag> tagsByInfoUnit = getTagsByInfoUnit(newValue);
+		List<Tag> tagsByInfoUnitCopy = new ArrayList<Tag>(tagsByInfoUnit);
+		for (Tag tag : tagsByInfoUnit) {
+			if (split.contains(tag.getName())) {
+				tagsByInfoUnitCopy.remove(tag);
+				splitCopy.remove(tag.getName());
+			}
+		}
+		handleNewTags(splitCopy, newValue);
+		handleOldTags(tagsByInfoUnitCopy, newValue);
+		for (Tag tag : tagsByInfoUnitCopy) {
+			handleEmptyTag(tag);
+		}
+
+	}
+
+	public void handleCreated(final InformationUnit newValue) {
+		if (newValue.getKeywords() != null) {
+			handleNewTags(Arrays.asList(newValue.getKeywords().split("\\W+")), newValue);
+		}
+
+	}
+
+	public void handleDeleted(final String informationUnitId) {
+		EList<Tag> tags = ApplicationModelPool.getInstance().getModel().getAvailableTags()
+				.getTags();
+		for (Tag tag : tags) {
+			EList<String> infoUnits = tag.getInfoUnits();
+			for (String string2 : infoUnits) {
+				if (string2.equals(informationUnitId)) {
+					tag.getInfoUnits().remove(string2);
+					handleEmptyTag(tag);
+				}
+			}
+
+		}
+	}
 
 }

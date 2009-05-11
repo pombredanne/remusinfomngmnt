@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectTypeRelationCondition;
@@ -72,15 +73,12 @@ public class AvailableInformationCache {
 	}
 
 	void addItem(final InformationUnitListItem item) {
-		if (this.cachedItems != null) {
-			this.cachedItems.put(item.getId(), item);
-		}
+		getAllItems(new NullProgressMonitor()).put(item.getId(), item);
+
 	}
 
 	void remove(final String id) {
-		if (this.cachedItems != null) {
-			this.cachedItems.remove(id);
-		}
+		getAllItems(new NullProgressMonitor()).remove(id);
 	}
 
 }

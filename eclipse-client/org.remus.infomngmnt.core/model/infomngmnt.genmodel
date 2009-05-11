@@ -171,8 +171,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizableObjectToSynchronizationActionMap/value"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//Tag">
-      <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Tag/infoUnits"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Tag/name"/>
+      <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Tag/infoUnits"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//AvailableTags">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//AvailableTags/tags"/>

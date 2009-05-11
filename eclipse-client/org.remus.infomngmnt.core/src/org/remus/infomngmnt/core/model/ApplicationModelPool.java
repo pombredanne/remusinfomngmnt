@@ -66,6 +66,14 @@ public class ApplicationModelPool {
 					&& msg.getNewValue() instanceof InformationUnitListItem) {
 				ApplicationModelPool.this.cache
 						.addItem((InformationUnitListItem) msg.getNewValue());
+			} else if (msg.getEventType() == Notification.ADD
+					&& msg.getNewValue() instanceof Category) {
+				InformationUnitListItem[] allInfoUnitItems = CategoryUtil
+						.getAllInfoUnitItems((Category) msg.getNewValue());
+				for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
+					ApplicationModelPool.this.cache.addItem(informationUnitListItem);
+				}
+
 			}
 			EditingUtil.getInstance().saveObjectToResource(this.category);
 			super.notifyChanged(msg);

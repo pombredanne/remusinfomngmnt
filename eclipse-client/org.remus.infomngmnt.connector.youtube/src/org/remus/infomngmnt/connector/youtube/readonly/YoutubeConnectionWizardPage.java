@@ -11,15 +11,20 @@
  *******************************************************************************/
 package org.remus.infomngmnt.connector.youtube.readonly;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -36,6 +41,9 @@ import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.common.core.util.StringUtils;
+import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
+import org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.security.CredentialProvider;
 
@@ -113,19 +121,25 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 		final Button validateCredentialsButton = new Button(credentialsGroup, SWT.NONE);
 		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				// try {
-				// getContainer().run(
-				// true,
-				// true,
-				// new ValidateConnectionJob(
-				// YoutubeConnectionWizardPage.this.repositoryDefinition));
-				// setErrorMessage(null);
-				// } catch (InvocationTargetException e) {
-				// setErrorMessage("Error validating your settings");
-				// } catch (InterruptedException e) {
-				// // do nothing
-				// }
-
+				try {
+					getContainer().run(true, false, new IRunnableWithProgress() {
+						public void run(final IProgressMonitor monitor)
+								throws InvocationTargetException, InterruptedException {
+							IStatus validate = YoutubeConnectionWizardPage.this.repositoryDefinition
+									.validate();
+							if (!validate.isOK()) {
+								throw new InvocationTargetException(validate.getException());
+							}
+							setErrorMessage(null);
+						}
+					});
+				} catch (InvocationTargetException e) {
+					setErrorMessage(StringUtils.join("Error validating repository (", e.getCause()
+							.getMessage(), ")"));
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
@@ -137,6 +151,7 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 
 		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition
 				.getCredentialProvider().getUserName(), "youtube-readonly"));
+		this.userNameText.setFocus();
 	}
 
 	public void setRemoteObject(final RemoteRepository repository) {
@@ -145,7 +160,8 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 	}
 
 	public void bindValuesToUi() {
-		this.apiUrlText.setText(YoutubeConnector.YOUTUBE_GDATA_SERVER);
+		this.apiUrlText.setText(YoutubeActivator.getDefault().getPreferenceStore().getString(
+				PreferenceInitializer.GDATA_SERVER_URL));
 		DataBindingContext ctx = new DataBindingContext();
 		EMFDataBindingContext ectx = new EMFDataBindingContext();
 		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
@@ -162,10 +178,8 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 			public void handleValueChange(final ValueChangeEvent event) {
 				String string = event.getObservableValue().getValue().toString();
 				YoutubeConnectionWizardPage.this.repository
-						.setUrl(YoutubeConnector.USER_FEED_PREFIX
-								+ YoutubeConnectionWizardPage.this.repositoryDefinition
-										.getCredentialProvider().getUserName()
-								+ YoutubeConnector.PLAYLISTS_FEED_SUFFIX);
+						.setUrl(YoutubeConnectionWizardPage.this.repositoryDefinition
+								.getRepositoryUrl());
 			}
 		});
 

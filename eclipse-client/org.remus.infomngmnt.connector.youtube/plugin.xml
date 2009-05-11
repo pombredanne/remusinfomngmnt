@@ -20,5 +20,20 @@
             repository-id="org.remus.infomngmnt.connector.youtube">
       </respository>
    </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.ui.repositories"
+            class="org.remus.infomngmnt.connector.youtube.preferences.YoutubePreferencePage"
+            id="org.remus.infomngmnt.connector.youtube.prefs"
+            name="Youtube">
+      </page>
+   </extension>
 
 </plugin>

@@ -30,7 +30,7 @@ public class NewReadonlyYoutubeRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewReadonlyYoutubeRepositoryWizard() {
-		// TODO Auto-generated constructor stub
+		setWindowTitle("Youtube Repository");
 	}
 
 	@Override

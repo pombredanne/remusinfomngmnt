@@ -29,6 +29,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -66,6 +67,7 @@ import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.editor.SearchResultEditor;
 import org.remus.infomngmnt.search.impl.SearchImpl;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
+import org.remus.infomngmnt.search.service.IFavoriteSearchHandler;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
 
 /**
@@ -395,6 +397,15 @@ public class SearchHistoryView extends AbstractScrolledTitledView {
 				public void linkActivated(final HyperlinkEvent e) {
 					Object href = e.getHref();
 					if (HREF_WATCH_SEARCH.equals(href)) {
+
+						IFavoriteSearchHandler service = SearchPlugin.getPlugin()
+								.getFavoriteTrackerService();
+						if (service == null) {
+							MessageDialog.openWarning(getSite().getShell(), "No handler found",
+									"No handler for creating watched searches found.");
+						} else {
+							service.addToFavorites(SearchHistoryDetails.this.model);
+						}
 
 					}
 					if (HREF_SEARCH_AGAIN.equals(href)) {

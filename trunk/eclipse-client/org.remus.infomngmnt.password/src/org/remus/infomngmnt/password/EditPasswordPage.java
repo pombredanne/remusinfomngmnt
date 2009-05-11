@@ -68,6 +68,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		doCreateGeneralSection(body, toolkit);
 		doCreateAdditionalSection(body, toolkit);
 		doCreateSemanticSection(body, toolkit);
+		bindValuesToUi();
 	}
 
 	private void doCreateAdditionalSection(final Composite body, final FormToolkit toolkit) {
@@ -128,12 +129,6 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		this.textUsername = toolkit.createText(composite, null, SWT.NONE);
 		this.textUsername.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
-				this.textUsername, this);
-		createTextBindingWidget.bindModel(InformationUtil.getChildByType(getModelObject(),
-				PasswordPlugin.NODE_USERNAME),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-
 		// Password
 		toolkit.createLabel(composite, "Password:", SWT.NONE);
 
@@ -144,17 +139,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 
 		this.textPassword = toolkit.createText(compositePassword, null, SWT.NONE);
 
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.textPassword,
-				this);
-		createTextBindingWidget.bindModel(getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-
 		this.textPasswordDecrypted = toolkit.createText(compositePassword, null, SWT.PASSWORD);
-
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
-				this.textPasswordDecrypted, this);
-		createTextBindingWidget.bindModel(getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
 		layout.topControl = this.textPasswordDecrypted;
 
@@ -191,5 +176,24 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 				}
 			}
 		});
+	}
+
+	@Override
+	protected void bindValuesToUi() {
+		super.bindValuesToUi();
+		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+				this.textUsername, this);
+		createTextBindingWidget.bindModel(InformationUtil.getChildByType(getModelObject(),
+				PasswordPlugin.NODE_USERNAME),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.textPassword,
+				this);
+		createTextBindingWidget.bindModel(getModelObject(),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+				this.textPasswordDecrypted, this);
+		createTextBindingWidget.bindModel(getModelObject(),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 	}
 }

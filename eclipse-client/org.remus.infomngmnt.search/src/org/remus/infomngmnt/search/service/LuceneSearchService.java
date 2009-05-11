@@ -309,7 +309,7 @@ public class LuceneSearchService {
 	}
 
 	protected ILuceneCustomizer getSearchService() {
-		ILuceneCustomizer service = SearchPlugin.getPlugin().getService();
+		ILuceneCustomizer service = SearchPlugin.getPlugin().getLuceneCustomizationService();
 		if (service == null) {
 			throw new IllegalStateException("No service implementation for local search found...");
 		}

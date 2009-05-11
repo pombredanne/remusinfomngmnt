@@ -66,6 +66,7 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 	private Text tx_Longitude;
 	private Button bt_GetCoords;
 	private Group group_Geo;
+	private Button bt_ClearCoords;
 
 	public EditContactAddressDialog(FormToolkit toolkit, Shell parentShell, InformationUnit contact, EditGeneralPage editGeneralPage) {
 		super(parentShell);
@@ -78,7 +79,7 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(final Composite parent) {
 		this.bt_Ok = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		this.bt_Ok.setEnabled(true);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+//		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 	@Override
 	public boolean close() {
@@ -175,6 +176,8 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		lb_Longitude.setText("Longitude:");
 		tx_Longitude = toolkit.createText(group_Geo, null, SWT.BORDER);
 		tx_Longitude.setLayoutData(gd_text_fill_horizontal);
+		
+		bt_ClearCoords = toolkit.createButton(group_Geo, "Reset Coords", SWT.NONE);
 	}
 
 	private void createListener() {
@@ -186,7 +189,6 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		});
 		bt_GetCoords.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e) {
-				//GMapsApi gma = new GMapsApi();
 				try {
 					String curKey = GMapsApi.getApiKey();
 					if (curKey.length() < 1) {
@@ -202,6 +204,12 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 				} catch (Exception e2) {
 					showGMapsApiKeyErrorMessageBox();
 				}
+			}
+		});
+		bt_ClearCoords.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e) {
+				tx_Longitude.setText("");
+				tx_Latitude.setText("");
 			}
 		});
 		tx_Street.addModifyListener(new ModifyListener(){
@@ -248,7 +256,8 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		tx_Latitude.setEnabled(false);
 		tx_Longitude.setEditable(false);
 		tx_Longitude.setEnabled(false);
-		bt_GetCoords.setEnabled(b);		
+		bt_GetCoords.setEnabled(b);
+		bt_ClearCoords.setEnabled(b);
 	}
 	private void setContactProportiesFromActivatorToGenerationDialog() {
 		try {

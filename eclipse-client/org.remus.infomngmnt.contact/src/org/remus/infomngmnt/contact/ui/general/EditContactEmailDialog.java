@@ -71,11 +71,15 @@ public class EditContactEmailDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
 		this.bt_Ok = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		if (InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MAIL_DEF).getStringValue().length() > 1) {
-			bt_Ok.setEnabled(true);
+		try {
+			if (InformationUtil.getChildByType(informationUnit, ContactActivator.NODE_MAIL_DEF).getStringValue().length() > 1) {
+				bt_Ok.setEnabled(true);
+			}
+			else this.bt_Ok.setEnabled(false);			
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		else this.bt_Ok.setEnabled(false);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		//createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 	@Override
 	public boolean close() {

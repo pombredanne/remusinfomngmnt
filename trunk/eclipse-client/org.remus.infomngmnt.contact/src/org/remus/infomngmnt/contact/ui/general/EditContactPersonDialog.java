@@ -74,7 +74,7 @@ public class EditContactPersonDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(final Composite parent) {
 		this.bt_Ok = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		this.bt_Ok.setEnabled(false);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		//createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 	@Override
 	public boolean close() {

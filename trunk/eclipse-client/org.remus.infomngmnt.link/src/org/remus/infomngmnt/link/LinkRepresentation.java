@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -106,13 +107,16 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 		try {
 			templateIs = FileLocator.openStream(Platform.getBundle(LinkActivator.PLUGIN_ID),
 					new Path("template/htmlserialization.flt"), false);
-			FreemarkerRenderer.getInstance().process(
-					LinkActivator.PLUGIN_ID,
-					templateIs,
-					contentsIs,
-					returnValue,
-					Collections.<String, String> singletonMap("imageHref", URI.createFileURI(
-							this.imageHref).toString()));
+
+			Map<String, String> map;
+			if (this.imageHref != null) {
+				map = Collections.<String, String> singletonMap("imageHref", URI.createFileURI(
+						this.imageHref).toString());
+			} else {
+				map = Collections.<String, String> emptyMap();
+			}
+			FreemarkerRenderer.getInstance().process(LinkActivator.PLUGIN_ID, templateIs,
+					contentsIs, returnValue, map);
 		} catch (IOException e) {
 			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
 		} finally {
@@ -120,5 +124,4 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 		}
 		return new ByteArrayInputStream(returnValue.toByteArray());
 	}
-
 }

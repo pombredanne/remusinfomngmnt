@@ -52,13 +52,6 @@ public class EditLinkPage extends AbstractInformationFormPage {
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(composite, SWT.NONE);
 
-		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables
-				.observeText(this.text, SWT.Modify));
-		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(),
-				this.editingDomain, getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		this.dataBindingContext.bindValue(swtLink, emfLink, null, null);
-
 		toolkit.createHyperlink(composite, "Open Url in System-Browser", SWT.NONE);
 		new Label(composite, SWT.NONE);
 
@@ -71,17 +64,20 @@ public class EditLinkPage extends AbstractInformationFormPage {
 				composite, SWT.NONE);
 		refreshSearchableContentImageHyperlink.setText("Refresh searchable content");
 
-		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("New Section");
-
-		final Composite composite_1 = toolkit.createComposite(section_1, SWT.NONE);
-		toolkit.paintBordersFor(composite_1);
-		section_1.setClient(composite_1);
-
 		doCreateSemanticSection(body, toolkit);
+		bindValuesToUi();
 
+	}
+
+	@Override
+	protected void bindValuesToUi() {
+		super.bindValuesToUi();
+		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables
+				.observeText(this.text, SWT.Modify));
+		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(),
+				this.editingDomain, getModelObject(),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		this.dataBindingContext.bindValue(swtLink, emfLink, null, null);
 	}
 
 }

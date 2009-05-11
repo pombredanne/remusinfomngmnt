@@ -41,6 +41,8 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.core.util.CollectionFilter;
+import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -180,6 +182,11 @@ public class CategoryUtil {
 	}
 
 	public static Category[] findCatetegories(final String startString, final boolean caseSensitive) {
+		return findCatetegories(startString, caseSensitive, null);
+	}
+
+	public static Category[] findCatetegories(final String startString,
+			final boolean caseSensitive, final CollectionFilter<Category> filter) {
 		ApplicationRoot model = ApplicationModelPool.getInstance().getModel();
 		EObjectCondition condition = new EObjectTypeRelationCondition(
 				InfomngmntPackage.Literals.CATEGORY);
@@ -210,6 +217,9 @@ public class CategoryUtil {
 				return categoryToString(arg0).compareToIgnoreCase(categoryToString(arg1));
 			}
 		});
+		if (filter != null) {
+			returnValue = CollectionUtils.filter(returnValue, filter);
+		}
 		return returnValue.toArray(new Category[returnValue.size()]);
 	}
 

@@ -31,6 +31,7 @@ import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
@@ -41,12 +42,10 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.core.model.StatusCreator;
-import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
@@ -82,6 +81,8 @@ public class ChangeSetExecutor {
 								remoteConvertedContainer,
 								InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 						for (InformationUnitListItem informationUnitListItem : allChildren) {
+							monitor.beginTask(NLS.bind("Checkout of element {0}",
+									informationUnitListItem.getLabel()), allChildren.size());
 							try {
 								InformationUnit informationUnit2 = changeSetItem
 										.getRemoteFullObjectMap().get(informationUnitListItem);
@@ -107,15 +108,13 @@ public class ChangeSetExecutor {
 								}
 								tempEditingDomain.getCommandStack().execute(command);
 								tempEditingDomain.getCommandStack().flush();
-								InfomngmntEditPlugin.getPlugin().getService(
-										ISaveParticipantExtensionService.class).fireEvent(
-										ISaveParticipant.CREATED, informationUnit2);
 							} catch (Exception e) {
 								InfomngmntEditPlugin.getPlugin().getLog().log(
 										StatusCreator.newStatus(
 												"Error checking out online-element", e));
 							}
 						}
+						monitor.worked(1);
 					}
 				}
 			}

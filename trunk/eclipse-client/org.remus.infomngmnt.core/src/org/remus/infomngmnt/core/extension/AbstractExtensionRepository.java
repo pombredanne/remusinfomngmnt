@@ -12,6 +12,10 @@
 
 package org.remus.infomngmnt.core.extension;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -22,6 +26,7 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.remote.AbstractRepository;
+import org.remus.infomngmnt.core.remote.IChangeSetDefinition;
 import org.remus.infomngmnt.core.remote.ICredentialProvider;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
@@ -37,6 +42,17 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 	private String contributor;
 
 	private String imagePath;
+
+	private Map<String, IChangeSetDefinition> changeSetDefinition;
+
+	private static class ChangeSetDefinitionImpl implements IChangeSetDefinition {
+
+		List<String> objectPaths;
+
+		public List<String> getRelevantObjectPaths() {
+			return this.objectPaths;
+		}
+	}
 
 	@Override
 	public Image getImage() {
@@ -87,4 +103,28 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 		this.imagePath = imagePath;
 	}
 
+	public IChangeSetDefinition getChangeSetDefinitionForType(final String type) {
+		if (this.changeSetDefinition == null) {
+			this.changeSetDefinition = new HashMap<String, IChangeSetDefinition>();
+		}
+		if (this.changeSetDefinition.get(type) == null) {
+			IConfigurationElement[] children = this.element
+					.getChildren(IRepositoryExtensionService.CHANGE_DEFINITION_NODE_NAME);
+			for (IConfigurationElement iConfigurationElement : children) {
+				if (type.equals(iConfigurationElement
+						.getAttribute(IRepositoryExtensionService.INFORMATION_TYPE_ATT))) {
+					ChangeSetDefinitionImpl changeSetDefinition = new ChangeSetDefinitionImpl();
+					IConfigurationElement[] children2 = iConfigurationElement
+							.getChildren(IRepositoryExtensionService.CHANGE_OBJECT_PATH_NODE_NAME);
+					for (IConfigurationElement iConfigurationElement2 : children2) {
+						changeSetDefinition.objectPaths.add(iConfigurationElement2
+								.getAttribute(IRepositoryExtensionService.PATH_ATT));
+					}
+					this.changeSetDefinition.put(type, changeSetDefinition);
+					break;
+				}
+			}
+		}
+		return this.changeSetDefinition.get(type);
+	}
 }

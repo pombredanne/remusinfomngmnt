@@ -104,4 +104,6 @@ public interface IRepository {
 	RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
 			IProgressMonitor monitor);
 
+	IChangeSetDefinition getChangeSetDefinitionForType(String type);
+
 }

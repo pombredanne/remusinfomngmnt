@@ -93,7 +93,7 @@ public class ReplaceElementsJob extends Job {
 				ChangeSet changeSet = new ChangeSetManager().createCheckOutChangeSet(
 						targetCategory, Collections
 								.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
-						localRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE);
+						localRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE, null);
 				EditingDomain navigationEditingDomain = EditingUtil.getInstance()
 						.getNavigationEditingDomain();
 				Command deleteCategory = CommandFactory.DELETE_CATEGORY(

@@ -206,10 +206,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//SynchronizationAction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Tag" eSuperTypes="#//Adapter">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="infoUnits" ordered="false"
-        upperBound="-1" eType="#//InformationUnitListItem"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="infoUnits" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AvailableTags">
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" ordered="false" upperBound="-1"

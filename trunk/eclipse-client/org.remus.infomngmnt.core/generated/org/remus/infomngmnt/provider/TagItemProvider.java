@@ -70,8 +70,8 @@ public class TagItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addInfoUnitsPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
+			addInfoUnitsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -93,7 +93,7 @@ public class TagItemProvider
 				 true,
 				 false,
 				 true,
-				 null,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}

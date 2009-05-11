@@ -90,16 +90,16 @@ public class TagService extends LuceneStore implements ITagService {
 				new EContentAdapterExtension());
 	}
 
-	public void addItems(final Collection<InformationUnitListItem> infoUnit, final Tag tagByName) {
-		for (InformationUnitListItem informationUnitListItem : infoUnit) {
+	public void addItems(final Collection<String> infoUnitIds, final Tag tagByName) {
+		for (String informationUnitListItemId : infoUnitIds) {
 			Document returnValue = new Document();
 
 			Field idField = new Field(TAGNAME, tagByName.getName(), Field.Store.YES,
 					Field.Index.TOKENIZED);
 			returnValue.add(idField);
 
-			Field unitField = new Field(INFOUNITID, informationUnitListItem.getId(),
-					Field.Store.YES, Field.Index.TOKENIZED);
+			Field unitField = new Field(INFOUNITID, informationUnitListItemId, Field.Store.YES,
+					Field.Index.TOKENIZED);
 			returnValue.add(unitField);
 			try {
 				getIndexWriter().addDocument(returnValue);

@@ -1232,8 +1232,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTag_InfoUnits() {
-		return (EReference)tagEClass.getEStructuralFeatures().get(0);
+	public EAttribute getTag_InfoUnits() {
+		return (EAttribute)tagEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1241,7 +1241,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EAttribute getTag_Name() {
-		return (EAttribute)tagEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)tagEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1549,8 +1549,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(synchronizableObjectToSynchronizationActionMapEClass, SYNCHRONIZABLE_OBJECT_TO_SYNCHRONIZATION_ACTION_MAP__VALUE);
 
 		tagEClass = createEClass(TAG);
-		createEReference(tagEClass, TAG__INFO_UNITS);
 		createEAttribute(tagEClass, TAG__NAME);
+		createEAttribute(tagEClass, TAG__INFO_UNITS);
 
 		availableTagsEClass = createEClass(AVAILABLE_TAGS);
 		createEReference(availableTagsEClass, AVAILABLE_TAGS__TAGS);
@@ -1758,8 +1758,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getSynchronizableObjectToSynchronizationActionMap_Value(), this.getSynchronizationAction(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tagEClass, Tag.class, "Tag", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTag_InfoUnits(), this.getInformationUnitListItem(), null, "infoUnits", null, 0, -1, Tag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getTag_Name(), ecorePackage.getEString(), "name", null, 0, 1, Tag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTag_InfoUnits(), ecorePackage.getEString(), "infoUnits", null, 0, -1, Tag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(availableTagsEClass, AvailableTags.class, "AvailableTags", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAvailableTags_Tags(), this.getTag(), null, "tags", null, 0, -1, AvailableTags.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

@@ -2,12 +2,16 @@ package org.remus.infomngmnt.resources.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -374,6 +378,47 @@ public class ResourceUtil {
 
 	public static IFile createTempFile() {
 		return createTempFile(null);
+	}
+
+	public static File getPreviousVersion(final IFile file, final IProgressMonitor monitor)
+			throws CoreException {
+		IFileState[] history = file.getHistory(monitor);
+		File createTempFile;
+		if (history.length > 0) {
+			InputStream contents;
+			FileOutputStream fos = null;
+			contents = history[0].getContents();
+			try {
+				createTempFile = File.createTempFile("history", ResourceUtil.FILE_EXTENSION);
+				fos = new FileOutputStream(createTempFile);
+				byte buf[] = new byte[1024];
+				int len;
+				while ((len = contents.read(buf)) > 0) {
+					fos.write(buf, 0, len);
+				}
+
+			} catch (Exception e) {
+				return null;
+			} finally {
+				if (fos != null) {
+					try {
+						fos.close();
+					} catch (IOException e) {
+						// do nothing. we've done our best.
+					}
+				}
+				if (contents != null) {
+					try {
+						contents.close();
+					} catch (IOException e) {
+						// do nothing. we've done our best.
+					}
+				}
+			}
+			return createTempFile;
+		} else {
+			return null;
+		}
 	}
 
 }

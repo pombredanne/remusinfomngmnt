@@ -23,19 +23,19 @@ import org.remus.infomngmnt.Tag;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface ITagService {
-	
+
 	EList<Tag> getAllTags();
-	
+
 	void addTag(Tag tag);
-	
+
 	void removeTag(Tag tag);
-	
-	void addItems(Collection<InformationUnitListItem> infoUnits, Tag tag);
-	
+
+	void addItems(Collection<String> infoUnits, Tag tag);
+
 	void removeItems(Collection<InformationUnitListItem> infoUnits);
-	
+
 	InformationUnitListItem[] getItemsForTag(Tag tag);
-	
+
 	Tag[] getTagsByInformationUnit(InformationUnitListItem item);
 
 }

@@ -498,8 +498,9 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 					if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
 							&& !InformationEditor.this.editingDomain.isReadOnly(resource)) {
 						try {
+							EditingUtil.getInstance().saveObjectToResource(
+									InformationEditor.this.primaryModel);
 							InformationEditor.this.savedResources.add(resource);
-							resource.save(saveOptions);
 						} catch (final Exception exception) {
 							InformationEditor.this.resourceToDiagnosticMap.put(resource,
 									analyzeResourceProblems(resource, exception));

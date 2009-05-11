@@ -10,6 +10,12 @@
             name="Password"
             presentation="org.remus.infomngmnt.password.AbstractInformationRepresentation"
             type="PASSWORD">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.urlTransfer">
+         </validTransfers>
       </information>
    </extension>
    <extension

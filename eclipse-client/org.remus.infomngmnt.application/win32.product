@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="false">
+<product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="true">
 
    <aboutInfo>
       <image path="/org.remus.infomngmnt.application/about.png"/>
@@ -45,7 +45,6 @@ http://www.remus-software.org/integrated-thirdparty-packages
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>
@@ -188,6 +187,12 @@ http://www.remus-software.org/integrated-thirdparty-packages
       <plugin id="org.remus.infomngmnt.ui"/>
       <plugin id="org.remus.infomngmnt.video"/>
    </plugins>
+
+   <features>
+      <feature id="org.remus.infomngmnt.core.feature" version="1.0.0.qualifier"/>
+      <feature id="org.remus.infomngmnt.infotypes.feature" version="1.0.0.qualifier"/>
+      <feature id="org.remus.infomngmnt.repository.feature" version="1.0.0.qualifier"/>
+   </features>
 
 
 </product>

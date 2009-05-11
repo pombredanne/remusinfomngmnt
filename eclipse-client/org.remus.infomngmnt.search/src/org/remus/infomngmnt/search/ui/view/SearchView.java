@@ -151,7 +151,14 @@ public class SearchView extends AbstractScrolledTitledView {
 			}
 		});
 
-		final Button button_1 = this.toolkit.createButton(composite, "Select All", SWT.NONE);
+		Composite buttonComposite = this.toolkit.createComposite(composite);
+		GridLayout layout = new GridLayout(2, false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		buttonComposite.setLayout(layout);
+		buttonComposite.setLayoutData(new GridData(SWT.END, SWT.BEGINNING, false, false));
+
+		final Button button_1 = this.toolkit.createButton(buttonComposite, "Select All", SWT.NONE);
 		button_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		button_1.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
@@ -160,7 +167,7 @@ public class SearchView extends AbstractScrolledTitledView {
 			}
 		});
 
-		final Button deselectAllButton = this.toolkit.createButton(composite, "Deselect All",
+		final Button deselectAllButton = this.toolkit.createButton(buttonComposite, "Deselect All",
 				SWT.NONE);
 		final GridData gd_deselectAllButton = new GridData(SWT.FILL, SWT.TOP, false, false);
 		deselectAllButton.setLayoutData(gd_deselectAllButton);

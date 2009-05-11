@@ -23,11 +23,13 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.osgi.util.NLS;
 
 import com.google.gdata.client.youtube.YouTubeService;
@@ -37,6 +39,7 @@ import com.google.gdata.data.youtube.PlaylistLinkEntry;
 import com.google.gdata.data.youtube.PlaylistLinkFeed;
 import com.google.gdata.data.youtube.VideoEntry;
 import com.google.gdata.data.youtube.VideoFeed;
+import com.google.gdata.data.youtube.YouTubeMediaGroup;
 import com.google.gdata.util.ServiceException;
 
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -49,10 +52,13 @@ import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.core.md5.MD5;
 import org.remus.infomngmnt.connector.youtube.SiteInspector;
+import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
+import org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
@@ -83,29 +89,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	private IRetrieveFileTransferContainerAdapter fileReceiveAdapter;
 
-	/**
-	 * The name of the server hosting the YouTube GDATA feeds
-	 */
-	public static final String YOUTUBE_GDATA_SERVER = "http://gdata.youtube.com";
-
-	public static final String VIDEO_HTML_URL = "http://www.youtube.com/watch?v="; //$NON-NLS-1$
-
-	/**
-	 * The prefix of the User Feeds
-	 */
-	public static final String USER_FEED_PREFIX = YOUTUBE_GDATA_SERVER + "/feeds/api/users/";
-
-	/**
-	 * The URL suffix of the test user's playlists feed
-	 */
-	public static final String PLAYLISTS_FEED_SUFFIX = "/playlists";
-
-	/**
-	 * The URL suffix of the test user's favorites feed
-	 */
-	public static final String FAVORITES_FEED_SUFFIX = "/favorites";
-
 	private IFile tmpVideoFile;
+
+	private IPreferenceStore preferenceStore;
 
 	/**
 	 * @return the youtubeService
@@ -114,6 +100,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		if (this.youtubeService == null) {
 			this.youtubeService = new YouTubeService("gdataSample-YouTube-1");
 		}
+
 		return this.youtubeService;
 	}
 
@@ -144,7 +131,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			if (KEY_PLAYLIST_FOLDER.equals(container.getId())) {
 				return buildPlayListCollection(container);
 			} else {
-				return buildVideoEntries(container);
+				if (!showOnlyContainers) {
+					return buildVideoEntries(container);
+				}
 			}
 		}
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
@@ -265,7 +254,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			final IProgressMonitor monitor) {
 		SynchronizationMetadata adapter = (SynchronizationMetadata) informationUnitListItem
 				.getAdapter(SynchronizationMetadata.class);
-		String url = VIDEO_HTML_URL + getVideoIdFromUrl(adapter.getUrl());
+		String url = NLS.bind(getPreferences().getString(PreferenceInitializer.VIDEO_HTML_URL),
+				getVideoIdFromUrl(adapter.getUrl()));
+
 		IFile tempFile = ResourceUtil.createTempFile();
 		try {
 			DownloadFileJob downloadWebsiteJob = new DownloadFileJob(new URL(url), tempFile,
@@ -274,15 +265,35 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			String hash = SiteInspector.getHash(tempFile);
 			String youtTubeId = SiteInspector.getId(url);
 			this.tmpVideoFile = ResourceUtil.createTempFile("flv");
-			DownloadFileJob downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash),
-					this.tmpVideoFile, getFileReceiveAdapter());
-			downloadVidJob.run(monitor);
+			DownloadFileJob downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash,
+					true), this.tmpVideoFile, getFileReceiveAdapter());
+			IStatus run = downloadVidJob.run(monitor);
+			if (run.getSeverity() != Status.OK) {
+				downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash, false),
+						this.tmpVideoFile, getFileReceiveAdapter());
+				downloadVidJob.run(monitor);
+			}
 			AbstractCreationFactory abstractCreationFactory = InformationExtensionManager
 					.getInstance().getInfoTypeByType(VideoActivator.TYPE_ID).getCreationFactory();
 			InformationUnit createNewObject = abstractCreationFactory.createNewObject();
 			InformationUtil.getChildByType(createNewObject, VideoActivator.NODE_NAME_MEDIATYPE)
 					.setStringValue("flv");
-
+			RemoteObject remoteObjectBySynchronizableObject = getRemoteObjectBySynchronizableObject(
+					informationUnitListItem, monitor);
+			Object wrappedObject = remoteObjectBySynchronizableObject.getWrappedObject();
+			if (wrappedObject instanceof VideoEntry) {
+				YouTubeMediaGroup mediaGroup = ((VideoEntry) wrappedObject).getMediaGroup();
+				if (mediaGroup != null) {
+					createNewObject.setDescription(mediaGroup.getDescription()
+							.getPlainTextContent());
+					List<String> keywords = mediaGroup.getKeywords().getKeywords();
+					StringBuilder sb = new StringBuilder();
+					for (String string : keywords) {
+						sb.append(string).append(" ");
+					}
+					createNewObject.setKeywords(sb.toString());
+				}
+			}
 			// runnable.run(monitor);
 			tempFile.delete(true, monitor);
 			return createNewObject;
@@ -428,8 +439,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	public String getRepositoryUrl() {
-		return YoutubeConnector.USER_FEED_PREFIX + getCredentialProvider().getUserName()
-				+ YoutubeConnector.PLAYLISTS_FEED_SUFFIX;
+		return NLS.bind(getPreferences().getString(PreferenceInitializer.GDATA_SERVER_URL),
+				getCredentialProvider().getUserName());
 	}
 
 	public String getTypeIdByObject(final RemoteObject remoteObject) {
@@ -443,8 +454,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	private URL getPlaylistUrl() {
 		try {
-			return new URL(USER_FEED_PREFIX + getCredentialProvider().getUserName()
-					+ PLAYLISTS_FEED_SUFFIX);
+			return new URL(NLS.bind(getPreferences().getString(PreferenceInitializer.PLAYLIST_URL),
+					getCredentialProvider().getUserName()));
 		} catch (MalformedURLException e) {
 			return null;
 		}
@@ -453,16 +464,24 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	private URL getFavoritesUrl() {
 		try {
-			return new URL(USER_FEED_PREFIX + getCredentialProvider().getUserName()
-					+ FAVORITES_FEED_SUFFIX);
+			return new URL(NLS.bind(
+					getPreferences().getString(PreferenceInitializer.FAVORITES_URL),
+					getCredentialProvider().getUserName()));
 		} catch (MalformedURLException e) {
 			return null;
 		}
 
 	}
 
-	private URL getDownloadUrl(final String id, final String hash) {
-		String url = "http://www.youtube.com/get_video?video_id=" + id + "&t=" + hash + "&fmt=22";
+	private URL getDownloadUrl(final String id, final String hash, final boolean hd) {
+		String url;
+		if (hd) {
+			url = NLS.bind(getPreferences().getString(
+					PreferenceInitializer.HIGH_DEFINITION_DOWNLOAD_URL), id, hash);
+		} else {
+			url = NLS.bind(getPreferences().getString(
+					PreferenceInitializer.HIGH_QUALITY_DOWNLOAD_URL), id, hash);
+		}
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {
@@ -491,8 +510,19 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	public IStatus validate() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			getYoutubeService().getFeed(getFavoritesUrl(), VideoFeed.class);
+		} catch (Exception e) {
+			return StatusCreator.newStatus("Error validating connector", e);
+		}
+		return Status.OK_STATUS;
+	}
+
+	private IPreferenceStore getPreferences() {
+		if (this.preferenceStore == null) {
+			this.preferenceStore = YoutubeActivator.getDefault().getPreferenceStore();
+		}
+		return this.preferenceStore;
 	}
 
 }

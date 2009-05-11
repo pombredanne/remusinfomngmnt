@@ -5,6 +5,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -85,6 +86,12 @@ public class LinkWizardPage extends WizardPage {
 		final Link eclipseorgLink = new Link(container, SWT.NONE);
 		eclipseorgLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		eclipseorgLink.setText("<a>Why is the screenshot feature disabled?</a>");
+		eclipseorgLink.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				Program.launch(LinkActivator.getDefault().getPreferenceStore().getString(
+						LinkPreferenceInitializer.URL_WEBSHOTHELP));
+			}
+		});
 	}
 
 }

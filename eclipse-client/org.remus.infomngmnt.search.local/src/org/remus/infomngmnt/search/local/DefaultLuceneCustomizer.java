@@ -49,7 +49,7 @@ import org.remus.infomngmnt.search.service.LuceneSearchService;
  */
 public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
 
 	/*
 	 * (non-Javadoc)
@@ -143,7 +143,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		returnValue.add(keywordField);
 
 		Field dateField = new Field(LuceneSearchService.SEARCHINDEX_CREATIONDATE, DATE_FORMAT
-				.format(document.getCreationDate()), Field.Store.YES, Field.Index.TOKENIZED);
+				.format(document.getCreationDate()), Field.Store.YES, Field.Index.UN_TOKENIZED);
 		returnValue.add(dateField);
 
 		Field projectField = new Field(LuceneSearchService.SEARCHINDEX_PROJECT, project.getName(),
@@ -151,7 +151,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		returnValue.add(projectField);
 
 		Field infoTypeField = new Field(LuceneSearchService.SEARCHINDEX_INFOTYPE_ID, document
-				.getType(), Field.Store.YES, Field.Index.UN_TOKENIZED);
+				.getType().toLowerCase(), Field.Store.YES, Field.Index.UN_TOKENIZED);
 		returnValue.add(infoTypeField);
 
 		return returnValue;
@@ -183,25 +183,27 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 					flagList.add(Occur.SHOULD);
 				}
 			} else {
-				fieldList.add(LuceneSearchService.SEARCHINDEX_LABEL);
-				termList.add(search.getSearchString());
-				flagList.add(Occur.SHOULD);
+				if (search.getSearchString() != null && search.getSearchString().length() > 0) {
+					fieldList.add(LuceneSearchService.SEARCHINDEX_LABEL);
+					termList.add(search.getSearchString());
+					flagList.add(Occur.SHOULD);
 
-				fieldList.add(LuceneSearchService.SEARCHINDEX_CONTENT);
-				termList.add(search.getSearchString());
-				flagList.add(Occur.SHOULD);
+					fieldList.add(LuceneSearchService.SEARCHINDEX_CONTENT);
+					termList.add(search.getSearchString());
+					flagList.add(Occur.SHOULD);
 
-				fieldList.add(LuceneSearchService.SEARCHINDEX_ADDITIONALS);
-				termList.add(search.getSearchString());
-				flagList.add(Occur.SHOULD);
+					fieldList.add(LuceneSearchService.SEARCHINDEX_ADDITIONALS);
+					termList.add(search.getSearchString());
+					flagList.add(Occur.SHOULD);
 
-				fieldList.add(LuceneSearchService.SEARCHINDEX_DESCRIPTION);
-				termList.add(search.getSearchString());
-				flagList.add(Occur.SHOULD);
+					fieldList.add(LuceneSearchService.SEARCHINDEX_DESCRIPTION);
+					termList.add(search.getSearchString());
+					flagList.add(Occur.SHOULD);
 
-				fieldList.add(LuceneSearchService.SEARCHINDEX_KEYWORDS);
-				termList.add(search.getSearchString());
-				flagList.add(Occur.SHOULD);
+					fieldList.add(LuceneSearchService.SEARCHINDEX_KEYWORDS);
+					termList.add(search.getSearchString());
+					flagList.add(Occur.SHOULD);
+				}
 			}
 
 		}
@@ -213,9 +215,12 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 						.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
 						.toArray(new Occur[flagList.size()]), new StandardAnalyzer());
 			} else {
-				searchWordQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
-						.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
-						.toArray(new Occur[flagList.size()]), getAnalyser());
+				if (search.getSearchString() != null && search.getSearchString().length() > 0) {
+					searchWordQuery = MultiFieldQueryParser.parse(termList
+							.toArray(new String[termList.size()]), fieldList
+							.toArray(new String[fieldList.size()]), flagList
+							.toArray(new Occur[flagList.size()]), getAnalyser());
+				}
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -241,12 +246,12 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 		if (search.getInfoType() != null && search.getInfoType().size() > 0
 				&& search.getInfoType().size() != size) {
 			StringBuilder termStringBuilder = new StringBuilder();
-			fieldList.add(LuceneSearchService.SEARCHINDEX_INFOTYPE_ID);
 			Iterator<String> iterator = search.getInfoType().iterator();
+			fieldList.add(LuceneSearchService.SEARCHINDEX_INFOTYPE_ID);
 			while (iterator.hasNext()) {
 				String string = iterator.next();
 				termStringBuilder.append("\"").append(string).append("\"").append(
-						iterator.hasNext() ? " AND " : "");
+						iterator.hasNext() ? " OR " : "");
 			}
 			termList.add(termStringBuilder.toString());
 			flagList.add(Occur.MUST);

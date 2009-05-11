@@ -116,6 +116,13 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="excludeFromIndex" type="boolean" use="default" value="false">
+            <annotation>
+               <documentation>
+                  Set this attribute to &apos;true&apos; if you don&apos;t want that the contents of this information-type is indexed through a SearchBuilder. Default-value is false.
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

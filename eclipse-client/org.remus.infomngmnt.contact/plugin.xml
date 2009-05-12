@@ -4,7 +4,7 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            buildHtml="false"
+            buildHtml="true"
             creationFactory="org.remus.infomngmnt.contact.core.ContactCreationFactory"
             icon="icons/iconexperience/contact.png"
             name="Contact"

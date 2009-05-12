@@ -15,16 +15,22 @@ package org.remus.infomngmnt.contact;
  * 
  */
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 
 public class ContactInformationRepresentation extends
 		AbstractInformationRepresentation {
@@ -77,8 +83,24 @@ public class ContactInformationRepresentation extends
 	@Override
 	public InputStream handleHtmlGeneration(IProgressMonitor monitor)
 			throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
+		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
+		InputStream templateIs = null;
+		InputStream contentsIs = getFile().getContents();
+		try {
+			templateIs = FileLocator.openStream(
+					Platform.getBundle(ContactActivator.PLUGIN_ID), 
+					new Path("template/htmlserialization.flt"), false);
+			FreemarkerRenderer.getInstance().process(
+					ContactActivator.PLUGIN_ID,
+					templateIs,
+					contentsIs,
+					returnValue, null);
+		} catch (IOException e) {
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations",e));
+		} finally {
+			StreamCloser.closeStreams(templateIs, contentsIs);
+		}
+		return new ByteArrayInputStream(returnValue.toByteArray());
 	}
-
 }

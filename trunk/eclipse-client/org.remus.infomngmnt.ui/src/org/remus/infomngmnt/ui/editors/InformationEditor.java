@@ -333,11 +333,12 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 	@Override
 	protected void createHeaderContents(final IManagedForm headerForm) {
-		headerForm.getForm().setText(getPrimaryModel().getLabel());
-		headerForm.getForm().setImage(
+		this.headerForm2 = headerForm;
+		this.headerForm2.getForm().setText(getPrimaryModel().getLabel());
+		this.headerForm2.getForm().setImage(
 				InformationExtensionManager.getInstance().getInfoTypeByType(
 						getPrimaryModel().getType()).getImageDescriptor().createImage());
-		getToolkit().decorateFormHeading(headerForm.getForm().getForm());
+		getToolkit().decorateFormHeading(this.headerForm2.getForm().getForm());
 	}
 
 	/**
@@ -441,6 +442,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 	private EMFDataBindingContext ctx;
 
+	private IManagedForm headerForm2;
+
 	@Override
 	protected void createPages() {
 		super.createPages();
@@ -451,10 +454,15 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	}
 
 	public void setDirty(final boolean dirty) {
-		if (dirty != this.dirty) {
-			this.dirty = dirty;
-			firePropertyChange(PROP_DIRTY);
-		}
+		getSite().getShell().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				if (dirty != InformationEditor.this.dirty) {
+					InformationEditor.this.dirty = dirty;
+					firePropertyChange(PROP_DIRTY);
+				}
+			}
+		});
+
 	}
 
 	@Override
@@ -581,9 +589,18 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 					}
 				}
 			}
+			for (int i = 0, n = this.pages.size(); i < n; i++) {
+				Object object = this.pages.get(i);
+				if (object instanceof AbstractInformationFormPage) {
+					if (((AbstractInformationFormPage) object).isRendered()) {
+						((AbstractInformationFormPage) object).disposeBinding();
+					}
+				}
+			}
 			disposeModel();
 			initializeEditingDomain();
 			init(getEditorSite(), getEditorInput());
+			this.headerForm2.getForm().setText(getPrimaryModel().getLabel());
 			for (int i = 0, n = this.pages.size(); i < n; i++) {
 				Object object = this.pages.get(i);
 				if (object instanceof AbstractInformationFormPage) {

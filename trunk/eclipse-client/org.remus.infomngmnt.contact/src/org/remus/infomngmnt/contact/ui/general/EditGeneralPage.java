@@ -10,6 +10,7 @@
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
 package org.remus.infomngmnt.contact.ui.general;
+
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
@@ -19,6 +20,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 public class EditGeneralPage extends AbstractInformationFormPage {
@@ -26,9 +28,9 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	public EditGeneralPage() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();

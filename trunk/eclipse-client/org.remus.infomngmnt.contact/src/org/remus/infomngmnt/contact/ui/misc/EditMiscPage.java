@@ -5,6 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 public class EditMiscPage extends AbstractInformationFormPage {
@@ -12,9 +13,9 @@ public class EditMiscPage extends AbstractInformationFormPage {
 	public EditMiscPage() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
@@ -24,6 +25,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 
 		new EncryptionSection(body, toolkit, getSite().getShell(), getModelObject(), this);
 		new MiscellaneousSection(body, toolkit, getSite().getShell(), getModelObject(), this);
-//		new UserDefinedSection(body, toolkit, getSite().getShell(), getModelObject(), editingDomain);
+		// new UserDefinedSection(body, toolkit, getSite().getShell(),
+		// getModelObject(), editingDomain);
 	}
 }

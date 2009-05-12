@@ -68,7 +68,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 	private RichTextWidget richtext;
 
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
@@ -97,10 +97,6 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		this.layerToolbarManager = this.richtext.crateToolbar();
 		this.tableToolbarManager = this.richtext.crateToolbar();
 
-		String html = getModelObject().getStringValue() == null ? "" : getModelObject()
-				.getStringValue();
-		this.richtext.setHtml(html);
-
 		GridData gridData2 = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		gridData2.heightHint = 500;
 		this.richtext.setLayoutData(gridData2);
@@ -113,7 +109,6 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 
 		form.reflow(true);
 
-		bindValuesToUi();
 	}
 
 	private void initActions() {
@@ -146,8 +141,13 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 	}
 
 	@Override
-	protected void bindValuesToUi() {
+	public void bindValuesToUi() {
 		super.bindValuesToUi();
+
+		String html = getModelObject().getStringValue() == null ? "" : getModelObject()
+				.getStringValue();
+		this.richtext.setHtml(html);
+
 		RichTextBindingWidget widget = BindingWidgetFactory.createRichText(this.richtext, this);
 		widget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);

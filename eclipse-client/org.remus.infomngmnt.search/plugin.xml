@@ -179,6 +179,11 @@
             name="Search-Context"
             parentId="org.eclipse.ui.contexts.window">
       </context>
+      <context
+            id="org.remus.infomngmnt.search.searchEditorContext"
+            name="Search Editor On Top Context"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -193,6 +198,12 @@
             contextId="org.remus.infomngmnt.search.searchcontext"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+ARROW_LEFT">
+      </key>
+      <key
+            commandId="org.remus.infomngmnt.search.searchAgain"
+            contextId="org.remus.infomngmnt.search.searchEditorContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F5">
       </key>
    </extension>
    <extension
@@ -223,6 +234,10 @@
             categoryId="org.remus.infomngmnt.ui.searchCategory"
             id="org.remus.infomngmnt.ui.searchReferences"
             name="References">
+      </command>
+      <command
+            id="org.remus.infomngmnt.search.searchAgain"
+            name="Search Again">
       </command>
    </extension>
    <extension
@@ -260,6 +275,21 @@
       <handler
             class="org.remus.infomngmnt.search.handler.SearchReferencesHandler"
             commandId="org.remus.infomngmnt.ui.searchReferences">
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.search.handler.SearchAgainHandler"
+            commandId="org.remus.infomngmnt.search.searchAgain">
+         <activeWhen>
+            <with
+                  variable="activeContexts">
+               <iterate
+                     operator="or">
+                  <equals
+                        value="org.remus.infomngmnt.search.searchEditorContext">
+                  </equals>
+               </iterate>
+            </with>
+         </activeWhen>
       </handler>
    </extension>
 

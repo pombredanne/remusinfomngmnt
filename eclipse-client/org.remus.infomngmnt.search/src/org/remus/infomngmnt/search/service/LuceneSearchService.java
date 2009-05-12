@@ -169,16 +169,19 @@ public class LuceneSearchService {
 									IProgressMonitor.UNKNOWN);
 							try {
 								for (final IProject project : deleteKeySet) {
-									reader = IndexReader.open(getSearchService().getIndexDirectory(
-											project));
-									final List<IFile> list = clonedDeleteMap.get(project);
-									for (final IFile path : list) {
-										String id = path.getFullPath().removeFileExtension()
-												.lastSegment();
-										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"",
-												id));
-										final Term term = new Term(SEARCHINDEX_ITEM_ID, id);
-										reader.deleteDocuments(term);
+									if (IndexReader.indexExists(getSearchService()
+											.getIndexDirectory(project))) {
+										reader = IndexReader.open(getSearchService()
+												.getIndexDirectory(project));
+										final List<IFile> list = clonedDeleteMap.get(project);
+										for (final IFile path : list) {
+											String id = path.getFullPath().removeFileExtension()
+													.lastSegment();
+											monitor.setTaskName(NLS.bind(
+													"Deleting document \"{0}\"", id));
+											final Term term = new Term(SEARCHINDEX_ITEM_ID, id);
+											reader.deleteDocuments(term);
+										}
 									}
 								}
 							} catch (final Exception e1) {
@@ -203,19 +206,22 @@ public class LuceneSearchService {
 								final List<IFile> list = clonedMap.get(project);
 								final long timeMillis = System.currentTimeMillis();
 								if (list.size() > 0) {
-									reader = IndexReader.open(getSearchService().getIndexDirectory(
-											project));
-									for (final IFile path : list) {
-										String id = path.getFullPath().removeFileExtension()
-												.lastSegment();
-										monitor.setTaskName(NLS.bind("Deleting document \"{0}\"",
-												id));
-										final Term term = new Term(SEARCHINDEX_ITEM_ID, id);
-										reader.deleteDocuments(term);
+									if (IndexReader.indexExists(getSearchService()
+											.getIndexDirectory(project))) {
+										reader = IndexReader.open(getSearchService()
+												.getIndexDirectory(project));
+										for (final IFile path : list) {
+											String id = path.getFullPath().removeFileExtension()
+													.lastSegment();
+											monitor.setTaskName(NLS.bind(
+													"Deleting document \"{0}\"", id));
+											final Term term = new Term(SEARCHINDEX_ITEM_ID, id);
+											reader.deleteDocuments(term);
+										}
+										reader.flush();
+										reader.close();
+										relaseIndexSearcher(project);
 									}
-									reader.flush();
-									reader.close();
-									relaseIndexSearcher(project);
 									if (IndexReader.isLocked(getSearchService().getIndexDirectory(
 											project))) {
 										IndexReader.unlock(getSearchService().getIndexDirectory(

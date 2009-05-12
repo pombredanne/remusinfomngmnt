@@ -17,21 +17,33 @@ import java.util.Date;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
+import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
 import org.remus.infomngmnt.search.save.SavedSearchesHandler;
+import org.remus.infomngmnt.search.service.IFavoriteSearchHandler;
 import org.remus.infomngmnt.search.ui.view.SearchOutline;
 
 /**
@@ -44,12 +56,53 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 	private SearchOutline contentOutlinePage;
 
 	public final static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+	private static final String CONTEXT_ID = "org.remus.infomngmnt.search.searchEditorContext";
+
+	protected IPartListener partListener = new IPartListener() {
+		public void partActivated(final IWorkbenchPart p) {
+			if (p == SearchResultEditor.this) {
+				handleActivate();
+			}
+		}
+
+		public void partBroughtToTop(final IWorkbenchPart p) {
+			// Ignore.
+		}
+
+		public void partClosed(final IWorkbenchPart p) {
+			// Ignore.
+		}
+
+		public void partDeactivated(final IWorkbenchPart p) {
+			if (p == SearchResultEditor.this) {
+				handleDeActivate();
+			}
+		}
+
+		public void partOpened(final IWorkbenchPart p) {
+			// Ignore.
+		}
+	};
+	private IContextService contextService;
+	private IContextActivation contextActivation;
 
 	/**
 	 * 
 	 */
 	public SearchResultEditor() {
 		// TODO Auto-generated constructor stub
+	}
+
+	protected void handleDeActivate() {
+		if (this.contextActivation != null) {
+			getContextService().deactivateContext(this.contextActivation);
+		}
+
+	}
+
+	protected void handleActivate() {
+		this.contextActivation = getContextService().activateContext(CONTEXT_ID);
+
 	}
 
 	/*
@@ -83,7 +136,30 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 				AbstractUIPlugin.imageDescriptorFromPlugin(SearchPlugin.PLUGIN_ID,
 						"images/text_find.png").createImage());
 		getToolkit().decorateFormHeading(headerForm.getForm().getForm());
-		// headerForm.getForm().getToolBarManager().add(action)
+		headerForm.getForm().getToolBarManager().add(new Action("Add to watched searches") {
+			@Override
+			public void run() {
+				IFavoriteSearchHandler service = SearchPlugin.getPlugin()
+						.getFavoriteTrackerService();
+				if (service == null) {
+					MessageDialog.openWarning(getSite().getShell(), "No handler found",
+							"No handler for creating watched searches found.");
+				} else {
+					service.addToFavorites(SearchResultEditor.this.model);
+				}
+			}
+
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				return ResourceManager.getPluginImageDescriptor(SearchPlugin.getPlugin(),
+						"icons/iconexperience/star_blue.png");
+			}
+		});
+		IContributionItem item = UIUtil.getCommandContribution("org.remus.infomngmnt.search.searchAgain",
+				ResourceManager.getPluginImageDescriptor(SearchPlugin.getPlugin(),
+						"icons/iconexperience/nav_refresh_blue.png"), null, null, null, null);
+		headerForm.getForm().getToolBarManager().add(item);
+		headerForm.getForm().getToolBarManager().update(true);
 	}
 
 	/*
@@ -125,6 +201,7 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 			this.model = new SavedSearchesHandler().getObjectFromUri(((URIEditorInput) input)
 					.getURI(), SearchPackage.Literals.SEARCH);
 		}
+		site.getPage().addPartListener(this.partListener);
 		setPartName(getTitleLabel());
 		super.init(site, input);
 
@@ -169,6 +246,20 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 			};
 		}
 		return this.contentOutlinePage;
+	}
+
+	private IContextService getContextService() {
+		if (this.contextService == null) {
+			this.contextService = (IContextService) PlatformUI.getWorkbench().getService(
+					IContextService.class);
+		}
+		return this.contextService;
+	}
+
+	@Override
+	public void dispose() {
+		getSite().getPage().removePartListener(this.partListener);
+		super.dispose();
 	}
 
 }

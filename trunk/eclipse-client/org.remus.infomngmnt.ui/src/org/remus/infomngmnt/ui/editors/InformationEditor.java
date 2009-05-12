@@ -572,7 +572,6 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				if (resource.isLoaded()) {
 					resource.unload();
 					try {
-						close(true);
 						resource.load(Collections.EMPTY_MAP);
 					} catch (final IOException exception) {
 						if (!this.resourceToDiagnosticMap.containsKey(resource)) {
@@ -582,6 +581,25 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 					}
 				}
 			}
+			disposeModel();
+			initializeEditingDomain();
+			init(getEditorSite(), getEditorInput());
+			for (int i = 0, n = this.pages.size(); i < n; i++) {
+				Object object = this.pages.get(i);
+				if (object instanceof AbstractInformationFormPage) {
+					((AbstractInformationFormPage) object).setModelObject(getPrimaryModel());
+					((AbstractInformationFormPage) object).setEditingDomain(this.editingDomain);
+					((AbstractInformationFormPage) object).setBindingContext(this.ctx);
+					if (((AbstractInformationFormPage) object).isRendered()) {
+						((AbstractInformationFormPage) object).bindValuesToUi();
+					}
+				}
+			}
+			if (this.contentOutlinePage != null) {
+				this.contentOutlinePage.setInfo(getPrimaryModel());
+				this.contentOutlinePage.setAdapterFactoryEditingDomain(this.editingDomain);
+				this.contentOutlinePage.bindValuesToUi();
+			}
 
 			// if (AdapterFactoryEditingDomain.isStale(editorSelection)) {
 			// setSelection(StructuredSelection.EMPTY);
@@ -589,6 +607,10 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 			this.updateProblemIndication = true;
 			updateProblemIndication();
+			getPrimaryModel().eAdapters().add(this.dirtyAdapter);
+
+			getActionBarContributor().activate();
+
 		}
 	}
 
@@ -852,10 +874,15 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		this.adapterFactory.dispose();
 
 		getPrimaryModel().eAdapters().remove(this.dirtyAdapter);
+		this.ctx.dispose();
+		if (this.contentOutlinePage != null) {
+			this.contentOutlinePage.disposeModel();
+		}
 
 		if (getActionBarContributor().getActiveEditor() == this) {
-			getActionBarContributor().setActiveEditor(null);
+			getActionBarContributor().deactivate();
 		}
+
 	}
 
 	/**

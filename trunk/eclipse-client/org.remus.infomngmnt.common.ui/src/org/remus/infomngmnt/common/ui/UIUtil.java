@@ -17,8 +17,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -38,6 +40,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
 /**
@@ -201,5 +205,15 @@ public class UIUtil {
 		toolBarManager.update(true);
 
 		section.setTextClient(toolbar);
+	}
+
+	public static IContributionItem getCommandContribution(final String commandId, final ImageDescriptor image,
+			final ImageDescriptor disabledImage, final String label, final String tooltip,
+			final String helpContextId) {
+		CommandContributionItemParameter commandParm = new CommandContributionItemParameter(
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow(), null, commandId, null, image,
+				disabledImage, null, label, null, tooltip, CommandContributionItem.STYLE_PUSH,
+				null, false);
+		return new CommandContributionItem(commandParm);
 	}
 }

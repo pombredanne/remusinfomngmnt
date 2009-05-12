@@ -32,8 +32,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -51,7 +53,7 @@ public class EditingUtil {
 
 	private static EditingUtil INSTANCE;
 
-	private static Map<String, Object> SAVE_OPTIONS;
+	public static Map<String, Object> SAVE_OPTIONS;
 
 	static {
 		SAVE_OPTIONS = new HashMap<String, Object>();
@@ -315,6 +317,32 @@ public class EditingUtil {
 		}
 
 		return resource;
+
+	}
+
+	public byte[] saveObjectToByte(final EObject object) {
+		byte[] returnValue = new byte[0];
+		Resource resource = new XMLResourceImpl();
+		resource.setURI(URI.createURI("serialization"));
+		resource.getContents().add(EcoreUtil.copy(object));
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			resource.save(outputStream, SAVE_OPTIONS);
+			returnValue = outputStream.toByteArray();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				outputStream.flush();
+				outputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return returnValue;
 
 	}
 

@@ -104,7 +104,7 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 		if (type != null) {
 			Command handlePreSavingCommand = type.getCreationFactory().handlePreSaving(
 					newInformationUnit, this.monitor);
-			if (handlePreSavingCommand != null) {
+			if (handlePreSavingCommand != null && handlePreSavingCommand.canExecute()) {
 				append(handlePreSavingCommand);
 			}
 		}

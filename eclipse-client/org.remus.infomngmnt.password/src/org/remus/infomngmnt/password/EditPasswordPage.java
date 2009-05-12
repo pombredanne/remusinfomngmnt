@@ -57,7 +57,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 	private Text textPasswordDecrypted;
 
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
@@ -68,7 +68,6 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		doCreateGeneralSection(body, toolkit);
 		doCreateAdditionalSection(body, toolkit);
 		doCreateSemanticSection(body, toolkit);
-		bindValuesToUi();
 	}
 
 	private void doCreateAdditionalSection(final Composite body, final FormToolkit toolkit) {
@@ -179,7 +178,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 	}
 
 	@Override
-	protected void bindValuesToUi() {
+	public void bindValuesToUi() {
 		super.bindValuesToUi();
 		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
 				this.textUsername, this);

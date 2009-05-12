@@ -91,13 +91,6 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		this.textUrl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(compositeAdditional, SWT.NONE);
 
-		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
-				this.textUrl, this);
-		createTextBindingWidget
-				.bindModel(InformationUtil
-						.getChildByType(getModelObject(), PasswordPlugin.NODE_URL),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-
 		Hyperlink hyperlink = toolkit.createHyperlink(compositeAdditional,
 				"Open Url in System-Browser", SWT.NONE);
 		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
@@ -185,6 +178,12 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		createTextBindingWidget.bindModel(InformationUtil.getChildByType(getModelObject(),
 				PasswordPlugin.NODE_USERNAME),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.textUrl, this);
+		createTextBindingWidget
+				.bindModel(InformationUtil
+						.getChildByType(getModelObject(), PasswordPlugin.NODE_URL),
+						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
 		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.textPassword,
 				this);

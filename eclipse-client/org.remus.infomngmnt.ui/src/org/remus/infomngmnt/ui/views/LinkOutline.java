@@ -278,9 +278,8 @@ public class LinkOutline extends ContentOutlinePage {
 		this.linkSection.setClient(this.linkFormText);
 
 		//
-		createActions();
+
 		initializeLinkToolBar(this.linkSection, toolkit);
-		initializeLinkMenu();
 		initDrop();
 
 	}
@@ -357,6 +356,8 @@ public class LinkOutline extends ContentOutlinePage {
 		buildList();
 		this.info.eAdapters().add(this.eventListChangeAdapter);
 		this.info.eAdapters().add(this.linkListChangeAdapter);
+		this.dropTargetListenerExtension = new CustomDropTargetListenerExtension(this.info
+				.getLinks());
 		this.abstractDropZone.addDropListener(this.dropTargetListenerExtension);
 
 	}
@@ -364,7 +365,9 @@ public class LinkOutline extends ContentOutlinePage {
 	public void disposeModel() {
 		this.info.eAdapters().remove(this.eventListChangeAdapter);
 		this.info.eAdapters().remove(this.linkListChangeAdapter);
-		this.abstractDropZone.removeDropListener(this.dropTargetListenerExtension);
+		if (!this.abstractDropZone.isDisposed()) {
+			this.abstractDropZone.removeDropListener(this.dropTargetListenerExtension);
+		}
 	}
 
 	/**
@@ -395,8 +398,6 @@ public class LinkOutline extends ContentOutlinePage {
 		final Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
 		this.abstractDropZone = new DropTarget(this.linkFormText, dndOperations);
 		this.abstractDropZone.setTransfer(transfers);
-		this.dropTargetListenerExtension = new CustomDropTargetListenerExtension(this.info
-				.getLinks());
 
 	}
 

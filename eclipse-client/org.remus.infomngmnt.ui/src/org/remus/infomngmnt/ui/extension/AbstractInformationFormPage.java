@@ -31,6 +31,7 @@ import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.forms.widgets.TableWrapData;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -108,11 +109,21 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 	}
 
 	protected void doCreateSemanticSection(final Composite parent, final FormToolkit toolkit) {
+		doCreateSemanticSection(parent, toolkit, false);
+	}
+
+	protected void doCreateSemanticSection(final Composite parent, final FormToolkit toolkit,
+			final boolean tableWrapLayout) {
 		final Section semanticsSection = toolkit.createSection(parent,
 				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
 						| ExpandableComposite.EXPANDED);
-		final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		semanticsSection.setLayoutData(gd_semanticsSection);
+		if (tableWrapLayout) {
+			semanticsSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
+					TableWrapData.TOP));
+		} else {
+			final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
+			semanticsSection.setLayoutData(gd_semanticsSection);
+		}
 		semanticsSection.setText("Semantics");
 
 		final Composite composite_2 = toolkit.createComposite(semanticsSection, SWT.NONE);
@@ -151,6 +162,10 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 					InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION, this);
 		}
 
+	}
+
+	public void disposeBinding() {
+		// does nothing by default
 	}
 
 	protected InformationUnit getModelObject() {

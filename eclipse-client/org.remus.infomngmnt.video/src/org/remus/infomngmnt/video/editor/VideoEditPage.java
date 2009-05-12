@@ -89,7 +89,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 	};
 
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
@@ -202,9 +202,9 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		});
 
 		toolkit.createLabel(composite, "px", SWT.NONE);
-		setCurrentRatio();
+
 		doCreateSemanticSection(body, toolkit);
-		bindValuesToUi();
+
 	}
 
 	protected void setCurrentRatio() {
@@ -216,9 +216,9 @@ public class VideoEditPage extends AbstractInformationFormPage {
 	}
 
 	@Override
-	protected void bindValuesToUi() {
+	public void bindValuesToUi() {
 		super.bindValuesToUi();
-		super.bindValuesToUi();
+		setCurrentRatio();
 		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables
 				.observeText(this.text, SWT.Modify));
 		IObservableValue emfLink = EMFEditObservables.observeValue(Realm.getDefault(),

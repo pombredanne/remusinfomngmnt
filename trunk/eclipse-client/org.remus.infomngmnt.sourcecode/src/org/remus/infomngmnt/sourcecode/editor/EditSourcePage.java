@@ -45,7 +45,7 @@ public class EditSourcePage extends AbstractInformationFormPage {
 	private Text text;
 
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
@@ -89,11 +89,10 @@ public class EditSourcePage extends AbstractInformationFormPage {
 		addControl(this.text);
 		addControl(this.styledText);
 
-		bindValuesToUi();
 	}
 
 	@Override
-	protected void bindValuesToUi() {
+	public void bindValuesToUi() {
 		super.bindValuesToUi();
 
 		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(

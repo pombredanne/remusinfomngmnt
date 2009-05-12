@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
@@ -49,6 +50,8 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 	}
 
 	private InformationUnit modelObject = null;
+
+	private boolean rendered = false;
 
 	private boolean dirty = false;
 
@@ -78,6 +81,15 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 			}
 		}
 	}
+
+	@Override
+	protected final void createFormContent(final IManagedForm managedForm) {
+		this.rendered = true;
+		renderPage(managedForm);
+		bindValuesToUi();
+	}
+
+	protected abstract void renderPage(IManagedForm managedForm);
 
 	/**
 	 * Binds a text control to a text control. The value to the model object is
@@ -129,12 +141,15 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 
 	}
 
-	protected void bindValuesToUi() {
-
-		BindingUtil.createTextAndBind(this.keyWordText, getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS, this);
-		BindingUtil.createTextAndBind(this.descriptionText, getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION, this);
+	public void bindValuesToUi() {
+		if (this.keyWordText != null) {
+			BindingUtil.createTextAndBind(this.keyWordText, getModelObject(),
+					InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS, this);
+		}
+		if (this.descriptionText != null) {
+			BindingUtil.createTextAndBind(this.descriptionText, getModelObject(),
+					InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION, this);
+		}
 
 	}
 
@@ -161,6 +176,13 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 	public void setBindingContext(final EMFDataBindingContext ctx) {
 		this.dataBindingContext = ctx;
 
+	}
+
+	/**
+	 * @return the rendered
+	 */
+	public boolean isRendered() {
+		return this.rendered;
 	}
 
 }

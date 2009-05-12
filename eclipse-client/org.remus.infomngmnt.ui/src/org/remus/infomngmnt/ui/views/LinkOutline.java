@@ -133,8 +133,8 @@ public class LinkOutline extends ContentOutlinePage {
 			List<Link> createLinks = createLinks(sources);
 			for (Link link : createLinks) {
 				CreateChildCommand create_link = CommandFactory.CREATE_LINK(LinkOutline.this.info,
-						link, LinkOutline.this.adapterFactoryEditingDomain);
-				LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(create_link);
+						link, getAdapterFactoryEditingDomain());
+				getAdapterFactoryEditingDomain().getCommandStack().execute(create_link);
 			}
 			// ((EList<Link>)this.targetObject).addAll(createLinks);
 		}
@@ -183,7 +183,7 @@ public class LinkOutline extends ContentOutlinePage {
 
 	public static final String ID = "org.remus.infomngmnt.ui.views.Test"; //$NON-NLS-1$
 
-	private final InformationUnit info;
+	private InformationUnit info;
 
 	private ScrolledForm sform;
 
@@ -191,10 +191,13 @@ public class LinkOutline extends ContentOutlinePage {
 
 	private FormText linkFormText;
 
-	private final EditingDomain adapterFactoryEditingDomain;
+	private EditingDomain adapterFactoryEditingDomain;
 
 	private Section linkSection;
 	private Section eventSection;
+	private FormToolkit toolkit;
+	private CustomDropTargetListenerExtension dropTargetListenerExtension;
+	private DropTarget abstractDropZone;
 
 	@Override
 	public Control getControl() {
@@ -209,18 +212,19 @@ public class LinkOutline extends ContentOutlinePage {
 	@Override
 	public void createControl(final Composite parent) {
 
-		FormToolkit toolkit = new FormToolkit(parent.getDisplay());
-		this.sform = toolkit.createScrolledForm(parent);
+		this.toolkit = new FormToolkit(parent.getDisplay());
+		this.sform = this.toolkit.createScrolledForm(parent);
 		this.sform.setLayoutData(new GridData(GridData.FILL_BOTH));
-		ManagedForm managedForm = new ManagedForm(toolkit, this.sform);
+		ManagedForm managedForm = new ManagedForm(this.toolkit, this.sform);
 
 		TableWrapLayout layout = new TableWrapLayout();
 		layout.leftMargin = 10;
 		layout.rightMargin = 10;
 		this.sform.getBody().setLayout(layout);
 
-		createEventSection(this.sform, toolkit);
-		createLinkSection(this.sform, toolkit);
+		createEventSection(this.sform, this.toolkit);
+		createLinkSection(this.sform, this.toolkit);
+		bindValuesToUi();
 
 	}
 
@@ -250,8 +254,8 @@ public class LinkOutline extends ContentOutlinePage {
 				String string = e.getHref().toString();
 				if ("addLink".equals(string)) {
 					NewLinkWizardPage newLinkWizardPage = new NewLinkWizardPage(getSite()
-							.getShell(), LinkOutline.this.info,
-							LinkOutline.this.adapterFactoryEditingDomain);
+							.getShell(), LinkOutline.this.info, LinkOutline.this
+							.getAdapterFactoryEditingDomain());
 					int open = newLinkWizardPage.open();
 					if (open == IDialogConstants.OK_ID) {
 						performResult(newLinkWizardPage.getResult());
@@ -272,16 +276,12 @@ public class LinkOutline extends ContentOutlinePage {
 		});
 
 		this.linkSection.setClient(this.linkFormText);
-		buildList();
-
-		this.info.eAdapters().add(this.linkListChangeAdapter);
 
 		//
 		createActions();
 		initializeLinkToolBar(this.linkSection, toolkit);
 		initializeLinkMenu();
 		initDrop();
-		bindValuesToUi();
 
 	}
 
@@ -324,41 +324,47 @@ public class LinkOutline extends ContentOutlinePage {
 								LinkOutline.this.info);
 						if (diag.open() == IDialogConstants.OK_ID) {
 							CompoundCommand cc = new CompoundCommand();
-							cc.append(new RemoveCommand(
-									LinkOutline.this.adapterFactoryEditingDomain,
+							cc.append(new RemoveCommand(getAdapterFactoryEditingDomain(),
 									LinkOutline.this.info,
 									InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
 									Collections.singleton(itemByValue)));
-							cc.append(new CreateChildCommand(
-									LinkOutline.this.adapterFactoryEditingDomain,
+							cc.append(new CreateChildCommand(getAdapterFactoryEditingDomain(),
 									LinkOutline.this.info,
 									InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
 									diag.getNewObject(), Collections.EMPTY_LIST));
 							cc.setLabel("Edit Calendar-Entry");
-							LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(
-									cc);
+							getAdapterFactoryEditingDomain().getCommandStack().execute(cc);
 						}
 					}
 				}
 			}
 
 		});
-		this.info.eAdapters().add(this.eventListChangeAdapter);
 		initializeEventToolBar(this.eventSection, toolkit);
-		buildEventList();
 		this.eventSection.setClient(this.eventFormText);
 
 	}
 
 	protected void performResult(final Collection result) {
-		Command command = SetCommand.create(this.adapterFactoryEditingDomain, this.info,
+		Command command = SetCommand.create(getAdapterFactoryEditingDomain(), this.info,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS, result);
 		((AbstractCommand) command).setLabel("Edit Links");
-		this.adapterFactoryEditingDomain.getCommandStack().execute(command);
+		getAdapterFactoryEditingDomain().getCommandStack().execute(command);
 	}
 
-	private void bindValuesToUi() {
+	public void bindValuesToUi() {
+		buildEventList();
+		buildList();
+		this.info.eAdapters().add(this.eventListChangeAdapter);
+		this.info.eAdapters().add(this.linkListChangeAdapter);
+		this.abstractDropZone.addDropListener(this.dropTargetListenerExtension);
 
+	}
+
+	public void disposeModel() {
+		this.info.eAdapters().remove(this.eventListChangeAdapter);
+		this.info.eAdapters().remove(this.linkListChangeAdapter);
+		this.abstractDropZone.removeDropListener(this.dropTargetListenerExtension);
 	}
 
 	/**
@@ -371,13 +377,13 @@ public class LinkOutline extends ContentOutlinePage {
 		calendarEntry.setEnd(new Date(calendarEntry.getStart().getTime() + (15 * 60 * 1000)));
 		calendarEntry.setReminder(-1);
 		NewCalendarEntryDialog diag = new NewCalendarEntryDialog(getSite().getShell(),
-				calendarEntry, LinkOutline.this.adapterFactoryEditingDomain, LinkOutline.this.info);
+				calendarEntry, getAdapterFactoryEditingDomain(), LinkOutline.this.info);
 		if (diag.open() == IDialogConstants.OK_ID) {
-			Command create = AddCommand.create(LinkOutline.this.adapterFactoryEditingDomain,
+			Command create = AddCommand.create(getAdapterFactoryEditingDomain(),
 					LinkOutline.this.info,
 					InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY, diag
 							.getNewObject());
-			LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(create);
+			getAdapterFactoryEditingDomain().getCommandStack().execute(create);
 		}
 	}
 
@@ -387,10 +393,10 @@ public class LinkOutline extends ContentOutlinePage {
 	private void initDrop() {
 		final int dndOperations = DND.DROP_MOVE | DND.DROP_LINK | DND.DROP_COPY;
 		final Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
-		DropTarget abstractDropZone = new DropTarget(this.linkFormText, dndOperations);
-		abstractDropZone.setTransfer(transfers);
-		abstractDropZone
-				.addDropListener(new CustomDropTargetListenerExtension(this.info.getLinks()));
+		this.abstractDropZone = new DropTarget(this.linkFormText, dndOperations);
+		this.abstractDropZone.setTransfer(transfers);
+		this.dropTargetListenerExtension = new CustomDropTargetListenerExtension(this.info
+				.getLinks());
 
 	}
 
@@ -483,7 +489,7 @@ public class LinkOutline extends ContentOutlinePage {
 			@Override
 			public void run() {
 				NewLinkWizardPage page = new NewLinkWizardPage(getSite().getShell(),
-						LinkOutline.this.info, LinkOutline.this.adapterFactoryEditingDomain);
+						LinkOutline.this.info, getAdapterFactoryEditingDomain());
 				if (page.open() == IDialogConstants.OK_ID) {
 					performResult(page.getResult());
 				}
@@ -539,11 +545,11 @@ public class LinkOutline extends ContentOutlinePage {
 								.getArrayContentProviderInstance(), labelProvider,
 						"Select the entries to delete");
 				if (diag.open() == IDialogConstants.OK_ID) {
-					Command create = RemoveCommand.create(
-							LinkOutline.this.adapterFactoryEditingDomain, LinkOutline.this.info,
+					Command create = RemoveCommand.create(getAdapterFactoryEditingDomain(),
+							LinkOutline.this.info,
 							InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY, Arrays
 									.asList(diag.getResult()));
-					LinkOutline.this.adapterFactoryEditingDomain.getCommandStack().execute(create);
+					getAdapterFactoryEditingDomain().getCommandStack().execute(create);
 				}
 			}
 
@@ -582,6 +588,26 @@ public class LinkOutline extends ContentOutlinePage {
 	@Override
 	public void setFocus() {
 		// Set the focus
+	}
+
+	/**
+	 * @param info
+	 *            the info to set
+	 */
+	public void setInfo(final InformationUnit info) {
+		this.info = info;
+	}
+
+	/**
+	 * @param adapterFactoryEditingDomain
+	 *            the adapterFactoryEditingDomain to set
+	 */
+	public void setAdapterFactoryEditingDomain(final EditingDomain adapterFactoryEditingDomain) {
+		this.adapterFactoryEditingDomain = adapterFactoryEditingDomain;
+	}
+
+	public EditingDomain getAdapterFactoryEditingDomain() {
+		return this.adapterFactoryEditingDomain;
 	}
 
 }

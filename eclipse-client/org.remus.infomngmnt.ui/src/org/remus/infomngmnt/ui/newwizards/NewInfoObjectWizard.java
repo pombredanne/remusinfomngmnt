@@ -123,7 +123,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 					createInfotype[0] = CommandFactory.CREATE_INFOTYPE(
 							NewInfoObjectWizard.this.newElement, findCategory(), monitor);
 					Command additionalCommands = getAdditionalCommands();
-					if (additionalCommands != null) {
+					if (additionalCommands != null && additionalCommands.canExecute()) {
 						createInfotype[0].append(additionalCommands);
 					}
 					return Status.OK_STATUS;

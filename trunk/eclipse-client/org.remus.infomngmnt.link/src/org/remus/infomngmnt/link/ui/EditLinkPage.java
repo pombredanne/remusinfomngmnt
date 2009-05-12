@@ -26,7 +26,7 @@ public class EditLinkPage extends AbstractInformationFormPage {
 	private Text text;
 
 	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
@@ -65,12 +65,11 @@ public class EditLinkPage extends AbstractInformationFormPage {
 		refreshSearchableContentImageHyperlink.setText("Refresh searchable content");
 
 		doCreateSemanticSection(body, toolkit);
-		bindValuesToUi();
 
 	}
 
 	@Override
-	protected void bindValuesToUi() {
+	public void bindValuesToUi() {
 		super.bindValuesToUi();
 		ISWTObservableValue swtLink = SWTObservables.observeDelayedValue(500, SWTObservables
 				.observeText(this.text, SWT.Modify));

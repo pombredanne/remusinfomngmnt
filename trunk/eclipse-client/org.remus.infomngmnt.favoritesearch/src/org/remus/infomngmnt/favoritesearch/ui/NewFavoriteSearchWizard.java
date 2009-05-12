@@ -12,10 +12,20 @@
 
 package org.remus.infomngmnt.favoritesearch.ui;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
+import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
+import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.service.ISearchCallBack;
+import org.remus.infomngmnt.search.service.LuceneSearchService;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
@@ -23,8 +33,43 @@ import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
  */
 public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 
+	private Search search;
+
 	public NewFavoriteSearchWizard() {
 		setWindowTitle("Create new Favorite search");
+	}
+
+	@Override
+	public boolean performFinish() {
+		try {
+			getContainer().run(true, false, new IRunnableWithProgress() {
+				public void run(final IProgressMonitor monitor) throws InvocationTargetException,
+						InterruptedException {
+					LuceneSearchService.getInstance().search(NewFavoriteSearchWizard.this.search,
+							false, false, new ISearchCallBack() {
+								public void afterSearch(final IProgressMonitor monitor,
+										final Search search) {
+									InformationUnit childByType = InformationUtil.getChildByType(
+											NewFavoriteSearchWizard.this.newElement,
+											FavoriteSearchActivator.RESULT_NODE);
+									childByType.setBinaryValue(SearchSerializer.serialize(search));
+								}
+
+								public void beforeSearch(final IProgressMonitor monitor,
+										final Search search) {
+									// do nothing.
+								}
+							});
+				}
+			});
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return super.performFinish();
 	}
 
 	/*
@@ -40,7 +85,8 @@ public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 
 	@Override
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
-		super.init(workbench, selection);
+		this.search = (Search) selection.getFirstElement();
+		this.page1 = new GeneralFavoriteSearchWizardPage(this.search);
 		setCategoryString("Inbox/Favorite Searches");
 		setCategoryToPage();
 	}

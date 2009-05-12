@@ -19,6 +19,12 @@ public class FavoriteSearchActivator extends AbstractUIPlugin {
 
 	public static final String TYPE_ID = "FAVSEARCH"; //$NON-NLS-1$
 
+	public static final String LATEST_SEARCH_TYPE = "LATEST_SEARCH";
+
+	public static final String NEW_ELEMENTS_TYPE = "NEW_ELEMENTS";
+
+	public static final String RESULT_NODE = "RESULT_NODE";
+
 	/**
 	 * The constructor
 	 */

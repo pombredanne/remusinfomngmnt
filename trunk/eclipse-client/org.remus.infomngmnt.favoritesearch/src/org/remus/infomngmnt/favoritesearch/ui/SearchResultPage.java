@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.favoritesearch.ui;
 
+import org.eclipse.ui.forms.IManagedForm;
+
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 /**
@@ -24,6 +26,12 @@ public class SearchResultPage extends AbstractInformationFormPage {
 	 */
 	public SearchResultPage() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void renderPage(final IManagedForm managedForm) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

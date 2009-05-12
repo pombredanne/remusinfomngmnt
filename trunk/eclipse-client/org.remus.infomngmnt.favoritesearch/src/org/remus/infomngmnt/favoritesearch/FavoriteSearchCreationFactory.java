@@ -12,6 +12,11 @@
 
 package org.remus.infomngmnt.favoritesearch;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.command.Command;
+
+import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 
 /**
@@ -19,11 +24,27 @@ import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
  */
 public class FavoriteSearchCreationFactory extends AbstractCreationFactory {
 
-	/**
-	 * 
-	 */
-	public FavoriteSearchCreationFactory() {
-		// TODO Auto-generated constructor stub
+	@Override
+	public InformationUnit createNewObject() {
+		InformationUnit newObject = super.createNewObject();
+		newObject.setType(FavoriteSearchActivator.TYPE_ID);
+		InformationUnit latestSearch = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		latestSearch.setType(FavoriteSearchActivator.LATEST_SEARCH_TYPE);
+		InformationUnit newElementNode = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		newElementNode.setType(FavoriteSearchActivator.NEW_ELEMENTS_TYPE);
+		InformationUnit searchResultNode = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		searchResultNode.setType(FavoriteSearchActivator.RESULT_NODE);
+
+		newObject.getChildValues().add(latestSearch);
+		newObject.getChildValues().add(newElementNode);
+		newObject.getChildValues().add(searchResultNode);
+
+		return newObject;
+	}
+
+	@Override
+	public Command handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
+		return null;
 	}
 
 }

@@ -1,0 +1,4 @@
+#Bundle ID regex, Resource Path regex, resource path
+org\.eclipse\.ui\.ide,plugin\.xml,/ide.xslt
+org\.eclipse\.ui,plugin\.xml,/ui.xslt
+

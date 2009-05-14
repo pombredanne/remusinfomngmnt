@@ -58,6 +58,12 @@ public class UIExtensionManager {
 	public static final String IMPLEMENTATION_ID_ATT = "implementation"; //$NON-NLS-1$
 
 	// ///-----------------------
+
+	public static final String EDITOR_ACTION_NODE_NAME = "editorAction"; //$NON-NLS-1$
+
+	public static final String COMMAND_ID_ATT = "commandId"; //$NON-NLS-1$
+
+	// ///-----------------------
 	public static final String CREATIONTRIGGER_NODE_NAME = "creationUiTrigger"; //$NON-NLS-1$
 
 	public static final String CLASS_ATT = "class"; //$NON-NLS-1$
@@ -69,6 +75,8 @@ public class UIExtensionManager {
 	private Map<String, Map<String, AbstractCreationPreferencePage>> preferencePages;
 
 	private Map<String, IConfigurationElement> creationTrigger;
+
+	private Map<String, List<String>> commandIds;
 
 	public static UIExtensionManager getInstance() {
 		if (INSTANCE == null) {
@@ -89,12 +97,14 @@ public class UIExtensionManager {
 		this.items = new HashMap<String, List<IEditPage>>();
 		this.preferencePages = new HashMap<String, Map<String, AbstractCreationPreferencePage>>();
 		this.creationTrigger = new HashMap<String, IConfigurationElement>();
+		this.commandIds = new HashMap<String, List<String>>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 				EXTENSION_POINT);
 		final IConfigurationElement[] configurationElements = extensionPoint
 				.getConfigurationElements();
 		for (final IConfigurationElement configurationElement : configurationElements) {
 			if (configurationElement.getName().equals(INFORMATION_NODE_NAME)) {
+
 				final IEditPage editPage = new EditPage(configurationElement, configurationElement
 						.getContributor().getName(), configurationElement.getAttribute(TYPE_ATT),
 						configurationElement.getAttribute(ID_ATT), configurationElement
@@ -124,6 +134,13 @@ public class UIExtensionManager {
 			} else if (configurationElement.getName().equals(CREATIONTRIGGER_NODE_NAME)) {
 				this.creationTrigger.put(configurationElement.getAttribute(TYPE_ID_ATT),
 						configurationElement);
+			} else if (configurationElement.getName().equals(EDITOR_ACTION_NODE_NAME)) {
+				String typeId = configurationElement.getAttribute(TYPE_ID_ATT);
+				if (this.commandIds.get(typeId) == null) {
+					this.commandIds.put(typeId, new ArrayList<String>());
+				}
+				List<String> list = this.commandIds.get(typeId);
+				list.add(configurationElement.getAttribute(COMMAND_ID_ATT));
 			}
 		}
 	}
@@ -152,6 +169,10 @@ public class UIExtensionManager {
 		} catch (CoreException e) {
 			return null;
 		}
+	}
+
+	public List<String> getCommandIdsByTypeId(final String type) {
+		return this.commandIds.get(type);
 	}
 
 }

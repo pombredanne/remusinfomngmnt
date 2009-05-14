@@ -40,6 +40,10 @@
             class="org.remus.infomngmnt.link.ui.NewLinkWizard"
             typeId="LINK">
       </creationUiTrigger>
+      <editorAction
+            commandId="org.remus.infomngmnt.link.openBrowser"
+            typeId="LINK">
+      </editorAction>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -87,6 +91,60 @@
             id="org.remus.infomngmnt.link.fittosizeimage"
             resource="icons/iconexperience/fit_to_size.png">
       </referenceResource>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+         <menu
+               icon="icons/iconexperience/link.png"
+               id="org.remus.infomngmnt.sourcecode.contextmenu"
+               label="Link"
+               mnemonic="l">
+            <command
+                  commandId="org.remus.infomngmnt.link.openBrowser"
+                  style="push">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <test
+                              property="org.remus.infomngmnt.iutypes.typeEquals"
+                              value="LINK">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.remus.infomngmnt.link.openBrowser"
+            name="Open in Browser">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.remus.infomngmnt.link.handler.OpenLinkInBrowserHandler"
+            commandId="org.remus.infomngmnt.link.openBrowser">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.link.openBrowser"
+            icon="icons/iconexperience/window_earth.png">
+      </image>
    </extension>
 
 </plugin>

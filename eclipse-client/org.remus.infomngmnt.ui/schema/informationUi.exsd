@@ -22,6 +22,7 @@
                <element ref="editPage"/>
                <element ref="transferpreferences"/>
                <element ref="creationUiTrigger"/>
+               <element ref="editorAction"/>
             </choice>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -157,6 +158,31 @@
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.remus.infomngmnt.ui.rules.ICreationTrigger"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="editorAction">
+      <complexType>
+         <attribute name="commandId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ui.commands/command/@id"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="typeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.remus.infomngmnt.core.informationType/information/@type"/>
                </appinfo>
             </annotation>
          </attribute>

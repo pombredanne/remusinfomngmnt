@@ -309,6 +309,8 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		menuManager.add(this.copyAction);
 		menuManager.add(this.pasteAction);
 		menuManager.add(new Separator());
+		menuManager.add(new GroupMarker("iuspecific"));
+		menuManager.add(new Separator());
 		menuManager.add(new GroupMarker("sync"));
 		menuManager.add(new Separator());
 		menuManager.add(this.deleteAction);

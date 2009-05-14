@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -34,8 +33,6 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
@@ -46,6 +43,7 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.text.ITextSelection;
@@ -70,12 +68,12 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.IFormPage;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
-import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
 import org.remus.infomngmnt.core.CorePlugin;
@@ -89,8 +87,7 @@ import org.remus.infomngmnt.ui.extension.IEditPage;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 import org.remus.infomngmnt.ui.views.LinkOutline;
 
-public class InformationEditor extends SharedHeaderFormEditor implements IEditingDomainProvider,
-		IGotoMarker {
+public class InformationEditor extends SharedHeaderFormEditor implements IEditingDomainProvider {
 
 	public static final String ID = "org.remus.infomngmnt.ui.editors.InformationEditor"; //$NON-NLS-1$
 
@@ -339,6 +336,18 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				InformationExtensionManager.getInstance().getInfoTypeByType(
 						getPrimaryModel().getType()).getImageDescriptor().createImage());
 		getToolkit().decorateFormHeading(this.headerForm2.getForm().getForm());
+		List<String> commandIdsByTypeId = UIExtensionManager.getInstance().getCommandIdsByTypeId(
+				getPrimaryModel().getType());
+		if (commandIdsByTypeId != null) {
+			for (String string : commandIdsByTypeId) {
+				IContributionItem commandContribution = UIUtil.getCommandContribution(string, null,
+						null, null, null, null);
+				if (commandContribution != null) {
+					headerForm.getForm().getToolBarManager().add(commandContribution);
+				}
+			}
+			headerForm.getForm().getToolBarManager().update(true);
+		}
 	}
 
 	/**
@@ -856,25 +865,6 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	@Override
 	public boolean isSaveAsAllowed() {
 		return false;
-	}
-
-	public void gotoMarker(final IMarker marker) {
-		try {
-			if (marker.getType().equals(EValidator.MARKER)) {
-				final String uriAttribute = marker.getAttribute(EValidator.URI_ATTRIBUTE, null);
-				if (uriAttribute != null) {
-					final URI uri = URI.createURI(uriAttribute);
-					final EObject eObject = this.editingDomain.getResourceSet().getEObject(uri,
-							true);
-					if (eObject != null) {
-						// setSelectionToViewer(Collections.singleton(editingDomain.getWrapper(eObject)));
-					}
-				}
-			}
-		} catch (final CoreException exception) {
-			InfomngmntEditPlugin.INSTANCE.log(exception);
-		}
-
 	}
 
 	public InformationUnit getPrimaryModel() {

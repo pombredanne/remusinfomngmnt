@@ -553,6 +553,13 @@
             properties="canCommitOrReplace, canAdd"
             type="org.remus.infomngmnt.SynchronizableObject">
       </propertyTester>
+      <propertyTester
+            class="org.remus.infomngmnt.ui.propertytester.InfoUnitTypeTester"
+            id="org.remus.infomngmnt.ui.InfoUnitTypeTest"
+            namespace="org.remus.infomngmnt.iutypes"
+            properties="typeEquals"
+            type="org.remus.infomngmnt.AbstractInformationUnit">
+      </propertyTester>
    </extension>
    <extension
          point="org.remus.infomngmnt.core.postProjectHandle">

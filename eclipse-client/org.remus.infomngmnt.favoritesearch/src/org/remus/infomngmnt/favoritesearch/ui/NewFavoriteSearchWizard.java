@@ -24,6 +24,7 @@ import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.service.ISearchCallBack;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
@@ -53,6 +54,11 @@ public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 											NewFavoriteSearchWizard.this.newElement,
 											FavoriteSearchActivator.RESULT_NODE);
 									childByType.setBinaryValue(SearchSerializer.serialize(search));
+									childByType = InformationUtil.getChildByType(
+											NewFavoriteSearchWizard.this.newElement,
+											FavoriteSearchActivator.NEW_ELEMENTS_TYPE);
+									childByType.setBinaryValue(SearchSerializer
+											.serialize(SearchFactory.eINSTANCE.createSearch()));
 								}
 
 								public void beforeSearch(final IProgressMonitor monitor,

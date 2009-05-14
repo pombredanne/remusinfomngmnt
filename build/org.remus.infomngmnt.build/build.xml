@@ -94,6 +94,27 @@
 			<param name="cvs.name" value="org.eclipse.equinox.ds"  />
 		</antcall>
 		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.equinox/components/bundles/org.eclipse.equinox.transforms.hook" />
+			<param name="cvs.name" value="org.eclipse.equinox.transforms.hook"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.equinox/components/bundles/org.eclipse.equinox.transforms.xslt" />
+			<param name="cvs.name" value="org.eclipse.equinox.transforms.xslt"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
+			<param name="cvs.tag"  value="R3_4_maintenance" />
+			<param name="cvs.package" value="org.eclipse.equinox/framework/bundles/org.eclipse.osgi" />
+			<param name="cvs.name" value="org.eclipse.osgi"  />
+		</antcall>
+		
 
 		<antcall target="checkoutPackage">
 			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />

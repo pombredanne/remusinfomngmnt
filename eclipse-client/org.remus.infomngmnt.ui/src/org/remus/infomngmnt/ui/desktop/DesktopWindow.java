@@ -49,7 +49,7 @@ public class DesktopWindow extends AbstractNotificationPopup {
 
 	private List<AbstractTraySection> traySections;
 
-	public DesktopWindow(Display display) {
+	public DesktopWindow(final Display display) {
 		super(display);
 		this.display = display;
 	}
@@ -57,7 +57,7 @@ public class DesktopWindow extends AbstractNotificationPopup {
 	private final Job closeJob = new Job("set alpha job") {
 
 		@Override
-		protected IStatus run(IProgressMonitor monitor) {
+		protected IStatus run(final IProgressMonitor monitor) {
 			if (!DesktopWindow.this.display.isDisposed()) {
 				DesktopWindow.this.display.asyncExec(new Runnable() {
 					public void run() {
@@ -84,7 +84,6 @@ public class DesktopWindow extends AbstractNotificationPopup {
 		}
 	};
 
-
 	private FadeJob transparancyJob;
 	private FormToolkit toolkit;
 
@@ -97,8 +96,8 @@ public class DesktopWindow extends AbstractNotificationPopup {
 		for (TraySection traySection : sections2) {
 			Section createSection = this.toolkit.createSection(parent, SWT.NO_FOCUS);
 			this.toolkit.createCompositeSeparator(createSection);
-			createSection.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,false));
-			Composite composite = this.toolkit.createComposite(createSection,SWT.NO_FOCUS);
+			createSection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			Composite composite = this.toolkit.createComposite(createSection, SWT.NO_FOCUS);
 			createSection.setClient(composite);
 			AbstractTraySection implementation = traySection.getImplementation();
 			implementation.init(this.toolkit, traySection);
@@ -118,7 +117,7 @@ public class DesktopWindow extends AbstractNotificationPopup {
 		return "RIM Desktop Panel";
 	}
 
-	private boolean isMouseOver(Shell shell) {
+	private boolean isMouseOver(final Shell shell) {
 		if (this.display.isDisposed()) {
 			return false;
 		}
@@ -137,35 +136,35 @@ public class DesktopWindow extends AbstractNotificationPopup {
 	public void closeFade() {
 		if (this.transparancyJob != null) {
 			this.transparancyJob.cancelAndWait(false);
+			this.transparancyJob.done(Status.OK_STATUS);
 		}
-		if (true) {
-			this.transparancyJob = SwtFadeUtil.fadeOut(getShell(),120, new IFadeListener() {
-				public void faded(Shell shell, int alpha) {
-					if (!shell.isDisposed()) {
-						if (alpha == 0) {
-							shell.close();
-						} else if (isMouseOver(shell)) {
-							if (DesktopWindow.this.transparancyJob != null) {
-								DesktopWindow.this.transparancyJob.cancelAndWait(false);
-							}
-							DesktopWindow.this.transparancyJob = SwtFadeUtil.fastFadeIn(shell, new IFadeListener() {
-								public void faded(Shell shell, int alpha) {
-									if (shell.isDisposed()) {
-										return;
-									}
-
-									if (alpha == 255) {
-										scheduleAutoClose();
-									}
-								}
-							});
+		this.transparancyJob = SwtFadeUtil.fadeOut(getShell(), 120, new IFadeListener() {
+			public void faded(final Shell shell, final int alpha) {
+				if (!shell.isDisposed()) {
+					if (alpha == 0) {
+						shell.close();
+					} else if (isMouseOver(shell)) {
+						if (DesktopWindow.this.transparancyJob != null) {
+							DesktopWindow.this.transparancyJob.cancelAndWait(false);
+							DesktopWindow.this.transparancyJob.done(Status.OK_STATUS);
 						}
+						DesktopWindow.this.transparancyJob = SwtFadeUtil.fastFadeIn(shell,
+								new IFadeListener() {
+									public void faded(final Shell shell, final int alpha) {
+										if (shell.isDisposed()) {
+											return;
+										}
+
+										if (alpha == 255) {
+											scheduleAutoClose();
+										}
+									}
+								});
 					}
 				}
-			});
-		} else {
-			// do nothing
-		}
+			}
+		});
+
 	}
 
 	@Override
@@ -175,22 +174,20 @@ public class DesktopWindow extends AbstractNotificationPopup {
 	}
 
 	@Override
-	protected void setLocation(Shell shell2) {
-		shell2.setLocation(PreferenceConverter.getPoint(
-				UIPlugin.getDefault().getPreferenceStore(), UIPreferenceInitializer.DESKTOP_LOCATION));
+	protected void setLocation(final Shell shell2) {
+		shell2.setLocation(PreferenceConverter.getPoint(UIPlugin.getDefault().getPreferenceStore(),
+				UIPreferenceInitializer.DESKTOP_LOCATION));
 	}
 
 	@Override
-	public void setBlockOnOpen(boolean shouldBlock) {
+	public void setBlockOnOpen(final boolean shouldBlock) {
 		super.setBlockOnOpen(shouldBlock);
 	}
 
 	@Override
-	protected void saveLocation(Shell shell2) {
-		PreferenceConverter.setValue(
-				UIPlugin.getDefault().getPreferenceStore(),
-				UIPreferenceInitializer.DESKTOP_LOCATION,
-				shell2.getLocation());
+	protected void saveLocation(final Shell shell2) {
+		PreferenceConverter.setValue(UIPlugin.getDefault().getPreferenceStore(),
+				UIPreferenceInitializer.DESKTOP_LOCATION, shell2.getLocation());
 	}
 
 }

@@ -17,6 +17,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
+            category="org.remus.infomngmnt.ui.simple"
             class="org.remus.infomngmnt.image.ui.NewImageWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/photo_landscape_new.png"

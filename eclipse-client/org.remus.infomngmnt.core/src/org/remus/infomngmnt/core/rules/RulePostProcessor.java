@@ -190,6 +190,8 @@ public class RulePostProcessor {
 														}
 													}
 												}
+											} else {
+												break;
 											}
 										}
 									}

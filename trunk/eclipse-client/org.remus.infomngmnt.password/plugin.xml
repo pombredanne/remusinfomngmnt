@@ -27,6 +27,10 @@
             label="Edit Password"
             type="PASSWORD">
       </editPage>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.password.NewPasswordWizard"
+            typeId="PASSWORD">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

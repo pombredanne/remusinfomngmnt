@@ -53,24 +53,24 @@ public class ContactInformationRepresentation extends
 				fileExtension = new Path(origFileName.getStringValue()).getFileExtension();
 			}
 			
-			// TODO, createabstractbuildfolder überschreiben...
-			
-			IFile file = getBuildFolder().getFile(
-					new Path(getValue().getId()).addFileExtension(fileExtension));
-//			this.imageHref = file.getLocation().toOSString();
-			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
-			try {
-				file.create(bais, true, monitor);
-			} catch (CoreException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} finally {
-				try {
-					bais.close();
-				} catch (IOException e) {
-					// do nothing... we've done our best.
-				}
-			}
+//			// TODO, createabstractbuildfolder überschreiben...
+////			createFolderOnBuild
+//			IFile file = getBuildFolder().getFile(
+//					new Path(getValue().getId()).addFileExtension(fileExtension));
+////			this.imageHref = file.getLocation().toOSString();
+//			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
+//			try {
+//				file.create(bais, true, monitor);
+//			} catch (CoreException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} finally {
+//				try {
+//					bais.close();
+//				} catch (IOException e) {
+//					// do nothing... we've done our best.
+//				}
+//			}
 		}
 	}
 	@Override

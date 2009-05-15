@@ -32,6 +32,7 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
@@ -60,6 +61,11 @@ public class GeneralSourcePage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
+
+		setTitle("New Source-Code");
+		setMessage("This wizard enables you to create a new source code snippet.");
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(SourceCodePlugin.getDefault(),
+				"icons/iconexperience/wizards/new_sourcode_wizard_title.png"));
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);

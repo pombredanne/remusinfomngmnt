@@ -12,14 +12,16 @@
 
 package org.remus.infomngmnt.ui.tray;
 
+import java.util.Date;
+
+import org.eclipse.nebula.widgets.cdatetime.CDT;
+import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
+
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
-
-
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -31,23 +33,22 @@ public class ClockTray extends AbstractTraySection {
 
 	@Override
 	public void createDetailsPart(final Composite parent) {
-		GridLayout gridLayout = new GridLayout(1,false);
+		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginTop = 0;
 		gridLayout.marginWidth = 0;
 		parent.setLayout(gridLayout);
-//		int style = CDT.READ_ONLY | CDT.CLOCK_12_HOUR | CDT.SIMPLE | CDT.TIME_MEDIUM | CDT.COMPACT;
-//		final CDateTime dateTime = new CDateTime(parent, style);
-//		
-//		//this.toolkit.adapt(dateTime);
-//		
+		int style = CDT.READ_ONLY | CDT.CLOCK_12_HOUR | CDT.SIMPLE | CDT.TIME_MEDIUM | CDT.COMPACT;
+		final CDateTime dateTime = new CDateTime(parent, style);
+		//		
+		this.toolkit.adapt(dateTime);
+
+		//		
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gridData.widthHint = 150;
-		final Label label = new Label(parent, SWT.NONE);
-		label.setLayoutData(gridData);
-		label.setText("1");
-		this.i = 1;
-//		dateTime.setLayoutData(gridData);
-//		dateTime.layout();
+		// gridData.widthHint = 150;
+		gridData.heightHint = 130;
+
+		dateTime.setLayoutData(gridData);
+		// dateTime.layout();
 		this.thread = new Thread() {
 			@Override
 			public void run() {
@@ -58,18 +59,20 @@ public class ClockTray extends AbstractTraySection {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					parent.getDisplay().asyncExec(new Runnable() {
-						public void run() {
-							label.setText(String.valueOf(++ClockTray.this.i));
-						}
-					});
+					if (!parent.isDisposed()) {
+						parent.getDisplay().asyncExec(new Runnable() {
+							public void run() {
+								dateTime.setSelection(new Date());
+							}
+						});
+					}
 				}
-				
+
 			};
 		};
 		this.thread.start();
 	}
-	
+
 	@Override
 	public void dispose() {
 		super.dispose();

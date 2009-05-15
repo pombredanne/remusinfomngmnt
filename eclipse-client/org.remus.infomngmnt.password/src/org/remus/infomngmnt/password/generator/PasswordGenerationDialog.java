@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.password.PasswordPlugin;
 
 /**
@@ -75,7 +76,14 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 	public PasswordGenerationDialog(final Shell parentShell, final InformationUnit password) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
+
 		this.password = password;
+	}
+
+	@Override
+	protected void configureShell(final Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText("Generate Password");
 	}
 
 	@Override
@@ -97,6 +105,10 @@ public class PasswordGenerationDialog extends TitleAreaDialog {
 		this.area = new Composite((Composite) super.createDialogArea(parent), SWT.NONE);
 		this.area.setLayout(new GridLayout());
 		this.area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		setTitleImage(ResourceManager.getPluginImage(PasswordPlugin.getDefault(),
+				"icons/iconexperience/wizards/create_password_wizard.png"));
+		setTitle("Generate password");
 
 		// Group Create Properties
 		setGroupCreateProportiesUI();

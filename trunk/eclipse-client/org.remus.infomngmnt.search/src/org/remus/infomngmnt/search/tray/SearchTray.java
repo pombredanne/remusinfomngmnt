@@ -53,44 +53,49 @@ public class SearchTray extends AbstractTraySection {
 
 	@Override
 	public void createDetailsPart(final Composite parent) {
-		GridLayout gridLayout = new GridLayout(1,false);
+		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginTop = 0;
 		gridLayout.marginWidth = 0;
 		parent.setLayout(gridLayout);
 		SearchText searchText = new SearchText(parent, SWT.NO_BACKGROUND) {
 			private Text text;
+
 			@Override
 			protected ToolBarManager doCreateButtons() {
 				ToolBarManager doCreateButtons = super.doCreateButtons();
 				SearchTray.this.toolkit.adapt(doCreateButtons.getControl());
 				return doCreateButtons;
 			}
+
 			@Override
-			protected Text doCreateFilterText(Composite parent) {
+			protected Text doCreateFilterText(final Composite parent) {
 				this.text = super.doCreateFilterText(parent);
-				String string = UimodelEditPlugin.getPlugin().getDialogSettings().get(DIALOG_SETTINGS_LAST_SEARCHTERM);
+				String string = UimodelEditPlugin.getPlugin().getDialogSettings().get(
+						DIALOG_SETTINGS_LAST_SEARCHTERM);
 				if (string != null) {
 					this.text.setText(string);
 				}
 				return this.text;
 			}
+
 			@Override
 			protected void doAddListenerToTextField() {
 				super.doAddListenerToTextField();
 				this.text.addListener(SWT.Modify, new Listener() {
-					public void handleEvent(Event event) {
-						UimodelEditPlugin.getPlugin().getDialogSettings().put(DIALOG_SETTINGS_LAST_SEARCHTERM, text.getText());
+					public void handleEvent(final Event event) {
+						UimodelEditPlugin.getPlugin().getDialogSettings().put(
+								DIALOG_SETTINGS_LAST_SEARCHTERM, text.getText());
 
 					}
 				});
 			}
+
 			@Override
 			protected void handleSearchButtonPresses() {
 				Search createSearch = SearchFactory.eINSTANCE.createSearch();
 				createSearch.setScope(SearchScope.ALL);
 				createSearch.setSearchString(this.text.getText());
-				LuceneSearchService.getInstance().search(
-						createSearch, true, true, null);
+				LuceneSearchService.getInstance().search(createSearch, true, true, null);
 				SearchTray.this.restoreScheduled = true;
 
 			}
@@ -109,36 +114,35 @@ public class SearchTray extends AbstractTraySection {
 
 		Job.getJobManager().addJobChangeListener(this.searchJobListener = new JobChangeAdapter() {
 			@Override
-			public void scheduled(IJobChangeEvent event) {
-				if (!parent.getDisplay().isDisposed())
-					checkSearchBar(searchBar,parent.getDisplay());
+			public void scheduled(final IJobChangeEvent event) {
+				if (!parent.getDisplay().isDisposed()) {
+					checkSearchBar(searchBar, parent.getDisplay());
+				}
 			}
-			@Override
-			public void done(IJobChangeEvent event) {
-				if (!parent.getDisplay().isDisposed())
-					checkSearchBar(searchBar,parent.getDisplay());
 
+			@Override
+			public void done(final IJobChangeEvent event) {
+				if (!parent.getDisplay().isDisposed()) {
+					checkSearchBar(searchBar, parent.getDisplay());
+				}
 
 			}
 		});
 
 		checkSearchBar(searchBar, parent.getDisplay());
 
-
-
 	}
 
-	protected void checkSearchBar(final ProgressBar progressBar, Display display) {
+	protected void checkSearchBar(final ProgressBar progressBar, final Display display) {
 
 		display.asyncExec(new Runnable() {
 			public void run() {
 				if (!progressBar.isDisposed()) {
-					progressBar.setVisible(
-							Job.getJobManager().find(LuceneSearchService.JOB_FAMILY).length > 0);
+					progressBar
+							.setVisible(Job.getJobManager().find(LuceneSearchService.JOB_FAMILY).length > 0);
 					if (getTrayService() != null
 							&& Job.getJobManager().find(LuceneSearchService.JOB_FAMILY).length == 0
 							&& SearchTray.this.restoreScheduled) {
-						System.out.println("RESTore");
 						getTrayService().restoreFromTray(UIUtil.getPrimaryWindow().getShell());
 						SearchTray.this.restoreScheduled = false;
 					}
@@ -156,10 +160,10 @@ public class SearchTray extends AbstractTraySection {
 	}
 
 	public ITrayService getTrayService() {
-		final BundleContext bundleContext = InfomngmntEditPlugin.getPlugin()
-		.getBundle().getBundleContext();
+		final BundleContext bundleContext = InfomngmntEditPlugin.getPlugin().getBundle()
+				.getBundleContext();
 		final ServiceReference serviceReference = bundleContext
-		.getServiceReference(ITrayService.class.getName());
+				.getServiceReference(ITrayService.class.getName());
 		if (serviceReference != null) {
 			return (ITrayService) bundleContext.getService(serviceReference);
 		}

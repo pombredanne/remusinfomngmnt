@@ -6,6 +6,51 @@
 <#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
 <#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >
 
+<!-- group person -->
+<#assign persFormatted = infoUnit["childValues[@type='persFormatted']/@stringValue"] >
+<#assign hasPersFormatted = persFormatted?is_string && persFormatted?length != 0 >
+<#assign persRole = infoUnit["childValues[@type='persRole']/@stringValue"] >
+<#assign hasPersRole = persRole?is_string && persRole?length != 0 >
+<#assign persComplete = infoUnit["childValues[@type='persComplete']/@stringValue"] >
+<#assign hasPersComplete = persComplete?is_string && persComplete?length != 0 >
+<#assign persOrganisation = infoUnit["childValues[@type='persOrganisation']/@stringValue"] >
+<#assign hasPersOrganisation = persOrganisation?is_string && persOrganisation?length != 0 >
+<#assign imageData = infoUnit["childValues[@type='imageData']/@stringValue"] >
+<#assign hasImageData = imageData?is_string && imageData?length != 0 >
+
+<!-- group phone number -->
+<#assign pnHome = infoUnit["childValues[@type='pnHome']/@stringValue"] >
+<#assign hasPnHome = pnHome?is_string && pnHome?length != 0 >
+<#assign pnWork = infoUnit["childValues[@type='pnWork']/@stringValue"] >
+<#assign hasPnWork = pnWork?is_string && pnWork?length != 0 >
+<#assign pnVoice = infoUnit["childValues[@type='pnVoice']/@stringValue"] >
+<#assign hasPnVoice = pnVoice?is_string && pnVoice?length != 0 >
+<#assign pnFax = infoUnit["childValues[@type='pnFAX']/@stringValue"] >
+<#assign hasPnFax = pnFax?is_string && pnFax?length != 0 >
+<#assign pnMobile = infoUnit["childValues[@type='pnMobile']/@stringValue"] >
+<#assign hasPnMobile = pnMobile?is_string && pnMobile?length != 0 >
+<#assign pnMailbox = infoUnit["childValues[@type='pnMailbox']/@stringValue"] >
+<#assign hasPnMailbox = pnMailbox?is_string && pnMailbox?length != 0 >
+<#assign pnModem = infoUnit["childValues[@type='pnModem']/@stringValue"] >
+<#assign hasPnModem = pnModem?is_string && pnModem?length != 0 >
+<#assign pnCar = infoUnit["childValues[@type='pnCar']/@stringValue"] >
+<#assign hasPnCar = pnCar?is_string && pnCar?length != 0 >
+<#assign pnIsdn = infoUnit["childValues[@type='pnIsdn']/@stringValue"] >
+<#assign hasPnIsdn = pnIsdn?is_string && pnIsdn?length != 0 >
+<#assign pnVideo = infoUnit["childValues[@type='pnVideo']/@stringValue"] >
+<#assign hasPnVideo = pnVideo?is_string && pnVideo?length != 0 >
+<#assign pnPcs = infoUnit["childValues[@type='pnPcs']/@stringValue"] >
+<#assign hasPnPcs = pnPcs?is_string && pnPcs?length != 0 >
+<#assign pnPager = infoUnit["childValues[@type='pnPager']/@stringValue"] >
+<#assign hasPnPager = pnPager?is_string && pnPager?length != 0 >
+<#assign pnOthers = infoUnit["childValues[@type='pnOthers']/@stringValue"] >
+<#assign hasPnOthers = pnOthers?is_string && pnOthers?length != 0 >
+
+
+<#assign email1 = infoUnit["childValues[@type='email1']/@stringValue"] >
+<#assign hasEmail1 = email1?is_string && email1?length != 0 >
+
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -44,34 +89,195 @@
 }
  </style>
 <body>
-	
-	<div style="margin:5px;">
+	<!-- General - General - Person -->
+ 	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<span class="systemfont" style="font-weight:bold;">Person</span>
+  	</div>
+  	<div style="margin:5px;">
 		<table>
+		
+		
+	  		<div style="position:relative;margin:10px;">
+	  			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}" width="${width}" height="${height}">
+	  			<#if linkCount != 0>
+		  			<#assign count = 0 >
+		  			<#list links as link >
+			  			<#assign locationX = link["childValues[@type='loc_x']"].@longValue?number * (width?number/1000) >
+			  			<#assign locationY = link["childValues[@type='loc_y']"].@longValue?number * (height?number/1000) >
+			  			<#assign linkWidth = link["childValues[@type='dim_width']"].@longValue?number * (width?number/1000) >
+			  			<#assign linkHeight = link["childValues[@type='dim_height']"].@longValue?number * (height?number/1000) >
+			  			<#if link["count(childValues[@type='text']/@stringValue)"] != 0 >
+			  				<#assign commentText = link["childValues[@type='text']"].@stringValue?js_string>
+			  			<#else>
+			  				<#assign commentText = "n.a.">
+			  			</#if>
+			  			<div id="overlay${count}" style="left: ${locationX}px; width: ${linkWidth}px; position: absolute; top: ${locationY}px;height:${linkHeight}px; border:2px solid white;visibility:show"><a "href="#" onmouseover="return overlib('${commentText}');" onmouseout="return nd();"><img width="${linkWidth}" height="${linkHeight}" border="0" src="${.globals.jslibDir}/gif/transparent.gif"></a></div>
+		  				<#assign count = count + 1 >
+	  				</#list>
+	  			</#if>
+	  		</div>
+		
+		
+			<#if hasImageData >
+				<img src=${imageData} width="200" height="150" >
+			</#if>
+			<#if hasPersComplete >
 			<tr>
-				<td class="bold">Text Name:</td>
-				<td>${infoUnit.@label?html}</td>
-			</tr>
-			<#if hasKeywords >
-			<tr>
-				<td class="bold">Keywords:</td>
-				<td>${infoUnit.@keywords?html}</td>
+				<td class="bold">Complete Name:</td>
+				<td>${persComplete}</td>
 			</tr>
 			</#if>
-			<#if hasDescription >
+			<#if hasPersRole >
 			<tr>
-				<td class="bold">Description:</td>
-				<td>${infoUnit.@description?html}</td>
+				<td class="bold">Role:</td>
+				<td>${persRole}</td>
 			</tr>
+			</#if>
+			<#if hasPersOrganisation >
+			<tr>
+				<td class="bold">Organisation:</td>
+				<td>${persOrganisation}</td>
+			</tr>
+			</#if>
+			<#if hasPersFormatted >
+			<tr>
+				<td class="bold">Formatted Name:</td>
+				<td>${persFormatted}</td>
+			</tr>
+			</#if>				
+		</table>
+	</div>
+
+	<!-- General - General - Phonenumbers -->
+	 <div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<span class="systemfont" style="font-weight:bold;">Phone Numbers</span>
+  	</div>
+   	<div style="margin:5px;">
+		<table>
+			<#if hasPnHome >
+			<tr>
+				<td class="bold">Home:</td>
+				<td>${pnHome}</td>
+			</tr>
+			</#if>
+			<#if hasPnWork >
+			<tr>
+				<td class="bold">Work:</td>
+				<td>${pnWork}</td>
+			</tr>
+			</#if>
+			<#if hasPnMobile >
+			<tr>
+				<td class="bold">Mobile:</td>
+				<td>${pnMobile}</td>
+			</tr>
+			</#if>
+			<#if hasPnFax >
+			<tr>
+				<td class="bold">Fax:</td>
+				<td>${pnFax}</td>
+			</tr>
+			</#if>
+			<#if hasPnVoice >
+			<tr>
+				<td class="bold">Voice:</td>
+				<td>${pnVoice}</td>
+			</tr>
+			</#if>
+			<#if hasPnMailbox >
+			<tr>
+				<td class="bold">Mailbox:</td>
+				<td>${pnMailbox}</td>
+			</tr>
+			</#if>
+			<#if hasPnModem >
+			<tr>
+				<td class="bold">Modem:</td>
+				<td>${pnModem}</td>
+			</tr>
+			</#if>
+			<#if hasPnCar >
+			<tr>
+				<td class="bold">Car:</td>
+				<td>${pnCar}</td>
+			</tr>
+			</#if>
+			<#if hasPnIsdn >
+			<tr>
+				<td class="bold">ISDN:</td>
+				<td>${pnIsdn}</td>
+			</tr>
+			</#if>
+			<#if hasPnVideo >
+			<tr>
+				<td class="bold">Video:</td>
+				<td>${pnVideo}</td>
+			</tr>
+			</#if>
+			<#if hasPnPcs >
+			<tr>
+				<td class="bold">PCS:</td>
+				<td>${pnPcs}</td>
+			</tr>
+			</#if>
+			<#if hasPnPager >
+			<tr>
+				<td class="bold">Pager:</td>
+				<td>${pnPager}</td>
+			</tr>
+			</#if>
+			<#if hasPnOthers >
+			<tr>
+				<td class="bold">Others:</td>
+				<td>${pnOthers}</td>
+			</tr>
+			</#if>	
+		</table>
+	</div>
+  <!--	
+	<div style="margin:5px;">
+		<table>
+			<#if hasEmail1>
+				<td class="bold">E-Mail 1:</td>
+				<td><a href="mailto:${email1}">${email1?html}</a></td>
 			</#if>
 		</table>
 	</div>
-  	<div>
+-->	
+	
+	<!-- General - Semantics -->
+	<div>
   		<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  			<span class="systemfont" style="font-weight:bold;">Text</span>
+  			<span class="systemfont" style="font-weight:bold;">Semantics</span>
   		</div>
-  	<#if hasText >
-  	${text}
-  	</#if>
+	  	<div style="margin:5px;">
+			<table>
+				<tr>
+					<td class="bold">Image Name:</td>
+					<td>${infoUnit.@label?html}</td>
+				</tr>
+				<#if hasKeywords >
+				<tr>
+					<td class="bold">Keywords:</td>
+					<td>${infoUnit.@keywords?html}</td>
+				</tr>
+				</#if>
+				<#if hasDescription >
+				<tr>
+					<td class="bold">Description:</td>
+					<td>${infoUnit.@description?html}</td>
+				</tr>
+				</#if>
+			</table>
+		</div>
+	  	<div>
+	  		<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+	  			<span class="systemfont" style="font-weight:bold;">Text</span>
+	  		</div>
+	  		<#if hasText >
+	  			${text}
+	  		</#if>
+	  	</div>
   	</div>
 </body>
 </html>

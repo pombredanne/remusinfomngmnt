@@ -17,6 +17,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
+            category="org.remus.infomngmnt.ui.business"
             class="org.remus.infomngmnt.sourcecode.wizard.NewSourceCodeWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/code_colored_new.png"

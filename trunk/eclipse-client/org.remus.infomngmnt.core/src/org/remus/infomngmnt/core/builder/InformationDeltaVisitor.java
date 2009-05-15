@@ -40,6 +40,7 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -186,9 +187,10 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				IMarker createMarker = resource.createMarker(IMarker.PROBLEM);
 				createMarker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 				createMarker.setAttribute(IMarker.LOCATION, objectFromFile.getLabel());
-				createMarker.setAttribute(IMarker.MESSAGE, StringUtils.join(
-						"Error while saving the inormation unit", objectFromFile.getLabel(), "(", e
-								.getMessage(), ")"));
+				String join = StringUtils.join("Error while saving the inormation unit",
+						objectFromFile.getLabel(), "(", e.getMessage(), ")");
+				createMarker.setAttribute(IMarker.MESSAGE, join);
+				InfomngmntEditPlugin.getPlugin().getLog().log(StatusCreator.newStatus(join, e));
 
 			} catch (CoreException e1) {
 				// TODO Auto-generated catch block

@@ -57,8 +57,8 @@ public class CommonImageRegistry extends ImageRegistry {
 		registerImage(SECTION_VERTICAL, "images/th_vertical.gif");
 		registerImage(NOTIFICATION_CLOSE_HOVER, "images/notification/notification-close-active.gif");
 		registerImage(NOTIFICATION_CLOSE, "images/notification/notification-close.gif");
-		registerImage(CLEAR_FILTER, "images/clear_co.gif");
-		registerImage(START_TASK, "images/start_task.gif");
+		registerImage(CLEAR_FILTER, "icons/iconexperience/eraser.png");
+		registerImage(START_TASK, "icons/iconexperience/media_play.png");
 		registerImage(INFORMATION_DECORATION, "images/information_decorator.png");
 
 	}
@@ -67,13 +67,12 @@ public class CommonImageRegistry extends ImageRegistry {
 		try {
 			IPath path = new Path(fileName);
 			URL url = FileLocator.find(UimodelEditPlugin.getPlugin().getBundle(), path, null);
-			if (url!=null) {
+			if (url != null) {
 				ImageDescriptor desc = ImageDescriptor.createFromURL(url);
 				put(key, desc);
 			}
 		} catch (Exception e) {
 		}
 	}
-
 
 }

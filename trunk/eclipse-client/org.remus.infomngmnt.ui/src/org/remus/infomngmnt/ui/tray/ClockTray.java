@@ -65,6 +65,8 @@ public class ClockTray extends AbstractTraySection {
 								dateTime.setSelection(new Date());
 							}
 						});
+					} else {
+						break;
 					}
 				}
 
@@ -75,6 +77,7 @@ public class ClockTray extends AbstractTraySection {
 
 	@Override
 	public void dispose() {
+
 		super.dispose();
 	}
 

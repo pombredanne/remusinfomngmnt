@@ -614,31 +614,35 @@ public abstract class AbstractNotificationPopup extends Window {
 			this.fadeJob.cancelAndWait(false);
 		}
 		if (this.supportsFading) {
-			this.fadeJob = SwtFadeUtil.fadeOut(getShell(), new IFadeListener() {
-				public void faded(final Shell shell, final int alpha) {
-					if (!shell.isDisposed()) {
-						if (alpha == 0) {
-							shell.close();
-						} else if (isMouseOver(shell)) {
-							if (AbstractNotificationPopup.this.fadeJob != null) {
-								AbstractNotificationPopup.this.fadeJob.cancelAndWait(false);
-							}
-							AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(shell,
-									new IFadeListener() {
-										public void faded(final Shell shell, final int alpha) {
-											if (shell.isDisposed()) {
-												return;
-											}
+			if (this.fadeJob != null) {
+				this.fadeJob.schedule(SwtFadeUtil.FADE_RESCHEDULE_DELAY);
+			} else {
+				this.fadeJob = SwtFadeUtil.fadeOut(getShell(), new IFadeListener() {
+					public void faded(final Shell shell, final int alpha) {
+						if (!shell.isDisposed()) {
+							if (alpha == 0) {
+								shell.close();
+							} else if (isMouseOver(shell)) {
+								if (AbstractNotificationPopup.this.fadeJob != null) {
+									AbstractNotificationPopup.this.fadeJob.cancelAndWait(false);
+								}
+								AbstractNotificationPopup.this.fadeJob = SwtFadeUtil.fastFadeIn(
+										shell, new IFadeListener() {
+											public void faded(final Shell shell, final int alpha) {
+												if (shell.isDisposed()) {
+													return;
+												}
 
-											if (alpha == 255) {
-												scheduleAutoClose();
+												if (alpha == 255) {
+													scheduleAutoClose();
+												}
 											}
-										}
-									});
+										});
+							}
 						}
 					}
-				}
-			});
+				});
+			}
 		} else {
 			this.shell.close();
 		}

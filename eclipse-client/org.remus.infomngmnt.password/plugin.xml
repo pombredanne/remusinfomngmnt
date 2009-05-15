@@ -31,6 +31,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
+            category="org.remus.infomngmnt.ui.simple"
             class="org.remus.infomngmnt.password.NewPasswordWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/password_new.png"

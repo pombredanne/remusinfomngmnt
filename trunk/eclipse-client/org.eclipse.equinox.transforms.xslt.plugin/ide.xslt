@@ -1,5 +1,5 @@
  <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-     <xsl:template match="wizard">
+     <xsl:template match="extension[@point='org.eclipse.ui.newWizards']">
      </xsl:template>
      <xsl:template match="key[@commandId='org.eclipse.ui.window.quickAccess']">
      </xsl:template>

@@ -67,7 +67,7 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 		this.newElement.setStringValue(String.valueOf(value));
 		InformationUnit childByType = InformationUtil.getChildByType(ruleValue,
 				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
-		if (childByType != null) {
+		if (childByType != null && childByType.getStringValue() != null) {
 			this.page1.setCategoryString(childByType.getStringValue());
 		}
 	}

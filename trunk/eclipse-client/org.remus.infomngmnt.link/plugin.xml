@@ -48,6 +48,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
+            category="org.remus.infomngmnt.ui.simple"
             class="org.remus.infomngmnt.link.ui.NewLinkWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/link_new.png"

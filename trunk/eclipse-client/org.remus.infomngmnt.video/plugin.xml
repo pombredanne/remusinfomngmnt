@@ -29,6 +29,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             canFinishEarly="true"
+            category="org.remus.infomngmnt.ui.simple"
             class="org.remus.infomngmnt.video.newwizard.NewVideoWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             hasPages="true"

@@ -82,19 +82,11 @@
             <command
                   commandId="org.remus.infomngmnt.sourcecode.copyToClipboard"
                   style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="selection">
-                     <iterate>
-                        <test
-                              property="org.remus.infomngmnt.iutypes.typeEquals"
-                              value="SOURCE">
-                        </test>
-                     </iterate>
-                  </with>
-               </visibleWhen>
             </command>
+            <separator
+                  name="additions"
+                  visible="false">
+            </separator>
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -112,10 +104,6 @@
                   </and>
                </with>
             </visibleWhen>
-            <separator
-                  name="additions"
-                  visible="false">
-            </separator>
          </menu>
       </menuContribution>
    </extension>

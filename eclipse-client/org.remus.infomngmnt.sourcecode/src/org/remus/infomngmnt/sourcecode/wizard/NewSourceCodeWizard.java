@@ -34,7 +34,7 @@ public class NewSourceCodeWizard extends NewInfoObjectWizard {
 	 * 
 	 */
 	public NewSourceCodeWizard() {
-		// TODO Auto-generated constructor stub
+		setWindowTitle("New Source Code");
 	}
 
 	@Override

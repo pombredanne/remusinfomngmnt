@@ -29,7 +29,6 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -43,6 +42,7 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DragSourceListener;
+import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -70,9 +70,7 @@ import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class DesktopPanelPreferencePage extends PreferencePage implements
-IWorkbenchPreferencePage {
-
+public class DesktopPanelPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	private TraySectionCollection sections;
 	private TableViewer tableViewer;
@@ -86,6 +84,7 @@ IWorkbenchPreferencePage {
 	private StackLayout stackLayout;
 	private List<AbstractTrayPreferencePage> knownPrefPages;
 	private Label fallbackText;
+
 	/**
 	 * 
 	 */
@@ -110,8 +109,12 @@ IWorkbenchPreferencePage {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse
+	 * .swt.widgets.Composite)
 	 */
 	@Override
 	protected Control createContents(final Composite parent) {
@@ -128,8 +131,10 @@ IWorkbenchPreferencePage {
 		desktopConfigurationGroup.setLayout(new FillLayout());
 
 		this.tableViewer = new TableViewer(desktopConfigurationGroup, SWT.BORDER);
-		this.tableViewer.setContentProvider(new AdapterFactoryContentProvider(UIEditingUtil.getInstance().getAdapterFactory()));
-		this.tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(UIEditingUtil.getInstance().getAdapterFactory()));
+		this.tableViewer.setContentProvider(new AdapterFactoryContentProvider(UIEditingUtil
+				.getInstance().getAdapterFactory()));
+		this.tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(UIEditingUtil
+				.getInstance().getAdapterFactory()));
 		this.tableViewer.setInput(this.sections);
 		this.tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent event) {
@@ -142,10 +147,10 @@ IWorkbenchPreferencePage {
 		avaiableTemplatesGroup.setText("Available Templates");
 		avaiableTemplatesGroup.setLayout(new GridLayout());
 
-
 		this.avaialableTemplatesViewer = new TableViewer(avaiableTemplatesGroup, SWT.BORDER);
-		this.avaialableTemplatesViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		sashForm_1.setWeights(new int[] {7, 3 });
+		this.avaialableTemplatesViewer.getControl().setLayoutData(
+				new GridData(SWT.FILL, SWT.FILL, true, true));
+		sashForm_1.setWeights(new int[] { 7, 3 });
 		this.avaialableTemplatesViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.avaialableTemplatesViewer.setLabelProvider(new LabelProvider() {
 			@Override
@@ -155,12 +160,11 @@ IWorkbenchPreferencePage {
 		});
 		this.avaialableTemplatesViewer.setInput(TraySectionManager.getInstance().getAllSections());
 
-
 		this.propertiesGroup = new Group(sashForm, SWT.NONE);
 		this.propertiesGroup.setText("Properties");
 		this.stackLayout = new StackLayout();
 		this.propertiesGroup.setLayout(this.stackLayout);
-		sashForm.setWeights(new int[] {1, 1 });
+		sashForm.setWeights(new int[] { 1, 1 });
 		initDnd();
 		hookContextMenu();
 		return composite;
@@ -168,11 +172,13 @@ IWorkbenchPreferencePage {
 
 	protected void handleSelectionChanged(final ISelection selection) {
 		if (!selection.isEmpty()) {
-			TraySection element = (TraySection) ((IStructuredSelection) selection).getFirstElement();
+			TraySection element = (TraySection) ((IStructuredSelection) selection)
+					.getFirstElement();
 
-			ITraySectionDefinition trayDefinition = TraySectionManager.getInstance().getSectionDefinitionById(element.getTemplateId());
+			ITraySectionDefinition trayDefinition = TraySectionManager.getInstance()
+					.getSectionDefinitionById(element.getTemplateId());
 			if (trayDefinition != null) {
-				//preferencePage.g
+				// preferencePage.g
 				AbstractTrayPreferencePage preferencePage = trayDefinition.getPreferencePage();
 				if (preferencePage == null) {
 					createFallBack();
@@ -193,7 +199,6 @@ IWorkbenchPreferencePage {
 			createFallBack();
 			this.stackLayout.topControl = this.fallbackText;
 		}
-
 
 	}
 
@@ -243,80 +248,98 @@ IWorkbenchPreferencePage {
 		// Drag and Drop of the tray-definition
 		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
 		Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
-		this.tableViewer.addDragSupport(DND.DROP_MOVE, transfers, new ViewerDragAdapter(this.tableViewer));
-		this.tableViewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(this.editingDomain, this.tableViewer) {
-			@Override
-			protected Object extractDropTarget(final Widget item) {
-				/*
-				 * For allowing drag'n'drop also on
-				 * an empty viewer we have to return
-				 * the root, so that it's possible
-				 * to drop items on a blank viewer.
-				 */
-				if (item == null) {
-					return this.viewer.getInput();
-				}
-				return super.extractDropTarget(item);
-			}
-		});
+		this.tableViewer.addDragSupport(DND.DROP_MOVE, transfers, new ViewerDragAdapter(
+				this.tableViewer));
+		this.tableViewer.addDropSupport(dndOperations, transfers,
+				new EditingDomainViewerDropAdapter(this.editingDomain, this.tableViewer) {
+					@Override
+					protected Object extractDropTarget(final Widget item) {
+						/*
+						 * For allowing drag'n'drop also on an empty viewer we
+						 * have to return the root, so that it's possible to
+						 * drop items on a blank viewer.
+						 */
+						if (item == null) {
+							return this.viewer.getInput();
+						}
+						return super.extractDropTarget(item);
+					}
 
-		// Drag of the available viewer
-		this.avaialableTemplatesViewer.addDragSupport(dndOperations, transfers, new DragSourceListener() {
-			public void dragFinished(final DragSourceEvent event) {
-				// do nothing
-			}
+					@Override
+					public void dragOver(final DropTargetEvent event) {
 
-			/* (non-Javadoc)
-			 * @see org.eclipse.swt.dnd.DragSourceListener#dragSetData(org.eclipse.swt.dnd.DragSourceEvent)
-			 */
-			public void dragSetData(final DragSourceEvent event) {
-				/*
-				 *  by default we're creating a new object, that
-				 *  can be dropped as a new TraySection into the list
-				 *  of rendered section
-				 */
-				if (LocalTransfer.getInstance().isSupportedType(event.dataType)) {
-					ITraySectionDefinition firstElement = (ITraySectionDefinition) ((IStructuredSelection) DesktopPanelPreferencePage.this.avaialableTemplatesViewer.getSelection()).getFirstElement();
-					TraySection newSection = UIModelFactory.eINSTANCE.createTraySection();
-					newSection.setImplementation(firstElement.getImplementation());
-					newSection.setTemplateId(firstElement.getId());
-					newSection.setName(firstElement.getLabel());
-					event.data = new StructuredSelection(newSection);
-				}
-			}
-
-			public void dragStart(final DragSourceEvent event) {
-				ITraySectionDefinition element = (ITraySectionDefinition) ((IStructuredSelection) DesktopPanelPreferencePage.this.avaialableTemplatesViewer
-						.getSelection()).getFirstElement();
-				if (!element.isMultiple()) {
-					/*
-					 * If an element is not allowed to be more than one
-					 * time in the desktop panel, the drag will be supressed
-					 * if this template is already in use.
-					 */
-					EList<TraySection> sections2 = DesktopPanelPreferencePage.this.sections.getSections();
-					for (TraySection currentSection : sections2) {
-						if (currentSection.getTemplateId().equals(element.getId())) {
-							event.detail = DND.DROP_NONE;
-							event.data = null;
-							return;
+						super.dragOver(event);
+						ITraySectionDefinition element = (ITraySectionDefinition) ((IStructuredSelection) DesktopPanelPreferencePage.this.avaialableTemplatesViewer
+								.getSelection()).getFirstElement();
+						if (!element.isMultiple()) {
+							/*
+							 * If an element is not allowed to be more than one
+							 * time in the desktop panel, the drag will be
+							 * supressed if this template is already in use.
+							 */
+							EList<TraySection> sections2 = DesktopPanelPreferencePage.this.sections
+									.getSections();
+							for (TraySection currentSection : sections2) {
+								if (currentSection.getTemplateId().equals(element.getId())) {
+									event.detail = DND.DROP_NONE;
+									event.data = null;
+									return;
+								}
+							}
 						}
 					}
-				}
-			}
-		});
+				});
+
+		// Drag of the available viewer
+		this.avaialableTemplatesViewer.addDragSupport(dndOperations, transfers,
+				new DragSourceListener() {
+					public void dragFinished(final DragSourceEvent event) {
+						// do nothing
+					}
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.dnd.DragSourceListener#dragSetData(org
+					 * .eclipse.swt.dnd.DragSourceEvent)
+					 */
+					public void dragSetData(final DragSourceEvent event) {
+						/*
+						 * by default we're creating a new object, that can be
+						 * dropped as a new TraySection into the list of
+						 * rendered section
+						 */
+						if (LocalTransfer.getInstance().isSupportedType(event.dataType)) {
+
+							ITraySectionDefinition firstElement = (ITraySectionDefinition) ((IStructuredSelection) DesktopPanelPreferencePage.this.avaialableTemplatesViewer
+									.getSelection()).getFirstElement();
+							TraySection newSection = UIModelFactory.eINSTANCE.createTraySection();
+							newSection.setImplementation(firstElement.getImplementation());
+							newSection.setTemplateId(firstElement.getId());
+							newSection.setName(firstElement.getLabel());
+							event.data = new StructuredSelection(newSection);
+						}
+					}
+
+					public void dragStart(final DragSourceEvent event) {
+						// do nothing
+					}
+				});
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(final IWorkbench workbench) {
 		this.sections = TrayConfigurationManager.getInstance().getTraySections();
 		this.editingDomain = UIEditingUtil.getInstance().createNewEditingDomain();
-		this.dialogSettings = UIUtil.getDialogSettings(DIALOG_SETTINGS_SECTION, UimodelEditPlugin.getPlugin().getDialogSettings());
+		this.dialogSettings = UIUtil.getDialogSettings(DIALOG_SETTINGS_SECTION, UimodelEditPlugin
+				.getPlugin().getDialogSettings());
 		this.knownPrefPages = new ArrayList<AbstractTrayPreferencePage>();
 	}
-
-
 
 }

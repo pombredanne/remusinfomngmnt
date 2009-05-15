@@ -37,6 +37,10 @@
             id="org.remus.infomngmnt.ui.simple"
             name="Simple">
       </category>
+      <category
+            id="org.remus.infomngmnt.ui.business"
+            name="Business">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">

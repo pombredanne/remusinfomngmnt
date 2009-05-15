@@ -5,6 +5,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
+            category="org.remus.infomngmnt.ui.general"
             class="org.remus.infomngmnt.efs.ui.NewEncryptedProjectWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/encrypted_project_new.png"
@@ -15,15 +16,6 @@
       <primaryWizard
             id="org.remus.infomngmnt.efs.newencryptedproject">
       </primaryWizard>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.remus.infomngmnt.ui.infoperspective">
-         <newWizardShortcut
-               id="org.remus.infomngmnt.efs.newencryptedproject">
-         </newWizardShortcut>
-      </perspectiveExtension>
    </extension>
    <extension
          point="org.eclipse.ui.decorators">

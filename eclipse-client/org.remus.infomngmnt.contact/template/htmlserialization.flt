@@ -46,10 +46,64 @@
 <#assign pnOthers = infoUnit["childValues[@type='pnOthers']/@stringValue"] >
 <#assign hasPnOthers = pnOthers?is_string && pnOthers?length != 0 >
 
+<!-- group address -->
+<#assign workStreet = infoUnit["childValues[@type='workStreet']/@stringValue"] >
+<#assign hasWorkStreet = workStreet?is_string && workStreet?length != 0 >
+<#assign workPob = infoUnit["childValues[@type='workPob']/@stringValue"] >
+<#assign hasWorkPob = workPob?is_string && workPob?length != 0 >
+<#assign workLocality = infoUnit["childValues[@type='workLocality']/@stringValue"] >
+<#assign hasWorkLocality = workLocality?is_string && workLocality?length != 0 >
+<#assign workRegion = infoUnit["childValues[@type='workRegion']/@stringValue"] >
+<#assign hasWorkRegion = workRegion?is_string && workRegion?length != 0 >
+<#assign workPostal = infoUnit["childValues[@type='workPostal']/@stringValue"] >
+<#assign hasWorkPostal = workPostal?is_string && workPostal?length != 0 >
+<#assign workCountry = infoUnit["childValues[@type='workCountry']/@stringValue"] >
+<#assign hasWorkCountry = workCountry?is_string && workCountry?length != 0 >
+<#assign workStreet = infoUnit["childValues[@type='workStreet']/@stringValue"] >
+<#assign hasWorkStreet = workStreet?is_string && workStreet?length != 0 >
+<#assign workLongitude = infoUnit["childValues[@type='workLongitude']/@stringValue"] >
+<#assign hasWorkLongitude = workLongitude?is_string && workLongitude?length != 0 >
+<#assign workLatitude = infoUnit["childValues[@type='workLatitude']/@stringValue"] >
+<#assign hasWorkLatitude = workLatitude?is_string && workLatitude?length != 0 >
 
+<#assign homeStreet = infoUnit["childValues[@type='homeStreet']/@stringValue"] >
+<#assign hasHomeStreet = homeStreet?is_string && homeStreet?length != 0 >
+<#assign homePob = infoUnit["childValues[@type='homePob']/@stringValue"] >
+<#assign hasHomePob = homePob?is_string && homePob?length != 0 >
+<#assign homeLocality = infoUnit["childValues[@type='homeLocality']/@stringValue"] >
+<#assign hasHomeLocality = homeLocality?is_string && homeLocality?length != 0 >
+<#assign homeRegion = infoUnit["childValues[@type='homeRegion']/@stringValue"] >
+<#assign hasHomeRegion = homeRegion?is_string && homeRegion?length != 0 >
+<#assign homePostal = infoUnit["childValues[@type='homePostal']/@stringValue"] >
+<#assign hasHomePostal = homePostal?is_string && homePostal?length != 0 >
+<#assign homeCountry = infoUnit["childValues[@type='homeCountry']/@stringValue"] >
+<#assign hasHomeCountry = homeCountry?is_string && homeCountry?length != 0 >
+	
+<!-- group email -->
 <#assign email1 = infoUnit["childValues[@type='email1']/@stringValue"] >
 <#assign hasEmail1 = email1?is_string && email1?length != 0 >
+<#assign email2 = infoUnit["childValues[@type='email2']/@stringValue"] >
+<#assign hasEmail2 = email2?is_string && email2?length != 0 >
+<#assign email3 = infoUnit["childValues[@type='email3']/@stringValue"] >
+<#assign hasEmail3 = email3?is_string && email3?length != 0 >
+<#assign email4 = infoUnit["childValues[@type='email4']/@stringValue"] >
+<#assign hasEmail4 = email4?is_string && email4?length != 0 >
+<#assign email5 = infoUnit["childValues[@type='email5']/@stringValue"] >
+<#assign hasEmail5 = email5?is_string && email5?length != 0 >
+<#assign email6 = infoUnit["childValues[@type='email6']/@stringValue"] >
+<#assign hasEmail6 = email6?is_string && email6?length != 0 >
+<#assign email7 = infoUnit["childValues[@type='email7']/@stringValue"] >
+<#assign hasEmail7 = email7?is_string && email7?length != 0 >
+<#assign email8 = infoUnit["childValues[@type='email8']/@stringValue"] >
+<#assign hasEmail8 = email8?is_string && email8?length != 0 >
+<#assign email9 = infoUnit["childValues[@type='email9']/@stringValue"] >
+<#assign hasEmail9 = email9?is_string && email9?length != 0 >
+<#assign email10 = infoUnit["childValues[@type='email10']/@stringValue"] >
+<#assign hasEmail10 = email10?is_string && email10?length != 0 >
 
+<!-- homepage -->
+<#assign frontpage = infoUnit["childValues[@type='frontpage']/@stringValue"] >
+<#assign hasFrontpage = frontpage?is_string && frontpage?length != 0 >
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
@@ -94,30 +148,7 @@
   		<span class="systemfont" style="font-weight:bold;">Person</span>
   	</div>
   	<div style="margin:5px;">
-		<table>
-		
-		
-	  		<div style="position:relative;margin:10px;">
-	  			<img src="${additionals.imageHref}" name="${infoUnit.@label?html}" width="${width}" height="${height}">
-	  			<#if linkCount != 0>
-		  			<#assign count = 0 >
-		  			<#list links as link >
-			  			<#assign locationX = link["childValues[@type='loc_x']"].@longValue?number * (width?number/1000) >
-			  			<#assign locationY = link["childValues[@type='loc_y']"].@longValue?number * (height?number/1000) >
-			  			<#assign linkWidth = link["childValues[@type='dim_width']"].@longValue?number * (width?number/1000) >
-			  			<#assign linkHeight = link["childValues[@type='dim_height']"].@longValue?number * (height?number/1000) >
-			  			<#if link["count(childValues[@type='text']/@stringValue)"] != 0 >
-			  				<#assign commentText = link["childValues[@type='text']"].@stringValue?js_string>
-			  			<#else>
-			  				<#assign commentText = "n.a.">
-			  			</#if>
-			  			<div id="overlay${count}" style="left: ${locationX}px; width: ${linkWidth}px; position: absolute; top: ${locationY}px;height:${linkHeight}px; border:2px solid white;visibility:show"><a "href="#" onmouseover="return overlib('${commentText}');" onmouseout="return nd();"><img width="${linkWidth}" height="${linkHeight}" border="0" src="${.globals.jslibDir}/gif/transparent.gif"></a></div>
-		  				<#assign count = count + 1 >
-	  				</#list>
-	  			</#if>
-	  		</div>
-		
-		
+		<table>		
 			<#if hasImageData >
 				<img src=${imageData} width="200" height="150" >
 			</#if>
@@ -232,6 +263,179 @@
 				<td>${pnOthers}</td>
 			</tr>
 			</#if>	
+		</table>
+	</div>
+	
+	<!-- General - General - Address - Home-->
+		 <div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<span class="systemfont" style="font-weight:bold;">Address (Home)</span>
+  	</div>
+   	<div style="margin:5px;">
+		<table>
+			<#if hasHomeStreet >
+			<tr>
+				<td class="bold">Street:</td>
+				<td>${homeStreet}</td>
+			</tr>
+			</#if>
+			<#if hasHomePob >
+			<tr>
+				<td class="bold">Post Office Box:</td>
+				<td>${homePob}</td>
+			</tr>
+			</#if>
+			<#if hasHomeLocality >
+			<tr>
+				<td class="bold">Locality:</td>
+				<td>${homeLocality}</td>
+			</tr>
+			</#if>
+			<#if hasHomeRegion >
+			<tr>
+				<td class="bold">Region:</td>
+				<td>${homeRegion}</td>
+			</tr>
+			</#if>
+			<#if hasHomePostal >
+			<tr>
+				<td class="bold">Postal Code:</td>
+				<td>${homePostal}</td>
+			</tr>
+			</#if>
+			<#if hasHomeCountry >
+			<tr>
+				<td class="bold">Country:</td>
+				<td>${homeCountry}</td>
+			</tr>
+			</#if>	
+		</table>
+	</div>
+	
+	<!-- General - General - Address - Work-->
+	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<span class="systemfont" style="font-weight:bold;">Address (Work)</span>
+  	</div>
+   	<div style="margin:5px;">
+		<table>
+			<#if hasWorkStreet >
+			<tr>
+				<td class="bold">Street:</td>
+				<td>${workStreet}</td>
+			</tr>
+			</#if>
+			<#if hasWorkPob >
+			<tr>
+				<td class="bold">Post Office Box:</td>
+				<td>${workPob}</td>
+			</tr>
+			</#if>
+			<#if hasWorkLocality >
+			<tr>
+				<td class="bold">Locality:</td>
+				<td>${workLocality}</td>
+			</tr>
+			</#if>
+			<#if hasWorkRegion >
+			<tr>
+				<td class="bold">Region:</td>
+				<td>${workRegion}</td>
+			</tr>
+			</#if>
+			<#if hasWorkPostal >
+			<tr>
+				<td class="bold">Postal Code:</td>
+				<td>${workPostal}</td>
+			</tr>
+			</#if>
+			<#if hasWorkCountry >
+			<tr>
+				<td class="bold">Country:</td>
+				<td>${workCountry}</td>
+			</tr>
+			</#if>	
+		</table>
+	</div>
+	
+	<!-- General - General - Homepage -->
+	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<span class="systemfont" style="font-weight:bold;">Homepage</span>
+  	</div>
+   	<div style="margin:5px;">
+		<table>
+			<#if hasFrontpage >
+			<tr>
+				<a href="${frontpage}" target="_blank">${frontpage?html}</a>
+			</tr>
+			</#if>
+		</table>
+	</div>		
+	
+	<!-- General - General - Messageing -->
+	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<span class="systemfont" style="font-weight:bold;">E-Mail</span>
+  	</div>
+   	<div style="margin:5px;">
+		<table>
+			<#if hasEmail1 >
+			<tr>
+				<td class="bold">E-Mail 1:</td>
+				<td><a href="mailto:${email1}">${email1?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail2 >
+			<tr>
+				<td class="bold">E-Mail 2:</td>
+				<td><a href="mailto:${email2}">${email2?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail3 >
+			<tr>
+				<td class="bold">E-Mail 3:</td>
+				<td><a href="mailto:${email3}">${email3?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail4 >
+			<tr>
+				<td class="bold">E-Mail 4:</td>
+				<td><a href="mailto:${email4}">${email4?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail5 >
+			<tr>
+				<td class="bold">E-Mail 5:</td>
+				<td><a href="mailto:${email5}">${email5?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail6 >
+			<tr>
+				<td class="bold">E-Mail 6:</td>
+				<td><a href="mailto:${email6}">${email6?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail7 >
+			<tr>
+				<td class="bold">E-Mail 7:</td>
+				<td><a href="mailto:${email7}">${email7?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail8 >
+			<tr>
+				<td class="bold">E-Mail 8:</td>
+				<td><a href="mailto:${email8}">${email8?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail9 >
+			<tr>
+				<td class="bold">E-Mail 9:</td>
+				<td><a href="mailto:${email9}">${email9?html}</a></td>
+			</tr>
+			</#if>
+			<#if hasEmail10 >
+			<tr>
+				<td class="bold">E-Mail 10:</td>
+				<td><a href="mailto:${email10}">${email10?html}</a></td>
+			</tr>
+			</#if>
 		</table>
 	</div>
   <!--	

@@ -14,6 +14,7 @@ package org.remus.infomngmnt.ui.extension;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.ui.rules.ICreationTrigger;
 
 /**
@@ -28,6 +29,8 @@ public abstract class AbstractCreationTrigger implements ICreationTrigger {
 	private InformationUnit newInformationUnit;
 
 	private String categoryString;
+
+	private TransferWrapper transferType;
 
 	public abstract void handleCreationRequest();
 
@@ -75,6 +78,21 @@ public abstract class AbstractCreationTrigger implements ICreationTrigger {
 	 */
 	public void setCategoryString(final String categoryString) {
 		this.categoryString = categoryString;
+	}
+
+	/**
+	 * @return the transferType
+	 */
+	public TransferWrapper getTransferType() {
+		return this.transferType;
+	}
+
+	/**
+	 * @param transferType
+	 *            the transferType to set
+	 */
+	public void setTransferType(final TransferWrapper transferType) {
+		this.transferType = transferType;
 	}
 
 }

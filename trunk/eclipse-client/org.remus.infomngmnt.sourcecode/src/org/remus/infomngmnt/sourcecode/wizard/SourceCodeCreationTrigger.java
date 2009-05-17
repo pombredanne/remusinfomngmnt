@@ -30,15 +30,19 @@ public class SourceCodeCreationTrigger extends AbstractCreationTrigger {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.ui.extension.AbstractCreationTrigger#handleCreationRequest()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.remus.infomngmnt.ui.extension.AbstractCreationTrigger#
+	 * handleCreationRequest()
 	 */
 	@Override
 	public void handleCreationRequest() {
 		NewSourceCodeWizard newLinkWizard = new NewSourceCodeWizard();
-		newLinkWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
-		newLinkWizard.setDefaults(getValue(), getRuleValue());
-		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),newLinkWizard);
+		newLinkWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(
+				new Object[0]));
+		newLinkWizard.setDefaults(getValue(), getRuleValue(), getTransferType());
+		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), newLinkWizard);
 		wizard.open();
 
 	}

@@ -78,6 +78,10 @@
 <#assign hasHomePostal = homePostal?is_string && homePostal?length != 0 >
 <#assign homeCountry = infoUnit["childValues[@type='homeCountry']/@stringValue"] >
 <#assign hasHomeCountry = homeCountry?is_string && homeCountry?length != 0 >
+<#assign homeLongitude = infoUnit["childValues[@type='homeLongitude']/@stringValue"] >
+<#assign hasHomeLongitude = homeLongitude?is_string && homeLongitude?length != 0 >
+<#assign homeLatitude = infoUnit["childValues[@type='homeLatitude']/@stringValue"] >
+<#assign hasHomeLatitude = homeLatitude?is_string && homeLatitude?length != 0 >
 	
 <!-- group email -->
 <#assign email1 = infoUnit["childValues[@type='email1']/@stringValue"] >
@@ -355,7 +359,35 @@
 			</#if>	
 		</table>
 	</div>
-	
+<!-- General - General - Address - Map-->
+	<#if hasWorkStreet>
+		<#if hasWorkLongitude >
+			<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+	  			<span class="systemfont" style="font-weight:bold;">Map (Work)</span>
+	  		</div>
+	  		<div style="margin:5px;">
+				<table>
+					<tr>
+						<img src="http://maps.google.com/staticmap?center=${workLatitude},${workLongitude}&zoom=14&size=400x400&markers=${workLatitude},${workLongitude},bluea&key=${additionals.gMapsApiKey}" />
+					</tr>
+				</table>
+			</div>
+	  	</#if>
+	<#elseif hasHomeStreet>
+		<#if hasHomeLongitude >
+			<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+	  			<span class="systemfont" style="font-weight:bold;">Map (Home)</span>
+	  		</div>
+	  		<div style="margin:5px;">
+				<table>
+					<tr>
+						<img src="http://maps.google.com/staticmap?center=${homeLatitude},${homeLongitude}&zoom=14&size=400x400&key=${additionals.gMapsApiKey}" />
+					</tr>
+				</table>
+			</div>
+		</#if>
+	</#if>
+
 	<!-- General - General - Homepage -->
 	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
   		<span class="systemfont" style="font-weight:bold;">Homepage</span>
@@ -438,16 +470,6 @@
 			</#if>
 		</table>
 	</div>
-  <!--	
-	<div style="margin:5px;">
-		<table>
-			<#if hasEmail1>
-				<td class="bold">E-Mail 1:</td>
-				<td><a href="mailto:${email1}">${email1?html}</a></td>
-			</#if>
-		</table>
-	</div>
--->	
 	
 	<!-- General - Semantics -->
 	<div>

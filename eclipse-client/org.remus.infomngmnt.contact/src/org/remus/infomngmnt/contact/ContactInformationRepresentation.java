@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -25,11 +26,13 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.geodata.google.GMapsApi;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 
 public class ContactInformationRepresentation extends
@@ -52,25 +55,6 @@ public class ContactInformationRepresentation extends
 			if (origFileName.getStringValue() != null) {
 				fileExtension = new Path(origFileName.getStringValue()).getFileExtension();
 			}
-			
-//			// TODO, createabstractbuildfolder überschreiben...
-////			createFolderOnBuild
-//			IFile file = getBuildFolder().getFile(
-//					new Path(getValue().getId()).addFileExtension(fileExtension));
-////			this.imageHref = file.getLocation().toOSString();
-//			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
-//			try {
-//				file.create(bais, true, monitor);
-//			} catch (CoreException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			} finally {
-//				try {
-//					bais.close();
-//				} catch (IOException e) {
-//					// do nothing... we've done our best.
-//				}
-//			}
 		}
 	}
 	@Override
@@ -86,6 +70,7 @@ public class ContactInformationRepresentation extends
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
+		String gMapsApiKey = GMapsApi.getApiKey();
 		try {
 			templateIs = FileLocator.openStream(
 					Platform.getBundle(ContactActivator.PLUGIN_ID), 
@@ -94,7 +79,7 @@ public class ContactInformationRepresentation extends
 					ContactActivator.PLUGIN_ID,
 					templateIs,
 					contentsIs,
-					returnValue, null);
+					returnValue, Collections.<String, String> singletonMap("gMapsApiKey", gMapsApiKey));
 		} catch (IOException e) {
 			throw new CoreException(StatusCreator.newStatus(
 					"Error reading locations",e));

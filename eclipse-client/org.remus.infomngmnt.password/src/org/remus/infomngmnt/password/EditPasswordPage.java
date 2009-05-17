@@ -68,6 +68,10 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		doCreateGeneralSection(body, toolkit);
 		doCreateAdditionalSection(body, toolkit);
 		doCreateSemanticSection(body, toolkit);
+
+		addControl(this.textUrl);
+		addControl(this.textUsername);
+
 	}
 
 	private void doCreateAdditionalSection(final Composite body, final FormToolkit toolkit) {

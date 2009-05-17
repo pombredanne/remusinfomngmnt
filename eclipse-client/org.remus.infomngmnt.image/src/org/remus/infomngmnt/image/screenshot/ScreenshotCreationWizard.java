@@ -38,8 +38,8 @@ public class ScreenshotCreationWizard extends Wizard {
 				NewImageWizard newImageWizard = new NewImageWizard();
 				newImageWizard.init(UIUtil.getPrimaryWindow().getWorkbench(),
 						new StructuredSelection(new Object[0]));
-				newImageWizard
-						.setDefaults(imageData, InfomngmntFactory.eINSTANCE.createRuleValue());
+				newImageWizard.setDefaults(imageData,
+						InfomngmntFactory.eINSTANCE.createRuleValue(), null);
 				WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
 						newImageWizard);
 				wizard.open();

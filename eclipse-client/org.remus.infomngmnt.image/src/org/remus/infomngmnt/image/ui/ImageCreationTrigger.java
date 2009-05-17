@@ -30,15 +30,19 @@ public class ImageCreationTrigger extends AbstractCreationTrigger {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.ui.extension.AbstractCreationTrigger#handleCreationRequest()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.remus.infomngmnt.ui.extension.AbstractCreationTrigger#
+	 * handleCreationRequest()
 	 */
 	@Override
 	public void handleCreationRequest() {
 		NewImageWizard newImageWizard = new NewImageWizard();
-		newImageWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
-		newImageWizard.setDefaults(getValue(), getRuleValue());
-		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),newImageWizard);
+		newImageWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(
+				new Object[0]));
+		newImageWizard.setDefaults(getValue(), getRuleValue(), getTransferType());
+		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), newImageWizard);
 		wizard.open();
 
 	}

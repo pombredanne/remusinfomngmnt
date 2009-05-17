@@ -379,7 +379,7 @@
 	  		<div style="margin:5px;">
 				<table>
 					<tr>
-						<img src="http://maps.google.com/staticmap?center=${homeLatitude},${homeLongitude}&zoom=14&size=400x400&key=${additionals.gMapsApiKey}" />
+						<img src="http://maps.google.com/staticmap?center=${homeLatitude},${homeLongitude}&zoom=14&size=400x400&markers=${homeLatitude},${homeLongitude},bluea&key=${additionals.gMapsApiKey}" />
 					</tr>
 				</table>
 			</div>

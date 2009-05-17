@@ -34,6 +34,7 @@
     </genEnums>
     <genDataTypes ecoreDataType="infomngmnt.ecore#//Object"/>
     <genDataTypes ecoreDataType="infomngmnt.ecore#//IRepository"/>
+    <genDataTypes ecoreDataType="infomngmnt.ecore#//TransferWrapper"/>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnit" labelFeature="#//infomngmnt/AbstractInformationUnit/label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/stringValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/longValue"/>
@@ -116,6 +117,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/value"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RuleResult/actions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/transferType"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RemoteRepository">
       <genOperations ecoreOperation="infomngmnt.ecore#//RemoteRepository/getRepositoryImplementation"/>

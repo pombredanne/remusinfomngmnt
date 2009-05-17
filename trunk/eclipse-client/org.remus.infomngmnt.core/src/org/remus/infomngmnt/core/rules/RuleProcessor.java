@@ -130,6 +130,7 @@ public class RuleProcessor {
 						EList<RuleAction> actions = remusTransferType.getActions();
 						RuleResult ruleResult = InfomngmntFactory.eINSTANCE.createRuleResult();
 						ruleResult.setValue(clipboared.getContents(transferTypeById.getTransfer()));
+						ruleResult.setTransferType(transferTypeById);
 						List<RuleAction> performGroovyCheck = performGroovyCheck(ruleResult,
 								actions);
 						if (performGroovyCheck.size() > 0) {

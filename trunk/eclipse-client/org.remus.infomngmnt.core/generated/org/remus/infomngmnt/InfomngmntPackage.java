@@ -1111,13 +1111,22 @@ public interface InfomngmntPackage extends EPackage {
 	int RULE_RESULT__DESCRIPTION = 2;
 
 	/**
+	 * The feature id for the '<em><b>Transfer Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_RESULT__TRANSFER_TYPE = 3;
+
+	/**
 	 * The number of structural features of the '<em>Rule Result</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_RESULT_FEATURE_COUNT = 3;
+	int RULE_RESULT_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RemoteRepositoryImpl <em>Remote Repository</em>}' class.
@@ -1950,6 +1959,17 @@ public interface InfomngmntPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '<em>Transfer Wrapper</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.core.extension.TransferWrapper
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTransferWrapper()
+	 * @generated
+	 */
+	int TRANSFER_WRAPPER = 36;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationUnit <em>Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2659,6 +2679,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getRuleResult_Description();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.RuleResult#getTransferType <em>Transfer Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Transfer Type</em>'.
+	 * @see org.remus.infomngmnt.RuleResult#getTransferType()
+	 * @see #getRuleResult()
+	 * @generated
+	 */
+	EAttribute getRuleResult_TransferType();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RemoteRepository <em>Remote Repository</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3330,6 +3361,17 @@ public interface InfomngmntPackage extends EPackage {
 	EDataType getIRepository();
 
 	/**
+	 * Returns the meta object for data type '{@link org.remus.infomngmnt.core.extension.TransferWrapper <em>Transfer Wrapper</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Transfer Wrapper</em>'.
+	 * @see org.remus.infomngmnt.core.extension.TransferWrapper
+	 * @model instanceClass="org.remus.infomngmnt.core.extension.TransferWrapper" serializeable="false"
+	 * @generated
+	 */
+	EDataType getTransferWrapper();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3914,6 +3956,14 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute RULE_RESULT__DESCRIPTION = eINSTANCE.getRuleResult_Description();
 
 		/**
+		 * The meta object literal for the '<em><b>Transfer Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE_RESULT__TRANSFER_TYPE = eINSTANCE.getRuleResult_TransferType();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RemoteRepositoryImpl <em>Remote Repository</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4446,6 +4496,16 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType IREPOSITORY = eINSTANCE.getIRepository();
+
+		/**
+		 * The meta object literal for the '<em>Transfer Wrapper</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.core.extension.TransferWrapper
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTransferWrapper()
+		 * @generated
+		 */
+		EDataType TRANSFER_WRAPPER = eINSTANCE.getTransferWrapper();
 
 	}
 

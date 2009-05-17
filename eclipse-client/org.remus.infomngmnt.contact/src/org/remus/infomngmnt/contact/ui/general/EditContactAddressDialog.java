@@ -79,7 +79,6 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(final Composite parent) {
 		this.bt_Ok = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		this.bt_Ok.setEnabled(true);
-//		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 	@Override
 	public boolean close() {
@@ -107,7 +106,9 @@ public class EditContactAddressDialog extends TitleAreaDialog {
 		gd_text_span_2.horizontalSpan = 2;
 		GridData gd_text_fill_horizontal = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		
-		combo_Address = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
+		combo_Address = new Combo(group_Properties, SWT.READ_ONLY);
+		combo_Address.setEnabled(false);
+//		combo_Address = new Combo(group_Properties, SWT.DROP_DOWN | SWT.READ_ONLY);
 		combo_Address.setLayoutData(gd_text_span_2);
 		combo_Address.setItems(ContactSettings.DEFAULT_ITMES_COMBO_ADDRESS_CHOOSER);
 		

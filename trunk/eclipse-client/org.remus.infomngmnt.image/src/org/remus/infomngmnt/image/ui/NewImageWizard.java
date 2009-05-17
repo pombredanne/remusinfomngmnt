@@ -30,12 +30,12 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
@@ -110,7 +110,8 @@ public class NewImageWizard extends NewInfoObjectWizard {
 	}
 
 	@Override
-	public void setDefaults(final Object value, final RuleValue ruleValue) {
+	public void setDefaults(final Object value, final RuleValue ruleValue,
+			final TransferWrapper transferType) {
 		if (value instanceof ImageData) {
 			ImageLoader loader = new ImageLoader();
 			loader.data = new ImageData[] { (ImageData) value };
@@ -135,17 +136,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 			origFilePath.setStringValue("clipboard.png");
 
 		}
-		InformationUnit predefinedCategory = InformationUtil.getChildByType(ruleValue,
-				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
-		InformationUnit predefinedName = InformationUtil.getChildByType(ruleValue,
-				AbstractCreationPreferencePage.NODENAME_PREDEFINED_NAME);
-		if (predefinedCategory != null && predefinedCategory.getStringValue() != null) {
-			this.page1.setCategoryString(predefinedCategory.getStringValue());
-		}
-		if (predefinedName != null && predefinedName.getStringValue() != null) {
-			this.newElement.setLabel(predefinedName.getStringValue());
-		}
+		// if (transferType instanceof FileTra)
 
 	}
-
 }

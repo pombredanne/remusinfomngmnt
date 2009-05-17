@@ -57,6 +57,7 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.Tag;
 import org.remus.infomngmnt.Usage;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.remote.IRepository;
 
 /**
@@ -282,6 +283,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EDataType iRepositoryEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType transferWrapperEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -885,6 +893,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRuleResult_TransferType() {
+		return (EAttribute)ruleResultEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1388,6 +1405,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getTransferWrapper() {
+		return transferWrapperEDataType;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1495,6 +1521,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(ruleResultEClass, RULE_RESULT__VALUE);
 		createEReference(ruleResultEClass, RULE_RESULT__ACTIONS);
 		createEAttribute(ruleResultEClass, RULE_RESULT__DESCRIPTION);
+		createEAttribute(ruleResultEClass, RULE_RESULT__TRANSFER_TYPE);
 
 		remoteRepositoryEClass = createEClass(REMOTE_REPOSITORY);
 
@@ -1575,6 +1602,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		// Create data types
 		objectEDataType = createEDataType(OBJECT);
 		iRepositoryEDataType = createEDataType(IREPOSITORY);
+		transferWrapperEDataType = createEDataType(TRANSFER_WRAPPER);
 	}
 
 	/**
@@ -1702,6 +1730,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getRuleResult_Value(), this.getObject(), "value", null, 1, 1, RuleResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRuleResult_Actions(), this.getRuleAction(), null, "actions", null, 1, -1, RuleResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRuleResult_Description(), ecorePackage.getEString(), "description", null, 0, 1, RuleResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRuleResult_TransferType(), this.getTransferWrapper(), "transferType", null, 0, 1, RuleResult.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteRepositoryEClass, RemoteRepository.class, "RemoteRepository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1804,6 +1833,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		// Initialize data types
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(iRepositoryEDataType, IRepository.class, "IRepository", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(transferWrapperEDataType, TransferWrapper.class, "TransferWrapper", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

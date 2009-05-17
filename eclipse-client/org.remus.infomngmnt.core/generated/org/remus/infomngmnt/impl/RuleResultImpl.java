@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleResult;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,6 +41,7 @@ import org.remus.infomngmnt.RuleResult;
  *   <li>{@link org.remus.infomngmnt.impl.RuleResultImpl#getValue <em>Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RuleResultImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.RuleResultImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RuleResultImpl#getTransferType <em>Transfer Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -95,6 +97,26 @@ public class RuleResultImpl extends EObjectImpl implements RuleResult {
 	 * @ordered
 	 */
 	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getTransferType() <em>Transfer Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTransferType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final TransferWrapper TRANSFER_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTransferType() <em>Transfer Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTransferType()
+	 * @generated
+	 * @ordered
+	 */
+	protected TransferWrapper transferType = TRANSFER_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -174,6 +196,27 @@ public class RuleResultImpl extends EObjectImpl implements RuleResult {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TransferWrapper getTransferType() {
+		return transferType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTransferType(TransferWrapper newTransferType) {
+		TransferWrapper oldTransferType = transferType;
+		transferType = newTransferType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.RULE_RESULT__TRANSFER_TYPE, oldTransferType, transferType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -197,6 +240,8 @@ public class RuleResultImpl extends EObjectImpl implements RuleResult {
 				return getActions();
 			case InfomngmntPackage.RULE_RESULT__DESCRIPTION:
 				return getDescription();
+			case InfomngmntPackage.RULE_RESULT__TRANSFER_TYPE:
+				return getTransferType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -220,6 +265,9 @@ public class RuleResultImpl extends EObjectImpl implements RuleResult {
 			case InfomngmntPackage.RULE_RESULT__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
+			case InfomngmntPackage.RULE_RESULT__TRANSFER_TYPE:
+				setTransferType((TransferWrapper)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -241,6 +289,9 @@ public class RuleResultImpl extends EObjectImpl implements RuleResult {
 			case InfomngmntPackage.RULE_RESULT__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
+			case InfomngmntPackage.RULE_RESULT__TRANSFER_TYPE:
+				setTransferType(TRANSFER_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -259,6 +310,8 @@ public class RuleResultImpl extends EObjectImpl implements RuleResult {
 				return actions != null && !actions.isEmpty();
 			case InfomngmntPackage.RULE_RESULT__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case InfomngmntPackage.RULE_RESULT__TRANSFER_TYPE:
+				return TRANSFER_TYPE_EDEFAULT == null ? transferType != null : !TRANSFER_TYPE_EDEFAULT.equals(transferType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -277,6 +330,8 @@ public class RuleResultImpl extends EObjectImpl implements RuleResult {
 		result.append(value);
 		result.append(", description: ");
 		result.append(description);
+		result.append(", transferType: ");
+		result.append(transferType);
 		result.append(')');
 		return result.toString();
 	}

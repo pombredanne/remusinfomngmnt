@@ -114,6 +114,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" lowerBound="1"
         upperBound="-1" eType="#//RuleAction" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transferType" eType="#//TransferWrapper"
+        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EClass" name="RemoteRepository" eSuperTypes="#//RemoteContainer">
@@ -240,4 +242,6 @@
     <eLiterals name="MONTHLY" value="3"/>
     <eLiterals name="ANNUAL" value="4"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TransferWrapper" instanceClassName="org.remus.infomngmnt.core.extension.TransferWrapper"
+      serializable="false"/>
 </ecore:EPackage>

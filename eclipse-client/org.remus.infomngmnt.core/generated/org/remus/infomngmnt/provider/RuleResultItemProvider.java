@@ -71,6 +71,7 @@ public class RuleResultItemProvider
 
 			addValuePropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
+			addTransferTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -111,6 +112,28 @@ public class RuleResultItemProvider
 				 getString("_UI_RuleResult_description_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_RuleResult_description_feature", "_UI_RuleResult_type"),
 				 InfomngmntPackage.Literals.RULE_RESULT__DESCRIPTION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Transfer Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTransferTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RuleResult_transferType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleResult_transferType_feature", "_UI_RuleResult_type"),
+				 InfomngmntPackage.Literals.RULE_RESULT__TRANSFER_TYPE,
 				 true,
 				 false,
 				 false,
@@ -189,6 +212,7 @@ public class RuleResultItemProvider
 		switch (notification.getFeatureID(RuleResult.class)) {
 			case InfomngmntPackage.RULE_RESULT__VALUE:
 			case InfomngmntPackage.RULE_RESULT__DESCRIPTION:
+			case InfomngmntPackage.RULE_RESULT__TRANSFER_TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case InfomngmntPackage.RULE_RESULT__ACTIONS:

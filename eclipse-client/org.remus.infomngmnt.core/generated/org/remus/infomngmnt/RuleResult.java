@@ -16,6 +16,7 @@ package org.remus.infomngmnt;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.RuleResult#getValue <em>Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RuleResult#getActions <em>Actions</em>}</li>
  *   <li>{@link org.remus.infomngmnt.RuleResult#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.RuleResult#getTransferType <em>Transfer Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,5 +105,31 @@ public interface RuleResult extends EObject {
 	 * @generated
 	 */
 	void setDescription(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Transfer Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Transfer Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Transfer Type</em>' attribute.
+	 * @see #setTransferType(TransferWrapper)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getRuleResult_TransferType()
+	 * @model dataType="org.remus.infomngmnt.TransferWrapper" transient="true"
+	 * @generated
+	 */
+	TransferWrapper getTransferType();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.RuleResult#getTransferType <em>Transfer Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Transfer Type</em>' attribute.
+	 * @see #getTransferType()
+	 * @generated
+	 */
+	void setTransferType(TransferWrapper value);
 
 } // RuleResult

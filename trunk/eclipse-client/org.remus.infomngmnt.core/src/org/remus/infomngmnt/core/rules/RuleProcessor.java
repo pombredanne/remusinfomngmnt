@@ -82,6 +82,7 @@ public class RuleProcessor {
 				EList<RuleAction> actions = remusTransferType.getActions();
 				RuleResult ruleResult = InfomngmntFactory.eINSTANCE.createRuleResult();
 				ruleResult.setValue(transferTypeById.nativeToJava(event.currentDataType));
+				ruleResult.setTransferType(transferTypeById);
 				List<RuleAction> performGroovyCheck = performGroovyCheck(ruleResult, actions);
 				if (performGroovyCheck.size() > 0) {
 					ruleResult.getActions().addAll(performGroovyCheck);

@@ -57,7 +57,9 @@ public class DownloadFileJob extends Job {
 	@Override
 	public IStatus run(final IProgressMonitor monitor) {
 		final List<IIncomingFileTransfer> transfers = new ArrayList<IIncomingFileTransfer>();
-		final SubProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
+		final IProgressMonitor sub = monitor;// new
+		// SubProgressMonitor(monitor,
+		// IProgressMonitor.UNKNOWN);
 		final PipedOutputStream out = new PipedOutputStream();
 		try {
 			monitor.subTask("Downloading file " + this.source.getFile());
@@ -77,7 +79,8 @@ public class DownloadFileJob extends Job {
 								pipedInputStream.connect(out);
 								this.incoming = rse.receive(out);
 								DownloadFileJob.this.target.appendContents(pipedInputStream, true,
-										false, sub);
+										false,
+										new SubProgressMonitor(sub, IProgressMonitor.UNKNOWN));
 							} catch (final IOException e) {
 								e.printStackTrace();
 								// handle Error
@@ -154,5 +157,4 @@ public class DownloadFileJob extends Job {
 
 		return (monitor.isCanceled() || sub.isCanceled()) ? Status.CANCEL_STATUS : Status.OK_STATUS;
 	}
-
 }

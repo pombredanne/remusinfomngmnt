@@ -15,11 +15,13 @@ package org.remus.infomngmnt.ui.newwizards;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -220,13 +222,18 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 
 	public void handleCreationRequest() {
 		init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
-		setDefaults(this.value, this.ruleValue, this.transferType);
-		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), this);
-		wizard.open();
+		try {
+			setDefaults(this.value, this.ruleValue, this.transferType);
+			WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), this);
+			wizard.open();
+		} catch (CoreException e) {
+			ErrorDialog.openError(getShell(), "Error creating new information unit",
+					"Error occured while executing your request.", e.getStatus());
+		}
 	}
 
 	protected void setDefaults(final Object value, final RuleValue ruleValue,
-			final TransferWrapper transferType) {
+			final TransferWrapper transferType) throws CoreException {
 		// does nothing by default
 
 	}

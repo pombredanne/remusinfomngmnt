@@ -21,6 +21,7 @@ import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.rules.PostProcessingResult;
 import org.remus.infomngmnt.core.rules.RuleProcessor;
@@ -35,12 +36,14 @@ public class NewElementQuickAccessElement extends QuickAccessElement {
 	private final RuleAction action;
 	private final IInfoType infoTypeByType;
 	private final Object value;
+	private final TransferWrapper transferType;
 
 	public NewElementQuickAccessElement(final QuickAccessProvider provider,
-			final RuleAction action, final Object value) {
+			final RuleAction action, final Object value, final TransferWrapper transferType) {
 		super(provider);
 		this.action = action;
 		this.value = value;
+		this.transferType = transferType;
 		this.infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
 				action.getInfoTypeId());
 	}
@@ -62,6 +65,7 @@ public class NewElementQuickAccessElement extends QuickAccessElement {
 			trigger.setCategoryString(postProcessing.getCategoryString());
 			trigger.setNewInformationUnit(postProcessing.getInformationUnit());
 			trigger.setRuleValue(this.action.getRuleValue());
+			trigger.setTransferType(this.transferType);
 			UIUtil.getDisplay().asyncExec(new Runnable() {
 				public void run() {
 					trigger.handleCreationRequest();

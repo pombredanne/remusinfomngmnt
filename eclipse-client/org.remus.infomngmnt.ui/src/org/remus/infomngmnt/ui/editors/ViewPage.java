@@ -36,8 +36,8 @@ public class ViewPage extends InformationFormPage {
 		public void propertyChange(final PropertyChangeEvent evt) {
 			getSite().getShell().getDisplay().asyncExec(new Runnable() {
 				public void run() {
-					JavaScriptSnippets.setNewLoadingBarMessage(
-							ViewPage.this.browser, (String) evt.getNewValue());
+					JavaScriptSnippets.setNewLoadingBarMessage(ViewPage.this.browser, (String) evt
+							.getNewValue());
 
 				}
 			});
@@ -59,7 +59,9 @@ public class ViewPage extends InformationFormPage {
 						public void run() {
 							if (!ViewPage.this.browser.isDisposed()) {
 								if (ViewPage.this.binFile.exists()) {
-									ViewPage.this.browser.setUrl(EditorUtil.computeBinFileLocation((IFileEditorInput) getEditorInput()));
+									ViewPage.this.browser
+											.setUrl(EditorUtil
+													.computeBinFileLocation((IFileEditorInput) getEditorInput()));
 								} else {
 									ViewPage.this.browser.setUrl(TemplateLocation.getLoadingUrl());
 								}
@@ -76,14 +78,16 @@ public class ViewPage extends InformationFormPage {
 	};
 
 	Browser browser;
+
 	/**
 	 * Create the form page
+	 * 
 	 * @param editor
 	 * @param id
 	 * @param title
 	 */
 	public ViewPage(final FormEditor editor, final InformationUnit infoUnit) {
-		super(editor, "view","Viewer");
+		super(editor, "view", "Viewer");
 		this.infoUnit = infoUnit;
 	}
 
@@ -95,6 +99,7 @@ public class ViewPage extends InformationFormPage {
 
 	/**
 	 * Create contents of the form
+	 * 
 	 * @param managedForm
 	 */
 	@Override
@@ -110,26 +115,27 @@ public class ViewPage extends InformationFormPage {
 		toolkit.paintBordersFor(this.browser);
 
 		if (this.binFile.exists()) {
-			this.browser.setUrl(EditorUtil.computeBinFileLocation((IFileEditorInput) getEditorInput()));
+			this.browser.setUrl(EditorUtil
+					.computeBinFileLocation((IFileEditorInput) getEditorInput()));
 		} else {
 			this.browser.setUrl(TemplateLocation.getLoadingUrl());
 		}
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this.binFileListener);
-		LoadingBarMessageProvider.getInstance().addPropertyChangeListener(getInfoId(), this.loadingMessageListener);
+		LoadingBarMessageProvider.getInstance().addPropertyChangeListener(getInfoId(),
+				this.loadingMessageListener);
 	}
 
 	@Override
 	public void dispose() {
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this.binFileListener);
-		LoadingBarMessageProvider.getInstance().removePropertyChangeListener(
-				getInfoId(), this.loadingMessageListener);
+		LoadingBarMessageProvider.getInstance().removePropertyChangeListener(getInfoId(),
+				this.loadingMessageListener);
 		super.dispose();
 	}
 
 	private String getInfoId() {
-		return ((IFileEditorInput) getEditorInput()).getFile().getProjectRelativePath().removeFileExtension().lastSegment();
+		return ((IFileEditorInput) getEditorInput()).getFile().getProjectRelativePath()
+				.removeFileExtension().lastSegment();
 	}
-
-
 
 }

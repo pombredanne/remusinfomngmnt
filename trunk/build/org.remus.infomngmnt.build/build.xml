@@ -13,7 +13,7 @@
 	
 	<property name="jar.location" value="/opt/eclipse/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar"/>
 	<property name="pde.build.location" location="/opt/eclipse/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/scripts/productBuild/productBuild.xml"/>
-	<property name="build.dir.location" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-NIGHTLYRCP/build/org.remus.infomngmnt.build"/>
+	<property name="build.dir.location" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-NIGHTLY/build/org.remus.infomngmnt.build"/>
 	
 
 	<tstamp>

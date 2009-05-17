@@ -24,17 +24,19 @@ import org.remus.infomngmnt.ui.extension.AbstractCreationTrigger;
  */
 public class LinkCreationTrigger extends AbstractCreationTrigger {
 
-
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.ui.extension.AbstractCreationTrigger#handleCreationRequest()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.remus.infomngmnt.ui.extension.AbstractCreationTrigger#
+	 * handleCreationRequest()
 	 */
 	@Override
 	public void handleCreationRequest() {
 		NewLinkWizard newLinkWizard = new NewLinkWizard();
-		newLinkWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
-		newLinkWizard.setDefaults(getValue(), getRuleValue());
-		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),newLinkWizard);
+		newLinkWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(
+				new Object[0]));
+		newLinkWizard.setDefaults(getValue(), getRuleValue(), getTransferType());
+		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), newLinkWizard);
 		wizard.open();
 	}
 

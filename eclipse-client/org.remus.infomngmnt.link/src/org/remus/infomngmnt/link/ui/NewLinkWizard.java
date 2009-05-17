@@ -19,6 +19,7 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
@@ -63,7 +64,8 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 	}
 
 	@Override
-	public void setDefaults(final Object value, final RuleValue ruleValue) {
+	public void setDefaults(final Object value, final RuleValue ruleValue,
+			final TransferWrapper transferType) {
 		this.newElement.setStringValue(String.valueOf(value));
 		InformationUnit childByType = InformationUtil.getChildByType(ruleValue,
 				AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);

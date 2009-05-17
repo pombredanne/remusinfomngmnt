@@ -12,13 +12,22 @@
 
 package org.remus.infomngmnt.image.ui;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.ecf.core.ContainerFactory;
+import org.eclipse.ecf.core.IContainer;
+import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -33,6 +42,9 @@ import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.operation.DownloadFileJob;
+import org.remus.infomngmnt.core.transfertypes.URLTransferWrapper;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
@@ -111,7 +123,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 
 	@Override
 	public void setDefaults(final Object value, final RuleValue ruleValue,
-			final TransferWrapper transferType) {
+			final TransferWrapper transferType) throws CoreException {
 		if (value instanceof ImageData) {
 			ImageLoader loader = new ImageLoader();
 			loader.data = new ImageData[] { (ImageData) value };
@@ -135,8 +147,51 @@ public class NewImageWizard extends NewInfoObjectWizard {
 					ImagePlugin.ORIGINAL_FILEPATH);
 			origFilePath.setStringValue("clipboard.png");
 
+		} else if (transferType instanceof URLTransferWrapper) {
+			try {
+				IContainer container = ContainerFactory.getDefault().createContainer();
+				IRetrieveFileTransferContainerAdapter adapter = (IRetrieveFileTransferContainerAdapter) container
+						.getAdapter(IRetrieveFileTransferContainerAdapter.class);
+				final URL url = new URL(value.toString());
+				final IFile tmpFile = ResourceUtil.createTempFile("png");
+				final DownloadFileJob job = new DownloadFileJob(url, tmpFile, adapter);
+				ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
+				pmd.run(true, false, new IRunnableWithProgress() {
+
+					public void run(final IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException {
+						monitor.beginTask("Download requested image", IProgressMonitor.UNKNOWN);
+						IStatus run = job.run(monitor);
+						monitor.beginTask("Calculating width and height", IProgressMonitor.UNKNOWN);
+						try {
+							ImageLoader loader = new ImageLoader();
+							InputStream contents = tmpFile.getContents();
+							loader.load(contents);
+							InformationUnit width = InformationUtil.getChildByType(
+									NewImageWizard.this.newElement, ImagePlugin.NODE_NAME_WIDTH);
+							width.setLongValue(loader.data[0].width);
+							InformationUnit height = InformationUtil.getChildByType(
+									NewImageWizard.this.newElement, ImagePlugin.NODE_NAME_HEIGHT);
+							height.setLongValue(loader.data[0].height);
+							InformationUnit origFilePath = InformationUtil.getChildByType(
+									NewImageWizard.this.newElement, ImagePlugin.ORIGINAL_FILEPATH);
+							origFilePath.setStringValue(url.getPath());
+							((GeneralImagePage) NewImageWizard.this.page1).setTmpFile(tmpFile);
+							if (!run.isOK()) {
+								throw new InvocationTargetException(run.getException(),
+										"Error downloading image");
+							}
+						} catch (CoreException e) {
+							throw new InvocationTargetException(e);
+						}
+
+					}
+
+				});
+			} catch (Exception e) {
+				throw new CoreException(StatusCreator.newStatus(e.getMessage(), e));
+			}
 		}
-		// if (transferType instanceof FileTra)
 
 	}
 }

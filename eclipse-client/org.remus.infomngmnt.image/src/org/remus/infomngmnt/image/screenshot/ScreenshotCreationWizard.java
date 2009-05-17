@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.image.screenshot;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -35,14 +37,20 @@ public class ScreenshotCreationWizard extends Wizard {
 		getShell().getDisplay().asyncExec(new Runnable() {
 
 			public void run() {
-				NewImageWizard newImageWizard = new NewImageWizard();
-				newImageWizard.init(UIUtil.getPrimaryWindow().getWorkbench(),
-						new StructuredSelection(new Object[0]));
-				newImageWizard.setDefaults(imageData,
-						InfomngmntFactory.eINSTANCE.createRuleValue(), null);
-				WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
-						newImageWizard);
-				wizard.open();
+				try {
+					NewImageWizard newImageWizard = new NewImageWizard();
+					newImageWizard.init(UIUtil.getPrimaryWindow().getWorkbench(),
+							new StructuredSelection(new Object[0]));
+					newImageWizard.setDefaults(imageData, InfomngmntFactory.eINSTANCE
+							.createRuleValue(), null);
+					WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
+							newImageWizard);
+					wizard.open();
+				} catch (CoreException e) {
+					ErrorDialog.openError(UIUtil.getDisplay().getActiveShell(),
+							"Error creating new information unit",
+							"Error occured while executing your request.", e.getStatus());
+				}
 			}
 
 		});

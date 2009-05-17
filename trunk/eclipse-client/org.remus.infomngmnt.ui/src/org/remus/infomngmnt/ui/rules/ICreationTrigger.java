@@ -14,6 +14,7 @@ package org.remus.infomngmnt.ui.rules;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -29,6 +30,8 @@ public interface ICreationTrigger {
 	void setRuleValue(final RuleValue ruleValue);
 
 	void setValue(final Object value);
+
+	void setTransferType(TransferWrapper transferWrapper);
 
 	void handleCreationRequest();
 

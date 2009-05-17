@@ -38,6 +38,7 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
@@ -69,6 +70,8 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 	protected InformationUnit newElement;
 
 	private String categoryString;
+
+	private TransferWrapper transferType;
 
 	/**
 	 * 
@@ -217,12 +220,13 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 
 	public void handleCreationRequest() {
 		init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
-		setDefaults(this.value, this.ruleValue);
+		setDefaults(this.value, this.ruleValue, this.transferType);
 		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), this);
 		wizard.open();
 	}
 
-	protected void setDefaults(final Object value, final RuleValue ruleValue) {
+	protected void setDefaults(final Object value, final RuleValue ruleValue,
+			final TransferWrapper transferType) {
 		// does nothing by default
 
 	}
@@ -248,5 +252,13 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 	 */
 	public void setCategoryString(final String categoryString) {
 		this.categoryString = categoryString;
+	}
+
+	/**
+	 * @param transferType
+	 *            the transferType to set
+	 */
+	public void setTransferType(final TransferWrapper transferType) {
+		this.transferType = transferType;
 	}
 }

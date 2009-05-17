@@ -44,7 +44,7 @@ public class NewElementQuickAccessProider extends QuickAccessProvider {
 			EList<RuleAction> actions = this.result.getActions();
 			for (RuleAction ruleAction : actions) {
 				this.action2idMap.put(IdFactory.createId(), new NewElementQuickAccessElement(this,
-						ruleAction, this.result.getValue()));
+						ruleAction, this.result.getValue(), this.result.getTransferType()));
 			}
 		}
 		return this.action2idMap;

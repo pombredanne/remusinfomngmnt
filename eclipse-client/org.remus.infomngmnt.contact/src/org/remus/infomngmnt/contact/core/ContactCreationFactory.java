@@ -10,6 +10,7 @@
  *     Jan Hartwig - initial API and implementation
  *******************************************************************************/
 package org.remus.infomngmnt.contact.core;
+
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
@@ -24,10 +25,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 	public ContactCreationFactory() {
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public InformationUnit createNewObject() {
 		InformationUnit returnValue = super.createNewObject();
-		
+
 		// general
 		returnValue.setType(ContactActivator.TYPE_ID);
 		InformationUnit rawDataImage = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -35,9 +37,9 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit rawDataLogo = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		rawDataLogo.setType(ContactActivator.NODE_NAME_RAWDATA_LOGO);
 		InformationUnit origFilePath = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		origFilePath.setType(ContactActivator.ORIGINAL_FILEPATH);		
+		origFilePath.setType(ContactActivator.ORIGINAL_FILEPATH);
 		InformationUnit pnHome = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		
+
 		// group person
 		InformationUnit persTitle = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		persTitle.setType(ContactActivator.NODE_NAME_PERS_NAME_TITLE);
@@ -57,7 +59,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		persOrganisation.setType(ContactActivator.NODE_NAME_PERS_ORGANISATION);
 		InformationUnit persComplete = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		persComplete.setType(ContactActivator.NODE_NAME_PERS_NAME_COMPLETE);
-		
+
 		// group phone number
 		pnHome.setType(ContactActivator.NODE_NAME_PN_HOME);
 		InformationUnit pnWork = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -84,8 +86,8 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		pnPager.setType(ContactActivator.NODE_NAME_PN_PAGER);
 		InformationUnit pnOthers = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		pnOthers.setType(ContactActivator.NODE_NAME_PN_OTHERS);
-		
-		//group address
+
+		// group address
 		InformationUnit addWorkStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addWorkStreet.setType(ContactActivator.NODE_ADDRESS_WORK_STREET);
 		InformationUnit addWorkPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -102,7 +104,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addWorkLatitude.setType(ContactActivator.NODE_ADDRESS_WORK_LATITUDE);
 		InformationUnit addWorkLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addWorkLongitude.setType(ContactActivator.NODE_ADDRESS_WORK_LONGITUDE);
-				
+
 		InformationUnit addHomeStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addHomeStreet.setType(ContactActivator.NODE_ADDRESS_HOME_STREET);
 		InformationUnit addHomePob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -153,7 +155,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addPostalLatitude.setType(ContactActivator.NODE_ADDRESS_POSTAL_LATITUDE);
 		InformationUnit addPostalLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addPostalLongitude.setType(ContactActivator.NODE_ADDRESS_POSTAL_LONGITUDE);
-	
+
 		InformationUnit addInternatStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addInternatStreet.setType(ContactActivator.NODE_ADDRESS_INTERNAT_STREET);
 		InformationUnit addInternatPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -204,30 +206,12 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		addOtherLatitude.setType(ContactActivator.NODE_ADDRESS_OTHER_LATITUDE);
 		InformationUnit addOtherLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		addOtherLongitude.setType(ContactActivator.NODE_ADDRESS_OTHER_LONGITUDE);
-		
-		//group email and instant messaging
-		InformationUnit mail1 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail1.setType(ContactActivator.NODE_MAIL_1);
-		InformationUnit mail2 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail2.setType(ContactActivator.NODE_MAIL_2);
-		InformationUnit mail3 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail3.setType(ContactActivator.NODE_MAIL_3);
-		InformationUnit mail4 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail4.setType(ContactActivator.NODE_MAIL_4);
-		InformationUnit mail5 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail5.setType(ContactActivator.NODE_MAIL_5);
-		InformationUnit mail6 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail6.setType(ContactActivator.NODE_MAIL_6);
-		InformationUnit mail7 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail7.setType(ContactActivator.NODE_MAIL_7);
-		InformationUnit mail8 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail8.setType(ContactActivator.NODE_MAIL_8);
-		InformationUnit mail9 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail9.setType(ContactActivator.NODE_MAIL_9);
-		InformationUnit mail10 = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		mail10.setType(ContactActivator.NODE_MAIL_10);
+
+		// group email and instant messaging
 		InformationUnit mailDef = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		mailDef.setType(ContactActivator.NODE_MAIL_DEF);
+		InformationUnit mailCollection = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		mailCollection.setType(ContactActivator.NODE_MAILS);
 
 		InformationUnit imAim = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		imAim.setType(ContactActivator.NODE_INSTMESS_AIM);
@@ -251,12 +235,12 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		imYahoo.setType(ContactActivator.NODE_INSTMESS_YAHOO);
 		InformationUnit imDefault = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		imDefault.setType(ContactActivator.NODE_INSTMESS_DEFAULT);
-		
+
 		InformationUnit blogFeed = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		blogFeed.setType(ContactActivator.NODE_BLOG_FEED);
 		InformationUnit frontpage = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		frontpage.setType(ContactActivator.NODE_FRONTPAGE);
-		
+
 		// section details
 		InformationUnit detDep = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		detDep.setType(ContactActivator.NODE_DETAILS_DEPARTMENT);
@@ -280,19 +264,19 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		detNaPart.setType(ContactActivator.NODE_DETAILS_NAME_PARTNER);
 		InformationUnit detNotes = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		detNotes.setType(ContactActivator.NODE_DETAILS_NOTES);
-		
+
 		// section misc
 		InformationUnit miscPubKey = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		miscPubKey.setType(ContactActivator.NODE_MISC_PUBKEY);
 		InformationUnit miscMime = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		miscMime.setType(ContactActivator.NODE_MISC_MIME);
-		
+
 		// general
 		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
 		returnValue.getChildValues().add(rawDataImage);
 		returnValue.getChildValues().add(rawDataLogo);
 		returnValue.getChildValues().add(origFilePath);
-		
+
 		// group person
 		returnValue.getChildValues().add(persAdditional);
 		returnValue.getChildValues().add(persComplete);
@@ -303,7 +287,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(persRole);
 		returnValue.getChildValues().add(persTitle);
 		returnValue.getChildValues().add(persTitleAfter);
-		
+
 		// group phone number
 		returnValue.getChildValues().add(pnCar);
 		returnValue.getChildValues().add(pnFax);
@@ -318,7 +302,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(pnVideo);
 		returnValue.getChildValues().add(pnVoice);
 		returnValue.getChildValues().add(pnWork);
-		
+
 		// group address
 		returnValue.getChildValues().add(addWorkCountry);
 		returnValue.getChildValues().add(addWorkLocality);
@@ -328,7 +312,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addWorkStreet);
 		returnValue.getChildValues().add(addWorkLatitude);
 		returnValue.getChildValues().add(addWorkLongitude);
-		
+
 		returnValue.getChildValues().add(addHomeCountry);
 		returnValue.getChildValues().add(addHomeLocality);
 		returnValue.getChildValues().add(addHomePob);
@@ -337,7 +321,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addHomeStreet);
 		returnValue.getChildValues().add(addHomeLatitude);
 		returnValue.getChildValues().add(addHomeLongitude);
-		
+
 		returnValue.getChildValues().add(addParcelCountry);
 		returnValue.getChildValues().add(addParcelLocality);
 		returnValue.getChildValues().add(addParcelPob);
@@ -346,7 +330,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addParcelStreet);
 		returnValue.getChildValues().add(addParcelLatitude);
 		returnValue.getChildValues().add(addParcelLongitude);
-		
+
 		returnValue.getChildValues().add(addPostalCountry);
 		returnValue.getChildValues().add(addPostalLocality);
 		returnValue.getChildValues().add(addPostalPob);
@@ -355,7 +339,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addPostalStreet);
 		returnValue.getChildValues().add(addPostalLatitude);
 		returnValue.getChildValues().add(addPostalLongitude);
-		
+
 		returnValue.getChildValues().add(addInternatCountry);
 		returnValue.getChildValues().add(addInternatLocality);
 		returnValue.getChildValues().add(addInternatPob);
@@ -364,7 +348,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addInternatStreet);
 		returnValue.getChildValues().add(addInternatLatitude);
 		returnValue.getChildValues().add(addInternatLongitude);
-		
+
 		returnValue.getChildValues().add(addDomesticCountry);
 		returnValue.getChildValues().add(addDomesticLocality);
 		returnValue.getChildValues().add(addDomesticPob);
@@ -373,7 +357,7 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addDomesticStreet);
 		returnValue.getChildValues().add(addDomesticLatitude);
 		returnValue.getChildValues().add(addDomesticLongitude);
-		
+
 		returnValue.getChildValues().add(addOtherCountry);
 		returnValue.getChildValues().add(addOtherLocality);
 		returnValue.getChildValues().add(addOtherPob);
@@ -382,20 +366,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(addOtherStreet);
 		returnValue.getChildValues().add(addOtherLongitude);
 		returnValue.getChildValues().add(addOtherLatitude);
-		
-		//group email and instant messaging
-		returnValue.getChildValues().add(mail1);
-		returnValue.getChildValues().add(mail2);
-		returnValue.getChildValues().add(mail3);
-		returnValue.getChildValues().add(mail4);
-		returnValue.getChildValues().add(mail5);
-		returnValue.getChildValues().add(mail6);
-		returnValue.getChildValues().add(mail7);
-		returnValue.getChildValues().add(mail8);
-		returnValue.getChildValues().add(mail9);
-		returnValue.getChildValues().add(mail10);
+
+		// group email and instant messaging
 		returnValue.getChildValues().add(mailDef);
-		
+		returnValue.getChildValues().add(mailCollection);
+
 		returnValue.getChildValues().add(imAim);
 		returnValue.getChildValues().add(imDefault);
 		returnValue.getChildValues().add(imGadu);
@@ -407,10 +382,10 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(imMw);
 		returnValue.getChildValues().add(imSkype);
 		returnValue.getChildValues().add(imYahoo);
-		
+
 		returnValue.getChildValues().add(blogFeed);
 		returnValue.getChildValues().add(frontpage);
-		
+
 		// section details
 		returnValue.getChildValues().add(detBirth);
 		returnValue.getChildValues().add(detBur);
@@ -423,11 +398,11 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(detNaPart);
 		returnValue.getChildValues().add(detNotes);
 		returnValue.getChildValues().add(detTitle);
-		
+
 		// section misc
 		returnValue.getChildValues().add(miscMime);
 		returnValue.getChildValues().add(miscPubKey);
-		
+
 		return returnValue;
 	}
 }

@@ -331,7 +331,9 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				editPage.setEditingDomain(this.editingDomain);
 				editPage.setBindingContext(this.ctx);
 				addPage(editPage);
-				setPageImage(i + offset, editPageByType.get(i).getImage().createImage());
+				if (editPageByType.get(i).getImage() != null) {
+					setPageImage(i + offset, editPageByType.get(i).getImage().createImage());
+				}
 				setPageText(i + offset, editPageByType.get(i).getLabel());
 			}
 

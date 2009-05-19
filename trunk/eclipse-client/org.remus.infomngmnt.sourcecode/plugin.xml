@@ -28,6 +28,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="org.remus.infomngmnt.ui.infotypes"
             class="org.remus.infomngmnt.sourcecode.prefs.SourceCodePreferencePage"
             id="org.remus.infomngmnt.sourcecode.sourcePref"
             name="Source-Code">

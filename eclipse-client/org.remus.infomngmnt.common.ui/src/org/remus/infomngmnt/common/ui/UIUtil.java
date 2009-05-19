@@ -29,6 +29,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -207,13 +208,20 @@ public class UIUtil {
 		section.setTextClient(toolbar);
 	}
 
-	public static IContributionItem getCommandContribution(final String commandId, final ImageDescriptor image,
-			final ImageDescriptor disabledImage, final String label, final String tooltip,
-			final String helpContextId) {
+	public static IContributionItem getCommandContribution(final String commandId,
+			final ImageDescriptor image, final ImageDescriptor disabledImage, final String label,
+			final String tooltip, final String helpContextId) {
 		CommandContributionItemParameter commandParm = new CommandContributionItemParameter(
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow(), null, commandId, null, image,
 				disabledImage, null, label, null, tooltip, CommandContributionItem.STYLE_PUSH,
 				null, false);
 		return new CommandContributionItem(commandParm);
+	}
+
+	public static GridLayout createMarginLessGridLayout(final int columns) {
+		GridLayout returnValue = new GridLayout(columns, false);
+		returnValue.marginWidth = 0;
+		returnValue.marginHeight = 0;
+		return returnValue;
 	}
 }

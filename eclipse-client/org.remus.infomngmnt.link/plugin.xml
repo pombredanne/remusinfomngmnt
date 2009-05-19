@@ -65,6 +65,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="org.remus.infomngmnt.ui.infotypes"
             class="org.remus.infomngmnt.link.preferences.LinkEditorPreferencePage"
             id="org.remus.infomngmnt.link.preferencePage"
             name="Link">

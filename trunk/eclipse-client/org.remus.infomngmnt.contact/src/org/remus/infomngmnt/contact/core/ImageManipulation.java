@@ -23,11 +23,11 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ui.general.LoadImageRunnable;
@@ -56,8 +56,8 @@ public class ImageManipulation {
 		}
 		return imageScaled;
 	}
-	
-	public static Image selectImageFromDialog(final Shell shell,
+
+	public static void selectImageFromDialog(final Shell shell,
 			final InformationUnit informationUnit, final String nodeName,
 			final AdapterFactoryEditingDomain editingDomain, final int imageTargetX,
 			final int imageTargetY) {
@@ -90,9 +90,6 @@ public class ImageManipulation {
 			loader.data[0] = imageScaled;
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			loader.save(baos, SWT.IMAGE_PNG);
-
-			Image image = new Image(null, imageScaled);
-
 			InformationUnit childByType = InformationUtil.getChildByType(informationUnit, nodeName);
 			SetCommand setCommand = new SetCommand(editingDomain, childByType,
 					InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, baos.toByteArray());
@@ -103,9 +100,7 @@ public class ImageManipulation {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return image;
-		} else {
-			return null;
+
 		}
 	}
 }

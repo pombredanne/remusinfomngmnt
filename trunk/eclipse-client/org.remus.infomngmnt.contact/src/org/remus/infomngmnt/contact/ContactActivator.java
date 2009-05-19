@@ -23,28 +23,22 @@ import org.osgi.framework.BundleContext;
  */
 public class ContactActivator extends AbstractUIPlugin {
 
-	public static String PASSWORD_INFO_ID = "CONTACT";
-
-	public static final String TYPE_ID = "IMAGE"; //$NON-NLS-1$
+	public static String TYPE_ID = "CONTACT";
 
 	public static final String NODE_NAME_RAWDATA_IMAGE = "imageData"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_RAWDATA_LOGO = "logoData"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_EXIF = "exifdata"; //$NON-NLS-1$
-
-	public static final String ORIGINAL_FILEPATH = "originFilePath"; //$NON-NLS-1$
+	public static final String ORIGINAL_FILEPATH = "originalfilepath";
 
 	// group person
-	public static final String NODE_NAME_PERS_NAME_TITLE = "persTitle"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_NAME_FIRST = "persFirst"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_NAME_ADDITIONAL = "persAdditional"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_NAME_LAST = "persLast"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_NAME_TITLE_AFTER = "persTitleAfter"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_NAME_FORMATTED = "persFormatted"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_ROLE = "persRole"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_ORGANISATION = "persOrganisation"; //$NON-NLS-1$
-	public static final String NODE_NAME_PERS_NAME_COMPLETE = "persComplete"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_TITLE = "title"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_FIRST = "firstname"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_ADDITIONAL = "additionals"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_LAST = "lastname"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_NAME_TITLE_AFTER = "titleafter"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_ROLE = "role"; //$NON-NLS-1$
+	public static final String NODE_NAME_PERS_ORGANISATION = "organization"; //$NON-NLS-1$
 
 	// group phone number
 	public static final String NODE_NAME_PN_HOME = "pnHome"; //$NON-NLS-1$
@@ -62,68 +56,22 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_NAME_PN_OTHERS = "pnOthers"; //$NON-NLS-1$
 
 	// group address
-	public static final String NODE_ADDRESS_WORK_STREET = "workStreet"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_WORK_POST_OFFICE_BOX = "workPob"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_WORK_LOCALITY = "workLocality"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_WORK_REGION = "workRegion"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_WORK_POSTAL = "workPostal"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_WORK_COUNTRY = "workCountry"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_WORK_LONGITUDE = "workLongitude"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_WORK_LATITUDE = "workLatitude"; //$NON-NLS-1$
+	public static final String NODE_NAME_WORK_ADRESS = "wordAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_HOME_ADRESS = "homeAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_INTERNAT_ADRESS = "internatAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_POSTAL_ADRESS = "postalAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_PARCEL_ADRESS = "parcelAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_DOMESTIC_ADRESS = "domesticAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_OTHER_ADRESS = "otherAdress"; //$NON-NLS-1$
 
-	public static final String NODE_ADDRESS_HOME_STREET = "homeStreet"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_HOME_POST_OFFICE_BOX = "homePob"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_HOME_LOCALITY = "homeLocality"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_HOME_REGION = "homeRegion"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_HOME_POSTAL = "homePostal"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_HOME_COUNTRY = "homeCountry"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_HOME_LONGITUDE = "homeLongitude"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_HOME_LATITUDE = "homeLatitude"; //$NON-NLS-1$
-
-	public static final String NODE_ADDRESS_INTERNAT_STREET = "internatStreet"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_INTERNAT_POST_OFFICE_BOX = "internatPob"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_INTERNAT_LOCALITY = "internatLocality"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_INTERNAT_REGION = "internatRegion"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_INTERNAT_POSTAL = "internatPostal"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_INTERNAT_COUNTRY = "internatCountry"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_INTERNAT_LONGITUDE = "internatLongitude"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_INTERNAT_LATITUDE = "internatLatitude"; //$NON-NLS-1$
-
-	public static final String NODE_ADDRESS_POSTAL_STREET = "postalStreet"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_POSTAL_POST_OFFICE_BOX = "postalPob"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_POSTAL_LOCALITY = "postalLocality"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_POSTAL_REGION = "postalRegion"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_POSTAL_POSTAL = "postalPostal"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_POSTAL_COUNTRY = "postalCountry"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_POSTAL_LONGITUDE = "internatLongitude"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_POSTAL_LATITUDE = "internatLatitude"; //$NON-NLS-1$
-
-	public static final String NODE_ADDRESS_PARCEL_STREET = "parcelStreet"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_PARCEL_POST_OFFICE_BOX = "parcelPob"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_PARCEL_LOCALITY = "parcelLocality"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_PARCEL_REGION = "parcelRegion"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_PARCEL_POSTAL = "parcelPostal"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_PARCEL_COUNTRY = "parcelCountry"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_PARCEL_LONGITUDE = "parcelLongitude"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_PARCEL_LATITUDE = "parcelLatitude"; //$NON-NLS-1$
-
-	public static final String NODE_ADDRESS_DOMESTIC_STREET = "domesticStreet"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_DOMESTIC_POST_OFFICE_BOX = "domesticPob"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_DOMESTIC_LOCALITY = "domesticLocality"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_DOMESTIC_REGION = "domesticRegion"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_DOMESTIC_POSTAL = "domesticPostal"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_DOMESTIC_COUNTRY = "domesticCountry"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_DOMESTIC_LONGITUDE = "domesticLongitude"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_DOMESTIC_LATITUDE = "domesticLatitude"; //$NON-NLS-1$
-
-	public static final String NODE_ADDRESS_OTHER_STREET = "otherStreet"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_OTHER_POST_OFFICE_BOX = "otherPob"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_OTHER_LOCALITY = "otherLocality"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_OTHER_REGION = "otherRegion"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_OTHER_POSTAL = "otherPostal"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_OTHER_COUNTRY = "otherCountry"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_OTHER_LONGITUDE = "otherLongitude"; //$NON-NLS-1$
-	public static final String NODE_ADDRESS_OTHER_LATITUDE = "otherLatitude"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_STREET = "street"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_POST_OFFICE_BOX = "postofficebox"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_LOCALITY = "locality"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_REGION = "region"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_POSTAL = "postal"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_COUNTRY = "country"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_LONGITUDE = "longitude"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_LATITUDE = "latitude"; //$NON-NLS-1$
 
 	// group email and instant messaging
 	public static final String NODE_MAILS = "emails"; //$NON-NLS-1$

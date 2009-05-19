@@ -28,17 +28,9 @@
             type="CONTACT">
       </editPage>
       <editPage
-            editpage="org.remus.infomngmnt.contact.ui.detail.EditDetailPage"
-            icon="icons/iconexperience/contact.png"
-            id="org.remus.infomngmnt.contact.editDetailPage"
-            label="Details"
-            type="CONTACT">
-      </editPage>
-      <editPage
             editpage="org.remus.infomngmnt.contact.ui.misc.EditMiscPage"
-            icon="icons/iconexperience/contact.png"
             id="org.remus.infomngmnt.contact.editMiscPage"
-            label="Miscellaneous"
+            label="Details"
             type="CONTACT">
       </editPage>
       <creationUiTrigger

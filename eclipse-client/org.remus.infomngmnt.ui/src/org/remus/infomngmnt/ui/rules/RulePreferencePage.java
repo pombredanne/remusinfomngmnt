@@ -17,13 +17,10 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.EMFObservables;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.PasteFromClipboardCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -39,8 +36,6 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferencePage;
@@ -80,14 +75,12 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RemusTransferType;
 import org.remus.infomngmnt.RuleAction;
-import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IRuleService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
-import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -300,14 +293,16 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 
 		});
 
-		this.availableRulesGroup = new Group(sashForm, SWT.NONE);
-		this.stackLayout = new StackLayout();
-		this.availableRulesGroup.setLayout(this.stackLayout);
-		this.availableRulesGroup.setText("Information unit-specific preferences");
-
+		/*
+		 * Disalbe
+		 */
+		// this.availableRulesGroup = new Group(sashForm, SWT.NONE);
+		// this.stackLayout = new StackLayout();
+		// this.availableRulesGroup.setLayout(this.stackLayout);
+		// this.availableRulesGroup.setText("Information unit-specific preferences");
 		this.combo.select(0);
 		hookContextMenu();
-		sashForm.setWeights(new int[] { 1, 1 });
+		sashForm.setWeights(new int[] { 1 });
 		return composite;
 	}
 
@@ -319,33 +314,38 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 		this.ruleName.setEnabled(element instanceof RuleAction);
 		this.groovyMatcherButton.setEnabled(element instanceof RuleAction);
 		this.postProcessingActionsButton.setEnabled(element instanceof RuleAction);
-		if (element instanceof RuleAction) {
-			this.selectedRuleAction = (RuleAction) element;
-			AbstractCreationPreferencePage preferencePage = UIExtensionManager.getInstance()
-					.getPreferencePageByTransferAndTypeId(
-							((RemusTransferType) ((RuleAction) element).eContainer()).getId(),
-							((RuleAction) element).getInfoTypeId());
-			if (preferencePage != null) {
-				RuleValue ruleValue = ((RuleAction) element).getRuleValue();
-				if (ruleValue == null) {
-					ruleValue = InfomngmntFactory.eINSTANCE.createRuleValue();
-					((RuleAction) element).setRuleValue(ruleValue);
-				}
-				preferencePage.setValues(ruleValue, this.editingDomain);
-				if (!this.knownPrefPages.contains(preferencePage)) {
-					this.knownPrefPages.add(preferencePage);
-					preferencePage.createPreferencePage(this.availableRulesGroup);
-				}
-				preferencePage.bindValuesToUi();
-				this.stackLayout.topControl = preferencePage.getControl();
-				this.availableRulesGroup.layout();
-			}
-			IObservableValue emfName = EMFObservables.observeValue((EObject) element,
-					InfomngmntPackage.Literals.RULE_ACTION__NAME);
-			ISWTObservableValue swtName = SWTObservables.observeText(this.ruleName, SWT.Modify);
-			this.nameBinding = this.ctx.bindValue(swtName, emfName, null, null);
-		}
-
+		/*
+		 * This will be disabled
+		 */
+		// if (element instanceof RuleAction) {
+		// this.selectedRuleAction = (RuleAction) element;
+		// AbstractCreationPreferencePage preferencePage =
+		// UIExtensionManager.getInstance()
+		// .getPreferencePageByTransferAndTypeId(
+		// ((RemusTransferType) ((RuleAction) element).eContainer()).getId(),
+		// ((RuleAction) element).getInfoTypeId());
+		// if (preferencePage != null) {
+		// RuleValue ruleValue = ((RuleAction) element).getRuleValue();
+		// if (ruleValue == null) {
+		// ruleValue = InfomngmntFactory.eINSTANCE.createRuleValue();
+		// ((RuleAction) element).setRuleValue(ruleValue);
+		// }
+		// preferencePage.setValues(ruleValue, this.editingDomain);
+		// if (!this.knownPrefPages.contains(preferencePage)) {
+		// this.knownPrefPages.add(preferencePage);
+		// preferencePage.createPreferencePage(this.availableRulesGroup);
+		// }
+		// preferencePage.bindValuesToUi();
+		// this.stackLayout.topControl = preferencePage.getControl();
+		// this.availableRulesGroup.layout();
+		// }
+		// IObservableValue emfName = EMFObservables.observeValue((EObject)
+		// element,
+		// InfomngmntPackage.Literals.RULE_ACTION__NAME);
+		// ISWTObservableValue swtName =
+		// SWTObservables.observeText(this.ruleName, SWT.Modify);
+		// this.nameBinding = this.ctx.bindValue(swtName, emfName, null, null);
+		// }
 	}
 
 	protected void handleRuleSetSelectionChange(final Event event) {

@@ -1,10 +1,16 @@
 package org.remus.infomngmnt.contact.ui.misc;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.observable.value.IValueChangeListener;
+import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -13,7 +19,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
@@ -23,10 +28,10 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.contact.ui.general.CalendarDateChooser;
@@ -48,6 +53,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 	private Text tx_Birthday;
 	private Text tx_NamePartner;
 	private Text tx_Jubilee;
+	private Label btImage;
 
 	public EditMiscPage() {
 		// TODO Auto-generated constructor stub
@@ -71,7 +77,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		final Section section_1 = this.toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("Miscellaneous");
+		section_1.setText("Company Logo");
 
 		final Composite compositeGeneral = this.toolkit.createComposite(section_1, SWT.NONE);
 		final GridLayout gridLayoutAdditional = new GridLayout();
@@ -86,53 +92,24 @@ public class EditMiscPage extends AbstractInformationFormPage {
 
 	private void createGroupImage(final Composite compositeGeneral) {
 
-		final Group group_Images = new Group(compositeGeneral, SWT.NONE);
-		final GridData gd_Images = new GridData();
-		group_Images.setLayoutData(gd_Images);
-		final GridLayout gl_ImageGroup = new GridLayout();
-		gl_ImageGroup.numColumns = 1;
-		group_Images.setLayout(gl_ImageGroup);
-
-		final Label lb_Image = this.toolkit.createLabel(group_Images, "Logo");
-		GridData gd_text = new GridData(SWT.CENTER, SWT.BEGINNING, true, false);
-		lb_Image.setLayoutData(gd_text);
-
-		final Label bt_Image = this.toolkit.createLabel(group_Images, "double click me ...",
-				SWT.BORDER);
-		GridData gd_Image = new GridData(SWT.FILL, SWT.BEGINNING, false, true);
-		final int sizeX = 150;
-		final int sizeY = 150;
+		this.btImage = this.toolkit.createLabel(compositeGeneral, null, SWT.NONE);
+		GridData gd_Image = new GridData(SWT.CENTER, SWT.BEGINNING, true, true);
+		final int sizeX = 128;
+		final int sizeY = 128;
+		this.btImage.setToolTipText("Add company logo");
 		gd_Image.widthHint = sizeX;
 		gd_Image.heightHint = sizeY;
-		bt_Image.setLayoutData(gd_Image);
+		this.btImage.setLayoutData(gd_Image);
 
-		bt_Image.addMouseListener(new MouseListener() {
-
+		this.btImage.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseDoubleClick(final MouseEvent e) {
-				// Image img = ImageManipulation.selectImageFromDialog(shell,
-				// informationUnit, ContactActivator.NODE_NAME_RAWDATA_LOGO,
-				// (AdapterFactoryEditingDomain)
-				// editMiscPage.getEditingDomain(), sizeX, sizeY);
-				// if(img != null) bt_Image.setImage(img);;
-			}
-
-			public void mouseDown(final MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-
-			public void mouseUp(final MouseEvent e) {
-				// TODO Auto-generated method stub
+				ImageManipulation.selectImageFromDialog(getSite().getShell(), getModelObject(),
+						ContactActivator.NODE_NAME_RAWDATA_LOGO,
+						(AdapterFactoryEditingDomain) getEditingDomain(), sizeX, sizeY);
 			}
 		});
-		InformationUnit rawData = InformationUtil.getChildByType(getModelObject(),
-				ContactActivator.NODE_NAME_RAWDATA_LOGO);
-		if (rawData != null && rawData.getBinaryValue() != null) {
-			ByteArrayInputStream bais = new ByteArrayInputStream(rawData.getBinaryValue());
-			ImageData imageData = new ImageData(bais);
-			ImageData imageScaled = ImageManipulation.scaleImageToTarget(imageData, sizeX, sizeY);
-			Image image = new Image(null, imageScaled);
-			bt_Image.setImage(image);
-		}
+
 	}
 
 	private void doCreateDetailSection(final Composite body) {
@@ -279,9 +256,41 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		lb_Separator.setLayoutData(gd_text);
 	}
 
+	protected void setBytesToImage(final byte[] value) {
+		if (value == null) {
+			this.btImage.setImage(ResourceManager.getPluginImage(ContactActivator.getDefault(),
+					"icons/iconexperience/factory.png"));
+		} else {
+			ByteArrayInputStream bais = new ByteArrayInputStream(value);
+			ImageData imageData = new ImageData(bais);
+			Image image = new Image(null, imageData);
+			this.btImage.setImage(image);
+			try {
+				bais.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	@Override
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
+
+		setBytesToImage(InformationUtil.getChildByType(getModelObject(),
+				ContactActivator.NODE_NAME_RAWDATA_LOGO).getBinaryValue());
+		IObservableValue observeValue = EMFObservables.observeValue(InformationUtil.getChildByType(
+				getModelObject(), ContactActivator.NODE_NAME_RAWDATA_LOGO),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE);
+		observeValue.addValueChangeListener(new IValueChangeListener() {
+			public void handleValueChange(final ValueChangeEvent event) {
+				byte[] value = (byte[]) event.getObservableValue().getValue();
+				setBytesToImage(value);
+			}
+		});
+
 		TextBindingWidget createTextBindingWidget0 = BindingWidgetFactory.createTextBindingWidget(
 				this.tx_Smime, this);
 		createTextBindingWidget0.bindModel(InformationUtil.getChildByType(getModelObject(),

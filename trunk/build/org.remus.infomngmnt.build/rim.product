@@ -3,7 +3,6 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="true">
 
-
    <configIni use="default">
       <linux>/org.remus.infomngmnt.application/config.ini</linux>
       <macosx>/org.remus.infomngmnt.application/config.ini</macosx>
@@ -11,7 +10,7 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-clean</programArgs>
+      <programArgs>-clean -nl en</programArgs>
       <vmArgs>-Dosgi.framework.extensions=org.eclipse.equinox.transforms.hook</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
@@ -31,10 +30,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>

@@ -14,49 +14,50 @@
  */
 package org.remus.infomngmnt.provider;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * This is the central singleton for the Infomngmnt edit plugin.
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * This is the central singleton for the Infomngmnt edit plugin. <!--
+ * begin-user-doc --> <!-- end-user-doc -->
+ * 
  * @generated
  */
 public final class InfomngmntEditPlugin extends EMFPlugin {
 	/**
-	 * Keep track of the singleton.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 */
 	public static final InfomngmntEditPlugin INSTANCE = new InfomngmntEditPlugin();
 
 	/**
-	 * Keep track of the singleton.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 */
 	private static Implementation plugin;
 
 	/**
-	 * Create the instance.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Create the instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public InfomngmntEditPlugin() {
-		super
-		  (new ResourceLocator [] {
-		   });
+		super(new ResourceLocator[] {});
 	}
 
 	/**
-	 * Returns the singleton instance of the Eclipse plugin.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -66,9 +67,9 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 	}
 
 	/**
-	 * Returns the singleton instance of the Eclipse plugin.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -77,16 +78,18 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 	}
 
 	/**
-	 * The actual implementation of the Eclipse <b>Plugin</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The actual implementation of the Eclipse <b>Plugin</b>. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public static class Implementation extends EclipsePlugin {
+
+		private IPreferenceStore preferenceStore;
+
 		/**
-		 * Creates an instance.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		public Implementation() {
@@ -97,13 +100,49 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 			plugin = this;
 		}
 
-		public <T> T getService(Class<T> serviceClass) {
-			ServiceReference serviceReference = getBundle().getBundleContext().getServiceReference(serviceClass.getName());
+		@Override
+		public void stop(final BundleContext context) throws Exception {
+			this.preferenceStore = null;
+			super.stop(context);
+		}
+
+		public <T> T getService(final Class<T> serviceClass) {
+			ServiceReference serviceReference = getBundle().getBundleContext().getServiceReference(
+					serviceClass.getName());
 			if (serviceReference != null) {
 				Object service = getBundle().getBundleContext().getService(serviceReference);
 				return (T) service;
 			}
 			return null;
+		}
+
+		/**
+		 * Returns the preference store for this UI plug-in. This preference
+		 * store is used to hold persistent settings for this plug-in in the
+		 * context of a workbench. Some of these settings will be user
+		 * controlled, whereas others may be internal setting that are never
+		 * exposed to the user.
+		 * <p>
+		 * If an error occurs reading the preference store, an empty preference
+		 * store is quietly created, initialized with defaults, and returned.
+		 * </p>
+		 * <p>
+		 * <strong>NOTE:</strong> As of Eclipse 3.1 this method is no longer
+		 * referring to the core runtime compatibility layer and so plug-ins
+		 * relying on Plugin#initializeDefaultPreferences will have to access
+		 * the compatibility layer themselves.
+		 * </p>
+		 * 
+		 * @return the preference store
+		 */
+		public IPreferenceStore getPreferenceStore() {
+			// Create the preference store lazily.
+			if (this.preferenceStore == null) {
+				this.preferenceStore = new ScopedPreferenceStore(new InstanceScope(), getBundle()
+						.getSymbolicName());
+
+			}
+			return this.preferenceStore;
 		}
 	}
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infomngmnt:AvailableRuleDefinitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0">
+  <newElementRules name="Default">
+    <transferTypes name="Dropped/Pasted URL" id="org.remus.infomngmnt.core.urlTransfer">
+      <actions infoTypeId="PLAINTEXT"/>
+      <actions name="Photo from URL" infoTypeId="IMAGE"/>
+      <actions name="Password for URL" infoTypeId="PASSWORD"/>
+      <actions name="Regular Link" infoTypeId="LINK" />
+    </transferTypes>
+    <transferTypes name="Dropped/Pasted File(s)" id="org.remus.infomngmnt.core.filetransfer">
+      <actions infoTypeId="VIDEO"/>
+    </transferTypes>
+    <transferTypes name="Dropped/Pasted HTML-Content" id="org.remus.infomngmnt.core.htmltransfer">
+      <actions infoTypeId="PLAINTEXT"/>
+      <actions infoTypeId="HTML"/>
+    </transferTypes>
+    <transferTypes name="Dropped/Pasted RichText-Content" id="org.remus.infomngmnt.core.rftTransfer"/>
+    <transferTypes name="Dropped/Pasted Image or Image-Data" id="org.remus.infomngmnt.core.imagetransfer">
+      <actions infoTypeId="IMAGE"/>
+    </transferTypes>
+    <transferTypes name="Dropped/Pasted Text-Content" id="org.remus.infomngmnt.core.texttransfer">
+      <actions infoTypeId="PLAINTEXT"/>
+      <actions infoTypeId="PASSWORD" postProcessingInstructions="preset(&quot;@stringValue&quot;,input);"/>
+      <actions name="Java SourceCode" infoTypeId="SOURCE" postProcessingInstructions="preset(&quot;childValues[@type='srcType']/@stringValue&quot;,&quot;java&quot;);" />
+      <actions infoTypeId="LINK" />
+      <actions name="Contact from E-Mail" infoTypeId="CONTACT" postProcessingInstructions="preset(&quot;childValues[@type='emails']/childValues[@type=&quot;email&quot;]/@stringValue&quot;,input);&#xD;&#xA;category=&quot;Inbox/My contacts&quot;"/>
+      <actions name="" infoTypeId="SOURCE" />
+    </transferTypes>
+  </newElementRules>
+</infomngmnt:AvailableRuleDefinitions>

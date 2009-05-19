@@ -12,10 +12,17 @@
 
 package org.remus.infomngmnt.core.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Map;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
@@ -25,6 +32,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RemusTransferType;
 import org.remus.infomngmnt.RuleAction;
+import org.remus.infomngmnt.common.core.streams.StreamUtil;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
@@ -44,10 +52,28 @@ public class RuleUtil implements IRuleService {
 		if (this.rules == null) {
 			IPath append = InfomngmntEditPlugin.getPlugin().getStateLocation().append(RULE_PATH);
 			boolean createDefaultValues = !append.toFile().exists();
+			if (createDefaultValues) {
+				try {
+					File file = append.toFile();
+					file.getParentFile().mkdirs();
+					file.createNewFile();
+					InputStream openStream = FileLocator
+							.openStream(InfomngmntEditPlugin.getPlugin().getBundle(), new Path(
+									"initial/defaultruleset.xml"), false);
+					FileOutputStream fos = new FileOutputStream(file);
+					StreamUtil.stream(openStream, fos);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			this.rules = EditingUtil.getInstance().getObjectFromFileUri(
 					URI.createFileURI(append.toOSString()),
 					InfomngmntPackage.Literals.AVAILABLE_RULE_DEFINITIONS, null);
-			if (createDefaultValues) {
+			if (false) {
 				NewElementRules createNewElementRules = InfomngmntFactory.eINSTANCE
 						.createNewElementRules();
 				createNewElementRules.setName(DEFAULT_RULENAME);

@@ -12,8 +12,6 @@
 
 package org.remus.infomngmnt.common.core.streams;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -72,41 +70,41 @@ public class StreamUtil {
 			throw new IllegalArgumentException("output stream cannot be null");
 		}
 
-		BufferedInputStream bufferedInputStream = null;
-		if (inputStream instanceof BufferedInputStream) {
-			bufferedInputStream = (BufferedInputStream) inputStream;
-		} else {
-			bufferedInputStream = new BufferedInputStream(inputStream);
-		}
-
-		BufferedOutputStream bufferedOutputStream = null;
-		if (outputStream instanceof BufferedOutputStream) {
-			bufferedOutputStream = (BufferedOutputStream) outputStream;
-		} else {
-			bufferedOutputStream = new BufferedOutputStream(outputStream);
-		}
+		// BufferedInputStream bufferedInputStream = null;
+		// if (inputStream instanceof BufferedInputStream) {
+		// bufferedInputStream = (BufferedInputStream) inputStream;
+		// } else {
+		// bufferedInputStream = new BufferedInputStream(inputStream);
+		// }
+		//
+		// BufferedOutputStream bufferedOutputStream = null;
+		// if (outputStream instanceof BufferedOutputStream) {
+		// bufferedOutputStream = (BufferedOutputStream) outputStream;
+		// } else {
+		// bufferedOutputStream = new BufferedOutputStream(outputStream);
+		// }
 
 		long counter = 0;
 		int flushCounter = 0;
 
 		byte[] buffer = new byte[4096];
 		int read;
-		while ((read = bufferedInputStream.read(buffer)) >= 0) {
+		while ((read = inputStream.read(buffer)) >= 0) {
 
-			bufferedOutputStream.write(buffer, 0, read);
+			outputStream.write(buffer, 0, read);
 
 			counter += read;
 			flushCounter += read;
 
 			// flush output stream every 8kB:
 			if (flushCounter >= 8192) {
-				bufferedOutputStream.flush();
+				outputStream.flush();
 				flushCounter = 0;
 			}
 
 		}
 
-		bufferedOutputStream.flush();
+		outputStream.flush();
 
 		return counter;
 

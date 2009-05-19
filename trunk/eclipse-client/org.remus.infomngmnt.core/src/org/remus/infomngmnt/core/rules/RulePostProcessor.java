@@ -107,8 +107,12 @@ public class RulePostProcessor {
 								if (eStructuralFeature.isMany()) {
 									EList children = (EList) currentObjectInstance
 											.eGet(eStructuralFeature);
+									boolean attributeFound = false;
 									EObject newChild = null;
 									for (Object object : children) {
+										if (attributeFound) {
+											break;
+										}
 										if (object instanceof EObject) {
 											/*
 											 * Searching for the attribte in the
@@ -116,7 +120,6 @@ public class RulePostProcessor {
 											 */
 											EList<EAttribute> eAllAttributes = ((EObject) object)
 													.eClass().getEAllAttributes();
-											boolean attributeFound = false;
 											for (EAttribute eAttribute : eAllAttributes) {
 												if (attributeName.equals(eAttribute.getName())
 														&& attributeValue.equals(((EObject) object)
@@ -132,71 +135,65 @@ public class RulePostProcessor {
 													break;
 												}
 											}
-											if (!attributeFound) {
-												/*
-												 * Attribute was not found. We
-												 * have to ask the editing
-												 * domain and its itemprovider
-												 * for possible children. The
-												 */
-												IEditingDomainItemProvider adapt = (IEditingDomainItemProvider) EditingUtil
-														.getInstance().getAdapterFactory().adapt(
-																currentObjectInstance,
-																IEditingDomainItemProvider.class);
-												if (adapt != null) {
-													/*
-													 * Getting the
-													 * newChild-Descriptors from
-													 * the editing domain.
-													 */
-													Collection<?> newChildDescriptors = adapt
-															.getNewChildDescriptors(
-																	currentObjectInstance,
-																	EditingUtil
-																			.getInstance()
-																			.createNewEditingDomain(),
-																	false);
-													/*
-													 * Iterating through the
-													 * newChildDescriptors to
-													 * get the corrent
-													 * descriptor (feature must
-													 * match)
-													 */
-													for (Object object2 : newChildDescriptors) {
-														if (object2 instanceof CommandParameter
-																&& eStructuralFeature == ((CommandParameter) object2)
-																		.getEStructuralFeature()) {
-															EObject eValue = ((CommandParameter) object2)
-																	.getEValue();
-															EList<EAttribute> eAllAttributesNew = eValue
-																	.eClass().getEAllAttributes();
-															for (EAttribute eAttribute : eAllAttributesNew) {
-																if (attributeName.equals(eAttribute
-																		.getName())
-																		&& eAttribute
-																				.isChangeable()) {
-																	eValue.eSet(eAttribute,
-																			attributeValue);
-																	newChild = eValue;
 
-																	currentObjectInstance = eValue;
-																	break;
-																}
-															}
-														}
-														if (newChild != null) {
+										}
+									}
+									if (!attributeFound) {
+										/*
+										 * Attribute was not found. We have to
+										 * ask the editing domain and its
+										 * itemprovider for possible children.
+										 * The
+										 */
+										IEditingDomainItemProvider adapt = (IEditingDomainItemProvider) EditingUtil
+												.getInstance().getAdapterFactory().adapt(
+														currentObjectInstance,
+														IEditingDomainItemProvider.class);
+										if (adapt != null) {
+											/*
+											 * Getting the newChild-Descriptors
+											 * from the editing domain.
+											 */
+											Collection<?> newChildDescriptors = adapt
+													.getNewChildDescriptors(currentObjectInstance,
+															EditingUtil.getInstance()
+																	.createNewEditingDomain(),
+															false);
+											/*
+											 * Iterating through the
+											 * newChildDescriptors to get the
+											 * corrent descriptor (feature must
+											 * match)
+											 */
+											for (Object object2 : newChildDescriptors) {
+												if (object2 instanceof CommandParameter
+														&& eStructuralFeature == ((CommandParameter) object2)
+																.getEStructuralFeature()) {
+													EObject eValue = ((CommandParameter) object2)
+															.getEValue();
+													EList<EAttribute> eAllAttributesNew = eValue
+															.eClass().getEAllAttributes();
+													for (EAttribute eAttribute : eAllAttributesNew) {
+														if (attributeName.equals(eAttribute
+																.getName())
+																&& eAttribute.isChangeable()) {
+															eValue.eSet(eAttribute, attributeValue);
+															newChild = eValue;
+
+															currentObjectInstance = eValue;
 															break;
 														}
 													}
+													if (newChild != null) {
+														break;
+													}
 												}
-											} else {
-												break;
+
 											}
 										}
-									}
-									if (newChild != null) {
-										children.add(newChild);
+										if (newChild != null) {
+											children.add(newChild);
+										}
 									}
 								}
 								break;

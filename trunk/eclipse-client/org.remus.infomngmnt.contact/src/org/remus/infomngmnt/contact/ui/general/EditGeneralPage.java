@@ -206,7 +206,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 			public void mouseDoubleClick(final MouseEvent e) {
 				ImageManipulation.selectImageFromDialog(getSite().getShell(), getModelObject(),
 						ContactActivator.NODE_NAME_RAWDATA_IMAGE,
-						(AdapterFactoryEditingDomain) getEditingDomain(), 100, 200);
+						(AdapterFactoryEditingDomain) getEditingDomain(), 64, 64);
 			}
 		});
 

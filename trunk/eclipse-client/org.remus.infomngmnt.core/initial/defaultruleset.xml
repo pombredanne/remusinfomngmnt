@@ -21,9 +21,9 @@
     <transferTypes name="Dropped/Pasted Text-Content" id="org.remus.infomngmnt.core.texttransfer">
       <actions infoTypeId="PLAINTEXT"/>
       <actions infoTypeId="PASSWORD" postProcessingInstructions="preset(&quot;@stringValue&quot;,input);"/>
-      <actions name="Java SourceCode" infoTypeId="SOURCE" postProcessingInstructions="preset(&quot;childValues[@type='srcType']/@stringValue&quot;,&quot;java&quot;);" />
+      <actions name="Java SourceCode" infoTypeId="SOURCE" postProcessingInstructions="preset(&quot;childValues[@type='srcType']/@stringValue&quot;,&quot;Java&quot;);" />
       <actions infoTypeId="LINK" />
-      <actions name="Contact from E-Mail" infoTypeId="CONTACT" postProcessingInstructions="preset(&quot;childValues[@type='emails']/childValues[@type=&quot;email&quot;]/@stringValue&quot;,input);&#xD;&#xA;category=&quot;Inbox/My contacts&quot;"/>
+      <actions name="Contact from E-Mail" infoTypeId="CONTACT" postProcessingInstructions="preset(&quot;childValues[@type='emails']/childValues[@type='email']/@stringValue&quot;,input);&#xD;&#xA;category=&quot;Inbox/My contacts&quot;"/>
       <actions name="" infoTypeId="SOURCE" />
     </transferTypes>
   </newElementRules>

@@ -37,23 +37,17 @@ public class EditPage implements IEditPage {
 	private final String id;
 	private final String label;
 
-
-
-
 	/**
 	 * Creates
+	 * 
 	 * @param configurationElement
 	 * @param contributor
 	 * @param type
 	 * @param createFactoryClass
 	 * @param imageFilePath
 	 */
-	public EditPage(final IConfigurationElement configurationElement,
-			final String contributor,
-			final String type,
-			final String id,
-			final String label,
-			final String imageFilePath) {
+	public EditPage(final IConfigurationElement configurationElement, final String contributor,
+			final String type, final String id, final String label, final String imageFilePath) {
 		this.configurationElement = configurationElement;
 		this.contributor = contributor;
 		this.type = type;
@@ -63,11 +57,10 @@ public class EditPage implements IEditPage {
 
 	}
 
-
 	public AbstractInformationFormPage getEditPage() {
 		try {
 			return (AbstractInformationFormPage) this.configurationElement
-			.createExecutableExtension(UIExtensionManager.EDIT_PAGE_ATT);
+					.createExecutableExtension(UIExtensionManager.EDIT_PAGE_ATT);
 		} catch (CoreException e) {
 			throw new IllegalArgumentException("Could not initialize edit-page");
 		}
@@ -78,8 +71,9 @@ public class EditPage implements IEditPage {
 	}
 
 	public ImageDescriptor getImage() {
-		if (this.img == null) {
-			this.img = AbstractUIPlugin.imageDescriptorFromPlugin(this.contributor, this.imageFilePath);
+		if (this.img == null && this.imageFilePath != null) {
+			this.img = AbstractUIPlugin.imageDescriptorFromPlugin(this.contributor,
+					this.imageFilePath);
 		}
 		return this.img;
 
@@ -88,7 +82,6 @@ public class EditPage implements IEditPage {
 	public String getId() {
 		return this.id;
 	}
-
 
 	public String getLabel() {
 		return this.label;

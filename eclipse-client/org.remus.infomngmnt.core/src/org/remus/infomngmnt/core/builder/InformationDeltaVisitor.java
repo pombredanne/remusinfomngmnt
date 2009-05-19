@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
+import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -208,7 +209,14 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			unitListItem.setLabel(objectFromFile.getLabel());
 			unitListItem.setType(objectFromFile.getType());
 			category.getInformationUnit().add(unitListItem);
+		} else {
+			String label = objectFromFile.getLabel();
+			String label2 = ((AbstractInformationUnit) adapter).getLabel();
+			if (!label.equals(label2)) {
+				((AbstractInformationUnit) adapter).setLabel(label);
+			}
 		}
+
 		this.referenceService.update(objectFromFile);
 	}
 

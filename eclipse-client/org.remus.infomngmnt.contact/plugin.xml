@@ -10,6 +10,12 @@
             name="Contact"
             presentation="org.remus.infomngmnt.contact.ContactInformationRepresentation"
             type="CONTACT">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.urlTransfer">
+         </validTransfers>
       </information>
    </extension>
    <extension
@@ -35,12 +41,16 @@
             label="Miscellaneous"
             type="CONTACT">
       </editPage>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.contact.wizard.NewContactWizard"
+            typeId="CONTACT">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
             category="org.remus.infomngmnt.ui.business"
-            class="org.remus.infomngmnt.contact.NewContactWizard"
+            class="org.remus.infomngmnt.contact.wizard.NewContactWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/contact_new.png"
             id="org.remus.infomngmnt.contact.newContactWizard"

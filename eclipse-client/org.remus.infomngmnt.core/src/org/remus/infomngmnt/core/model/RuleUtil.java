@@ -17,8 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -27,16 +25,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
 import org.remus.infomngmnt.AvailableRuleDefinitions;
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NewElementRules;
-import org.remus.infomngmnt.RemusTransferType;
-import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.services.IRuleExtensionService;
 import org.remus.infomngmnt.core.services.IRuleService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
@@ -73,36 +64,6 @@ public class RuleUtil implements IRuleService {
 			this.rules = EditingUtil.getInstance().getObjectFromFileUri(
 					URI.createFileURI(append.toOSString()),
 					InfomngmntPackage.Literals.AVAILABLE_RULE_DEFINITIONS, null);
-			if (false) {
-				NewElementRules createNewElementRules = InfomngmntFactory.eINSTANCE
-						.createNewElementRules();
-				createNewElementRules.setName(DEFAULT_RULENAME);
-				createNewElementRules.setDeletable(false);
-				this.rules.getNewElementRules().add(createNewElementRules);
-				Map<String, TransferWrapper> allTransferTypes = InfomngmntEditPlugin.getPlugin()
-						.getService(IRuleExtensionService.class).getAllTransferTypes();
-				for (String transferWrapperIds : allTransferTypes.keySet()) {
-					RemusTransferType createRemusTransferType = InfomngmntFactory.eINSTANCE
-							.createRemusTransferType();
-					createRemusTransferType.setId(transferWrapperIds);
-					createRemusTransferType.setName(allTransferTypes.get(transferWrapperIds)
-							.getName());
-					// Default behavior: add all valid types
-					Collection<IInfoType> types = InformationExtensionManager.getInstance()
-							.getTypes();
-					for (IInfoType infoType : types) {
-						if (infoType.getValidTransferTypeIds().contains(transferWrapperIds)) {
-							RuleAction createRuleAction = InfomngmntFactory.eINSTANCE
-									.createRuleAction();
-							createRuleAction.setInfoTypeId(infoType.getType());
-							createRemusTransferType.getActions().add(createRuleAction);
-						}
-					}
-					createNewElementRules.getTransferTypes().add(createRemusTransferType);
-				}
-
-				EditingUtil.getInstance().saveObjectToResource(this.rules);
-			}
 		}
 		return this.rules;
 	}

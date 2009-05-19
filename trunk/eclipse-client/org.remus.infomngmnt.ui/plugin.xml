@@ -145,6 +145,11 @@
             id="org.remus.infomngmnt.ui.repositories"
             name="Remote Repositories">
       </page>
+      <page
+            class="org.remus.infomngmnt.ui.preference.InformationTypesPreferencePage"
+            id="org.remus.infomngmnt.ui.infotypes"
+            name="Information Types">
+      </page>
    </extension>
    <extension
          point="org.remus.infomngmnt.common.ui.trayAction">

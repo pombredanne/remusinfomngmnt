@@ -27,6 +27,7 @@ import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -72,6 +73,7 @@ import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
@@ -228,6 +230,16 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				setDirty(true);
 			}
 		}
+	};
+
+	private final Adapter labelChangeAdapter = new AdapterImpl() {
+		@Override
+		public void notifyChanged(final Notification msg) {
+			if (msg.getFeature() == InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL) {
+				InformationEditor.this.headerForm2.getForm().setText(getPrimaryModel().getLabel());
+				setPartName(getPrimaryModel().getLabel());
+			}
+		};
 	};
 
 	/**
@@ -460,6 +472,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			((CTabFolder) getContainer()).setTabHeight(0);
 		}
 		getPrimaryModel().eAdapters().add(this.dirtyAdapter);
+		getPrimaryModel().eAdapters().add(this.labelChangeAdapter);
 	}
 
 	public void setDirty(final boolean dirty) {
@@ -634,6 +647,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			this.updateProblemIndication = true;
 			updateProblemIndication();
 			getPrimaryModel().eAdapters().add(this.dirtyAdapter);
+			getPrimaryModel().eAdapters().add(this.labelChangeAdapter);
 
 			getActionBarContributor().activate();
 
@@ -881,6 +895,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 		this.adapterFactory.dispose();
 
 		getPrimaryModel().eAdapters().remove(this.dirtyAdapter);
+		getPrimaryModel().eAdapters().remove(this.labelChangeAdapter);
 		this.ctx.dispose();
 		if (this.contentOutlinePage != null) {
 			this.contentOutlinePage.disposeModel();

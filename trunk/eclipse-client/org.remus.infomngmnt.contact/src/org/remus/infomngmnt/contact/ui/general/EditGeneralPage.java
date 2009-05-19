@@ -320,10 +320,16 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	}
 
 	protected void handleAdressComboChange(final KeyValueObject firstElement) {
-		this.currentSelectedAdress = InformationUtil.getChildByType(getModelObject(), firstElement
-				.getId());
+		if (this.currentSelectedAdress != null) {
+			removeAdressListeners();
+		}
+		if (firstElement != null) {
+			this.currentSelectedAdress = InformationUtil.getChildByType(getModelObject(),
+					firstElement.getId());
+		} else {
+			this.currentSelectedAdress = null;
+		}
 		this.bt_EditAddress.setEnabled(this.currentSelectedAdress != null);
-		removeAdressListeners();
 		if (this.currentSelectedAdress != null) {
 			addAdressListeners();
 		}

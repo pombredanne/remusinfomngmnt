@@ -212,7 +212,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 		} else {
 			String label = objectFromFile.getLabel();
 			String label2 = ((AbstractInformationUnit) adapter).getLabel();
-			if (!label.equals(label2)) {
+			if (label != null && !label.equals(label2)) {
 				((AbstractInformationUnit) adapter).setLabel(label);
 			}
 		}

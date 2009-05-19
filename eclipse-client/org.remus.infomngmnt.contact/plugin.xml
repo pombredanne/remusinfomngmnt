@@ -56,5 +56,20 @@
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.ui.infotypes"
+            class="org.remus.infomngmnt.contact.WorkbenchPreferencePage1"
+            id="org.remus.infomngmnt.contact.preferences"
+            name="Contact">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer">
+      </initializer>
+   </extension>
 
 </plugin>

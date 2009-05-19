@@ -31,7 +31,6 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		InformationUnit returnValue = super.createNewObject();
 
 		// general
-		returnValue.setType(ContactActivator.TYPE_ID);
 		InformationUnit rawDataImage = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		rawDataImage.setType(ContactActivator.NODE_NAME_RAWDATA_IMAGE);
 		InformationUnit rawDataLogo = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -51,14 +50,10 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		persLast.setType(ContactActivator.NODE_NAME_PERS_NAME_LAST);
 		InformationUnit persTitleAfter = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		persTitleAfter.setType(ContactActivator.NODE_NAME_PERS_NAME_TITLE_AFTER);
-		InformationUnit persFormatted = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		persFormatted.setType(ContactActivator.NODE_NAME_PERS_NAME_FORMATTED);
 		InformationUnit persRole = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		persRole.setType(ContactActivator.NODE_NAME_PERS_ROLE);
 		InformationUnit persOrganisation = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		persOrganisation.setType(ContactActivator.NODE_NAME_PERS_ORGANISATION);
-		InformationUnit persComplete = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		persComplete.setType(ContactActivator.NODE_NAME_PERS_NAME_COMPLETE);
 
 		// group phone number
 		pnHome.setType(ContactActivator.NODE_NAME_PN_HOME);
@@ -86,126 +81,6 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		pnPager.setType(ContactActivator.NODE_NAME_PN_PAGER);
 		InformationUnit pnOthers = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		pnOthers.setType(ContactActivator.NODE_NAME_PN_OTHERS);
-
-		// group address
-		InformationUnit addWorkStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkStreet.setType(ContactActivator.NODE_ADDRESS_WORK_STREET);
-		InformationUnit addWorkPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkPob.setType(ContactActivator.NODE_ADDRESS_WORK_POST_OFFICE_BOX);
-		InformationUnit addWorkLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkLocality.setType(ContactActivator.NODE_ADDRESS_WORK_LOCALITY);
-		InformationUnit addWorkRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkRegion.setType(ContactActivator.NODE_ADDRESS_WORK_REGION);
-		InformationUnit addWorkPostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkPostal.setType(ContactActivator.NODE_ADDRESS_WORK_POSTAL);
-		InformationUnit addWorkCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkCountry.setType(ContactActivator.NODE_ADDRESS_WORK_COUNTRY);
-		InformationUnit addWorkLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkLatitude.setType(ContactActivator.NODE_ADDRESS_WORK_LATITUDE);
-		InformationUnit addWorkLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addWorkLongitude.setType(ContactActivator.NODE_ADDRESS_WORK_LONGITUDE);
-
-		InformationUnit addHomeStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomeStreet.setType(ContactActivator.NODE_ADDRESS_HOME_STREET);
-		InformationUnit addHomePob = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomePob.setType(ContactActivator.NODE_ADDRESS_HOME_POST_OFFICE_BOX);
-		InformationUnit addHomeLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomeLocality.setType(ContactActivator.NODE_ADDRESS_HOME_LOCALITY);
-		InformationUnit addHomeRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomeRegion.setType(ContactActivator.NODE_ADDRESS_HOME_REGION);
-		InformationUnit addHomePostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomePostal.setType(ContactActivator.NODE_ADDRESS_HOME_POSTAL);
-		InformationUnit addHomeCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomeCountry.setType(ContactActivator.NODE_ADDRESS_HOME_COUNTRY);
-		InformationUnit addHomeLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomeLatitude.setType(ContactActivator.NODE_ADDRESS_HOME_LATITUDE);
-		InformationUnit addHomeLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addHomeLongitude.setType(ContactActivator.NODE_ADDRESS_HOME_LONGITUDE);
-
-		InformationUnit addParcelStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelStreet.setType(ContactActivator.NODE_ADDRESS_PARCEL_STREET);
-		InformationUnit addParcelPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelPob.setType(ContactActivator.NODE_ADDRESS_PARCEL_POST_OFFICE_BOX);
-		InformationUnit addParcelLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelLocality.setType(ContactActivator.NODE_ADDRESS_PARCEL_LOCALITY);
-		InformationUnit addParcelRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelRegion.setType(ContactActivator.NODE_ADDRESS_PARCEL_REGION);
-		InformationUnit addParcelPostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelPostal.setType(ContactActivator.NODE_ADDRESS_PARCEL_POSTAL);
-		InformationUnit addParcelCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelCountry.setType(ContactActivator.NODE_ADDRESS_PARCEL_COUNTRY);
-		InformationUnit addParcelLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelLatitude.setType(ContactActivator.NODE_ADDRESS_PARCEL_LATITUDE);
-		InformationUnit addParcelLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addParcelLongitude.setType(ContactActivator.NODE_ADDRESS_PARCEL_LONGITUDE);
-
-		InformationUnit addPostalStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalStreet.setType(ContactActivator.NODE_ADDRESS_POSTAL_STREET);
-		InformationUnit addPostalPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalPob.setType(ContactActivator.NODE_ADDRESS_POSTAL_POST_OFFICE_BOX);
-		InformationUnit addPostalLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalLocality.setType(ContactActivator.NODE_ADDRESS_POSTAL_LOCALITY);
-		InformationUnit addPostalRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalRegion.setType(ContactActivator.NODE_ADDRESS_POSTAL_REGION);
-		InformationUnit addPostalPostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalPostal.setType(ContactActivator.NODE_ADDRESS_POSTAL_POSTAL);
-		InformationUnit addPostalCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalCountry.setType(ContactActivator.NODE_ADDRESS_POSTAL_COUNTRY);
-		InformationUnit addPostalLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalLatitude.setType(ContactActivator.NODE_ADDRESS_POSTAL_LATITUDE);
-		InformationUnit addPostalLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addPostalLongitude.setType(ContactActivator.NODE_ADDRESS_POSTAL_LONGITUDE);
-
-		InformationUnit addInternatStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatStreet.setType(ContactActivator.NODE_ADDRESS_INTERNAT_STREET);
-		InformationUnit addInternatPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatPob.setType(ContactActivator.NODE_ADDRESS_INTERNAT_POST_OFFICE_BOX);
-		InformationUnit addInternatLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatLocality.setType(ContactActivator.NODE_ADDRESS_INTERNAT_LOCALITY);
-		InformationUnit addInternatRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatRegion.setType(ContactActivator.NODE_ADDRESS_INTERNAT_REGION);
-		InformationUnit addInternatPostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatPostal.setType(ContactActivator.NODE_ADDRESS_INTERNAT_POSTAL);
-		InformationUnit addInternatCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatCountry.setType(ContactActivator.NODE_ADDRESS_INTERNAT_COUNTRY);
-		InformationUnit addInternatLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatLatitude.setType(ContactActivator.NODE_ADDRESS_INTERNAT_LATITUDE);
-		InformationUnit addInternatLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addInternatLongitude.setType(ContactActivator.NODE_ADDRESS_INTERNAT_LONGITUDE);
-
-		InformationUnit addDomesticStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticStreet.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_STREET);
-		InformationUnit addDomesticPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticPob.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_POST_OFFICE_BOX);
-		InformationUnit addDomesticLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticLocality.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_LOCALITY);
-		InformationUnit addDomesticRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticRegion.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_REGION);
-		InformationUnit addDomesticPostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticPostal.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_POSTAL);
-		InformationUnit addDomesticCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticCountry.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_COUNTRY);
-		InformationUnit addDomesticLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticLatitude.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_LATITUDE);
-		InformationUnit addDomesticLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addDomesticLongitude.setType(ContactActivator.NODE_ADDRESS_DOMESTIC_LONGITUDE);
-
-		InformationUnit addOtherStreet = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherStreet.setType(ContactActivator.NODE_ADDRESS_OTHER_STREET);
-		InformationUnit addOtherPob = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherPob.setType(ContactActivator.NODE_ADDRESS_OTHER_POST_OFFICE_BOX);
-		InformationUnit addOtherLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherLocality.setType(ContactActivator.NODE_ADDRESS_OTHER_LOCALITY);
-		InformationUnit addOtherRegion = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherRegion.setType(ContactActivator.NODE_ADDRESS_OTHER_REGION);
-		InformationUnit addOtherPostal = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherPostal.setType(ContactActivator.NODE_ADDRESS_OTHER_POSTAL);
-		InformationUnit addOtherCountry = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherCountry.setType(ContactActivator.NODE_ADDRESS_OTHER_COUNTRY);
-		InformationUnit addOtherLatitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherLatitude.setType(ContactActivator.NODE_ADDRESS_OTHER_LATITUDE);
-		InformationUnit addOtherLongitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		addOtherLongitude.setType(ContactActivator.NODE_ADDRESS_OTHER_LONGITUDE);
 
 		// group email and instant messaging
 		InformationUnit mailDef = InfomngmntFactory.eINSTANCE.createInformationUnit();
@@ -272,16 +147,14 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		miscMime.setType(ContactActivator.NODE_MISC_MIME);
 
 		// general
-		returnValue.setType(ContactActivator.PASSWORD_INFO_ID);
+		returnValue.setType(ContactActivator.TYPE_ID);
 		returnValue.getChildValues().add(rawDataImage);
 		returnValue.getChildValues().add(rawDataLogo);
 		returnValue.getChildValues().add(origFilePath);
 
 		// group person
 		returnValue.getChildValues().add(persAdditional);
-		returnValue.getChildValues().add(persComplete);
 		returnValue.getChildValues().add(persFirst);
-		returnValue.getChildValues().add(persFormatted);
 		returnValue.getChildValues().add(persLast);
 		returnValue.getChildValues().add(persOrganisation);
 		returnValue.getChildValues().add(persRole);
@@ -304,68 +177,13 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(pnWork);
 
 		// group address
-		returnValue.getChildValues().add(addWorkCountry);
-		returnValue.getChildValues().add(addWorkLocality);
-		returnValue.getChildValues().add(addWorkPob);
-		returnValue.getChildValues().add(addWorkPostal);
-		returnValue.getChildValues().add(addWorkRegion);
-		returnValue.getChildValues().add(addWorkStreet);
-		returnValue.getChildValues().add(addWorkLatitude);
-		returnValue.getChildValues().add(addWorkLongitude);
-
-		returnValue.getChildValues().add(addHomeCountry);
-		returnValue.getChildValues().add(addHomeLocality);
-		returnValue.getChildValues().add(addHomePob);
-		returnValue.getChildValues().add(addHomePostal);
-		returnValue.getChildValues().add(addHomeRegion);
-		returnValue.getChildValues().add(addHomeStreet);
-		returnValue.getChildValues().add(addHomeLatitude);
-		returnValue.getChildValues().add(addHomeLongitude);
-
-		returnValue.getChildValues().add(addParcelCountry);
-		returnValue.getChildValues().add(addParcelLocality);
-		returnValue.getChildValues().add(addParcelPob);
-		returnValue.getChildValues().add(addParcelPostal);
-		returnValue.getChildValues().add(addParcelRegion);
-		returnValue.getChildValues().add(addParcelStreet);
-		returnValue.getChildValues().add(addParcelLatitude);
-		returnValue.getChildValues().add(addParcelLongitude);
-
-		returnValue.getChildValues().add(addPostalCountry);
-		returnValue.getChildValues().add(addPostalLocality);
-		returnValue.getChildValues().add(addPostalPob);
-		returnValue.getChildValues().add(addPostalPostal);
-		returnValue.getChildValues().add(addPostalRegion);
-		returnValue.getChildValues().add(addPostalStreet);
-		returnValue.getChildValues().add(addPostalLatitude);
-		returnValue.getChildValues().add(addPostalLongitude);
-
-		returnValue.getChildValues().add(addInternatCountry);
-		returnValue.getChildValues().add(addInternatLocality);
-		returnValue.getChildValues().add(addInternatPob);
-		returnValue.getChildValues().add(addInternatPostal);
-		returnValue.getChildValues().add(addInternatRegion);
-		returnValue.getChildValues().add(addInternatStreet);
-		returnValue.getChildValues().add(addInternatLatitude);
-		returnValue.getChildValues().add(addInternatLongitude);
-
-		returnValue.getChildValues().add(addDomesticCountry);
-		returnValue.getChildValues().add(addDomesticLocality);
-		returnValue.getChildValues().add(addDomesticPob);
-		returnValue.getChildValues().add(addDomesticPostal);
-		returnValue.getChildValues().add(addDomesticRegion);
-		returnValue.getChildValues().add(addDomesticStreet);
-		returnValue.getChildValues().add(addDomesticLatitude);
-		returnValue.getChildValues().add(addDomesticLongitude);
-
-		returnValue.getChildValues().add(addOtherCountry);
-		returnValue.getChildValues().add(addOtherLocality);
-		returnValue.getChildValues().add(addOtherPob);
-		returnValue.getChildValues().add(addOtherPostal);
-		returnValue.getChildValues().add(addOtherRegion);
-		returnValue.getChildValues().add(addOtherStreet);
-		returnValue.getChildValues().add(addOtherLongitude);
-		returnValue.getChildValues().add(addOtherLatitude);
+		returnValue.getChildValues().add(createAdress(ContactActivator.NODE_NAME_WORK_ADRESS));
+		returnValue.getChildValues().add(createAdress(ContactActivator.NODE_NAME_HOME_ADRESS));
+		returnValue.getChildValues().add(createAdress(ContactActivator.NODE_NAME_INTERNAT_ADRESS));
+		returnValue.getChildValues().add(createAdress(ContactActivator.NODE_NAME_POSTAL_ADRESS));
+		returnValue.getChildValues().add(createAdress(ContactActivator.NODE_NAME_PARCEL_ADRESS));
+		returnValue.getChildValues().add(createAdress(ContactActivator.NODE_NAME_DOMESTIC_ADRESS));
+		returnValue.getChildValues().add(createAdress(ContactActivator.NODE_NAME_OTHER_ADRESS));
 
 		// group email and instant messaging
 		returnValue.getChildValues().add(mailDef);
@@ -404,5 +222,36 @@ public class ContactCreationFactory extends AbstractCreationFactory {
 		returnValue.getChildValues().add(miscPubKey);
 
 		return returnValue;
+	}
+
+	private InformationUnit createAdress(final String type) {
+		InformationUnit adress = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		adress.setType(type);
+		InformationUnit street = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		street.setType(ContactActivator.NODE_NAME_ADRESS_STREET);
+		InformationUnit postOfficeBox = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		postOfficeBox.setType(ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX);
+		InformationUnit workLocality = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		workLocality.setType(ContactActivator.NODE_NAME_ADRESS_LOCALITY);
+		InformationUnit region = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		region.setType(ContactActivator.NODE_NAME_ADRESS_REGION);
+		InformationUnit postal = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		postal.setType(ContactActivator.NODE_NAME_ADRESS_POSTAL);
+		InformationUnit country = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		country.setType(ContactActivator.NODE_NAME_ADRESS_COUNTRY);
+		InformationUnit longitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		longitude.setType(ContactActivator.NODE_NAME_ADRESS_LONGITUDE);
+		InformationUnit latitude = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		latitude.setType(ContactActivator.NODE_NAME_ADRESS_LATITUDE);
+		adress.getChildValues().add(street);
+		adress.getChildValues().add(postOfficeBox);
+		adress.getChildValues().add(workLocality);
+		adress.getChildValues().add(region);
+		adress.getChildValues().add(postal);
+		adress.getChildValues().add(country);
+		adress.getChildValues().add(longitude);
+		adress.getChildValues().add(latitude);
+
+		return adress;
 	}
 }

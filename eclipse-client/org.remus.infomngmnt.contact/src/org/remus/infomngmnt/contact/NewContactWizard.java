@@ -25,7 +25,7 @@ public class NewContactWizard extends NewInfoObjectWizard implements INewWizard 
 
 	@Override
 	protected String getInfoTypeId() {
-		return ContactActivator.PASSWORD_INFO_ID;
+		return ContactActivator.TYPE_ID;
 	}
 
 }

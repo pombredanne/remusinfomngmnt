@@ -218,19 +218,26 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter, IValid
 	}
 
 	protected void initDatabinding() {
-		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
-		IObservableValue emfName = EMFObservables.observeValue(this.unit,
-				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
-		this.ctx.bindValue(swtName, emfName, null, null);
-		ISWTObservableValue swtKeyWords = SWTObservables.observeText(this.keywordsText, SWT.Modify);
-		IObservableValue emfKeywords = EMFObservables.observeValue(this.unit,
-				InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS);
-		this.ctx.bindValue(swtKeyWords, emfKeywords, null, null);
-		ISWTObservableValue swtDescription = SWTObservables.observeText(this.descriptionText,
-				SWT.Modify);
-		IObservableValue emfDescription = EMFObservables.observeValue(this.unit,
-				InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
-		this.ctx.bindValue(swtDescription, emfDescription, null, null);
+		if (this.nameText != null) {
+			ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
+			IObservableValue emfName = EMFObservables.observeValue(this.unit,
+					InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
+			this.ctx.bindValue(swtName, emfName, null, null);
+		}
+		if (this.keywordsText != null) {
+			ISWTObservableValue swtKeyWords = SWTObservables.observeText(this.keywordsText,
+					SWT.Modify);
+			IObservableValue emfKeywords = EMFObservables.observeValue(this.unit,
+					InfomngmntPackage.Literals.INFORMATION_UNIT__KEYWORDS);
+			this.ctx.bindValue(swtKeyWords, emfKeywords, null, null);
+		}
+		if (this.descriptionText != null) {
+			ISWTObservableValue swtDescription = SWTObservables.observeText(this.descriptionText,
+					SWT.Modify);
+			IObservableValue emfDescription = EMFObservables.observeValue(this.unit,
+					InfomngmntPackage.Literals.INFORMATION_UNIT__DESCRIPTION);
+			this.ctx.bindValue(swtDescription, emfDescription, null, null);
+		}
 	}
 
 	public void setCategory(final Category category) {

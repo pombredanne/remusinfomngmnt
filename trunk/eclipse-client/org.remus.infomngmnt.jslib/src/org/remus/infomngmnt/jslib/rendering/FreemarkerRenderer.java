@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.forms.IFormColors;
 import org.xml.sax.InputSource;
 
 import freemarker.template.Configuration;
@@ -32,7 +33,6 @@ import freemarker.template.TemplateModelException;
 import org.remus.infomngmnt.jslib.StyleProvider;
 import org.remus.infomngmnt.jslib.TemplateLocation;
 import org.remus.infomngmnt.jslib.extension.CheckResourceReferenceJob;
-
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -61,41 +61,42 @@ public class FreemarkerRenderer {
 		this.cfg.setDefaultEncoding("UTF-8");
 		try {
 			this.cfg.setSharedVariable("jslibDir", TemplateLocation.getBasePath());
-			this.cfg.setSharedVariable("jslibstatelocation", TemplateLocation.getGradientSectionImageLocation());
+			this.cfg.setSharedVariable("jslibstatelocation", TemplateLocation
+					.getGradientSectionImageLocation());
 			this.cfg.setSharedVariable("defaultFont", StyleProvider.getSystemFont());
 			this.cfg.setSharedVariable("defaultFontStyle", StyleProvider.getSystemFontStyle());
 			this.cfg.setSharedVariable("defaultFontSize", StyleProvider.getSystemFontSize());
 			this.cfg.setSharedVariable("sharedResources", CheckResourceReferenceJob.map);
+			this.cfg.setSharedVariable("sectionTitleColor", StyleProvider
+					.getFormColorAsHex(IFormColors.TITLE));
+			this.cfg.setSharedVariable("sectionBgColor", StyleProvider
+					.getFormColorAsHex(IFormColors.TB_BORDER));
 		} catch (TemplateModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void process(
-			final String templateName,
-			final InputStream template, 
-			final InputStream xmlFile,
-			final OutputStream out,
+	public void process(final String templateName, final InputStream template,
+			final InputStream xmlFile, final OutputStream out,
 			final Map<String, ? extends Object> additionals) throws RenderingException {
 
 		try {
 			Template freemarekerTemplate;
-			freemarekerTemplate = new Template(templateName,new InputStreamReader(template),this.cfg);
-			
+			freemarekerTemplate = new Template(templateName, new InputStreamReader(template),
+					this.cfg);
+
 			Map<String, Object> root = new HashMap<String, Object>();
-			root.put(
-					"doc",
-					freemarker.ext.dom.NodeModel.parse(new InputSource(xmlFile)));
+			root.put("doc", freemarker.ext.dom.NodeModel.parse(new InputSource(xmlFile)));
 			root.put("additionals", additionals);
-			
-			Writer writer = new OutputStreamWriter(out,"UTF-8");
+
+			Writer writer = new OutputStreamWriter(out, "UTF-8");
 			freemarekerTemplate.process(root, writer);
 		} catch (Exception e) {
-			Status status = new Status(IStatus.ERROR,TemplateLocation.BUNDLE_ID,300,"Error while serializing object",e);
+			Status status = new Status(IStatus.ERROR, TemplateLocation.BUNDLE_ID, 300,
+					"Error while serializing object", e);
 			throw new RenderingException(status);
-		} 
+		}
 	}
-	
-	
+
 }

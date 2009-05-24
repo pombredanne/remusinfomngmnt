@@ -33,13 +33,14 @@ public class HtmlComposerObservable extends AbstractObservableValue {
 
 	public static final int EVENT_ID_MODIFY = 62;
 
-	private String cachedOldValue;
+	private String newValue;
+	private String oldValue;
 
 	private final Listener modifyListener = new Listener() {
 		public void handleEvent(final Event event) {
 			final Properties props = (Properties) event.data;
 			if (event.type != EventConstants.ALL) {
-				final String oldValue = HtmlComposerObservable.this.cachedOldValue;
+
 				// final String newValue =
 				// HtmlComposerObservable.this.htmlComposer.getHtml();
 				// At this point the new value is the old.
@@ -48,22 +49,24 @@ public class HtmlComposerObservable extends AbstractObservableValue {
 				// HtmlComposerObservable.this.cachedOldValue = newValue;
 				if (props.getProperty("key") != null) {
 					Display.getDefault().asyncExec(new Runnable() {
-
 						public void run() {
+							HtmlComposerObservable.this.newValue = HtmlComposerObservable.this.htmlComposer
+									.getHtml();
 							fireValueChange(new ValueDiff() {
 
 								@Override
 								public Object getNewValue() {
-									return props.getProperty("key");
+									System.out.println(HtmlComposerObservable.this.newValue);
+									return HtmlComposerObservable.this.newValue;
 								}
 
 								@Override
 								public Object getOldValue() {
-									return null;
+									return HtmlComposerObservable.this.oldValue;
 								}
 
 							});
-
+							HtmlComposerObservable.this.oldValue = HtmlComposerObservable.this.newValue;
 						}
 
 					});

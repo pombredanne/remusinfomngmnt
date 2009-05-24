@@ -389,7 +389,7 @@ public class ResourceUtil {
 			FileOutputStream fos = null;
 			contents = history[0].getContents();
 			try {
-				createTempFile = File.createTempFile("history", ResourceUtil.FILE_EXTENSION);
+				createTempFile = File.createTempFile("history", ResourceUtil.DOT_FILE_EXTENSION);
 				fos = new FileOutputStream(createTempFile);
 				byte buf[] = new byte[1024];
 				int len;

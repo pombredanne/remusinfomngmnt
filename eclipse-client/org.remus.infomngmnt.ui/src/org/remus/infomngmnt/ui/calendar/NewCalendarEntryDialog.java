@@ -50,10 +50,12 @@ import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
 import org.remus.infomngmnt.ui.editors.EditorUtil;
 
@@ -97,6 +99,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(final Composite parent) {
+
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout());
@@ -179,6 +182,10 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		//
 
 		bindValuesToUi();
+		setTitle("Edit calendar entry");
+		setMessage("This wizard enables you to edit calendar entry");
+		setTitleImage(ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				"icons/iconexperience/wizards/calendar_entry_wizard.png"));
 		return area;
 
 	}
@@ -303,6 +310,12 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 			return instance.format((double) minutes / 1440) + " Days";
 		}
 		return minutes + " Minutes";
+	}
+
+	@Override
+	protected void configureShell(final Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText("Edit Calendar Entry");
 	}
 
 }

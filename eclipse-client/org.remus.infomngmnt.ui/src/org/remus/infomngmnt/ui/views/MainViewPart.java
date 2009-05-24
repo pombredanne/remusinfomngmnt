@@ -182,7 +182,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 		created.setObject(Boolean.FALSE);
 		final ValueObject<CollapsibleButtonBar> firstSelection = new ValueObject<CollapsibleButtonBar>();
 
-		this.cb = new CollapsibleButtons(parent, SWT.NONE, IColorManager.SKIN_OFFICE_2007);
+		this.cb = new CollapsibleButtons(parent, SWT.NONE, IColorManager.SKIN_AUTO_DETECT);
 		int counter = 1;
 		for (final CollapsibleButtonBar element : this.items) {
 			CustomButton button = this.cb.addButton(element.getTitle(), element.getTooltip(),

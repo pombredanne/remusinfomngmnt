@@ -150,6 +150,11 @@
             id="org.remus.infomngmnt.ui.infotypes"
             name="Information Types">
       </page>
+      <page
+            class="org.remus.infomngmnt.ui.preference.UIPreferencePage"
+            id="org.remus.infomngmnt.ui.userinterface"
+            name="User Interface">
+      </page>
    </extension>
    <extension
          point="org.remus.infomngmnt.common.ui.trayAction">

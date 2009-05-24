@@ -84,6 +84,8 @@ import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.calendar.CalendarEditor;
+import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
 import org.remus.infomngmnt.ui.calendar.NewCalendarEntryDialog;
 import org.remus.infomngmnt.ui.dnd.CustomDropTargetListener;
@@ -311,7 +313,13 @@ public class LinkOutline extends ContentOutlinePage {
 				if ("addEvent".equals(string)) {
 					openNewCalendarEntryDialog();
 				} else if ("openCalendar".equals(string)) {
-					// TODO open calendar.
+					try {
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+								.openEditor(new CalendarEditorInput(), CalendarEditor.EDITOR_ID);
+					} catch (PartInitException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				} else {
 					EObject itemByValue = ModelUtil.getItemByValue(LinkOutline.this.info
 							.getCalendarEntry(), InfomngmntPackage.Literals.CALENDAR_ENTRY__ID,

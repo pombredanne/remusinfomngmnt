@@ -314,6 +314,9 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 		this.ruleName.setEnabled(element instanceof RuleAction);
 		this.groovyMatcherButton.setEnabled(element instanceof RuleAction);
 		this.postProcessingActionsButton.setEnabled(element instanceof RuleAction);
+		if (element instanceof RuleAction) {
+			this.selectedRuleAction = (RuleAction) element;
+		}
 		/*
 		 * This will be disabled
 		 */

@@ -65,7 +65,7 @@
 		</table>
 	</div>
   	<div>
-  		<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  		<div class="srccode" style="margin: 0 auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
   			<span class="systemfont" style="font-weight:bold;">Source</span>
   		</div>
   	<pre>

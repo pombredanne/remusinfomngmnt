@@ -24,6 +24,10 @@
             label="Edit Video"
             type="VIDEO">
       </editPage>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.video.newwizard.NewVideoWizard"
+            typeId="VIDEO">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

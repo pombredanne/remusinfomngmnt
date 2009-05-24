@@ -11,15 +11,23 @@
  *******************************************************************************/
 package org.remus.infomngmnt.video.newwizard;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
+import org.remus.infomngmnt.core.transfertypes.FileTransferWrapper;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 import org.remus.infomngmnt.video.VideoActivator;
 
@@ -77,62 +85,32 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 		return VideoActivator.TYPE_ID;
 	}
 
-	// public void setDefaults(final Object value, final RuleValue ruleValue) {
-	// if (value instanceof ImageData) {
-	// InformationUnit rawDataNode =
-	// InformationUtil.getChildByType(this.newElement,
-	// ImagePlugin.NODE_NAME_RAWDATA);
-	// ImageLoader loader = new ImageLoader();
-	// loader.data = new ImageData[] { (ImageData) value };
-	// ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	// loader.save(baos, SWT.IMAGE_BMP);
-	// rawDataNode.setBinaryValue(baos.toByteArray());
-	// try {
-	// baos.close();
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// InformationUnit width = InformationUtil.getChildByType(this.newElement,
-	// ImagePlugin.NODE_NAME_WIDTH);
-	// width.setLongValue(((ImageData) value).width);
-	// InformationUnit height = InformationUtil.getChildByType(this.newElement,
-	// ImagePlugin.NODE_NAME_HEIGHT);
-	// height.setLongValue(((ImageData) value).height);
-	// int type = ((ImageData) value).type;
-	// String extension = "bmp";
-	// switch (type) {
-	// case SWT.IMAGE_GIF:
-	// extension = "gif";
-	// break;
-	// case SWT.IMAGE_JPEG:
-	// extension = "jpg";
-	// break;
-	// case SWT.IMAGE_PNG:
-	// extension = "png";
-	// break;
-	// default:
-	// break;
-	// }
-	// InformationUnit origFilePath =
-	// InformationUtil.getChildByType(this.newElement,
-	// ImagePlugin.ORIGINAL_FILEPATH);
-	// origFilePath.setStringValue("clipboard." + extension);
-	//
-	// }
-	// InformationUnit predefinedCategory =
-	// InformationUtil.getChildByType(ruleValue,
-	// AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
-	// InformationUnit predefinedName =
-	// InformationUtil.getChildByType(ruleValue,
-	// AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
-	// if (predefinedCategory != null) {
-	// this.page1.setCategoryString(predefinedCategory.getStringValue());
-	// }
-	// if (predefinedName != null) {
-	// this.newElement.setLabel(predefinedName.getStringValue());
-	// }
-	//
-	// }
+	@Override
+	protected void setDefaults(final Object value, final RuleValue ruleValue,
+			final TransferWrapper transferType) throws CoreException {
+		if (transferType instanceof FileTransferWrapper) {
+			String[] paths = (String[]) value;
+			/*
+			 * We're just taking the first element. For dropping multiple
+			 * elements into the application we have to provide an import
+			 * wizard.
+			 */
+			String string = paths[0];
+			LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
+			runnable.setFilePath(string);
+			try {
+				new ProgressMonitorDialog(getShell()).run(true, false, runnable);
+				((GeneralVideoPage) this.page1).setTmpFile(runnable.getTmpFile());
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		super.setDefaults(value, ruleValue, transferType);
+	}
 
 }

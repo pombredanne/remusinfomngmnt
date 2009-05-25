@@ -6,34 +6,7 @@
 <!-- tinyMCE -->
 <script language="javascript" type="text/javascript" src="../jscripts/tiny_mce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript" src="../jscripts/bridgeFunctions.js"></script>
-<script language=JavaScript>
-<!--
-var message="Function Disabled!";
-///////////////////////////////////
-function clickIE4(){
-if (event.button==ctrl){
-alert(message);
-return false;
-}
-}
-function clickNS4(e){
-if (document.layers||document.getElementById&&!document.all){
-if (e.which==ctrl||e.which==ctrl){
-alert(message);
-return false;
-}
-}
-}
-if (document.layers){
-document.captureEvents(Event.CTRLDOWN);
-document.onctrldown=clickNS4;
-}
-else if (document.all&&!document.getElementById){
-document.onctrldown=clickIE4;
-}
-document.oncontextmenu=new Function("alert(message);return false")
-// -->
-</script>
+
 <script language="javascript" type="text/javascript">
 	/**
 	 *	function getQueryVariable
@@ -57,6 +30,13 @@ document.oncontextmenu=new Function("alert(message);return false")
 			window.status="62:START"; 
 			window.status="key:ANYEVENT";  
 			return true; // Continue handling 
+		}
+		function tinyEventOnkeypress() {  
+			alert("Test");
+			var code; 
+			window.status="62:START"; 
+			window.status="key:ANYEVENT";  
+			return true; // Continue handling 
 		} 
 	
 	//var plugins2load = getQueryVariable("plugins");
@@ -75,7 +55,6 @@ document.oncontextmenu=new Function("alert(message);return false")
 		onchange_callback : "tinyEventCallBack" 
 	});
 	
-	
 </script>
 <style type="text/css">
 body
@@ -89,9 +68,13 @@ overflow: hidden;
 
 </head>
 <body id="body">
-<form>
+
 <textarea id="elm1" name="elm1" >
 </textarea>
 </form>
+<script type="text/javascript">
+tinyMCE.addEvent(tinyMCE.EditorManager.getInstanceById('mce_editor_0').getDoc(), 'keydown',"tinyEventCallBack");
+
+</script>
 </body>
 </html>

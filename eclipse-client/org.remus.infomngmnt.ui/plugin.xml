@@ -131,6 +131,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="org.remus.infomngmnt.ui.desktop"
             class="org.remus.infomngmnt.ui.rules.RulePreferencePage"
             id="org.remus.infomngmnt.ui.rules"
             name="Rules">
@@ -138,7 +139,7 @@
       <page
             class="org.remus.infomngmnt.ui.tray.DesktopPanelPreferencePage"
             id="org.remus.infomngmnt.ui.desktop"
-            name="Desktop Panel">
+            name="Desktop Integration">
       </page>
       <page
             class="org.remus.infomngmnt.ui.preference.RemoteRepositoriesPreferencePage"

@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.ref.tags;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -97,9 +98,12 @@ public class TagSaveParticipant implements ISaveParticipant {
 	}
 
 	public void handleChanged(final InformationUnit oldValue, final InformationUnit newValue) {
-		List<String> split = new ArrayList<String>(Arrays.asList(newValue.getKeywords().split(
-				"\\W+")));
-		List<String> splitCopy = new ArrayList<String>(split);
+		List<String> splitCopy = Collections.EMPTY_LIST;
+		List<String> split = Collections.EMPTY_LIST;
+		if (newValue.getKeywords() != null) {
+			split = new ArrayList<String>(Arrays.asList(newValue.getKeywords().split("\\W+")));
+			splitCopy = new ArrayList<String>(split);
+		}
 		List<Tag> tagsByInfoUnit = getTagsByInfoUnit(newValue);
 		List<Tag> tagsByInfoUnitCopy = new ArrayList<Tag>(tagsByInfoUnit);
 		for (Tag tag : tagsByInfoUnit) {

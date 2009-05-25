@@ -50,12 +50,15 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 		this.visitor = new InformationDeltaVisitor();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.resources.IncrementalProjectBuilder#build(int, java.util.Map, org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.core.resources.IncrementalProjectBuilder#build(int,
+	 * java.util.Map, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
-	throws CoreException {
+	protected IProject[] build(final int kind, final Map args, final IProgressMonitor monitor)
+			throws CoreException {
 		switch (kind) {
 		case FULL_BUILD:
 			IFolder folder = getProject().getFolder(ResourceUtil.BIN_FOLDER);
@@ -63,16 +66,22 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 				folder.create(true, true, monitor);
 			}
 			IResource[] members = getProject().members();
-			monitor.beginTask(NLS.bind("Refreshing info-object on {0}", getProject().getName()), members.length);
+			monitor.beginTask(NLS.bind("Refreshing info-object on {0}", getProject().getName()),
+					members.length);
 			for (IResource resource : members) {
 				if (resource.getType() == IResource.FILE
 						&& resource.getFileExtension().equals(ResourceUtil.FILE_EXTENSION)) {
-					InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile((IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit());
+					InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile(
+							(IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit(),
+							false);
 					if (objectFromFile != null) {
-						monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile.getLabel()));
-						IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(objectFromFile.getType());
+						monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile
+								.getLabel()));
+						IInfoType infoTypeByType = InformationExtensionManager.getInstance()
+								.getInfoTypeByType(objectFromFile.getType());
 						this.visitor.setMonitor(monitor);
-						this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile)resource);
+						this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType,
+								(IFile) resource);
 						monitor.worked(1);
 					}
 				}
@@ -81,7 +90,6 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 		default:
 			break;
 		}
-
 
 		if (getDelta(getProject()) != null) {
 			proceedDelta(getDelta(getProject()), monitor);
@@ -99,7 +107,7 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 	}
 
 	@Override
-	protected void clean(IProgressMonitor monitor) throws CoreException {
+	protected void clean(final IProgressMonitor monitor) throws CoreException {
 		IFolder folder = getProject().getFolder("bin");
 		if (folder.exists()) {
 			folder.delete(true, monitor);

@@ -34,7 +34,7 @@ public class UIPreferencePage extends FieldEditorPreferencePage implements IWork
 
 	@Override
 	protected void createFieldEditors() {
-		// TODO Auto-generated method stub
+		// new StringFieldEditor()
 
 	}
 

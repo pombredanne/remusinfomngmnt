@@ -22,8 +22,10 @@ import java.util.Locale;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import org.remus.infomngmnt.common.ui.UIUtil;
 
@@ -33,28 +35,33 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 public class CountryCombo extends Composite {
 
 	private final ComboViewer combo;
+	private Label flagLabel;
+	private final boolean showFlag;
+	private static List<Country> countries;
 
 	public CountryCombo(final Composite parent, final int style) {
+		this(parent, style, false);
+	}
+
+	public CountryCombo(final Composite parent, final int style, final boolean showFlag) {
 		super(parent, style);
-		setLayout(UIUtil.createMarginLessGridLayout(1));
+		this.showFlag = showFlag;
+		int columns = 1;
+		if (showFlag) {
+			columns = 2;
+		}
+		setLayout(UIUtil.createMarginLessGridLayout(columns));
+		if (showFlag) {
+			this.flagLabel = new Label(this, SWT.NONE);
+			GridData gridData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+			gridData.widthHint = 16;
+			gridData.heightHint = 16;
+			this.flagLabel.setLayoutData(gridData);
+			this.flagLabel.setText("");
+		}
 		this.combo = new ComboViewer(this);
-		List<Country> countries = new ArrayList<Country>();
 		this.combo.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		Locale[] locales = Locale.getAvailableLocales();
-		List<String> isos = new ArrayList<String>();
-		for (Locale locale : locales) {
-			String iso = locale.getISO3Country();
-			String code = locale.getCountry();
-			String name = locale.getDisplayCountry();
-
-			if (!"".equals(iso) && !"".equals(code) && !"".equals(name) && !isos.contains(iso)) {
-				countries.add(new Country(iso, code, name));
-				isos.add(iso);
-			}
-		}
-
-		Collections.sort(countries, new CountryComparator());
 		this.combo.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.combo.setLabelProvider(new LabelProvider() {
 			@Override
@@ -62,7 +69,7 @@ public class CountryCombo extends Composite {
 				return ((Country) element).getName();
 			}
 		});
-		this.combo.setInput(countries);
+		this.combo.setInput(getAllCountries());
 	}
 
 	public static class Country {
@@ -105,7 +112,7 @@ public class CountryCombo extends Composite {
 		}
 	}
 
-	private class CountryComparator implements Comparator<Country> {
+	private static class CountryComparator implements Comparator<Country> {
 		private final Comparator comparator;
 
 		CountryComparator() {
@@ -122,6 +129,48 @@ public class CountryCombo extends Composite {
 	 */
 	public ComboViewer getCombo() {
 		return this.combo;
+	}
+
+	/**
+	 * @return the showFlag
+	 */
+	public boolean isShowFlag() {
+		return this.showFlag;
+	}
+
+	/**
+	 * @return the flagLabel
+	 */
+	public Label getFlagLabel() {
+		return this.flagLabel;
+	}
+
+	public void updateImage(final Image image) {
+		if (this.flagLabel != null) {
+			this.flagLabel.setImage(image);
+			layout();
+		}
+	}
+
+	public synchronized static List<Country> getAllCountries() {
+		if (countries == null) {
+			countries = new ArrayList<Country>();
+			Locale[] locales = Locale.getAvailableLocales();
+			List<String> isos = new ArrayList<String>();
+			for (Locale locale : locales) {
+				String iso = locale.getISO3Country();
+				String code = locale.getCountry();
+				String name = locale.getDisplayCountry();
+
+				if (!"".equals(iso) && !"".equals(code) && !"".equals(name) && !isos.contains(iso)) {
+					countries.add(new Country(iso, code, name));
+					isos.add(iso);
+				}
+			}
+			Collections.sort(countries, new CountryComparator());
+		}
+		return countries;
+
 	}
 
 }

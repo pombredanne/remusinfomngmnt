@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.URI;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
@@ -111,15 +112,17 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 						buildSingleInfoUnit(objectFromFile, infoTypeByType, (IFile) resourceDelta
 								.getResource());
+						File previousVersion = null;
 						try {
-							File previousVersion = ResourceUtil.getPreviousVersion(
-									(IFile) resourceDelta.getResource(), this.monitor);
+							previousVersion = ResourceUtil.getPreviousVersion((IFile) resourceDelta
+									.getResource(), this.monitor);
 							if (previousVersion != null) {
 								InformationUnit objectFromUri = EditingUtil.getInstance()
-										.getObjectFromUri(
-												new Path(previousVersion.getAbsolutePath()),
-												InfomngmntPackage.Literals.INFORMATION_UNIT, false,
-												null, false);
+										.getObjectFromFileUri(
+												URI
+														.createFileURI(previousVersion
+																.getAbsolutePath()),
+												InfomngmntPackage.Literals.INFORMATION_UNIT, null);
 								this.saveParticipantService.fireEvent(
 										ISaveParticipantExtensionService.SAVED, objectFromUri,
 										objectFromFile);
@@ -127,6 +130,10 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 						} catch (CoreException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						} finally {
+							if (previousVersion != null) {
+								previousVersion.delete();
+							}
 						}
 
 					}

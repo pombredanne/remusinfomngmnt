@@ -30,30 +30,26 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
-
 /**
  * <p>
- * This class is the basic implementation for the
- * integration of information-types. This class
- * is normally called by the default builder for
+ * This class is the basic implementation for the integration of
+ * information-types. This class is normally called by the default builder for
  * information types.
  * </p>
  * <p>
- * The information object is stored as {@link IFile}
- * within the workspace. After a write operation where
- * the the information-object is affected, the specific
+ * The information object is stored as {@link IFile} within the workspace. After
+ * a write operation where the the information-object is affected, the specific
  * builder for information units asks
  * </p>
  * <p>
- * In addition the search engine asks the info-type
- * specific implementation of this class for relevant
- * informations, which become indexed.
+ * In addition the search engine asks the info-type specific implementation of
+ * this class for relevant informations, which become indexed.
  * </p>
  * <p>
- * In every case you have to implement a subtype of
- * this class, it is essential for the integration of
- * a new info-type.
+ * In every case you have to implement a subtype of this class, it is essential
+ * for the integration of a new info-type.
  * </p>
+ * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
  * @since 1.0
  */
@@ -76,25 +72,29 @@ public abstract class AbstractInformationRepresentation {
 
 	/**
 	 * <p>
-	 * Executed before building the info-object. Useful
-	 * for executing operations which are required to
-	 * serialize information object
+	 * Executed before building the info-object. Useful for executing operations
+	 * which are required to serialize information object
 	 * </p>
-	 * @param monitor The progressmonitor
+	 * 
+	 * @param monitor
+	 *            The progressmonitor
 	 */
 	public void handlePreBuild(final IProgressMonitor monitor) {
 		// does nothing by default
 	}
 
-
 	/**
-	 * Executed after the serialization of the info-object.
-	 * Uselful
-	 * @param derivedFile the file
-	 * @param monitor The progressmonitor
-	 * @throws CoreException if an exception occurs.
+	 * Executed after the serialization of the info-object. Uselful
+	 * 
+	 * @param derivedFile
+	 *            the file
+	 * @param monitor
+	 *            The progressmonitor
+	 * @throws CoreException
+	 *             if an exception occurs.
 	 */
-	public void handlePostBuild(final IFile derivedFile, final IProgressMonitor monitor) throws CoreException {
+	public void handlePostBuild(final IFile derivedFile, final IProgressMonitor monitor)
+			throws CoreException {
 		// does nothing by default.
 	}
 
@@ -106,12 +106,15 @@ public abstract class AbstractInformationRepresentation {
 	public abstract InputStream handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
 
 	/**
-	 * Returns the string that is used for as title in the search-result.
-	 * Mostly it is the same the {@link InformationUnit#getLabel()} would return.
-	 * It is the highest ranked field in the search.
-	 * @param monitor the progressmonitor.
+	 * Returns the string that is used for as title in the search-result. Mostly
+	 * it is the same the {@link InformationUnit#getLabel()} would return. It is
+	 * the highest ranked field in the search.
+	 * 
+	 * @param monitor
+	 *            the progressmonitor.
 	 * @return the String which is inexed
-	 * @throws CoreException if an exception occurs.
+	 * @throws CoreException
+	 *             if an exception occurs.
 	 */
 	public String getTitleForIndexing(final IProgressMonitor monitor) throws CoreException {
 		return getValue().getLabel();
@@ -119,15 +122,18 @@ public abstract class AbstractInformationRepresentation {
 
 	/**
 	 * Returns an "indexable representation" of the information object.
-	 * @param monitor the progressmonitor
+	 * 
+	 * @param monitor
+	 *            the progressmonitor
 	 * @return the String which is indexed.
-	 * @throws CoreException if an exception occurs.
+	 * @throws CoreException
+	 *             if an exception occurs.
 	 */
 	public abstract String getBodyForIndexing(IProgressMonitor monitor) throws CoreException;
 
 	/**
-	 * Returns an additional String for indexing. Useful for instance
-	 * if you
+	 * Returns an additional String for indexing. Useful for instance if you
+	 * 
 	 * @param monitor
 	 * @return
 	 * @throws CoreException
@@ -158,8 +164,6 @@ public abstract class AbstractInformationRepresentation {
 		this.differences = null;
 
 	}
-	
-	
 
 	protected IFile getFile() {
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(
@@ -169,17 +173,19 @@ public abstract class AbstractInformationRepresentation {
 	protected List<DiffElement> getDifferences() {
 		if (getPreviousVersion() != null && this.differences == null) {
 			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromUri(
-					new Path(this.previousVersion.getAbsolutePath()), InfomngmntPackage.Literals.INFORMATION_UNIT);
+					new Path(this.previousVersion.getAbsolutePath()),
+					InfomngmntPackage.Literals.INFORMATION_UNIT);
 			this.differences = InformationUtil.computeDiffs(previousModel, getValue());
 		}
 		return this.differences;
 	}
 
 	protected boolean isChanged(final EAttribute attribute) {
-		AttributeChange attributeChange = InformationUtil.getAttributeChange(this.differences, attribute);
+		AttributeChange attributeChange = InformationUtil.getAttributeChange(this.differences,
+				attribute);
 		return attributeChange != null;
 	}
-	
+
 	public boolean createFolderOnBuild() {
 		return false;
 	}
@@ -189,10 +195,11 @@ public abstract class AbstractInformationRepresentation {
 	}
 
 	protected IFolder getBuildFolder() {
+		if (!createFolderOnBuild()) {
+			throw new IllegalStateException(
+					"Access on the build folder requires a true returnValue on Method #createFolderOnBuild");
+		}
 		return this.folder;
 	}
-
-
-
 
 }

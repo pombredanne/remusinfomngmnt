@@ -51,7 +51,7 @@ public class FlagTransformer {
 			String code = locale.getCountry();
 			String name = locale.getDisplayCountry();
 
-			if (!"".equals(iso) && !"".equals(code) && !"".equals(name) && !isos.contains(iso)) {
+			if (!"".equals(name) && !isos.contains(iso)) {
 				if (name.equals("United States")) {
 					countries.add(new Country(iso, code, "usa"));
 				} else {

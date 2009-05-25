@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.nebula.widgets.collapsiblebuttons;bundle-version="1.0.0";visibility:=reexport,
  de.spiritlink.richhtml4eclipse;bundle-version="1.0.0";visibility:=reexport,
  org.eclipse.core.databinding.beans;bundle-version="1.1.0",
- org.eclipse.nebula.widgets.cdatetime;visibility:=reexport
+ org.eclipse.nebula.widgets.cdatetime;visibility:=reexport,
+ org.remus.infomngmnt.common.flags;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.nebula.widgets.calendarcombo,
@@ -35,6 +36,7 @@ Export-Package: org.eclipse.nebula.widgets.calendarcombo,
  org.remus.infomngmnt.common.ui.extension,
  org.remus.infomngmnt.common.ui.html,
  org.remus.infomngmnt.common.ui.image,
+ org.remus.infomngmnt.common.ui.jface,
  org.remus.infomngmnt.common.ui.model,
  org.remus.infomngmnt.common.ui.quickaccess,
  org.remus.infomngmnt.common.ui.richtext,

@@ -21,7 +21,11 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.common.flags.Activator;
+import org.remus.infomngmnt.common.flags.FlagUtil;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.swt.CountryCombo;
 import org.remus.infomngmnt.common.ui.swt.CountryCombo.Country;
 
@@ -50,6 +54,7 @@ public class CountryComboObservable extends AbstractObservableValue {
 									.getSelection()).getFirstElement();
 							CountryComboObservable.this.newValue = firstElement.getIso();
 						}
+						setImage(CountryComboObservable.this.newValue);
 						fireValueChange(new ValueDiff() {
 							@Override
 							public Object getNewValue() {
@@ -92,14 +97,32 @@ public class CountryComboObservable extends AbstractObservableValue {
 
 	@Override
 	protected void doSetValue(final Object value) {
-		List<Country> input = (List<Country>) this.combo.getCombo().getInput();
+		List<Country> input = CountryCombo.getAllCountries();
+		boolean foundCountry = false;
 		for (Country country : input) {
 			if (country.getIso().equals(value)) {
 				this.combo.getCombo().setSelection(new StructuredSelection(country));
-				return;
+				foundCountry = true;
+				break;
 			}
 		}
-		this.combo.getCombo().setSelection(StructuredSelection.EMPTY);
+		if (!foundCountry) {
+			this.combo.getCombo().setSelection(StructuredSelection.EMPTY);
+			if (this.combo.isShowFlag()) {
+				setImage(null);
+			}
+		}
+		if (this.combo.isShowFlag() && foundCountry) {
+			setImage(value.toString());
+		}
+	}
+
+	public void setImage(final String iso) {
+		if (iso != null) {
+			Image pluginImage = ResourceManager.getPluginImage(Activator.getDefault(), FlagUtil
+					.getPathByIsoCode(iso));
+			this.combo.updateImage(pluginImage);
+		}
 	}
 
 	public Object getValueType() {

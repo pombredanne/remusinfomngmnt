@@ -20,6 +20,8 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -223,5 +225,23 @@ public class UIUtil {
 		returnValue.marginWidth = 0;
 		returnValue.marginHeight = 0;
 		return returnValue;
+	}
+
+	/**
+	 * Get the preference node with pageId.
+	 * 
+	 * @param pageId
+	 * @return IPreferenceNode
+	 */
+	public static IPreferenceNode getPreferenceNode(final String pageId) {
+		Iterator iterator = PlatformUI.getWorkbench().getPreferenceManager().getElements(
+				PreferenceManager.PRE_ORDER).iterator();
+		while (iterator.hasNext()) {
+			IPreferenceNode next = (IPreferenceNode) iterator.next();
+			if (next.getId().equals(pageId)) {
+				return next;
+			}
+		}
+		return null;
 	}
 }

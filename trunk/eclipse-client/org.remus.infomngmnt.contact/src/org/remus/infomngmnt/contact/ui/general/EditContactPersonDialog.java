@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.StatusDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -38,10 +37,11 @@ import org.remus.infomngmnt.common.ui.databinding.AbstractBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.IEMFEditBindingProvider;
+import org.remus.infomngmnt.common.ui.jface.BindingStatusDialog;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.model.InformationUtil;
 
-public class EditContactPersonDialog extends StatusDialog {
+public class EditContactPersonDialog extends BindingStatusDialog {
 
 	private final InformationUnit contact;
 	private AbstractBindingWidget createTextBindingWidget;
@@ -114,24 +114,28 @@ public class EditContactPersonDialog extends StatusDialog {
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_FIRST),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(this.createTextBindingWidget.getBinding());
 
 		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
 				this.tx_TitleAfterName, this.editingDomainProvider);
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_TITLE_AFTER),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(this.createTextBindingWidget.getBinding());
 
 		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
 				this.tx_AdditionalName, this.editingDomainProvider);
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_ADDITIONAL),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(this.createTextBindingWidget.getBinding());
 
 		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
 				this.tx_LastName, this.editingDomainProvider);
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_LAST),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(this.createTextBindingWidget.getBinding());
 
 		ComboBindingWidget createComboBinding = BindingWidgetFactory.createComboBinding(
 				this.cb_Title, this.editingDomainProvider);
@@ -147,6 +151,7 @@ public class EditContactPersonDialog extends StatusDialog {
 		createComboBinding.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_TITLE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(createComboBinding.getBinding());
 
 	}
 

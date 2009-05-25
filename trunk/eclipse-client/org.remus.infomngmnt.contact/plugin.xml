@@ -62,7 +62,7 @@
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.remus.infomngmnt.ui.infotypes"
-            class="org.remus.infomngmnt.contact.WorkbenchPreferencePage1"
+            class="org.remus.infomngmnt.contact.ui.preferences.ContactPreferencePage"
             id="org.remus.infomngmnt.contact.preferences"
             name="Contact">
       </page>
@@ -72,6 +72,13 @@
       <initializer
             class="org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.contact.phone"
+            resource="icons/iconexperience/phone_call.png">
+      </referenceResource>
    </extension>
 
 </plugin>

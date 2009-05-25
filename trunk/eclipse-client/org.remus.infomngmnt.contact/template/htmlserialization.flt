@@ -1,113 +1,32 @@
 <#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
 <#setting url_escaping_charset="UTF-8">  
 <#assign infoUnit = doc.InformationUnit>
-<#assign hasText= infoUnit["count(@stringValue)"] != 0>
-<#assign text = infoUnit["@stringValue"] >
+
 <#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
 <#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >
 
-<!-- group person -->
-<#assign persFormatted = infoUnit["childValues[@type='persFormatted']/@stringValue"] >
-<#assign hasPersFormatted = persFormatted?is_string && persFormatted?length != 0 >
-<#assign persRole = infoUnit["childValues[@type='persRole']/@stringValue"] >
-<#assign hasPersRole = persRole?is_string && persRole?length != 0 >
-<#assign persComplete = infoUnit["childValues[@type='persComplete']/@stringValue"] >
-<#assign hasPersComplete = persComplete?is_string && persComplete?length != 0 >
-<#assign persOrganisation = infoUnit["childValues[@type='persOrganisation']/@stringValue"] >
-<#assign hasPersOrganisation = persOrganisation?is_string && persOrganisation?length != 0 >
-<#assign imageData = infoUnit["childValues[@type='imageData']/@stringValue"] >
-<#assign hasImageData = imageData?is_string && imageData?length != 0 >
+<#assign email= infoUnit["childValues[@type='emaildef']/@stringValue"]>
+<#assign role = infoUnit["childValues[@type='role']/@stringValue"]>
+<#assign organization = infoUnit["childValues[@type='organization']/@stringValue"]>
 
-<!-- group phone number -->
-<#assign pnHome = infoUnit["childValues[@type='pnHome']/@stringValue"] >
-<#assign hasPnHome = pnHome?is_string && pnHome?length != 0 >
-<#assign pnWork = infoUnit["childValues[@type='pnWork']/@stringValue"] >
-<#assign hasPnWork = pnWork?is_string && pnWork?length != 0 >
-<#assign pnVoice = infoUnit["childValues[@type='pnVoice']/@stringValue"] >
-<#assign hasPnVoice = pnVoice?is_string && pnVoice?length != 0 >
-<#assign pnFax = infoUnit["childValues[@type='pnFAX']/@stringValue"] >
-<#assign hasPnFax = pnFax?is_string && pnFax?length != 0 >
-<#assign pnMobile = infoUnit["childValues[@type='pnMobile']/@stringValue"] >
-<#assign hasPnMobile = pnMobile?is_string && pnMobile?length != 0 >
-<#assign pnMailbox = infoUnit["childValues[@type='pnMailbox']/@stringValue"] >
-<#assign hasPnMailbox = pnMailbox?is_string && pnMailbox?length != 0 >
-<#assign pnModem = infoUnit["childValues[@type='pnModem']/@stringValue"] >
-<#assign hasPnModem = pnModem?is_string && pnModem?length != 0 >
-<#assign pnCar = infoUnit["childValues[@type='pnCar']/@stringValue"] >
-<#assign hasPnCar = pnCar?is_string && pnCar?length != 0 >
-<#assign pnIsdn = infoUnit["childValues[@type='pnIsdn']/@stringValue"] >
-<#assign hasPnIsdn = pnIsdn?is_string && pnIsdn?length != 0 >
-<#assign pnVideo = infoUnit["childValues[@type='pnVideo']/@stringValue"] >
-<#assign hasPnVideo = pnVideo?is_string && pnVideo?length != 0 >
-<#assign pnPcs = infoUnit["childValues[@type='pnPcs']/@stringValue"] >
-<#assign hasPnPcs = pnPcs?is_string && pnPcs?length != 0 >
-<#assign pnPager = infoUnit["childValues[@type='pnPager']/@stringValue"] >
-<#assign hasPnPager = pnPager?is_string && pnPager?length != 0 >
-<#assign pnOthers = infoUnit["childValues[@type='pnOthers']/@stringValue"] >
-<#assign hasPnOthers = pnOthers?is_string && pnOthers?length != 0 >
+<#assign pnHome = infoUnit["childValues[@type='pnHome']/@stringValue"]>
+<#assign pnMobile = infoUnit["childValues[@type='pnMobile']/@stringValue"]>
+<#assign pnCar = infoUnit["childValues[@type='pnCar']/@stringValue"]>
+<#assign pnMailbox = infoUnit["childValues[@type='pnMailbox']/@stringValue"]>
+<#assign pnFAX = infoUnit["childValues[@type='pnFAX']/@stringValue"]>
+<#assign pnIsdn = infoUnit["childValues[@type='pnIsdn']/@stringValue"]>
+<#assign pnModem = infoUnit["childValues[@type='pnModem']/@stringValue"]>
+<#assign pnOthers = infoUnit["childValues[@type='pnOthers']/@stringValue"]>
+<#assign pnVoice = infoUnit["childValues[@type='pnVoice']/@stringValue"]>
+<#assign pnWork = infoUnit["childValues[@type='pnWork']/@stringValue"]>
 
-<!-- group address -->
-<#assign workStreet = infoUnit["childValues[@type='workStreet']/@stringValue"] >
-<#assign hasWorkStreet = workStreet?is_string && workStreet?length != 0 >
-<#assign workPob = infoUnit["childValues[@type='workPob']/@stringValue"] >
-<#assign hasWorkPob = workPob?is_string && workPob?length != 0 >
-<#assign workLocality = infoUnit["childValues[@type='workLocality']/@stringValue"] >
-<#assign hasWorkLocality = workLocality?is_string && workLocality?length != 0 >
-<#assign workRegion = infoUnit["childValues[@type='workRegion']/@stringValue"] >
-<#assign hasWorkRegion = workRegion?is_string && workRegion?length != 0 >
-<#assign workPostal = infoUnit["childValues[@type='workPostal']/@stringValue"] >
-<#assign hasWorkPostal = workPostal?is_string && workPostal?length != 0 >
-<#assign workCountry = infoUnit["childValues[@type='workCountry']/@stringValue"] >
-<#assign hasWorkCountry = workCountry?is_string && workCountry?length != 0 >
-<#assign workStreet = infoUnit["childValues[@type='workStreet']/@stringValue"] >
-<#assign hasWorkStreet = workStreet?is_string && workStreet?length != 0 >
-<#assign workLongitude = infoUnit["childValues[@type='workLongitude']/@stringValue"] >
-<#assign hasWorkLongitude = workLongitude?is_string && workLongitude?length != 0 >
-<#assign workLatitude = infoUnit["childValues[@type='workLatitude']/@stringValue"] >
-<#assign hasWorkLatitude = workLatitude?is_string && workLatitude?length != 0 >
+<#assign worklatitude = infoUnit["childValues[@type='wordAdress']/childValues[@type='latitude']/@stringValue"]>
+<#assign worklongtitude = infoUnit["childValues[@type='wordAdress']/childValues[@type='longitude']/@stringValue"]>
+<#assign homelatitude = infoUnit["childValues[@type='homeAdress']/childValues[@type='latitude']/@stringValue"]>
+<#assign homelongitude = infoUnit["childValues[@type='homeAdress']/childValues[@type='longitude']/@stringValue"]>
 
-<#assign homeStreet = infoUnit["childValues[@type='homeStreet']/@stringValue"] >
-<#assign hasHomeStreet = homeStreet?is_string && homeStreet?length != 0 >
-<#assign homePob = infoUnit["childValues[@type='homePob']/@stringValue"] >
-<#assign hasHomePob = homePob?is_string && homePob?length != 0 >
-<#assign homeLocality = infoUnit["childValues[@type='homeLocality']/@stringValue"] >
-<#assign hasHomeLocality = homeLocality?is_string && homeLocality?length != 0 >
-<#assign homeRegion = infoUnit["childValues[@type='homeRegion']/@stringValue"] >
-<#assign hasHomeRegion = homeRegion?is_string && homeRegion?length != 0 >
-<#assign homePostal = infoUnit["childValues[@type='homePostal']/@stringValue"] >
-<#assign hasHomePostal = homePostal?is_string && homePostal?length != 0 >
-<#assign homeCountry = infoUnit["childValues[@type='homeCountry']/@stringValue"] >
-<#assign hasHomeCountry = homeCountry?is_string && homeCountry?length != 0 >
-<#assign homeLongitude = infoUnit["childValues[@type='homeLongitude']/@stringValue"] >
-<#assign hasHomeLongitude = homeLongitude?is_string && homeLongitude?length != 0 >
-<#assign homeLatitude = infoUnit["childValues[@type='homeLatitude']/@stringValue"] >
-<#assign hasHomeLatitude = homeLatitude?is_string && homeLatitude?length != 0 >
-	
-<!-- group email -->
-<#assign email1 = infoUnit["childValues[@type='email1']/@stringValue"] >
-<#assign hasEmail1 = email1?is_string && email1?length != 0 >
-<#assign email2 = infoUnit["childValues[@type='email2']/@stringValue"] >
-<#assign hasEmail2 = email2?is_string && email2?length != 0 >
-<#assign email3 = infoUnit["childValues[@type='email3']/@stringValue"] >
-<#assign hasEmail3 = email3?is_string && email3?length != 0 >
-<#assign email4 = infoUnit["childValues[@type='email4']/@stringValue"] >
-<#assign hasEmail4 = email4?is_string && email4?length != 0 >
-<#assign email5 = infoUnit["childValues[@type='email5']/@stringValue"] >
-<#assign hasEmail5 = email5?is_string && email5?length != 0 >
-<#assign email6 = infoUnit["childValues[@type='email6']/@stringValue"] >
-<#assign hasEmail6 = email6?is_string && email6?length != 0 >
-<#assign email7 = infoUnit["childValues[@type='email7']/@stringValue"] >
-<#assign hasEmail7 = email7?is_string && email7?length != 0 >
-<#assign email8 = infoUnit["childValues[@type='email8']/@stringValue"] >
-<#assign hasEmail8 = email8?is_string && email8?length != 0 >
-<#assign email9 = infoUnit["childValues[@type='email9']/@stringValue"] >
-<#assign hasEmail9 = email9?is_string && email9?length != 0 >
-<#assign email10 = infoUnit["childValues[@type='email10']/@stringValue"] >
-<#assign hasEmail10 = email10?is_string && email10?length != 0 >
 
-<!-- homepage -->
-<#assign frontpage = infoUnit["childValues[@type='frontpage']/@stringValue"] >
-<#assign hasFrontpage = frontpage?is_string && frontpage?length != 0 >
+
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
@@ -126,8 +45,9 @@
 	          autoPad: true
 	      }
 	
-	      var myBoxObject = new curvyCorners(settings,"srccode");
+	      var myBoxObject = new curvyCorners(settings,"headerSection");
 	      myBoxObject.applyCornersToAll();
+	     
 	  }
 </script>
   <title>${infoUnit.@label}</title>
@@ -147,361 +67,196 @@
 }
  </style>
 <body>
-	<!-- General - General - Person -->
- 	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  		<span class="systemfont" style="font-weight:bold;">Person</span>
-  	</div>
-  	<div style="margin:5px;">
-		<table>		
-			<#if hasImageData >
-				<img src=${imageData} width="200" height="150" >
-			</#if>
-			<#if hasPersComplete >
+	<div style="width:100%;">
+		<table cellspacing="0" cellpadding="0" border="0">
 			<tr>
-				<td class="bold">Complete Name:</td>
-				<td>${persComplete}</td>
+				<#if additionals.photo?has_content>
+				<td rowspan="4"><img src="${additionals.photo}" border="0"></td>
+				<td rowspan="4">&nbsp;&nbsp;</td>
+				</#if>
+				<td class="bold">Name:</td>
+				<td>${infoUnit.@label}</td>
 			</tr>
-			</#if>
-			<#if hasPersRole >
+			<tr>
+				<td class="bold">Email:</td>
+				<td>
+				<#if email?has_content>
+					<a href="mailto:${infoUnit.@label}&lt;${email?html}&gt;">${email?html}</a>
+				<#else>
+					n.a.
+				</#if>
+				</td>
+			</tr>
 			<tr>
 				<td class="bold">Role:</td>
-				<td>${persRole}</td>
-			</tr>
-			</#if>
-			<#if hasPersOrganisation >
-			<tr>
-				<td class="bold">Organisation:</td>
-				<td>${persOrganisation}</td>
-			</tr>
-			</#if>
-			<#if hasPersFormatted >
-			<tr>
-				<td class="bold">Formatted Name:</td>
-				<td>${persFormatted}</td>
-			</tr>
-			</#if>				
-		</table>
-	</div>
-
-	<!-- General - General - Phonenumbers -->
-	 <div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  		<span class="systemfont" style="font-weight:bold;">Phone Numbers</span>
-  	</div>
-   	<div style="margin:5px;">
-		<table>
-			<#if hasPnHome >
-			<tr>
-				<td class="bold">Home:</td>
-				<td>${pnHome}</td>
-			</tr>
-			</#if>
-			<#if hasPnWork >
-			<tr>
-				<td class="bold">Work:</td>
-				<td>${pnWork}</td>
-			</tr>
-			</#if>
-			<#if hasPnMobile >
-			<tr>
-				<td class="bold">Mobile:</td>
-				<td>${pnMobile}</td>
-			</tr>
-			</#if>
-			<#if hasPnFax >
-			<tr>
-				<td class="bold">Fax:</td>
-				<td>${pnFax}</td>
-			</tr>
-			</#if>
-			<#if hasPnVoice >
-			<tr>
-				<td class="bold">Voice:</td>
-				<td>${pnVoice}</td>
-			</tr>
-			</#if>
-			<#if hasPnMailbox >
-			<tr>
-				<td class="bold">Mailbox:</td>
-				<td>${pnMailbox}</td>
-			</tr>
-			</#if>
-			<#if hasPnModem >
-			<tr>
-				<td class="bold">Modem:</td>
-				<td>${pnModem}</td>
-			</tr>
-			</#if>
-			<#if hasPnCar >
-			<tr>
-				<td class="bold">Car:</td>
-				<td>${pnCar}</td>
-			</tr>
-			</#if>
-			<#if hasPnIsdn >
-			<tr>
-				<td class="bold">ISDN:</td>
-				<td>${pnIsdn}</td>
-			</tr>
-			</#if>
-			<#if hasPnVideo >
-			<tr>
-				<td class="bold">Video:</td>
-				<td>${pnVideo}</td>
-			</tr>
-			</#if>
-			<#if hasPnPcs >
-			<tr>
-				<td class="bold">PCS:</td>
-				<td>${pnPcs}</td>
-			</tr>
-			</#if>
-			<#if hasPnPager >
-			<tr>
-				<td class="bold">Pager:</td>
-				<td>${pnPager}</td>
-			</tr>
-			</#if>
-			<#if hasPnOthers >
-			<tr>
-				<td class="bold">Others:</td>
-				<td>${pnOthers}</td>
-			</tr>
-			</#if>	
-		</table>
-	</div>
-	
-	<!-- General - General - Address - Home-->
-		 <div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  		<span class="systemfont" style="font-weight:bold;">Address (Home)</span>
-  	</div>
-   	<div style="margin:5px;">
-		<table>
-			<#if hasHomeStreet >
-			<tr>
-				<td class="bold">Street:</td>
-				<td>${homeStreet}</td>
-			</tr>
-			</#if>
-			<#if hasHomePob >
-			<tr>
-				<td class="bold">Post Office Box:</td>
-				<td>${homePob}</td>
-			</tr>
-			</#if>
-			<#if hasHomeLocality >
-			<tr>
-				<td class="bold">Locality:</td>
-				<td>${homeLocality}</td>
-			</tr>
-			</#if>
-			<#if hasHomeRegion >
-			<tr>
-				<td class="bold">Region:</td>
-				<td>${homeRegion}</td>
-			</tr>
-			</#if>
-			<#if hasHomePostal >
-			<tr>
-				<td class="bold">Postal Code:</td>
-				<td>${homePostal}</td>
-			</tr>
-			</#if>
-			<#if hasHomeCountry >
-			<tr>
-				<td class="bold">Country:</td>
-				<td>${homeCountry}</td>
-			</tr>
-			</#if>	
-		</table>
-	</div>
-	
-	<!-- General - General - Address - Work-->
-	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  		<span class="systemfont" style="font-weight:bold;">Address (Work)</span>
-  	</div>
-   	<div style="margin:5px;">
-		<table>
-			<#if hasWorkStreet >
-			<tr>
-				<td class="bold">Street:</td>
-				<td>${workStreet}</td>
-			</tr>
-			</#if>
-			<#if hasWorkPob >
-			<tr>
-				<td class="bold">Post Office Box:</td>
-				<td>${workPob}</td>
-			</tr>
-			</#if>
-			<#if hasWorkLocality >
-			<tr>
-				<td class="bold">Locality:</td>
-				<td>${workLocality}</td>
-			</tr>
-			</#if>
-			<#if hasWorkRegion >
-			<tr>
-				<td class="bold">Region:</td>
-				<td>${workRegion}</td>
-			</tr>
-			</#if>
-			<#if hasWorkPostal >
-			<tr>
-				<td class="bold">Postal Code:</td>
-				<td>${workPostal}</td>
-			</tr>
-			</#if>
-			<#if hasWorkCountry >
-			<tr>
-				<td class="bold">Country:</td>
-				<td>${workCountry}</td>
-			</tr>
-			</#if>	
-		</table>
-	</div>
-<!-- General - General - Address - Map-->
-		<#if hasWorkLongitude >
-			<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-	  			<span class="systemfont" style="font-weight:bold;">Map (Work)</span>
-	  		</div>
-	  		<div style="margin:5px;">
-				<table>
-					<tr>
-						<img src="http://maps.google.com/staticmap?center=${workLatitude},${workLongitude}&zoom=14&size=400x400&markers=${workLatitude},${workLongitude},bluea&key=${additionals.gMapsApiKey}" />
-					</tr>
-				</table>
-			</div>
-
-		<#elseif hasHomeLongitude >
-			<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-	  			<span class="systemfont" style="font-weight:bold;">Map (Home)</span>
-	  		</div>
-	  		<div style="margin:5px;">
-				<table>
-					<tr>
-						<img src="http://maps.google.com/staticmap?center=${homeLatitude},${homeLongitude}&zoom=14&size=400x400&markers=${homeLatitude},${homeLongitude},bluea&key=${additionals.gMapsApiKey}" />
-					</tr>
-				</table>
-			</div>
-		</#if>
-
-
-	<!-- General - General - Homepage -->
-	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  		<span class="systemfont" style="font-weight:bold;">Homepage</span>
-  	</div>
-   	<div style="margin:5px;">
-		<table>
-			<#if hasFrontpage >
-			<tr>
-				<a href="${frontpage}" target="_blank">${frontpage?html}</a>
-			</tr>
-			</#if>
-		</table>
-	</div>		
-	
-	<!-- General - General - Messageing -->
-	<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  		<span class="systemfont" style="font-weight:bold;">E-Mail</span>
-  	</div>
-   	<div style="margin:5px;">
-		<table>
-			<#if hasEmail1 >
-			<tr>
-				<td class="bold">E-Mail 1:</td>
-				<td><a href="mailto:${email1}">${email1?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail2 >
-			<tr>
-				<td class="bold">E-Mail 2:</td>
-				<td><a href="mailto:${email2}">${email2?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail3 >
-			<tr>
-				<td class="bold">E-Mail 3:</td>
-				<td><a href="mailto:${email3}">${email3?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail4 >
-			<tr>
-				<td class="bold">E-Mail 4:</td>
-				<td><a href="mailto:${email4}">${email4?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail5 >
-			<tr>
-				<td class="bold">E-Mail 5:</td>
-				<td><a href="mailto:${email5}">${email5?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail6 >
-			<tr>
-				<td class="bold">E-Mail 6:</td>
-				<td><a href="mailto:${email6}">${email6?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail7 >
-			<tr>
-				<td class="bold">E-Mail 7:</td>
-				<td><a href="mailto:${email7}">${email7?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail8 >
-			<tr>
-				<td class="bold">E-Mail 8:</td>
-				<td><a href="mailto:${email8}">${email8?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail9 >
-			<tr>
-				<td class="bold">E-Mail 9:</td>
-				<td><a href="mailto:${email9}">${email9?html}</a></td>
-			</tr>
-			</#if>
-			<#if hasEmail10 >
-			<tr>
-				<td class="bold">E-Mail 10:</td>
-				<td><a href="mailto:${email10}">${email10?html}</a></td>
-			</tr>
-			</#if>
-		</table>
-	</div>
-	
-	<!-- General - Semantics -->
-	<div>
-  		<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-  			<span class="systemfont" style="font-weight:bold;">Semantics</span>
-  		</div>
-	  	<div style="margin:5px;">
-			<table>
-				<tr>
-					<td class="bold">Image Name:</td>
-					<td>${infoUnit.@label?html}</td>
-				</tr>
-				<#if hasKeywords >
-				<tr>
-					<td class="bold">Keywords:</td>
-					<td>${infoUnit.@keywords?html}</td>
-				</tr>
+				<td>
+				<#if role?has_content>
+					${role?html}
+				<#else>
+					n.a.
 				</#if>
-				<#if hasDescription >
-				<tr>
-					<td class="bold">Description:</td>
-					<td>${infoUnit.@description?html}</td>
-				</tr>
+				</td>
+			</tr>
+			<tr>
+				<td class="bold">Organization:</td>
+				<td>
+				<#if organization?has_content>
+					${organization?html}
+				<#else>
+					n.a.
 				</#if>
-			</table>
-		</div>
-	  	<div>
-	  		<div class="srccode" style="margin: 0 auto;width:100%; color: #194c7f;border: 1px solid #b7cade; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
-	  			<span class="systemfont" style="font-weight:bold;">Text</span>
-	  		</div>
-	  		<#if hasText >
-	  			${text}
-	  		</#if>
-	  	</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>&nbsp;</div>
+	<#if pnHome?has_content || pnMobile?has_content || pnCar?has_content || pnMailbox?has_content || pnFAX?has_content || pnIsdn?has_content || pnModem?has_content || pnOthers?has_content || pnVoice?has_content || pnWork?has_content>  
+	<div class="headerSection" style="margin:0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  		<span class="systemfont" style="font-weight:bold;">Phone</span>
   	</div>
+  	<div style="margin-left:5px;margin-top:10px;">
+  	<table cellpadding="0" cellspacing="0" border="0">
+  		<#if pnHome?has_content>
+  		<tr>
+  			<td class="bold">Home</td>
+  			<td>&nbsp;</td>
+  			<td>${pnHome?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnHome)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnMobile?has_content>
+  		<tr>
+  			<td class="bold">Mobile</td>
+  			<td>&nbsp;</td>
+  			<td>${pnMobile?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnMobile)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnCar?has_content>
+  		<tr>
+  			<td class="bold">Car</td>
+  			<td>&nbsp;</td>
+  			<td>${pnCar?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnCar)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnMailbox?has_content>
+  		<tr>
+  			<td class="bold">Mailbox</td>
+  			<td>&nbsp;</td>
+  			<td>${pnMailbox?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnMailbox)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnFAX?has_content>
+  		<tr>
+  			<td class="bold">FAX</td>
+  			<td>&nbsp;</td>
+  			<td>${pnFAX?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnFAX)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnIsdn?has_content>
+  		<tr>
+  			<td class="bold">ISDN</td>
+  			<td>&nbsp;</td>
+  			<td>${pnIsdn?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnIsdn)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnModem?has_content>
+  		<tr>
+  			<td class="bold">Modem</td>
+  			<td>&nbsp;</td>
+  			<td>${pnModem?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnModem)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnVoice?has_content>
+  		<tr>
+  			<td class="bold">Voice</td>
+  			<td>&nbsp;</td>
+  			<td>${pnVoice?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnVoice)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnWork?has_content>
+  		<tr>
+  			<td class="bold">Work</td>
+  			<td>&nbsp;</td>
+  			<td>${pnWork?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnWork)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnOthers?has_content>
+  		<tr>
+  			<td class="bold">Other</td>
+  			<td>&nbsp;</td>
+  			<td>${pnOthers?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnOthers)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  	</table>
+  	</div>
+  	<div>&nbsp;</div>
+  	</#if>
+  	<#if additionals.formattedWorkAdress?has_content || additionals.formattedHomeAdress?has_content>
+  		<div class="headerSection" style="margin:0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  		<span class="systemfont" style="font-weight:bold;">Adress</span>
+  	</div>
+  	<div style="margin-left:5px;margin-top:10px;">
+  	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+  		<#if additionals.formattedWorkAdress?has_content && (additionals.formattedWorkAdress?trim?length > 0)>
+  			<tr>
+  				<td class="bold" valign="top">Work</td>
+  				<td>&nbsp;</td>
+  				<td valign="top">${additionals.formattedWorkAdress?replace("\n","<br>")}</td>
+  				<#if additionals.createMapsImage && additionals.mapskey?has_content && worklatitude?has_content && worklongtitude?has_content>
+  				<td>&nbsp;</td>
+  				<td align="right"><img src="https://maps-api-ssl.google.com/staticmap?key=${additionals.mapskey?url}&size=${additionals.mapsWidth?url}x${additionals.mapsHeight?url}&zoom=${additionals.mapsZoom?url}&markers=${worklatitude},${worklongtitude}"</td>
+  				<#else>
+  				<td colspan="2">&nbsp;</td>
+  				</#if>
+  			</tr>
+	  	</#if>
+	  	<#if additionals.formattedWorkAdress?has_content && additionals.formattedHomeAdress?has_content && (additionals.formattedHomeAdress?trim?length > 0) && (additionals.formattedWorkAdress?trim?length > 0)>
+	  		<tr><td colspan="5" style="border-bottom:1px solid black;">&nbsp;</td></tr>
+	  		<tr><td colspan="5">&nbsp;</td></tr>
+	  	</#if>
+  		<#if additionals.formattedHomeAdress?has_content && (additionals.formattedHomeAdress?trim?length > 0) >
+  			<tr>
+  				<td class="bold" valign="top">Home</td>
+  				<td>&nbsp;</td>
+  				<td valign="top">${additionals.formattedHomeAdress?replace("\n","<br>")}</td>
+  				<#if additionals.createMapsImage && additionals.mapskey?has_content && homelatitude?has_content && homelongitude?has_content>
+  				<td>&nbsp;</td>
+  				<td align="right"><img src="https://maps-api-ssl.google.com/staticmap?key=${additionals.mapskey?url}&size=${additionals.mapsWidth?url}x${additionals.mapsHeight?url}&zoom=${additionals.mapsZoom?url}&markers=${homelatitude},${homelongitude}"</td>
+  				</#if>
+  			</tr>
+	  	</#if>
+  	</table>
+  	</div>
+  	</#if>
+	
 </body>
 </html>

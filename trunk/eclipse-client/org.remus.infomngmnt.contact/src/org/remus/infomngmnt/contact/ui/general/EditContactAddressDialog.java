@@ -20,7 +20,7 @@ import java.awt.geom.Point2D;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.StatusDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -39,12 +38,14 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.CountryComboObservable;
 import org.remus.infomngmnt.common.ui.databinding.IEMFEditBindingProvider;
+import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.common.ui.jface.BindingStatusDialog;
 import org.remus.infomngmnt.common.ui.swt.CountryCombo;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.geodata.google.GMapsApi;
 
-public class EditContactAddressDialog extends StatusDialog {
+public class EditContactAddressDialog extends BindingStatusDialog {
 
 	private final InformationUnit adress;
 	private final IEMFEditBindingProvider provider;
@@ -109,7 +110,7 @@ public class EditContactAddressDialog extends StatusDialog {
 
 		final Label lb_Country = new Label(comp, SWT.NONE);
 		lb_Country.setText("Country");
-		this.countryCombo = new CountryCombo(comp, SWT.NONE);
+		this.countryCombo = new CountryCombo(comp, SWT.NONE, true);
 		this.countryCombo.getCombo().getControl().setLayoutData(
 				new GridData(SWT.FILL, SWT.CENTER, true, false));
 
@@ -169,54 +170,65 @@ public class EditContactAddressDialog extends StatusDialog {
 	}
 
 	private void showGMapsApiKeyErrorMessageBox() {
-		MessageBox msgb = new MessageBox(new Shell(), SWT.NONE);
-		msgb.setMessage("Please go to Extras -> Preferences -> GeoData -> Google Maps API Key");
-		msgb.setText("False Key Found");
-		msgb.open();
+		MessageDialog.openError(getShell(), "No or incorrect Maps Key.",
+				"Please go to Extras -> Preferences -> GeoData -> Google Maps API Key");
+
 	}
 
 	private void createTextValueBindings() {
-		BindingWidgetFactory.createTextBindingWidget(this.tx_Street, this.provider).bindModel(
-				InformationUtil.getChildByType(this.adress,
-						ContactActivator.NODE_NAME_ADRESS_STREET),
+		TextBindingWidget bindingWidget = BindingWidgetFactory.createTextBindingWidget(
+				this.tx_Street, this.provider);
+		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
+				ContactActivator.NODE_NAME_ADRESS_STREET),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(bindingWidget.getBinding());
 
-		BindingWidgetFactory.createTextBindingWidget(this.tx_Pob, this.provider).bindModel(
-				InformationUtil.getChildByType(this.adress,
-						ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX),
+		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Pob, this.provider);
+		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(bindingWidget.getBinding());
 
-		BindingWidgetFactory.createTextBindingWidget(this.tx_Locality, this.provider).bindModel(
-				InformationUtil.getChildByType(this.adress,
-						ContactActivator.NODE_NAME_ADRESS_LOCALITY),
+		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Locality,
+				this.provider);
+		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(bindingWidget.getBinding());
 
-		BindingWidgetFactory.createTextBindingWidget(this.tx_Region, this.provider).bindModel(
-				InformationUtil.getChildByType(this.adress,
-						ContactActivator.NODE_NAME_ADRESS_REGION),
+		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Region, this.provider);
+		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
+				ContactActivator.NODE_NAME_ADRESS_REGION),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(bindingWidget.getBinding());
 
-		BindingWidgetFactory.createTextBindingWidget(this.tx_Postal, this.provider).bindModel(
-				InformationUtil.getChildByType(this.adress,
-						ContactActivator.NODE_NAME_ADRESS_POSTAL),
+		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Postal, this.provider);
+		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(bindingWidget.getBinding());
 
-		BindingWidgetFactory.createTextBindingWidget(this.tx_Longitude, this.provider).bindModel(
-				InformationUtil.getChildByType(this.adress,
-						ContactActivator.NODE_NAME_ADRESS_LONGITUDE),
+		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Longitude,
+				this.provider);
+		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
+				ContactActivator.NODE_NAME_ADRESS_LONGITUDE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(bindingWidget.getBinding());
 
-		BindingWidgetFactory.createTextBindingWidget(this.tx_Latitude, this.provider).bindModel(
-				InformationUtil.getChildByType(this.adress,
-						ContactActivator.NODE_NAME_ADRESS_LATITUDE),
+		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Latitude,
+				this.provider);
+		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
+				ContactActivator.NODE_NAME_ADRESS_LATITUDE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		addBinding(bindingWidget.getBinding());
 
 		IObservableValue emfCountry = EMFEditObservables.observeValue(this.provider
 				.getEditingDomain(), InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_COUNTRY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		CountryComboObservable swtCountry = new CountryComboObservable(this.countryCombo);
-		this.provider.getDatabindingContext().bindValue(swtCountry, emfCountry, null, null);
+		addBinding(this.provider.getDatabindingContext().bindValue(swtCountry, emfCountry, null,
+				null));
 
 	}
 

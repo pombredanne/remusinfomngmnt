@@ -16,6 +16,8 @@ import java.io.StringWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.util.KeyValueObject;
 import org.remus.infomngmnt.contact.ContactActivator;
@@ -47,7 +49,7 @@ public class ContactUtil {
 				returnValue.append(childByType.getStringValue());
 			}
 		}
-		return returnValue.toString();
+		return StringUtils.strip(returnValue.toString());
 	}
 
 	public static String getFormattedAdress(final InformationUnit unit) {
@@ -92,8 +94,8 @@ public class ContactUtil {
 	public static KeyValueObject[] getAdressCollection() {
 		KeyValueObject[] returnValue = new KeyValueObject[7];
 
-		returnValue[0] = new KeyValueObject(ContactActivator.NODE_NAME_WORK_ADRESS, "Home");
-		returnValue[1] = new KeyValueObject(ContactActivator.NODE_NAME_HOME_ADRESS, "Work");
+		returnValue[0] = new KeyValueObject(ContactActivator.NODE_NAME_WORK_ADRESS, "Work");
+		returnValue[1] = new KeyValueObject(ContactActivator.NODE_NAME_HOME_ADRESS, "Home");
 		returnValue[2] = new KeyValueObject(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
 				"International");
 		returnValue[3] = new KeyValueObject(ContactActivator.NODE_NAME_POSTAL_ADRESS, "Postal");

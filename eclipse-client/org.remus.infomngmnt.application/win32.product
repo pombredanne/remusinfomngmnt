@@ -27,8 +27,8 @@ http://www.remus-software.org/integrated-thirdparty-packages
    </configIni>
 
    <launcherArgs>
-      <programArgs>-consoleLog</programArgs>
-      <vmArgs>-Xmx256M</vmArgs>
+      <programArgs>-consoleLog -clean</programArgs>
+      <vmArgs>-Dosgi.framework.extensions=org.eclipse.equinox.transforms.hook</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
@@ -36,8 +36,8 @@ http://www.remus-software.org/integrated-thirdparty-packages
 
    <splash
       location="org.remus.infomngmnt.application"
-      startupProgressRect="210,210,270,15"
-      startupMessageRect="210,230,270,15"
+      startupProgressRect="125,280,150,10"
+      startupMessageRect="1000,1000,270,15"
       startupForegroundColor="FFFFFF" />
    <launcher>
       <solaris/>
@@ -46,8 +46,10 @@ http://www.remus-software.org/integrated-thirdparty-packages
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
 
    <plugins>
       <plugin id="com.ibm.icu"/>

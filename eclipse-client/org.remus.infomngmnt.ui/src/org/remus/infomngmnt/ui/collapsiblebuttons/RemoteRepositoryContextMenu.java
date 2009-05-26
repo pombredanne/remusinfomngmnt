@@ -89,7 +89,7 @@ public class RemoteRepositoryContextMenu implements IMenuListener, IPropertyList
 	public void init(final IActionBars actionBars) {
 		final ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
-		this.deleteAction = new DeleteAction(removeAllReferencesOnDelete());
+		this.deleteAction = new DeleteRepositoryAction(removeAllReferencesOnDelete());
 		this.deleteAction.setImageDescriptor(sharedImages
 				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		this.deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete");

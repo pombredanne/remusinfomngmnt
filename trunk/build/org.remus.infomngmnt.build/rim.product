@@ -3,6 +3,7 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="true">
 
+
    <configIni use="default">
       <linux>/org.remus.infomngmnt.application/config.ini</linux>
       <macosx>/org.remus.infomngmnt.application/config.ini</macosx>
@@ -18,17 +19,18 @@
    <windowImages i16="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
 
    <splash
-      startupProgressRect="5,275,445,15"
-      startupMessageRect="7,252,445,20"
-      startupForegroundColor="000000" />
+      location="org.remus.infomngmnt.application"
+      startupProgressRect="5,275,445,15" />
    <launcher name="rim">
       <linux icon="/org.remus.infomngmnt.application/launchericons/xpm/cabinet_open.xpm"/>
+      <macosx icon="/org.remus.infomngmnt.application/launchericons/icns/Mac.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/org.remus.infomngmnt.application/launchericons/ico/cabinet_open.ico"/>
+         <ico path="/org.remus.infomngmnt.build/ico/cabinet_open.ico"/>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>

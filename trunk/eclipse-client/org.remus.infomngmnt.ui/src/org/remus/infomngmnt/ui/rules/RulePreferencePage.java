@@ -17,10 +17,13 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.PasteFromClipboardCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -36,6 +39,8 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferencePage;
@@ -316,6 +321,10 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 		this.postProcessingActionsButton.setEnabled(element instanceof RuleAction);
 		if (element instanceof RuleAction) {
 			this.selectedRuleAction = (RuleAction) element;
+			IObservableValue emfName = EMFObservables.observeValue((EObject) element,
+					InfomngmntPackage.Literals.RULE_ACTION__NAME);
+			ISWTObservableValue swtName = SWTObservables.observeText(this.ruleName, SWT.Modify);
+			this.nameBinding = this.ctx.bindValue(swtName, emfName, null, null);
 		}
 		/*
 		 * This will be disabled
@@ -342,12 +351,6 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 		// this.stackLayout.topControl = preferencePage.getControl();
 		// this.availableRulesGroup.layout();
 		// }
-		// IObservableValue emfName = EMFObservables.observeValue((EObject)
-		// element,
-		// InfomngmntPackage.Literals.RULE_ACTION__NAME);
-		// ISWTObservableValue swtName =
-		// SWTObservables.observeText(this.ruleName, SWT.Modify);
-		// this.nameBinding = this.ctx.bindValue(swtName, emfName, null, null);
 		// }
 	}
 

@@ -45,7 +45,6 @@ import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
-import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -61,8 +60,6 @@ public class DeleteInformationUnitCommand implements Command {
 	private final CompoundCommand delegateCommand;
 
 	private final EditingDomain domain;
-
-	private final ISaveParticipantExtensionService service;
 
 	private EditingDomain referenceDomain;
 
@@ -100,8 +97,6 @@ public class DeleteInformationUnitCommand implements Command {
 			this.map
 					.put(informationUnitListItem, new InfoUnit2PathMapper(pathInWorkspace, adapter));
 		}
-		this.service = InfomngmntEditPlugin.getPlugin().getService(
-				ISaveParticipantExtensionService.class);
 	}
 
 	/*

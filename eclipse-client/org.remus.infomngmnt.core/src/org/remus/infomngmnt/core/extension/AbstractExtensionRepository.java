@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.core.extension;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,10 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 	private Map<String, IChangeSetDefinition> changeSetDefinition;
 
 	private static class ChangeSetDefinitionImpl implements IChangeSetDefinition {
+
+		public ChangeSetDefinitionImpl() {
+			this.objectPaths = new ArrayList<String>();
+		}
 
 		List<String> objectPaths;
 

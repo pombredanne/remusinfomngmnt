@@ -9,6 +9,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -149,7 +151,16 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter, IValid
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
 						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
+				dialog.setTitle("Select a category");
+				dialog.setMessage("Select a cateogry");
 				dialog.setDoubleClickSelects(true);
+				dialog.addFilter(new ViewerFilter() {
+					@Override
+					public boolean select(final Viewer viewer, final Object parentElement,
+							final Object element) {
+						return element instanceof Category;
+					}
+				});
 				dialog.setValidator(new ISelectionStatusValidator() {
 					public IStatus validate(final Object[] pselection) {
 						if (pselection.length == 0) {

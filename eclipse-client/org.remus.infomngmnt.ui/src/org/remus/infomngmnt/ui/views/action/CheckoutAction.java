@@ -14,9 +14,13 @@ package org.remus.infomngmnt.ui.views.action;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -29,8 +33,10 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.sync.ChangeSetException;
+import org.remus.infomngmnt.core.sync.ChangeSetExecutor;
 import org.remus.infomngmnt.core.sync.ChangeSetManager;
-import org.remus.infomngmnt.ui.remote.SynchronizationWizard;
+import org.remus.infomngmnt.ui.remote.CheckoutWizard;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -47,30 +53,50 @@ public class CheckoutAction extends BaseSelectionListenerAction {
 	public void run() {
 		ProgressMonitorDialog pmd = new ProgressMonitorDialog(UIUtil.getDisplay().getActiveShell());
 		final ChangeSet[] changeSet = new ChangeSet[1];
+		final ChangeSetManager manager = new ChangeSetManager();
 		try {
 			pmd.run(true, true, new CancelableRunnable() {
 
 				@Override
 				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 					monitor.beginTask("Prepare checkout", IProgressMonitor.UNKNOWN);
-					ChangeSetManager manager = new ChangeSetManager();
-					changeSet[0] = manager.createCheckOutChangeSet(null, getStructuredSelection()
-							.toList(), null, ChangeSetManager.MODE_CHECKOUT_REPLACE, monitor);
+					try {
+						changeSet[0] = manager.createChangeSet(null, getStructuredSelection()
+								.toList(), null, ChangeSetManager.MODE_CHECKOUT_REPLACE, monitor);
+					} catch (ChangeSetException e) {
+						return e.getStatus();
+					}
 					return Status.OK_STATUS;
 				}
 
 			});
 			if (changeSet[0] != null) {
-				SynchronizationWizard synchronizationWizard = new SynchronizationWizard(
-						SynchronizationWizard.CHECKOUTMODE);
-				synchronizationWizard.init(changeSet[0]);
+				final CheckoutWizard checkoutWizard = new CheckoutWizard();
+				checkoutWizard.init(changeSet[0]);
 				WizardDialog wz = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
-						synchronizationWizard);
-				wz.open();
+						checkoutWizard);
+				if (wz.open() == IDialogConstants.OK_ID) {
+					Job job = new Job("Checkout of selected element") {
+
+						@Override
+						protected IStatus run(final IProgressMonitor monitor) {
+							changeSet[0].setTargetCategory(checkoutWizard.getTargetCategory());
+							ChangeSetExecutor executor = new ChangeSetExecutor();
+							executor.checkout(changeSet[0], monitor);
+							return Status.OK_STATUS;
+						}
+					};
+					job.setUser(true);
+					job.schedule();
+
+				}
+
 			}
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorDialog.openError(UIUtil.getDisplay().getActiveShell(),
+					"Error contacting repository",
+					"An error occured while connecting to the repository", ((CoreException) e
+							.getCause()).getStatus());
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,14 +110,6 @@ public class CheckoutAction extends BaseSelectionListenerAction {
 				&& ModelUtil.hasEqualAttribute(selection.toList(),
 						InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_ID)) {
 			return true;
-			// String repositoryId = (String) ((EObject)
-			// selection.toList().get(0))
-			// .eGet(InfomngmntPackage.Literals.REMOTE_OBJECT__REPOSITORY_TYPE_ID);
-			// IRepositoryActionContributor actionContributor =
-			// UIPlugin.getDefault().getService(
-			// IRepositoryExtensionService.class).getItemByRepositoryId(repositoryId)
-			// .getActionContributor();
-
 		}
 		return false;
 	}

@@ -25,19 +25,19 @@ import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.RemoteException;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class RemoteRepositoryDeferredAdapter implements
-		IDeferredWorkbenchAdapter {
-	
+public class RemoteRepositoryDeferredAdapter implements IDeferredWorkbenchAdapter {
+
 	private final RemoteObject remoteObject;
 	private final IRepository itemById;
 
 	public RemoteRepositoryDeferredAdapter(final RemoteObject object) {
 		this.remoteObject = object;
-		
+
 		this.itemById = getRepository(this.remoteObject).getRepositoryImplementation();
 	}
 
@@ -50,40 +50,59 @@ public class RemoteRepositoryDeferredAdapter implements
 			}
 		}
 		return null;
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.progress.IDeferredWorkbenchAdapter#fetchDeferredChildren(java.lang.Object, org.eclipse.ui.progress.IElementCollector, org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.progress.IDeferredWorkbenchAdapter#fetchDeferredChildren
+	 * (java.lang.Object, org.eclipse.ui.progress.IElementCollector,
+	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public void fetchDeferredChildren(final Object object,
-			final IElementCollector collector, final IProgressMonitor monitor) {
+	public void fetchDeferredChildren(final Object object, final IElementCollector collector,
+			final IProgressMonitor monitor) {
 		if (this.remoteObject instanceof RemoteContainer) {
-			RemoteObject[] children = this.itemById.getChildren(monitor, (RemoteContainer) this.remoteObject, true);
-			List<RemoteObject> asList = Arrays.asList(children);
-			for (RemoteObject remoteObject : asList) {
-				remoteObject.setRepositoryTypeId(this.remoteObject.getRepositoryTypeId());
+			try {
+				RemoteObject[] children = this.itemById.getChildren(monitor,
+						(RemoteContainer) this.remoteObject, true);
+				List<RemoteObject> asList = Arrays.asList(children);
+				for (RemoteObject remoteObject : asList) {
+					remoteObject.setRepositoryTypeId(this.remoteObject.getRepositoryTypeId());
+				}
+				((RemoteContainer) this.remoteObject).getChildren().addAll(asList);
+				collector.add(children, monitor);
+			} catch (RemoteException e) {
+
+				// do nothing
 			}
-			((RemoteContainer) this.remoteObject).getChildren().addAll(asList);
-			collector.add(children,monitor);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.progress.IDeferredWorkbenchAdapter#getRule(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.progress.IDeferredWorkbenchAdapter#getRule(java.lang.Object
+	 * )
 	 */
 	public ISchedulingRule getRule(final Object object) {
 		return this.itemById.getRule();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.progress.IDeferredWorkbenchAdapter#isContainer()
 	 */
 	public boolean isContainer() {
 		return this.remoteObject instanceof RemoteObject;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getChildren(java.lang.Object)
 	 */
 	public Object[] getChildren(final Object o) {
@@ -93,21 +112,29 @@ public class RemoteRepositoryDeferredAdapter implements
 		return new Object[0];
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getImageDescriptor(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.model.IWorkbenchAdapter#getImageDescriptor(java.lang.Object
+	 * )
 	 */
 	public ImageDescriptor getImageDescriptor(final Object object) {
 		return ImageDescriptor.createFromImage(this.itemById.getImage());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getLabel(java.lang.Object)
 	 */
 	public String getLabel(final Object o) {
 		return this.remoteObject.getName();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getParent(java.lang.Object)
 	 */
 	public Object getParent(final Object o) {

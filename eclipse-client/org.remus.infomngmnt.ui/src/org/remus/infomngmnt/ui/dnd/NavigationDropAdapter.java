@@ -55,18 +55,17 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 		super(domain, viewer);
 	}
 
-
 	@Override
 	public void drop(final DropTargetEvent event) {
 		Collection<?> extractDragSource = extractDragSource(event.data);
 		Object target = extractDropTarget(event.item);
 		if (extractDragSource.size() == 0) {
-			this.ruleByName = (NewElementRules) EcoreUtil.copy(InfomngmntEditPlugin.getPlugin().getService(IRuleService.class).getRuleByName("Default Ruleset"));
-			List<RuleResult> process = RuleProcessor.getInstance().process(
-					event, this.ruleByName);
+			this.ruleByName = (NewElementRules) EcoreUtil.copy(InfomngmntEditPlugin.getPlugin()
+					.getService(IRuleService.class).getRuleByName("Default Ruleset"));
+			List<RuleResult> process = RuleProcessor.getInstance().process(event, this.ruleByName);
 			if (process.size() == 0) {
-				MessageDialog.openInformation(
-						this.viewer.getControl().getShell(), "drop", "Cannot drop");
+				MessageDialog.openInformation(this.viewer.getControl().getShell(), "drop",
+						"Cannot drop");
 			} else {
 				// At first we have to extract the target-category
 				Category targetCategory = null;
@@ -78,8 +77,8 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 				String categoryString = CategoryUtil.categoryToString(targetCategory);
 				/*
 				 * We have temporarily create some Rule-actions with the
-				 * predefined category so that the creation trigger of
-				 * the new info-type can access the drop target category.
+				 * predefined category so that the creation trigger of the new
+				 * info-type can access the drop target category.
 				 */
 				for (RuleResult ruleResult : process) {
 					EList<RuleAction> actions = ruleResult.getActions();
@@ -88,10 +87,12 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 							ruleAction.setRuleValue(InfomngmntFactory.eINSTANCE.createRuleValue());
 						}
 						RuleValue predefCategory = (RuleValue) InformationUtil.getChildByType(
-								ruleAction.getRuleValue(), AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+								ruleAction.getRuleValue(),
+								AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
 						if (predefCategory == null) {
 							predefCategory = InfomngmntFactory.eINSTANCE.createRuleValue();
-							predefCategory.setType(AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
+							predefCategory
+									.setType(AbstractCreationPreferencePage.NODENAME_PREDEFINED_CATEGORY);
 							ruleAction.getRuleValue().getChildValues().add(predefCategory);
 						}
 						predefCategory.setStringValue(categoryString);
@@ -103,45 +104,43 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 			// A command was created if the source was available early, and the
 			// information used to create it was cached...
 			//
-			if (this.dragAndDropCommandInformation != null)
-			{
+			if (this.dragAndDropCommandInformation != null) {
 				// Recreate the command.
 				//
 				this.command = this.dragAndDropCommandInformation.createCommand();
-			}
-			else
-			{
-				// Otherwise, the source should be available now as event.data, and we
+			} else {
+				// Otherwise, the source should be available now as event.data,
+				// and we
 				// can create the command.
 				//
 				this.source = extractDragSource(event.data);
-				this.command = DragAndDropCommand.create(this.domain, target, getLocation(event), event.operations, this.originalOperation, this.source);
+				this.command = DragAndDropCommand.create(this.domain, target, getLocation(event),
+						event.operations, this.originalOperation, this.source);
 			}
 
 			// If the command can execute...
 			//
-			if (this.command.canExecute())
-			{
+			if (this.command.canExecute()) {
+
 				/*
-				 * Before we execute the command we have to check
-				 * if src & target are in the same project.
-				 * If not, we also have to move files within
-				 * the workspace.
+				 * Before we execute the command we have to check if src &
+				 * target are in the same project. If not, we also have to move
+				 * files within the workspace.
 				 */
-				this.command = NavigationDropHelper.checkProjectRelevance(this.source,target,this.command);
-				
+				this.command = NavigationDropHelper.checkProjectRelevance(this.source, target,
+						this.command, (this.originalOperation) == DND.DROP_COPY);
+
 				/*
-				 * The next step is to check the integration of 
-				 * the synchronization state.
+				 * The next step is to check the integration of the
+				 * synchronization state.
 				 */
-				this.command = NavigationDropHelper.checkSyncStates(this.source,target,this.command);
+				this.command = NavigationDropHelper.checkSyncStates(this.source, target,
+						this.command);
 
 				// Execute it.
 				//
 				this.domain.getCommandStack().execute(this.command);
-			}
-			else
-			{
+			} else {
 				// Otherwise, let's call the whole thing off.
 				//
 				event.detail = DND.DROP_NONE;
@@ -162,9 +161,7 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 			for (int i = 0, n = process.size(); i < n; i++) {
 				provider[i] = new NewElementQuickAccessProider(process.get(i));
 			}
-			new QuickAccessDialog(
-					UIUtil.getPrimaryWindow(),
-					null,provider).open();
+			new QuickAccessDialog(UIUtil.getPrimaryWindow(), null, provider).open();
 		} else {
 			// nothing
 		}
@@ -184,8 +181,5 @@ public class NavigationDropAdapter extends EditingDomainViewerDropAdapter {
 		}
 
 	}
-
-
-
 
 }

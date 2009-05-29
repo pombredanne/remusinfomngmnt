@@ -1,25 +1,15 @@
 package org.remus.infomngmnt.ui.remote;
 
-import java.util.Collections;
-
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.compare.diff.metamodel.DiffModel;
-import org.eclipse.emf.compare.diff.service.DiffService;
-import org.eclipse.emf.compare.match.metamodel.MatchModel;
-import org.eclipse.emf.compare.match.service.MatchService;
-import org.eclipse.emf.compare.util.AdapterUtils;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -41,7 +31,9 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
@@ -49,17 +41,16 @@ import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
-import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
 
-public class ChangeSetWizardPage extends WizardPage implements DiffWizard, IValidatingWizard {
+public class ChangeSetWizardPage extends WizardPage implements IValidatingWizard {
 
 	private Text parentCategoryText;
 	private Category selection;
 	private Tree tree;
-	private DiffModel diffModel;
-	private ChangeSet changeSet;
+	private final ChangeSet changeSet;
 	private TreeViewer treeViewer;
+	private Category targetCategory;
 
 	/**
 	 * Create the wizard
@@ -156,7 +147,7 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard, IVali
 		final Label changesetLabel = new Label(container, SWT.NONE);
 		final GridData gd_changesetLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
 		changesetLabel.setLayoutData(gd_changesetLabel);
-		changesetLabel.setText("Change-Set");
+		changesetLabel.setText("Preview");
 
 		this.treeViewer = new TreeViewer(container, SWT.BORDER);
 
@@ -164,72 +155,50 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard, IVali
 
 		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-		this.treeViewer.setLabelProvider(new ChangeSetLabelProvider(AdapterUtils
+		this.treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(EditingUtil.getInstance()
 				.getAdapterFactory()));
-		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(AdapterUtils
-				.getAdapterFactory()));
+		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
+				.getInstance().getAdapterFactory()) {
+			@Override
+			public boolean hasChildren(final Object object) {
+				if (object instanceof InformationUnitListItem) {
+					return false;
+				}
+				return super.hasChildren(object);
+			}
 
-		this.treeViewer.setInput(this.diffModel);
-		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(final SelectionChangedEvent event) {
-				Object firstElement = ((IStructuredSelection) event.getSelection())
-						.getFirstElement();
-				System.out.println(event.getSelection());
-
+			@Override
+			public Object[] getChildren(final Object object) {
+				return super.getChildren(object);
 			}
 		});
-		initValidation();
-		setControl(container);
-	}
-
-	protected void handleCategoryStringChanged(final String newText) {
-
-		setErrorMessage(null);
-		Category localTargetCategory = InfomngmntFactory.eINSTANCE.createCategory();
-		Category tmpRemoteRootCategory = CategoryUtil.copyBlankObject(localTargetCategory);
-		this.changeSet.setTargetCategory(CategoryUtil.findCategory(newText, false));
+		this.treeViewer.addFilter(new ViewerFilter() {
+			@Override
+			public boolean select(final Viewer viewer, final Object parentElement,
+					final Object element) {
+				return !(element instanceof SynchronizationMetadata);
+			}
+		});
+		Category tmpRemoteRootCategory = InfomngmntFactory.eINSTANCE.createCategory();
 
 		EList<ChangeSetItem> changeSetItems = this.changeSet.getChangeSetItems();
 		for (ChangeSetItem changeSetItem2 : changeSetItems) {
 			tmpRemoteRootCategory.getChildren().add(
 					(Category) EcoreUtil.copy(changeSetItem2.getRemoteConvertedContainer()));
 		}
-		EditingUtil.getInstance().saveObjectToResource(
-				tmpRemoteRootCategory,
-				UIPlugin.getDefault().getStateLocation().append("compare").append("remote.xml")
-						.toOSString());
+		this.treeViewer.setInput(tmpRemoteRootCategory);
 
-		EditingUtil.getInstance().saveObjectToResource(
-				localTargetCategory,
-				UIPlugin.getDefault().getStateLocation().append("compare").append("local.xml")
-						.toOSString());
+		initValidation();
+		setControl(container);
+	}
 
-		MatchModel match;
-		try {
-			match = MatchService.doMatch(localTargetCategory, tmpRemoteRootCategory, Collections
-					.<String, Object> emptyMap());
-			this.diffModel = DiffService.doDiff(match, false);
-			this.treeViewer.setInput(this.diffModel);
-			// performDiff(ownedElements, changeSetItem);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// Computing differences
-
+	protected void handleCategoryStringChanged(final String newText) {
+		this.targetCategory = CategoryUtil.findCategory(newText, false);
 	}
 
 	protected void initValidation() {
 		setPageComplete(validate(false));
 		WizardValidatingUtil.validateControlsOnModify(this, this.parentCategoryText);
-	}
-
-	public void setChangeSet(final ChangeSet changeSet) {
-		this.changeSet = changeSet;
-	}
-
-	public DiffModel getDiffModel() {
-		return this.diffModel;
 	}
 
 	public boolean validate(final boolean showErrorMessage) {
@@ -240,11 +209,17 @@ public class ChangeSetWizardPage extends WizardPage implements DiffWizard, IVali
 			if (showErrorMessage) {
 				setErrorMessage("No valid category");
 			}
-			this.treeViewer.setInput(null);
 			return false;
 		}
 		setErrorMessage(null);
 		return true;
+	}
+
+	/**
+	 * @return the targetCategory
+	 */
+	public Category getTargetCategory() {
+		return this.targetCategory;
 	}
 
 }

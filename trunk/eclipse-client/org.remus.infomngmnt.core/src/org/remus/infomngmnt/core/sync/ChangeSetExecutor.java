@@ -231,10 +231,11 @@ public class ChangeSetExecutor {
 					StatusCreator
 							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
 		}
-		EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
+		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		Command deleteInfounit = CommandFactory.DELETE_INFOUNIT(Collections
 				.<InformationUnitListItem> singletonList(itemById), editingDomain);
-		deleteInfounit.execute();
+		editingDomain.getCommandStack().execute(deleteInfounit);
+		editingDomain.getCommandStack().flush();
 	}
 
 	private void addLocalInfoUnit(final InformationUnitListItem synchronizableObject,
@@ -358,10 +359,12 @@ public class ChangeSetExecutor {
 						newRemoteInformationUnit, editingDomain);
 				command.append(addFileCommand);
 			}
-			itemById.setSynchronizationMetaData(synchronizableObject.getSynchronizationMetaData());
 			cc.append(command);
 			editingDomain.getCommandStack().execute(cc);
 		}
+		itemById = ApplicationModelPool.getInstance().getItemById(synchronizableObject.getId(),
+				monitor);
+		itemById.setSynchronizationMetaData(synchronizableObject.getSynchronizationMetaData());
 		editingDomain.getCommandStack().flush();
 	}
 

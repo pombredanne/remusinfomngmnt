@@ -12,22 +12,36 @@
 
 package org.remus.infomngmnt.core.sync;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.compare.diff.metamodel.AddModelElement;
+import org.eclipse.emf.compare.diff.metamodel.DiffElement;
+import org.eclipse.emf.compare.diff.metamodel.DiffGroup;
+import org.eclipse.emf.compare.diff.metamodel.DiffModel;
+import org.eclipse.emf.compare.diff.metamodel.RemoveModelElement;
+import org.eclipse.emf.compare.diff.metamodel.UpdateAttribute;
+import org.eclipse.emf.compare.diff.service.DiffService;
+import org.eclipse.emf.compare.match.metamodel.MatchModel;
+import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
-import org.eclipse.emf.query.conditions.eobjects.EObjectInstanceCondition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectTypeRelationCondition;
 import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 
+import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -45,9 +59,15 @@ import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.core.remote.RemoteUtil;
+import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -57,9 +77,26 @@ public class ChangeSetManager {
 	public static final int MODE_SYNC = 1;
 	public static final int MODE_CHECKOUT_REPLACE = 2;
 
-	public ChangeSet createCheckOutChangeSet(final Category localContainer,
+	private static final String COMPARE_FOLDER = "compare";
+
+	public ChangeSet createChangeSet(final Category cat, final IProgressMonitor monitor)
+			throws CoreException {
+		SynchronizationMetadata metaData = cat.getSynchronizationMetaData();
+		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(metaData.getRepositoryId());
+		RemoteObject remoteObject = remoteRepository.getRepositoryImplementation()
+				.getRemoteObjectBySynchronizableObject(cat, monitor);
+		if (remoteObject != null && remoteObject instanceof RemoteContainer) {
+			return createChangeSet(cat, Collections
+					.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
+					remoteRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE, monitor);
+		}
+		return null;
+	}
+
+	public ChangeSet createChangeSet(final Category localContainer,
 			final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository,
-			final int mode, final IProgressMonitor monitor) {
+			final int mode, final IProgressMonitor monitor) throws ChangeSetException {
 
 		/*
 		 * At first we make sure that all elements are located within the same
@@ -136,11 +173,16 @@ public class ChangeSetManager {
 				createCategory.setId(findId(createCategory, createChangeSetItem));
 				createChangeSetItem.setRemoteOriginalObject(copiedItem);
 				createChangeSetItem.setRemoteConvertedContainer(createCategory);
-				RemoteObject[] children = repositoryImplementation.getChildren(monitor, copiedItem,
-						false);
-				for (RemoteObject remoteObject2 : children) {
-					fillRemoteContainer(createChangeSetItem, remoteObject2, repository,
-							createCategory, mode);
+				try {
+					RemoteObject[] children = repositoryImplementation.getChildren(monitor,
+							copiedItem, false);
+					for (RemoteObject remoteObject2 : children) {
+						fillRemoteContainer(createChangeSetItem, remoteObject2, repository,
+								createCategory, mode);
+					}
+				} catch (RemoteException e) {
+					throw new ChangeSetException(StatusCreator.newStatus(
+							"Error creating changeset", e));
 				}
 			}
 			return createChangeSet;
@@ -160,10 +202,11 @@ public class ChangeSetManager {
 	 * @param remoteRepository
 	 * @param parentCategory
 	 * @param mode
+	 * @throws RemoteException
 	 */
 	public void fillRemoteContainer(final ChangeSetItem changeSetItem,
 			final RemoteObject remoteObject2, final RemoteRepository remoteRepository,
-			final Category parentCategory, final int mode) {
+			final Category parentCategory, final int mode) throws RemoteException {
 		if (remoteObject2 instanceof RemoteContainer) {
 			Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
 
@@ -177,6 +220,7 @@ public class ChangeSetManager {
 
 			createCategory.setSynchronizationMetaData(metadata);
 			createCategory.setId(findId(createCategory, changeSetItem));
+			createCategory.setLabel(remoteObject2.getName());
 			if (parentCategory != null) {
 				parentCategory.getChildren().add(createCategory);
 			} else {
@@ -219,8 +263,6 @@ public class ChangeSetManager {
 			if (prefetchedInformationUnit != null) {
 				prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
 			}
-			changeSetItem.getSyncObjectActionMap().put(createInformationUnitListItem,
-					SynchronizationAction.ADD_LOCAL);
 		}
 	}
 
@@ -233,8 +275,12 @@ public class ChangeSetManager {
 									.getUrl())) {
 				return localContainer.getId();
 			}
-			EObjectCondition typeRelationCondition = new EObjectInstanceCondition(
-					InfomngmntPackage.Literals.CATEGORY);
+			EObjectCondition typeRelationCondition = new EObjectCondition() {
+				@Override
+				public boolean isSatisfied(final EObject eObject) {
+					return eObject.eClass() == InfomngmntPackage.Literals.CATEGORY;
+				}
+			};
 			EObjectCondition valueCondition = new EObjectCondition() {
 				@Override
 				public boolean isSatisfied(final EObject eObject) {
@@ -288,6 +334,177 @@ public class ChangeSetManager {
 			}
 		}
 		return IdFactory.createNewId(null);
+
+	}
+
+	public DiffModel createDiffModel(final ChangeSetItem changeSetItem,
+			final Category targetCategory) throws ChangeSetException {
+		return createDiffModel(changeSetItem, targetCategory, false);
+	}
+
+	public DiffModel createDiffModel(final ChangeSetItem changeSetItem,
+			final Category targetCategory, final boolean replaceAllLocal) throws ChangeSetException {
+		DiffModel returnValue = null;
+		/*
+		 * We have to unset all local ids and replace them with the remote-hash.
+		 */
+		Category remoteCopy = (Category) EcoreUtil
+				.copy(changeSetItem.getRemoteConvertedContainer());
+
+		Category copy = (Category) EcoreUtil.copy(targetCategory);
+		TreeIterator<EObject> eAllContents = copy.eAllContents();
+		while (eAllContents.hasNext()) {
+			EObject eObject = eAllContents.next();
+			if (eObject instanceof InformationUnitListItem) {
+				/*
+				 * Additionally we have to unset the workspace-path
+				 */
+				eObject
+						.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
+			}
+		}
+		/*
+		 * If we replace all we have to force differences on every item. That's
+		 * done with a hash.
+		 */
+		if (replaceAllLocal) {
+			TreeIterator<EObject> eAllContents2 = copy.eAllContents();
+			while (eAllContents2.hasNext()) {
+				EObject eObject = eAllContents2.next();
+				if (eObject instanceof SynchronizationMetadata) {
+					/*
+					 * Additionally we have to unset the workspace-path
+					 */
+					eObject.eSet(InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH, "");
+				}
+			}
+		}
+
+		EditingUtil.getInstance().saveObjectToResource(
+				remoteCopy,
+				InfomngmntEditPlugin.getPlugin().getStateLocation().append(COMPARE_FOLDER).append(
+						IdFactory.createNewId(null)).addFileExtension("xml").toOSString());
+
+		EditingUtil.getInstance().saveObjectToResource(
+				copy,
+				InfomngmntEditPlugin.getPlugin().getStateLocation().append(COMPARE_FOLDER).append(
+						IdFactory.createNewId(null)).addFileExtension("xml").toOSString());
+
+		MatchModel match;
+		try {
+			match = MatchService.doMatch(copy, remoteCopy, Collections.<String, Object> emptyMap());
+			returnValue = DiffService.doDiff(match, false);
+
+		} catch (Exception e) {
+			throw new ChangeSetException(StatusCreator.newStatus("Error computing difference", e));
+		}
+		return returnValue;
+		// Computing differences
+	}
+
+	public void prepareSyncActions(final EList<DiffElement> diffModel, final ChangeSetItem item,
+			final Category targetCategory) {
+		for (DiffElement diffElement : diffModel) {
+			/*
+			 * The diff model has an element which is not local present, We have
+			 * to check if the model was deleted local.
+			 */
+			if (diffElement instanceof AddModelElement) {
+				final AddModelElement addOp = (AddModelElement) diffElement;
+				EObject rightElement = addOp.getRightElement();
+				if (rightElement instanceof AbstractInformationUnit) {
+					// TODO implement for deleted items
+					if (true) {
+						item.getSyncObjectActionMap().put((SynchronizableObject) rightElement,
+								SynchronizationAction.ADD_LOCAL);
+					}
+				} else if (rightElement instanceof Category) {
+					// TODO implement for deleted items
+					if (true) {
+						item.getSyncCategoryActionMap().put((Category) rightElement,
+								SynchronizationAction.ADD_LOCAL);
+					}
+				}
+			}
+			if (diffElement instanceof DiffGroup) {
+				diffElement.getSubDiffElements();
+				prepareSyncActions(diffElement.getSubDiffElements(), item, targetCategory);
+			}
+			/*
+			 * An update on an attribute was detected. We have to find the
+			 * parent SynchronizableObject.
+			 */
+			if (diffElement instanceof UpdateAttribute) {
+				final UpdateAttribute addOp = (UpdateAttribute) diffElement;
+				EObject rightElement = addOp.getRightElement();
+
+				EObject parentByClass = ModelUtil.getParentByClass(rightElement,
+						InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
+				if (parentByClass == null) {
+					parentByClass = ModelUtil.getParentByClass(rightElement,
+							InfomngmntPackage.Literals.CATEGORY);
+				} else {
+					/*
+					 * Search if the IU was edited locally. If so we have to
+					 * resolve a conflict.
+					 */
+					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
+							.getItemById(((AbstractInformationUnit) parentByClass).getId(),
+									new NullProgressMonitor());
+					if (addOp.getAttribute() == InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH) {
+						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
+									SynchronizationAction.RESOLVE_CONFLICT);
+						} else {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
+									SynchronizationAction.REPLACE_LOCAL);
+						}
+
+					} else {
+						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
+									SynchronizationAction.REPLACE_REMOTE);
+						} else {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
+									SynchronizationAction.REPLACE_LOCAL);
+						}
+					}
+				}
+			}
+			/*
+			 * Something was deleted at the repository.
+			 */
+			if (diffElement instanceof RemoveModelElement) {
+				RemoveModelElement removeOp = (RemoveModelElement) diffElement;
+				EObject leftElement = removeOp.getLeftElement();
+				if (leftElement instanceof InformationUnitListItem) {
+					item.getSyncObjectActionMap().put((SynchronizableObject) leftElement,
+							SynchronizationAction.DELETE_LOCAL);
+				} else if (leftElement instanceof Category) {
+					item.getSyncCategoryActionMap().put((Category) leftElement,
+							SynchronizationAction.DELETE_LOCAL);
+				}
+			}
+		}
+	}
+
+	public void replaceAllLocal(final ChangeSetItem changeSetItem2) {
+		EMap<Category, SynchronizationAction> syncCategoryActionMap = changeSetItem2
+				.getSyncCategoryActionMap();
+		if (syncCategoryActionMap != null) {
+			Set<Category> keySet = syncCategoryActionMap.keySet();
+			for (Category category : keySet) {
+				syncCategoryActionMap.put(category, SynchronizationAction.REPLACE_LOCAL);
+			}
+		}
+		EMap<SynchronizableObject, SynchronizationAction> syncObjectActionMap = changeSetItem2
+				.getSyncObjectActionMap();
+		if (syncObjectActionMap != null) {
+			Set<SynchronizableObject> keySet = syncObjectActionMap.keySet();
+			for (SynchronizableObject synchronizableObject : keySet) {
+				syncObjectActionMap.put(synchronizableObject, SynchronizationAction.REPLACE_LOCAL);
+			}
+		}
 
 	}
 

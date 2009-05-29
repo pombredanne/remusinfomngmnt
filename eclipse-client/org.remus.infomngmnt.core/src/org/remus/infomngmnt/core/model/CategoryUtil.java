@@ -15,6 +15,7 @@ package org.remus.infomngmnt.core.model;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -29,8 +30,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.query.conditions.Condition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectTypeRelationCondition;
+import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectAttributeValueCondition;
 import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
@@ -277,6 +280,34 @@ public class CategoryUtil {
 			returnValue[i++] = informationUnitListItem;
 		}
 		return returnValue;
+	}
+
+	public static Category getCategoryById(final String id) {
+		EObjectCondition typeRelationCondition = new EObjectCondition() {
+			@Override
+			public boolean isSatisfied(final EObject eObject) {
+				return eObject.eClass() == InfomngmntPackage.Literals.CATEGORY;
+			}
+		};
+		EObjectCondition valueCondition = new EObjectAttributeValueCondition(
+				InfomngmntPackage.Literals.CATEGORY__ID, new Condition() {
+					@Override
+					public boolean isSatisfied(final Object object) {
+						return id.equals(object);
+					}
+				});
+		SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
+				.getRootCategories()), new WHERE(typeRelationCondition.AND(valueCondition)));
+		IQueryResult execute = select.execute();
+		Set<? extends EObject> eObjects = execute.getEObjects();
+		if (eObjects.size() > 0) {
+			Iterator<? extends EObject> iterator = eObjects.iterator();
+			while (iterator.hasNext()) {
+				EObject eObject = iterator.next();
+				return ((Category) eObject);
+			}
+		}
+		return null;
 	}
 
 	public static EObject[] getAllAdpatableChildren(final EObject parent, final Class adaptable) {

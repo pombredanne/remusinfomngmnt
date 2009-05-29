@@ -138,6 +138,11 @@ public class CommandFactory {
 		return new MoveInformationUnitCommand(item, targetPath);
 	}
 
+	public static Command COPY_INFOUNIT_COMMAND(final InformationUnitListItem item,
+			final String targetPath) {
+		return new CopyInformationUnitCommand(item, targetPath);
+	}
+
 	public static Command REMOVE_SYNCDATACOMMAND(final SynchronizableObject synchronizableObject,
 			final EditingDomain domain) {
 		return new SetCommand(domain, synchronizableObject,

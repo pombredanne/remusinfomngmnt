@@ -25,6 +25,7 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -34,8 +35,12 @@ import org.remus.infomngmnt.ui.UIPlugin;
  */
 public class ShareItemHandler extends AbstractRemoteHandler {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
+	 * ExecutionEvent)
 	 */
 	@Override
 	public Object doExecute(final ExecutionEvent event) throws ExecutionException {
@@ -44,17 +49,24 @@ public class ShareItemHandler extends AbstractRemoteHandler {
 			List list = ((IStructuredSelection) currentSelection).toList();
 			for (Object object : list) {
 				if (object instanceof InformationUnitListItem) {
-					SynchronizationMetadata adapter = (SynchronizationMetadata) ((InformationUnitListItem) object).getAdapter(SynchronizationMetadata.class);
-					RemoteRepository repositoryById = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(adapter.getRepositoryId());
+					SynchronizationMetadata adapter = (SynchronizationMetadata) ((InformationUnitListItem) object)
+							.getAdapter(SynchronizationMetadata.class);
+					RemoteRepository repositoryById = UIPlugin.getDefault().getService(
+							IRepositoryService.class).getRepositoryById(adapter.getRepositoryId());
 					try {
-						RemoteObject addToRepository = repositoryById.getRepositoryImplementation().addToRepository((InformationUnitListItem) object, null);
+						RemoteObject addToRepository = repositoryById.getRepositoryImplementation()
+								.addToRepository((InformationUnitListItem) object, null);
+						if (addToRepository == null) {
+							throw new RemoteException(
+									StatusCreator
+											.newStatus("The repository is unable to add the object to the repository"));
+						}
 						adapter.setHash(addToRepository.getHash());
-						adapter.setReadonly(/* TODO implement */ false);
+						adapter.setReadonly(/* TODO implement */false);
 						adapter.setSyncState(SynchronizationState.IN_SYNC);
 						adapter.setUrl(addToRepository.getUrl());
 					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						// Not possible
 					}
 				}
 			}

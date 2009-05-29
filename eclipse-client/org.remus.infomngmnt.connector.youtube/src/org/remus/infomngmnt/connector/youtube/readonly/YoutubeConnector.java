@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.connector.youtube.readonly;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -82,8 +83,6 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	public static final String KEY_VIDEO = "KEY_VIDEO"; //$NON-NLS-1$
 
 	public static final String INTERNAL_PROTOCOL = "http"; //$NON-NLS-1$
-
-	MD5 md5 = new MD5();
 
 	private IContainer container;
 
@@ -182,8 +181,25 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	private RemoteObject createRemoteObject(final VideoEntry videoEntry,
 			final RemoteContainer container) {
+		/*
+		 * Youtube unfortunately has no edited flag when editing video-metadata.
+		 * We have to generate our own hash based on the metadata that can be
+		 * edited.
+		 */
+		MD5 md5 = new MD5();
+		StringWriter sw = new StringWriter();
+		YouTubeMediaGroup mediaGroup = videoEntry.getMediaGroup();
+		if (mediaGroup != null) {
+			sw.append(mediaGroup.getDescription().getPlainTextContent());
+			List<String> keywords = mediaGroup.getKeywords().getKeywords();
+			StringBuilder sb = new StringBuilder();
+			for (String string : keywords) {
+				sb.append(string);
+			}
+		}
+		md5.Update(sw.toString());
 		RemoteObject remoteVideo = InfomngmntFactory.eINSTANCE.createRemoteObject();
-		remoteVideo.setHash(videoEntry.getId());
+		remoteVideo.setHash(md5.asHex());
 		remoteVideo.setId(SiteInspector.getId(videoEntry.getHtmlLink().getHref()));
 		remoteVideo.setName(videoEntry.getTitle().getPlainText());
 		remoteVideo.setRepositoryTypeObjectId(KEY_VIDEO);
@@ -219,34 +235,31 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	private RemoteContainer buildSubscriptionFeed() {
-		this.md5.Update(KEY_SUBSCRIPTION_FOLDER);
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteContainer.setName(NLS.bind("Subscriptions of {0}", getCredentialProvider()
 				.getUserName()));
 		remoteContainer.setId(KEY_SUBSCRIPTION_FOLDER);
 		remoteContainer.setRepositoryTypeObjectId(KEY_SUBSCRIPTION_FOLDER);
-		remoteContainer.setHash(this.md5.asHex());
+		remoteContainer.setHash(KEY_SUBSCRIPTION_FOLDER);
 		return remoteContainer;
 	}
 
 	private RemoteContainer buildPlayListFeed() {
-		this.md5.Update(KEY_PLAYLIST_FOLDER);
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteContainer.setName(NLS.bind("Playlist of {0}", getCredentialProvider().getUserName()));
 		remoteContainer.setId(KEY_PLAYLIST_FOLDER);
 		remoteContainer.setRepositoryTypeObjectId(KEY_PLAYLIST_FOLDER);
-		remoteContainer.setHash(this.md5.asHex());
+		remoteContainer.setHash(KEY_PLAYLIST_FOLDER);
 		return remoteContainer;
 	}
 
 	private RemoteContainer buildFavoritesFeed() {
-		this.md5.Update(KEY_FAVORITES_FOLDER);
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteContainer
 				.setName(NLS.bind("Favorites of {0}", getCredentialProvider().getUserName()));
 		remoteContainer.setId(KEY_FAVORITES_FOLDER);
 		remoteContainer.setRepositoryTypeObjectId(KEY_FAVORITES_FOLDER);
-		remoteContainer.setHash(this.md5.asHex());
+		remoteContainer.setHash(KEY_FAVORITES_FOLDER);
 		return remoteContainer;
 	}
 
@@ -393,8 +406,6 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 							} else {
 								return remoteObject;
 							}
-						} else {
-							return null;
 						}
 					}
 				} else {

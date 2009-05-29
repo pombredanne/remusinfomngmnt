@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 
 import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.ui.UIPlugin;
 
 public class SynchronizeChangeSetWizardPage extends WizardPage {
 
@@ -28,8 +30,10 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 		super("wizardPage");
 		this.diffModel = diffModel2;
 		this.changeSet = item;
-		setTitle("Wizard Page title");
-		setDescription("Wizard Page description");
+		setTitle("Synchronization of selected elements");
+		setDescription("This page shows you a changeset of your local data and the repository data.");
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
+				"icons/iconexperience/wizards/synchronization_wizard.png"));
 	}
 
 	/**

@@ -12,30 +12,16 @@
 
 package org.remus.infomngmnt.connector.youtube.readonly;
 
-import java.util.List;
-
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
-import org.remus.infomngmnt.RemoteContainer;
-import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.connector.youtube.actions.CheckoutFeedAction;
 import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class YoutubeActionContributor implements IRepositoryActionContributor {
-
-	private CheckoutFeedAction feedAction;
-
-	private BaseSelectionListenerAction getCheckOutFeedAction() {
-		if (this.feedAction == null) {
-			this.feedAction = new CheckoutFeedAction();
-		}
-		return this.feedAction;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -46,19 +32,6 @@ public class YoutubeActionContributor implements IRepositoryActionContributor {
 	 */
 	public BaseSelectionListenerAction[] createCheckOutAsActions(
 			final IStructuredSelection selection) {
-		List list = selection.toList();
-		for (Object object : list) {
-			if (object instanceof RemoteContainer && !(object instanceof RemoteRepository)) {
-				/*
-				 * if all selected elements are tag-items, we can perform a
-				 * checkout for creating new categories with the links wrapped.
-				 */
-				BaseSelectionListenerAction checkOutFeedAction = getCheckOutFeedAction();
-				checkOutFeedAction.selectionChanged(selection);
-				return new BaseSelectionListenerAction[] { checkOutFeedAction };
-			}
-
-		}
 		return new BaseSelectionListenerAction[0];
 
 	}

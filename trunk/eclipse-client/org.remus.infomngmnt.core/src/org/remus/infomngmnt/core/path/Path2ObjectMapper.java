@@ -48,6 +48,10 @@ public class Path2ObjectMapper {
 		this.value = value;
 	}
 
+	public static Object getObjectByExpression(final String expression, final EObject object) {
+		return new Path2ObjectMapper(expression, object, null).getObjectForPath(false, false);
+	}
+
 	public Object getObjectForPath(final boolean create, final boolean setValue) {
 		Object returnValue = null;
 		EObject currentObjectInstance = this.object;

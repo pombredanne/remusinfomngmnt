@@ -12,20 +12,20 @@
 
 package org.remus.infomngmnt.core.sync;
 
-import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
+import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
@@ -34,8 +34,8 @@ import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
@@ -69,14 +69,19 @@ public class ReplaceElementsJob extends Job {
 				: this.objects.size());
 		for (SynchronizableObject synchronizableObject : filteredList) {
 
-			monitor.setTaskName(NLS.bind("Try to download \'{0}\' from remote-repository",
+			monitor.setTaskName(NLS.bind("Try to download \"{0}\" from remote-repository",
 					synchronizableObject.getSynchronizationMetaData().getUrl()));
 			String repositoryId = synchronizableObject.getSynchronizationMetaData()
 					.getRepositoryId();
 			RemoteRepository localRepository = InfomngmntEditPlugin.getPlugin().getService(
 					IRepositoryService.class).getRepositoryById(repositoryId);
-			RemoteObject remoteObject = localRepository.getRepositoryImplementation()
-					.getRemoteObjectBySynchronizableObject(synchronizableObject, monitor);
+			RemoteObject remoteObject = null;
+			try {
+				remoteObject = localRepository.getRepositoryImplementation()
+						.getRemoteObjectBySynchronizableObject(synchronizableObject, monitor);
+			} catch (RemoteException e1) {
+				return e1.getStatus();
+			}
 			if (remoteObject == null) {
 
 				/*
@@ -87,26 +92,27 @@ public class ReplaceElementsJob extends Job {
 			} else if (remoteObject instanceof RemoteContainer
 					&& synchronizableObject instanceof Category) {
 				monitor.setTaskName(NLS.bind(
-						"Found object in repository. Preparing replace for \'{0}\'", remoteObject
+						"Found object in repository. Preparing replace for \"{0}\"", remoteObject
 								.getName()));
-				Category targetCategory = ((Category) synchronizableObject.eContainer());
-				ChangeSet changeSet = new ChangeSetManager().createCheckOutChangeSet(
-						targetCategory, Collections
-								.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
-						localRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE, null);
-				EditingDomain navigationEditingDomain = EditingUtil.getInstance()
-						.getNavigationEditingDomain();
-				Command deleteCategory = CommandFactory.DELETE_CATEGORY(
-						(Category) synchronizableObject, navigationEditingDomain);
-				System.out.println(deleteCategory.canExecute());
-				navigationEditingDomain.getCommandStack().execute(deleteCategory);
-				ChangeSetExecutor changeSetExecutor = new ChangeSetExecutor();
-				monitor.setTaskName("Calculating differences...");
-				changeSetExecutor.setChangeSet(changeSet);
-				changeSetExecutor.prepareDiff(targetCategory);
-				DiffModel makeDiff = changeSetExecutor.makeDiff();
-				monitor.setTaskName("Getting data from repository...");
-				changeSetExecutor.performCheckout(makeDiff.getOwnedElements(), monitor);
+				Category targetCategory = (Category) synchronizableObject;
+				ChangeSet changeSet;
+				ChangeSetManager changeSetManager = new ChangeSetManager();
+				try {
+					changeSet = changeSetManager.createChangeSet(targetCategory, monitor);
+					EList<ChangeSetItem> changeSetItems = changeSet.getChangeSetItems();
+					for (ChangeSetItem changeSetItem2 : changeSetItems) {
+						DiffModel createDiffModel = changeSetManager.createDiffModel(
+								changeSetItem2, targetCategory, true);
+						changeSetManager.prepareSyncActions(createDiffModel.getOwnedElements(),
+								changeSetItem2, targetCategory);
+						changeSetManager.replaceAllLocal(changeSetItem2);
+						new ChangeSetExecutor().synchronize(createDiffModel.getOwnedElements(),
+								changeSetItem2, monitor, targetCategory);
+
+					}
+				} catch (CoreException e) {
+					return e.getStatus();
+				}
 
 			} else if (remoteObject instanceof RemoteObject
 					&& synchronizableObject instanceof InformationUnitListItem) {

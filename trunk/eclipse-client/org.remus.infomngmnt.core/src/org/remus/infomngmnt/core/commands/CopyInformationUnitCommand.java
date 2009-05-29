@@ -26,32 +26,33 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class MoveInformationUnitCommand implements Command {
+public class CopyInformationUnitCommand implements Command {
 
-	public MoveInformationUnitCommand(final InformationUnitListItem affectedObject,
+	public CopyInformationUnitCommand(final InformationUnitListItem affectedObject,
 			final String targetPath) {
+		this.affectedObject = affectedObject;
 		this.targetPath = targetPath;
 		this.affectedFile = ResourcesPlugin.getWorkspace().getRoot().getFile(
 				new Path(affectedObject.getWorkspacePath()));
-
-		this.sourcePath = affectedObject.getWorkspacePath();
 		this.targetFile = ResourcesPlugin.getWorkspace().getRoot().getFile(
 				new Path(IPath.SEPARATOR + targetPath));
+		this.sourcePath = affectedObject.getWorkspacePath();
 
-		InformationUnit fullObject = (InformationUnit) affectedObject
-				.getAdapter(InformationUnit.class);
-		EList<BinaryReference> binaryReferences = fullObject.getBinaryReferences();
+		this.fullObject = (InformationUnit) affectedObject.getAdapter(InformationUnit.class);
 		this.sourceBinaryReferences = new ArrayList<IFile>();
 		this.targetBinaryReferences = new ArrayList<IFile>();
+		EList<BinaryReference> binaryReferences = this.fullObject.getBinaryReferences();
 		for (BinaryReference binaryReference : binaryReferences) {
 			binaryReference.getProjectRelativePath();
 			this.sourceBinaryReferences.add(ResourcesPlugin.getWorkspace().getRoot().getProject(
@@ -63,6 +64,7 @@ public class MoveInformationUnitCommand implements Command {
 		}
 	}
 
+	private final InformationUnitListItem affectedObject;
 	private final IFile affectedFile;
 	private final IFile targetFile;
 	private final String targetPath;
@@ -70,6 +72,7 @@ public class MoveInformationUnitCommand implements Command {
 
 	private final List<IFile> sourceBinaryReferences;
 	private final List<IFile> targetBinaryReferences;
+	private final InformationUnit fullObject;
 
 	/*
 	 * (non-Javadoc)
@@ -124,11 +127,13 @@ public class MoveInformationUnitCommand implements Command {
 	public void execute() {
 		try {
 			NullProgressMonitor monitor = new NullProgressMonitor();
-			this.affectedFile.move(new Path(IPath.SEPARATOR + this.targetPath), true, monitor);
+			InformationUnit copy = (InformationUnit) EcoreUtil.copy(this.fullObject);
+			copy.setId(this.affectedObject.getId());
 			for (int i = 0, n = this.sourceBinaryReferences.size(); i < n; i++) {
-				this.sourceBinaryReferences.get(i).move(
+				this.sourceBinaryReferences.get(i).copy(
 						this.targetBinaryReferences.get(i).getFullPath(), true, monitor);
 			}
+			EditingUtil.getInstance().saveObjectToResource(this.targetFile, copy);
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,10 +194,9 @@ public class MoveInformationUnitCommand implements Command {
 	public void undo() {
 		try {
 			NullProgressMonitor monitor = new NullProgressMonitor();
-			this.targetFile.move(new Path(this.sourcePath), true, monitor);
+			this.targetFile.delete(true, monitor);
 			for (int i = 0, n = this.targetBinaryReferences.size(); i < n; i++) {
-				this.targetBinaryReferences.get(i).move(
-						this.sourceBinaryReferences.get(i).getFullPath(), true, monitor);
+				this.targetBinaryReferences.get(i).delete(true, monitor);
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block

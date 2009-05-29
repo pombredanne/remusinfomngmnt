@@ -56,7 +56,7 @@ public interface IRepository {
 	String getRepositoryUrl();
 
 	RemoteObject[] getChildren(IProgressMonitor monitor, RemoteContainer container,
-			boolean showOnlyContainers);
+			boolean showOnlyContainers) throws RemoteException;
 
 	IStatus validate();
 
@@ -84,7 +84,7 @@ public interface IRepository {
 	InformationUnit getPrefetchedInformationUnit(RemoteObject remoteObject);
 
 	InformationUnit getFullObject(InformationUnitListItem informationUnitListItem,
-			IProgressMonitor monitor);
+			IProgressMonitor monitor) throws RemoteException;
 
 	/**
 	 * @return
@@ -97,12 +97,14 @@ public interface IRepository {
 	 * @param item2commit
 	 * @param monitor
 	 */
-	String commit(SynchronizableObject item2commit, IProgressMonitor monitor);
+	String commit(SynchronizableObject item2commit, IProgressMonitor monitor)
+			throws RemoteException;
 
-	RemoteObject addToRepository(SynchronizableObject item, IProgressMonitor monitor);
+	RemoteObject addToRepository(SynchronizableObject item, IProgressMonitor monitor)
+			throws RemoteException;
 
 	RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
-			IProgressMonitor monitor);
+			IProgressMonitor monitor) throws RemoteException;
 
 	IChangeSetDefinition getChangeSetDefinitionForType(String type);
 

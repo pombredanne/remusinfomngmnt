@@ -82,6 +82,10 @@ public class SyncStateParticipant implements ISaveParticipant {
 							}
 						}
 
+					} else {
+						if (synchronizationMetadata.getSyncState() != SynchronizationState.NOT_ADDED) {
+							synchronizationMetadata.setSyncState(SynchronizationState.LOCAL_EDITED);
+						}
 					}
 				} catch (CoreException e) {
 					// TODO Auto-generated catch block

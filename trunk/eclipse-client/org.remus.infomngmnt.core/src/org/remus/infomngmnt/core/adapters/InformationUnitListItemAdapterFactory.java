@@ -29,8 +29,12 @@ import org.remus.infomngmnt.resources.util.ResourceUtil;
  */
 public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object,
+	 * java.lang.Class)
 	 */
 	public Object getAdapter(final Object adaptableObject, final Class adapterType) {
 		if (adapterType.equals(InformationUnit.class)
@@ -39,8 +43,11 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 			String id = item.getId();
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 					new Path(item.eResource().getURI().toPlatformString(true)));
-			return EditingUtil.getInstance().getObjectFromFile(
-					file.getProject().getFile(new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION)), InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
+			return EditingUtil.getInstance().getObjectFromUri(
+					file.getProject().getFile(
+							new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION))
+							.getFullPath(), InfomngmntPackage.eINSTANCE.getInformationUnit(),
+					false, null, false);
 		}
 		if (adapterType.equals(SynchronizationMetadata.class)
 				&& adaptableObject instanceof InformationUnitListItem) {
@@ -49,11 +56,13 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
 	 */
 	public Class[] getAdapterList() {
-		return new Class[] {InformationUnit.class, SynchronizationMetadata.class};
+		return new Class[] { InformationUnit.class, SynchronizationMetadata.class };
 	}
 
 }

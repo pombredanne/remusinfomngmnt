@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.commands;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class DeleteInformationUnitCommand implements Command {
 
 	private Map<IFile, IFile> binaries;
 
-	private final CompoundCommand delegateCommand;
+	private CompoundCommand delegateCommand;
 
 	private final EditingDomain domain;
 
@@ -86,16 +87,32 @@ public class DeleteInformationUnitCommand implements Command {
 
 	public DeleteInformationUnitCommand(final List<InformationUnitListItem> items,
 			final EditingDomain domain) {
+		this(items, domain, false);
+	}
+
+	public DeleteInformationUnitCommand(final List<InformationUnitListItem> items,
+			final EditingDomain domain, final boolean keepListItem) {
 		this.domain = domain;
 		this.map = new HashMap<InformationUnitListItem, InfoUnit2PathMapper>();
-		this.delegateCommand = new CompoundCommand();
-		this.delegateCommand.append(new DeleteCommand(domain, items));
+		if (!keepListItem) {
+			this.delegateCommand = new CompoundCommand();
+			this.delegateCommand.append(new DeleteCommand(domain, items));
+		}
 		for (InformationUnitListItem informationUnitListItem : items) {
-			IPath pathInWorkspace = new Path(informationUnitListItem.getWorkspacePath());
-			InformationUnit adapter = (InformationUnit) informationUnitListItem
-					.getAdapter(InformationUnit.class);
-			this.map
-					.put(informationUnitListItem, new InfoUnit2PathMapper(pathInWorkspace, adapter));
+			/*
+			 * If we have a invalid datastructure here is thrown an exception
+			 * and the user cannot delete invalid structures. we have to bypass
+			 * this exception
+			 */
+			try {
+				IPath pathInWorkspace = new Path(informationUnitListItem.getWorkspacePath());
+				InformationUnit adapter = (InformationUnit) informationUnitListItem
+						.getAdapter(InformationUnit.class);
+				this.map.put(informationUnitListItem, new InfoUnit2PathMapper(pathInWorkspace,
+						adapter));
+			} catch (Exception e) {
+				// do nothing
+			}
 		}
 	}
 
@@ -105,6 +122,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#canExecute()
 	 */
 	public boolean canExecute() {
+		if (this.delegateCommand == null) {
+			return true;
+		}
 		return this.delegateCommand.canExecute();
 	}
 
@@ -114,6 +134,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#canUndo()
 	 */
 	public boolean canUndo() {
+		if (this.delegateCommand == null) {
+			return true;
+		}
 		return this.delegateCommand.canUndo();
 	}
 
@@ -125,6 +148,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * .Command)
 	 */
 	public Command chain(final Command command) {
+		if (this.delegateCommand == null) {
+			return null;
+		}
 		return this.delegateCommand.chain(command);
 	}
 
@@ -134,7 +160,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#dispose()
 	 */
 	public void dispose() {
-		this.delegateCommand.dispose();
+		if (this.delegateCommand != null) {
+			this.delegateCommand.dispose();
+		}
 		this.map.clear();
 	}
 
@@ -148,8 +176,9 @@ public class DeleteInformationUnitCommand implements Command {
 		 * At first we have to find all items that are referencing this iu:
 		 */
 		preExecute();
-
-		this.delegateCommand.execute();
+		if (this.delegateCommand != null) {
+			this.delegateCommand.execute();
+		}
 		Collection<InfoUnit2PathMapper> values = this.map.values();
 		this.binaries = new HashMap<IFile, IFile>();
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
@@ -295,6 +324,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#getAffectedObjects()
 	 */
 	public Collection<?> getAffectedObjects() {
+		if (this.delegateCommand == null) {
+			return Collections.EMPTY_LIST;
+		}
 		return this.delegateCommand.getAffectedObjects();
 	}
 
@@ -304,6 +336,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#getDescription()
 	 */
 	public String getDescription() {
+		if (this.delegateCommand == null) {
+			return "";
+		}
 		return this.delegateCommand.getDescription();
 	}
 
@@ -313,6 +348,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#getLabel()
 	 */
 	public String getLabel() {
+		if (this.delegateCommand == null) {
+			return "";
+		}
 		return this.delegateCommand.getLabel();
 	}
 
@@ -322,6 +360,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#getResult()
 	 */
 	public Collection<?> getResult() {
+		if (this.delegateCommand == null) {
+			return Collections.EMPTY_LIST;
+		}
 		return this.delegateCommand.getResult();
 	}
 
@@ -332,7 +373,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 */
 	public void redo() {
 		preExecute();
-		this.delegateCommand.redo();
+		if (this.delegateCommand != null) {
+			this.delegateCommand.redo();
+		}
 		Collection<InfoUnit2PathMapper> values = this.map.values();
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
@@ -355,7 +398,9 @@ public class DeleteInformationUnitCommand implements Command {
 	 */
 	public void undo() {
 		preUndo();
-		this.delegateCommand.undo();
+		if (this.delegateCommand != null) {
+			this.delegateCommand.undo();
+		}
 		Collection<InfoUnit2PathMapper> values = this.map.values();
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(

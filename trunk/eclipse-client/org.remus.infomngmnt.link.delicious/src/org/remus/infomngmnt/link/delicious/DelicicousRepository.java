@@ -37,12 +37,12 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
-import org.remus.infomngmnt.common.core.md5.MD5;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
+import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.link.LinkActivator;
 
 /**
@@ -56,8 +56,6 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	public static final String KEY_LINK = "KEY_LINK"; //$NON-NLS-1$
 
-	MD5 md5 = new MD5();
-
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
 			reset();
@@ -65,37 +63,41 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	};
 
 	public RemoteObject[] getChildren(final IProgressMonitor monitor,
-			final RemoteContainer container, final boolean showOnlyContainer) {
+			final RemoteContainer container, final boolean showOnlyContainer)
+			throws RemoteException {
 		List<RemoteObject> returnValue = new LinkedList<RemoteObject>();
-		if (container instanceof RemoteRepository) {
-			IProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
-			List<Tag> tags = getApi().getTags();
-			for (Tag tag : tags) {
-				RemoteContainer remoteContainer = buildRemoteContainer(tag, container
-						.getRepositoryTypeId());
-				returnValue.add(remoteContainer);
-			}
+		try {
+			if (container instanceof RemoteRepository) {
+				IProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
+				List<Tag> tags = getApi().getTags();
+				for (Tag tag : tags) {
+					RemoteContainer remoteContainer = buildRemoteContainer(tag, container
+							.getRepositoryTypeId());
+					returnValue.add(remoteContainer);
+				}
 
-		} else if (!showOnlyContainer) {
-			List<Post> posts = getApi().getAllPosts(container.getName());
-			for (Post post : posts) {
-				RemoteObject remoteObject = buildRemoteObject(post, container.getRepositoryTypeId());
-				returnValue.add(remoteObject);
+			} else if (!showOnlyContainer) {
+				List<Post> posts = getApi().getAllPosts(container.getName());
+				for (Post post : posts) {
+					RemoteObject remoteObject = buildRemoteObject(post, container
+							.getRepositoryTypeId());
+					returnValue.add(remoteObject);
+				}
 			}
+		} catch (Exception e) {
+			throw new RemoteException(StatusCreator.newStatus("Error getting children of "
+					+ container.getName(), e));
 		}
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
 	}
 
 	private RemoteObject buildRemoteObject(final Post post, final String repositoryTypeId) {
-		String str = post.getHash() + post.getDescription() + post.getExtended();
-		this.md5.Update(str);
-		String md5Hash = this.md5.asHex();
 		RemoteObject remoteObject = InfomngmntFactory.eINSTANCE.createRemoteObject();
 		remoteObject.setId(post.getHash());
 		remoteObject.setName(post.getDescription());
 		remoteObject.setUrl(getRepositoryUrl() + post.getHash());
 		remoteObject.setRepositoryTypeObjectId(KEY_LINK);
-		remoteObject.setHash(md5Hash);
+		remoteObject.setHash(post.getHash());
 		remoteObject.setWrappedObject(post);
 		remoteObject.setRepositoryTypeId(repositoryTypeId);
 		return remoteObject;
@@ -104,11 +106,10 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	private RemoteContainer buildRemoteContainer(final Tag tag, final String repositoryTypeId) {
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteContainer.setId(tag.getTag());
-		this.md5.Update(getRepositoryUrl() + tag.getTag());
 		remoteContainer.setRepositoryTypeObjectId(KEY_TAG);
 		remoteContainer.setName(tag.getTag());
 		remoteContainer.setUrl(getRepositoryUrl() + tag.getTag());
-		remoteContainer.setHash(this.md5.asHex());
+		remoteContainer.setHash(getRepositoryUrl() + tag.getTag());
 		remoteContainer.setWrappedObject(tag);
 		remoteContainer.setRepositoryTypeId(repositoryTypeId);
 		return remoteContainer;

@@ -25,6 +25,7 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
 
@@ -45,11 +46,16 @@ public class ShareItemHandler extends AbstractRemoteHandler {
 				if (object instanceof InformationUnitListItem) {
 					SynchronizationMetadata adapter = (SynchronizationMetadata) ((InformationUnitListItem) object).getAdapter(SynchronizationMetadata.class);
 					RemoteRepository repositoryById = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(adapter.getRepositoryId());
-					RemoteObject addToRepository = repositoryById.getRepositoryImplementation().addToRepository((InformationUnitListItem) object, null);
-					adapter.setHash(addToRepository.getHash());
-					adapter.setReadonly(/* TODO implement */ false);
-					adapter.setSyncState(SynchronizationState.IN_SYNC);
-					adapter.setUrl(addToRepository.getUrl());
+					try {
+						RemoteObject addToRepository = repositoryById.getRepositoryImplementation().addToRepository((InformationUnitListItem) object, null);
+						adapter.setHash(addToRepository.getHash());
+						adapter.setReadonly(/* TODO implement */ false);
+						adapter.setSyncState(SynchronizationState.IN_SYNC);
+						adapter.setUrl(addToRepository.getUrl());
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}

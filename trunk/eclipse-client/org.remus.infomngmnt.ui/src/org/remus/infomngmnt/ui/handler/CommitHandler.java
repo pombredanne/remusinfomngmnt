@@ -35,6 +35,7 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.core.remote.RemoteUtil;
 
 /**
@@ -42,8 +43,12 @@ import org.remus.infomngmnt.core.remote.RemoteUtil;
  */
 public class CommitHandler extends AbstractRemoteHandler {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
+	 * ExecutionEvent)
 	 */
 	@Override
 	public Object doExecute(final ExecutionEvent event) throws ExecutionException {
@@ -53,36 +58,47 @@ public class CommitHandler extends AbstractRemoteHandler {
 			protected IStatus run(final IProgressMonitor monitor) {
 				if (currentSelection instanceof IStructuredSelection) {
 					List list = ((IStructuredSelection) currentSelection).toList();
-					Map<RemoteRepository, List<Adapter>> groupedRemoteRepository = RemoteUtil.groupByRemoteRepsoitory(list);
+					Map<RemoteRepository, List<Adapter>> groupedRemoteRepository = RemoteUtil
+							.groupByRemoteRepsoitory(list);
 					Set<RemoteRepository> keySet = groupedRemoteRepository.keySet();
 					for (RemoteRepository remoteRepository : keySet) {
 						List<Adapter> items2commit = groupedRemoteRepository.get(remoteRepository);
 						for (Adapter item2commit : items2commit) {
-							recursivelyCommit(item2commit, monitor, remoteRepository.getRepositoryImplementation());
+							try {
+								recursivelyCommit(item2commit, monitor, remoteRepository
+										.getRepositoryImplementation());
+							} catch (RemoteException e) {
+								return e.getStatus();
+							}
 						}
 					}
 				}
 				return Status.OK_STATUS;
 			}
 
-			private void recursivelyCommit(final Adapter item2commit, final IProgressMonitor monitor, final IRepository iRepository) {
+			private void recursivelyCommit(final Adapter item2commit,
+					final IProgressMonitor monitor, final IRepository iRepository)
+					throws RemoteException {
 				String newHash = null;
 				if (item2commit instanceof Category) {
-					newHash = iRepository.commit((Category)item2commit, monitor);
-					List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(item2commit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT);
+					newHash = iRepository.commit((Category) item2commit, monitor);
+					List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(
+							item2commit, InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT);
 					for (InformationUnitListItem informationUnitListItem : allChildren) {
 						recursivelyCommit(informationUnitListItem, monitor, iRepository);
-						
+
 					}
-					List<Category> catChildren = ModelUtil.getAllChildren(item2commit, InfomngmntPackage.Literals.CATEGORY);
+					List<Category> catChildren = ModelUtil.getAllChildren(item2commit,
+							InfomngmntPackage.Literals.CATEGORY);
 					for (Category category : catChildren) {
 						recursivelyCommit(category, monitor, iRepository);
 					}
-					newHash = iRepository.commit((Category)item2commit, monitor);
+					newHash = iRepository.commit((Category) item2commit, monitor);
 				} else if (item2commit instanceof InformationUnitListItem) {
-					newHash = iRepository.commit((InformationUnitListItem)item2commit, monitor);
+					newHash = iRepository.commit((InformationUnitListItem) item2commit, monitor);
 				}
-				SynchronizationMetadata adapter = (SynchronizationMetadata) item2commit.getAdapter(SynchronizationMetadata.class);
+				SynchronizationMetadata adapter = (SynchronizationMetadata) item2commit
+						.getAdapter(SynchronizationMetadata.class);
 				adapter.setSyncState(SynchronizationState.IN_SYNC);
 				adapter.setHash(newHash);
 			}

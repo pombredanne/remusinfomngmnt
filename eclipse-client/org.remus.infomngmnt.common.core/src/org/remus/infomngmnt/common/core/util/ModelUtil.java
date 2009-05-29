@@ -144,4 +144,16 @@ public class ModelUtil {
 		return returnValue;
 	}
 
+	public static EObject getParentByClass(final EObject object, final EClass signature) {
+		if (object.eClass() == signature) {
+			return object;
+		} else {
+			if (object.eContainer() != null) {
+				return getParentByClass(object.eContainer(), signature);
+			} else {
+				return null;
+			}
+		}
+	}
+
 }

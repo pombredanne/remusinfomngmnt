@@ -11,7 +11,7 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-clean -nl en</programArgs>
+      <programArgs>-nl en</programArgs>
       <vmArgs>-Dosgi.framework.extensions=org.eclipse.equinox.transforms.hook</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>

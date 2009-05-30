@@ -26,7 +26,7 @@
       <macosx icon="/org.remus.infomngmnt.application/launchericons/icns/Mac.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/org.remus.infomngmnt.build/ico/cabinet_open.ico"/>
+         <ico path="/org.remus.infomngmnt.application/launchericons/ico/Win.ico"/>
          <bmp/>
       </win>
    </launcher>

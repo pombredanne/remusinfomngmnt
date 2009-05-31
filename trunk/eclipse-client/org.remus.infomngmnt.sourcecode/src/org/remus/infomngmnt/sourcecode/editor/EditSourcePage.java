@@ -28,6 +28,7 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
@@ -94,6 +95,9 @@ public class EditSourcePage extends AbstractInformationFormPage {
 	@Override
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
+
+		BindingUtil.createTextAndBind(this.text, getModelObject(),
+				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, this);
 
 		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
 				this.styledText, this);

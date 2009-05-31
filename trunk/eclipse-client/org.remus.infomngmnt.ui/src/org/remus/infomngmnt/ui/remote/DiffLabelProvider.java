@@ -19,6 +19,7 @@ import org.eclipse.emf.compare.util.AdapterUtils;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
@@ -30,6 +31,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.common.ui.image.SWTResourceManager;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -72,19 +74,16 @@ public class DiffLabelProvider extends LabelProvider {
 					IInfoType infoTypeByType = InformationExtensionManager.getInstance()
 							.getInfoTypeByType(((AbstractInformationUnit) parent).getType());
 					if (infoTypeByType != null) {
-						Image baseImage;
-						if (returnImage) {
-							baseImage = infoTypeByType.getImage();
-						}
 						SynchronizationAction action = SyncUtil.getAction(this.changeSet, parent);
+						if (returnImage) {
+							Image imageFromModel = getImageFromModel(parent);
+							return decorateImage(imageFromModel, action);
+						}
 						switch (action) {
 						case REPLACE_LOCAL:
-							if (returnImage) {
+							return NLS.bind("Element \"{0}\" was updated at the repository",
+									((AbstractInformationUnit) parent).getLabel());
 
-							} else {
-								return NLS.bind("Element \"{0}\" was updated at the repository",
-										((AbstractInformationUnit) parent).getLabel());
-							}
 						case REPLACE_REMOTE:
 							return NLS.bind("Element \"{0}\" was updated locally",
 									((AbstractInformationUnit) parent).getLabel());
@@ -108,6 +107,10 @@ public class DiffLabelProvider extends LabelProvider {
 			final AddModelElement addOp = (AddModelElement) element;
 			EObject rightElement = addOp.getRightElement();
 			SynchronizationAction action = SyncUtil.getAction(this.changeSet, rightElement);
+			if (returnImage) {
+				Image imageFromModel = getImageFromModel(rightElement);
+				return decorateImage(imageFromModel, action);
+			}
 			switch (action) {
 			case ADD_LOCAL:
 				if (rightElement instanceof Category) {
@@ -134,7 +137,12 @@ public class DiffLabelProvider extends LabelProvider {
 			RemoveModelElement removeOp = (RemoveModelElement) element;
 			EObject leftElement = removeOp.getLeftElement();
 			SynchronizationAction action = SyncUtil.getAction(this.changeSet, leftElement);
+			if (returnImage) {
+				Image imageFromModel = getImageFromModel(leftElement);
+				return decorateImage(imageFromModel, action);
+			}
 			switch (action) {
+
 			case ADD_REMOTE:
 				if (leftElement instanceof Category) {
 					return NLS.bind("Category \"{0}\" will be added remotely",
@@ -180,4 +188,44 @@ public class DiffLabelProvider extends LabelProvider {
 		this.changeSet = setChangeSet;
 	}
 
+	private Image decorateImage(final Image baseImage, final SynchronizationAction syncAction) {
+		Image addDecorator = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				"icons/iconexperience/decorator/add.png");
+		Image removeDecorator = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				"icons/iconexperience/decorator/remove.png");
+		Image commitDecorator = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				"icons/iconexperience/decorator/commit_to_server.png");
+		Image updateDecorator = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				"icons/iconexperience/decorator/update_from_server.png");
+
+		switch (syncAction) {
+		case ADD_LOCAL:
+			Image decorateImage = ResourceManager.decorateImage(baseImage, updateDecorator,
+					ResourceManager.TOP_RIGHT);
+			return ResourceManager.decorateImage(decorateImage, addDecorator,
+					ResourceManager.BOTTOM_LEFT);
+		case REPLACE_LOCAL:
+			return ResourceManager.decorateImage(baseImage, updateDecorator, IDecoration.TOP_RIGHT);
+		case DELETE_LOCAL:
+			decorateImage = ResourceManager.decorateImage(baseImage, updateDecorator,
+					ResourceManager.TOP_RIGHT);
+			return ResourceManager.decorateImage(decorateImage, removeDecorator,
+					ResourceManager.BOTTOM_LEFT);
+		case REPLACE_REMOTE:
+			return ResourceManager.decorateImage(baseImage, commitDecorator, IDecoration.TOP_RIGHT);
+		case ADD_REMOTE:
+			decorateImage = ResourceManager.decorateImage(baseImage, commitDecorator,
+					ResourceManager.TOP_RIGHT);
+			return ResourceManager.decorateImage(decorateImage, addDecorator,
+					ResourceManager.BOTTOM_LEFT);
+		case DELETE_REMOTE:
+			decorateImage = ResourceManager.decorateImage(baseImage, commitDecorator,
+					ResourceManager.TOP_RIGHT);
+			return ResourceManager.decorateImage(decorateImage, removeDecorator,
+					ResourceManager.BOTTOM_LEFT);
+		default:
+			break;
+		}
+		return baseImage;
+	}
 }

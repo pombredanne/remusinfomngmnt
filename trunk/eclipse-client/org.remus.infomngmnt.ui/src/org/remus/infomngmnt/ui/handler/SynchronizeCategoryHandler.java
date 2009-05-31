@@ -72,16 +72,21 @@ public class SynchronizeCategoryHandler extends AbstractHandler {
 					@Override
 					protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 						try {
+							monitor.beginTask("Calculating differences", 3);
 							ChangeSet changeSet = manager.createChangeSet(cat, monitor);
+							monitor.worked(1);
 							if (changeSet != null && changeSet.getChangeSetItems().size() > 0) {
 								changeSetItem[0] = changeSet.getChangeSetItems().get(0);
 								diffModel[0] = manager.createDiffModel(changeSetItem[0], cat);
+								monitor.worked(1);
 								manager.prepareSyncActions(diffModel[0].getOwnedElements(),
 										changeSetItem[0], cat);
+								monitor.worked(1);
 							}
 						} catch (CoreException e) {
 							return e.getStatus();
 						}
+						monitor.done();
 						return Status.OK_STATUS;
 					}
 

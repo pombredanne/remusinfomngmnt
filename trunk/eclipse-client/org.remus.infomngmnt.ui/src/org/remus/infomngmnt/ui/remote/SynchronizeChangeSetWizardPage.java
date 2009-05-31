@@ -64,7 +64,7 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 		// this.treeViewer.setLabelProvider(new
 		// AdapterFactoryLabelProvider(AdapterUtils.getAdapterFactory()));
 		this.diffLabelProvider = new DiffLabelProvider();
-		this.diffLabelProvider.setSyncActions(this.changeSet.getSyncObjectActionMap());
+		this.diffLabelProvider.setChangeSet(this.changeSet);
 		this.treeViewer.setLabelProvider(this.diffLabelProvider);
 
 		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(AdapterUtils

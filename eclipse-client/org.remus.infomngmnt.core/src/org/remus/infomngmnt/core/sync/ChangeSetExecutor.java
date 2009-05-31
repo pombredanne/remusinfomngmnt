@@ -311,13 +311,9 @@ public class ChangeSetExecutor {
 		/*
 		 * Get the full object from repository
 		 */
-		InformationUnit newRemoteInformationUnit = changeSetItem.getRemoteFullObjectMap().get(
-				synchronizableObject);
-		if (newRemoteInformationUnit == null) {
-			newRemoteInformationUnit = itemByRepository
-					.getFullObject(synchronizableObject, monitor);
+		InformationUnit newRemoteInformationUnit = SyncUtil.getFullObjectFromChangeSet(
+				changeSetItem, synchronizableObject, itemByRepository, monitor);
 
-		}
 		newRemoteInformationUnit.setLabel(synchronizableObject.getLabel());
 		newRemoteInformationUnit.setId(synchronizableObject.getId());
 		InformationUnit adapter = (InformationUnit) itemById.getAdapter(InformationUnit.class);

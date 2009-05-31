@@ -15,6 +15,7 @@ package org.remus.infomngmnt.core.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
@@ -26,7 +27,14 @@ import org.eclipse.emf.compare.diff.service.DiffService;
 import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.query.conditions.Condition;
+import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectAttributeValueCondition;
+import org.eclipse.emf.query.statements.FROM;
+import org.eclipse.emf.query.statements.SELECT;
+import org.eclipse.emf.query.statements.WHERE;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -100,6 +108,21 @@ public class InformationUtil {
 			}
 		}
 		return null;
+	}
+
+	public static Set<? extends EObject> getAllItemsByType(final String type) {
+		EObjectAttributeValueCondition condition1 = new EObjectAttributeValueCondition(
+				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__TYPE, new Condition() {
+					@Override
+					public boolean isSatisfied(final Object object) {
+						return type.toLowerCase().equals(object.toString().toLowerCase());
+					}
+
+				});
+		SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
+				.getRootCategories()), new WHERE(condition1));
+		return select.execute().getEObjects();
+
 	}
 
 }

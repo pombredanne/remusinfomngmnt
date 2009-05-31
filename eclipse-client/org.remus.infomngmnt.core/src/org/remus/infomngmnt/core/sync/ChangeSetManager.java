@@ -40,6 +40,7 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
+import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
@@ -60,6 +61,7 @@ import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.core.model.StatusCreator;
@@ -151,6 +153,7 @@ public class ChangeSetManager {
 			 * have to ask the repositories for the children and create a
 			 * datastructure that can be applied to the local datastructure.
 			 */
+			monitor.subTask("Requesting objects from repository");
 			IRepository repositoryImplementation = repository.getRepositoryImplementation();
 			for (RemoteContainer remoteObject : filteredList) {
 				RemoteContainer copiedItem = (RemoteContainer) EcoreUtil.copy(remoteObject);
@@ -178,7 +181,7 @@ public class ChangeSetManager {
 							copiedItem, false);
 					for (RemoteObject remoteObject2 : children) {
 						fillRemoteContainer(createChangeSetItem, remoteObject2, repository,
-								createCategory, mode);
+								createCategory, monitor);
 					}
 				} catch (RemoteException e) {
 					throw new ChangeSetException(StatusCreator.newStatus(
@@ -206,7 +209,8 @@ public class ChangeSetManager {
 	 */
 	public void fillRemoteContainer(final ChangeSetItem changeSetItem,
 			final RemoteObject remoteObject2, final RemoteRepository remoteRepository,
-			final Category parentCategory, final int mode) throws RemoteException {
+			final Category parentCategory, final IProgressMonitor monitor) throws RemoteException {
+		monitor.subTask(NLS.bind("Found item \"{0}\"", remoteObject2.getName()));
 		if (remoteObject2 instanceof RemoteContainer) {
 			Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
 
@@ -231,7 +235,7 @@ public class ChangeSetManager {
 					new NullProgressMonitor(), (RemoteContainer) remoteObject2, false);
 			for (RemoteObject newChildren : children) {
 				fillRemoteContainer(changeSetItem, newChildren, remoteRepository, createCategory,
-						mode);
+						monitor);
 			}
 		} else {
 			InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE
@@ -443,6 +447,28 @@ public class ChangeSetManager {
 				if (parentByClass == null) {
 					parentByClass = ModelUtil.getParentByClass(rightElement,
 							InfomngmntPackage.Literals.CATEGORY);
+					if (parentByClass != null) {
+						Category categoryById = CategoryUtil
+								.getCategoryById(((Category) parentByClass).getId());
+						if (addOp.getAttribute() == InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH) {
+							if (categoryById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
+										SynchronizationAction.RESOLVE_CONFLICT);
+							} else {
+								item.getSyncObjectActionMap().put((Category) parentByClass,
+										SynchronizationAction.REPLACE_LOCAL);
+							}
+
+						} else {
+							if (categoryById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
+										SynchronizationAction.REPLACE_REMOTE);
+							} else {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
+										SynchronizationAction.REPLACE_LOCAL);
+							}
+						}
+					}
 				} else {
 					/*
 					 * Search if the IU was edited locally. If so we have to
@@ -472,17 +498,30 @@ public class ChangeSetManager {
 				}
 			}
 			/*
-			 * Something was deleted at the repository.
+			 * Something was deleted at the repository. Or something was added
+			 * locally and is not present at the repository.
 			 */
 			if (diffElement instanceof RemoveModelElement) {
 				RemoveModelElement removeOp = (RemoveModelElement) diffElement;
 				EObject leftElement = removeOp.getLeftElement();
-				if (leftElement instanceof InformationUnitListItem) {
-					item.getSyncObjectActionMap().put((SynchronizableObject) leftElement,
-							SynchronizationAction.DELETE_LOCAL);
-				} else if (leftElement instanceof Category) {
-					item.getSyncCategoryActionMap().put((Category) leftElement,
-							SynchronizationAction.DELETE_LOCAL);
+				if (((SynchronizableObject) leftElement).getSynchronizationMetaData() != null
+						&& ((SynchronizableObject) leftElement).getSynchronizationMetaData()
+								.getSyncState() == SynchronizationState.NOT_ADDED) {
+					if (leftElement instanceof InformationUnitListItem) {
+						item.getSyncObjectActionMap().put((SynchronizableObject) leftElement,
+								SynchronizationAction.ADD_REMOTE);
+					} else if (leftElement instanceof Category) {
+						item.getSyncCategoryActionMap().put((Category) leftElement,
+								SynchronizationAction.ADD_REMOTE);
+					}
+				} else {
+					if (leftElement instanceof InformationUnitListItem) {
+						item.getSyncObjectActionMap().put((SynchronizableObject) leftElement,
+								SynchronizationAction.DELETE_LOCAL);
+					} else if (leftElement instanceof Category) {
+						item.getSyncCategoryActionMap().put((Category) leftElement,
+								SynchronizationAction.DELETE_LOCAL);
+					}
 				}
 			}
 		}

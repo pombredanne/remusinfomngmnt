@@ -32,6 +32,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 
 /**
@@ -90,6 +92,14 @@ public class CommandFactory {
 		CreateChildCommand createChildCommand = new CreateChildCommand(editingDomain,
 				parentCategory, InfomngmntPackage.Literals.CATEGORY__CHILDREN, newCategory,
 				Collections.EMPTY_LIST);
+		if (parentCategory.getSynchronizationMetaData() != null
+				&& newCategory.getSynchronizationMetaData() == null) {
+			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
+					.createSynchronizationMetadata();
+			metadata.setRepositoryId(parentCategory.getSynchronizationMetaData().getRepositoryId());
+			metadata.setSyncState(SynchronizationState.NOT_ADDED);
+			newCategory.setSynchronizationMetaData(metadata);
+		}
 		createChildCommand.setLabel(NLS.bind("Create category {0}", newCategory.getLabel()));
 		return createChildCommand;
 	}

@@ -25,19 +25,27 @@ import org.remus.infomngmnt.SynchronizationMetadata;
  */
 public class CategoryAdapterFactory implements IAdapterFactory {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object,
+	 * java.lang.Class)
 	 */
 	public Object getAdapter(final Object adaptableObject, final Class adapterType) {
 		if (adaptableObject instanceof Category) {
 			if (((Category) adaptableObject).eContainer() == null
 					&& (adapterType == IResource.class || adapterType == IProject.class)) {
 				try {
-					return ResourcesPlugin.getWorkspace().getRoot().getProject(((Category) adaptableObject).getLabel());
+					IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
+							((Category) adaptableObject).getLabel());
+					if (project.exists()) {
+						return project;
+					}
 				} catch (Exception e) {
 					return null;
 				}
-			} else if (adapterType == SynchronizationMetadata.class 
+			} else if (adapterType == SynchronizationMetadata.class
 					&& ((Category) adaptableObject).getSynchronizationMetaData() != null) {
 				return ((Category) adaptableObject).getSynchronizationMetaData();
 			}
@@ -45,11 +53,13 @@ public class CategoryAdapterFactory implements IAdapterFactory {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
 	 */
 	public Class[] getAdapterList() {
-		return new Class[] {IProject.class, IResource.class};
+		return new Class[] { IProject.class, IResource.class };
 	}
 
 }

@@ -56,6 +56,8 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 
 	public static final String KEY_LINK = "KEY_LINK"; //$NON-NLS-1$
 
+	private long lastApiCall;
+
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
 		public void propertyChange(final PropertyChangeEvent evt) {
 			reset();
@@ -127,12 +129,25 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	private Delicious getApi() {
 		System.out.println("CONTACTING API");
 
+		/*
+		 * API requires to wait at least 1 second between api calls.
+		 */
+		if (this.lastApiCall > 0) {
+			while ((System.currentTimeMillis() - this.lastApiCall) < 2000) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// do nothing
+				}
+			}
+		}
 		if (this.api == null) {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
 			this.api = new Delicious(getCredentialProvider().getUserName(), getCredentialProvider()
 					.getPassword());
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
+		this.lastApiCall = System.currentTimeMillis();
 		return this.api;
 	}
 

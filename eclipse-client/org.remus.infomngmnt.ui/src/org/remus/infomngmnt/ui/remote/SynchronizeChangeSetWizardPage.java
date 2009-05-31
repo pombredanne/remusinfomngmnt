@@ -2,7 +2,6 @@ package org.remus.infomngmnt.ui.remote;
 
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.compare.util.AdapterUtils;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -67,8 +66,8 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 		this.diffLabelProvider.setChangeSet(this.changeSet);
 		this.treeViewer.setLabelProvider(this.diffLabelProvider);
 
-		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(AdapterUtils
-				.getAdapterFactory()));
+		this.treeViewer
+				.setContentProvider(new DiffContentProvider(AdapterUtils.getAdapterFactory()));
 
 		this.treeViewer.setInput(this.diffModel);
 		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {

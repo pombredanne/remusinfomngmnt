@@ -29,44 +29,41 @@ import org.osgi.framework.BundleContext;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 
 /**
- * This is the central singleton for the Uimodel edit plugin.
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * This is the central singleton for the Uimodel edit plugin. <!--
+ * begin-user-doc --> <!-- end-user-doc -->
+ * 
  * @generated
  */
 public final class UimodelEditPlugin extends EMFPlugin {
 	/**
-	 * Keep track of the singleton.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 */
 	public static final UimodelEditPlugin INSTANCE = new UimodelEditPlugin();
 
 	/**
-	 * Keep track of the singleton.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 */
 	private static Implementation plugin;
 
 	/**
-	 * Create the instance.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Create the instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public UimodelEditPlugin() {
-		super
-		  (new ResourceLocator [] {
-		   });
+		super(new ResourceLocator[] {});
 	}
 
 	/**
-	 * Returns the singleton instance of the Eclipse plugin.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -76,9 +73,9 @@ public final class UimodelEditPlugin extends EMFPlugin {
 	}
 
 	/**
-	 * Returns the singleton instance of the Eclipse plugin.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -87,9 +84,9 @@ public final class UimodelEditPlugin extends EMFPlugin {
 	}
 
 	/**
-	 * The actual implementation of the Eclipse <b>Plugin</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The actual implementation of the Eclipse <b>Plugin</b>. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static class Implementation extends EclipsePlugin {
@@ -105,11 +102,9 @@ public final class UimodelEditPlugin extends EMFPlugin {
 		 */
 		private static final String FN_DIALOG_SETTINGS = "dialog_settings.xml"; //$NON-NLS-1$
 
-
 		/**
-		 * Creates an instance.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		public Implementation() {
@@ -119,7 +114,7 @@ public final class UimodelEditPlugin extends EMFPlugin {
 			//
 			plugin = this;
 		}
-		
+
 		@Override
 		public void stop(final BundleContext context) throws Exception {
 			ResourceManager.dispose();
@@ -127,17 +122,17 @@ public final class UimodelEditPlugin extends EMFPlugin {
 		}
 
 		/**
-		 * Returns the dialog settings for this UI plug-in.
-		 * The dialog settings is used to hold persistent state data for the various
-		 * wizards and dialogs of this plug-in in the context of a workbench.
+		 * Returns the dialog settings for this UI plug-in. The dialog settings
+		 * is used to hold persistent state data for the various wizards and
+		 * dialogs of this plug-in in the context of a workbench.
 		 * <p>
-		 * If an error occurs reading the dialog store, an empty one is quietly created
-		 * and returned.
+		 * If an error occurs reading the dialog store, an empty one is quietly
+		 * created and returned.
 		 * </p>
 		 * <p>
 		 * Subclasses may override this method but are not expected to.
 		 * </p>
-		 *
+		 * 
 		 * @return the dialog settings
 		 */
 		public IDialogSettings getDialogSettings() {
@@ -148,12 +143,13 @@ public final class UimodelEditPlugin extends EMFPlugin {
 		}
 
 		/**
-		 * Loads the dialog settings for this plug-in.
-		 * The default implementation first looks for a standard named file in the
-		 * plug-in's read/write state area; if no such file exists, the plug-in's
-		 * install directory is checked to see if one was installed with some default
-		 * settings; if no file is found in either place, a new empty dialog settings
-		 * is created. If a problem occurs, an empty settings is silently used.
+		 * Loads the dialog settings for this plug-in. The default
+		 * implementation first looks for a standard named file in the plug-in's
+		 * read/write state area; if no such file exists, the plug-in's install
+		 * directory is checked to see if one was installed with some default
+		 * settings; if no file is found in either place, a new empty dialog
+		 * settings is created. If a problem occurs, an empty settings is
+		 * silently used.
 		 * <p>
 		 * This framework method may be overridden, although this is typically
 		 * unnecessary.
@@ -162,13 +158,13 @@ public final class UimodelEditPlugin extends EMFPlugin {
 		protected void loadDialogSettings() {
 			this.dialogSettings = new DialogSettings("Workbench"); //$NON-NLS-1$
 
-			// bug 69387: The instance area should not be created (in the call to
+			// bug 69387: The instance area should not be created (in the call
+			// to
 			// #getStateLocation) if -data @none or -data @noDefault was used
 			IPath dataLocation = getStateLocationOrNull();
 			if (dataLocation != null) {
 				// try r/w state area in the local file system
-				String readWritePath = dataLocation.append(FN_DIALOG_SETTINGS)
-				.toOSString();
+				String readWritePath = dataLocation.append(FN_DIALOG_SETTINGS).toOSString();
 				File settingsFile = new File(readWritePath);
 				if (settingsFile.exists()) {
 					try {
@@ -192,21 +188,22 @@ public final class UimodelEditPlugin extends EMFPlugin {
 		/**
 		 * FOR INTERNAL WORKBENCH USE ONLY.
 		 * 
-		 * Returns the path to a location in the file system that can be used
-		 * to persist/restore state between workbench invocations.
-		 * If the location did not exist prior to this call it will  be created.
-		 * Returns <code>null</code> if no such location is available.
+		 * Returns the path to a location in the file system that can be used to
+		 * persist/restore state between workbench invocations. If the location
+		 * did not exist prior to this call it will be created. Returns
+		 * <code>null</code> if no such location is available.
 		 * 
 		 * @return path to a location in the file system where this plug-in can
-		 * persist data between sessions, or <code>null</code> if no such
-		 * location is available.
+		 *         persist data between sessions, or <code>null</code> if no
+		 *         such location is available.
 		 * @since 3.1
 		 */
 		private IPath getStateLocationOrNull() {
 			try {
 				return getStateLocation();
 			} catch (IllegalStateException e) {
-				// This occurs if -data=@none is explicitly specified, so ignore this silently.
+				// This occurs if -data=@none is explicitly specified, so ignore
+				// this silently.
 				// Is this OK? See bug 85071.
 				return null;
 			}

@@ -45,15 +45,21 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
+import org.remus.infomngmnt.common.service.ITrayService;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.FadeJob;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.IFadeListener;
+import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 /**
  * @author Benjamin Pasero
  * @author Mik Kersten
  * @author Steffen Pingel
+ * @author Tom Seidel
  */
 public abstract class AbstractNotificationPopup extends Window {
 
@@ -282,6 +288,32 @@ public abstract class AbstractNotificationPopup extends Window {
 			}
 
 		});
+
+		final Label restore = new Label(parent, SWT.NONE);
+		restore.setImage(CommonImageRegistry.getInstance().get(
+				CommonImageRegistry.NOTIFICATION_RESTORE));
+		restore.addMouseTrackListener(new MouseTrackAdapter() {
+			@Override
+			public void mouseEnter(final MouseEvent e) {
+				restore.setImage(CommonImageRegistry.getInstance().get(
+						CommonImageRegistry.NOTIFICATION_RESTORE_HOVER));
+			}
+
+			@Override
+			public void mouseExit(final MouseEvent e) {
+				restore.setImage(CommonImageRegistry.getInstance().get(
+						CommonImageRegistry.NOTIFICATION_RESTORE));
+			}
+		});
+		restore.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseUp(final MouseEvent e) {
+				getTrayService().restoreFromTray(UIUtil.getPrimaryWindow().getShell());
+			}
+
+		});
+
 		final Label button = new Label(parent, SWT.NONE);
 		button.setImage(CommonImageRegistry.getInstance().get(
 				CommonImageRegistry.NOTIFICATION_CLOSE));
@@ -700,6 +732,18 @@ public abstract class AbstractNotificationPopup extends Window {
 		}
 
 		return location;
+	}
+
+	public ITrayService getTrayService() {
+		final BundleContext bundleContext = UimodelEditPlugin.getPlugin().getBundle()
+				.getBundleContext();
+		final ServiceReference serviceReference = bundleContext
+				.getServiceReference(ITrayService.class.getName());
+		if (serviceReference != null) {
+			return (ITrayService) bundleContext.getService(serviceReference);
+		}
+		return null;
+
 	}
 
 }

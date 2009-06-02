@@ -31,6 +31,8 @@ public class CommonImageRegistry extends ImageRegistry {
 	public static final String SECTION_VERTICAL = "SECTION_VERTICAL"; //$NON-NLS-1$
 	public static final String NOTIFICATION_CLOSE = "NOTIFICATION_CLOSE"; //$NON-NLS-1$
 	public static final String NOTIFICATION_CLOSE_HOVER = "NOTIFICATION_CLOSE_HOVER"; //$NON-NLS-1$
+	public static final String NOTIFICATION_RESTORE = "NOTIFICATION_RESTORE"; //$NON-NLS-1$
+	public static final String NOTIFICATION_RESTORE_HOVER = "NOTIFICATION_RESTORE_HOVER"; //$NON-NLS-1$
 	public static final String CLEAR_FILTER = "CLEAR_FILTER"; //$NON-NLS-1$
 	public static final String START_TASK = "START_TASK"; //$NON-NLS-1$
 	public static final String INFORMATION_DECORATION = "INFORMATION_DECORATION"; //$NON-NLS-1$
@@ -60,6 +62,8 @@ public class CommonImageRegistry extends ImageRegistry {
 		registerImage(CLEAR_FILTER, "icons/iconexperience/eraser.png");
 		registerImage(START_TASK, "icons/iconexperience/media_play.png");
 		registerImage(INFORMATION_DECORATION, "images/information_decorator.png");
+		registerImage(NOTIFICATION_RESTORE_HOVER, "images/notification/notification_max_active.gif");
+		registerImage(NOTIFICATION_RESTORE, "images/notification/notification_max.gif");
 
 	}
 

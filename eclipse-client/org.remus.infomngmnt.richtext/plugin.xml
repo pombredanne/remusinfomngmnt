@@ -12,6 +12,9 @@
          <validTransfers
                transferId="org.remus.infomngmnt.core.htmltransfer">
          </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
       </information>
    </extension>
    <extension
@@ -28,6 +31,10 @@
             transferId="org.remus.infomngmnt.core.htmltransfer"
             typeId="HTML">
       </transferpreferences>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
+            typeId="HTML">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

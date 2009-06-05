@@ -125,6 +125,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.TAG: return createTag();
 			case InfomngmntPackage.AVAILABLE_TAGS: return createAvailableTags();
 			case InfomngmntPackage.CALENDAR_ENTRY: return createCalendarEntry();
+			case InfomngmntPackage.NOTIFICATION: return createNotification();
+			case InfomngmntPackage.NOTIFICATION_COLLECTION: return createNotificationCollection();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -143,6 +145,10 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return createSynchronizationActionFromString(eDataType, initialValue);
 			case InfomngmntPackage.CALENDAR_ENTRY_TYPE:
 				return createCalendarEntryTypeFromString(eDataType, initialValue);
+			case InfomngmntPackage.NOTIFICATION_IMPORTANCE:
+				return createNotificationImportanceFromString(eDataType, initialValue);
+			case InfomngmntPackage.SEVERITY:
+				return createSeverityFromString(eDataType, initialValue);
 			case InfomngmntPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			default:
@@ -163,6 +169,10 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return convertSynchronizationActionToString(eDataType, instanceValue);
 			case InfomngmntPackage.CALENDAR_ENTRY_TYPE:
 				return convertCalendarEntryTypeToString(eDataType, instanceValue);
+			case InfomngmntPackage.NOTIFICATION_IMPORTANCE:
+				return convertNotificationImportanceToString(eDataType, instanceValue);
+			case InfomngmntPackage.SEVERITY:
+				return convertSeverityToString(eDataType, instanceValue);
 			case InfomngmntPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			default:
@@ -425,6 +435,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Notification createNotification() {
+		NotificationImpl notification = new NotificationImpl();
+		return notification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationCollection createNotificationCollection() {
+		NotificationCollectionImpl notificationCollection = new NotificationCollectionImpl();
+		return notificationCollection;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -475,6 +505,46 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * @generated
 	 */
 	public String convertCalendarEntryTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationImportance createNotificationImportanceFromString(EDataType eDataType, String initialValue) {
+		NotificationImportance result = NotificationImportance.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertNotificationImportanceToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Severity createSeverityFromString(EDataType eDataType, String initialValue) {
+		Severity result = Severity.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertSeverityToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

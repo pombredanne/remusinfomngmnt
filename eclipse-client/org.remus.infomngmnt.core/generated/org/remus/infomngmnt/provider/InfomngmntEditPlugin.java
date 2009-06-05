@@ -22,6 +22,8 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
+import org.remus.infomngmnt.core.services.INotificationManagerManager;
+
 /**
  * This is the central singleton for the Infomngmnt edit plugin. <!--
  * begin-user-doc --> <!-- end-user-doc -->
@@ -46,18 +48,20 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 	private static Implementation plugin;
 
 	/**
-	 * Create the instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Create the instance.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public InfomngmntEditPlugin() {
-		super(new ResourceLocator[] {});
+		super
+		  (new ResourceLocator [] {
+		   });
 	}
 
 	/**
-	 * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
+	 * Returns the singleton instance of the Eclipse plugin.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -67,9 +71,9 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 	}
 
 	/**
-	 * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
+	 * Returns the singleton instance of the Eclipse plugin.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -86,10 +90,11 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 	public static class Implementation extends EclipsePlugin {
 
 		private IPreferenceStore preferenceStore;
+		private INotificationManagerManager service;
 
 		/**
-		 * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-		 * 
+		 * Creates an instance.
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		public Implementation() {
@@ -103,7 +108,19 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 		@Override
 		public void stop(final BundleContext context) throws Exception {
 			this.preferenceStore = null;
+			if (this.service != null) {
+				this.service.shutdown();
+			}
 			super.stop(context);
+		}
+
+		@Override
+		public void start(final BundleContext context) throws Exception {
+			super.start(context);
+			this.service = getService(INotificationManagerManager.class);
+			if (this.service != null) {
+				this.service.init();
+			}
 		}
 
 		public <T> T getService(final Class<T> serviceClass) {

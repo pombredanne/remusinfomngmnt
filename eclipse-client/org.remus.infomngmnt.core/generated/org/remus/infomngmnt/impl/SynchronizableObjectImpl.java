@@ -37,7 +37,6 @@ import org.remus.infomngmnt.SynchronizationMetadata;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.SynchronizableObjectImpl#getSynchronizationMetaData <em>Synchronization Meta Data</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.SynchronizableObjectImpl#getMarkedAsDeleteItems <em>Marked As Delete Items</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,16 +52,6 @@ public abstract class SynchronizableObjectImpl extends AdapterImpl implements Sy
 	 * @ordered
 	 */
 	protected SynchronizationMetadata synchronizationMetaData;
-
-	/**
-	 * The cached value of the '{@link #getMarkedAsDeleteItems() <em>Marked As Delete Items</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMarkedAsDeleteItems()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<SynchronizableObject> markedAsDeleteItems;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -131,25 +120,11 @@ public abstract class SynchronizableObjectImpl extends AdapterImpl implements Sy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<SynchronizableObject> getMarkedAsDeleteItems() {
-		if (markedAsDeleteItems == null) {
-			markedAsDeleteItems = new EObjectContainmentEList<SynchronizableObject>(SynchronizableObject.class, this, InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS);
-		}
-		return markedAsDeleteItems;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA:
 				return basicSetSynchronizationMetaData(null, msgs);
-			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS:
-				return ((InternalEList<?>)getMarkedAsDeleteItems()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -164,8 +139,6 @@ public abstract class SynchronizableObjectImpl extends AdapterImpl implements Sy
 		switch (featureID) {
 			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA:
 				return getSynchronizationMetaData();
-			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS:
-				return getMarkedAsDeleteItems();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -182,10 +155,6 @@ public abstract class SynchronizableObjectImpl extends AdapterImpl implements Sy
 			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA:
 				setSynchronizationMetaData((SynchronizationMetadata)newValue);
 				return;
-			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS:
-				getMarkedAsDeleteItems().clear();
-				getMarkedAsDeleteItems().addAll((Collection<? extends SynchronizableObject>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -201,9 +170,6 @@ public abstract class SynchronizableObjectImpl extends AdapterImpl implements Sy
 			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA:
 				setSynchronizationMetaData((SynchronizationMetadata)null);
 				return;
-			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS:
-				getMarkedAsDeleteItems().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -218,8 +184,6 @@ public abstract class SynchronizableObjectImpl extends AdapterImpl implements Sy
 		switch (featureID) {
 			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA:
 				return synchronizationMetaData != null;
-			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS:
-				return markedAsDeleteItems != null && !markedAsDeleteItems.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

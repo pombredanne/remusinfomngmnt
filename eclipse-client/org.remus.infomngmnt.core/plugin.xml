@@ -6,6 +6,7 @@
  <extension-point id="ruleDefinition" name="ruleDefinition" schema="schema/ruleDefinition.exsd"/>
  <extension-point id="remoteRepository" name="remoteRepository" schema="schema/remoteRepository.exsd"/>
  <extension-point id="saveParticipant" name="saveParticipant" schema="schema/saveParticipant.exsd"/>
+ <extension-point id="job" name="job" schema="schema/job.exsd"/>
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
@@ -138,6 +139,15 @@
       <participant
             class="org.remus.infomngmnt.core.ref.tags.TagSaveParticipant">
       </participant>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.job">
+      <job
+            class="org.remus.infomngmnt.core.sync.SynchronizeItemsJob"
+            id="org.remus.infomngmnt.core.syncJob"
+            interval="10"
+            name="Synchronization of Remote Repositories">
+      </job>
    </extension>
   
 

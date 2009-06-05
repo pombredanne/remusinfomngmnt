@@ -223,8 +223,6 @@
       eSuperTypes="#//Adapter">
     <eStructuralFeatures xsi:type="ecore:EReference" name="synchronizationMetaData"
         eType="#//SynchronizationMetadata" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="markedAsDeleteItems" upperBound="-1"
-        eType="#//SynchronizableObject" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CalendarEntry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -244,4 +242,32 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="TransferWrapper" instanceClassName="org.remus.infomngmnt.core.extension.TransferWrapper"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Notification" eSuperTypes="#//Adapter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeStamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importance" eType="#//NotificationImportance"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="severity" eType="#//Severity"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="noticed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="message" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="details" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//Notification" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="affectedInfoUnitIds" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NotificationCollection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="notifcations" upperBound="-1"
+        eType="#//Notification" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="NotificationImportance">
+    <eLiterals name="NONE"/>
+    <eLiterals name="LOW" value="1"/>
+    <eLiterals name="MEDIUM" value="2"/>
+    <eLiterals name="HIGH" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Severity">
+    <eLiterals name="OK"/>
+    <eLiterals name="INFO" value="1"/>
+    <eLiterals name="WARNING" value="2"/>
+    <eLiterals name="ERROR" value="3"/>
+  </eClassifiers>
 </ecore:EPackage>

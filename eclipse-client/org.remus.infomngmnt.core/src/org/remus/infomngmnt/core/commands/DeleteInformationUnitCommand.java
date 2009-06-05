@@ -42,6 +42,7 @@ import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -58,7 +59,7 @@ public class DeleteInformationUnitCommand implements Command {
 
 	private Map<IFile, IFile> binaries;
 
-	private CompoundCommand delegateCommand;
+	private final CompoundCommand delegateCommand;
 
 	private final EditingDomain domain;
 
@@ -87,16 +88,30 @@ public class DeleteInformationUnitCommand implements Command {
 
 	public DeleteInformationUnitCommand(final List<InformationUnitListItem> items,
 			final EditingDomain domain) {
-		this(items, domain, false);
+		this(items, domain, true);
 	}
 
 	public DeleteInformationUnitCommand(final List<InformationUnitListItem> items,
-			final EditingDomain domain, final boolean keepListItem) {
+			final EditingDomain domain, final boolean checkForSyncState) {
 		this.domain = domain;
 		this.map = new HashMap<InformationUnitListItem, InfoUnit2PathMapper>();
-		if (!keepListItem) {
-			this.delegateCommand = new CompoundCommand();
+		this.delegateCommand = new CompoundCommand();
+		if (checkForSyncState) {
+			for (InformationUnitListItem informationUnitListItem : items) {
+				if (informationUnitListItem.getSynchronizationMetaData() != null
+						&& informationUnitListItem.getSynchronizationMetaData().getSyncState() != SynchronizationState.NOT_ADDED) {
+					this.delegateCommand.append(SetCommand.create(domain, informationUnitListItem
+							.getSynchronizationMetaData(),
+							InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+							SynchronizationState.LOCAL_DELETED));
+				} else {
+					this.delegateCommand.append(new DeleteCommand(domain, Collections
+							.singleton(informationUnitListItem)));
+				}
+			}
+		} else {
 			this.delegateCommand.append(new DeleteCommand(domain, items));
+
 		}
 		for (InformationUnitListItem informationUnitListItem : items) {
 			/*
@@ -202,18 +217,20 @@ public class DeleteInformationUnitCommand implements Command {
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
 			IReferencedUnitStore service = InfomngmntEditPlugin.getPlugin().getService(
 					IReferencedUnitStore.class);
-			String[] referencedInfoUnitIds = service.getReferencedInfoUnitIds(infoUnit2PathMapper
-					.getUnit().getId());
-			for (String string : referencedInfoUnitIds) {
-				InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
-						string, new NullProgressMonitor());
-				InformationUnit adapter = (InformationUnit) itemById
-						.getAdapter(InformationUnit.class);
-				this.referenceDomain.getResourceSet().getResources().add(adapter.eResource());
+			if (infoUnit2PathMapper.getUnit() != null) {
+				String[] referencedInfoUnitIds = service
+						.getReferencedInfoUnitIds(infoUnit2PathMapper.getUnit().getId());
+				for (String string : referencedInfoUnitIds) {
+					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
+							.getItemById(string, new NullProgressMonitor());
+					InformationUnit adapter = (InformationUnit) itemById
+							.getAdapter(InformationUnit.class);
+					this.referenceDomain.getResourceSet().getResources().add(adapter.eResource());
+				}
+				this.referenceDomain.getResourceSet().getResources().add(
+						infoUnit2PathMapper.getUnit().eResource());
+				relevantObjects.add(infoUnit2PathMapper.getUnit());
 			}
-			this.referenceDomain.getResourceSet().getResources().add(
-					infoUnit2PathMapper.getUnit().eResource());
-			relevantObjects.add(infoUnit2PathMapper.getUnit());
 		}
 		this.usages = EcoreUtil.UsageCrossReferencer.findAll(relevantObjects, this.referenceDomain
 				.getResourceSet());

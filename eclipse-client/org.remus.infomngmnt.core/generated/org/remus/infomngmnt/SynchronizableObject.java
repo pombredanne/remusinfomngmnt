@@ -25,7 +25,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.SynchronizableObject#getSynchronizationMetaData <em>Synchronization Meta Data</em>}</li>
- *   <li>{@link org.remus.infomngmnt.SynchronizableObject#getMarkedAsDeleteItems <em>Marked As Delete Items</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,21 +58,5 @@ public interface SynchronizableObject extends Adapter {
 	 * @generated
 	 */
 	void setSynchronizationMetaData(SynchronizationMetadata value);
-
-	/**
-	 * Returns the value of the '<em><b>Marked As Delete Items</b></em>' containment reference list.
-	 * The list contents are of type {@link org.remus.infomngmnt.SynchronizableObject}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Marked As Delete Items</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Marked As Delete Items</em>' containment reference list.
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getSynchronizableObject_MarkedAsDeleteItems()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<SynchronizableObject> getMarkedAsDeleteItems();
 
 } // SynchronizableObject

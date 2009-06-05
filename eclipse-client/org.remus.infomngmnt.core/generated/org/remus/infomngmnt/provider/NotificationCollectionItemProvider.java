@@ -20,7 +20,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -28,20 +32,21 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.NotificationCollection;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.SynchronizableObject} object.
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.NotificationCollection} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class SynchronizableObjectItemProvider
-	extends AdapterItemProvider
+public class NotificationCollectionItemProvider
+	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -55,7 +60,7 @@ public class SynchronizableObjectItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SynchronizableObjectItemProvider(AdapterFactory adapterFactory) {
+	public NotificationCollectionItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -86,7 +91,7 @@ public class SynchronizableObjectItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
+			childrenFeatures.add(InfomngmntPackage.Literals.NOTIFICATION_COLLECTION__NOTIFCATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -105,6 +110,17 @@ public class SynchronizableObjectItemProvider
 	}
 
 	/**
+	 * This returns NotificationCollection.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/NotificationCollection"));
+	}
+
+	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -112,7 +128,7 @@ public class SynchronizableObjectItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_SynchronizableObject_type");
+		return getString("_UI_NotificationCollection_type");
 	}
 
 	/**
@@ -126,8 +142,8 @@ public class SynchronizableObjectItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(SynchronizableObject.class)) {
-			case InfomngmntPackage.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA:
+		switch (notification.getFeatureID(NotificationCollection.class)) {
+			case InfomngmntPackage.NOTIFICATION_COLLECTION__NOTIFCATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -147,8 +163,19 @@ public class SynchronizableObjectItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
-				 InfomngmntFactory.eINSTANCE.createSynchronizationMetadata()));
+				(InfomngmntPackage.Literals.NOTIFICATION_COLLECTION__NOTIFCATIONS,
+				 InfomngmntFactory.eINSTANCE.createNotification()));
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return InfomngmntEditPlugin.INSTANCE;
 	}
 
 }

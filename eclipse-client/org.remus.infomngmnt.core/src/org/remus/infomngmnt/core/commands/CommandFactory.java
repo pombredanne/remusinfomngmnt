@@ -164,8 +164,18 @@ public class CommandFactory {
 		return new DeleteInformationUnitCommand(items, domain);
 	}
 
+	public static Command DELETE_INFOUNIT_WITHOUT_SYNC_CHECK(
+			final List<InformationUnitListItem> items, final EditingDomain domain) {
+		return new DeleteInformationUnitCommand(items, domain, false);
+	}
+
 	public static Command DELETE_CATEGORY(final Category category, final EditingDomain domain) {
 		return new DeleteCategoryCommand(category, domain);
+	}
+
+	public static Command DELETE_SYNCHRONIZABLE_CATEGORY(final Category category,
+			final EditingDomain domain) {
+		return new DeleteSynchronizedCategoryCommand(category, domain);
 	}
 
 	public static Command addFileToInfoUnit(final IFile file, final InformationUnit targetInfoUnit,

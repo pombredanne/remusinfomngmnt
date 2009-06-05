@@ -729,6 +729,52 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Notification} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NotificationItemProvider notificationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.Notification}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNotificationAdapter() {
+		if (notificationItemProvider == null) {
+			notificationItemProvider = new NotificationItemProvider(this);
+		}
+
+		return notificationItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.NotificationCollection} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NotificationCollectionItemProvider notificationCollectionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.NotificationCollection}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNotificationCollectionAdapter() {
+		if (notificationCollectionItemProvider == null) {
+			notificationCollectionItemProvider = new NotificationCollectionItemProvider(this);
+		}
+
+		return notificationCollectionItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -855,6 +901,8 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (tagItemProvider != null) tagItemProvider.dispose();
 		if (availableTagsItemProvider != null) availableTagsItemProvider.dispose();
 		if (calendarEntryItemProvider != null) calendarEntryItemProvider.dispose();
+		if (notificationItemProvider != null) notificationItemProvider.dispose();
+		if (notificationCollectionItemProvider != null) notificationCollectionItemProvider.dispose();
 	}
 
 }

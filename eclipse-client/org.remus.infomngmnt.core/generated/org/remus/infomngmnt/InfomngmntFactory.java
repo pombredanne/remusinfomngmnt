@@ -259,6 +259,24 @@ public interface InfomngmntFactory extends EFactory {
 	CalendarEntry createCalendarEntry();
 
 	/**
+	 * Returns a new object of class '<em>Notification</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Notification</em>'.
+	 * @generated
+	 */
+	Notification createNotification();
+
+	/**
+	 * Returns a new object of class '<em>Notification Collection</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Notification Collection</em>'.
+	 * @generated
+	 */
+	NotificationCollection createNotificationCollection();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

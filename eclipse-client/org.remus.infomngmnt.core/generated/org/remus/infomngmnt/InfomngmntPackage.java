@@ -409,22 +409,13 @@ public interface InfomngmntPackage extends EPackage {
 	int SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA = ADAPTER_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Marked As Delete Items</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS = ADAPTER_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>Synchronizable Object</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SYNCHRONIZABLE_OBJECT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 2;
+	int SYNCHRONIZABLE_OBJECT_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CategoryImpl <em>Category</em>}' class.
@@ -444,15 +435,6 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORY__SYNCHRONIZATION_META_DATA = SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA;
-
-	/**
-	 * The feature id for the '<em><b>Marked As Delete Items</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__MARKED_AS_DELETE_ITEMS = SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -555,22 +537,13 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM__SYNCHRONIZATION_META_DATA = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Marked As Delete Items</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INFORMATION_UNIT_LIST_ITEM__MARKED_AS_DELETE_ITEMS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Workspace Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 2;
+	int INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Information Unit List Item</em>' class.
@@ -579,7 +552,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 3;
+	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 2;
 
 
 	/**
@@ -1907,6 +1880,125 @@ public interface InfomngmntPackage extends EPackage {
 	int CALENDAR_ENTRY_FEATURE_COUNT = 6;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.NotificationImpl <em>Notification</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.NotificationImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotification()
+	 * @generated
+	 */
+	int NOTIFICATION = 31;
+
+	/**
+	 * The feature id for the '<em><b>Time Stamp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__TIME_STAMP = ADAPTER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Importance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__IMPORTANCE = ADAPTER_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__SEVERITY = ADAPTER_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Noticed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__NOTICED = ADAPTER_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__MESSAGE = ADAPTER_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Details</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__DETAILS = ADAPTER_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__CHILDREN = ADAPTER_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Affected Info Unit Ids</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__AFFECTED_INFO_UNIT_IDS = ADAPTER_FEATURE_COUNT + 7;
+
+	/**
+	 * The number of structural features of the '<em>Notification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 8;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.NotificationCollectionImpl <em>Notification Collection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.NotificationCollectionImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotificationCollection()
+	 * @generated
+	 */
+	int NOTIFICATION_COLLECTION = 32;
+
+	/**
+	 * The feature id for the '<em><b>Notifcations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION_COLLECTION__NOTIFCATIONS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Notification Collection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION_COLLECTION_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1914,7 +2006,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 31;
+	int SYNCHRONIZATION_STATE = 33;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -1924,7 +2016,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 32;
+	int SYNCHRONIZATION_ACTION = 34;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.CalendarEntryType <em>Calendar Entry Type</em>}' enum.
@@ -1934,7 +2026,27 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntryType()
 	 * @generated
 	 */
-	int CALENDAR_ENTRY_TYPE = 33;
+	int CALENDAR_ENTRY_TYPE = 35;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.NotificationImportance <em>Notification Importance</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.NotificationImportance
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotificationImportance()
+	 * @generated
+	 */
+	int NOTIFICATION_IMPORTANCE = 36;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.Severity <em>Severity</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.Severity
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSeverity()
+	 * @generated
+	 */
+	int SEVERITY = 37;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -1944,7 +2056,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 34;
+	int OBJECT = 38;
 
 
 	/**
@@ -1955,7 +2067,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
 	 * @generated
 	 */
-	int IREPOSITORY = 35;
+	int IREPOSITORY = 39;
 
 
 	/**
@@ -1966,7 +2078,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTransferWrapper()
 	 * @generated
 	 */
-	int TRANSFER_WRAPPER = 36;
+	int TRANSFER_WRAPPER = 40;
 
 
 	/**
@@ -3222,17 +3334,6 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getSynchronizableObject_SynchronizationMetaData();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.SynchronizableObject#getMarkedAsDeleteItems <em>Marked As Delete Items</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Marked As Delete Items</em>'.
-	 * @see org.remus.infomngmnt.SynchronizableObject#getMarkedAsDeleteItems()
-	 * @see #getSynchronizableObject()
-	 * @generated
-	 */
-	EReference getSynchronizableObject_MarkedAsDeleteItems();
-
-	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.CalendarEntry <em>Calendar Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3309,6 +3410,125 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getCalendarEntry_Title();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.Notification <em>Notification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Notification</em>'.
+	 * @see org.remus.infomngmnt.Notification
+	 * @generated
+	 */
+	EClass getNotification();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#getTimeStamp <em>Time Stamp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Time Stamp</em>'.
+	 * @see org.remus.infomngmnt.Notification#getTimeStamp()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_TimeStamp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#getImportance <em>Importance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Importance</em>'.
+	 * @see org.remus.infomngmnt.Notification#getImportance()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_Importance();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Severity</em>'.
+	 * @see org.remus.infomngmnt.Notification#getSeverity()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_Severity();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#isNoticed <em>Noticed</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Noticed</em>'.
+	 * @see org.remus.infomngmnt.Notification#isNoticed()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_Noticed();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#getMessage <em>Message</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Message</em>'.
+	 * @see org.remus.infomngmnt.Notification#getMessage()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_Message();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#getDetails <em>Details</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Details</em>'.
+	 * @see org.remus.infomngmnt.Notification#getDetails()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_Details();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.Notification#getChildren <em>Children</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Children</em>'.
+	 * @see org.remus.infomngmnt.Notification#getChildren()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EReference getNotification_Children();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.remus.infomngmnt.Notification#getAffectedInfoUnitIds <em>Affected Info Unit Ids</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Affected Info Unit Ids</em>'.
+	 * @see org.remus.infomngmnt.Notification#getAffectedInfoUnitIds()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_AffectedInfoUnitIds();
+
+	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.NotificationCollection <em>Notification Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Notification Collection</em>'.
+	 * @see org.remus.infomngmnt.NotificationCollection
+	 * @generated
+	 */
+	EClass getNotificationCollection();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.NotificationCollection#getNotifcations <em>Notifcations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Notifcations</em>'.
+	 * @see org.remus.infomngmnt.NotificationCollection#getNotifcations()
+	 * @see #getNotificationCollection()
+	 * @generated
+	 */
+	EReference getNotificationCollection_Notifcations();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3337,6 +3557,26 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getCalendarEntryType();
+
+	/**
+	 * Returns the meta object for enum '{@link org.remus.infomngmnt.NotificationImportance <em>Notification Importance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Notification Importance</em>'.
+	 * @see org.remus.infomngmnt.NotificationImportance
+	 * @generated
+	 */
+	EEnum getNotificationImportance();
+
+	/**
+	 * Returns the meta object for enum '{@link org.remus.infomngmnt.Severity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Severity</em>'.
+	 * @see org.remus.infomngmnt.Severity
+	 * @generated
+	 */
+	EEnum getSeverity();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Object <em>Object</em>}'.
@@ -4382,14 +4622,6 @@ public interface InfomngmntPackage extends EPackage {
 		EReference SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA = eINSTANCE.getSynchronizableObject_SynchronizationMetaData();
 
 		/**
-		 * The meta object literal for the '<em><b>Marked As Delete Items</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS = eINSTANCE.getSynchronizableObject_MarkedAsDeleteItems();
-
-		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.CalendarEntryImpl <em>Calendar Entry</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4448,6 +4680,98 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute CALENDAR_ENTRY__TITLE = eINSTANCE.getCalendarEntry_Title();
 
 		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.NotificationImpl <em>Notification</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.NotificationImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotification()
+		 * @generated
+		 */
+		EClass NOTIFICATION = eINSTANCE.getNotification();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Stamp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__TIME_STAMP = eINSTANCE.getNotification_TimeStamp();
+
+		/**
+		 * The meta object literal for the '<em><b>Importance</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__IMPORTANCE = eINSTANCE.getNotification_Importance();
+
+		/**
+		 * The meta object literal for the '<em><b>Severity</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__SEVERITY = eINSTANCE.getNotification_Severity();
+
+		/**
+		 * The meta object literal for the '<em><b>Noticed</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__NOTICED = eINSTANCE.getNotification_Noticed();
+
+		/**
+		 * The meta object literal for the '<em><b>Message</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__MESSAGE = eINSTANCE.getNotification_Message();
+
+		/**
+		 * The meta object literal for the '<em><b>Details</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__DETAILS = eINSTANCE.getNotification_Details();
+
+		/**
+		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NOTIFICATION__CHILDREN = eINSTANCE.getNotification_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Affected Info Unit Ids</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__AFFECTED_INFO_UNIT_IDS = eINSTANCE.getNotification_AffectedInfoUnitIds();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.NotificationCollectionImpl <em>Notification Collection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.NotificationCollectionImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotificationCollection()
+		 * @generated
+		 */
+		EClass NOTIFICATION_COLLECTION = eINSTANCE.getNotificationCollection();
+
+		/**
+		 * The meta object literal for the '<em><b>Notifcations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NOTIFICATION_COLLECTION__NOTIFCATIONS = eINSTANCE.getNotificationCollection_Notifcations();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4476,6 +4800,26 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum CALENDAR_ENTRY_TYPE = eINSTANCE.getCalendarEntryType();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.NotificationImportance <em>Notification Importance</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.NotificationImportance
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotificationImportance()
+		 * @generated
+		 */
+		EEnum NOTIFICATION_IMPORTANCE = eINSTANCE.getNotificationImportance();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.Severity <em>Severity</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.Severity
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSeverity()
+		 * @generated
+		 */
+		EEnum SEVERITY = eINSTANCE.getSeverity();
 
 		/**
 		 * The meta object literal for the '<em>Object</em>' data type.

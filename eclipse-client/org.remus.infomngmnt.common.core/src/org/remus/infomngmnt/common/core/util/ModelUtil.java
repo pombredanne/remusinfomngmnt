@@ -113,11 +113,13 @@ public class ModelUtil {
 
 	public static <T> List<T> getAllChildren(final EObject object, final EClass clazz) {
 		List<T> returnValue = new LinkedList<T>();
-		TreeIterator<EObject> eAllContents = object.eAllContents();
-		while (eAllContents.hasNext()) {
-			EObject eObject = eAllContents.next();
-			if (eObject.eClass() == clazz) {
-				returnValue.add((T) eObject);
+		if (object != null) {
+			TreeIterator<EObject> eAllContents = object.eAllContents();
+			while (eAllContents.hasNext()) {
+				EObject eObject = eAllContents.next();
+				if (eObject.eClass() == clazz) {
+					returnValue.add((T) eObject);
+				}
 			}
 		}
 		return returnValue;

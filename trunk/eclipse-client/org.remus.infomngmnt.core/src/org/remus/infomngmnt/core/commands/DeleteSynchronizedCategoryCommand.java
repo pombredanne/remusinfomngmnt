@@ -19,17 +19,19 @@ import java.util.List;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class DeleteCategoryCommand implements Command {
+public class DeleteSynchronizedCategoryCommand implements Command {
 
 	private final Category category;
 	private final EditingDomain domain;
@@ -37,10 +39,27 @@ public class DeleteCategoryCommand implements Command {
 	private final List<InformationUnitListItem> affectedChildren;
 	private final CompoundCommand cc;
 
-	public DeleteCategoryCommand(final Category category, final EditingDomain domain) {
+	public DeleteSynchronizedCategoryCommand(final Category category, final EditingDomain domain) {
 		this.category = category;
 		this.domain = domain;
-		Command deleteCommand = new DeleteCommand(domain, Collections.singleton(category));
+		CompoundCommand deleteCommand = new CompoundCommand();
+		if (category.eContainer() != null
+				&& ((Category) category.eContainer()).getSynchronizationMetaData() != null
+				&& category.getSynchronizationMetaData() != null
+				&& category.getSynchronizationMetaData().getSyncState() != SynchronizationState.NOT_ADDED) {
+			deleteCommand.append(SetCommand.create(domain, category.getSynchronizationMetaData(),
+					InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+					SynchronizationState.LOCAL_DELETED));
+			List<Object> allChildren = ModelUtil.getAllChildren(category,
+					InfomngmntPackage.Literals.CATEGORY);
+			for (Object object : allChildren) {
+				deleteCommand.append(new DeleteSynchronizedCategoryCommand((Category) object,
+						domain));
+			}
+		} else {
+			deleteCommand.append(new DeleteCommand(domain, Collections.singleton(category)));
+		}
+
 		this.affectedChildren = ModelUtil.getAllChildren(category,
 				InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 		this.cc = new CompoundCommand();

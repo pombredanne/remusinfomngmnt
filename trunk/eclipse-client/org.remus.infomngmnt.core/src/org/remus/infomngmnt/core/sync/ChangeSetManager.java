@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.core.sync;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,7 @@ import org.eclipse.emf.compare.diff.metamodel.AddModelElement;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.emf.compare.diff.metamodel.DiffGroup;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
+import org.eclipse.emf.compare.diff.metamodel.MoveModelElement;
 import org.eclipse.emf.compare.diff.metamodel.RemoveModelElement;
 import org.eclipse.emf.compare.diff.metamodel.UpdateAttribute;
 import org.eclipse.emf.compare.diff.service.DiffService;
@@ -417,17 +419,16 @@ public class ChangeSetManager {
 				final AddModelElement addOp = (AddModelElement) diffElement;
 				EObject rightElement = addOp.getRightElement();
 				if (rightElement instanceof AbstractInformationUnit) {
-					// TODO implement for deleted items
-					if (true) {
-						item.getSyncObjectActionMap().put((SynchronizableObject) rightElement,
-								SynchronizationAction.ADD_LOCAL);
-					}
+
+					item.getSyncObjectActionMap().put((SynchronizableObject) rightElement,
+							SynchronizationAction.ADD_LOCAL);
+
 				} else if (rightElement instanceof Category) {
 					// TODO implement for deleted items
-					if (true) {
-						item.getSyncCategoryActionMap().put((Category) rightElement,
-								SynchronizationAction.ADD_LOCAL);
-					}
+
+					item.getSyncCategoryActionMap().put((Category) rightElement,
+							SynchronizationAction.ADD_LOCAL);
+
 				}
 			}
 			if (diffElement instanceof DiffGroup) {
@@ -469,14 +470,23 @@ public class ChangeSetManager {
 							}
 						}
 					}
+				}
+				if (diffElement instanceof MoveModelElement) {
+					System.out.println("Move");
 				} else {
 					/*
 					 * Search if the IU was edited locally. If so we have to
 					 * resolve a conflict.
 					 */
-					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
-							.getItemById(((AbstractInformationUnit) parentByClass).getId(),
-									new NullProgressMonitor());
+					SynchronizableObject itemById = null;
+					if (parentByClass instanceof AbstractInformationUnit) {
+						itemById = ApplicationModelPool.getInstance().getItemById(
+								((AbstractInformationUnit) parentByClass).getId(),
+								new NullProgressMonitor());
+					} else {
+						itemById = CategoryUtil.getCategoryById(((Category) parentByClass).getId());
+					}
+
 					if (addOp.getAttribute() == InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH) {
 						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
 							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
@@ -490,6 +500,9 @@ public class ChangeSetManager {
 						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
 							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.REPLACE_REMOTE);
+						} else if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_DELETED) {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
+									SynchronizationAction.DELETE_REMOTE);
 						} else {
 							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.REPLACE_LOCAL);
@@ -545,6 +558,45 @@ public class ChangeSetManager {
 			}
 		}
 
+	}
+
+	public void updateFromRemote(final ChangeSetItem changeSet) {
+		EMap<Category, SynchronizationAction> syncCategoryActionMap = changeSet
+				.getSyncCategoryActionMap();
+		if (syncCategoryActionMap != null) {
+			Set<Category> keySet = syncCategoryActionMap.keySet();
+			for (Category category : keySet) {
+				SynchronizationAction synchronizationAction = syncCategoryActionMap.get(category);
+				switch (synchronizationAction) {
+				case RESOLVE_CONFLICT:
+				case ADD_REMOTE:
+				case REPLACE_REMOTE:
+				case DELETE_REMOTE:
+					syncCategoryActionMap.remove(category);
+				default:
+					break;
+				}
+			}
+		}
+		EMap<SynchronizableObject, SynchronizationAction> syncObjectActionMap = changeSet
+				.getSyncObjectActionMap();
+		if (syncObjectActionMap != null) {
+			Set<SynchronizableObject> keySet = new HashSet<SynchronizableObject>(
+					syncObjectActionMap.keySet());
+			for (SynchronizableObject object : keySet) {
+				SynchronizationAction synchronizationAction = syncObjectActionMap.get(object);
+				switch (synchronizationAction) {
+				case RESOLVE_CONFLICT:
+				case ADD_REMOTE:
+				case REPLACE_REMOTE:
+				case DELETE_REMOTE:
+				case DELETE_LOCAL:
+					syncObjectActionMap.remove(object);
+				default:
+					break;
+				}
+			}
+		}
 	}
 
 }

@@ -13,19 +13,31 @@
 package org.remus.infomngmnt.core.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
+import org.eclipse.jface.preference.IPreferenceStore;
+
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
+	public static final String MAX_SAVED_NOTIFICATIONS = "MAX_SAVED_NOTIFICATIONS"; //$NON-NLS-1$
+	private final IPreferenceStore store;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
+	public PreferenceInitializer() {
+		this.store = InfomngmntEditPlugin.getPlugin().getPreferenceStore();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#
+	 * initializeDefaultPreferences()
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		// TODO Auto-generated method stub
+		this.store.setDefault(MAX_SAVED_NOTIFICATIONS, 20);
 
 	}
 

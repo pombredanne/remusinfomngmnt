@@ -109,7 +109,6 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
-			childrenFeatures.add(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS);
 		}
 		return childrenFeatures;
 	}
@@ -189,16 +188,6 @@ IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProv
 			(createChildParameter
 				(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
 				 InfomngmntFactory.eINSTANCE.createSynchronizationMetadata()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS,
-				 InfomngmntFactory.eINSTANCE.createCategory()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS,
-				 InfomngmntFactory.eINSTANCE.createInformationUnitListItem()));
 	}
 
 }

@@ -232,7 +232,7 @@ public class ChangeSetExecutor {
 							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
 		}
 		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
-		Command deleteInfounit = CommandFactory.DELETE_INFOUNIT(Collections
+		Command deleteInfounit = CommandFactory.DELETE_INFOUNIT_WITHOUT_SYNC_CHECK(Collections
 				.<InformationUnitListItem> singletonList(itemById), editingDomain);
 		editingDomain.getCommandStack().execute(deleteInfounit);
 		editingDomain.getCommandStack().flush();

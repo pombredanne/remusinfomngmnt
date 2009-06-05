@@ -42,6 +42,9 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.NewElementRules;
+import org.remus.infomngmnt.Notification;
+import org.remus.infomngmnt.NotificationCollection;
+import org.remus.infomngmnt.NotificationImportance;
 import org.remus.infomngmnt.RecentlyUsedKeywords;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
@@ -51,6 +54,7 @@ import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleResult;
 import org.remus.infomngmnt.RuleValue;
+import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.SynchronizationMetadata;
@@ -255,6 +259,20 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	private EClass calendarEntryEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass notificationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass notificationCollectionEClass = null;
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -271,6 +289,20 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EEnum calendarEntryTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum notificationImportanceEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum severityEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1294,14 +1326,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSynchronizableObject_MarkedAsDeleteItems() {
-		return (EReference)synchronizableObjectEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1365,6 +1389,105 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNotification() {
+		return notificationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_TimeStamp() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_Importance() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_Severity() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_Noticed() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_Message() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_Details() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNotification_Children() {
+		return (EReference)notificationEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_AffectedInfoUnitIds() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNotificationCollection() {
+		return notificationCollectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNotificationCollection_Notifcations() {
+		return (EReference)notificationCollectionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1386,6 +1509,24 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EEnum getCalendarEntryType() {
 		return calendarEntryTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getNotificationImportance() {
+		return notificationImportanceEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getSeverity() {
+		return severityEEnum;
 	}
 
 	/**
@@ -1584,7 +1725,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		synchronizableObjectEClass = createEClass(SYNCHRONIZABLE_OBJECT);
 		createEReference(synchronizableObjectEClass, SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
-		createEReference(synchronizableObjectEClass, SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS);
 
 		calendarEntryEClass = createEClass(CALENDAR_ENTRY);
 		createEAttribute(calendarEntryEClass, CALENDAR_ENTRY__ID);
@@ -1594,10 +1734,25 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(calendarEntryEClass, CALENDAR_ENTRY__REMINDER);
 		createEAttribute(calendarEntryEClass, CALENDAR_ENTRY__TITLE);
 
+		notificationEClass = createEClass(NOTIFICATION);
+		createEAttribute(notificationEClass, NOTIFICATION__TIME_STAMP);
+		createEAttribute(notificationEClass, NOTIFICATION__IMPORTANCE);
+		createEAttribute(notificationEClass, NOTIFICATION__SEVERITY);
+		createEAttribute(notificationEClass, NOTIFICATION__NOTICED);
+		createEAttribute(notificationEClass, NOTIFICATION__MESSAGE);
+		createEAttribute(notificationEClass, NOTIFICATION__DETAILS);
+		createEReference(notificationEClass, NOTIFICATION__CHILDREN);
+		createEAttribute(notificationEClass, NOTIFICATION__AFFECTED_INFO_UNIT_IDS);
+
+		notificationCollectionEClass = createEClass(NOTIFICATION_COLLECTION);
+		createEReference(notificationCollectionEClass, NOTIFICATION_COLLECTION__NOTIFCATIONS);
+
 		// Create enums
 		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
 		synchronizationActionEEnum = createEEnum(SYNCHRONIZATION_ACTION);
 		calendarEntryTypeEEnum = createEEnum(CALENDAR_ENTRY_TYPE);
+		notificationImportanceEEnum = createEEnum(NOTIFICATION_IMPORTANCE);
+		severityEEnum = createEEnum(SEVERITY);
 
 		// Create data types
 		objectEDataType = createEDataType(OBJECT);
@@ -1646,6 +1801,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		changeSetItemEClass.getESuperTypes().add(this.getAdapter());
 		tagEClass.getESuperTypes().add(this.getAdapter());
 		synchronizableObjectEClass.getESuperTypes().add(this.getAdapter());
+		notificationEClass.getESuperTypes().add(this.getAdapter());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(informationUnitEClass, InformationUnit.class, "InformationUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1795,7 +1951,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(synchronizableObjectEClass, SynchronizableObject.class, "SynchronizableObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSynchronizableObject_SynchronizationMetaData(), this.getSynchronizationMetadata(), null, "synchronizationMetaData", null, 0, 1, SynchronizableObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSynchronizableObject_MarkedAsDeleteItems(), this.getSynchronizableObject(), null, "markedAsDeleteItems", null, 0, -1, SynchronizableObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(calendarEntryEClass, CalendarEntry.class, "CalendarEntry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCalendarEntry_Id(), ecorePackage.getEString(), "id", null, 1, 1, CalendarEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1804,6 +1959,19 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getCalendarEntry_EntryType(), this.getCalendarEntryType(), "entryType", null, 0, 1, CalendarEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCalendarEntry_Reminder(), ecorePackage.getEInt(), "reminder", null, 0, 1, CalendarEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCalendarEntry_Title(), ecorePackage.getEString(), "title", null, 0, 1, CalendarEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(notificationEClass, Notification.class, "Notification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getNotification_TimeStamp(), ecorePackage.getEDate(), "timeStamp", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_Importance(), this.getNotificationImportance(), "importance", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_Severity(), this.getSeverity(), "severity", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_Noticed(), ecorePackage.getEBoolean(), "noticed", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_Message(), ecorePackage.getEString(), "message", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_Details(), ecorePackage.getEString(), "details", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNotification_Children(), this.getNotification(), null, "children", null, 0, -1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_AffectedInfoUnitIds(), ecorePackage.getEString(), "affectedInfoUnitIds", null, 0, -1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(notificationCollectionEClass, NotificationCollection.class, "NotificationCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getNotificationCollection_Notifcations(), this.getNotification(), null, "notifcations", null, 0, -1, NotificationCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");
@@ -1829,6 +1997,18 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.TWO_WEEK);
 		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.MONTHLY);
 		addEEnumLiteral(calendarEntryTypeEEnum, CalendarEntryType.ANNUAL);
+
+		initEEnum(notificationImportanceEEnum, NotificationImportance.class, "NotificationImportance");
+		addEEnumLiteral(notificationImportanceEEnum, NotificationImportance.NONE);
+		addEEnumLiteral(notificationImportanceEEnum, NotificationImportance.LOW);
+		addEEnumLiteral(notificationImportanceEEnum, NotificationImportance.MEDIUM);
+		addEEnumLiteral(notificationImportanceEEnum, NotificationImportance.HIGH);
+
+		initEEnum(severityEEnum, Severity.class, "Severity");
+		addEEnumLiteral(severityEEnum, Severity.OK);
+		addEEnumLiteral(severityEEnum, Severity.INFO);
+		addEEnumLiteral(severityEEnum, Severity.WARNING);
+		addEEnumLiteral(severityEEnum, Severity.ERROR);
 
 		// Initialize data types
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

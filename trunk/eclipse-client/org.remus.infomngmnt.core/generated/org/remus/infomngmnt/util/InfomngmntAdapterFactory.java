@@ -229,6 +229,14 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createCalendarEntryAdapter();
 			}
 			@Override
+			public Adapter caseNotification(Notification object) {
+				return createNotificationAdapter();
+			}
+			@Override
+			public Adapter caseNotificationCollection(NotificationCollection object) {
+				return createNotificationCollectionAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -683,6 +691,34 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCalendarEntryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.Notification <em>Notification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.Notification
+	 * @generated
+	 */
+	public Adapter createNotificationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.NotificationCollection <em>Notification Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.NotificationCollection
+	 * @generated
+	 */
+	public Adapter createNotificationCollectionAdapter() {
 		return null;
 	}
 

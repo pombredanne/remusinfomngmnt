@@ -14,7 +14,6 @@
  */
 package org.remus.infomngmnt.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -36,19 +35,19 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.SynchronizationMetadata;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.SynchronizationMetadata} object.
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * This is the item provider adapter for a
+ * {@link org.remus.infomngmnt.SynchronizationMetadata} object. <!--
+ * begin-user-doc --> <!-- end-user-doc -->
+ * 
  * @generated
  */
-public class SynchronizationMetadataItemProvider
-	extends AdapterItemProvider
-	implements
-		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider {
+public class SynchronizationMetadataItemProvider extends AdapterItemProvider implements
+		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+		IItemLabelProvider, IItemPropertySource, IItemColorProvider {
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This constructs an instance from a factory and a notifier. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SynchronizationMetadataItemProvider(AdapterFactory adapterFactory) {
@@ -56,9 +55,9 @@ public class SynchronizationMetadataItemProvider
 	}
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This returns the property descriptors for the adapted class. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -77,9 +76,9 @@ public class SynchronizationMetadataItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Repository Id feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This adds a property descriptor for the Repository Id feature. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addRepositoryIdPropertyDescriptor(Object object) {
@@ -100,8 +99,8 @@ public class SynchronizationMetadataItemProvider
 
 	/**
 	 * This adds a property descriptor for the Url feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void addUrlPropertyDescriptor(Object object) {
@@ -121,9 +120,9 @@ public class SynchronizationMetadataItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Readonly feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This adds a property descriptor for the Readonly feature. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addReadonlyPropertyDescriptor(Object object) {
@@ -144,8 +143,7 @@ public class SynchronizationMetadataItemProvider
 
 	/**
 	 * This adds a property descriptor for the Last Synchronisation feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void addLastSynchronisationPropertyDescriptor(Object object) {
@@ -166,8 +164,8 @@ public class SynchronizationMetadataItemProvider
 
 	/**
 	 * This adds a property descriptor for the Hash feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void addHashPropertyDescriptor(Object object) {
@@ -187,9 +185,9 @@ public class SynchronizationMetadataItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Sync State feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This adds a property descriptor for the Sync State feature. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addSyncStatePropertyDescriptor(Object object) {
@@ -210,8 +208,8 @@ public class SynchronizationMetadataItemProvider
 
 	/**
 	 * This returns SynchronizationMetadata.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -221,8 +219,8 @@ public class SynchronizationMetadataItemProvider
 
 	/**
 	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -234,10 +232,11 @@ public class SynchronizationMetadataItemProvider
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This handles model notifications by calling {@link #updateChildren} to
+	 * update any cached children and by creating a viewer notification, which
+	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
@@ -245,25 +244,27 @@ public class SynchronizationMetadataItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SynchronizationMetadata.class)) {
-			case InfomngmntPackage.SYNCHRONIZATION_METADATA__REPOSITORY_ID:
-			case InfomngmntPackage.SYNCHRONIZATION_METADATA__URL:
-			case InfomngmntPackage.SYNCHRONIZATION_METADATA__READONLY:
-			case InfomngmntPackage.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION:
-			case InfomngmntPackage.SYNCHRONIZATION_METADATA__HASH:
-			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
-				// We also have to update the parent item.
-				fireNotifyChanged(new ViewerNotification(notification, ((EObject) notification.getNotifier()).eContainer(), false, true));
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
+		case InfomngmntPackage.SYNCHRONIZATION_METADATA__REPOSITORY_ID:
+		case InfomngmntPackage.SYNCHRONIZATION_METADATA__URL:
+		case InfomngmntPackage.SYNCHRONIZATION_METADATA__READONLY:
+		case InfomngmntPackage.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION:
+		case InfomngmntPackage.SYNCHRONIZATION_METADATA__HASH:
+		case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
+			// We also have to update the parent item.
+			fireNotifyChanged(new ViewerNotification(notification, ((EObject) notification
+					.getNotifier()).eContainer().eContainer(), true, true));
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
+					false, true));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s
+	 * describing the children that can be created under this object. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

@@ -65,7 +65,12 @@ public class SyncUtil {
 		Set<InformationUnitListItem> keySet = changeSet.getRemoteFullObjectMap().keySet();
 		for (InformationUnitListItem informationUnitListItem : keySet) {
 			if (informationUnitListItem.getId().equals(listItem.getId())) {
-				return changeSet.getRemoteFullObjectMap().get(informationUnitListItem);
+				InformationUnit informationUnit = changeSet.getRemoteFullObjectMap().get(
+						informationUnitListItem);
+				if (informationUnit == null) {
+					informationUnit = repository.getFullObject(listItem, monitor);
+				}
+				return informationUnit;
 			}
 		}
 		return repository.getFullObject(listItem, monitor);

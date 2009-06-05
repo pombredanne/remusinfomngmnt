@@ -60,6 +60,12 @@
             name="Main"
             restorable="true">
       </view>
+      <view
+            class="org.remus.infomngmnt.ui.views.NotificationView"
+            id="org.remus.infomngmnt.ui.views.NotificationView"
+            name="Notifications"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -119,6 +125,13 @@
             multiple="false"
             name="Clock"
             sectionControl="org.remus.infomngmnt.ui.tray.ClockTray">
+      </sectionBox>
+      <sectionBox
+            id="org.remus.infomngmnt.ui.notificationBox"
+            multiple="false"
+            name="Notifications"
+            preferencesclass="org.remus.infomngmnt.ui.notification.NotificationTrayPreferences"
+            sectionControl="org.remus.infomngmnt.ui.notification.NotificationTraySection">
       </sectionBox>
    </extension>
    <extension

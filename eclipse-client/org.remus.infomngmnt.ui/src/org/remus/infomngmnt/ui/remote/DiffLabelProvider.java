@@ -31,7 +31,6 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.common.ui.image.SWTResourceManager;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -87,6 +86,9 @@ public class DiffLabelProvider extends LabelProvider {
 						case REPLACE_REMOTE:
 							return NLS.bind("Element \"{0}\" was updated locally",
 									((AbstractInformationUnit) parent).getLabel());
+						case DELETE_REMOTE:
+							return NLS.bind("Element \"{0}\" will be deleted at the repository",
+									((AbstractInformationUnit) parent).getLabel());
 						default:
 							break;
 						}
@@ -130,6 +132,7 @@ public class DiffLabelProvider extends LabelProvider {
 							((AbstractInformationUnit) rightElement).getLabel());
 				}
 				break;
+
 			default:
 				break;
 			}
@@ -153,6 +156,7 @@ public class DiffLabelProvider extends LabelProvider {
 				}
 				break;
 			case REPLACE_REMOTE:
+
 				break;
 
 			default:

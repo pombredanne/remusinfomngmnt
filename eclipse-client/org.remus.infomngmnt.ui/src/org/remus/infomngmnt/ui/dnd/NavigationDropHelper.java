@@ -26,6 +26,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -183,12 +184,24 @@ public class NavigationDropHelper {
 					if (syncMetaData.getSyncState() != SynchronizationState.NOT_ADDED
 							&& ((IAdaptable) ((EObject) object).eContainer())
 									.getAdapter(SynchronizationMetadata.class) != null) {
-						compoundCommand
-								.append(new CreateChildCommand(
-										EditingUtil.getInstance().getNavigationEditingDomain(),
-										((EObject) object).eContainer(),
-										InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS,
-										EcoreUtil.copy((EObject) object), Collections.EMPTY_LIST));
+						SynchronizableObject newObject = (SynchronizableObject) EcoreUtil
+								.copy((EObject) object);
+						newObject.getSynchronizationMetaData().setSyncState(
+								SynchronizationState.LOCAL_DELETED);
+						EReference newReference = null;
+						if (newObject instanceof Category) {
+							((Category) newObject).setId(IdFactory.createNewId(null));
+							newReference = InfomngmntPackage.Literals.CATEGORY__CHILDREN;
+						} else if (newObject instanceof InformationUnitListItem) {
+							((InformationUnitListItem) newObject)
+									.setId(IdFactory.createNewId(null));
+							newReference = InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT;
+						}
+						if (newReference != null) {
+							compoundCommand.append(new CreateChildCommand(EditingUtil.getInstance()
+									.getNavigationEditingDomain(), ((EObject) object).eContainer(),
+									newReference, newObject, Collections.EMPTY_LIST));
+						}
 					}
 					/*
 					 * The target is not under sync-control remove the
@@ -217,7 +230,16 @@ public class NavigationDropHelper {
 							}
 						}
 
-					} else {
+					}
+					// else if ((target instanceof Category && ((EObject)
+					// object).eContainer() == target)
+					// || (target instanceof InformationUnitListItem &&
+					// ((EObject) object)
+					// .eContainer() == ((EObject) target).eContainer())) {
+					// // do nothing. Object was moved withing the same
+					// // category.
+					// }
+					else {
 						/*
 						 * transfer the repository-id for the dragged object and
 						 * its children.

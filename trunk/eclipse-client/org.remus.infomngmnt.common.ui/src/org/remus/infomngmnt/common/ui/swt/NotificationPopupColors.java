@@ -20,7 +20,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * Helper Class to create the colors for the {@link AbstractNotificationPopup}.
+ * Helper Class to create the colors for the {@link AbstractDesktopWindow}.
  * <p>
  * Note: Copied from FormColors of UI Forms.
  * </p>

@@ -234,22 +234,24 @@ public class LuceneSearchService {
 										try {
 											final InformationUnit infoUnit = EditingUtil
 													.getInstance()
-													.getObjectFromFile(
-															path,
+													.getObjectFromUri(
+															path.getFullPath(),
 															InfomngmntPackage.Literals.INFORMATION_UNIT,
-															false);
-											monitor.setTaskName(NLS.bind("Adding {0} to queue",
-													infoUnit.getLabel()));
-											IInfoType infoTypeByType = InformationExtensionManager
-													.getInstance().getInfoTypeByType(
-															infoUnit.getType());
-											if (!infoTypeByType.isExcludeFromIndex()) {
-												writer.addDocument(getSearchService()
-														.getLuceneDocument(infoUnit, project,
-																monitor));
+															false, null, false);
+											if (infoUnit != null) {
+												monitor.setTaskName(NLS.bind("Adding {0} to queue",
+														infoUnit.getLabel()));
+												IInfoType infoTypeByType = InformationExtensionManager
+														.getInstance().getInfoTypeByType(
+																infoUnit.getType());
+												if (!infoTypeByType.isExcludeFromIndex()) {
+													writer.addDocument(getSearchService()
+															.getLuceneDocument(infoUnit, project,
+																	monitor));
+												}
+												infoUnit.eResource().unload();
+												monitor.worked(1);
 											}
-											infoUnit.eResource().unload();
-											monitor.worked(1);
 										} catch (final Exception e) {
 											e.printStackTrace();
 										}

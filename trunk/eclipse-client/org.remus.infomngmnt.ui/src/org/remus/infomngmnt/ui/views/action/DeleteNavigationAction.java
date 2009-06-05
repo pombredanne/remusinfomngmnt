@@ -64,8 +64,8 @@ public class DeleteNavigationAction extends DeleteAction {
 				//
 				// cc.append(CommandFactory.DELETE_INFOUNIT(Arrays.asList(allInfoUnitItems),
 				// getEditingDomain()));
-				cc.append(CommandFactory.DELETE_CATEGORY((org.remus.infomngmnt.Category) object,
-						getEditingDomain()));
+				cc.append(CommandFactory.DELETE_SYNCHRONIZABLE_CATEGORY(
+						(org.remus.infomngmnt.Category) object, getEditingDomain()));
 			} else if (object instanceof InformationUnitListItem) {
 				cc.append(CommandFactory.DELETE_INFOUNIT(Collections
 						.singletonList((InformationUnitListItem) object), getEditingDomain()));

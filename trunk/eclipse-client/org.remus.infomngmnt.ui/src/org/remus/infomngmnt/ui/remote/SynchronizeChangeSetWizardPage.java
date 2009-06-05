@@ -61,7 +61,11 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		// this.treeViewer.setLabelProvider(new
-		// AdapterFactoryLabelProvider(AdapterUtils.getAdapterFactory()));
+		// AdapterFactoryLabelProvider(AdapterUtils
+		// .getAdapterFactory()));
+		// this.treeViewer.setContentProvider(new
+		// AdapterFactoryContentProvider(AdapterUtils
+		// .getAdapterFactory()));
 		this.diffLabelProvider = new DiffLabelProvider();
 		this.diffLabelProvider.setChangeSet(this.changeSet);
 		this.treeViewer.setLabelProvider(this.diffLabelProvider);

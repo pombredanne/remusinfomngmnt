@@ -65,9 +65,10 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
@@ -302,7 +303,13 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 			@Override
 			public boolean select(final Viewer viewer, final Object parentElement,
 					final Object element) {
-				return ((EObject) element).eContainingFeature() != InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__MARKED_AS_DELETE_ITEMS;
+				if (element instanceof SynchronizableObject
+						&& ((SynchronizableObject) element).getSynchronizationMetaData() != null
+						&& ((SynchronizableObject) element).getSynchronizationMetaData()
+								.getSyncState() == SynchronizationState.LOCAL_DELETED) {
+					return false;
+				}
+				return true;
 			}
 
 		});

@@ -30,7 +30,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
-import org.remus.infomngmnt.common.ui.swt.AbstractNotificationPopup;
+import org.remus.infomngmnt.common.ui.swt.AbstractDesktopWindow;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.FadeJob;
 import org.remus.infomngmnt.common.ui.swt.SwtFadeUtil.IFadeListener;
@@ -43,7 +43,7 @@ import org.remus.infomngmt.common.ui.uimodel.TraySectionCollection;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 @SuppressWarnings("restriction")
-public class DesktopWindow extends AbstractNotificationPopup {
+public class DesktopWindow extends AbstractDesktopWindow {
 
 	private final Display display;
 

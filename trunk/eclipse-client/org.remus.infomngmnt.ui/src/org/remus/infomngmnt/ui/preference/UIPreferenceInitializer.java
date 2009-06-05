@@ -35,6 +35,8 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 	public static final String USER_DOCUMENTATION_LINK = "USER_DOCUMENTATION_LINK"; //$NON-NLS-1$
 	public static final String VIDEO_LINK = "VIDEO_LINK"; //$NON-NLS-1$
 
+	public static final String AMOUNT_SHOWN_NOTIFICATIONS_TRAY = "AMOUNT_SHOWN_NOTIFICATIONS_TRAY"; //$NON-NLS-1$
+
 	/**
 	 * 
 	 */
@@ -60,6 +62,7 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 		this.store.setDefault(VIDEO_LINK,
 				"http://remus-software.org/media/screencasts/getting-started/video.html");
 		PreferenceConverter.setDefault(this.store, DESKTOP_LOCATION, new Point(10000, 10000));
+		this.store.setDefault(AMOUNT_SHOWN_NOTIFICATIONS_TRAY, 3);
 	}
 
 }

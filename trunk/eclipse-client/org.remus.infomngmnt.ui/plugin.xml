@@ -232,6 +232,10 @@
             id="org.remus.infomngmnt.ui.openWelcome"
             name="Welcome">
       </command>
+      <command
+            id="org.remus.infomngmnt.ui.ignoreForSynchronization"
+            name="Add to Sync-Ignore">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -328,6 +332,15 @@
                   </test>
                </iterate>
             </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.AddToSyncIgnoreHandler"
+            commandId="org.remus.infomngmnt.ui.ignoreForSynchronization">
+         <activeWhen>
+            <reference
+                  definitionId="selectionCanBeFiltered">
+            </reference>
          </activeWhen>
       </handler>
    </extension>
@@ -509,6 +522,14 @@
                   visible="true">
             </separator>
             <command
+                  commandId="org.remus.infomngmnt.ui.ignoreForSynchronization"
+                  icon="icons/iconexperience/16/funnel.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+            <command
                   commandId="org.remus.infomngmnt.ui.disconnect"
                   icon="icons/iconexperience/16/server_delete.png"
                   style="push">
@@ -571,6 +592,26 @@
             </iterate>
          </and>
       </definition>
+      <definition
+            id="selectionIsUnderSyncControl">
+         <iterate
+               ifEmpty="false"
+               operator="and">
+            <test
+                  property="org.remus.infomngmnt.ui.isUnderSyncControl">
+            </test>
+         </iterate>
+      </definition>
+      <definition
+            id="selectionCanBeFiltered">
+         <iterate
+               ifEmpty="false"
+               operator="and">
+            <test
+                  property="org.remus.infomngmnt.ui.canIgnore">
+            </test>
+         </iterate>
+      </definition>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -578,7 +619,7 @@
             class="org.remus.infomngmnt.ui.propertytester.SynchronizableObjectItemTester"
             id="org.remus.infomngmnt.ui.ISynchronizableObjectTest"
             namespace="org.remus.infomngmnt.ui"
-            properties="canCommitOrReplace, canAdd"
+            properties="canCommitOrReplace, canAdd, isUnderSyncControl, canIgnore"
             type="org.remus.infomngmnt.SynchronizableObject">
       </propertyTester>
       <propertyTester

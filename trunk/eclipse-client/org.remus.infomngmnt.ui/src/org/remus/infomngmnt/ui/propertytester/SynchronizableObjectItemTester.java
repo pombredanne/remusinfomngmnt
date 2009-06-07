@@ -24,14 +24,16 @@ import org.remus.infomngmnt.SynchronizationState;
  */
 public class SynchronizableObjectItemTester extends PropertyTester {
 
-
-	
 	public static final String PROPERTY_REPLACECOMMIT = "canCommitOrReplace"; //$NON-NLS-1$
 	public static final String PROPERTY_LOCALONLY = "canAdd"; //$NON-NLS-1$
+	public static final String PROPERTY_IS_UNDER_SYNC = "isUnderSyncControl"; //$NON-NLS-1$
+	public static final String PROPERTY_IGNORE = "canIgnore"; //$NON-NLS-1$
 
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.expressions.IPropertyTester#test(java.lang.Object, java.lang.String, java.lang.Object[], java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.core.expressions.IPropertyTester#test(java.lang.Object,
+	 * java.lang.String, java.lang.Object[], java.lang.Object)
 	 */
 	public boolean test(final Object receiver, final String property, final Object[] args,
 			final Object expectedValue) {
@@ -40,12 +42,27 @@ public class SynchronizableObjectItemTester extends PropertyTester {
 			if (((SynchronizableObject) receiver).getAdapter(IProject.class) != null) {
 				return false;
 			}
-			SynchronizationMetadata metaData = ((SynchronizableObject) receiver).getSynchronizationMetaData();
+			SynchronizationMetadata metaData = ((SynchronizableObject) receiver)
+					.getSynchronizationMetaData();
 			if (PROPERTY_REPLACECOMMIT.equals(property)) {
-				return metaData != null && metaData.getSyncState() != SynchronizationState.NOT_ADDED;
+				return metaData != null
+						&& metaData.getSyncState() != SynchronizationState.NOT_ADDED
+						&& metaData.getSyncState() != SynchronizationState.IGNORED;
 			}
 			if (PROPERTY_LOCALONLY.equals(property)) {
-				return metaData != null && metaData.getSyncState() == SynchronizationState.NOT_ADDED;
+				return metaData != null
+						&& metaData.getSyncState() == SynchronizationState.NOT_ADDED
+						&& metaData.getSyncState() != SynchronizationState.IGNORED;
+			}
+			if (PROPERTY_IS_UNDER_SYNC.equals(property)) {
+				return metaData != null;
+			}
+			if (PROPERTY_IGNORE.equals(property)) {
+				return metaData != null
+						&& ((SynchronizableObject) receiver).eContainer() != null
+						&& ((SynchronizableObject) ((SynchronizableObject) receiver).eContainer())
+								.getSynchronizationMetaData() != null
+						&& metaData.getSyncState() != SynchronizationState.IGNORED;
 			}
 		}
 		return false;

@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.core.sync;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -362,6 +363,7 @@ public class ChangeSetManager {
 
 		CategoryUtil.recursivelySortId(remoteCopy);
 		CategoryUtil.recursivelySortId(copy);
+		filterIgnoredItems(copy);
 
 		TreeIterator<EObject> eAllContents = copy.eAllContents();
 		while (eAllContents.hasNext()) {
@@ -417,6 +419,24 @@ public class ChangeSetManager {
 		}
 		return returnValue;
 		// Computing differences
+	}
+
+	private void filterIgnoredItems(final Category copy) {
+		List<InformationUnitListItem> informationUnit = new ArrayList<InformationUnitListItem>(copy
+				.getInformationUnit());
+		for (InformationUnitListItem informationUnitListItem : informationUnit) {
+			if (informationUnitListItem.getSynchronizationMetaData().getSyncState() == SynchronizationState.IGNORED) {
+				copy.getInformationUnit().remove(informationUnitListItem);
+			}
+		}
+		EList<Category> children = copy.getChildren();
+		List<Category> arrayList = new ArrayList<Category>(children);
+		for (Category category : arrayList) {
+			if (category.getSynchronizationMetaData().getSyncState() == SynchronizationState.IGNORED) {
+				copy.getChildren().remove(category);
+			}
+		}
+
 	}
 
 	public void prepareSyncActions(final EList<DiffElement> diffModel, final ChangeSetItem item,

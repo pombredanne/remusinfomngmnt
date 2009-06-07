@@ -41,6 +41,11 @@ public class SyncStateParticipant implements ISaveParticipant {
 				&& ((InformationUnitListItem) adapter).getSynchronizationMetaData() != null) {
 			SynchronizationMetadata synchronizationMetadata = ((InformationUnitListItem) adapter)
 					.getSynchronizationMetaData();
+			if (synchronizationMetadata.getSyncState() == SynchronizationState.LOCAL_EDITED
+					|| synchronizationMetadata.getSyncState() == SynchronizationState.NOT_ADDED
+					|| synchronizationMetadata.getSyncState() == SynchronizationState.IGNORED) {
+				return;
+			}
 			RemoteRepository itemById = InfomngmntEditPlugin.getPlugin().getService(
 					IRepositoryService.class).getRepositoryById(
 					synchronizationMetadata.getRepositoryId());
@@ -74,18 +79,14 @@ public class SyncStateParticipant implements ISaveParticipant {
 								equals = true;
 							}
 							if (!equals) {
-								if (synchronizationMetadata.getSyncState() != SynchronizationState.NOT_ADDED) {
-									synchronizationMetadata
-											.setSyncState(SynchronizationState.LOCAL_EDITED);
-									break;
-								}
+								synchronizationMetadata
+										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								break;
+
 							}
 						}
-
 					} else {
-						if (synchronizationMetadata.getSyncState() != SynchronizationState.NOT_ADDED) {
-							synchronizationMetadata.setSyncState(SynchronizationState.LOCAL_EDITED);
-						}
+						synchronizationMetadata.setSyncState(SynchronizationState.LOCAL_EDITED);
 					}
 				} catch (CoreException e) {
 					// TODO Auto-generated catch block

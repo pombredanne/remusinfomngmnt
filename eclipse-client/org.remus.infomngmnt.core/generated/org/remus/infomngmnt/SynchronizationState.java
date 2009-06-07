@@ -86,7 +86,15 @@ public enum SynchronizationState implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	IN_SYNC(5, "IN_SYNC", "IN_SYNC");
+	IN_SYNC(5, "IN_SYNC", "IN_SYNC"), /**
+	 * The '<em><b>IGNORED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #IGNORED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	IGNORED(6, "IGNORED", "IGNORED");
 
 	/**
 	 * The '<em><b>LOCAL DELETED</b></em>' literal value.
@@ -179,6 +187,21 @@ public enum SynchronizationState implements Enumerator {
 	public static final int IN_SYNC_VALUE = 5;
 
 	/**
+	 * The '<em><b>IGNORED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>IGNORED</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #IGNORED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IGNORED_VALUE = 6;
+
+	/**
 	 * An array of all the '<em><b>Synchronization State</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -192,6 +215,7 @@ public enum SynchronizationState implements Enumerator {
 			LOCAL_EDITED,
 			TARGET_EDITED,
 			IN_SYNC,
+			IGNORED,
 		};
 
 	/**
@@ -248,6 +272,7 @@ public enum SynchronizationState implements Enumerator {
 			case LOCAL_EDITED_VALUE: return LOCAL_EDITED;
 			case TARGET_EDITED_VALUE: return TARGET_EDITED;
 			case IN_SYNC_VALUE: return IN_SYNC;
+			case IGNORED_VALUE: return IGNORED;
 		}
 		return null;
 	}

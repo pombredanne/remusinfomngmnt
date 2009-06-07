@@ -15,6 +15,7 @@
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/LOCAL_EDITED"/>
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/TARGET_EDITED"/>
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/IN_SYNC"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/IGNORED"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//SynchronizationAction">
       <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/REPLACE_LOCAL"/>

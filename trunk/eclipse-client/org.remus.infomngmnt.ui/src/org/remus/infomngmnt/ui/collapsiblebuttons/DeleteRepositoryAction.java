@@ -15,6 +15,7 @@ package org.remus.infomngmnt.ui.collapsiblebuttons;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -34,7 +35,10 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * JFace Action which unsets all {@link SynchronizationMetadata} on the
@@ -74,7 +78,6 @@ public class DeleteRepositoryAction extends DeleteAction {
 											.getSynchronizationMetaData().getRepositoryId());
 						}
 					};
-					System.out.println("TEST");
 					SELECT select = new SELECT(new FROM(model),
 							new WHERE(condition.AND(condition2)));
 					IQueryResult execute = select.execute();
@@ -83,7 +86,16 @@ public class DeleteRepositoryAction extends DeleteAction {
 						eObject
 								.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
 					}
-
+					try {
+						AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin
+								.getPlugin().getService(IRepositoryExtensionService.class)
+								.getItemByRepository((RemoteRepository) object);
+						if (itemByRepository != null) {
+							itemByRepository.getCredentialProvider().delete();
+						}
+					} catch (CoreException e) {
+						// do nothing
+					}
 				}
 			}
 		}

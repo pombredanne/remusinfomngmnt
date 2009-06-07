@@ -6,6 +6,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
+import org.remus.infomngmnt.ui.notification.NotificationPopupManager;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -15,8 +16,12 @@ public class UIPlugin extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.ui";
 
+	private static final int NOTIFICATION_DELAY = 5000;
+
 	// The shared instance
 	private static UIPlugin plugin;
+
+	private NotificationPopupManager popupManager;
 
 	/**
 	 * The constructor
@@ -47,6 +52,8 @@ public class UIPlugin extends AbstractUIPlugin {
 			}
 		});
 		plugin = this;
+		this.popupManager = new NotificationPopupManager();
+		this.popupManager.startNotification(NOTIFICATION_DELAY);
 	}
 
 	/*

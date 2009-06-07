@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
 import del.icio.us.Delicious;
@@ -232,8 +233,11 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 					 */
 					SynchronizationMetadata adapter2 = (SynchronizationMetadata) item2commit
 							.getAdapter(SynchronizationMetadata.class);
-					List<Post> postForUrl = getApi().getPostsForHash(adapter2.getHash());
-					boolean replace = postForUrl.size() > 0;
+					List<Post> postForUrl = null;
+					if (adapter2.getHash() != null) {
+						postForUrl = getApi().getPostsForHash(adapter2.getHash());
+					}
+					boolean replace = postForUrl != null && postForUrl.size() > 0;
 					if (replace) {
 						Post post = postForUrl.get(0);
 						getApi().deletePost(post.getHref());
@@ -295,8 +299,40 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				return returnValue;
 			}
 
+		} else if (item instanceof Category) {
+			EList<Category> children = ((Category) item).getChildren();
+			for (Category category : children) {
+				addToRepository(category, monitor);
+			}
+			EList<InformationUnitListItem> informationUnit = ((Category) item).getInformationUnit();
+			for (InformationUnitListItem informationUnitListItem : informationUnit) {
+				addToRepository(informationUnitListItem, monitor);
+			}
+
 		}
-		return null;
+		return getRemoteObjectBySynchronizableObject(item, monitor);
+	}
+
+	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
+			throws RemoteException {
+		if (item instanceof InformationUnitListItem) {
+			RemoteObject remoteObjectBySynchronizableObject = getRemoteObjectBySynchronizableObject(
+					item, monitor);
+			Post wrappedObject = (Post) remoteObjectBySynchronizableObject.getWrappedObject();
+			getApi().deletePost(wrappedObject.getHref());
+		} else if (item instanceof Category) {
+			EList<InformationUnitListItem> informationUnit = ((Category) item).getInformationUnit();
+			for (InformationUnitListItem informationUnitListItem : informationUnit) {
+				deleteFromRepository(informationUnitListItem, monitor);
+			}
+			EList<Category> children = ((Category) item).getChildren();
+			for (Category category : children) {
+				deleteFromRepository(category, monitor);
+			}
+			RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(item, monitor);
+			Tag wrappedObject = (Tag) remoteObject.getWrappedObject();
+			getApi().deleteTag(wrappedObject.getTag());
+		}
 	}
 
 	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,

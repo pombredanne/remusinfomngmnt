@@ -68,8 +68,9 @@ import del.icio.us.beans.Subscription;
 import del.icio.us.beans.Tag;
 
 /**
- * Delicious is a class for accessing the <a href="http://del.icio.us/doc/api">del.icio.us API</a>.
- *
+ * Delicious is a class for accessing the <a
+ * href="http://del.icio.us/doc/api">del.icio.us API</a>.
+ * 
  * @author David Czarnecki
  * @version $Id: Delicious.java,v 1.24 2007/01/19 00:14:43 czarneckid Exp $
  * @since 1.0
@@ -83,22 +84,24 @@ public class Delicious {
 	private String apiEndpoint;
 	private int httpResult;
 	private Object resultMetaInformation;
-	
+
 	/**
-	 * By convention you have to wait between two requests to the
-	 * delicious platform at least 1 second, otherwise you get 
-	 * throttled automatically. So we have to use this intervall
-	 * between two requests.
+	 * By convention you have to wait between two requests to the delicious
+	 * platform at least 1 second, otherwise you get throttled automatically. So
+	 * we have to use this intervall between two requests.
 	 */
 	private static final long WAIT_INTERVALL = 1500;
 
 	public static long lastApiCall;
 
 	/**
-	 * Create an object to interact with del.icio.us. API endpoint defaults to: http://del.icio.us/api/
-	 *
-	 * @param username del.icio.us username
-	 * @param password del.icio.us password
+	 * Create an object to interact with del.icio.us. API endpoint defaults to:
+	 * http://del.icio.us/api/
+	 * 
+	 * @param username
+	 *            del.icio.us username
+	 * @param password
+	 *            del.icio.us password
 	 */
 	public Delicious(final String username, final String password) {
 		this(username, password, DeliciousConstants.API_ENDPOINT);
@@ -106,18 +109,24 @@ public class Delicious {
 
 	/**
 	 * Create an object to interact with del.icio.us
-	 *
-	 * @param username    del.icio.us username
-	 * @param password    del.icio.us password
-	 * @param apiEndpoint del.icio.us API endpoint
+	 * 
+	 * @param username
+	 *            del.icio.us username
+	 * @param password
+	 *            del.icio.us password
+	 * @param apiEndpoint
+	 *            del.icio.us API endpoint
 	 */
 	public Delicious(final String username, final String password, final String apiEndpoint) {
 		this.apiEndpoint = apiEndpoint;
 		this.httpClient = new HttpClient();
 		HttpClientParams httpClientParams = new HttpClientParams();
-		DefaultHttpMethodRetryHandler defaultHttpMethodRetryHandler = new DefaultHttpMethodRetryHandler(0, false);
-		httpClientParams.setParameter(HttpMethodParams.USER_AGENT, DeliciousConstants.USER_AGENT_VALUE);
-		httpClientParams.setParameter(HttpClientParams.RETRY_HANDLER, defaultHttpMethodRetryHandler);
+		DefaultHttpMethodRetryHandler defaultHttpMethodRetryHandler = new DefaultHttpMethodRetryHandler(
+				0, false);
+		httpClientParams.setParameter(HttpMethodParams.USER_AGENT,
+				DeliciousConstants.USER_AGENT_VALUE);
+		httpClientParams
+				.setParameter(HttpClientParams.RETRY_HANDLER, defaultHttpMethodRetryHandler);
 		this.httpClient.setParams(httpClientParams);
 		this.httpClient.getState().setCredentials(AuthScope.ANY,
 				new UsernamePasswordCredentials(username, password));
@@ -137,12 +146,17 @@ public class Delicious {
 
 	/**
 	 * Create an object to interact with del.icio.us
-	 *
-	 * @param username    del.icio.us username
-	 * @param password    del.icio.us password
-	 * @param apiEndpoint del.icio.us API endpoint
-	 * @param proxyHost   Proxy host
-	 * @param proxyPort   Proxy port
+	 * 
+	 * @param username
+	 *            del.icio.us username
+	 * @param password
+	 *            del.icio.us password
+	 * @param apiEndpoint
+	 *            del.icio.us API endpoint
+	 * @param proxyHost
+	 *            Proxy host
+	 * @param proxyPort
+	 *            Proxy port
 	 * @since 1.1
 	 */
 	public Delicious(final String username, final String password, final String apiEndpoint,
@@ -155,9 +169,11 @@ public class Delicious {
 	/**
 	 * Sets proxy configuration information. This method must be called before
 	 * any calls to the API if you require proxy configuration.
-	 *
-	 * @param proxyHost Proxy host
-	 * @param proxyPort Proxy port
+	 * 
+	 * @param proxyHost
+	 *            Proxy host
+	 * @param proxyPort
+	 *            Proxy port
 	 * @since 1.1
 	 */
 	public void setProxyConfiguration(final String proxyHost, final int proxyPort) {
@@ -168,21 +184,27 @@ public class Delicious {
 	}
 
 	/**
-	 * Sets proxy authentication information. This method must be called before any
-	 * calls to the API if you require proxy authentication.
-	 *
-	 * @param proxyUsername Username to access proxy
-	 * @param proxyPassword Password to access proxy
+	 * Sets proxy authentication information. This method must be called before
+	 * any calls to the API if you require proxy authentication.
+	 * 
+	 * @param proxyUsername
+	 *            Username to access proxy
+	 * @param proxyPassword
+	 *            Password to access proxy
 	 * @since 1.8
 	 */
-	public void setProxyAuthenticationConfiguration(final String proxyUsername, final String proxyPassword) {
-		this.httpClient.getState().setProxyCredentials(AuthScope.ANY, new UsernamePasswordCredentials(proxyUsername, proxyPassword));
+	public void setProxyAuthenticationConfiguration(final String proxyUsername,
+			final String proxyPassword) {
+		this.httpClient.getState().setProxyCredentials(AuthScope.ANY,
+				new UsernamePasswordCredentials(proxyUsername, proxyPassword));
 	}
 
 	/**
-	 * Set a new API endpoint which may be different from the default {@link DeliciousConstants.API_ENDPOINT}
-	 *
-	 * @param apiEndpoint New API endpoint
+	 * Set a new API endpoint which may be different from the default
+	 * {@link DeliciousConstants.API_ENDPOINT}
+	 * 
+	 * @param apiEndpoint
+	 *            New API endpoint
 	 * @since 2.0
 	 */
 	public void setApiEndpoint(final String apiEndpoint) {
@@ -191,7 +213,7 @@ public class Delicious {
 
 	/**
 	 * Return the HTTP status code of the last operation
-	 *
+	 * 
 	 * @return HTTP status code
 	 */
 	public int getHttpResult() {
@@ -200,8 +222,9 @@ public class Delicious {
 
 	/**
 	 * Return list of {@link DeliciousDate} objects
-	 *
-	 * @param tag Filter by this tag (optional)
+	 * 
+	 * @param tag
+	 *            Filter by this tag (optional)
 	 * @return List of {@link DeliciousDate} objects
 	 */
 	public List getDatesWithPost(final String tag) {
@@ -214,7 +237,7 @@ public class Delicious {
 
 		if (!DeliciousUtils.checkNullOrBlank(tag)) {
 			NameValuePair tagParam = new NameValuePair(DeliciousConstants.TAG_PARAMETER, tag);
-			get.setQueryString(new NameValuePair[]{tagParam});
+			get.setQueryString(new NameValuePair[] { tagParam });
 		}
 
 		try {
@@ -222,7 +245,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -231,14 +255,17 @@ public class Delicious {
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
 
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList dateItems = document.getElementsByTagName(DeliciousConstants.DATE_TAG);
 				if (dateItems != null && dateItems.getLength() > 0) {
 					for (int i = 0; i < dateItems.getLength(); i++) {
 						Node dateItem = dateItems.item(i);
 						DeliciousDate date;
-						String count = dateItem.getAttributes().getNamedItem(DeliciousConstants.COUNT_ATTRIBUTE).getNodeValue();
-						String dateAttribute = dateItem.getAttributes().getNamedItem(DeliciousConstants.DATE_ATTRIBUTE).getNodeValue();
+						String count = dateItem.getAttributes().getNamedItem(
+								DeliciousConstants.COUNT_ATTRIBUTE).getNodeValue();
+						String dateAttribute = dateItem.getAttributes().getNamedItem(
+								DeliciousConstants.DATE_ATTRIBUTE).getNodeValue();
 						date = new DeliciousDate(Integer.parseInt(count), dateAttribute);
 
 						dates.add(date);
@@ -257,7 +284,7 @@ public class Delicious {
 
 	/**
 	 * Return list of {@link DeliciousDate} objects
-	 *
+	 * 
 	 * @return List of {@link DeliciousDate} objects
 	 * @since 2.0
 	 */
@@ -267,7 +294,7 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Tag} objects
-	 *
+	 * 
 	 * @return List of {@link Tag} objects
 	 */
 	public List getTags() {
@@ -283,7 +310,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -291,14 +319,17 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList tagItems = document.getElementsByTagName(DeliciousConstants.TAG_TAG);
 				if (tagItems != null && tagItems.getLength() > 0) {
 					for (int i = 0; i < tagItems.getLength(); i++) {
 						Node tagItem = tagItems.item(i);
 						Tag tag;
-						String count = tagItem.getAttributes().getNamedItem(DeliciousConstants.COUNT_ATTRIBUTE).getNodeValue();
-						String tagAttribute = tagItem.getAttributes().getNamedItem(DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
+						String count = tagItem.getAttributes().getNamedItem(
+								DeliciousConstants.COUNT_ATTRIBUTE).getNodeValue();
+						String tagAttribute = tagItem.getAttributes().getNamedItem(
+								DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
 						tag = new Tag(Integer.parseInt(count), tagAttribute);
 						tags.add(tag);
 					}
@@ -316,14 +347,19 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Post} objects
-	 *
-	 * @param filterTag filter by this tag (optional)
-	 * @param date      Filter by this date
-	 * @param url       URL of post to retrieve (if present, only retrieves a single {@link Post} object
+	 * 
+	 * @param filterTag
+	 *            filter by this tag (optional)
+	 * @param date
+	 *            Filter by this date
+	 * @param url
+	 *            URL of post to retrieve (if present, only retrieves a single
+	 *            {@link Post} object
 	 * @return List of {@link Post} objects
 	 * @since 1.8
 	 */
-	public List getPosts(final String filterTag, final Date date, final String url, final String hash) {
+	public List getPosts(final String filterTag, final Date date, final String url,
+			final String hash) {
 		clearResultMetaInformation();
 		List posts = new ArrayList();
 		StringBuffer result = new StringBuffer();
@@ -338,7 +374,8 @@ public class Delicious {
 		}
 
 		if (date != null) {
-			NameValuePair dt = new NameValuePair(DeliciousConstants.DT_PARAMETER, DeliciousUtils.getDeliciousDate(date));
+			NameValuePair dt = new NameValuePair(DeliciousConstants.DT_PARAMETER, DeliciousUtils
+					.getDeliciousDate(date));
 			params.add(dt);
 		}
 
@@ -360,7 +397,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -368,24 +406,36 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList postItems = document.getElementsByTagName(DeliciousConstants.POST_TAG);
 				if (postItems != null && postItems.getLength() > 0) {
 					for (int i = 0; i < postItems.getLength(); i++) {
 						Node postItem = postItems.item(i);
 						Post post;
-						String href = postItem.getAttributes().getNamedItem(DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
-						String description = postItem.getAttributes().getNamedItem(DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
-						String hash2 = postItem.getAttributes().getNamedItem(DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
-						String tag = postItem.getAttributes().getNamedItem(DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
-						String time = postItem.getAttributes().getNamedItem(DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
+						String href = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
+						String description = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
+						String hash2 = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
+						String tag = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
+						String time = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
 						String extended = null;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
-							extended = postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
+							extended = postItem.getAttributes().getNamedItem(
+									DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
 						}
 						boolean shared = true;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER) != null) {
-							shared = Boolean.valueOf(postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER).getNodeValue()).booleanValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.SHARED_PARAMETER) != null) {
+							shared = Boolean.valueOf(
+									postItem.getAttributes().getNamedItem(
+											DeliciousConstants.SHARED_PARAMETER).getNodeValue())
+									.booleanValue();
 						}
 						post = new Post(href, description, extended, hash2, tag, time, shared);
 
@@ -405,18 +455,20 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Post} objects
-	 *
-	 * @param filterTag filter by this tag (optional)
-	 * @param date      Filter by this date
+	 * 
+	 * @param filterTag
+	 *            filter by this tag (optional)
+	 * @param date
+	 *            Filter by this date
 	 * @return List of {@link Post} objects
 	 */
 	public List getPostsForDate(final String filterTag, final Date date) {
-		return getPosts(filterTag, date, null,null);
+		return getPosts(filterTag, date, null, null);
 	}
 
 	/**
 	 * Return a list of {@link Post} objects
-	 *
+	 * 
 	 * @return List of {@link Post} objects
 	 * @since 2.0
 	 */
@@ -426,8 +478,9 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Post} objects for a given URL
-	 *
-	 * @param url Filter by this URL
+	 * 
+	 * @param url
+	 *            Filter by this URL
 	 * @return List of {@link Post} objects for a given URL
 	 * @since 1.8
 	 */
@@ -437,18 +490,21 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Post} objects for a given tag
-	 *
-	 * @param tag Filter by this tag
+	 * 
+	 * @param tag
+	 *            Filter by this tag
 	 * @return List of {@link Post} objects for a given tag
 	 * @since 1.8
 	 */
 	public List getPostsForTag(final String tag) {
 		return getPosts(tag, null, null, null);
 	}
+
 	/**
 	 * Return a list of {@link Post} objects for a given tag
-	 *
-	 * @param tag Filter by this tag
+	 * 
+	 * @param tag
+	 *            Filter by this tag
 	 * @return List of {@link Post} objects for a given tag
 	 * @since 1.8
 	 */
@@ -457,9 +513,11 @@ public class Delicious {
 	}
 
 	/**
-	 * Return a list of {@link Post} objects for a given set of tags. Calls {@link #getPostsForTag(String)} for each tag.
-	 *
-	 * @param tags Filter by these tags
+	 * Return a list of {@link Post} objects for a given set of tags. Calls
+	 * {@link #getPostsForTag(String)} for each tag.
+	 * 
+	 * @param tags
+	 *            Filter by these tags
 	 * @return List of {@link Post} objects for the given set of tags
 	 * @since 1.8
 	 */
@@ -484,9 +542,11 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Post} objects
-	 *
-	 * @param filterTag filter by this tag (optional)
-	 * @param count     Must be &gt; 0 and &lt; 100
+	 * 
+	 * @param filterTag
+	 *            filter by this tag (optional)
+	 * @param count
+	 *            Must be &gt; 0 and &lt; 100
 	 * @return List of {@link Post} objects
 	 */
 	public List getRecentPosts(final String filterTag, int count) {
@@ -507,7 +567,8 @@ public class Delicious {
 
 		List params = new ArrayList();
 
-		NameValuePair countParam = new NameValuePair(DeliciousConstants.COUNT_PARAMETER, Integer.toString(count));
+		NameValuePair countParam = new NameValuePair(DeliciousConstants.COUNT_PARAMETER, Integer
+				.toString(count));
 		params.add(countParam);
 
 		if (!DeliciousUtils.checkNullOrBlank(filterTag)) {
@@ -524,7 +585,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -532,24 +594,36 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList postItems = document.getElementsByTagName(DeliciousConstants.POST_TAG);
 				if (postItems != null && postItems.getLength() > 0) {
 					for (int i = 0; i < postItems.getLength(); i++) {
 						Node postItem = postItems.item(i);
 						Post post;
-						String href = postItem.getAttributes().getNamedItem(DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
-						String description = postItem.getAttributes().getNamedItem(DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
-						String hash = postItem.getAttributes().getNamedItem(DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
-						String tag = postItem.getAttributes().getNamedItem(DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
-						String time = postItem.getAttributes().getNamedItem(DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
+						String href = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
+						String description = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
+						String hash = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
+						String tag = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
+						String time = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
 						String extended = null;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
-							extended = postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
+							extended = postItem.getAttributes().getNamedItem(
+									DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
 						}
 						boolean shared = true;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER) != null) {
-							shared = Boolean.valueOf(postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER).getNodeValue()).booleanValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.SHARED_PARAMETER) != null) {
+							shared = Boolean.valueOf(
+									postItem.getAttributes().getNamedItem(
+											DeliciousConstants.SHARED_PARAMETER).getNodeValue())
+									.booleanValue();
 						}
 						post = new Post(href, description, extended, hash, tag, time, shared);
 
@@ -569,19 +643,19 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Post} objects
-	 *
-	 * @param filterTag filter by this tag (optional)
+	 * 
+	 * @param filterTag
+	 *            filter by this tag (optional)
 	 * @return List of {@link Post} objects
 	 */
 	public List getRecentPosts(final String filterTag) {
 		return getRecentPosts(filterTag, DeliciousConstants.DEFAULT_POST_COUNT);
 	}
-	
-	
 
 	/**
-	 * Return a list of recent {@link Post} objects; uses default number of items to retrieve {@link DeliciousConstants#DEFAULT_POST_COUNT}
-	 *
+	 * Return a list of recent {@link Post} objects; uses default number of
+	 * items to retrieve {@link DeliciousConstants#DEFAULT_POST_COUNT}
+	 * 
 	 * @return List of {@link Post} objects
 	 * @since 2.0
 	 */
@@ -590,10 +664,12 @@ public class Delicious {
 	}
 
 	/**
-	 * Return a list of all {@link Post} objects. This method populates the result meta information
-	 * field with a {@link Date} object containing the last update time.
-	 *
-	 * @param filterTag Filter by this tag
+	 * Return a list of all {@link Post} objects. This method populates the
+	 * result meta information field with a {@link Date} object containing the
+	 * last update time.
+	 * 
+	 * @param filterTag
+	 *            Filter by this tag
 	 * @return List of all {@link Post} objects
 	 */
 	public List getAllPosts(final String filterTag) {
@@ -603,7 +679,8 @@ public class Delicious {
 
 		GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_ALL);
 		if (!DeliciousUtils.checkNullOrBlank(filterTag)) {
-			get.setQueryString(new NameValuePair[] {new NameValuePair(DeliciousConstants.TAG_PARAMETER, filterTag)});
+			get.setQueryString(new NameValuePair[] { new NameValuePair(
+					DeliciousConstants.TAG_PARAMETER, filterTag) });
 		}
 
 		get.setDoAuthentication(true);
@@ -613,7 +690,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -621,13 +699,16 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 
-				// Parse the <posts .../> item for meta information (update attribute)
+				// Parse the <posts .../> item for meta information (update
+				// attribute)
 				NodeList postsTag = document.getElementsByTagName(DeliciousConstants.POSTS_TAG);
 				if (postsTag != null && postsTag.getLength() > 0) {
 					Node postsItem = postsTag.item(0);
-					String updateTime = postsItem.getAttributes().getNamedItem(DeliciousConstants.UPDATE_ATTRIBUTE).getNodeValue();
+					String updateTime = postsItem.getAttributes().getNamedItem(
+							DeliciousConstants.UPDATE_ATTRIBUTE).getNodeValue();
 
 					this.resultMetaInformation = DeliciousUtils.getDateFromUTCString(updateTime);
 				}
@@ -638,18 +719,29 @@ public class Delicious {
 					for (int i = 0; i < postItems.getLength(); i++) {
 						Node postItem = postItems.item(i);
 						Post post;
-						String href = postItem.getAttributes().getNamedItem(DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
-						String description = postItem.getAttributes().getNamedItem(DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
-						String hash = postItem.getAttributes().getNamedItem(DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
-						String tag = postItem.getAttributes().getNamedItem(DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
-						String time = postItem.getAttributes().getNamedItem(DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
+						String href = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
+						String description = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
+						String hash = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
+						String tag = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
+						String time = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
 						String extended = null;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
-							extended = postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
+							extended = postItem.getAttributes().getNamedItem(
+									DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
 						}
 						boolean shared = true;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER) != null) {
-							shared = Boolean.valueOf(postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER).getNodeValue()).booleanValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.SHARED_PARAMETER) != null) {
+							shared = Boolean.valueOf(
+									postItem.getAttributes().getNamedItem(
+											DeliciousConstants.SHARED_PARAMETER).getNodeValue())
+									.booleanValue();
 						}
 						post = new Post(href, description, extended, hash, tag, time, shared);
 
@@ -668,9 +760,10 @@ public class Delicious {
 	}
 
 	/**
-	 * Return a list of all {@link Post} objects. This method populates the result meta information
-	 * field with a {@link Date} object containing the last update time.
-	 *
+	 * Return a list of all {@link Post} objects. This method populates the
+	 * result meta information field with a {@link Date} object containing the
+	 * last update time.
+	 * 
 	 * @return List of all {@link Post} objects
 	 */
 	public List getAllPosts() {
@@ -684,8 +777,8 @@ public class Delicious {
 
 		GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.POSTS_ALL);
 
-		get.setQueryString(new NameValuePair[] {new NameValuePair(DeliciousConstants.HASH_PARAMETER, "")});
-
+		get.setQueryString(new NameValuePair[] { new NameValuePair(
+				DeliciousConstants.HASH_PARAMETER, "") });
 
 		get.setDoAuthentication(true);
 
@@ -694,7 +787,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -702,11 +796,12 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 
-				// Parse the <posts .../> item for meta information (update attribute)
+				// Parse the <posts .../> item for meta information (update
+				// attribute)
 				NodeList postsTag = document.getElementsByTagName(DeliciousConstants.POSTS_TAG);
-				
 
 				// Parse the <post .../> items
 				NodeList postItems = document.getElementsByTagName(DeliciousConstants.POST_TAG);
@@ -714,8 +809,10 @@ public class Delicious {
 					for (int i = 0; i < postItems.getLength(); i++) {
 						Node postItem = postItems.item(i);
 						Hash hash;
-						String hashValue = postItem.getAttributes().getNamedItem(DeliciousConstants.META_ATTRIBUTE).getNodeValue();
-						String urlHash = postItem.getAttributes().getNamedItem(DeliciousConstants.URL_PARAMETER).getNodeValue();
+						String hashValue = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.META_ATTRIBUTE).getNodeValue();
+						String urlHash = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.URL_PARAMETER).getNodeValue();
 						hash = new Hash(hashValue, urlHash);
 						hashes.add(hash);
 					}
@@ -732,16 +829,24 @@ public class Delicious {
 	}
 
 	/**
-	 * Make a post to del.icio.us. If either the <code>url</code> or <code>description</code> parameters are null or
-	 * blank, this method immediately returns <code>false</code>. 
-	 *
-	 * @param url         URL for post
-	 * @param description Description for post
-	 * @param extended    Extended for post
-	 * @param tags        Space-delimited list of tags
-	 * @param date        Date for post
-	 * @param replace     <code>true</code> if call should replace post
-	 * @param shared      Make the item private
+	 * Make a post to del.icio.us. If either the <code>url</code> or
+	 * <code>description</code> parameters are null or blank, this method
+	 * immediately returns <code>false</code>.
+	 * 
+	 * @param url
+	 *            URL for post
+	 * @param description
+	 *            Description for post
+	 * @param extended
+	 *            Extended for post
+	 * @param tags
+	 *            Space-delimited list of tags
+	 * @param date
+	 *            Date for post
+	 * @param replace
+	 *            <code>true</code> if call should replace post
+	 * @param shared
+	 *            Make the item private
 	 * @return <code>true</code> if posted, <code>false</code> otherwise
 	 * @since 1.8
 	 */
@@ -766,11 +871,13 @@ public class Delicious {
 		NameValuePair urlParam = new NameValuePair(DeliciousConstants.URL_PARAMETER, url);
 		post.addParameter(urlParam);
 
-		NameValuePair descriptionParam = new NameValuePair(DeliciousConstants.DESCRIPTION_PARAMETER, description);
+		NameValuePair descriptionParam = new NameValuePair(
+				DeliciousConstants.DESCRIPTION_PARAMETER, description);
 		post.addParameter(descriptionParam);
 
 		if (!DeliciousUtils.checkNullOrBlank(extended)) {
-			NameValuePair extendedParam = new NameValuePair(DeliciousConstants.EXTENDED_PARAMETER, extended);
+			NameValuePair extendedParam = new NameValuePair(DeliciousConstants.EXTENDED_PARAMETER,
+					extended);
 			post.addParameter(extendedParam);
 		}
 
@@ -780,7 +887,8 @@ public class Delicious {
 		}
 
 		if (date != null) {
-			NameValuePair dtParam = new NameValuePair(DeliciousConstants.DT_PARAMETER, DeliciousUtils.getUTCDate(date));
+			NameValuePair dtParam = new NameValuePair(DeliciousConstants.DT_PARAMETER,
+					DeliciousUtils.getUTCDate(date));
 			post.addParameter(dtParam);
 		}
 
@@ -800,12 +908,14 @@ public class Delicious {
 		}
 
 		try {
-			post.addRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+			post.addRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded; charset=utf-8");
 			this.httpResult = this.httpClient.executeMethod(post);
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (post.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(post
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -826,12 +936,17 @@ public class Delicious {
 
 	/**
 	 * Make a post to del.icio.us
-	 *
-	 * @param url         URL for post
-	 * @param description Description for post
-	 * @param extended    Extended for post
-	 * @param tags        Space-delimited list of tags
-	 * @param date        Date for post
+	 * 
+	 * @param url
+	 *            URL for post
+	 * @param description
+	 *            Description for post
+	 * @param extended
+	 *            Extended for post
+	 * @param tags
+	 *            Space-delimited list of tags
+	 * @param date
+	 *            Date for post
 	 * @return <code>true</code> if posted, <code>false</code> otherwise
 	 */
 	public boolean addPost(final String url, final String description, final String extended,
@@ -841,9 +956,11 @@ public class Delicious {
 
 	/**
 	 * Make a post to del.icio.us
-	 *
-	 * @param url         URL for post
-	 * @param description Description for post
+	 * 
+	 * @param url
+	 *            URL for post
+	 * @param description
+	 *            Description for post
 	 * @return <code>true</code> if posted, <code>false</code> otherwise
 	 * @since 2.0
 	 */
@@ -853,8 +970,9 @@ public class Delicious {
 
 	/**
 	 * Deletes a post
-	 *
-	 * @param url URL for post
+	 * 
+	 * @param url
+	 *            URL for post
 	 * @return <code>true</code> if post deleted, <code>false</code> otherwise
 	 */
 	public boolean deletePost(final String url) {
@@ -866,14 +984,15 @@ public class Delicious {
 		get.setDoAuthentication(true);
 
 		NameValuePair urlParam = new NameValuePair(DeliciousConstants.URL_PARAMETER, url);
-		get.setQueryString(new NameValuePair[]{urlParam});
+		get.setQueryString(new NameValuePair[] { urlParam });
 
 		try {
 			this.httpResult = this.httpClient.executeMethod(get);
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -894,9 +1013,11 @@ public class Delicious {
 
 	/**
 	 * Renames a tag
-	 *
-	 * @param oldTag Old tag
-	 * @param newTag New tag
+	 * 
+	 * @param oldTag
+	 *            Old tag
+	 * @param newTag
+	 *            New tag
 	 * @return <code>true</code> if tag renamed, <code>false</code> otherwise
 	 */
 	public boolean renameTag(final String oldTag, final String newTag) {
@@ -909,15 +1030,18 @@ public class Delicious {
 
 		NameValuePair oldParam = new NameValuePair(DeliciousConstants.OLD_PARAMETER, oldTag);
 		NameValuePair newParam = new NameValuePair(DeliciousConstants.NEW_PARAMETER, newTag);
-		get.setQueryString(new NameValuePair[]{oldParam, newParam});
+		get.setQueryString(new NameValuePair[] { oldParam, newParam });
 
 		try {
-			get.addRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");            
+			get
+					.addRequestHeader("Content-Type",
+							"application/x-www-form-urlencoded; charset=utf-8");
 			this.httpResult = this.httpClient.executeMethod(get);
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -938,8 +1062,9 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Post} items in your inbox
-	 *
-	 * @param date Filter by this date
+	 * 
+	 * @param date
+	 *            Filter by this date
 	 * @return List of {@link Post} items in your inbox
 	 */
 	public List getInboxEntries(final Date date) {
@@ -951,8 +1076,9 @@ public class Delicious {
 		get.setDoAuthentication(true);
 
 		if (date != null) {
-			NameValuePair dateParam = new NameValuePair(DeliciousConstants.DT_PARAMETER, DeliciousUtils.getDeliciousDate(date));
-			get.setQueryString(new NameValuePair[]{dateParam});
+			NameValuePair dateParam = new NameValuePair(DeliciousConstants.DT_PARAMETER,
+					DeliciousUtils.getDeliciousDate(date));
+			get.setQueryString(new NameValuePair[] { dateParam });
 		}
 
 		try {
@@ -960,7 +1086,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -968,24 +1095,36 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList postItems = document.getElementsByTagName(DeliciousConstants.POST_TAG);
 				if (postItems != null && postItems.getLength() > 0) {
 					for (int i = 0; i < postItems.getLength(); i++) {
 						Node postItem = postItems.item(i);
 						Post post;
-						String href = postItem.getAttributes().getNamedItem(DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
-						String description = postItem.getAttributes().getNamedItem(DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
-						String hash = postItem.getAttributes().getNamedItem(DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
-						String tag = postItem.getAttributes().getNamedItem(DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
-						String time = postItem.getAttributes().getNamedItem(DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
+						String href = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HREF_ATTRIBUTE).getNodeValue();
+						String description = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.DESCRIPTION_ATTRIBUTE).getNodeValue();
+						String hash = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.HASH_ATTRIBUTE).getNodeValue();
+						String tag = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
+						String time = postItem.getAttributes().getNamedItem(
+								DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
 						String extended = null;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
-							extended = postItem.getAttributes().getNamedItem(DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.EXTENDED_ATTRIBUTE) != null) {
+							extended = postItem.getAttributes().getNamedItem(
+									DeliciousConstants.EXTENDED_ATTRIBUTE).getNodeValue();
 						}
 						boolean shared = true;
-						if (postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER) != null) {
-							shared = Boolean.valueOf(postItem.getAttributes().getNamedItem(DeliciousConstants.SHARED_PARAMETER).getNodeValue()).booleanValue();
+						if (postItem.getAttributes().getNamedItem(
+								DeliciousConstants.SHARED_PARAMETER) != null) {
+							shared = Boolean.valueOf(
+									postItem.getAttributes().getNamedItem(
+											DeliciousConstants.SHARED_PARAMETER).getNodeValue())
+									.booleanValue();
 						}
 						post = new Post(href, description, extended, hash, tag, time, shared);
 
@@ -1005,7 +1144,7 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link DeliciousDate} objects containing inbox entries
-	 *
+	 * 
 	 * @return List of {@link DeliciousDate} objects containing inbox entries
 	 */
 	public List getDatesWithInboxEntries() {
@@ -1021,7 +1160,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -1029,14 +1169,17 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList dateItems = document.getElementsByTagName(DeliciousConstants.DATE_TAG);
 				if (dateItems != null && dateItems.getLength() > 0) {
 					for (int i = 0; i < dateItems.getLength(); i++) {
 						Node dateItem = dateItems.item(i);
 						DeliciousDate date;
-						String count = dateItem.getAttributes().getNamedItem(DeliciousConstants.COUNT_ATTRIBUTE).getNodeValue();
-						String dateAttribute = dateItem.getAttributes().getNamedItem(DeliciousConstants.DATE_ATTRIBUTE).getNodeValue();
+						String count = dateItem.getAttributes().getNamedItem(
+								DeliciousConstants.COUNT_ATTRIBUTE).getNodeValue();
+						String dateAttribute = dateItem.getAttributes().getNamedItem(
+								DeliciousConstants.DATE_ATTRIBUTE).getNodeValue();
 						date = new DeliciousDate(Integer.parseInt(count), dateAttribute);
 
 						dates.add(date);
@@ -1055,7 +1198,7 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Subscription} objects
-	 *
+	 * 
 	 * @return List of {@link Subscription} objects
 	 */
 	public List getSubscriptions() {
@@ -1071,7 +1214,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -1079,14 +1223,17 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList subItems = document.getElementsByTagName(DeliciousConstants.SUB_TAG);
 				if (subItems != null && subItems.getLength() > 0) {
 					for (int i = 0; i < subItems.getLength(); i++) {
 						Node subItem = subItems.item(i);
 						Subscription subscription;
-						String tag = subItem.getAttributes().getNamedItem(DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
-						String user = subItem.getAttributes().getNamedItem(DeliciousConstants.USER_ATTRIBUTE).getNodeValue();
+						String tag = subItem.getAttributes().getNamedItem(
+								DeliciousConstants.TAG_ATTRIBUTE).getNodeValue();
+						String user = subItem.getAttributes().getNamedItem(
+								DeliciousConstants.USER_ATTRIBUTE).getNodeValue();
 
 						subscription = new Subscription(tag, user);
 
@@ -1106,7 +1253,7 @@ public class Delicious {
 
 	/**
 	 * Return a list of {@link Bundle} objects
-	 *
+	 * 
 	 * @return List of {@link Bundle} objects
 	 * @since 1.9
 	 */
@@ -1123,7 +1270,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -1131,14 +1279,17 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList bundleItems = document.getElementsByTagName(DeliciousConstants.BUNDLE_TAG);
 				if (bundleItems != null && bundleItems.getLength() > 0) {
 					for (int i = 0; i < bundleItems.getLength(); i++) {
 						Node bundleItem = bundleItems.item(i);
 						Bundle bundle;
-						String name = bundleItem.getAttributes().getNamedItem(DeliciousConstants.BUNDLE_NAME_ATTRIBUTE).getNodeValue();
-						String tags = bundleItem.getAttributes().getNamedItem(DeliciousConstants.BUNDLE_TAGS_ATTRIBUTE).getNodeValue();
+						String name = bundleItem.getAttributes().getNamedItem(
+								DeliciousConstants.BUNDLE_NAME_ATTRIBUTE).getNodeValue();
+						String tags = bundleItem.getAttributes().getNamedItem(
+								DeliciousConstants.BUNDLE_TAGS_ATTRIBUTE).getNodeValue();
 
 						bundle = new Bundle(name, tags);
 
@@ -1157,11 +1308,15 @@ public class Delicious {
 	}
 
 	/**
-	 * Add a new tag bundle. If either the bundle name or tags is blank or null, <code>false</code> is returned immediately
-	 *
-	 * @param bundleName Bundle name
-	 * @param tags       Space-separated list of tags
-	 * @return <code>true</code> if the bundle was created, <code>false</code> otherwise
+	 * Add a new tag bundle. If either the bundle name or tags is blank or null,
+	 * <code>false</code> is returned immediately
+	 * 
+	 * @param bundleName
+	 *            Bundle name
+	 * @param tags
+	 *            Space-separated list of tags
+	 * @return <code>true</code> if the bundle was created, <code>false</code>
+	 *         otherwise
 	 * @since 1.9
 	 */
 	public boolean addBundle(final String bundleName, final String tags) {
@@ -1180,18 +1335,21 @@ public class Delicious {
 			return false;
 		}
 
-		NameValuePair bundleNameParam = new NameValuePair(DeliciousConstants.BUNDLE_PARAMETER, bundleName);
+		NameValuePair bundleNameParam = new NameValuePair(DeliciousConstants.BUNDLE_PARAMETER,
+				bundleName);
 		NameValuePair tagsParam = new NameValuePair(DeliciousConstants.BUNDLE_TAGS_ATTRIBUTE, tags);
 
-		post.setQueryString(new NameValuePair[]{bundleNameParam, tagsParam});
+		post.setQueryString(new NameValuePair[] { bundleNameParam, tagsParam });
 
 		try {
-			post.addRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+			post.addRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded; charset=utf-8");
 			this.httpResult = this.httpClient.executeMethod(post);
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (post.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(post
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -1212,8 +1370,9 @@ public class Delicious {
 
 	/**
 	 * Delete a bundle of the given name
-	 *
-	 * @param bundleName Bundle to delete
+	 * 
+	 * @param bundleName
+	 *            Bundle to delete
 	 * @return <code>true</code> if the bundle was deleted, false otherwise
 	 * @since 1.9
 	 */
@@ -1225,15 +1384,17 @@ public class Delicious {
 		GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.BUNDLES_DELETE);
 		get.setDoAuthentication(true);
 
-		NameValuePair bundleNameParam = new NameValuePair(DeliciousConstants.BUNDLE_PARAMETER, bundleName);
-		get.setQueryString(new NameValuePair[]{bundleNameParam});
+		NameValuePair bundleNameParam = new NameValuePair(DeliciousConstants.BUNDLE_PARAMETER,
+				bundleName);
+		get.setQueryString(new NameValuePair[] { bundleNameParam });
 
 		try {
 			this.httpResult = this.httpClient.executeMethod(get);
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -1253,12 +1414,60 @@ public class Delicious {
 	}
 
 	/**
+	 * Delete a bundle of the given name
+	 * 
+	 * @param tagName
+	 *            Bundle to delete
+	 * @return <code>true</code> if the bundle was deleted, false otherwise
+	 * @since 1.9
+	 */
+	public boolean deleteTag(final String tagName) {
+		clearResultMetaInformation();
+		boolean deleteTagResult = false;
+		StringBuffer result = new StringBuffer();
+
+		GetMethod get = new GetMethod(this.apiEndpoint + DeliciousConstants.TAGS_DELETE);
+		get.setDoAuthentication(true);
+
+		NameValuePair bundleNameParam = new NameValuePair(DeliciousConstants.TAG_PARAMETER, tagName);
+		get.setQueryString(new NameValuePair[] { bundleNameParam });
+
+		try {
+			this.httpResult = this.httpClient.executeMethod(get);
+			checkNotAuthorized(this.httpResult);
+			this.logger.debug("Result: " + this.httpResult);
+			if (get.getResponseBodyAsStream() != null) {
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				String input;
+				while ((input = bufferedReader.readLine()) != null) {
+					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
+				}
+
+				get.releaseConnection();
+				lastApiCall = System.currentTimeMillis();
+				if (result.indexOf(DeliciousConstants.CODE_OK_STANDALONE) != -1) {
+					deleteTagResult = true;
+				}
+			}
+		} catch (IOException e) {
+			this.logger.error(e);
+		}
+
+		return deleteTagResult;
+	}
+
+	/**
 	 * Add or remove a subscription
-	 *
-	 * @param user        Username
-	 * @param tag         Optional, set to <code>null</code> for all posts
-	 * @param unsubscribe If you want to unsubscribe
-	 * @return <code>true</code> if add/remove subscription successful, <code>false</code> otherwise
+	 * 
+	 * @param user
+	 *            Username
+	 * @param tag
+	 *            Optional, set to <code>null</code> for all posts
+	 * @param unsubscribe
+	 *            If you want to unsubscribe
+	 * @return <code>true</code> if add/remove subscription successful,
+	 *         <code>false</code> otherwise
 	 */
 	public boolean subs(final String user, final String tag, final boolean unsubscribe) {
 		clearResultMetaInformation();
@@ -1291,7 +1500,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -1312,8 +1522,9 @@ public class Delicious {
 
 	/**
 	 * Get the time of the last update
-	 *
-	 * @return {@link Date} object of last update time or <code>null</code> if there was an error in the call
+	 * 
+	 * @return {@link Date} object of last update time or <code>null</code> if
+	 *         there was an error in the call
 	 * @since 1.3
 	 */
 	public Date getLastUpdate() {
@@ -1328,7 +1539,8 @@ public class Delicious {
 			checkNotAuthorized(this.httpResult);
 			this.logger.debug("Result: " + this.httpResult);
 			if (get.getResponseBodyAsStream() != null) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(get
+						.getResponseBodyAsStream(), DeliciousUtils.UTF_8));
 				String input;
 				while ((input = bufferedReader.readLine()) != null) {
 					result.append(input).append(DeliciousUtils.LINE_SEPARATOR);
@@ -1336,11 +1548,13 @@ public class Delicious {
 
 				get.releaseConnection();
 				lastApiCall = System.currentTimeMillis();
-				Document document = this.documentBuilder.parse(new InputSource(new StringReader(result.toString())));
+				Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+						result.toString())));
 				NodeList updateItems = document.getElementsByTagName(DeliciousConstants.UPDATE_TAG);
 				if (updateItems != null && updateItems.getLength() > 0) {
 					Node updateItem = updateItems.item(0);
-					String updateTime = updateItem.getAttributes().getNamedItem(DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
+					String updateTime = updateItem.getAttributes().getNamedItem(
+							DeliciousConstants.TIME_ATTRIBUTE).getNodeValue();
 
 					return DeliciousUtils.getDateFromUTCString(updateTime);
 				}
@@ -1356,10 +1570,11 @@ public class Delicious {
 	}
 
 	/**
-	 * Check to see if the user is not authorized. If result is 401 (NOT_AUTHORIZED) a
-	 * {@link DeliciousNotAuthorizedException} is thrown
-	 *
-	 * @param result Result code from executing HTTP method
+	 * Check to see if the user is not authorized. If result is 401
+	 * (NOT_AUTHORIZED) a {@link DeliciousNotAuthorizedException} is thrown
+	 * 
+	 * @param result
+	 *            Result code from executing HTTP method
 	 * @since 1.4
 	 */
 	protected void checkNotAuthorized(final int result) {
@@ -1369,8 +1584,9 @@ public class Delicious {
 	}
 
 	/**
-	 * Clear the result meta information by setting the object to <code>null</code>.
-	 *
+	 * Clear the result meta information by setting the object to
+	 * <code>null</code>.
+	 * 
 	 * @since 1.3
 	 */
 	protected void clearResultMetaInformation() {
@@ -1383,13 +1599,14 @@ public class Delicious {
 			}
 		}
 		this.resultMetaInformation = null;
-		
+
 	}
 
 	/**
-	 * Retrieve an object containing meta information about the last call. Only certain methods
-	 * actually populate the result meta information such as the {@link #getAllPosts()} method.
-	 *
+	 * Retrieve an object containing meta information about the last call. Only
+	 * certain methods actually populate the result meta information such as the
+	 * {@link #getAllPosts()} method.
+	 * 
 	 * @return Object containing meta information about the last call
 	 * @since 1.3
 	 */

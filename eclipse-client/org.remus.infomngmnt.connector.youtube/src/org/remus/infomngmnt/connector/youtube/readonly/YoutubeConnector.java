@@ -62,6 +62,8 @@ import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
+import org.remus.infomngmnt.core.remote.OperationNotSupportedException;
+import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.video.VideoActivator;
 
@@ -104,18 +106,26 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	public RemoteObject addToRepository(final SynchronizableObject item,
-			final IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
-		return null;
+			final IProgressMonitor monitor) throws OperationNotSupportedException {
+		throw new OperationNotSupportedException(StatusCreator.newStatus("Adding is not supported"));
 	}
 
-	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
-		return null;
+	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor)
+			throws RemoteException {
+		throw new OperationNotSupportedException(StatusCreator
+				.newStatus("Committing is not supported"));
+	}
+
+	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
+			throws RemoteException {
+		throw new OperationNotSupportedException(StatusCreator
+				.newStatus("Deleting is not supported"));
+
 	}
 
 	public RemoteObject[] getChildren(final IProgressMonitor monitor,
-			final RemoteContainer container, final boolean showOnlyContainers) {
+			final RemoteContainer container, final boolean showOnlyContainers)
+			throws RemoteException {
 		List<RemoteObject> returnValue = new LinkedList<RemoteObject>();
 		if (container instanceof RemoteRepository) {
 			IProgressMonitor sub = new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN);
@@ -138,7 +148,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
 	}
 
-	private RemoteObject[] buildVideoEntries(final RemoteContainer container) {
+	private RemoteObject[] buildVideoEntries(final RemoteContainer container)
+			throws RemoteException {
 		List<RemoteObject> returnValue = new ArrayList<RemoteObject>();
 		if (KEY_FAVORITES_FOLDER.equals(container.getId())) {
 			try {
@@ -164,15 +175,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 				for (PlaylistEntry playlistEntry : entries) {
 					returnValue.add(createRemoteObject(playlistEntry, container));
 				}
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				throw new RemoteException(StatusCreator.newStatus(
+						"Error collecting video-information", e));
 			}
 		}
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
@@ -374,10 +379,11 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	/**
+	 * @throws RemoteException
 	 * 
 	 */
 	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
-			final IProgressMonitor monitor) {
+			final IProgressMonitor monitor) throws RemoteException {
 		String url = object.getSynchronizationMetaData().getUrl();
 		try {
 			URL url2 = new URL(url);
@@ -518,6 +524,11 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	public void reset() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean hasBinaryReferences() {
+		return true;
 	}
 
 	public IStatus validate() {

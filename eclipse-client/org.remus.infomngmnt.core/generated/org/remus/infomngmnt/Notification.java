@@ -34,6 +34,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.Notification#getDetails <em>Details</em>}</li>
  *   <li>{@link org.remus.infomngmnt.Notification#getChildren <em>Children</em>}</li>
  *   <li>{@link org.remus.infomngmnt.Notification#getAffectedInfoUnitIds <em>Affected Info Unit Ids</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.Notification#getSource <em>Source</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.Notification#getImage <em>Image</em>}</li>
  * </ul>
  * </p>
  *
@@ -235,5 +237,57 @@ public interface Notification extends Adapter {
 	 * @generated
 	 */
 	EList<String> getAffectedInfoUnitIds();
+
+	/**
+	 * Returns the value of the '<em><b>Source</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Source</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Source</em>' attribute.
+	 * @see #setSource(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getNotification_Source()
+	 * @model
+	 * @generated
+	 */
+	String getSource();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.Notification#getSource <em>Source</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Source</em>' attribute.
+	 * @see #getSource()
+	 * @generated
+	 */
+	void setSource(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Image</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Image</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Image</em>' attribute.
+	 * @see #setImage(Object)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getNotification_Image()
+	 * @model dataType="org.remus.infomngmnt.Object"
+	 * @generated
+	 */
+	Object getImage();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.Notification#getImage <em>Image</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Image</em>' attribute.
+	 * @see #getImage()
+	 * @generated
+	 */
+	void setImage(Object value);
 
 } // Notification

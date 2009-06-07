@@ -22,13 +22,16 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.osgi.util.NLS;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
@@ -61,6 +64,19 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 			throws CoreException {
 		switch (kind) {
 		case FULL_BUILD:
+			EList<Category> rootCategories = ApplicationModelPool.getInstance().getModel()
+					.getRootCategories();
+			boolean addedToModelPool = false;
+			for (Category category : rootCategories) {
+				if (getProject().getName().equals(category.getLabel())) {
+					addedToModelPool = true;
+					break;
+				}
+			}
+			if (!addedToModelPool) {
+				ApplicationModelPool.getInstance().addToModel(getProject());
+			}
+
 			IFolder folder = getProject().getFolder(ResourceUtil.BIN_FOLDER);
 			if (!folder.exists()) {
 				folder.create(true, true, monitor);

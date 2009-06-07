@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Tom Seidel, Remus Software
+ * Copyright (c) 2009 Tom Seidel, Remus Software
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,27 +12,21 @@
 
 package org.remus.infomngmnt.core.remote;
 
-import java.beans.PropertyChangeListener;
+import org.eclipse.core.runtime.IStatus;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public interface ICredentialProvider {
+public class OperationNotSupportedException extends RemoteException {
 
-	String getUserName();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6308589825808224367L;
 
-	String getPassword();
-
-	void setUserName(String username);
-
-	void setPassword(String password);
-
-	void setIdentifier(String identifier);
-
-	void addPropertyChangeListener(PropertyChangeListener listener);
-
-	void removePropertyChangeListener(PropertyChangeListener listener);
-
-	void delete();
+	public OperationNotSupportedException(final IStatus status) {
+		super(status);
+		// TODO Auto-generated constructor stub
+	}
 
 }

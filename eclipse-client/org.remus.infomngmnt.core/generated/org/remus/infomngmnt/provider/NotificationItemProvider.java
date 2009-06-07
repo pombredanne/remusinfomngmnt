@@ -79,6 +79,8 @@ public class NotificationItemProvider
 			addDetailsPropertyDescriptor(object);
 			addChildrenPropertyDescriptor(object);
 			addAffectedInfoUnitIdsPropertyDescriptor(object);
+			addSourcePropertyDescriptor(object);
+			addImagePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -260,6 +262,50 @@ public class NotificationItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Source feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSourcePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Notification_source_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Notification_source_feature", "_UI_Notification_type"),
+				 InfomngmntPackage.Literals.NOTIFICATION__SOURCE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Image feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addImagePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Notification_image_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Notification_image_feature", "_UI_Notification_type"),
+				 InfomngmntPackage.Literals.NOTIFICATION__IMAGE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns Notification.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -304,6 +350,8 @@ public class NotificationItemProvider
 			case InfomngmntPackage.NOTIFICATION__MESSAGE:
 			case InfomngmntPackage.NOTIFICATION__DETAILS:
 			case InfomngmntPackage.NOTIFICATION__AFFECTED_INFO_UNIT_IDS:
+			case InfomngmntPackage.NOTIFICATION__SOURCE:
+			case InfomngmntPackage.NOTIFICATION__IMAGE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

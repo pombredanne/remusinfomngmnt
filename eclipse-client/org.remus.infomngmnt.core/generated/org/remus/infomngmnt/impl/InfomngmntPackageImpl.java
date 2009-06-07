@@ -1474,6 +1474,24 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getNotification_Source() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNotification_Image() {
+		return (EAttribute)notificationEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getNotificationCollection() {
 		return notificationCollectionEClass;
 	}
@@ -1743,6 +1761,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(notificationEClass, NOTIFICATION__DETAILS);
 		createEReference(notificationEClass, NOTIFICATION__CHILDREN);
 		createEAttribute(notificationEClass, NOTIFICATION__AFFECTED_INFO_UNIT_IDS);
+		createEAttribute(notificationEClass, NOTIFICATION__SOURCE);
+		createEAttribute(notificationEClass, NOTIFICATION__IMAGE);
 
 		notificationCollectionEClass = createEClass(NOTIFICATION_COLLECTION);
 		createEReference(notificationCollectionEClass, NOTIFICATION_COLLECTION__NOTIFCATIONS);
@@ -1969,6 +1989,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getNotification_Details(), ecorePackage.getEString(), "details", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNotification_Children(), this.getNotification(), null, "children", null, 0, -1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNotification_AffectedInfoUnitIds(), ecorePackage.getEString(), "affectedInfoUnitIds", null, 0, -1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_Source(), ecorePackage.getEString(), "source", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNotification_Image(), this.getObject(), "image", null, 0, 1, Notification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(notificationCollectionEClass, NotificationCollection.class, "NotificationCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNotificationCollection_Notifcations(), this.getNotification(), null, "notifcations", null, 0, -1, NotificationCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

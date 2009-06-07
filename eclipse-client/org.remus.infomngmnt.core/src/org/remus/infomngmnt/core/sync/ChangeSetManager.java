@@ -155,7 +155,7 @@ public class ChangeSetManager {
 			 * have to ask the repositories for the children and create a
 			 * datastructure that can be applied to the local datastructure.
 			 */
-			monitor.subTask("Requesting objects from repository");
+			monitor.beginTask("Requesting objects from repository", IProgressMonitor.UNKNOWN);
 			IRepository repositoryImplementation = repository.getRepositoryImplementation();
 			for (RemoteContainer remoteObject : filteredList) {
 				RemoteContainer copiedItem = (RemoteContainer) EcoreUtil.copy(remoteObject);
@@ -179,6 +179,8 @@ public class ChangeSetManager {
 				createChangeSetItem.setRemoteOriginalObject(copiedItem);
 				createChangeSetItem.setRemoteConvertedContainer(createCategory);
 				try {
+					monitor.setTaskName(NLS.bind("Contacting repository for item \"{0}\"",
+							copiedItem.getName()));
 					RemoteObject[] children = repositoryImplementation.getChildren(monitor,
 							copiedItem, false);
 					for (RemoteObject remoteObject2 : children) {
@@ -356,8 +358,11 @@ public class ChangeSetManager {
 		 */
 		Category remoteCopy = (Category) EcoreUtil
 				.copy(changeSetItem.getRemoteConvertedContainer());
-
 		Category copy = (Category) EcoreUtil.copy(targetCategory);
+
+		CategoryUtil.recursivelySortId(remoteCopy);
+		CategoryUtil.recursivelySortId(copy);
+
 		TreeIterator<EObject> eAllContents = copy.eAllContents();
 		while (eAllContents.hasNext()) {
 			EObject eObject = eAllContents.next();
@@ -367,6 +372,12 @@ public class ChangeSetManager {
 				 */
 				eObject
 						.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
+				/*
+				 * 
+				 */
+				((EObject) eObject
+						.eGet(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA))
+						.eUnset(InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION);
 			}
 		}
 		/*
@@ -517,6 +528,9 @@ public class ChangeSetManager {
 			if (diffElement instanceof RemoveModelElement) {
 				RemoveModelElement removeOp = (RemoveModelElement) diffElement;
 				EObject leftElement = removeOp.getLeftElement();
+				if (leftElement instanceof SynchronizationMetadata) {
+					leftElement = leftElement.eContainer();
+				}
 				if (((SynchronizableObject) leftElement).getSynchronizationMetaData() != null
 						&& ((SynchronizableObject) leftElement).getSynchronizationMetaData()
 								.getSyncState() == SynchronizationState.NOT_ADDED) {

@@ -211,6 +211,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/details"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Notification/children"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/affectedInfoUnitIds"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/source"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/image"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//NotificationCollection">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//NotificationCollection/notifcations"/>

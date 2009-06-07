@@ -137,4 +137,8 @@ public abstract class CredentialProvider implements ICredentialProvider {
 		this.group = group;
 		firePropertyChange(GROUP, oldValue, group);
 	}
+
+	public void delete() {
+		this.preferences.node(this.identifier).removeNode();
+	}
 }

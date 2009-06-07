@@ -12,7 +12,9 @@
 
 package org.remus.infomngmnt.core.sync;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +33,7 @@ import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 
@@ -42,10 +45,12 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
@@ -169,7 +174,6 @@ public class ChangeSetExecutor {
 				replaceLocalCategory(category);
 				break;
 			case ADD_LOCAL:
-				// TODO implement adding of subcategories:
 				addLocalCategory(category, targetCategory, monitor, item);
 				break;
 			case DELETE_LOCAL:
@@ -193,6 +197,12 @@ public class ChangeSetExecutor {
 			if (synchronizableObject instanceof InformationUnitListItem) {
 				SynchronizationAction synchronizationAction = item.getSyncObjectActionMap().get(
 						synchronizableObject);
+				RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+						IRepositoryService.class).getRepositoryById(
+						synchronizableObject.getSynchronizationMetaData().getRepositoryId());
+				AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin()
+						.getService(IRepositoryExtensionService.class).getItemByRepository(
+								remoteRepository);
 				switch (synchronizationAction) {
 				case REPLACE_LOCAL:
 					replaceLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
@@ -206,13 +216,13 @@ public class ChangeSetExecutor {
 							monitor);
 					break;
 				case DELETE_REMOTE:
-					// TODO
+					deleteRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
 					break;
 				case REPLACE_REMOTE:
-					// TODO
+					replaceRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
 					break;
 				case ADD_REMOTE:
-					// TODO
+					addRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
 					break;
 				default:
 					break;
@@ -220,6 +230,75 @@ public class ChangeSetExecutor {
 			}
 		}
 		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().flush();
+	}
+
+	private void replaceRemoteInfoUnit(final InformationUnitListItem synchronizableObject,
+			final IProgressMonitor monitor) throws CoreException {
+		InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
+				synchronizableObject.getId(), monitor);
+		if (itemById == null) {
+			throw new ChangeSetException(
+					StatusCreator
+							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
+		}
+		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(
+				synchronizableObject.getSynchronizationMetaData().getRepositoryId());
+		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
+		String newHash = itemByRepository.commit(itemById, monitor);
+		itemById.getSynchronizationMetaData().setLastSynchronisation(new Date());
+		itemById.getSynchronizationMetaData().setHash(newHash);
+		itemById.getSynchronizationMetaData().setSyncState(SynchronizationState.IN_SYNC);
+
+	}
+
+	private void deleteRemoteInfoUnit(final InformationUnitListItem synchronizableObject,
+			final IProgressMonitor monitor) throws CoreException {
+		InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
+				synchronizableObject.getId(), monitor);
+		if (itemById == null) {
+			throw new ChangeSetException(
+					StatusCreator
+							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
+		}
+		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(
+				synchronizableObject.getSynchronizationMetaData().getRepositoryId());
+		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
+		itemByRepository.deleteFromRepository(itemById, monitor);
+		EditingDomain createNewEditingDomain = EditingUtil.getInstance().createNewEditingDomain();
+
+		Command create = DeleteCommand.create(createNewEditingDomain, Collections
+				.singletonList(itemById));
+		createNewEditingDomain.getCommandStack().execute(create);
+		createNewEditingDomain.getCommandStack().flush();
+
+	}
+
+	private void addRemoteInfoUnit(final InformationUnitListItem synchronizableObject,
+			final IProgressMonitor monitor) throws CoreException {
+		InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
+				synchronizableObject.getId(), monitor);
+		if (itemById == null) {
+			throw new ChangeSetException(
+					StatusCreator
+							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
+		}
+		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(
+				synchronizableObject.getSynchronizationMetaData().getRepositoryId());
+		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
+		RemoteObject addToRepository = itemByRepository.addToRepository(synchronizableObject,
+				monitor);
+		SynchronizationMetadata synchronizationMetaData = itemById.getSynchronizationMetaData();
+		synchronizationMetaData.setHash(addToRepository.getHash());
+		synchronizationMetaData.setUrl(addToRepository.getUrl());
+		synchronizationMetaData.setRepositoryId(remoteRepository.getId());
+		synchronizationMetaData.setLastSynchronisation(new Date());
+		synchronizationMetaData.setSyncState(SynchronizationState.IN_SYNC);
 	}
 
 	private void deleteLocalInforUnit(final InformationUnitListItem synchronizableObject,
@@ -252,13 +331,8 @@ public class ChangeSetExecutor {
 		/*
 		 * Get the full object from repository
 		 */
-		InformationUnit newRemoteInformationUnit = item.getRemoteFullObjectMap().get(
-				synchronizableObject);
-		if (newRemoteInformationUnit == null) {
-			newRemoteInformationUnit = itemByRepository
-					.getFullObject(synchronizableObject, monitor);
-
-		}
+		InformationUnit newRemoteInformationUnit = SyncUtil.getFullObjectFromChangeSet(item,
+				synchronizableObject, itemByRepository, monitor);
 		newRemoteInformationUnit.setLabel(synchronizableObject.getLabel());
 		newRemoteInformationUnit.setId(synchronizableObject.getId());
 
@@ -327,19 +401,23 @@ public class ChangeSetExecutor {
 				EditingUtil.getInstance().saveObjectToResource(adapter);
 			}
 			/*
-			 * Binary references are replaced ALWAYS
+			 * Binary references are replaced ALWAYS if repository supports
+			 * this.
 			 */
-			EList<BinaryReference> binaryReferences2 = adapter.getBinaryReferences();
-			for (BinaryReference binaryReference : binaryReferences2) {
-				DeleteBinaryReferenceCommand command = new DeleteBinaryReferenceCommand(
-						binaryReference, editingDomain);
-				editingDomain.getCommandStack().execute(command);
-			}
-			IFile[] binaryReferences = itemByRepository.getBinaryReferences();
-			for (IFile iFile : binaryReferences) {
-				Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile, adapter,
-						editingDomain);
-				editingDomain.getCommandStack().execute(addFileCommand);
+			if (itemByRepository.hasBinaryReferences()) {
+				List<BinaryReference> binaryReferences2 = new ArrayList<BinaryReference>(adapter
+						.getBinaryReferences());
+				for (BinaryReference binaryReference : binaryReferences2) {
+					DeleteBinaryReferenceCommand command = new DeleteBinaryReferenceCommand(
+							binaryReference, editingDomain);
+					editingDomain.getCommandStack().execute(command);
+				}
+				IFile[] binaryReferences = itemByRepository.getBinaryReferences();
+				for (IFile iFile : binaryReferences) {
+					Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile, adapter,
+							editingDomain);
+					editingDomain.getCommandStack().execute(addFileCommand);
+				}
 			}
 		} else {
 			Category parentCategory = (Category) itemById.eContainer();

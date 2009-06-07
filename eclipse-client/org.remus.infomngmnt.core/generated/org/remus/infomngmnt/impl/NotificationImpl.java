@@ -50,6 +50,8 @@ import org.remus.infomngmnt.Severity;
  *   <li>{@link org.remus.infomngmnt.impl.NotificationImpl#getDetails <em>Details</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.NotificationImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.NotificationImpl#getAffectedInfoUnitIds <em>Affected Info Unit Ids</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.NotificationImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.NotificationImpl#getImage <em>Image</em>}</li>
  * </ul>
  * </p>
  *
@@ -195,6 +197,46 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 	 * @ordered
 	 */
 	protected EList<String> affectedInfoUnitIds;
+
+	/**
+	 * The default value of the '{@link #getSource() <em>Source</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSource()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SOURCE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSource() <em>Source</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSource()
+	 * @generated
+	 * @ordered
+	 */
+	protected String source = SOURCE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getImage() <em>Image</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImage()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Object IMAGE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getImage() <em>Image</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImage()
+	 * @generated
+	 * @ordered
+	 */
+	protected Object image = IMAGE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -370,6 +412,48 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getSource() {
+		return source;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSource(String newSource) {
+		String oldSource = source;
+		source = newSource;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, org.eclipse.emf.common.notify.Notification.SET, InfomngmntPackage.NOTIFICATION__SOURCE, oldSource, source));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object getImage() {
+		return image;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setImage(Object newImage) {
+		Object oldImage = image;
+		image = newImage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, org.eclipse.emf.common.notify.Notification.SET, InfomngmntPackage.NOTIFICATION__IMAGE, oldImage, image));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -403,6 +487,10 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 				return getChildren();
 			case InfomngmntPackage.NOTIFICATION__AFFECTED_INFO_UNIT_IDS:
 				return getAffectedInfoUnitIds();
+			case InfomngmntPackage.NOTIFICATION__SOURCE:
+				return getSource();
+			case InfomngmntPackage.NOTIFICATION__IMAGE:
+				return getImage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -442,6 +530,12 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 				getAffectedInfoUnitIds().clear();
 				getAffectedInfoUnitIds().addAll((Collection<? extends String>)newValue);
 				return;
+			case InfomngmntPackage.NOTIFICATION__SOURCE:
+				setSource((String)newValue);
+				return;
+			case InfomngmntPackage.NOTIFICATION__IMAGE:
+				setImage(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -478,6 +572,12 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 			case InfomngmntPackage.NOTIFICATION__AFFECTED_INFO_UNIT_IDS:
 				getAffectedInfoUnitIds().clear();
 				return;
+			case InfomngmntPackage.NOTIFICATION__SOURCE:
+				setSource(SOURCE_EDEFAULT);
+				return;
+			case InfomngmntPackage.NOTIFICATION__IMAGE:
+				setImage(IMAGE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -506,6 +606,10 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 				return children != null && !children.isEmpty();
 			case InfomngmntPackage.NOTIFICATION__AFFECTED_INFO_UNIT_IDS:
 				return affectedInfoUnitIds != null && !affectedInfoUnitIds.isEmpty();
+			case InfomngmntPackage.NOTIFICATION__SOURCE:
+				return SOURCE_EDEFAULT == null ? source != null : !SOURCE_EDEFAULT.equals(source);
+			case InfomngmntPackage.NOTIFICATION__IMAGE:
+				return IMAGE_EDEFAULT == null ? image != null : !IMAGE_EDEFAULT.equals(image);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -534,6 +638,10 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 		result.append(details);
 		result.append(", affectedInfoUnitIds: ");
 		result.append(affectedInfoUnitIds);
+		result.append(", source: ");
+		result.append(source);
+		result.append(", image: ");
+		result.append(image);
 		result.append(')');
 		return result.toString();
 	}

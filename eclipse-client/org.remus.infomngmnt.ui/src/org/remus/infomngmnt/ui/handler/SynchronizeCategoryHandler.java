@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -73,8 +74,9 @@ public class SynchronizeCategoryHandler extends AbstractHandler {
 					protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 						try {
 							monitor.beginTask("Calculating differences", 3);
-							ChangeSet changeSet = manager.createChangeSet(cat, monitor);
 							monitor.worked(1);
+							ChangeSet changeSet = manager.createChangeSet(cat,
+									new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
 							if (changeSet != null && changeSet.getChangeSetItems().size() > 0) {
 								changeSetItem[0] = changeSet.getChangeSetItems().get(0);
 								diffModel[0] = manager.createDiffModel(changeSetItem[0], cat);

@@ -43,8 +43,9 @@ public class InformationEditorInput extends FileEditorInput implements IFileEdit
 
 	public InformationEditorInput(final IFile file) {
 		super(file);
-		InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile(file,
-				InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
+		InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromUri(
+				file.getFullPath(), InfomngmntPackage.eINSTANCE.getInformationUnit(), false, null,
+				false);
 		setLabels(objectFromFile);
 		objectFromFile.eResource().unload();
 

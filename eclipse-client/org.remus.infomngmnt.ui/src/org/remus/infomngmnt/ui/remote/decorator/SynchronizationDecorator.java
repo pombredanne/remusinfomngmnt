@@ -29,6 +29,7 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
@@ -37,15 +38,13 @@ import org.remus.infomngmnt.ui.UIPlugin;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class SynchronizationDecorator extends LabelProvider implements
-ILightweightLabelDecorator {
+public class SynchronizationDecorator extends LabelProvider implements ILightweightLabelDecorator {
 
 	private final Map<String, ImageDescriptor> scaledImageMap;
-	
+
 	public SynchronizationDecorator() {
 		this.scaledImageMap = new HashMap<String, ImageDescriptor>();
 	}
-
 
 	public void decorate(final Object element, final IDecoration decoration) {
 		SynchronizationMetadata synchronizationMetaData = null;
@@ -54,16 +53,17 @@ ILightweightLabelDecorator {
 		}
 		if (synchronizationMetaData != null) {
 			/**
-			 * We have to adapt the SynchronizationMetaData that the
-			 * adapter is registered as Notification to the data object.
-			 * If we don't do that, the viewer which shows no MetaData
-			 * as real TreeItems is not notified about a change in this
-			 * object, doesn't call a refresh on the shown object and this
-			 * decorator will not be refreshed. 
+			 * We have to adapt the SynchronizationMetaData that the adapter is
+			 * registered as Notification to the data object. If we don't do
+			 * that, the viewer which shows no MetaData as real TreeItems is not
+			 * notified about a change in this object, doesn't call a refresh on
+			 * the shown object and this decorator will not be refreshed.
 			 */
-			EditingUtil.getInstance().getAdapterFactory().adapt(synchronizationMetaData, ITreeItemContentProvider.class);
-			RemoteRepository itemById = UIPlugin.getDefault().getService(IRepositoryService.class).getRepositoryById(synchronizationMetaData.getRepositoryId());
-			
+			EditingUtil.getInstance().getAdapterFactory().adapt(synchronizationMetaData,
+					ITreeItemContentProvider.class);
+			RemoteRepository itemById = UIPlugin.getDefault().getService(IRepositoryService.class)
+					.getRepositoryById(synchronizationMetaData.getRepositoryId());
+
 			switch (synchronizationMetaData.getSyncState()) {
 			case LOCAL_EDITED:
 			case NOT_ADDED:
@@ -79,30 +79,37 @@ ILightweightLabelDecorator {
 				decoration.addOverlay(getScaledImage(itemById.getRepositoryTypeId()));
 				break;
 			case NOT_ADDED:
-				decoration.addOverlay(CommonImageRegistry.getInstance().getDescriptor(CommonImageRegistry.INFORMATION_DECORATION));
+				decoration.addOverlay(CommonImageRegistry.getInstance().getDescriptor(
+						CommonImageRegistry.INFORMATION_DECORATION));
+				break;
+			case IGNORED:
+				decoration.addOverlay(ResourceManager.getPluginImageDescriptor(UIPlugin
+						.getDefault(), "icons/iconexperience/decorator/funnel.png"));
 				break;
 			default:
 				break;
 
 			}
-			if (element instanceof Category && 
-					((EObject) element).eContainer() != null &&
-					((IAdaptable) ((EObject) element).eContainer()).getAdapter(SynchronizationMetadata.class) == null) {
+			if (element instanceof Category
+					&& ((EObject) element).eContainer() != null
+					&& ((IAdaptable) ((EObject) element).eContainer())
+							.getAdapter(SynchronizationMetadata.class) == null) {
 				decoration.addSuffix(String.format(" [%s]", itemById.getName()));
 			}
 		}
 
-  
 	}
-
 
 	private ImageDescriptor getScaledImage(final String repositoryId) {
 		if (this.scaledImageMap.get(repositoryId) == null) {
-			ImageDescriptor itemById = UIPlugin.getDefault().getService(IRepositoryExtensionService.class).getImageByRepositoryId(repositoryId);
+			ImageDescriptor itemById = UIPlugin.getDefault().getService(
+					IRepositoryExtensionService.class).getImageByRepositoryId(repositoryId);
 			if (itemById != null) {
 				ImageData image = itemById.getImageData();
-				ImageData scaledTo = image.scaledTo(9,9);
-				this.scaledImageMap.put(repositoryId,ImageDescriptor.createFromImageData(scaledTo));;
+				ImageData scaledTo = image.scaledTo(9, 9);
+				this.scaledImageMap
+						.put(repositoryId, ImageDescriptor.createFromImageData(scaledTo));
+				;
 			} else {
 				return null;
 			}

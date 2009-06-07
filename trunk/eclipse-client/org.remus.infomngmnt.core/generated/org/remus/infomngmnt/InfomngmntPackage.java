@@ -1962,13 +1962,31 @@ public interface InfomngmntPackage extends EPackage {
 	int NOTIFICATION__AFFECTED_INFO_UNIT_IDS = ADAPTER_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Source</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__SOURCE = ADAPTER_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Image</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTIFICATION__IMAGE = ADAPTER_FEATURE_COUNT + 9;
+
+	/**
 	 * The number of structural features of the '<em>Notification</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NOTIFICATION_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 8;
+	int NOTIFICATION_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 10;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.NotificationCollectionImpl <em>Notification Collection</em>}' class.
@@ -3508,6 +3526,28 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getNotification_AffectedInfoUnitIds();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Source</em>'.
+	 * @see org.remus.infomngmnt.Notification#getSource()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_Source();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Notification#getImage <em>Image</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Image</em>'.
+	 * @see org.remus.infomngmnt.Notification#getImage()
+	 * @see #getNotification()
+	 * @generated
+	 */
+	EAttribute getNotification_Image();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.NotificationCollection <em>Notification Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4752,6 +4792,22 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NOTIFICATION__AFFECTED_INFO_UNIT_IDS = eINSTANCE.getNotification_AffectedInfoUnitIds();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__SOURCE = eINSTANCE.getNotification_Source();
+
+		/**
+		 * The meta object literal for the '<em><b>Image</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTIFICATION__IMAGE = eINSTANCE.getNotification_Image();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.NotificationCollectionImpl <em>Notification Collection</em>}' class.

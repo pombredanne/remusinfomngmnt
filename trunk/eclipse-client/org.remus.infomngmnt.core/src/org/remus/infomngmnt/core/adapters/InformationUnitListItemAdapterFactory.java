@@ -21,6 +21,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -41,8 +42,18 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 				&& adaptableObject instanceof InformationUnitListItem) {
 			InformationUnitListItem item = (InformationUnitListItem) adaptableObject;
 			String id = item.getId();
-			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
-					new Path(item.eResource().getURI().toPlatformString(true)));
+			IFile file = null;
+			try {
+				file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+						new Path(item.eResource().getURI().toPlatformString(true)));
+			} catch (Exception e) {
+				InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
+						item.getId(), null);
+				if (itemById != null) {
+					file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+							new Path(itemById.eResource().getURI().toPlatformString(true)));
+				}
+			}
 			return EditingUtil.getInstance().getObjectFromUri(
 					file.getProject().getFile(
 							new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION))

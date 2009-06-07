@@ -120,17 +120,7 @@ public class ApplicationModelPool {
 		this.model = InfomngmntFactory.eINSTANCE.createApplicationRoot();
 		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
 		for (IProject project : relevantProjects) {
-			if (project.isOpen()) {
-				IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
-						+ ResourceUtil.PRIMARY_CONTENT_FILE));
-				final Category category = EditingUtil.getInstance().getObjectFromFile(file,
-						InfomngmntPackage.eINSTANCE.getCategory(),
-						EditingUtil.getInstance().getNavigationEditingDomain());
-				category.eResource().eAdapters().add(new AdapterImplExtension(category));
-				this.model.getRootCategories().add(category);
-				EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet()
-						.getResources().add(category.eResource());
-			}
+			addToModel(project);
 		}
 		this.cache = new AvailableInformationCache();
 		AvailableTags objectFromUri = EditingUtil.getInstance().getObjectFromFileUri(
@@ -141,6 +131,24 @@ public class ApplicationModelPool {
 				objectFromUri.eResource());
 		this.model.setAvailableTags(objectFromUri);
 		this.model.getAvailableTags().eAdapters().add(new AdapterTagImplExtension());
+
+	}
+
+	public void addToModel(final IProject project) {
+		if (project.isOpen()) {
+			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
+					+ ResourceUtil.PRIMARY_CONTENT_FILE));
+			final Category category = EditingUtil.getInstance().getObjectFromFile(file,
+					InfomngmntPackage.eINSTANCE.getCategory(),
+					EditingUtil.getInstance().getNavigationEditingDomain());
+
+			category.eResource().eAdapters().add(new AdapterImplExtension(category));
+
+			this.model.getRootCategories().add(category);
+			EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources()
+					.add(category.eResource());
+		}
+
 	}
 
 	public ApplicationRoot getModel() {

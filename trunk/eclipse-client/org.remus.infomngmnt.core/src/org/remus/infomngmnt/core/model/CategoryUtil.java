@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -123,12 +124,14 @@ public class CategoryUtil {
 				}
 			} else {
 				boolean found = false;
-				EList<Category> children = parentCategory.getChildren();
-				for (Category category : children) {
-					if (category.getLabel().equals(split[i])) {
-						parentCategory = category;
-						found = true;
-						break;
+				if (parentCategory != null) {
+					EList<Category> children = parentCategory.getChildren();
+					for (Category category : children) {
+						if (category.getLabel().equals(split[i])) {
+							parentCategory = category;
+							found = true;
+							break;
+						}
 					}
 				}
 
@@ -327,6 +330,20 @@ public class CategoryUtil {
 			returnValue[i++] = informationUnitListItem;
 		}
 		return returnValue;
+	}
+
+	public static void recursivelySortId(final Category category) {
+		EList<InformationUnitListItem> informationUnit = category.getInformationUnit();
+		ECollections.sort(informationUnit, new Comparator<InformationUnitListItem>() {
+			public int compare(final InformationUnitListItem arg0,
+					final InformationUnitListItem arg1) {
+				return arg0.getId().compareTo(arg1.getId());
+			}
+		});
+		EList<Category> children = category.getChildren();
+		for (Category category2 : children) {
+			recursivelySortId(category2);
+		}
 	}
 
 }

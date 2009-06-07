@@ -124,11 +124,23 @@ public class MoveInformationUnitCommand implements Command {
 	public void execute() {
 		try {
 			NullProgressMonitor monitor = new NullProgressMonitor();
-			this.affectedFile.move(new Path(IPath.SEPARATOR + this.targetPath), true, monitor);
-			for (int i = 0, n = this.sourceBinaryReferences.size(); i < n; i++) {
-				this.sourceBinaryReferences.get(i).move(
-						this.targetBinaryReferences.get(i).getFullPath(), true, monitor);
+			if (this.affectedFile.getLocationURI().getScheme().equals(
+					this.targetFile.getLocationURI().getScheme())) {
+				this.affectedFile.move(new Path(IPath.SEPARATOR + this.targetPath), true, monitor);
+				for (int i = 0, n = this.sourceBinaryReferences.size(); i < n; i++) {
+					this.sourceBinaryReferences.get(i).move(
+							this.targetBinaryReferences.get(i).getFullPath(), true, monitor);
+				}
+			} else {
+				this.targetFile.create(this.affectedFile.getContents(), true, monitor);
+				this.affectedFile.delete(true, monitor);
+				for (int i = 0, n = this.sourceBinaryReferences.size(); i < n; i++) {
+					this.targetBinaryReferences.get(i).create(
+							this.sourceBinaryReferences.get(i).getContents(), true, monitor);
+					this.sourceBinaryReferences.get(i).delete(true, monitor);
+				}
 			}
+
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,10 +201,22 @@ public class MoveInformationUnitCommand implements Command {
 	public void undo() {
 		try {
 			NullProgressMonitor monitor = new NullProgressMonitor();
-			this.targetFile.move(new Path(this.sourcePath), true, monitor);
-			for (int i = 0, n = this.targetBinaryReferences.size(); i < n; i++) {
-				this.targetBinaryReferences.get(i).move(
-						this.sourceBinaryReferences.get(i).getFullPath(), true, monitor);
+			if (this.affectedFile.getLocationURI().getScheme().equals(
+					this.targetFile.getLocationURI().getScheme())) {
+				this.targetFile.move(new Path(this.sourcePath), true, monitor);
+				for (int i = 0, n = this.targetBinaryReferences.size(); i < n; i++) {
+					this.targetBinaryReferences.get(i).move(
+							this.sourceBinaryReferences.get(i).getFullPath(), true, monitor);
+				}
+			} else {
+				this.affectedFile.create(this.targetFile.getContents(), true, monitor);
+				this.targetFile.delete(true, monitor);
+				for (int i = 0, n = this.targetBinaryReferences.size(); i < n; i++) {
+					this.sourceBinaryReferences.get(i).create(
+							this.targetBinaryReferences.get(i).getContents(), true, monitor);
+					this.targetBinaryReferences.get(i).delete(true, monitor);
+				}
+
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block

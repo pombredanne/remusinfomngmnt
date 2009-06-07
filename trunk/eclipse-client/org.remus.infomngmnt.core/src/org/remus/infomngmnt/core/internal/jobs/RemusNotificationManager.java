@@ -15,6 +15,7 @@ package org.remus.infomngmnt.core.internal.jobs;
 import java.io.File;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -26,6 +27,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -64,7 +66,8 @@ public class RemusNotificationManager implements INotificationManagerManager {
 						IProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,
 								IProgressMonitor.UNKNOWN);
 						abstractJob.beforeRun(subProgressMonitor);
-						org.remus.infomngmnt.Notification run = abstractJob.run(subProgressMonitor);
+						List<org.remus.infomngmnt.Notification> run = abstractJob
+								.run(subProgressMonitor);
 						if (run != null) {
 							addNotification(run);
 						}
@@ -81,13 +84,16 @@ public class RemusNotificationManager implements INotificationManagerManager {
 		};
 	};
 
-	protected void addNotification(final org.remus.infomngmnt.Notification run) {
-		if ((this.allNotifications.getNotifcations().size() - 1) == InfomngmntEditPlugin
-				.getPlugin().getPreferenceStore().getInt(
-						PreferenceInitializer.MAX_SAVED_NOTIFICATIONS)) {
-			this.allNotifications.getNotifcations().remove(0);
+	protected void addNotification(final List<org.remus.infomngmnt.Notification> run) {
+		for (org.remus.infomngmnt.Notification notification : run) {
+			if ((this.allNotifications.getNotifcations().size() - 1) == InfomngmntEditPlugin
+					.getPlugin().getPreferenceStore().getInt(
+							PreferenceInitializer.MAX_SAVED_NOTIFICATIONS)) {
+				this.allNotifications.getNotifcations().remove(0);
+			}
+			this.allNotifications.getNotifcations().add(
+					(org.remus.infomngmnt.Notification) EcoreUtil.copy(notification));
 		}
-		this.allNotifications.getNotifcations().add(run);
 
 	}
 

@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.core.sync;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,10 +30,13 @@ import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationImportance;
 import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 
@@ -55,7 +60,7 @@ public class SynchronizeItemsJob extends AbstractJob {
 	 * .IProgressMonitor)
 	 */
 	@Override
-	public Notification run(final IProgressMonitor monitor) {
+	public List<Notification> run(final IProgressMonitor monitor) {
 		EObjectCondition typeRelationCondition = new EObjectCondition() {
 			@Override
 			public boolean isSatisfied(final EObject eObject) {
@@ -94,28 +99,42 @@ public class SynchronizeItemsJob extends AbstractJob {
 					manager.prepareSyncActions(createDiffModel.getOwnedElements(), changeSetItem,
 							(Category) eObject);
 					manager.updateFromRemote(changeSetItem);
-					updateCount = changeSetItem.getSyncObjectActionMap().size()
-							+ changeSetItem.getSyncCategoryActionMap().size();
 
 					sync.setMessage(NLS.bind("Updated {0} elements on item \"{1}\"", updateCount,
 							((Category) eObject).getLabel()));
 					ChangeSetExecutor executor = new ChangeSetExecutor();
 					executor.synchronize(createDiffModel.getOwnedElements(), changeSetItem,
 							monitor, (Category) eObject);
-					sync.setSeverity(Severity.OK);
-					sync.setImportance(updateCount > 0 ? NotificationImportance.MEDIUM
-							: NotificationImportance.NONE);
-
+					Set<SynchronizableObject> keySet = changeSetItem.getSyncObjectActionMap()
+							.keySet();
+					for (SynchronizableObject synchronizableObject : keySet) {
+						Notification notification = InfomngmntFactory.eINSTANCE
+								.createNotification();
+						InformationUnitListItem item = (InformationUnitListItem) synchronizableObject;
+						IInfoType infoType = InformationExtensionManager.getInstance()
+								.getInfoTypeByType(item.getType());
+						if (infoType != null) {
+							notification.setImage(infoType.getImage());
+						}
+						notification.setTimeStamp(new Date());
+						notification.setMessage(NLS.bind("Updated \"{0}\"", item.getLabel()));
+						notification.getAffectedInfoUnitIds().add(item.getId());
+						notification.setImportance(NotificationImportance.MEDIUM);
+						// notification.setSource(synchronizableObject.getSynchronizationMetaData()
+						// .getRepositoryId());
+						notification.setSeverity(Severity.OK);
+						returnValue.getChildren().add(notification);
+					}
 				}
 			} catch (Exception e) {
 				sync.setSeverity(Severity.ERROR);
 				sync.setDetails(e.getMessage());
 				sync.setImportance(NotificationImportance.HIGH);
+				returnValue.getChildren().add(sync);
 			}
-			returnValue.getChildren().add(sync);
 
 		}
-		return returnValue;
+		return returnValue.getChildren();
 	}
 
 }

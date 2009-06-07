@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.core.jobs;
 
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -72,7 +73,7 @@ public abstract class AbstractJob {
 		// does nothing by default
 	}
 
-	public abstract Notification run(IProgressMonitor monitor);
+	public abstract List<Notification> run(IProgressMonitor monitor);
 
 	public void afterRun(final IProgressMonitor monitor) {
 		// does nothing by default

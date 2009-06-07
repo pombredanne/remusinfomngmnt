@@ -97,4 +97,8 @@ public abstract class AbstractRepository implements IRepository {
 		this.localRepositoryId = localRepositoryId;
 	}
 
+	public boolean hasBinaryReferences() {
+		return false;
+	}
+
 }

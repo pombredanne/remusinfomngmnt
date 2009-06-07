@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteContainer;
@@ -92,10 +93,18 @@ public interface IRepository {
 	IFile[] getBinaryReferences();
 
 	/**
-	 * Commits a {@link SynchronizableObject}.
+	 * Commits a {@link SynchronizableObject}. This can be a {@link Category} or
+	 * a {@link InformationUnitListItem}. When committing this method has to
+	 * return a new hash, which will be assigned to the
+	 * {@link SynchronizableObject}.
 	 * 
 	 * @param item2commit
 	 * @param monitor
+	 * @throws RemoteException
+	 *             if something went wrong.
+	 * @throws OperationNotSupportedException
+	 *             if committing is not supported.
+	 * 
 	 */
 	String commit(SynchronizableObject item2commit, IProgressMonitor monitor)
 			throws RemoteException;
@@ -103,9 +112,24 @@ public interface IRepository {
 	RemoteObject addToRepository(SynchronizableObject item, IProgressMonitor monitor)
 			throws RemoteException;
 
+	void deleteFromRepository(SynchronizableObject item, IProgressMonitor monitor)
+			throws RemoteException;
+
 	RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
 			IProgressMonitor monitor) throws RemoteException;
 
+	/**
+	 * Returns a definition which properties within an information unit are
+	 * synchronized with the repository. In the most cases the repository cannot
+	 * synchronize all properties of the information unit. Because of that we
+	 * have to provide a collection which properties are updated
+	 * 
+	 * @param type
+	 *            the information type
+	 * @return a collection of properties which can be synchronized.
+	 */
 	IChangeSetDefinition getChangeSetDefinitionForType(String type);
+
+	boolean hasBinaryReferences();
 
 }

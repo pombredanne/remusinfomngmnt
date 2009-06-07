@@ -35,4 +35,6 @@ public interface ITrayService {
 
 	void moveToTray(Shell shell);
 
+	boolean isMinimized();
+
 }

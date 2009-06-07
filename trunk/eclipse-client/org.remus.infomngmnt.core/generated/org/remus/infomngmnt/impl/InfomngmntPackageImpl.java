@@ -2003,6 +2003,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.LOCAL_EDITED);
 		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.TARGET_EDITED);
 		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.IN_SYNC);
+		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.IGNORED);
 
 		initEEnum(synchronizationActionEEnum, SynchronizationAction.class, "SynchronizationAction");
 		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.REPLACE_LOCAL);

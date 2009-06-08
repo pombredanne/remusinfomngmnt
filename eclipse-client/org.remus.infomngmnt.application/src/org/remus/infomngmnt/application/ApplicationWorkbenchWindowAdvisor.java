@@ -940,4 +940,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		super.dispose();
 	}
 
+	public boolean isMinimized() {
+		return this.fMinimizedToTray;
+	}
+
 }

@@ -51,6 +51,10 @@
                name="startupMessageRect"
                value="1000,1000,270,15">
          </property>
+         <property
+               name="startupForegroundColor"
+               value="FFFFFF">
+         </property>
       </product>
    </extension>
 

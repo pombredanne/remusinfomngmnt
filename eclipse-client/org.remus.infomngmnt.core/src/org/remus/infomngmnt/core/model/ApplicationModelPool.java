@@ -14,12 +14,15 @@ package org.remus.infomngmnt.core.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
@@ -32,6 +35,9 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.core.extension.ISaveParticipant;
+import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -134,6 +140,22 @@ public class ApplicationModelPool {
 
 	}
 
+	public void removeFromModel(final IProject project) throws CoreException {
+		Category itemByValue = (Category) ModelUtil.getItemByValue(getModel().getRootCategories(),
+				InfomngmntPackage.Literals.CATEGORY__LABEL, project.getName());
+		if (itemByValue != null) {
+			Collection<ISaveParticipant> allItems = InfomngmntEditPlugin.getPlugin().getService(
+					ISaveParticipantExtensionService.class).getAllItems();
+			for (ISaveParticipant iSaveParticipant : allItems) {
+				iSaveParticipant.handleClean(project);
+			}
+			getModel().getRootCategories().remove(itemByValue);
+		}
+		project.close(new NullProgressMonitor());
+		clearCache();
+
+	}
+
 	public void addToModel(final IProject project) {
 		if (project.isOpen()) {
 			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
@@ -147,6 +169,7 @@ public class ApplicationModelPool {
 			this.model.getRootCategories().add(category);
 			EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources()
 					.add(category.eResource());
+
 		}
 
 	}
@@ -167,6 +190,10 @@ public class ApplicationModelPool {
 
 	public InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor) {
 		return this.cache.getItemById(id, monitor);
+	}
+
+	public void clearCache() {
+		this.cache.clear();
 	}
 
 }

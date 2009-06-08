@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.AvailableTags;
@@ -128,17 +131,36 @@ public class TagSaveParticipant implements ISaveParticipant {
 	}
 
 	public void handleDeleted(final String informationUnitId) {
-		EList<Tag> tags = ApplicationModelPool.getInstance().getModel().getAvailableTags()
-				.getTags();
+		List<Tag> tags = new ArrayList<Tag>(ApplicationModelPool.getInstance().getModel()
+				.getAvailableTags().getTags());
 		for (Tag tag : tags) {
-			EList<String> infoUnits = tag.getInfoUnits();
+			List<String> infoUnits = new ArrayList<String>(tag.getInfoUnits());
 			for (String string2 : infoUnits) {
 				if (string2.equals(informationUnitId)) {
 					tag.getInfoUnits().remove(string2);
 					handleEmptyTag(tag);
 				}
 			}
+		}
+	}
 
+	public void handleClean(final IProject project) {
+		List<Tag> tags = new ArrayList<Tag>(ApplicationModelPool.getInstance().getModel()
+				.getAvailableTags().getTags());
+		for (Tag tag : tags) {
+			List<String> arrayList = new ArrayList<String>(tag.getInfoUnits());
+			for (String string : arrayList) {
+				InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
+						string, null);
+				if (itemById == null
+						|| itemById.eResource() == null
+						|| project.equals(ResourcesPlugin.getWorkspace().getRoot().getFile(
+								new Path(itemById.eResource().getURI().toPlatformString(true)))
+								.getProject())) {
+					tag.getInfoUnits().remove(string);
+				}
+			}
+			handleEmptyTag(tag);
 		}
 	}
 

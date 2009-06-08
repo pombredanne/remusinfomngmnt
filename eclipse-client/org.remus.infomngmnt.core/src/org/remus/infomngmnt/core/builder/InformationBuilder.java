@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.core.builder;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -30,9 +31,11 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
+import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
@@ -98,6 +101,13 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 						this.visitor.setMonitor(monitor);
 						this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType,
 								(IFile) resource);
+
+						Collection<ISaveParticipant> allItems = InfomngmntEditPlugin.getPlugin()
+								.getService(ISaveParticipantExtensionService.class).getAllItems();
+						for (ISaveParticipant iSaveParticipant : allItems) {
+							iSaveParticipant.handleCreated(objectFromFile);
+						}
+
 						monitor.worked(1);
 					}
 				}
@@ -127,6 +137,11 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 		IFolder folder = getProject().getFolder("bin");
 		if (folder.exists()) {
 			folder.delete(true, monitor);
+		}
+		Collection<ISaveParticipant> allItems = InfomngmntEditPlugin.getPlugin().getService(
+				ISaveParticipantExtensionService.class).getAllItems();
+		for (ISaveParticipant iSaveParticipant : allItems) {
+			iSaveParticipant.handleClean(getProject());
 		}
 		super.clean(monitor);
 	}

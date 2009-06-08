@@ -79,7 +79,6 @@ public class ResourceUtil {
 		} catch (final CoreException e) {
 			// do nothing
 		}
-		System.out.println("test");
 		return false;
 	}
 
@@ -88,6 +87,17 @@ public class ResourceUtil {
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		for (IProject project : projects) {
 			if (isRelevantProject(project)) {
+				returnValue.add(project);
+			}
+		}
+		return returnValue.toArray(new IProject[returnValue.size()]);
+	}
+
+	public static IProject[] getRelevantAndClosedProjects() {
+		List<IProject> returnValue = new ArrayList<IProject>();
+		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		for (IProject project : projects) {
+			if (isRelevantProject(project) || !project.isOpen()) {
 				returnValue.add(project);
 			}
 		}
@@ -419,6 +429,22 @@ public class ResourceUtil {
 		} else {
 			return null;
 		}
+	}
+
+	public static void closeProject(final IProject object) throws CoreException {
+
+		if (isRelevantProject(object) && object.isOpen()) {
+			ApplicationModelPool.getInstance().removeFromModel(object);
+		}
+
+	}
+
+	public static void deleteProject(final IProject object, final IProgressMonitor monitor)
+			throws CoreException {
+		// TODO implement search for references and delete the linkings.
+		ApplicationModelPool.getInstance().removeFromModel(object);
+		object.delete(true, true, monitor);
+
 	}
 
 }

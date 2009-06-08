@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.core.extension;
 
+import org.eclipse.core.resources.IProject;
+
 import org.remus.infomngmnt.InformationUnit;
 
 /**
@@ -24,5 +26,7 @@ public interface ISaveParticipant {
 	void handleChanged(InformationUnit oldValue, InformationUnit newValue);
 
 	void handleDeleted(String informationUnitId);
+
+	void handleClean(IProject project);
 
 }

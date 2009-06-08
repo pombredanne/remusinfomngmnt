@@ -324,10 +324,15 @@ public class ChangeSetManager {
 			EObjectCondition valueCondition = new EObjectCondition() {
 				@Override
 				public boolean isSatisfied(final EObject eObject) {
-					return ((SynchronizableObject) eObject).getSynchronizationMetaData() != null
+					boolean b = ((SynchronizableObject) eObject).getSynchronizationMetaData() != null
 							&& infoUnit.getSynchronizationMetaData().getUrl().equals(
 									((SynchronizableObject) eObject).getSynchronizationMetaData()
-											.getUrl());
+											.getUrl())
+							&& ((SynchronizableObject) eObject).getSynchronizationMetaData()
+									.getSyncState() != SynchronizationState.IGNORED
+							&& ((SynchronizableObject) eObject).getSynchronizationMetaData()
+									.getSyncState() != SynchronizationState.NOT_ADDED;
+					return b;
 				}
 			};
 			SELECT select = new SELECT(new FROM(localContainer), new WHERE(typeRelationCondition

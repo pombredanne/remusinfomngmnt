@@ -236,6 +236,10 @@
             id="org.remus.infomngmnt.ui.ignoreForSynchronization"
             name="Add to Sync-Ignore">
       </command>
+      <command
+            id="org.remus.infomngmnt.ui.projectmanagement"
+            name="Project-Management">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -342,6 +346,10 @@
                   definitionId="selectionCanBeFiltered">
             </reference>
          </activeWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.ui.handler.OpenProjectManagerHandler"
+            commandId="org.remus.infomngmnt.ui.projectmanagement">
       </handler>
    </extension>
    <extension
@@ -544,6 +552,13 @@
          <command
                commandId="org.remus.infomngmnt.ui.openWelcome"
                icon="icons/iconexperience/16/earth.png"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:window?after=additions">
+         <command
+               commandId="org.remus.infomngmnt.ui.projectmanagement"
                style="push">
          </command>
       </menuContribution>

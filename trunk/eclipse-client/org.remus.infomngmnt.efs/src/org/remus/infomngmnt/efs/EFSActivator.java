@@ -82,7 +82,7 @@ public class EFSActivator extends AbstractUIPlugin {
 			AbstractSecurityProvider providerByFileSystem = getService(
 					ISecurityProviderExtension.class).getProviderByFileSystem(
 					iProject.getLocationURI().getScheme());
-			if (providerByFileSystem != null && !providerByFileSystem.isInitialized()) {
+			if (providerByFileSystem != null) {
 				SecurityWrapper securityProvider = getProviderByExtension(returnValue,
 						providerByFileSystem);
 				if (securityProvider == null) {
@@ -91,7 +91,6 @@ public class EFSActivator extends AbstractUIPlugin {
 					returnValue.add(securityProvider);
 				}
 				securityProvider.addProject(iProject);
-				System.out.println(providerByFileSystem.getName());
 			}
 		}
 		return returnValue;

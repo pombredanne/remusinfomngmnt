@@ -35,19 +35,22 @@ public class EncryptedProjectDecorator extends LabelProvider implements ILightwe
 	 * .Object, org.eclipse.jface.viewers.IDecoration)
 	 */
 	public void decorate(final Object element, final IDecoration decoration) {
+		Object adapter = null;
 		if (element instanceof Adapter) {
-			Object adapter = ((Adapter) element).getAdapter(IProject.class);
-			if (adapter != null && adapter instanceof IProject) {
-				try {
-					if (((IProject) adapter).getDescription().getLocationURI() != null
-							&& ((IProject) adapter).getDescription().getLocationURI().getScheme()
-									.startsWith("encrypted")) {
-						decoration.addOverlay(ResourceManager.getPluginImageDescriptor(EFSActivator
-								.getDefault(), "icons/iconexperience/lock.png"));
-					}
-				} catch (CoreException e) {
-					// do nothing.
+			adapter = ((Adapter) element).getAdapter(IProject.class);
+		} else if (element instanceof IProject) {
+			adapter = element;
+		}
+		if (adapter != null && adapter instanceof IProject) {
+			try {
+				if (((IProject) adapter).getDescription().getLocationURI() != null
+						&& ((IProject) adapter).getDescription().getLocationURI().getScheme()
+								.startsWith("encrypted")) {
+					decoration.addOverlay(ResourceManager.getPluginImageDescriptor(EFSActivator
+							.getDefault(), "icons/iconexperience/lock.png"));
 				}
+			} catch (CoreException e) {
+				// do nothing.
 			}
 		}
 

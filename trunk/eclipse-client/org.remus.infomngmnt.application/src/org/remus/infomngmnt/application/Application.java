@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -17,7 +16,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
@@ -33,10 +31,6 @@ import org.eclipse.ui.internal.ide.ChooseWorkspaceDialog;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.internal.ide.StatusUtil;
-
-import org.remus.infomngmnt.efs.EFSActivator;
-import org.remus.infomngmnt.efs.internal.model.SecurityWrapper;
-import org.remus.infomngmnt.efs.ui.InitializeSecurityProviderDialog;
 
 /**
  * This class controls all aspects of the application's execution
@@ -120,15 +114,18 @@ public class Application implements IApplication {
 			// Therefore we iterate through projects and searching for schemes
 			// that match
 			// to a file system which is encrypted.
-			List<SecurityWrapper> securityProvideProjects = EFSActivator.getDefault()
-					.getSecurityProvideProjects();
-			if (securityProvideProjects.size() > 0) {
-				InitializeSecurityProviderDialog diag = new InitializeSecurityProviderDialog(
-						display.getActiveShell(), securityProvideProjects);
-				if (diag.open() != IDialogConstants.OK_ID) {
-					return EXIT_OK;
-				}
-			}
+
+			// Will be disabled. Opening of secured projects will be done
+			// in the project managemt dialog
+			/*
+			 * List<SecurityWrapper> securityProvideProjects =
+			 * EFSActivator.getDefault() .getSecurityProvideProjects(); if
+			 * (securityProvideProjects.size() > 0) {
+			 * InitializeSecurityProviderDialog diag = new
+			 * InitializeSecurityProviderDialog( display.getActiveShell(),
+			 * securityProvideProjects); if (diag.open() !=
+			 * IDialogConstants.OK_ID) { return EXIT_OK; } }
+			 */
 
 			// create the workbench with this advisor and run it until it exits
 			// N.B. createWorkbench remembers the advisor, and also registers

@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -114,6 +115,9 @@ public class InitializeSecurityProviderDialog extends TitleAreaDialog {
 								if (!project.isOpen()) {
 									try {
 										project.open(monitor);
+										project
+												.build(IncrementalProjectBuilder.FULL_BUILD,
+														monitor);
 									} catch (CoreException e) {
 										// hm, ok. We've done our best.
 									}

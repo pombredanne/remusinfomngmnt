@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.remote;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -103,6 +104,11 @@ public class SyncStateParticipant implements ISaveParticipant {
 	}
 
 	public void handleDeleted(final String informationUnitId) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void handleClean(final IProject project) {
 		// TODO Auto-generated method stub
 
 	}

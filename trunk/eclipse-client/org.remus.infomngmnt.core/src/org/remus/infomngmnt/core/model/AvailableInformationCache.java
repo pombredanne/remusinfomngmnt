@@ -64,8 +64,10 @@ public class AvailableInformationCache {
 	}
 
 	public void clear() {
-		this.cachedItems.clear();
-		this.cachedItems = null;
+		if (this.cachedItems != null) {
+			this.cachedItems.clear();
+			this.cachedItems = null;
+		}
 	}
 
 	public InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor) {

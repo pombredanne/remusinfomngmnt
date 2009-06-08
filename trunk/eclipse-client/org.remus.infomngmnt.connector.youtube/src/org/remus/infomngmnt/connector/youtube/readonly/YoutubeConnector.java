@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,7 +53,6 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
-import org.remus.infomngmnt.common.core.md5.MD5;
 import org.remus.infomngmnt.connector.youtube.SiteInspector;
 import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
 import org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer;
@@ -185,13 +186,19 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	private RemoteObject createRemoteObject(final VideoEntry videoEntry,
-			final RemoteContainer container) {
+			final RemoteContainer container) throws RemoteException {
 		/*
 		 * Youtube unfortunately has no edited flag when editing video-metadata.
 		 * We have to generate our own hash based on the metadata that can be
 		 * edited.
 		 */
-		MD5 md5 = new MD5();
+		MessageDigest instance;
+		try {
+			instance = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			throw new RemoteException(StatusCreator.newStatus("Error creating MD5", e));
+		}
+
 		StringWriter sw = new StringWriter();
 		YouTubeMediaGroup mediaGroup = videoEntry.getMediaGroup();
 		if (mediaGroup != null) {
@@ -202,9 +209,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 				sb.append(string);
 			}
 		}
-		md5.Update(sw.toString());
+		instance.update(sw.toString().getBytes());
 		RemoteObject remoteVideo = InfomngmntFactory.eINSTANCE.createRemoteObject();
-		remoteVideo.setHash(md5.asHex());
+		remoteVideo.setHash(asHex(instance.digest()));
 		remoteVideo.setId(SiteInspector.getId(videoEntry.getHtmlLink().getHref()));
 		remoteVideo.setName(videoEntry.getTitle().getPlainText());
 		remoteVideo.setRepositoryTypeObjectId(KEY_VIDEO);
@@ -545,6 +552,18 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			this.preferenceStore = YoutubeActivator.getDefault().getPreferenceStore();
 		}
 		return this.preferenceStore;
+	}
+
+	private static final char[] HEX_CHARS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+			'a', 'b', 'c', 'd', 'e', 'f', };
+
+	public static String asHex(final byte hash[]) {
+		char buf[] = new char[hash.length * 2];
+		for (int i = 0, x = 0; i < hash.length; i++) {
+			buf[x++] = HEX_CHARS[(hash[i] >>> 4) & 0xf];
+			buf[x++] = HEX_CHARS[hash[i] & 0xf];
+		}
+		return new String(buf);
 	}
 
 }

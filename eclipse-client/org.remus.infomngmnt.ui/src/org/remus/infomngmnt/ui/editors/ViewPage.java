@@ -48,8 +48,10 @@ public class ViewPage extends InformationFormPage {
 	private final IResourceChangeListener binFileListener = new IResourceChangeListener() {
 
 		public void resourceChanged(final IResourceChangeEvent event) {
-			IResourceDelta[] affectedChildren = event.getDelta().getAffectedChildren();
-			visit(affectedChildren);
+			if (event.getDelta() != null) {
+				IResourceDelta[] affectedChildren = event.getDelta().getAffectedChildren();
+				visit(affectedChildren);
+			}
 		}
 
 		private void visit(final IResourceDelta[] affectedChildren) {

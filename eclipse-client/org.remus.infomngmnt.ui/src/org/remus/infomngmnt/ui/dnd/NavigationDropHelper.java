@@ -182,6 +182,7 @@ public class NavigationDropHelper {
 					 * repository, we have to mark it as deleted.
 					 */
 					if (syncMetaData.getSyncState() != SynchronizationState.NOT_ADDED
+							&& syncMetaData.getSyncState() != SynchronizationState.IGNORED
 							&& ((IAdaptable) ((EObject) object).eContainer())
 									.getAdapter(SynchronizationMetadata.class) != null) {
 						SynchronizableObject newObject = (SynchronizableObject) EcoreUtil
@@ -230,16 +231,12 @@ public class NavigationDropHelper {
 							}
 						}
 
-					}
-					// else if ((target instanceof Category && ((EObject)
-					// object).eContainer() == target)
-					// || (target instanceof InformationUnitListItem &&
-					// ((EObject) object)
-					// .eContainer() == ((EObject) target).eContainer())) {
-					// // do nothing. Object was moved withing the same
-					// // category.
-					// }
-					else {
+					} else if ((target instanceof Category && ((EObject) object).eContainer() == target)
+							|| (target instanceof InformationUnitListItem && ((EObject) object)
+									.eContainer() == ((EObject) target).eContainer())) {
+						// do nothing. Object was moved withing the same
+						// category.
+					} else {
 						/*
 						 * transfer the repository-id for the dragged object and
 						 * its children.

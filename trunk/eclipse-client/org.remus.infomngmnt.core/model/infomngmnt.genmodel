@@ -133,6 +133,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/transferType"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//RemoteRepository">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteRepository/options"/>
       <genOperations ecoreOperation="infomngmnt.ecore#//RemoteRepository/getRepositoryImplementation"/>
     </genClasses>
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//RemoteObject">
@@ -217,6 +218,10 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//NotificationCollection">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//NotificationCollection/notifcations"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//StringToStringMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//StringToStringMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//StringToStringMap/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

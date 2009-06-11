@@ -273,6 +273,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	private EClass notificationCollectionEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToStringMapEClass = null;
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -942,6 +949,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRemoteRepository_Options() {
+		return (EReference)remoteRepositoryEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1506,6 +1522,33 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToStringMap() {
+		return stringToStringMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToStringMap_Key() {
+		return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToStringMap_Value() {
+		return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1683,6 +1726,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(ruleResultEClass, RULE_RESULT__TRANSFER_TYPE);
 
 		remoteRepositoryEClass = createEClass(REMOTE_REPOSITORY);
+		createEReference(remoteRepositoryEClass, REMOTE_REPOSITORY__OPTIONS);
 
 		remoteObjectEClass = createEClass(REMOTE_OBJECT);
 		createEAttribute(remoteObjectEClass, REMOTE_OBJECT__POSSIBLE_INFO_TYPE_ID);
@@ -1766,6 +1810,10 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		notificationCollectionEClass = createEClass(NOTIFICATION_COLLECTION);
 		createEReference(notificationCollectionEClass, NOTIFICATION_COLLECTION__NOTIFCATIONS);
+
+		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__VALUE);
 
 		// Create enums
 		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
@@ -1909,6 +1957,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getRuleResult_TransferType(), this.getTransferWrapper(), "transferType", null, 0, 1, RuleResult.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(remoteRepositoryEClass, RemoteRepository.class, "RemoteRepository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRemoteRepository_Options(), this.getStringToStringMap(), null, "options", null, 0, -1, RemoteRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(remoteRepositoryEClass, this.getIRepository(), "getRepositoryImplementation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1994,6 +2043,10 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(notificationCollectionEClass, NotificationCollection.class, "NotificationCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNotificationCollection_Notifcations(), this.getNotification(), null, "notifcations", null, 0, -1, NotificationCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToStringMap_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");

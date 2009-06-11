@@ -1402,13 +1402,22 @@ public interface InfomngmntPackage extends EPackage {
 	int REMOTE_REPOSITORY__EXCLUSION_CHILDREN = REMOTE_CONTAINER__EXCLUSION_CHILDREN;
 
 	/**
+	 * The feature id for the '<em><b>Options</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOTE_REPOSITORY__OPTIONS = REMOTE_CONTAINER_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Remote Repository</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REMOTE_REPOSITORY_FEATURE_COUNT = REMOTE_CONTAINER_FEATURE_COUNT + 0;
+	int REMOTE_REPOSITORY_FEATURE_COUNT = REMOTE_CONTAINER_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.RepositoryCollectionImpl <em>Repository Collection</em>}' class.
@@ -2017,6 +2026,43 @@ public interface InfomngmntPackage extends EPackage {
 	int NOTIFICATION_COLLECTION_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.StringToStringMapImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getStringToStringMap()
+	 * @generated
+	 */
+	int STRING_TO_STRING_MAP = 33;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To String Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2024,7 +2070,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 33;
+	int SYNCHRONIZATION_STATE = 34;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -2034,7 +2080,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 34;
+	int SYNCHRONIZATION_ACTION = 35;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.CalendarEntryType <em>Calendar Entry Type</em>}' enum.
@@ -2044,7 +2090,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntryType()
 	 * @generated
 	 */
-	int CALENDAR_ENTRY_TYPE = 35;
+	int CALENDAR_ENTRY_TYPE = 36;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.NotificationImportance <em>Notification Importance</em>}' enum.
@@ -2054,7 +2100,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotificationImportance()
 	 * @generated
 	 */
-	int NOTIFICATION_IMPORTANCE = 36;
+	int NOTIFICATION_IMPORTANCE = 37;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.Severity <em>Severity</em>}' enum.
@@ -2064,7 +2110,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSeverity()
 	 * @generated
 	 */
-	int SEVERITY = 37;
+	int SEVERITY = 38;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -2074,7 +2120,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 38;
+	int OBJECT = 39;
 
 
 	/**
@@ -2085,7 +2131,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
 	 * @generated
 	 */
-	int IREPOSITORY = 39;
+	int IREPOSITORY = 40;
 
 
 	/**
@@ -2096,7 +2142,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTransferWrapper()
 	 * @generated
 	 */
-	int TRANSFER_WRAPPER = 40;
+	int TRANSFER_WRAPPER = 41;
 
 
 	/**
@@ -2828,6 +2874,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getRemoteRepository();
+
+	/**
+	 * Returns the meta object for the map '{@link org.remus.infomngmnt.RemoteRepository#getOptions <em>Options</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Options</em>'.
+	 * @see org.remus.infomngmnt.RemoteRepository#getOptions()
+	 * @see #getRemoteRepository()
+	 * @generated
+	 */
+	EReference getRemoteRepository_Options();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.RemoteObject <em>Remote Object</em>}'.
@@ -3569,6 +3626,40 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getNotificationCollection_Notifcations();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To String Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="org.eclipse.emf.ecore.EString"
+	 * @generated
+	 */
+	EClass getStringToStringMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringMap_Value();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4254,6 +4345,14 @@ public interface InfomngmntPackage extends EPackage {
 		EClass REMOTE_REPOSITORY = eINSTANCE.getRemoteRepository();
 
 		/**
+		 * The meta object literal for the '<em><b>Options</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference REMOTE_REPOSITORY__OPTIONS = eINSTANCE.getRemoteRepository_Options();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.RemoteObjectImpl <em>Remote Object</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4826,6 +4925,32 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NOTIFICATION_COLLECTION__NOTIFCATIONS = eINSTANCE.getNotificationCollection_Notifcations();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.StringToStringMapImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getStringToStringMap()
+		 * @generated
+		 */
+		EClass STRING_TO_STRING_MAP = eINSTANCE.getStringToStringMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_MAP__KEY = eINSTANCE.getStringToStringMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_MAP__VALUE = eINSTANCE.getStringToStringMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.

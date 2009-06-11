@@ -127,6 +127,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.CALENDAR_ENTRY: return createCalendarEntry();
 			case InfomngmntPackage.NOTIFICATION: return createNotification();
 			case InfomngmntPackage.NOTIFICATION_COLLECTION: return createNotificationCollection();
+			case InfomngmntPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -452,6 +453,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	public NotificationCollection createNotificationCollection() {
 		NotificationCollectionImpl notificationCollection = new NotificationCollectionImpl();
 		return notificationCollection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, String> createStringToStringMap() {
+		StringToStringMapImpl stringToStringMap = new StringToStringMapImpl();
+		return stringToStringMap;
 	}
 
 	/**

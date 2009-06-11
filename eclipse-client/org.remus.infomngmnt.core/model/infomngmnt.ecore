@@ -120,6 +120,8 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EClass" name="RemoteRepository" eSuperTypes="#//RemoteContainer">
     <eOperations name="getRepositoryImplementation" eType="#//IRepository"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="options" upperBound="-1"
+        eType="#//StringToStringMap" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoteObject" eSuperTypes="#//Adapter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="possibleInfoTypeId" upperBound="-1"
@@ -272,5 +274,9 @@
     <eLiterals name="INFO" value="1"/>
     <eLiterals name="WARNING" value="2"/>
     <eLiterals name="ERROR" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToStringMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

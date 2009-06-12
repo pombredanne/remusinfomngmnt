@@ -60,6 +60,7 @@ public class ScreenshotCreationWizard extends Wizard {
 
 	@Override
 	public void addPages() {
+		setWindowTitle("Capture desktop");
 		addPage(this.page1 = new ScreenshotCreationPage());
 
 	}

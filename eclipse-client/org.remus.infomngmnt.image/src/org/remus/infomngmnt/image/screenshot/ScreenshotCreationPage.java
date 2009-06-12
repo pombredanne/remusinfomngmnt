@@ -165,7 +165,7 @@ public class ScreenshotCreationPage extends WizardPage {
 	public ScreenshotCreationPage() {
 		super("ScreenShotAttachment"); //$NON-NLS-1$
 		setTitle("Capture screenshot");
-		setDescription("Screenshot bla");
+		setDescription("This wizard enables you to create a new image from a screenshot");
 	}
 
 	public void createControl(final Composite parent) {
@@ -179,7 +179,7 @@ public class ScreenshotCreationPage extends WizardPage {
 
 		// TODO: need disabled versions of all toolbar icons
 		ToolBarManager tbm = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL | SWT.RIGHT);
-		this.captureAction = new Action("Blabla", IAction.AS_PUSH_BUTTON) {
+		this.captureAction = new Action("Capture", IAction.AS_PUSH_BUTTON) {
 
 			private boolean isFirstCapture = true;
 

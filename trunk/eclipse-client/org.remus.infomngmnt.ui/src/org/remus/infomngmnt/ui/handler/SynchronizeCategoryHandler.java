@@ -106,8 +106,8 @@ public class SynchronizeCategoryHandler extends AbstractHandler {
 				synchronizationWizard.init(diffModel[0], changeSetItem[0]);
 				if (changeSetItem[0].getSyncCategoryActionMap().size() == 0
 						&& changeSetItem[0].getSyncObjectActionMap().size() == 0) {
-					MessageDialog.openInformation(HandlerUtil.getActiveShell(event), "No changes",
-							"No changes found");
+					MessageDialog.openInformation(UIUtil.getDisplay().getActiveShell(),
+							"No changes", "No changes found");
 				} else {
 					WizardDialog wz = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
 							synchronizationWizard);

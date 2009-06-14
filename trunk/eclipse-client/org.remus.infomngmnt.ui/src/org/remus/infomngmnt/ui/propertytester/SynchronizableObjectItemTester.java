@@ -15,9 +15,12 @@ package org.remus.infomngmnt.ui.propertytester;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IProject;
 
+import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -28,6 +31,8 @@ public class SynchronizableObjectItemTester extends PropertyTester {
 	public static final String PROPERTY_LOCALONLY = "canAdd"; //$NON-NLS-1$
 	public static final String PROPERTY_IS_UNDER_SYNC = "isUnderSyncControl"; //$NON-NLS-1$
 	public static final String PROPERTY_IGNORE = "canIgnore"; //$NON-NLS-1$
+	public static final String REPOSITORY_PROPERTY = "repositoryIdEquals"; //$NON-NLS-1$
+	public static final String SYNCSTATE_PROPERTY = "syncStateEquals"; //$NON-NLS-1$
 
 	/*
 	 * (non-Javadoc)
@@ -63,6 +68,18 @@ public class SynchronizableObjectItemTester extends PropertyTester {
 						&& ((SynchronizableObject) ((SynchronizableObject) receiver).eContainer())
 								.getSynchronizationMetaData() != null
 						&& metaData.getSyncState() != SynchronizationState.IGNORED;
+			}
+			if (REPOSITORY_PROPERTY.equals(property)) {
+				if (metaData != null) {
+					RemoteRepository itemById = UIPlugin.getDefault().getService(
+							IRepositoryService.class).getRepositoryById(metaData.getRepositoryId());
+					if (itemById != null && itemById.getRepositoryImplementation() != null) {
+						return expectedValue.equals(itemById.getRepositoryImplementation().getId());
+					}
+				}
+			}
+			if (SYNCSTATE_PROPERTY.equals(property)) {
+				return metaData != null && expectedValue.equals(metaData.getSyncState().getName());
 			}
 		}
 		return false;

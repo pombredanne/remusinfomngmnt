@@ -634,7 +634,7 @@
             class="org.remus.infomngmnt.ui.propertytester.SynchronizableObjectItemTester"
             id="org.remus.infomngmnt.ui.ISynchronizableObjectTest"
             namespace="org.remus.infomngmnt.ui"
-            properties="canCommitOrReplace, canAdd, isUnderSyncControl, canIgnore"
+            properties="canCommitOrReplace, canAdd, isUnderSyncControl, canIgnore, repositoryIdEquals, syncStateEquals"
             type="org.remus.infomngmnt.SynchronizableObject">
       </propertyTester>
       <propertyTester

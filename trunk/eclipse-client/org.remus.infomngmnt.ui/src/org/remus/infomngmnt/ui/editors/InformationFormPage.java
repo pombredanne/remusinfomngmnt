@@ -59,6 +59,10 @@ public abstract class InformationFormPage extends FormPage {
 		control.addFocusListener(this.focusAdapter);
 	}
 
+	protected void removeControl(final Control control) {
+		control.removeFocusListener(this.focusAdapter);
+	}
+
 	protected Control getFocusControl() {
 		IManagedForm form = getManagedForm();
 		if (form == null) {

@@ -115,14 +115,14 @@ public class SearchTray extends AbstractTraySection {
 		Job.getJobManager().addJobChangeListener(this.searchJobListener = new JobChangeAdapter() {
 			@Override
 			public void scheduled(final IJobChangeEvent event) {
-				if (!parent.getDisplay().isDisposed()) {
+				if (!parent.isDisposed() && !parent.getDisplay().isDisposed()) {
 					checkSearchBar(searchBar, parent.getDisplay());
 				}
 			}
 
 			@Override
 			public void done(final IJobChangeEvent event) {
-				if (!parent.getDisplay().isDisposed()) {
+				if (!parent.isDisposed() && !parent.getDisplay().isDisposed()) {
 					checkSearchBar(searchBar, parent.getDisplay());
 				}
 

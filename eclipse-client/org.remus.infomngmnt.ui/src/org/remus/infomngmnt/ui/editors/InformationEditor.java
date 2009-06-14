@@ -202,7 +202,6 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 						});
 					}
 				}
-
 				if (!visitor.getChangedResources().isEmpty()) {
 					InformationEditor.this.changedResources.addAll(visitor.getChangedResources());
 					if (getSite().getPage().getActiveEditor() == InformationEditor.this) {

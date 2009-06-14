@@ -76,13 +76,13 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="actioncontributor" type="string" use="required">
+         <attribute name="actioncontributor" type="string">
             <annotation>
                <documentation>
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.remus.infomngmnt.ui.remote.IRepositoryActionContributor"/>
+                  <meta.attribute kind="java" basedOn=":org.remus.infomngmnt.ui.remote.IRepositoryActionContributor" deprecated="true"/>
                </appinfo>
             </annotation>
          </attribute>

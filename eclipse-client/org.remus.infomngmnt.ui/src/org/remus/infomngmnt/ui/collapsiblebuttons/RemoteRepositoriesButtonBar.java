@@ -51,6 +51,7 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.deferred.DeferredContentProvider;
@@ -255,7 +256,7 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 				this.service.executeCommand(CMD_ID, null);
 			} catch (Exception e) {
 				ErrorDialog.openError(getViewSite().getShell(), "Error executing command",
-						"Error creating new repository", null);
+						"Error creating new repository", StatusCreator.newStatus(e.getMessage()));
 			}
 
 		}

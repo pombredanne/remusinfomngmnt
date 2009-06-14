@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 
@@ -57,6 +58,7 @@ public class Path2ObjectMapper {
 		EObject currentObjectInstance = this.object;
 		Path path = new Path(this.expression);
 		String[] segments = path.segments();
+		int i = 0;
 		for (String string : segments) {
 			if (string.startsWith(ATTRIBUTE_ACCESSOR)) {
 				EList<EAttribute> eAttributes = currentObjectInstance.eClass().getEAllAttributes();
@@ -126,6 +128,12 @@ public class Path2ObjectMapper {
 												 * We can proceed further
 												 */
 												attributeFound = true;
+												if (i == segments.length - 1 && setValue) {
+													int indexOf = children.indexOf(object);
+													children.set(indexOf, EcoreUtil
+															.copy((EObject) this.value));
+
+												}
 												currentObjectInstance = (EObject) object;
 												returnValue = object;
 												break;
@@ -204,6 +212,7 @@ public class Path2ObjectMapper {
 					}
 				}
 			}
+			i++;
 		}
 		return returnValue;
 	}

@@ -47,6 +47,9 @@ public class SyncStateParticipant implements ISaveParticipant {
 					|| synchronizationMetadata.getSyncState() == SynchronizationState.IGNORED) {
 				return;
 			}
+			if (synchronizationMetadata.isCurrentlySyncing()) {
+				return;
+			}
 			RemoteRepository itemById = InfomngmntEditPlugin.getPlugin().getService(
 					IRepositoryService.class).getRepositoryById(
 					synchronizationMetadata.getRepositoryId());

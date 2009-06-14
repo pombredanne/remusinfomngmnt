@@ -30,6 +30,7 @@ import java.util.Date;
  *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#getLastSynchronisation <em>Last Synchronisation</em>}</li>
  *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#getHash <em>Hash</em>}</li>
  *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#getSyncState <em>Sync State</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#isCurrentlySyncing <em>Currently Syncing</em>}</li>
  * </ul>
  * </p>
  *
@@ -196,5 +197,32 @@ public interface SynchronizationMetadata extends Adapter {
 	 * @generated
 	 */
 	void setSyncState(SynchronizationState value);
+
+	/**
+	 * Returns the value of the '<em><b>Currently Syncing</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Currently Syncing</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Currently Syncing</em>' attribute.
+	 * @see #setCurrentlySyncing(boolean)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getSynchronizationMetadata_CurrentlySyncing()
+	 * @model default="false" transient="true"
+	 * @generated
+	 */
+	boolean isCurrentlySyncing();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.SynchronizationMetadata#isCurrentlySyncing <em>Currently Syncing</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Currently Syncing</em>' attribute.
+	 * @see #isCurrentlySyncing()
+	 * @generated
+	 */
+	void setCurrentlySyncing(boolean value);
 
 } // SynchronizationMetadata

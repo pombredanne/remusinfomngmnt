@@ -1126,6 +1126,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_CurrentlySyncing() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1752,6 +1761,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION);
 		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__HASH);
 		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__SYNC_STATE);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING);
 
 		changeSetEClass = createEClass(CHANGE_SET);
 		createEReference(changeSetEClass, CHANGE_SET__TARGET_CATEGORY);
@@ -1985,6 +1995,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getSynchronizationMetadata_LastSynchronisation(), ecorePackage.getEDate(), "lastSynchronisation", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSynchronizationMetadata_Hash(), ecorePackage.getEString(), "hash", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSynchronizationMetadata_SyncState(), this.getSynchronizationState(), "syncState", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizationMetadata_CurrentlySyncing(), ecorePackage.getEBoolean(), "currentlySyncing", "false", 0, 1, SynchronizationMetadata.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getChangeSet_TargetCategory(), this.getCategory(), null, "targetCategory", null, 1, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

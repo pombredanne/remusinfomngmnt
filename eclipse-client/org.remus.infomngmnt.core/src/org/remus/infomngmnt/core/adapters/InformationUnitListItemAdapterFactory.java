@@ -54,11 +54,13 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 							new Path(itemById.eResource().getURI().toPlatformString(true)));
 				}
 			}
-			return EditingUtil.getInstance().getObjectFromUri(
-					file.getProject().getFile(
-							new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION))
-							.getFullPath(), InfomngmntPackage.eINSTANCE.getInformationUnit(),
-					false, null, false);
+			if (file != null) {
+				return EditingUtil.getInstance().getObjectFromUri(
+						file.getProject().getFile(
+								new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION))
+								.getFullPath(), InfomngmntPackage.eINSTANCE.getInformationUnit(),
+						false, null, false);
+			}
 		}
 		if (adapterType.equals(SynchronizationMetadata.class)
 				&& adaptableObject instanceof InformationUnitListItem) {

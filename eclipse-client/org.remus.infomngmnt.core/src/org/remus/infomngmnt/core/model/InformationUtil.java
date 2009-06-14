@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +35,7 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
@@ -123,6 +125,30 @@ public class InformationUtil {
 				.getRootCategories()), new WHERE(condition1));
 		return select.execute().getEObjects();
 
+	}
+
+	public static InformationUnit createNew(final String type, final String stringValue) {
+		InformationUnit unit = createNew(type);
+		unit.setStringValue(stringValue);
+		return unit;
+	}
+
+	public static InformationUnit createNew(final String type) {
+		InformationUnit unit = InfomngmntFactory.eINSTANCE.createInformationUnit();
+		unit.setType(type);
+		return unit;
+	}
+
+	public static InformationUnit createNew(final String type, final long longValue) {
+		InformationUnit unit = createNew(type);
+		unit.setLongValue(longValue);
+		return unit;
+	}
+
+	public static InformationUnit createNew(final String type, final Date dateValue) {
+		InformationUnit unit = createNew(type);
+		unit.setDateValue(dateValue);
+		return unit;
 	}
 
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -195,37 +196,49 @@ public class ChangeSetExecutor {
 		Set<SynchronizableObject> keySet2 = item.getSyncObjectActionMap().keySet();
 		for (SynchronizableObject synchronizableObject : keySet2) {
 			if (synchronizableObject instanceof InformationUnitListItem) {
-				SynchronizationAction synchronizationAction = item.getSyncObjectActionMap().get(
-						synchronizableObject);
-				RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
-						IRepositoryService.class).getRepositoryById(
-						synchronizableObject.getSynchronizationMetaData().getRepositoryId());
-				AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin()
-						.getService(IRepositoryExtensionService.class).getItemByRepository(
-								remoteRepository);
-				switch (synchronizationAction) {
-				case REPLACE_LOCAL:
-					replaceLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
-							monitor);
-					break;
-				case ADD_LOCAL:
-					addLocalInfoUnit((InformationUnitListItem) synchronizableObject, item, monitor);
-					break;
-				case DELETE_LOCAL:
-					deleteLocalInforUnit((InformationUnitListItem) synchronizableObject, item,
-							monitor);
-					break;
-				case DELETE_REMOTE:
-					deleteRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
-					break;
-				case REPLACE_REMOTE:
-					replaceRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
-					break;
-				case ADD_REMOTE:
-					addRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
-					break;
-				default:
-					break;
+				try {
+					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
+							.getItemById(((InformationUnitListItem) synchronizableObject).getId(),
+									monitor);
+					if (itemById != null) {
+						itemById.getSynchronizationMetaData().setCurrentlySyncing(true);
+					}
+					SynchronizationAction synchronizationAction = item.getSyncObjectActionMap()
+							.get(synchronizableObject);
+					switch (synchronizationAction) {
+					case REPLACE_LOCAL:
+						replaceLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
+								monitor);
+						break;
+					case ADD_LOCAL:
+						addLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
+								monitor);
+						break;
+					case DELETE_LOCAL:
+						deleteLocalInforUnit((InformationUnitListItem) synchronizableObject, item,
+								monitor);
+						break;
+					case DELETE_REMOTE:
+						deleteRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
+								monitor);
+						break;
+					case REPLACE_REMOTE:
+						replaceRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
+								monitor);
+						break;
+					case ADD_REMOTE:
+						addRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
+						break;
+					default:
+						break;
+					}
+				} finally {
+					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
+							.getItemById(((InformationUnitListItem) synchronizableObject).getId(),
+									monitor);
+					if (itemById != null) {
+						itemById.getSynchronizationMetaData().setCurrentlySyncing(false);
+					}
 				}
 			}
 		}
@@ -399,6 +412,10 @@ public class ChangeSetExecutor {
 				Path2ObjectMapper path2ObjectMapper = new Path2ObjectMapper(string, adapter, object);
 				path2ObjectMapper.getObjectForPath(true, true);
 				EditingUtil.getInstance().saveObjectToResource(adapter);
+			}
+			IFile file = (IFile) adapter.getAdapter(IFile.class);
+			if (file != null && file.exists()) {
+				file.getProject().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
 			}
 			/*
 			 * Binary references are replaced ALWAYS if repository supports

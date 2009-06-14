@@ -1512,13 +1512,22 @@ public interface InfomngmntPackage extends EPackage {
 	int SYNCHRONIZATION_METADATA__SYNC_STATE = ADAPTER_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Currently Syncing</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING = ADAPTER_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Synchronization Metadata</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SYNCHRONIZATION_METADATA_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 6;
+	int SYNCHRONIZATION_METADATA_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.ChangeSetImpl <em>Change Set</em>}' class.
@@ -3114,6 +3123,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getSynchronizationMetadata_SyncState();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#isCurrentlySyncing <em>Currently Syncing</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Currently Syncing</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#isCurrentlySyncing()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_CurrentlySyncing();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.ChangeSet <em>Change Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4527,6 +4547,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SYNCHRONIZATION_METADATA__SYNC_STATE = eINSTANCE.getSynchronizationMetadata_SyncState();
+
+		/**
+		 * The meta object literal for the '<em><b>Currently Syncing</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING = eINSTANCE.getSynchronizationMetadata_CurrentlySyncing();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ChangeSetImpl <em>Change Set</em>}' class.

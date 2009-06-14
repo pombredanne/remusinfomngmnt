@@ -37,6 +37,7 @@ import org.remus.infomngmnt.SynchronizationState;
  *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#getLastSynchronisation <em>Last Synchronisation</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#getHash <em>Hash</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#getSyncState <em>Sync State</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#isCurrentlySyncing <em>Currently Syncing</em>}</li>
  * </ul>
  * </p>
  *
@@ -162,6 +163,26 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 	 * @ordered
 	 */
 	protected SynchronizationState syncState = SYNC_STATE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isCurrentlySyncing() <em>Currently Syncing</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCurrentlySyncing()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean CURRENTLY_SYNCING_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isCurrentlySyncing() <em>Currently Syncing</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCurrentlySyncing()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean currentlySyncing = CURRENTLY_SYNCING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -313,6 +334,27 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isCurrentlySyncing() {
+		return currentlySyncing;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCurrentlySyncing(boolean newCurrentlySyncing) {
+		boolean oldCurrentlySyncing = currentlySyncing;
+		currentlySyncing = newCurrentlySyncing;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING, oldCurrentlySyncing, currentlySyncing));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -328,6 +370,8 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				return getHash();
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
 				return getSyncState();
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
+				return isCurrentlySyncing() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -357,6 +401,9 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				return;
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
 				setSyncState((SynchronizationState)newValue);
+				return;
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
+				setCurrentlySyncing(((Boolean)newValue).booleanValue());
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -388,6 +435,9 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
 				setSyncState(SYNC_STATE_EDEFAULT);
 				return;
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
+				setCurrentlySyncing(CURRENTLY_SYNCING_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -412,6 +462,8 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				return HASH_EDEFAULT == null ? hash != null : !HASH_EDEFAULT.equals(hash);
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
 				return syncState != SYNC_STATE_EDEFAULT;
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
+				return currentlySyncing != CURRENTLY_SYNCING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -438,6 +490,8 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 		result.append(hash);
 		result.append(", syncState: ");
 		result.append(syncState);
+		result.append(", currentlySyncing: ");
+		result.append(currentlySyncing);
 		result.append(')');
 		return result.toString();
 	}

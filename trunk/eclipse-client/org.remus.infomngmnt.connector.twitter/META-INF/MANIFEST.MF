@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Twitter Plug-in
+Bundle-SymbolicName: org.remus.infomngmnt.connector.twitter;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.remus.infomngmnt.connector.twitter.TwitterActivator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.remus.infomngmnt.core,
+ org.eclipse.equinox.security,
+ org.eclipse.emf.databinding;bundle-version="1.0.0",
+ org.eclipse.core.databinding.beans;bundle-version="1.1.1",
+ org.eclipse.jface.databinding;bundle-version="1.2.1",
+ org.apache.commons.lang;bundle-version="2.3.0",
+ org.eclipse.ui.forms,
+ org.remus.infomngmnt.common.ui;bundle-version="1.0.0",
+ org.remus.infomngmnt.ui;bundle-version="1.0.0",
+ org.apache.commons.httpclient;bundle-version="3.1.0",
+ org.apache.commons.logging;bundle-version="1.0.4",
+ org.eclipse.ecf,
+ org.eclipse.ecf.filetransfer;bundle-version="2.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ lib/twitter4j-2.0.8.jar

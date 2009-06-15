@@ -60,7 +60,7 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 		this.store.setDefault(USER_DOCUMENTATION_LINK,
 				"http://remus-software.org/user-documentation");
 		this.store.setDefault(VIDEO_LINK,
-				" http://remus-software.org/media/screencasts/rim_5_minutes/rim_5_minutes.html");
+				"http://remus-software.org/media/screencasts/rim_5_minutes/rim_5_minutes.html");
 		PreferenceConverter.setDefault(this.store, DESKTOP_LOCATION, new Point(10000, 10000));
 		this.store.setDefault(AMOUNT_SHOWN_NOTIFICATIONS_TRAY, 3);
 	}

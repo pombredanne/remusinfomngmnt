@@ -65,6 +65,7 @@ public class ProjectManagementDialog extends TitleAreaDialog {
 	 */
 	public ProjectManagementDialog(final Shell parentShell) {
 		super(parentShell);
+		setShellStyle(getShellStyle() | SWT.RESIZE);
 	}
 
 	/**
@@ -343,6 +344,12 @@ public class ProjectManagementDialog extends TitleAreaDialog {
 		return false;
 	}
 
+	@Override
+	public boolean close() {
+		UIUtil.saveDialogSettings(UIPlugin.getDefault(), this);
+		return super.close();
+	}
+
 	private void bindValuesToUI() {
 		this.tableViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.tableViewer.setInput(ResourceUtil.getRelevantAndClosedProjects());
@@ -410,7 +417,14 @@ public class ProjectManagementDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(500, 375);
+		return UIUtil
+				.getDialogSettingsInitialSize(UIPlugin.getDefault(), this, new Point(500, 375));
+	}
+
+	@Override
+	protected Point getInitialLocation(final Point initialSize) {
+		return UIUtil.getDialogSettingsInitialLocation(UIPlugin.getDefault(), this, super
+				.getInitialLocation(initialSize));
 	}
 
 	@Override

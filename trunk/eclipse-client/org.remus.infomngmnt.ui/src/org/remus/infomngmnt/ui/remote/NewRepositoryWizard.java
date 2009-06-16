@@ -31,6 +31,7 @@ public abstract class NewRepositoryWizard extends Wizard {
 
 	protected RemoteRepository repository;
 	private String repositoryId;
+	private boolean editMode;
 
 	public NewRepositoryWizard() {
 		setNeedsProgressMonitor(true);
@@ -45,7 +46,9 @@ public abstract class NewRepositoryWizard extends Wizard {
 	public boolean performFinish() {
 		RepositoryCollection repositories = InfomngmntEditPlugin.getPlugin().getService(
 				IRepositoryService.class).getRepositories();
-		repositories.getRepositories().add(this.repository);
+		if (!this.editMode) {
+			repositories.getRepositories().add(this.repository);
+		}
 		EditingUtil.getInstance().saveObjectToResource(repositories);
 		return true;
 	}
@@ -53,10 +56,17 @@ public abstract class NewRepositoryWizard extends Wizard {
 	public void init(final IStructuredSelection selection) {
 		if (!selection.isEmpty() && selection.getFirstElement() instanceof IRepositoryUI) {
 			this.repositoryId = ((IRepositoryUI) selection.getFirstElement()).getRepositoryId();
+		} else if (!selection.isEmpty() && selection.getFirstElement() instanceof RemoteRepository) {
+			this.repository = (((RemoteRepository) selection.getFirstElement()));
+			this.repositoryId = this.repository.getRepositoryImplementation().getId();
+			this.editMode = true;
 		}
 	}
 
-	@SuppressWarnings("restriction")
+	protected boolean isEditMode() {
+		return this.editMode;
+	}
+
 	protected RemoteRepository getRepository() {
 		if (this.repository == null) {
 			this.repository = InfomngmntFactory.eINSTANCE.createRemoteRepository();

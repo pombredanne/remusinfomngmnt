@@ -32,8 +32,10 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.GridData;
@@ -56,6 +58,9 @@ import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.deferred.DeferredContentProvider;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
+import org.remus.infomngmnt.ui.extension.IRepositoryUI;
+import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
+import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -152,7 +157,16 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 			public void open(final OpenEvent event) {
 				Object object = ((IStructuredSelection) event.getSelection()).getFirstElement();
 				if (object instanceof RemoteRepository) {
-
+					IRepositoryUI itemByRepositoryId = UIPlugin.getDefault().getService(
+							IRepositoryExtensionService.class).getItemByRepositoryId(
+							((RemoteRepository) object).getRepositoryImplementation().getId());
+					if (itemByRepositoryId != null) {
+						NewRepositoryWizard wizardClass = itemByRepositoryId.getWizardClass();
+						WizardDialog wizDialog = new WizardDialog(getViewSite().getShell(),
+								wizardClass);
+						wizardClass.init(new StructuredSelection(object));
+						wizDialog.open();
+					}
 				}
 			}
 

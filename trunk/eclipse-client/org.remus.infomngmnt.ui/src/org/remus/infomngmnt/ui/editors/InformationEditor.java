@@ -599,18 +599,22 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			this.editingDomain.getCommandStack().flush();
 
 			this.updateProblemIndication = false;
-			for (final Resource resource : this.changedResources) {
-				if (resource.isLoaded()) {
-					resource.unload();
-					try {
-						resource.load(Collections.EMPTY_MAP);
-					} catch (final IOException exception) {
-						if (!this.resourceToDiagnosticMap.containsKey(resource)) {
-							this.resourceToDiagnosticMap.put(resource, analyzeResourceProblems(
-									resource, exception));
+			try {
+				for (final Resource resource : this.changedResources) {
+					if (resource.isLoaded()) {
+						resource.unload();
+						try {
+							resource.load(Collections.EMPTY_MAP);
+						} catch (final IOException exception) {
+							if (!this.resourceToDiagnosticMap.containsKey(resource)) {
+								this.resourceToDiagnosticMap.put(resource, analyzeResourceProblems(
+										resource, exception));
+							}
 						}
 					}
 				}
+			} catch (Exception e) {
+				// do nothing
 			}
 			for (int i = 0, n = this.pages.size(); i < n; i++) {
 				Object object = this.pages.get(i);

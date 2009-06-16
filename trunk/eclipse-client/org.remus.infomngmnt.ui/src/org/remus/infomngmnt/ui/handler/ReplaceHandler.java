@@ -21,9 +21,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.core.sync.SynchronizeSingleElementJob;
+import org.remus.infomngmnt.core.sync.ReplaceElementsJob;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -48,9 +47,7 @@ public class ReplaceHandler extends AbstractRemoteHandler {
 					"Confirm",
 					"You're about to overwrite your local data. Do you want to continue?");
 			if (openConfirm) {
-				SynchronizeSingleElementJob job = new SynchronizeSingleElementJob(
-						(InformationUnitListItem) list.get(0));
-				// ReplaceElementsJob job = new ReplaceElementsJob(list);
+				ReplaceElementsJob job = new ReplaceElementsJob(list);
 				job.setUser(true);
 				job.schedule();
 			}

@@ -64,6 +64,7 @@ public class AnnotatingQuickFixTextBox implements ModifyListener, TraverseListen
 
 	private String fText;
 	private final List<IPropertyChangeListener> listeners;
+	private final Composite cc;
 
 	public AnnotatingQuickFixTextBox(final Composite composite, final String message,
 			final String initialText) {
@@ -75,11 +76,11 @@ public class AnnotatingQuickFixTextBox implements ModifyListener, TraverseListen
 		AnnotationModel annotationModel = new AnnotationModel();
 		IAnnotationAccess annotationAccess = new DefaultMarkerAnnotationAccess();
 
-		Composite cc = new Composite(composite, SWT.BORDER);
-		cc.setLayout(new FillLayout());
-		cc.setLayoutData(new GridData(GridData.FILL_BOTH));
+		this.cc = new Composite(composite, SWT.BORDER);
+		this.cc.setLayout(new FillLayout());
+		this.cc.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		final SourceViewer sourceViewer = new SourceViewer(cc, null, null, true, SWT.MULTI
+		final SourceViewer sourceViewer = new SourceViewer(this.cc, null, null, true, SWT.MULTI
 				| SWT.V_SCROLL | SWT.WRAP);
 		this.fTextField = sourceViewer.getTextWidget();
 		this.fTextField.setIndent(2);
@@ -398,6 +399,10 @@ public class AnnotatingQuickFixTextBox implements ModifyListener, TraverseListen
 		if (!this.listeners.contains(listener)) {
 			this.listeners.add(listener);
 		}
+	}
+
+	public void setLayoutData(final Object data) {
+		this.cc.setLayoutData(data);
 	}
 
 	/**

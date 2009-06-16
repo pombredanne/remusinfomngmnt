@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -437,6 +438,21 @@ public class ResourceUtil {
 			ApplicationModelPool.getInstance().removeFromModel(object);
 		}
 
+	}
+
+	public static boolean isPathInResourceDelta(final IResourceDelta delta, final IPath path) {
+		boolean returnValue = false;
+		if (delta.getResource() != null && delta.getResource().getFullPath().equals(path)) {
+			return true;
+		} else {
+			IResourceDelta[] affectedChildren = delta.getAffectedChildren();
+			for (IResourceDelta iResourceDelta : affectedChildren) {
+				if (!returnValue) {
+					returnValue = isPathInResourceDelta(iResourceDelta, path);
+				}
+			}
+		}
+		return returnValue;
 	}
 
 	public static void deleteProject(final IProject object, final IProgressMonitor monitor)

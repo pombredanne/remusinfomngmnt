@@ -51,6 +51,12 @@ public class JobExtensionSerivce extends PluginRegistryDynamic implements IJobEx
 					AbstractJob job = (AbstractJob) configurationElement
 							.createExecutableExtension(CLASS_ATT);
 					job.setName(configurationElement.getAttribute(NAME_ATT));
+					try {
+						job.setInterval(Integer.parseInt(configurationElement
+								.getAttribute(INTERVAL_ATT)));
+					} catch (Exception e) {
+						job.setInterval(10);
+					}
 					this.jobs.put(configurationElement.getAttribute(ID_ATT), job);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

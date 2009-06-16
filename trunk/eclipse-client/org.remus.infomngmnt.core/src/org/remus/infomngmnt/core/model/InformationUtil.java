@@ -30,14 +30,21 @@ import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.query.conditions.Condition;
+import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectAttributeValueCondition;
+import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectReferenceValueCondition;
 import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -121,8 +128,25 @@ public class InformationUtil {
 					}
 
 				});
+		EObjectReferenceValueCondition condition2 = new EObjectReferenceValueCondition(
+				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+				new EObjectCondition() {
+					@Override
+					public boolean isSatisfied(final EObject object) {
+						return object == null
+								|| ((SynchronizationMetadata) object).getSyncState() != SynchronizationState.LOCAL_DELETED;
+					}
+				});
+		EObjectCondition condition3 = new EObjectCondition() {
+
+			@Override
+			public boolean isSatisfied(final EObject eObject) {
+				return ((SynchronizableObject) eObject).getSynchronizationMetaData() == null;
+			}
+
+		};
 		SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
-				.getRootCategories()), new WHERE(condition1));
+				.getRootCategories()), new WHERE(condition1.AND(condition3.OR(condition2))));
 		return select.execute().getEObjects();
 
 	}
@@ -149,6 +173,12 @@ public class InformationUtil {
 		InformationUnit unit = createNew(type);
 		unit.setDateValue(dateValue);
 		return unit;
+	}
+
+	public static String getFullReadablePath(final InformationUnitListItem item) {
+		String text = CategoryUtil.categoryToString((Category) item.eContainer()) + "/"
+				+ item.getLabel();
+		return text;
 	}
 
 }

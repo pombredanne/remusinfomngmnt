@@ -99,8 +99,8 @@ public class DeleteInformationUnitCommand implements Command {
 		if (checkForSyncState) {
 			for (InformationUnitListItem informationUnitListItem : items) {
 				if (informationUnitListItem.getSynchronizationMetaData() != null
-						&& (informationUnitListItem.getSynchronizationMetaData().getSyncState() != SynchronizationState.NOT_ADDED || informationUnitListItem
-								.getSynchronizationMetaData().getSyncState() != SynchronizationState.IGNORED)) {
+						&& informationUnitListItem.getSynchronizationMetaData().getSyncState() != SynchronizationState.NOT_ADDED
+						&& informationUnitListItem.getSynchronizationMetaData().getSyncState() != SynchronizationState.IGNORED) {
 					this.delegateCommand.append(SetCommand.create(domain, informationUnitListItem
 							.getSynchronizationMetaData(),
 							InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,

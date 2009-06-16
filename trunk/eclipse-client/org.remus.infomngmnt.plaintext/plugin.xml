@@ -40,6 +40,10 @@
             label="Edit"
             type="PLAINTEXT">
       </editPage>
+      <editorAction
+            commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
+            typeId="PLAINTEXT">
+      </editorAction>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -49,6 +53,64 @@
                id="org.remus.infomngmnt.plaintext.wizard">
          </newWizardShortcut>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+         <menu
+               icon="icons/iconexperience/text.png"
+               id="org.remus.infomngmnt.plaintcontextmenu"
+               label="Unformatted Text"
+               mnemonic="r">
+            <command
+                  commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
+                  style="push">
+            </command>
+            <separator
+                  name="additions"
+                  visible="false">
+            </separator>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <test
+                              property="org.remus.infomngmnt.iutypes.typeEquals"
+                              value="PLAINTEXT">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.remus.infomngmnt.plaintext.copyToClipboard"
+            name="Copy To Clipboard">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.remus.infomngmnt.plaintext.handler.CopyTextToClipboardHandler"
+            commandId="org.remus.infomngmnt.plaintext.copyToClipboard">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
+            icon="icons/iconexperience/paste.png">
+      </image>
    </extension>
 
 </plugin>

@@ -58,10 +58,10 @@ public class TwitterPreferenceInitializer extends AbstractPreferenceInitializer 
 		this.store.setDefault(SHOWN_MESSAGE, 30);
 		this.store.setDefault(SAVED_MESSAGES, 200);
 		this.store.setDefault(CACHED_IMAGES, 200);
-		this.store.setDefault(RELOAD_ALL_FRIENDS_FEED, 2);
-		this.store.setDefault(RELOAD_DIRECT_MESSAGES_FEED, 5);
-		this.store.setDefault(RELOAD_REPLIES_FEED, 15);
-		this.store.setDefault(RELOAD_SEARCH_FEEDS, 15);
+		this.store.setDefault(RELOAD_ALL_FRIENDS_FEED, 4);
+		this.store.setDefault(RELOAD_DIRECT_MESSAGES_FEED, 15);
+		this.store.setDefault(RELOAD_REPLIES_FEED, 20);
+		this.store.setDefault(RELOAD_SEARCH_FEEDS, 20);
 		this.store.setDefault(SEARCH_URL, "http://search.twitter.com/search?q=%s");
 
 	}

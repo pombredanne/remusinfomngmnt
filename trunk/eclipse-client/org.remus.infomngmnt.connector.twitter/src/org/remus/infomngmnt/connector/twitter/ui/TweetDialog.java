@@ -15,6 +15,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -23,17 +24,22 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
+import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 
 public class TweetDialog extends TitleAreaDialog {
 
+	private Combo combo;
 	private Text text;
 	private AnnotatingQuickFixTextBox styledText;
 	private Label availableCharacterLabel;
 	private final String initialMessage;
 	private String message;
+
+	public static final int MAX_CHAR = 140;
 
 	/**
 	 * Create the dialog
@@ -42,6 +48,7 @@ public class TweetDialog extends TitleAreaDialog {
 	 */
 	public TweetDialog(final Shell parentShell, final String initialMessage) {
 		super(parentShell);
+		setShellStyle(getShellStyle() | SWT.RESIZE);
 		this.initialMessage = initialMessage;
 	}
 
@@ -55,12 +62,12 @@ public class TweetDialog extends TitleAreaDialog {
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
+		gridLayout.numColumns = 3;
 		container.setLayout(gridLayout);
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		final Label enterYourTextLabel = new Label(container, SWT.NONE);
-		enterYourTextLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+		enterYourTextLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 		enterYourTextLabel.setText("Enter your text");
 
 		Composite composite = new Composite(container, SWT.NONE);
@@ -68,34 +75,47 @@ public class TweetDialog extends TitleAreaDialog {
 		layout.marginWidth = 0;
 		layout.marginHeight = 0;
 		composite.setLayout(layout);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-		this.styledText = new AnnotatingQuickFixTextBox(composite, "",
-				this.initialMessage != null ? this.initialMessage : "");
+		this.styledText = new AnnotatingQuickFixTextBox(composite, "", "");
 
 		this.styledText.addPropertyChangeListener(new IPropertyChangeListener() {
 			public void propertyChange(final PropertyChangeEvent event) {
 				if (AnnotatingQuickFixTextBox.OK_REQUESTED.equals(event.getProperty())) {
 					okPressed();
 				} else if (AnnotatingQuickFixTextBox.COMMENT_MODIFIED.equals(event.getProperty())) {
-					TweetDialog.this.availableCharacterLabel.setText(String
-							.valueOf(140 - TweetDialog.this.styledText.getText().length()));
+					TweetDialog.this.availableCharacterLabel.setText(String.valueOf(MAX_CHAR
+							- TweetDialog.this.styledText.getText().length()));
 					TweetDialog.this.message = event.getNewValue().toString();
+					if (MAX_CHAR - TweetDialog.this.styledText.getText().length() < 0) {
+						setErrorMessage("Message is too long");
+					} else {
+						setErrorMessage(null);
+					}
+					checkOkButton();
 				}
 			}
 		});
 
 		this.availableCharacterLabel = new Label(container, SWT.NONE);
 		this.availableCharacterLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 2, 1));
-		this.availableCharacterLabel.setText("140");
+				false, 3, 1));
+		this.availableCharacterLabel.setText(String.valueOf(MAX_CHAR));
+		this.styledText.getFTextField().setText(
+				this.initialMessage != null ? this.initialMessage : "");
 
 		final Label shortenUrlLabel = new Label(container, SWT.NONE);
-		shortenUrlLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		shortenUrlLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		shortenUrlLabel.setText("Shorten URL");
 
 		this.text = new Text(container, SWT.BORDER);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		this.combo = new Combo(container, SWT.READ_ONLY);
+		this.combo.setLayoutData(new GridData());
+		this.combo.add("bit.ly");
+		this.combo.add("tinyurl");
+		this.combo.select(0);
 
 		final Button shortenButton = new Button(container, SWT.NONE);
 		shortenButton.setText("Shorten");
@@ -104,12 +124,17 @@ public class TweetDialog extends TitleAreaDialog {
 				final String[] tinyUrl = new String[1];
 				final String url = TweetDialog.this.text.getText();
 				ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
+				final int selectionIndex = TweetDialog.this.combo.getSelectionIndex();
 				try {
 					pmd.run(true, true, new CancelableRunnable() {
 						@Override
 						protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 							try {
-								tinyUrl[0] = TinyURLUtils.getTinyUrl(url);
+								if (selectionIndex == 0) {
+									tinyUrl[0] = ShrinkURLUtils.getBitLyUrl(url);
+								} else {
+									tinyUrl[0] = ShrinkURLUtils.getTinyUrl(url);
+								}
 							} catch (Exception e) {
 								return StatusCreator.newStatus("Error getting tinyURL", e);
 							}
@@ -133,6 +158,14 @@ public class TweetDialog extends TitleAreaDialog {
 		return area;
 	}
 
+	protected void checkOkButton() {
+		if (getButton(OK) != null) {
+			getButton(OK)
+					.setEnabled(MAX_CHAR - TweetDialog.this.styledText.getText().length() >= 0);
+		}
+
+	}
+
 	/**
 	 * Create contents of the button bar
 	 * 
@@ -142,6 +175,13 @@ public class TweetDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(final Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		checkOkButton();
+	}
+
+	@Override
+	public boolean close() {
+		UIUtil.saveDialogSettings(TwitterActivator.getDefault(), this);
+		return super.close();
 	}
 
 	/**
@@ -149,7 +189,14 @@ public class TweetDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(500, 375);
+		return UIUtil.getDialogSettingsInitialSize(TwitterActivator.getDefault(), this, new Point(
+				500, 375));
+	}
+
+	@Override
+	protected Point getInitialLocation(final Point initialSize) {
+		return UIUtil.getDialogSettingsInitialLocation(TwitterActivator.getDefault(), this, super
+				.getInitialLocation(initialSize));
 	}
 
 	@Override

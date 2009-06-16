@@ -30,9 +30,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.User;
 import twitter4j.http.AccessToken;
 import twitter4j.http.RequestToken;
 
@@ -85,8 +85,11 @@ public class OAuthUpdate {
 			System.out.println("Access token: " + accessToken.getToken());
 			System.out.println("Access token secret: " + accessToken.getTokenSecret());
 
-			Status status = twitter.updateStatus(args[0]);
-			System.out.println("Successfully updated the status to [" + status.getText() + "].");
+			User status = twitter.verifyCredentials();
+			System.out.println(status.getRateLimitRemaining());
+			System.out.println(status.getRateLimitReset());
+			// System.out.println("Successfully updated the status to [" +
+			// status.getText() + "].");
 			System.exit(0);
 		} catch (TwitterException te) {
 			System.out.println("Failed to get timeline: " + te.getMessage());

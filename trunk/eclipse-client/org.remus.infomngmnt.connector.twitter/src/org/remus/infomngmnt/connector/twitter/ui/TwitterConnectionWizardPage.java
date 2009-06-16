@@ -212,9 +212,9 @@ public class TwitterConnectionWizardPage extends WizardPage {
 		DataBindingContext ctx = new DataBindingContext();
 		EMFDataBindingContext ectx = new EMFDataBindingContext();
 
-		this.searchList = new WritableList(new ArrayList<String>(Arrays.asList(this.repository
-				.getOptions().get(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY).split("\\|"))),
-				String.class);
+		this.searchList = new WritableList(new ArrayList<String>(Arrays
+				.asList(org.apache.commons.lang.StringUtils.split((this.repository).getOptions()
+						.get(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY), "|"))), String.class);
 		this.tableViewer.setContentProvider(new ObservableListContentProvider());
 		this.tableViewer.setLabelProvider(new LabelProvider());
 		this.tableViewer.setInput(this.searchList);

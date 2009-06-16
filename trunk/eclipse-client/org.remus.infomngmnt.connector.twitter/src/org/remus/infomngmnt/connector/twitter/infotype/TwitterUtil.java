@@ -14,6 +14,7 @@ package org.remus.infomngmnt.connector.twitter.infotype;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,9 +22,13 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
+import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.services.IRepositoryService;
@@ -31,7 +36,10 @@ import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 import twitter4j.DirectMessage;
 import twitter4j.Status;
+import twitter4j.Tweet;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.User;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -173,5 +181,70 @@ public class TwitterUtil {
 			return ((TwitterRepository) repositoryImplementation).getApi();
 		}
 		return null;
+	}
+
+	public static InformationUnit buildMessage(final Tweet status, final Twitter api)
+			throws TwitterException {
+		InformationUnit returnValue = InformationUtil.createNew(TwitterActivator.MESSAGE_TYPE);
+		returnValue.getChildValues().add(
+				InformationUtil
+						.createNew(TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt()));
+		returnValue.getChildValues().add(
+				InformationUtil.createNew(TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText()));
+		returnValue.getChildValues().add(
+				InformationUtil.createNew(TwitterActivator.MESSAGE_INTERNAL_ID, status.getId()));
+		returnValue.getChildValues().add(
+				InformationUtil.createNew(TwitterActivator.MESSAGE_SRC_TYPE, StringEscapeUtils
+						.unescapeXml(status.getSource())));
+		returnValue.getChildValues().add(
+				InformationUtil.createNew(TwitterActivator.REPLY_ID, status.getToUser()));
+		User userDetail = api.getUserDetail(status.getFromUser());
+		returnValue.getChildValues()
+				.add(
+						InformationUtil.createNew(TwitterActivator.MESSAGE_USER_TYPE, userDetail
+								.getName()));
+		returnValue.getChildValues().add(
+				InformationUtil.createNew(TwitterActivator.MESSAGE_USER_ID_TYPE, userDetail
+						.getScreenName()));
+		TwitterActivator.getDefault().getImageCache().checkCache(userDetail.getScreenName(),
+				userDetail.getProfileImageURL(), null);
+		return returnValue;
+	}
+
+	public static boolean onlineActionsAvailable(final InformationUnitListItem adapter) {
+
+		return adapter != null
+				&& adapter.getSynchronizationMetaData() != null
+				&& adapter.getSynchronizationMetaData().getSyncState() != SynchronizationState.NOT_ADDED
+				&& adapter.getSynchronizationMetaData().getSyncState() != SynchronizationState.IGNORED;
+	}
+
+	public static boolean onlineActionsAvailable(final InformationUnit unit) {
+		InformationUnitListItem adapter = (InformationUnitListItem) unit
+				.getAdapter(InformationUnitListItem.class);
+		return onlineActionsAvailable(adapter);
+	}
+
+	public static boolean canAdd2Repository(final String repositoryId, final String keyWord) {
+		RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(repositoryId);
+		String string = repositoryById.getOptions().get(
+				TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY);
+		List<String> asList = Arrays.asList(org.apache.commons.lang.StringUtils.split(string, "|"));
+		return !asList.contains(keyWord);
+	}
+
+	public static void addKeyWordToRepository(final String repositoryId, final String keyWord) {
+		RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(repositoryId);
+		String string = repositoryById.getOptions().get(
+				TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY);
+		List<String> asList = new ArrayList<String>(Arrays
+				.asList(org.apache.commons.lang.StringUtils.split(string, "|")));
+		asList.add(keyWord);
+		repositoryById.getOptions().put(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
+				org.apache.commons.lang.StringUtils.join(asList, "|"));
+		EditingUtil.getInstance().saveObjectToResource(repositoryById);
+
 	}
 }

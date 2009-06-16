@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.plaintext.wizard;
 
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.plaintext.Activator;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
@@ -20,11 +21,23 @@ import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
  */
 public class NewPlainTextWizard extends NewInfoObjectWizard {
 
+	public NewPlainTextWizard() {
+		super();
+		setWindowTitle("New unformatted text");
+	}
+
 	@Override
 	protected String getInfoTypeId() {
 		return Activator.INFO_TYPE_ID;
 	}
 
-	
+	@Override
+	public void addPages() {
+		super.addPages();
+		this.page1.setTitle("New unformatted text");
+		this.page1.setMessage("This wizard enables you to create new unformatted text units");
+		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(Activator
+				.getDefault(), "icons/iconexperience/new_wizard.png"));
+	}
 
 }

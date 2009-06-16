@@ -21,29 +21,36 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.core.sync.ReplaceElementsJob;
+import org.remus.infomngmnt.core.sync.SynchronizeSingleElementJob;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ReplaceHandler extends AbstractRemoteHandler {
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.ui.handler.AbstractRemoteHandler#doExecute(org.eclipse.core.commands.ExecutionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.ui.handler.AbstractRemoteHandler#doExecute(org.eclipse
+	 * .core.commands.ExecutionEvent)
 	 */
 	@Override
 	protected Object doExecute(final ExecutionEvent event) throws ExecutionException {
 		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 		if (currentSelection instanceof IStructuredSelection) {
 			// we assume only Synchronizable Objects
-			final List<SynchronizableObject> list = ((IStructuredSelection) currentSelection).toList();
-			boolean openConfirm = MessageDialog.openConfirm(
-					HandlerUtil.getActiveShell(event),
+			final List<SynchronizableObject> list = ((IStructuredSelection) currentSelection)
+					.toList();
+			boolean openConfirm = MessageDialog.openConfirm(HandlerUtil.getActiveShell(event),
 					"Confirm",
 					"You're about to overwrite your local data. Do you want to continue?");
 			if (openConfirm) {
-				ReplaceElementsJob job = new ReplaceElementsJob(list);
+				SynchronizeSingleElementJob job = new SynchronizeSingleElementJob(
+						(InformationUnitListItem) list.get(0));
+				// ReplaceElementsJob job = new ReplaceElementsJob(list);
 				job.setUser(true);
 				job.schedule();
 			}

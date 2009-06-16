@@ -1,5 +1,6 @@
 package org.remus.infomngmnt.ui.collapsiblebuttons;
 
+import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.action.CutAction;
@@ -17,6 +18,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISharedImages;
@@ -29,8 +31,10 @@ import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.views.NewWizardMenu;
 import org.remus.infomngmnt.ui.views.action.DeleteNavigationAction;
+import org.remus.infomngmnt.ui.views.action.RefreshTreeAction;
 import org.remus.infomngmnt.ui.views.action.RenameAction;
 import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
@@ -89,6 +93,8 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 	 * This is the action used to implement paste.
 	 */
 	protected PasteAction pasteAction;
+
+	protected RefreshTreeAction refreshAction;
 
 	/**
 	 * This style bit indicates that the "additions" separator should come after
@@ -155,6 +161,11 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		this.redoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
 				UimodelEditPlugin.getPlugin(), "icons/iconexperience/redo.png"));
 		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
+
+		this.refreshAction = new RefreshTreeAction();
+		this.refreshAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin
+				.getDefault(), "icons/iconexperience/16/nav_refresh_blue.png"));
+		actionBars.setGlobalActionHandler(ActionFactory.REFRESH.getId(), this.refreshAction);
 
 		this.renameAction = new RenameAction();
 		setGlobalActionHandler();
@@ -267,6 +278,12 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 			this.pasteAction.updateSelection(structuredSelection);
 			this.renameAction.updateSelection(structuredSelection);
 		}
+		final Viewer viewerProvider = this.activeEditor instanceof IViewerProvider ? ((IViewerProvider) this.activeEditor)
+				.getViewer()
+				: null;
+		if (viewerProvider != null) {
+
+		}
 
 		this.undoAction.update();
 		this.redoAction.update();
@@ -304,6 +321,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		menuManager.add(this.redoAction);
 		menuManager.add(new Separator());
 		menuManager.add(this.renameAction);
+		menuManager.add(this.refreshAction);
 		menuManager.add(new Separator());
 		menuManager.add(this.cutAction);
 		menuManager.add(this.copyAction);

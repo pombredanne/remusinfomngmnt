@@ -204,8 +204,11 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 					String textData = iMemento.getTextData();
 					EObject eObject = EditingUtil.getInstance().getNavigationEditingDomain()
 							.getResourceSet().getEObject(URI.createURI(textData), true);
-					this.expandedElements.add(EditingUtil.getInstance()
-							.getNavigationEditingDomain().getWrapper(eObject));
+					Object wrapper = EditingUtil.getInstance().getNavigationEditingDomain()
+							.getWrapper(eObject);
+					if (wrapper != null) {
+						this.expandedElements.add(wrapper);
+					}
 				} catch (Exception e) {
 					// if any exception occurs, e.g.
 					// the project is not open we have to skip
@@ -264,6 +267,7 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	private void initInput() {
 		this.viewer.setInput(ApplicationModelPool.getInstance().getModel());
+
 		this.viewer.setExpandedElements(this.expandedElements.toArray(new Object[0]));
 		this.viewer.setSelection(new StructuredSelection(this.selectedElements), true);
 

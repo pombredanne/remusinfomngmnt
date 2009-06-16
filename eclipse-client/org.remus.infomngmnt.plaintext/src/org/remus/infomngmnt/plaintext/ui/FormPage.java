@@ -1,21 +1,24 @@
 package org.remus.infomngmnt.plaintext.ui;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
+import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 public class FormPage extends AbstractInformationFormPage {
 
-	private Text styledText;
+	private AnnotatingQuickFixTextBox richtext;
 
 	@Override
 	protected void renderPage(final IManagedForm managedForm) {
@@ -25,26 +28,35 @@ public class FormPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		this.styledText = toolkit.createText(body,
-				"", SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL); //$NON-NLS-1$
-		this.styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.EXPANDED);
+		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
+		generalSection.setLayoutData(gd_generalSection);
+		generalSection.setText("General");
 
-		toolkit.adapt(this.styledText, true, true);
+		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
+		client.setLayout(new GridLayout());
+		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+
+		client.setLayoutData(gridData);
+
+		generalSection.setClient(client);
+
+		this.richtext = new AnnotatingQuickFixTextBox(client, "", "");
+
+		addControl(this.richtext.getFTextField());
+		doCreateSemanticSection(body, toolkit);
+		form.reflow(true);
 
 	}
 
 	@Override
 	public void bindValuesToUi() {
-		addDirtyOnTextModifyListener(this.styledText,
+		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
+				this.richtext.getFTextField(), this);
+		textBindingWidget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		super.bindValuesToUi();
-	}
-
-	@Override
-	public void doSave(final IProgressMonitor monitor) {
-		// getModelObject().setStringValue(this.styledText.getText());
-		setDirty(false);
-		super.doSave(monitor);
 	}
 
 }

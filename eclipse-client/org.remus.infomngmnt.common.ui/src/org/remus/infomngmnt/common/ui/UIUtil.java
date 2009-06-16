@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceManager;
@@ -31,6 +32,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
@@ -46,6 +48,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ISetSelectionTarget;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -243,5 +246,37 @@ public class UIUtil {
 			}
 		}
 		return null;
+	}
+
+	public static void saveDialogSettings(final AbstractUIPlugin plugin, final Dialog dialog) {
+		IDialogSettings addNewSection = plugin.getDialogSettings().addNewSection(
+				dialog.getClass().getName());
+		addNewSection.put("x", dialog.getShell().getLocation().x);
+		addNewSection.put("y", dialog.getShell().getLocation().y);
+		addNewSection.put("width", dialog.getShell().getSize().x);
+		addNewSection.put("height", dialog.getShell().getSize().y);
+
+	}
+
+	public static Point getDialogSettingsInitialLocation(final AbstractUIPlugin plugin,
+			final Dialog dialog, final Point defaultValue) {
+		IDialogSettings section = plugin.getDialogSettings()
+				.getSection(dialog.getClass().getName());
+		if (section == null) {
+			return defaultValue;
+		} else {
+			return new Point(section.getInt("x"), section.getInt("y"));
+		}
+	}
+
+	public static Point getDialogSettingsInitialSize(final AbstractUIPlugin plugin,
+			final Dialog dialog, final Point defaultValue) {
+		IDialogSettings section = plugin.getDialogSettings()
+				.getSection(dialog.getClass().getName());
+		if (section == null) {
+			return defaultValue;
+		} else {
+			return new Point(section.getInt("width"), section.getInt("height"));
+		}
 	}
 }

@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
+import org.remus.infomngmnt.core.model.StatusCreator;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -29,11 +30,24 @@ public class SendMessageJob extends Job {
 
 	private final String text;
 	private final String repositoryId;
+	private final Long replyId;
+	private final String userId;
 
 	public SendMessageJob(final String text, final String repositoryId) {
+		this(text, repositoryId, null, null);
+	}
+
+	public SendMessageJob(final String text, final String repositoryId, final String userId) {
+		this(text, repositoryId, null, userId);
+	}
+
+	public SendMessageJob(final String text, final String repositoryId, final Long replyId,
+			final String userId) {
 		super("Sending message");
 		this.text = text;
 		this.repositoryId = repositoryId;
+		this.replyId = replyId;
+		this.userId = userId;
 	}
 
 	/*
@@ -47,10 +61,15 @@ public class SendMessageJob extends Job {
 		monitor.beginTask("Sending message", IProgressMonitor.UNKNOWN);
 		try {
 			Twitter twitterApi = TwitterUtil.getTwitterApi(this.repositoryId);
-			twitterApi.updateStatus(this.text);
+			if (this.replyId != null) {
+				twitterApi.updateStatus(this.text, this.replyId);
+			} else if (this.userId != null) {
+				twitterApi.sendDirectMessage(this.userId, this.text);
+			} else {
+				twitterApi.updateStatus(this.text);
+			}
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return StatusCreator.newStatus("Error while sending the message", e);
 		}
 		return Status.OK_STATUS;
 	}

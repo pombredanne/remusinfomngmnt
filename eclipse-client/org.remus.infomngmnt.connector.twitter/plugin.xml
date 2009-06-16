@@ -119,5 +119,42 @@
          </activeWhen>
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.remus.infomngmnt.connector.twitter.tester.CanTweetTester"
+            id="org.remus.infomngmnt.connector.twitter.propTest"
+            namespace="org.remus.infomngmnt.connector.twitter"
+            properties="canTweet"
+            type="java.lang.Object">
+      </propertyTester>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.common.ui.traySection">
+      <sectionBox
+            id="org.remus.infomngmnt.connector.twitter.sectionBox"
+            multiple="true"
+            name="Twitter"
+            preferencesclass="org.remus.infomngmnt.connector.twitter.desktop.TwitterSectionPreferences"
+            sectionControl="org.remus.infomngmnt.connector.twitter.desktop.TwitterTraySection">
+      </sectionBox>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.job">
+      <job
+            class="org.remus.infomngmnt.connector.twitter.jobs.RefreshTwitterJob"
+            id="org.remus.infomngmnt.connector.twitter.sync"
+            name="Twitter All Friends Refresh">
+      </job>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.ui.repositories"
+            class="org.remus.infomngmnt.connector.twitter.ui.TwitterPreferencePage2"
+            id="org.remus.infomngmnt.connector.twitter"
+            name="Twitter">
+      </page>
+   </extension>
 
 </plugin>

@@ -63,6 +63,8 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 
 	public static final String ID_REPLIES = "replies"; //$NON-NLS-1$
 
+	public static final String ID_FAVORITES = "favorites"; //$NON-NLS-1$
+
 	public static final String ID_DIRECT_MESSAGES = "direct"; //$NON-NLS-1$
 
 	public static final String ID_SEARCH_PREFIX = "search_"; //$NON-NLS-1$
@@ -92,8 +94,8 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	 */
 	public RemoteObject addToRepository(final SynchronizableObject item,
 			final IProgressMonitor monitor) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RemoteException(StatusCreator
+				.newStatus("Adding items is not supported by this repository"));
 	}
 
 	/*
@@ -105,8 +107,8 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	 */
 	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RemoteException(StatusCreator
+				.newStatus("Committing items is not supported by this repository"));
 	}
 
 	/*
@@ -119,7 +121,8 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	 */
 	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		throw new RemoteException(StatusCreator
+				.newStatus("Deleting items is not supported by this repository"));
 
 	}
 
@@ -319,7 +322,23 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 		try {
 			URL url = new URL(informationUnitListItem.getSynchronizationMetaData().getUrl());
 			Path path = new Path(url.getPath());
-			if (path.lastSegment().equals(ID_FRIENDS)) {
+			if (path.segmentCount() > 1
+					&& ID_SEARCH_PREFIX.equals(path.segment(path.segmentCount() - 2))) {
+				RemoteObject buildAllFriendsMessages = buildSearchMessages(path.lastSegment(),
+						true, null);
+				List<twitter4j.Tweet> wrappedObject = (List<twitter4j.Tweet>) buildAllFriendsMessages
+						.getWrappedObject();
+				Collections.reverse(wrappedObject);
+				for (twitter4j.Tweet status : wrappedObject) {
+					try {
+						childByType.getChildValues().add(0,
+								TwitterUtil.buildMessage(status, getApi()));
+					} catch (TwitterException e) {
+						throw new RemoteException(StatusCreator.newStatus(
+								"Error creating search messages", e));
+					}
+				}
+			} else if (path.lastSegment().equals(ID_FRIENDS)) {
 				RemoteObject buildAllFriendsMessages = buildAllFriendsMessages(true, null);
 				List<twitter4j.Status> wrappedObject = (List<twitter4j.Status>) buildAllFriendsMessages
 						.getWrappedObject();
@@ -356,7 +375,23 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 			InformationUnit childByType = InformationUtil.getChildByType(unit,
 					TwitterActivator.MESSAGES_ID);
 			Path path = new Path(url.getPath());
-			if (path.lastSegment().equals(ID_FRIENDS)) {
+			if (path.segmentCount() > 1
+					&& ID_SEARCH_PREFIX.equals(path.segment(path.segmentCount() - 2))) {
+				RemoteObject buildAllFriendsMessages = buildSearchMessages(path.lastSegment(),
+						false, id);
+				List<twitter4j.Tweet> wrappedObject = (List<twitter4j.Tweet>) buildAllFriendsMessages
+						.getWrappedObject();
+				Collections.reverse(wrappedObject);
+				for (twitter4j.Tweet status : wrappedObject) {
+					try {
+						childByType.getChildValues().add(0,
+								TwitterUtil.buildMessage(status, getApi()));
+					} catch (TwitterException e) {
+						throw new RemoteException(StatusCreator.newStatus(
+								"Error creating search messages", e));
+					}
+				}
+			} else if (path.lastSegment().equals(ID_FRIENDS)) {
 				RemoteObject buildAllFriendsMessages = buildAllFriendsMessages(false, id);
 				List<twitter4j.Status> wrappedObject = (List<twitter4j.Status>) buildAllFriendsMessages
 						.getWrappedObject();
@@ -404,10 +439,15 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 			if (path.lastSegment() == null) {
 				return getRepositoryById(object.getSynchronizationMetaData().getRepositoryId());
 			}
-			if (ID_FRIENDS.equals(path.lastSegment())) {
+			if (path.segmentCount() > 1
+					&& ID_SEARCH_PREFIX.equals(path.segment(path.segmentCount() - 2))) {
+				return buildSearchMessages(path.lastSegment(), false, null);
+			} else if (ID_FRIENDS.equals(path.lastSegment())) {
 				return buildAllFriendsMessages(false, null);
 			} else if (ID_REPLIES.equals(path.lastSegment())) {
 				return buildRepliesMessages(false, null);
+			} else if (ID_DIRECT_MESSAGES.equals(path.lastSegment())) {
+				return buildDirectMessages(false, null);
 			}
 
 		} catch (MalformedURLException e) {
@@ -482,6 +522,7 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 					.getPassword());
 			this.api.setUserAgent("Remus");
 			this.api.setSource("Remus");
+
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
 		return this.api;

@@ -243,36 +243,42 @@ public class ChangeSetManager {
 						monitor);
 			}
 		} else {
-			InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE
-					.createInformationUnitListItem();
-
-			// transfer the needed information
-
-			createInformationUnitListItem.setLabel(remoteObject2.getName());
-			createInformationUnitListItem.setType(remoteRepository.getRepositoryImplementation()
-					.getTypeIdByObject(remoteObject2));
-
-			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
-					.createSynchronizationMetadata();
-			metadata.setHash(remoteObject2.getHash());
-			metadata.setReadonly(/* TODO implement */false);
-			metadata.setRepositoryId(remoteRepository.getId());
-			metadata.setSyncState(SynchronizationState.IN_SYNC);
-			metadata.setUrl(remoteObject2.getUrl());
-			createInformationUnitListItem.setSynchronizationMetaData(metadata);
-			if (parentCategory != null) {
-				parentCategory.getInformationUnit().add(createInformationUnitListItem);
-			}
-			InformationUnit prefetchedInformationUnit = remoteRepository
-					.getRepositoryImplementation().getPrefetchedInformationUnit(remoteObject2);
-			changeSetItem.getRemoteFullObjectMap().put(createInformationUnitListItem,
-					prefetchedInformationUnit);
-			createInformationUnitListItem
-					.setId(findId(createInformationUnitListItem, changeSetItem));
-			if (prefetchedInformationUnit != null) {
-				prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
-			}
+			fillInfoObject(changeSetItem, remoteObject2, remoteRepository, parentCategory);
 		}
+	}
+
+	private void fillInfoObject(final ChangeSetItem changeSetItem,
+			final RemoteObject remoteObject2, final RemoteRepository remoteRepository,
+			final Category parentCategory) {
+		InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE
+				.createInformationUnitListItem();
+
+		// transfer the needed information
+
+		createInformationUnitListItem.setLabel(remoteObject2.getName());
+		createInformationUnitListItem.setType(remoteRepository.getRepositoryImplementation()
+				.getTypeIdByObject(remoteObject2));
+
+		SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
+				.createSynchronizationMetadata();
+		metadata.setHash(remoteObject2.getHash());
+		metadata.setReadonly(/* TODO implement */false);
+		metadata.setRepositoryId(remoteRepository.getId());
+		metadata.setSyncState(SynchronizationState.IN_SYNC);
+		metadata.setUrl(remoteObject2.getUrl());
+		createInformationUnitListItem.setSynchronizationMetaData(metadata);
+		if (parentCategory != null) {
+			parentCategory.getInformationUnit().add(createInformationUnitListItem);
+		}
+		InformationUnit prefetchedInformationUnit = remoteRepository.getRepositoryImplementation()
+				.getPrefetchedInformationUnit(remoteObject2);
+		changeSetItem.getRemoteFullObjectMap().put(createInformationUnitListItem,
+				prefetchedInformationUnit);
+		createInformationUnitListItem.setId(findId(createInformationUnitListItem, changeSetItem));
+		if (prefetchedInformationUnit != null) {
+			prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
+		}
+
 	}
 
 	private String findId(final Category createCategory, final ChangeSetItem changeSetItem) {
@@ -636,6 +642,84 @@ public class ChangeSetManager {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Creates a changeset for a single information-unit. The
+	 * {@link ChangeSetItem} has special prepared containers, which are copies
+	 * of local categories but only with a copy of the requested item. This is
+	 * needed for building a {@link DiffModel} and synchronizing the
+	 * {@link ChangeSet} with the {@link ChangeSetExecutor}.
+	 * 
+	 * @param item
+	 *            the local item to synchronize
+	 * @param monitor
+	 *            a progressmonitor
+	 * @return
+	 * @throws ChangeSetException
+	 */
+	public ChangeSet syncSingleInformationUnit(final InformationUnitListItem item,
+			final IProgressMonitor monitor) throws ChangeSetException {
+		ChangeSet changeSet = InfomngmntFactory.eINSTANCE.createChangeSet();
+		if (item.getSynchronizationMetaData() != null
+				&& item.getSynchronizationMetaData().getSyncState() != SynchronizationState.IGNORED
+				&& item.getSynchronizationMetaData().getSyncState() != SynchronizationState.LOCAL_DELETED
+				&& item.getSynchronizationMetaData().getSyncState() != SynchronizationState.NOT_ADDED) {
+			SynchronizationMetadata metaData = item.getSynchronizationMetaData();
+
+			/*
+			 * At first we call the remote-repository to find the appended
+			 * object within that repository.
+			 */
+			RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+					IRepositoryService.class).getRepositoryById(metaData.getRepositoryId());
+			RemoteObject remoteObject;
+			try {
+				remoteObject = remoteRepository.getRepositoryImplementation()
+						.getRemoteObjectBySynchronizableObject(item, monitor);
+				if (remoteObject == null) {
+					/*
+					 * Item was removed on the repository
+					 */
+					throw new ChangeSetException(StatusCreator
+							.newStatus("The requested item was not found on the repository."));
+				}
+			} catch (RemoteException e) {
+				throw new ChangeSetException(StatusCreator.newStatus(
+						"Error creating changeset for information unit", e));
+			}
+			changeSet.setRepository(remoteRepository);
+
+			/*
+			 * We construct a copy of the local container, the category with
+			 * only this one item.
+			 */
+			Category localCopiedContainer = (Category) EcoreUtil.copy(item.eContainer());
+			localCopiedContainer.getChildren().clear();
+			localCopiedContainer.getInformationUnit().clear();
+			localCopiedContainer.getInformationUnit().add(
+					(InformationUnitListItem) EcoreUtil.copy(item));
+			changeSet.setTargetCategory(localCopiedContainer);
+
+			RemoteObject copiedItem = (RemoteObject) EcoreUtil.copy(remoteObject);
+
+			ChangeSetItem createChangeSetItem = InfomngmntFactory.eINSTANCE.createChangeSetItem();
+			changeSet.getChangeSetItems().add(createChangeSetItem);
+			createChangeSetItem.setLocalContainer(localCopiedContainer);
+
+			/*
+			 * Based on the local container we create a remote container which
+			 * is always identical. In this remote container we're adding a
+			 * comparable item for the Diffprocessor to populate the needed
+			 * synchronization actions.
+			 */
+			Category copiedRemoteContainer = (Category) EcoreUtil.copy(localCopiedContainer);
+			copiedRemoteContainer.getInformationUnit().clear();
+			createChangeSetItem.setRemoteConvertedContainer(copiedRemoteContainer);
+			fillInfoObject(createChangeSetItem, copiedItem, remoteRepository, copiedRemoteContainer);
+
+		}
+		return changeSet;
 	}
 
 }

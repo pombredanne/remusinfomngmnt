@@ -60,25 +60,30 @@ public class RemusNotificationManager implements INotificationManagerManager {
 					Date now = new Date();
 					Date lastExecution = abstractJob.getLastExecution();
 					if (lastExecution == null
-							|| (lastExecution.getTime() - now.getTime()) > (abstractJob
+							|| (now.getTime() - lastExecution.getTime()) > (abstractJob
 									.getInterval() * 1000 * 60)) {
 						monitor.subTask(NLS.bind("Executing \"{0}\"", abstractJob.getName()));
 						IProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,
 								IProgressMonitor.UNKNOWN);
-						abstractJob.beforeRun(subProgressMonitor);
-						List<org.remus.infomngmnt.Notification> run = abstractJob
-								.run(subProgressMonitor);
-						if (run != null) {
-							addNotification(run);
+						try {
+							abstractJob.beforeRun(subProgressMonitor);
+							List<org.remus.infomngmnt.Notification> run = abstractJob
+									.run(subProgressMonitor);
+							if (run != null) {
+								addNotification(run);
+							}
+							abstractJob.afterRun(subProgressMonitor);
+							abstractJob.setLastExecution(new Date());
+						} catch (Exception e) {
+							// Job throw any exception. continue.
 						}
-						abstractJob.afterRun(subProgressMonitor);
-						abstractJob.setLastExecution(new Date());
 					}
 					monitor.worked(1);
 
 				}
 				schedule(1000 * 60);
 			}
+
 			monitor.done();
 			return Status.OK_STATUS;
 		};
@@ -136,11 +141,13 @@ public class RemusNotificationManager implements INotificationManagerManager {
 						monitor.worked(1);
 					}
 				}
+				RemusNotificationManager.this.job.setSystem(true);
 				RemusNotificationManager.this.job.schedule();
 				monitor.done();
 				return Status.OK_STATUS;
 			}
 		};
+		job.setSystem(true);
 		job.schedule();
 	}
 

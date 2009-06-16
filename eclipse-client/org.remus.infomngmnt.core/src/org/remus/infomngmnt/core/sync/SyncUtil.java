@@ -77,4 +77,12 @@ public class SyncUtil {
 
 	}
 
+	public static String getRepositoryId(final InformationUnit item) {
+
+		InformationUnitListItem adapter = (InformationUnitListItem) item
+				.getAdapter(InformationUnitListItem.class);
+		return adapter.getSynchronizationMetaData().getRepositoryId();
+
+	}
+
 }

@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
@@ -53,6 +54,7 @@ import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
+import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
 import org.remus.infomngmnt.core.commands.DeleteInformationUnitCommand;
@@ -167,18 +169,33 @@ public class ChangeSetExecutor {
 	public void synchronize(final EList<DiffElement> diffElements, final ChangeSetItem item,
 			final IProgressMonitor monitor, final Category targetCategory) throws CoreException {
 		Set<Category> keySet = item.getSyncCategoryActionMap().keySet();
+		MultiStatus status = new MultiStatus(CorePlugin.PLUGIN_ID, 500,
+				"Error while synchronizing", null);
 		for (Category category : keySet) {
 			SynchronizationAction synchronizationAction = item.getSyncCategoryActionMap().get(
 					category);
 			switch (synchronizationAction) {
 			case REPLACE_LOCAL:
-				replaceLocalCategory(category);
+				try {
+					replaceLocalCategory(category);
+				} catch (Exception e) {
+					append2Status(status, e);
+				}
 				break;
 			case ADD_LOCAL:
-				addLocalCategory(category, targetCategory, monitor, item);
+				try {
+					addLocalCategory(category, targetCategory, monitor, item);
+				} catch (Exception e) {
+					append2Status(status, e);
+				}
 				break;
 			case DELETE_LOCAL:
-				deleteLocalCategory(category);
+				try {
+					deleteLocalCategory(category);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case DELETE_REMOTE:
 				// TODO
@@ -207,27 +224,53 @@ public class ChangeSetExecutor {
 							.get(synchronizableObject);
 					switch (synchronizationAction) {
 					case REPLACE_LOCAL:
-						replaceLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
-								monitor);
+						try {
+							replaceLocalInfoUnit((InformationUnitListItem) synchronizableObject,
+									item, monitor);
+						} catch (Exception e) {
+							append2Status(status, e);
+						}
 						break;
 					case ADD_LOCAL:
-						addLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
-								monitor);
+						try {
+							addLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
+									monitor);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						break;
 					case DELETE_LOCAL:
-						deleteLocalInforUnit((InformationUnitListItem) synchronizableObject, item,
-								monitor);
+						try {
+							deleteLocalInforUnit((InformationUnitListItem) synchronizableObject,
+									item, monitor);
+						} catch (Exception e) {
+							append2Status(status, e);
+						}
 						break;
 					case DELETE_REMOTE:
-						deleteRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
-								monitor);
+						try {
+							deleteRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
+									monitor);
+						} catch (Exception e) {
+							append2Status(status, e);
+						}
 						break;
 					case REPLACE_REMOTE:
-						replaceRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
-								monitor);
+						try {
+							replaceRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
+									monitor);
+						} catch (Exception e) {
+							append2Status(status, e);
+						}
 						break;
 					case ADD_REMOTE:
-						addRemoteInfoUnit((InformationUnitListItem) synchronizableObject, monitor);
+						try {
+							addRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
+									monitor);
+						} catch (Exception e) {
+							append2Status(status, e);
+						}
 						break;
 					default:
 						break;
@@ -242,7 +285,18 @@ public class ChangeSetExecutor {
 				}
 			}
 		}
+		if (status.getChildren().length > 0) {
+			throw new ChangeSetException(status);
+		}
 		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().flush();
+	}
+
+	private void append2Status(final MultiStatus status, final Exception e) {
+		if (e instanceof CoreException) {
+			status.add(((CoreException) e).getStatus());
+		} else {
+			status.add(StatusCreator.newStatus("Error synchronizing", e));
+		}
 	}
 
 	private void replaceRemoteInfoUnit(final InformationUnitListItem synchronizableObject,
@@ -411,8 +465,8 @@ public class ChangeSetExecutor {
 						newRemoteInformationUnit);
 				Path2ObjectMapper path2ObjectMapper = new Path2ObjectMapper(string, adapter, object);
 				path2ObjectMapper.getObjectForPath(true, true);
-				EditingUtil.getInstance().saveObjectToResource(adapter);
 			}
+			EditingUtil.getInstance().saveObjectToResource(adapter);
 			IFile file = (IFile) adapter.getAdapter(IFile.class);
 			if (file != null && file.exists()) {
 				file.getProject().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);

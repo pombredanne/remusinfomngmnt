@@ -29,7 +29,7 @@ public class TweetAction extends Action {
 	public TweetAction(final String repositoryId) {
 		this.repositoryId = repositoryId;
 		setText("Tweet new mesage");
-		setToolTipText("Tweet new mesage");
+		setToolTipText("Tweet new message");
 
 	}
 

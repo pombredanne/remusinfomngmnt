@@ -29,6 +29,8 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.remote.AbstractRepository;
 import org.remus.infomngmnt.core.remote.IChangeSetDefinition;
 import org.remus.infomngmnt.core.remote.ICredentialProvider;
+import org.remus.infomngmnt.core.remote.IInteractiveCredentialProvider;
+import org.remus.infomngmnt.core.remote.IInteractiveCredentialProvider.LoginSate;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -82,13 +84,34 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 				ICredentialProvider createExecutableExtension = (ICredentialProvider) this.element
 						.createExecutableExtension(IRepositoryExtensionService.CREDENTIALPROVIDER_ATT);
 				createExecutableExtension.setIdentifier(getLocalRepositoryId());
+				configureCredentialProvider(createExecutableExtension);
 				setCredentialProvider(createExecutableExtension);
 
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 			}
 		}
+		ICredentialProvider provider = super.getCredentialProvider();
+		if (provider instanceof IInteractiveCredentialProvider) {
+			if (((IInteractiveCredentialProvider) provider).getInterActionResult() != LoginSate.IN_INTERACTION
+					|| ((IInteractiveCredentialProvider) provider).getInterActionResult() != LoginSate.INTERACTION_SUCCESS) {
+				((IInteractiveCredentialProvider) provider).startInterAction();
+				while (((IInteractiveCredentialProvider) provider).getInterActionResult() != LoginSate.IN_INTERACTION) {
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		return super.getCredentialProvider();
+	}
+
+	protected void configureCredentialProvider(final ICredentialProvider createExecutableExtension) {
+		// does nothing by default
+
 	}
 
 	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
@@ -131,5 +154,9 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 			}
 		}
 		return this.changeSetDefinition.get(type);
+	}
+
+	public boolean multiple() {
+		return true;
 	}
 }

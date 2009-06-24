@@ -40,6 +40,7 @@ Export-Package: org.remus.infomngmnt.ui,
  org.remus.infomngmnt.ui.project,
  org.remus.infomngmnt.ui.provider,
  org.remus.infomngmnt.ui.remote,
+ org.remus.infomngmnt.ui.remote.auth,
  org.remus.infomngmnt.ui.views,
  org.remus.infomngmnt.welcome
 Service-Component: OSGI-INF/repositoryuiextension.xml, OSGI-INF/collapsiblebuttonextension.xml,

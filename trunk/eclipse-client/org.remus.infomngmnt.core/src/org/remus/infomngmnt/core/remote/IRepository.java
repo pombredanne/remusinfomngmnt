@@ -132,4 +132,6 @@ public interface IRepository {
 
 	boolean hasBinaryReferences();
 
+	boolean multiple();
+
 }

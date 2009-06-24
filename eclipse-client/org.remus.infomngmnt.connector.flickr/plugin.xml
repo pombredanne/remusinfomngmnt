@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.flickr.FlickrConnector"
+            credentialprovider="org.remus.infomngmnt.connector.flickr.FlickrCredentials"
+            icon="icons/flickr.png"
+            id="org.remus.infomngmnt.connector.flickr."
+            name="Flickr">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.flickr.ui"
+            newWizard="org.remus.infomngmnt.connector.flickr.ui.NewFlickrRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.flickr.">
+      </respository>
+   </extension>
+
+</plugin>

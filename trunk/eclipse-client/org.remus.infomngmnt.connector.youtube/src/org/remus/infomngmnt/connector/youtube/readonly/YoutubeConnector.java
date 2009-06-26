@@ -381,7 +381,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	@Override
-	public IFile[] getBinaryReferences() {
+	public IFile[] getBinaryReferences(final InformationUnitListItem remoteListItem,
+			final IProgressMonitor monitor) {
 		return new IFile[] { this.tmpVideoFile };
 	}
 

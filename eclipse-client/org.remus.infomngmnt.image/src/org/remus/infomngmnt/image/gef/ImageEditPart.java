@@ -23,7 +23,6 @@ import org.eclipse.draw2d.ImageFigure;
 import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.XYLayout;
-import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -45,6 +44,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -165,7 +165,7 @@ class ImageEditPart extends AbstractGraphicalEditPart implements Adapter, IEditi
 		// list of
 		// shapes
 		for (InformationUnit informationUnit : childValues) {
-			returnValue.add(new ShapableInfoDelegate(informationUnit, new Dimension(
+			returnValue.add(new ShapableInfoDelegate(informationUnit, new java.awt.Dimension(
 					(int) this.width, (int) this.height), this.editingDomain));
 		}
 		return returnValue;

@@ -32,7 +32,7 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.image.gef.ShapableInfoDelegate;
+import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 

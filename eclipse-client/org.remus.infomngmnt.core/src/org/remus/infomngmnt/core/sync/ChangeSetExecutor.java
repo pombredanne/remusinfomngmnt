@@ -409,7 +409,8 @@ public class ChangeSetExecutor {
 		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		CompoundCommand createInfotype = CommandFactory.CREATE_INFOTYPE(newRemoteInformationUnit,
 				parentCategory);
-		IFile[] binaryReferences = itemByRepository.getBinaryReferences();
+		IFile[] binaryReferences = itemByRepository.getBinaryReferences(synchronizableObject,
+				monitor);
 		for (IFile iFile : binaryReferences) {
 			Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile,
 					newRemoteInformationUnit, editingDomain);
@@ -418,6 +419,12 @@ public class ChangeSetExecutor {
 		editingDomain.getCommandStack().execute(createInfotype);
 		InformationUnitListItem localListItem = (InformationUnitListItem) newRemoteInformationUnit
 				.getAdapter(InformationUnitListItem.class);
+
+		InformationUnit newInformationUnit = (InformationUnit) localListItem
+				.getAdapter(InformationUnit.class);
+		if (newInformationUnit != null) {
+			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit);
+		}
 		localListItem.setSynchronizationMetaData(synchronizableObject.getSynchronizationMetaData());
 	}
 
@@ -483,7 +490,8 @@ public class ChangeSetExecutor {
 							binaryReference, editingDomain);
 					editingDomain.getCommandStack().execute(command);
 				}
-				IFile[] binaryReferences = itemByRepository.getBinaryReferences();
+				IFile[] binaryReferences = itemByRepository.getBinaryReferences(
+						synchronizableObject, monitor);
 				for (IFile iFile : binaryReferences) {
 					Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile, adapter,
 							editingDomain);
@@ -498,7 +506,8 @@ public class ChangeSetExecutor {
 			CompoundCommand command = CommandFactory.CREATE_INFOTYPE_FROM_EXISTING_LISTITEM(
 					newRemoteInformationUnit, parentCategory, monitor, itemById);
 
-			IFile[] binaryReferences = itemByRepository.getBinaryReferences();
+			IFile[] binaryReferences = itemByRepository.getBinaryReferences(synchronizableObject,
+					monitor);
 			for (IFile iFile : binaryReferences) {
 				Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile,
 						newRemoteInformationUnit, editingDomain);
@@ -509,6 +518,11 @@ public class ChangeSetExecutor {
 		}
 		itemById = ApplicationModelPool.getInstance().getItemById(synchronizableObject.getId(),
 				monitor);
+		InformationUnit newInformationUnit = (InformationUnit) itemById
+				.getAdapter(InformationUnit.class);
+		if (newInformationUnit != null) {
+			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit);
+		}
 		itemById.setSynchronizationMetaData(synchronizableObject.getSynchronizationMetaData());
 		editingDomain.getCommandStack().flush();
 	}

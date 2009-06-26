@@ -90,7 +90,8 @@ public interface IRepository {
 	/**
 	 * @return
 	 */
-	IFile[] getBinaryReferences();
+	IFile[] getBinaryReferences(InformationUnitListItem remoteListItem, IProgressMonitor monitor)
+			throws RemoteException;
 
 	/**
 	 * Commits a {@link SynchronizableObject}. This can be a {@link Category} or
@@ -117,6 +118,16 @@ public interface IRepository {
 
 	RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
 			IProgressMonitor monitor) throws RemoteException;
+
+	/**
+	 * Sometimes it is necessary to manipulate some data of the local added or
+	 * updated information unit after the sync-process, e.g. if some data is
+	 * available after downloading the files.
+	 * 
+	 * @param unit
+	 *            the new or updated local information unit
+	 */
+	void proceedLocalInformationUnitAfterSync(InformationUnit newOrUpdatedLocalInformationUnit);
 
 	/**
 	 * Returns a definition which properties within an information unit are

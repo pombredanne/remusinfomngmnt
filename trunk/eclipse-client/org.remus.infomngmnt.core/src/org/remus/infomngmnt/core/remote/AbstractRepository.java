@@ -19,6 +19,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -77,8 +80,14 @@ public abstract class AbstractRepository implements IRepository {
 		this.credentialProvider = credentialProvider;
 	}
 
-	public IFile[] getBinaryReferences() {
+	public IFile[] getBinaryReferences(final InformationUnitListItem remoteListItem,
+			final IProgressMonitor monitor) throws RemoteException {
 		return new IFile[0];
+	}
+
+	public void proceedLocalInformationUnitAfterSync(
+			final InformationUnit newOrUpdatedLocalInformationUnit) {
+		// does nothing by default
 	}
 
 	public String getId() {

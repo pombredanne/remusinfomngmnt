@@ -32,22 +32,25 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
+
 /**
  * EditPart used for Shape instances (more specific for EllipticalShape and
  * RectangularShape instances).
- * <p>This edit part must implement the PropertyChangeListener interface, 
- * so it can be notified of property changes in the corresponding model element.
+ * <p>
+ * This edit part must implement the PropertyChangeListener interface, so it can
+ * be notified of property changes in the corresponding model element.
  * </p>
  * 
  * @author Elias Volanakis
  */
-class CommentEditPart extends AbstractGraphicalEditPart 
-implements Adapter, IEditingDomainHolder{
+class CommentEditPart extends AbstractGraphicalEditPart implements Adapter, IEditingDomainHolder {
 
 	private EditingDomain editingDomain;
 
 	/**
-	 * Upon activation, attach to the model element as a property change listener.
+	 * Upon activation, attach to the model element as a property change
+	 * listener.
 	 */
 	@Override
 	public void activate() {
@@ -57,18 +60,22 @@ implements Adapter, IEditingDomainHolder{
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#createEditPolicies()
 	 */
 	@Override
 	protected void createEditPolicies() {
 		// allow removal of the associated model element
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new CommentComponentEditPolicy());
-		// allow the creation of connections and 
+		// allow the creation of connections and
 		// and the reconnection of connections between Shape instances
 	}
 
-	/*(non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
 	 */
 	@Override
@@ -80,7 +87,7 @@ implements Adapter, IEditingDomainHolder{
 
 	/**
 	 * Return a IFigure depending on the instance of the current model element.
-	 * This allows this EditPart to be used for both sublasses of Shape. 
+	 * This allows this EditPart to be used for both sublasses of Shape.
 	 */
 	private IFigure createFigureForModel() {
 		RectangleFigure figure2 = new RectangleFigure();
@@ -92,7 +99,8 @@ implements Adapter, IEditingDomainHolder{
 	}
 
 	/**
-	 * Upon deactivation, detach from the model element as a property change listener.
+	 * Upon deactivation, detach from the model element as a property change
+	 * listener.
 	 */
 	@Override
 	public void deactivate() {
@@ -106,16 +114,23 @@ implements Adapter, IEditingDomainHolder{
 		return (ShapableInfoDelegate) getModel();
 	}
 
-
+	@Override
+	protected void unregisterModel() {
+		getCastedModel().dispose();
+		super.unregisterModel();
+	}
 
 	@Override
 	protected void refreshVisuals() {
 		// notify parent container of changed position & location
-		// if this line is removed, the XYLayoutManager used by the parent container 
-		// (the Figure of the ShapesDiagramEditPart), will not know the bounds of this figure
+		// if this line is removed, the XYLayoutManager used by the parent
+		// container
+		// (the Figure of the ShapesDiagramEditPart), will not know the bounds
+		// of this figure
 		// and will not draw it correctly.
-		Rectangle bounds = new Rectangle(getCastedModel().getLocation(),
-				getCastedModel().getSize());
+		Rectangle bounds = new Rectangle(getCastedModel().getLocation().x, getCastedModel()
+				.getLocation().y, getCastedModel().getSize().width,
+				getCastedModel().getSize().height);
 		((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), bounds);
 	}
 
@@ -131,20 +146,19 @@ implements Adapter, IEditingDomainHolder{
 
 	public void notifyChanged(final Notification notification) {
 		refreshVisuals();
-		
 
 	}
 
 	@Override
 	public void performRequest(final Request req) {
 		if (req.getType() == RequestConstants.REQ_OPEN) {
-			InputDialog inputDialog = new InputDialog(
-					getViewer().getControl().getShell(),
+			InputDialog inputDialog = new InputDialog(getViewer().getControl().getShell(),
 					"Set comment", "Set a new message", getCastedModel().getText(), null) {
 				@Override
 				protected int getInputTextStyle() {
 					return SWT.MULTI | SWT.BORDER | SWT.V_SCROLL;
 				}
+
 				@Override
 				protected Control createDialogArea(final Composite parent) {
 					Control createDialogArea = super.createDialogArea(parent);

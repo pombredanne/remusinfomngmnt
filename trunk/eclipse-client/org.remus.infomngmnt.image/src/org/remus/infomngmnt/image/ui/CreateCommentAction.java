@@ -12,8 +12,6 @@
 
 package org.remus.infomngmnt.image.ui;
 
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.action.Action;
@@ -23,8 +21,8 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.image.gef.IEditingDomainHolder;
-import org.remus.infomngmnt.image.gef.ShapableInfoDelegate;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -47,14 +45,16 @@ public class CreateCommentAction extends Action implements IEditingDomainHolder 
 		InformationUnit createInformationUnit = InfomngmntFactory.eINSTANCE.createInformationUnit();
 		createInformationUnit.setType(ImagePlugin.NODE_NAME_LINK);
 		ShapableInfoDelegate shapableInfoDelegate = new ShapableInfoDelegate(createInformationUnit,
-				new Dimension(300, 300), this.editingDomain);
-		shapableInfoDelegate.setLocation(new Point(10, 10));
-		shapableInfoDelegate.setSize(new Dimension(30, 30));
+				new java.awt.Dimension(300, 300), this.editingDomain);
+		shapableInfoDelegate.setLocation(new java.awt.Point(10, 10));
+		shapableInfoDelegate.setSize(new java.awt.Dimension(30, 30));
 		AddCommand add = new AddCommand(this.editingDomain, childByType,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, shapableInfoDelegate
 						.getOrigInfoObject());
 		add.setLabel("Add new comment");
 		this.editingDomain.getCommandStack().execute(add);
+		shapableInfoDelegate.dispose();
+
 	}
 
 	public EditingDomain getEditingDomain() {

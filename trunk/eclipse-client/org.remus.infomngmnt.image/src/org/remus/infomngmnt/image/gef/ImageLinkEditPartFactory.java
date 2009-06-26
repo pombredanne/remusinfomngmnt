@@ -16,6 +16,7 @@ import org.eclipse.gef.EditPartFactory;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 
 /**
  * Factory that maps model elements to edit parts.

@@ -22,8 +22,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.image.gef.IEditingDomainHolder;
-import org.remus.infomngmnt.image.gef.ShapableInfoDelegate;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

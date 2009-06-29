@@ -16,17 +16,23 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -34,9 +40,11 @@ import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
+import org.xml.sax.SAXException;
 
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.FlickrException;
@@ -45,11 +53,14 @@ import com.aetrion.flickr.photos.Extras;
 import com.aetrion.flickr.photos.Note;
 import com.aetrion.flickr.photos.Photo;
 import com.aetrion.flickr.photos.PhotoList;
+import com.aetrion.flickr.photos.Size;
 import com.aetrion.flickr.photosets.Photoset;
 import com.aetrion.flickr.photosets.Photosets;
 import com.aetrion.flickr.photosets.PhotosetsInterface;
 import com.aetrion.flickr.tags.Tag;
+import com.aetrion.flickr.uploader.UploadMetaData;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -58,6 +69,7 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.streams.StreamUtil;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
@@ -89,6 +101,12 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 
 	public static final String ID_FAVORITES = "ID_FAVORITES";
 
+	private static final String DUMMY_TITLE = "__rim_dummy_photo";
+
+	public static final String DUMMY_PHOTO_ID = "DUMMY_PHOTO_ID"; //$NON-NLS-1$
+
+	public static final String RIM_INTERNAL_SET = "__rim_internal_set"; //$NON-NLS-1$
+
 	/**
 	 * 
 	 */
@@ -118,8 +136,146 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 */
 	public RemoteObject addToRepository(final SynchronizableObject item,
 			final IProgressMonitor monitor) throws RemoteException {
-		// TODO Auto-generated method stub
+		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(
+				(SynchronizableObject) item.eContainer(), monitor);
+		if (ID_SET_COLLECTION.equals(remoteObject.getRepositoryTypeObjectId())) {
+			if (item instanceof Category) {
+				try {
+
+					/*
+					 * Creating a photoset requires at least one photo. We have
+					 * to upload it once
+					 */
+					String dummyId = uploadDummyPhoto();
+					RemoteContainer buildPhotoSet = buildPhotoSet(getApi().getPhotosetsInterface()
+							.create(((Category) item).getLabel(), "", dummyId));
+					getApi().getPhotosInterface().delete(dummyId);
+					return buildPhotoSet;
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} else if (ID_SET.equals(remoteObject.getRepositoryTypeObjectId())) {
+			if (item instanceof InformationUnitListItem
+					&& ImagePlugin.TYPE_ID.equals(((InformationUnitListItem) item).getType())) {
+				InformationUnit adapter = (InformationUnit) item.getAdapter(InformationUnit.class);
+				try {
+					Photoset wrappedObject = (Photoset) remoteObject.getWrappedObject();
+					RemoteObject returnValue = updateOrAddPhoto(null, adapter, null, wrappedObject
+							.getId());
+
+					return returnValue;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
 		return null;
+	}
+
+	private String uploadDummyPhoto() throws Exception {
+
+		InputStream openStream = FileLocator.openStream(FlickrPlugin.getDefault().getBundle(),
+				new Path("dummy/dummy.png"), false);
+		UploadMetaData metadata = new UploadMetaData();
+		metadata.setAsync(false);
+		metadata.setTitle(DUMMY_TITLE);
+		metadata.setPublicFlag(true);
+		String upload = getApi().getUploader().upload(StreamUtil.convertStreamToByte(openStream),
+				metadata);
+		return upload;
+	}
+
+	private RemoteObject updateOrAddPhoto(final RemoteObject object, final InformationUnit unit,
+			final String flickrPhotoId, final String setId) throws IOException, SAXException,
+			FlickrException, CoreException {
+		if (flickrPhotoId != null) {
+			List allContexts = getApi().getPhotosInterface().getAllContexts(flickrPhotoId);
+			if (allContexts.size() > 1) {
+				if (setId != null) {
+					getApi().getPhotosetsInterface().removePhoto(setId, flickrPhotoId);
+				} else {
+					getApi().getFavoritesInterface().remove(flickrPhotoId);
+				}
+			} else {
+				getApi().getPhotosInterface().delete(flickrPhotoId);
+			}
+		}
+		UploadMetaData metadata = new UploadMetaData();
+		metadata.setAsync(false);
+		metadata.setDescription(unit.getDescription());
+		metadata.setTitle(unit.getLabel());
+		metadata.setDescription(unit.getDescription());
+		metadata.setPublicFlag(true);
+		if (unit.getKeywords() != null) {
+			metadata.setTags(Arrays.asList(StringUtils.split(unit.getKeywords(), " ")));
+		}
+		IFile adapter = (IFile) unit.getAdapter(IFile.class);
+		IPath append = adapter.getProject().getFullPath().append(ResourceUtil.BINARY_FOLDER)
+				.append(unit.getBinaryReferences().get(0).getProjectRelativePath());
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(append);
+		InputStream contents = file.getContents();
+		String upload = getApi().getUploader().upload(StreamUtil.convertStreamToByte(contents),
+				metadata);
+		StreamCloser.closeStreams(contents);
+		InformationUnitListItem listItem = (InformationUnitListItem) unit
+				.getAdapter(InformationUnitListItem.class);
+		RemoteObject returnValue;
+		if (object == null) {
+			returnValue = InfomngmntFactory.eINSTANCE.createRemoteObject();
+		} else {
+			returnValue = object;
+		}
+
+		Collection sizes = getApi().getPhotosInterface().getSizes(upload);
+		int width = 0;
+		int height = 0;
+		for (Object object2 : sizes) {
+			Size size = (Size) object2;
+			if (Size.MEDIUM == Integer.valueOf(size.getLabel())) {
+				width = size.getWidth();
+				height = size.getHeight();
+				break;
+			}
+		}
+		// After the edit/update we have to refresh comments
+		EList<InformationUnit> comments = InformationUtil.getChildByType(unit,
+				ImagePlugin.NODE_NAME_LINKS).getChildValues();
+
+		EditingDomain tempEditingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		for (InformationUnit informationUnit : comments) {
+			ShapableInfoDelegate delegate = new ShapableInfoDelegate(informationUnit,
+					new Dimension(width, height), tempEditingDomain);
+			Note note = new Note();
+			note.setText(delegate.getText());
+			note.setBounds(new Rectangle(delegate.getLocation().x, delegate.getLocation().y,
+					delegate.getSize().width, delegate.getSize().height));
+			getApi().getNotesInterface().add(upload, note);
+		}
+		Photo info = getApi().getPhotosInterface().getInfo(upload, "");
+		returnValue.setHash(String.valueOf(info.getLastUpdate().getTime()));
+		returnValue.setId(upload);
+		returnValue.setName(info.getTitle());
+		returnValue.setWrappedObject(info);
+		StringWriter sw = new StringWriter();
+		sw.append(info.getId()).append(".");
+		if (info.getOriginalSecret() != null && info.getOriginalSecret().length() > 0) {
+			sw.append(info.getOriginalSecret());
+		} else {
+			sw.append(info.getSecret());
+		}
+		if (setId != null) {
+			getApi().getPhotosetsInterface().addPhoto(setId, upload);
+			returnValue.setUrl(FLICKR_URL + ID_SET_COLLECTION + "/" + setId + "/" + sw.toString());
+		} else {
+			getApi().getFavoritesInterface().add(upload);
+			returnValue.setUrl(FLICKR_URL + ID_FAVORITES + "/" + sw.toString());
+		}
+		return returnValue;
 	}
 
 	/*
@@ -131,7 +287,39 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 */
 	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(
+				(SynchronizableObject) item2commit.eContainer(), monitor);
+		if (ID_SET_COLLECTION.equals(remoteObject.getRepositoryTypeObjectId())) {
+			if (item2commit instanceof Category) {
+				try {
+					getApi().getPhotosetsInterface().create(((Category) item2commit).getLabel(),
+							"", "");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} else if (ID_SET.equals(remoteObject.getRepositoryTypeObjectId())) {
+			if (item2commit instanceof InformationUnitListItem
+					&& ImagePlugin.TYPE_ID
+							.equals(((InformationUnitListItem) item2commit).getType())) {
+				InformationUnit adapter = (InformationUnit) item2commit
+						.getAdapter(InformationUnit.class);
+				try {
+					RemoteObject remotePhoto = getRemoteObjectBySynchronizableObject(item2commit,
+							monitor);
+					Photo wrappedObject = (Photo) remotePhoto.getWrappedObject();
+
+					return updateOrAddPhoto(remoteObject, adapter, wrappedObject.getId(),
+							((Photoset) remoteObject.getWrappedObject()).getId()).getHash();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		}
 		return null;
 	}
 
@@ -145,7 +333,11 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 */
 	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(item, monitor);
+		Object wrappedObject = remoteObject.getWrappedObject();
+		if (wrappedObject instanceof Photo) {
+
+		}
 
 	}
 
@@ -187,8 +379,6 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					Integer.MAX_VALUE, 1);
 			for (Object object : photos) {
 				Photo photo = (Photo) object;
-				// we have to do a second request to get the original secret
-
 				returnValue.add(buildPhoto(photo, container.getUrl()));
 			}
 		} catch (Exception e) {
@@ -539,9 +729,8 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	private Flickr getApi() {
 		if (this.api == null) {
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
-			this.api = ((FlickrCredentials) getCredentialProvider()).getFlickr();
 		}
-		return this.api;
+		return this.api = ((FlickrCredentials) getCredentialProvider()).getFlickr();
 	}
 
 	private FlickrCredentials getFlickrCredentialProvider() {

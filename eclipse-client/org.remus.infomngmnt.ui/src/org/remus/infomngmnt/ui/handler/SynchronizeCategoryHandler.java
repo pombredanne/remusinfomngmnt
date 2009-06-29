@@ -31,6 +31,7 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import org.remus.infomngmnt.Category;
@@ -117,7 +118,12 @@ public class SynchronizeCategoryHandler extends AbstractHandler {
 							@Override
 							protected IStatus run(final IProgressMonitor monitor) {
 								ChangeSetExecutor executor = new ChangeSetExecutor();
+								monitor.beginTask(NLS.bind("Synchronizing element {0}", cat
+										.getLabel()), changeSetItem[0].getSyncCategoryActionMap()
+										.size()
+										+ changeSetItem[0].getSyncObjectActionMap().size() + 1);
 								try {
+									monitor.worked(1);
 									executor.synchronize(diffModel[0].getOwnedElements(),
 											changeSetItem[0], monitor, cat);
 								} catch (CoreException e) {

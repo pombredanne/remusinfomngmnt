@@ -74,6 +74,15 @@
                      value="org.remus.infomngmnt.search.ui.view.SearchHistoryView">
                </parameter>
             </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeWorkbenchWindow.activePerspective">
+                  <equals
+                        value="org.remus.infomngmnt.ui.infoperspective">
+                  </equals>
+               </with>
+            </visibleWhen>
          </toolbar>
          <toolbar
                id="org.remus.infomngmnt.search.contextBar">
@@ -89,15 +98,23 @@
             </command>
             <visibleWhen
                   checkEnabled="false">
-               <with
-                     variable="activeContexts">
-                  <iterate
-                        operator="or">
+               <and>
+                  <with
+                        variable="activeContexts">
+                     <iterate
+                           operator="or">
+                        <equals
+                              value="org.remus.infomngmnt.search.searchcontext">
+                        </equals>
+                     </iterate>
+                  </with>
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
                      <equals
-                           value="org.remus.infomngmnt.search.searchcontext">
+                           value="org.remus.infomngmnt.ui.infoperspective">
                      </equals>
-                  </iterate>
-               </with>
+                  </with>
+               </and>
             </visibleWhen>
          </toolbar>
       </menuContribution>

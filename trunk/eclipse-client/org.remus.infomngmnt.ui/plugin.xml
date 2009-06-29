@@ -46,6 +46,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="org.remus.infomngmnt.ui.perspective.Perspective"
+            icon="icons/rim_icon.png"
             id="org.remus.infomngmnt.ui.infoperspective"
             name="Information Management">
       </perspective>

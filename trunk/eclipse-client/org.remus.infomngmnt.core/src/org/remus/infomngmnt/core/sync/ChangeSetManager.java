@@ -385,11 +385,13 @@ public class ChangeSetManager {
 				 */
 				eObject
 						.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
+
+			}
+			if (eObject instanceof SynchronizationMetadata) {
 				/*
 				 * 
 				 */
-				((EObject) eObject
-						.eGet(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA))
+				(eObject)
 						.eUnset(InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION);
 			}
 		}

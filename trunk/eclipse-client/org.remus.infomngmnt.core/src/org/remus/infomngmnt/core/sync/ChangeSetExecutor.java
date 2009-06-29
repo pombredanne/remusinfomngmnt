@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
@@ -36,6 +37,7 @@ import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 
@@ -184,7 +186,10 @@ public class ChangeSetExecutor {
 				break;
 			case ADD_LOCAL:
 				try {
-					addLocalCategory(category, targetCategory, monitor, item);
+					IProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,
+							IProgressMonitor.UNKNOWN);
+					subProgressMonitor.setTaskName("Adding local category");
+					addLocalCategory(category, targetCategory, subProgressMonitor, item);
 				} catch (Exception e) {
 					append2Status(status, e);
 				}
@@ -193,30 +198,46 @@ public class ChangeSetExecutor {
 				try {
 					deleteLocalCategory(category);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					append2Status(status, e);
 				}
 				break;
 			case DELETE_REMOTE:
-				// TODO
-				break;
+				try {
+					IProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,
+							IProgressMonitor.UNKNOWN);
+					subProgressMonitor.setTaskName("Deleting remote category");
+					deleteRemoteCategory(category, subProgressMonitor);
+				} catch (Exception e) {
+					append2Status(status, e);
+				}
 			case REPLACE_REMOTE:
 				// TODO
 				break;
 			case ADD_REMOTE:
-				// TODO
+				try {
+					IProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,
+							IProgressMonitor.UNKNOWN);
+					subProgressMonitor.setTaskName("Adding remote category");
+					addRemoteCategory(category, subProgressMonitor);
+				} catch (Exception e) {
+					append2Status(status, e);
+				}
 				break;
 			default:
 				break;
 			}
+			monitor.worked(1);
 		}
 		Set<SynchronizableObject> keySet2 = item.getSyncObjectActionMap().keySet();
 		for (SynchronizableObject synchronizableObject : keySet2) {
 			if (synchronizableObject instanceof InformationUnitListItem) {
 				try {
+					IProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,
+							IProgressMonitor.UNKNOWN);
+					subProgressMonitor.setTaskName("Getting local object");
 					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
 							.getItemById(((InformationUnitListItem) synchronizableObject).getId(),
-									monitor);
+									subProgressMonitor);
 					if (itemById != null) {
 						itemById.getSynchronizationMetaData().setCurrentlySyncing(true);
 					}
@@ -225,16 +246,22 @@ public class ChangeSetExecutor {
 					switch (synchronizationAction) {
 					case REPLACE_LOCAL:
 						try {
+							subProgressMonitor = new SubProgressMonitor(monitor,
+									IProgressMonitor.UNKNOWN);
+							subProgressMonitor.setTaskName("Updating local information unit");
 							replaceLocalInfoUnit((InformationUnitListItem) synchronizableObject,
-									item, monitor);
+									item, subProgressMonitor);
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
 						break;
 					case ADD_LOCAL:
 						try {
+							subProgressMonitor = new SubProgressMonitor(monitor,
+									IProgressMonitor.UNKNOWN);
+							subProgressMonitor.setTaskName("Adding local information unit");
 							addLocalInfoUnit((InformationUnitListItem) synchronizableObject, item,
-									monitor);
+									subProgressMonitor);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -242,32 +269,44 @@ public class ChangeSetExecutor {
 						break;
 					case DELETE_LOCAL:
 						try {
+							subProgressMonitor = new SubProgressMonitor(monitor,
+									IProgressMonitor.UNKNOWN);
+							subProgressMonitor.setTaskName("Deleting local information unit");
 							deleteLocalInforUnit((InformationUnitListItem) synchronizableObject,
-									item, monitor);
+									item, subProgressMonitor);
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
 						break;
 					case DELETE_REMOTE:
 						try {
+							subProgressMonitor = new SubProgressMonitor(monitor,
+									IProgressMonitor.UNKNOWN);
+							subProgressMonitor.setTaskName("Deleting remote information unit");
 							deleteRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
-									monitor);
+									subProgressMonitor);
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
 						break;
 					case REPLACE_REMOTE:
 						try {
+							subProgressMonitor = new SubProgressMonitor(monitor,
+									IProgressMonitor.UNKNOWN);
+							subProgressMonitor.setTaskName("Replacing remote information unit");
 							replaceRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
-									monitor);
+									subProgressMonitor);
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
 						break;
 					case ADD_REMOTE:
 						try {
+							subProgressMonitor = new SubProgressMonitor(monitor,
+									IProgressMonitor.UNKNOWN);
+							subProgressMonitor.setTaskName("Adding remote information unit");
 							addRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
-									monitor);
+									subProgressMonitor);
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
@@ -276,19 +315,77 @@ public class ChangeSetExecutor {
 						break;
 					}
 				} finally {
+					IProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor,
+							IProgressMonitor.UNKNOWN);
+					subProgressMonitor.setTaskName("Getting local information unit");
 					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
 							.getItemById(((InformationUnitListItem) synchronizableObject).getId(),
-									monitor);
+									subProgressMonitor);
 					if (itemById != null) {
 						itemById.getSynchronizationMetaData().setCurrentlySyncing(false);
 					}
 				}
 			}
 		}
+		monitor.worked(1);
 		if (status.getChildren().length > 0) {
 			throw new ChangeSetException(status);
 		}
 		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().flush();
+	}
+
+	private void addRemoteCategory(final Category category, final IProgressMonitor monitor)
+			throws CoreException {
+		Category localCategory = CategoryUtil.getCategoryById(category.getId());
+		if (localCategory == null) {
+			throw new ChangeSetException(
+					StatusCreator
+							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
+		}
+		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(
+				category.getSynchronizationMetaData().getRepositoryId());
+		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
+		RemoteObject addToRepository = itemByRepository.addToRepository(category, monitor);
+		SynchronizationMetadata synchronizationMetaData = localCategory
+				.getSynchronizationMetaData();
+		synchronizationMetaData.setHash(addToRepository.getHash());
+		synchronizationMetaData.setUrl(addToRepository.getUrl());
+		synchronizationMetaData.setRepositoryId(remoteRepository.getId());
+		synchronizationMetaData.setLastSynchronisation(new Date());
+		synchronizationMetaData.setSyncState(SynchronizationState.IN_SYNC);
+		EObject[] allChildren = CategoryUtil.getAllChildren(localCategory,
+				InfomngmntPackage.Literals.CATEGORY);
+		for (EObject eObject : allChildren) {
+			if (eObject != localCategory) {
+				addRemoteCategory((Category) eObject, monitor);
+			}
+		}
+		InformationUnitListItem[] allInfoUnitItems = CategoryUtil
+				.getAllInfoUnitItems(localCategory);
+		for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
+			addRemoteInfoUnit(informationUnitListItem, monitor);
+		}
+
+	}
+
+	private void deleteRemoteCategory(final Category category, final IProgressMonitor monitor)
+			throws CoreException {
+		Category localCategory = CategoryUtil.getCategoryById(category.getId());
+		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(
+				category.getSynchronizationMetaData().getRepositoryId());
+		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
+		itemByRepository.deleteFromRepository(localCategory, monitor);
+		EditingDomain createNewEditingDomain = EditingUtil.getInstance().createNewEditingDomain();
+
+		Command create = DeleteCommand.create(createNewEditingDomain, Collections
+				.singletonList(localCategory));
+		createNewEditingDomain.getCommandStack().execute(create);
+		createNewEditingDomain.getCommandStack().flush();
+
 	}
 
 	private void append2Status(final MultiStatus status, final Exception e) {
@@ -362,6 +459,7 @@ public class ChangeSetExecutor {
 				monitor);
 		SynchronizationMetadata synchronizationMetaData = itemById.getSynchronizationMetaData();
 		synchronizationMetaData.setHash(addToRepository.getHash());
+
 		synchronizationMetaData.setUrl(addToRepository.getUrl());
 		synchronizationMetaData.setRepositoryId(remoteRepository.getId());
 		synchronizationMetaData.setLastSynchronisation(new Date());
@@ -425,7 +523,11 @@ public class ChangeSetExecutor {
 		if (newInformationUnit != null) {
 			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit);
 		}
-		localListItem.setSynchronizationMetaData(synchronizableObject.getSynchronizationMetaData());
+		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
+				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+				synchronizableObject.getSynchronizationMetaData());
+		editingDomain.getCommandStack().execute(setSycnMetadata);
+		editingDomain.getCommandStack().flush();
 	}
 
 	private void replaceLocalInfoUnit(final InformationUnitListItem synchronizableObject,
@@ -523,7 +625,10 @@ public class ChangeSetExecutor {
 		if (newInformationUnit != null) {
 			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit);
 		}
-		itemById.setSynchronizationMetaData(synchronizableObject.getSynchronizationMetaData());
+		Command setSycnMetadata = SetCommand.create(editingDomain, itemById,
+				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+				synchronizableObject.getSynchronizationMetaData());
+		editingDomain.getCommandStack().execute(setSycnMetadata);
 		editingDomain.getCommandStack().flush();
 	}
 

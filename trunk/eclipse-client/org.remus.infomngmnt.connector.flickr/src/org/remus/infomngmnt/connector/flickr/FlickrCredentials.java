@@ -81,23 +81,23 @@ public class FlickrCredentials extends CredentialProvider {
 	 * @return the flickr
 	 */
 	public Flickr getFlickr() {
-		if (this.flickr == null) {
-			try {
-				this.flickr = new Flickr(FlickrPlugin.API_KEY, FlickrPlugin.SHARED_SECRET,
-						new REST());
-				User user = new User();
-				user.setId(getInternalId());
-				user.setUsername(getUserName());
-				RequestContext requestContext = RequestContext.getRequestContext();
-				Auth auth = new Auth();
-				auth.setPermission(Permission.DELETE);
-				auth.setToken(getPassword());
-				requestContext.setAuth(auth);
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+		try {
+			this.flickr = new Flickr(FlickrPlugin.API_KEY, FlickrPlugin.SHARED_SECRET, new REST());
+			User user = new User();
+			user.setId(getInternalId());
+			user.setUsername(getUserName());
+			RequestContext requestContext = RequestContext.getRequestContext();
+			Auth auth = new Auth();
+			auth.setPermission(Permission.DELETE);
+			auth.setToken(getPassword());
+			requestContext.setAuth(auth);
+			this.flickr.setAuth(auth);
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		return this.flickr;
 	}
 }

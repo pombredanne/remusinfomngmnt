@@ -77,6 +77,7 @@ import org.eclipse.update.configurator.ConfiguratorUtils;
 import org.eclipse.update.configurator.IPlatformConfiguration;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.ServiceReference;
 
 import org.remus.infomngmnt.common.service.ITrayService;
 import org.remus.infomngmnt.common.ui.UIUtil;
@@ -144,8 +145,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		super(configurer);
 		this.wbAdvisor = wbAdvisor;
 		this.preferenceStore = UIPlugin.getDefault().getPreferenceStore();
-		Platform.getBundle(ApplicationPlugin.PLUGIN_ID).getBundleContext().registerService(
-				ITrayService.class.getName(), this, null);
+		ServiceReference serviceReference = Platform.getBundle(ApplicationPlugin.PLUGIN_ID)
+				.getBundleContext().getServiceReference(ITrayService.class.getName());
+		if (serviceReference == null
+				|| Platform.getBundle(ApplicationPlugin.PLUGIN_ID).getBundleContext().getService(
+						serviceReference) == null) {
+			Platform.getBundle(ApplicationPlugin.PLUGIN_ID).getBundleContext().registerService(
+					ITrayService.class.getName(), this, null);
+		}
 
 	}
 

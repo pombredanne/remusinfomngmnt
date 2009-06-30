@@ -34,6 +34,15 @@
 		<move file="N.RIM/RIM-linux.gtk.x86.zip" failonerror="false" tofile="N.RIM/RIM-linux.gtk.x86.tar.gz"></move>
 		<move file="N.RIM/RIM-macosx.carbon.ppc.zip" failonerror="false" tofile="N.RIM/RIM-macosx.carbon.ppc.tar.gz"></move>
 		<move file="N.RIM/RIM-macosx.cocoa.x86.zip" failonerror="false" tofile="N.RIM/RIM-macosx.cocoa.x86.tar.gz"></move>
+		
+		<delete>
+			<fileset dir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite">
+			</fileset>
+		</delete>
+
+		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite" failonerror="false">
+			<fileset dir="buildRepo"></fileset>
+		</copy>
 	</target>
 
 	<target name="depending">

@@ -12,9 +12,9 @@
 
 package org.remus.infomngmnt.ui.remote;
 
-import org.eclipse.emf.compare.diff.metamodel.AddModelElement;
 import org.eclipse.emf.compare.diff.metamodel.DiffGroup;
-import org.eclipse.emf.compare.diff.metamodel.RemoveModelElement;
+import org.eclipse.emf.compare.diff.metamodel.ModelElementChangeLeftTarget;
+import org.eclipse.emf.compare.diff.metamodel.ModelElementChangeRightTarget;
 import org.eclipse.emf.compare.util.AdapterUtils;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -23,7 +23,6 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
-
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -52,7 +51,7 @@ public class DiffLabelProvider extends LabelProvider {
 	private Object getImageOrText(final Object element, final boolean returnImage) {
 		if (element instanceof DiffGroup) {
 			final DiffGroup group = (DiffGroup) element;
-			final EObject parent = group.getLeftParent();
+			final EObject parent = group.getRightParent();
 			if (parent != null) {
 				if (parent instanceof Category && ((Category) parent).getId() == null) {
 					if (!returnImage) {
@@ -105,8 +104,8 @@ public class DiffLabelProvider extends LabelProvider {
 				return NLS
 						.bind("Ready to apply the following changes ({0})", group.getSubchanges());
 			}
-		} else if (element instanceof AddModelElement) {
-			final AddModelElement addOp = (AddModelElement) element;
+		} else if (element instanceof ModelElementChangeRightTarget) {
+			final ModelElementChangeRightTarget  addOp = (ModelElementChangeRightTarget) element;
 			EObject rightElement = addOp.getRightElement();
 			SynchronizationAction action = SyncUtil.getAction(this.changeSet, rightElement);
 			if (returnImage) {
@@ -136,8 +135,8 @@ public class DiffLabelProvider extends LabelProvider {
 			default:
 				break;
 			}
-		} else if (element instanceof RemoveModelElement) {
-			RemoveModelElement removeOp = (RemoveModelElement) element;
+		} else if (element instanceof ModelElementChangeLeftTarget) {
+			ModelElementChangeLeftTarget removeOp = (ModelElementChangeLeftTarget) element;
 			EObject leftElement = removeOp.getLeftElement();
 			SynchronizationAction action = SyncUtil.getAction(this.changeSet, leftElement);
 			if (returnImage) {

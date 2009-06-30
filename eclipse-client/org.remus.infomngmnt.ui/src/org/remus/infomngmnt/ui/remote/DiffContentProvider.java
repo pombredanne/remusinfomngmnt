@@ -50,7 +50,7 @@ public class DiffContentProvider extends AdapterFactoryContentProvider {
 	public boolean hasChildren(final Object object) {
 		boolean returnValue = super.hasChildren(object);
 		if (object instanceof DiffGroup
-				&& ((DiffGroup) object).getLeftParent() instanceof InformationUnitListItem) {
+				&& ((DiffGroup) object).getRightParent() instanceof InformationUnitListItem) {
 			return false;
 		}
 		return returnValue;

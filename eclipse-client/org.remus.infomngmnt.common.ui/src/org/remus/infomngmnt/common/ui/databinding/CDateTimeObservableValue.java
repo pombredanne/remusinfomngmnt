@@ -2,12 +2,9 @@ package org.remus.infomngmnt.common.ui.databinding;
 
 import java.util.Date;
 
-import org.eclipse.core.databinding.observable.Diffs;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.internal.databinding.provisional.swt.AbstractSWTObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.nebula.widgets.cdatetime.CDateTime;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.SWT;
 
 /**
  * An implementation of the DataBindings IObservableValue interface for the
@@ -16,52 +13,12 @@ import org.eclipse.swt.events.SelectionListener;
  * @author pcentgraf
  * @since Mar 8, 2007
  */
-public class CDateTimeObservableValue extends AbstractSWTObservableValue implements
-		IObservableValue {
+public class CDateTimeObservableValue extends WidgetValueProperty {
 
-	/**
-	 * The Control being observed here.
-	 */
-	protected final CDateTime dateTime;
-
-	/**
-	 * Flag to prevent infinite recursion in {@link #doSetValue(Object)}.
-	 */
-	protected boolean updating = false;
-
-	/**
-	 * The "old" selection before a selection event is fired.
-	 */
-	protected Date currentSelection;
-
-	/**
-	 * Observe the selection property of the provided CDateTime control.
-	 * 
-	 * @param dateTime
-	 *            the control to observe
-	 */
-	public CDateTimeObservableValue(final CDateTime dateTime) {
-		super(dateTime);
-		this.dateTime = dateTime;
-		this.currentSelection = dateTime.getSelection();
-		dateTime.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(final SelectionEvent e) {
-				update(e);
-			}
-
-			public void widgetSelected(final SelectionEvent e) {
-				update(e);
-			}
-
-			public void update(final SelectionEvent e) {
-				if (!CDateTimeObservableValue.this.updating) {
-					Date newSelection = CDateTimeObservableValue.this.dateTime.getSelection();
-					fireValueChange(Diffs.createValueDiff(
-							CDateTimeObservableValue.this.currentSelection, newSelection));
-					CDateTimeObservableValue.this.currentSelection = newSelection;
-				}
-			}
-		});
+	
+	public CDateTimeObservableValue() {
+		super(SWT.Selection);
+		
 	}
 
 	/*
@@ -83,23 +40,12 @@ public class CDateTimeObservableValue extends AbstractSWTObservableValue impleme
 	 * #doGetValue()
 	 */
 	@Override
-	protected Object doGetValue() {
-		return this.dateTime.getSelection();
+	protected Object doGetValue(Object source) {
+		return ((CDateTime) source).getSelection();
 	}
 
 	@Override
-	protected void doSetValue(final Object value) {
-		Date oldValue;
-		Date newValue;
-		try {
-			this.updating = true;
-			oldValue = this.dateTime.getSelection();
-			newValue = (Date) value;
-			this.dateTime.setSelection(newValue);
-			this.currentSelection = newValue;
-			fireValueChange(Diffs.createValueDiff(oldValue, newValue));
-		} finally {
-			this.updating = false;
-		}
+	protected void doSetValue(final Object source, Object value) {
+		((CDateTime) source).setSelection((Date) value);
 	}
 }

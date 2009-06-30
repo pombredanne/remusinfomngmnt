@@ -907,6 +907,16 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.swt.cocoa.macosx"
+         os="macosx"
+         ws="cocoa"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.swt.gtk.linux.x86"
          os="linux"
          ws="gtk"
@@ -950,6 +960,15 @@
          fragment="true"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.ui.cocoa"
+         ws="cocoa"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+         
    <plugin
          id="org.eclipse.ui.carbon"
          ws="carbon"

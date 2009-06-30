@@ -1,0 +1,2 @@
+instructions.configure=\
+  addRepository(type:0,location:http${#58}//www.remus-software.org/updateSite);

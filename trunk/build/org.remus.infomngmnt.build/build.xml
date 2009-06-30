@@ -33,6 +33,7 @@
 		<move file="N.RIM/RIM-linux.gtk.x86_64.zip" failonerror="false" tofile="N.RIM/RIM-linux.gtk.x86_64.tar.gz"></move>
 		<move file="N.RIM/RIM-linux.gtk.x86.zip" failonerror="false" tofile="N.RIM/RIM-linux.gtk.x86.tar.gz"></move>
 		<move file="N.RIM/RIM-macosx.carbon.ppc.zip" failonerror="false" tofile="N.RIM/RIM-macosx.carbon.ppc.tar.gz"></move>
+		<move file="N.RIM/RIM-macosx.cocoa.x86.zip" failonerror="false" tofile="N.RIM/RIM-macosx.cocoa.x86.tar.gz"></move>
 	</target>
 
 	<target name="depending">

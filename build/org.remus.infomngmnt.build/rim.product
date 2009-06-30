@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="true">
-
+<product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
       <linux>/org.remus.infomngmnt.application/config.ini</linux>
@@ -30,7 +29,6 @@
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>

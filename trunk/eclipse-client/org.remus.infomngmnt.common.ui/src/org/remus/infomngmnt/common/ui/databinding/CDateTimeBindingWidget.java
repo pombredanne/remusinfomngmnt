@@ -17,6 +17,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.jface.databinding.swt.ISWTObservable;
 import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 
 /**
@@ -37,8 +38,7 @@ public class CDateTimeBindingWidget extends AbstractBindingWidget {
 	public void bindModel(final EObject object, final EStructuralFeature feature,
 			final UpdateValueStrategy target2Model, final UpdateValueStrategy model2target) {
 
-		CDateTimeObservableValue observableValue = new CDateTimeObservableValue(
-				(CDateTime) getWrappedControl());
+		IObservableValue observableValue = new CDateTimeObservableValue().observe((CDateTime) getWrappedControl());
 		IObservableValue emfObserveValue = EMFEditObservables.observeValue(getEditingDomain(),
 				object, feature);
 		setBinding(getBindingContext().bindValue(observableValue, emfObserveValue, target2Model,

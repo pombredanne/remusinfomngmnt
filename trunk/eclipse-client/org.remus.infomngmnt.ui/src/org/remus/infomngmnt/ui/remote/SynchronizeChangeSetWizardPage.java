@@ -2,6 +2,8 @@ package org.remus.infomngmnt.ui.remote;
 
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.compare.util.AdapterUtils;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -12,7 +14,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
-
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -60,12 +61,13 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 
 		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-		// this.treeViewer.setLabelProvider(new
-		// AdapterFactoryLabelProvider(AdapterUtils
-		// .getAdapterFactory()));
-		// this.treeViewer.setContentProvider(new
-		// AdapterFactoryContentProvider(AdapterUtils
-		// .getAdapterFactory()));
+//		 this.treeViewer.setLabelProvider(new
+//		 AdapterFactoryLabelProvider(AdapterUtils
+//		 .getAdapterFactory()));
+//		 this.treeViewer.setContentProvider(new
+//		 AdapterFactoryContentProvider(AdapterUtils
+//		 .getAdapterFactory()));
+		
 		this.diffLabelProvider = new DiffLabelProvider();
 		this.diffLabelProvider.setChangeSet(this.changeSet);
 		this.treeViewer.setLabelProvider(this.diffLabelProvider);

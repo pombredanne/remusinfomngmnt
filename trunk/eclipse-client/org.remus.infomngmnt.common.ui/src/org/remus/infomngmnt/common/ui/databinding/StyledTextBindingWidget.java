@@ -42,7 +42,7 @@ public class StyledTextBindingWidget extends AbstractBindingWidget {
 	public void bindModel(final EObject object, final EStructuralFeature feature,
 			UpdateValueStrategy target2Model, final UpdateValueStrategy model2target) {
 		ISWTObservableValue swtSource = SWTObservables.observeDelayedValue(500,
-				new StyledTextObservableValue((StyledText) getWrappedControl(), SWT.Modify));
+				new StyledTextObservableValue().observe(getWrappedControl()));
 		IObservableValue emfSource = EMFEditObservables.observeValue(Realm.getDefault(),
 				getEditingDomain(), object, feature);
 		if (target2Model == null) {

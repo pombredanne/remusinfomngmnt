@@ -39,15 +39,12 @@
 			<arg value="-application" />
 			<arg value="org.eclipse.equinox.p2.publisher.CategoryPublisher" />
 			<arg value="-metadataRepository" />
-			<arg value="file:${build.dir.location}/repository" />
+			<arg value="file:${build.dir.location}/buildRepo" />
 			<arg value="-categoryDefinition" />
 			<arg value="file:${build.dir.location}/customization/rim_repository_category.xml" />
 		</java>
-		<delete>
-			<fileset dir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite">
-			</fileset>
+		<delete dir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite">
 		</delete>
-
 		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite" failonerror="false">
 			<fileset dir="buildRepo"></fileset>
 		</copy>

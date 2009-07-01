@@ -41,7 +41,7 @@
 			<arg value="-metadataRepository" />
 			<arg value="file:${build.dir.location}/repository" />
 			<arg value="-categoryDefinition" />
-			<arg value="file:${build.dir.location}/rim_repository_category.xml" />
+			<arg value="file:${build.dir.location}/customization/rim_repository_category.xml" />
 		</java>
 		<delete>
 			<fileset dir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite">

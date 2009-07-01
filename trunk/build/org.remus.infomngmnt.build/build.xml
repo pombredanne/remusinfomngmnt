@@ -49,7 +49,7 @@
 			<arg value="-metadataRepository" />
 			<arg value="file:/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite" />
 			<arg value="-categoryDefinition" />
-			<arg value="${build.dir.location}/category.xml" />
+			<arg value="file:${build.dir.location}/category.xml" />
 		</java>
 	</target>
 

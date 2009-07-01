@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
-
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -107,7 +106,7 @@ public interface IRepository {
 	 *             if committing is not supported.
 	 * 
 	 */
-	String commit(SynchronizableObject item2commit, IProgressMonitor monitor)
+	RemoteObject commit(SynchronizableObject item2commit, IProgressMonitor monitor)
 			throws RemoteException;
 
 	RemoteObject addToRepository(SynchronizableObject item, IProgressMonitor monitor)

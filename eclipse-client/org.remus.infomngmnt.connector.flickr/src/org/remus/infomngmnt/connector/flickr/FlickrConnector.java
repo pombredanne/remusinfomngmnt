@@ -44,22 +44,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
-import org.xml.sax.SAXException;
-
-import com.aetrion.flickr.Flickr;
-import com.aetrion.flickr.FlickrException;
-import com.aetrion.flickr.photos.Exif;
-import com.aetrion.flickr.photos.Extras;
-import com.aetrion.flickr.photos.Note;
-import com.aetrion.flickr.photos.Photo;
-import com.aetrion.flickr.photos.PhotoList;
-import com.aetrion.flickr.photos.Size;
-import com.aetrion.flickr.photosets.Photoset;
-import com.aetrion.flickr.photosets.Photosets;
-import com.aetrion.flickr.photosets.PhotosetsInterface;
-import com.aetrion.flickr.tags.Tag;
-import com.aetrion.flickr.uploader.UploadMetaData;
-
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -83,6 +67,21 @@ import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.xml.sax.SAXException;
+
+import com.aetrion.flickr.Flickr;
+import com.aetrion.flickr.FlickrException;
+import com.aetrion.flickr.photos.Exif;
+import com.aetrion.flickr.photos.Extras;
+import com.aetrion.flickr.photos.Note;
+import com.aetrion.flickr.photos.Photo;
+import com.aetrion.flickr.photos.PhotoList;
+import com.aetrion.flickr.photos.Size;
+import com.aetrion.flickr.photosets.Photoset;
+import com.aetrion.flickr.photosets.Photosets;
+import com.aetrion.flickr.photosets.PhotosetsInterface;
+import com.aetrion.flickr.tags.Tag;
+import com.aetrion.flickr.uploader.UploadMetaData;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -285,18 +284,18 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 * org.remus.infomngmnt.core.remote.IRepository#commit(org.remus.infomngmnt
 	 * .SynchronizableObject, org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor)
-			throws RemoteException {
+	public RemoteObject commit(final SynchronizableObject item2commit,
+			final IProgressMonitor monitor) throws RemoteException {
 		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(
 				(SynchronizableObject) item2commit.eContainer(), monitor);
 		if (ID_SET_COLLECTION.equals(remoteObject.getRepositoryTypeObjectId())) {
 			if (item2commit instanceof Category) {
 				try {
-					getApi().getPhotosetsInterface().create(((Category) item2commit).getLabel(),
-							"", "");
+					Photoset create = getApi().getPhotosetsInterface().create(
+							((Category) item2commit).getLabel(), "", "");
+					return buildPhotoSet(create);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new RemoteException(StatusCreator.newStatus("Error creating photoset", e));
 				}
 			}
 		} else if (ID_SET.equals(remoteObject.getRepositoryTypeObjectId())) {
@@ -311,10 +310,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					Photo wrappedObject = (Photo) remotePhoto.getWrappedObject();
 
 					return updateOrAddPhoto(remoteObject, adapter, wrappedObject.getId(),
-							((Photoset) remoteObject.getWrappedObject()).getId()).getHash();
+							((Photoset) remoteObject.getWrappedObject()).getId());
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new RemoteException(StatusCreator.newStatus("Error commiting photo", e));
 				}
 
 			}

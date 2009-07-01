@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.osgi.util.NLS;
-
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -105,8 +104,8 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	 * org.remus.infomngmnt.core.remote.IRepository#commit(org.remus.infomngmnt
 	 * .SynchronizableObject, org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor)
-			throws RemoteException {
+	public RemoteObject commit(final SynchronizableObject item2commit,
+			final IProgressMonitor monitor) throws RemoteException {
 		throw new RemoteException(StatusCreator
 				.newStatus("Committing items is not supported by this repository"));
 	}

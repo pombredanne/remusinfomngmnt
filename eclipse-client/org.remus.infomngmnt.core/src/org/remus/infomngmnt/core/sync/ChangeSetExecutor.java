@@ -40,7 +40,6 @@ import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
-
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
@@ -410,9 +409,10 @@ public class ChangeSetExecutor {
 				synchronizableObject.getSynchronizationMetaData().getRepositoryId());
 		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
 				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
-		String newHash = itemByRepository.commit(itemById, monitor);
+		RemoteObject newHash = itemByRepository.commit(itemById, monitor);
 		itemById.getSynchronizationMetaData().setLastSynchronisation(new Date());
-		itemById.getSynchronizationMetaData().setHash(newHash);
+		itemById.getSynchronizationMetaData().setHash(newHash.getHash());
+		itemById.getSynchronizationMetaData().setUrl(newHash.getUrl());
 		itemById.getSynchronizationMetaData().setSyncState(SynchronizationState.IN_SYNC);
 
 	}

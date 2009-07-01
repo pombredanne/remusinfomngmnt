@@ -34,17 +34,6 @@ import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.osgi.util.NLS;
-
-import com.google.gdata.client.youtube.YouTubeService;
-import com.google.gdata.data.youtube.PlaylistEntry;
-import com.google.gdata.data.youtube.PlaylistFeed;
-import com.google.gdata.data.youtube.PlaylistLinkEntry;
-import com.google.gdata.data.youtube.PlaylistLinkFeed;
-import com.google.gdata.data.youtube.VideoEntry;
-import com.google.gdata.data.youtube.VideoFeed;
-import com.google.gdata.data.youtube.YouTubeMediaGroup;
-import com.google.gdata.util.ServiceException;
-
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -67,6 +56,16 @@ import org.remus.infomngmnt.core.remote.OperationNotSupportedException;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.video.VideoActivator;
+
+import com.google.gdata.client.youtube.YouTubeService;
+import com.google.gdata.data.youtube.PlaylistEntry;
+import com.google.gdata.data.youtube.PlaylistFeed;
+import com.google.gdata.data.youtube.PlaylistLinkEntry;
+import com.google.gdata.data.youtube.PlaylistLinkFeed;
+import com.google.gdata.data.youtube.VideoEntry;
+import com.google.gdata.data.youtube.VideoFeed;
+import com.google.gdata.data.youtube.YouTubeMediaGroup;
+import com.google.gdata.util.ServiceException;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -111,8 +110,8 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		throw new OperationNotSupportedException(StatusCreator.newStatus("Adding is not supported"));
 	}
 
-	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor)
-			throws RemoteException {
+	public RemoteObject commit(final SynchronizableObject item2commit,
+			final IProgressMonitor monitor) throws RemoteException {
 		throw new OperationNotSupportedException(StatusCreator
 				.newStatus("Committing is not supported"));
 	}

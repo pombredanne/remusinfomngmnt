@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.ui.handler;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,11 +26,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-
 import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
@@ -79,7 +80,7 @@ public class CommitHandler extends AbstractRemoteHandler {
 			private void recursivelyCommit(final Adapter item2commit,
 					final IProgressMonitor monitor, final IRepository iRepository)
 					throws RemoteException {
-				String newHash = null;
+				RemoteObject newHash = null;
 				if (item2commit instanceof Category) {
 					newHash = iRepository.commit((Category) item2commit, monitor);
 					List<InformationUnitListItem> allChildren = ModelUtil.getAllChildren(
@@ -99,8 +100,10 @@ public class CommitHandler extends AbstractRemoteHandler {
 				}
 				SynchronizationMetadata adapter = (SynchronizationMetadata) item2commit
 						.getAdapter(SynchronizationMetadata.class);
+				adapter.setHash(newHash.getHash());
+				adapter.setUrl(newHash.getUrl());
+				adapter.setLastSynchronisation(new Date());
 				adapter.setSyncState(SynchronizationState.IN_SYNC);
-				adapter.setHash(newHash);
 			}
 		};
 		job.setUser(true);

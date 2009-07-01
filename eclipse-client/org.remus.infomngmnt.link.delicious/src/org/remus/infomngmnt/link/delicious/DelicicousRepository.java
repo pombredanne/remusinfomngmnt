@@ -23,12 +23,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-
-import del.icio.us.Delicious;
-import del.icio.us.DeliciousConstants;
-import del.icio.us.beans.Post;
-import del.icio.us.beans.Tag;
-
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -45,6 +39,11 @@ import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.link.LinkActivator;
+
+import del.icio.us.Delicious;
+import del.icio.us.DeliciousConstants;
+import del.icio.us.beans.Post;
+import del.icio.us.beans.Tag;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -274,9 +273,10 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		}
 	}
 
-	public String commit(final SynchronizableObject item2commit, final IProgressMonitor monitor) {
+	public RemoteObject commit(final SynchronizableObject item2commit,
+			final IProgressMonitor monitor) {
 		RemoteObject addToRepository = addToRepository(item2commit, monitor);
-		return addToRepository.getHash();
+		return addToRepository;
 	}
 
 	public RemoteObject addToRepository(final SynchronizableObject item,

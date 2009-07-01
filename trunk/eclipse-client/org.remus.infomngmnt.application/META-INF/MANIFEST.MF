@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Application Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.application; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.application.ApplicationPlugin
 Bundle-Vendor: Tom Seidel - Remus Software
 Require-Bundle: org.eclipse.ui,

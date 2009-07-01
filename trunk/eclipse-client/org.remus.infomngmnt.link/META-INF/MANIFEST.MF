@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Link Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.link;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.link.LinkActivator
-Bundle-Vendor: Tom Seidel - Remus Sfotware
+Bundle-Vendor: Remus Sfotware
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.remus.infomngmnt.core;bundle-version="1.0.0",

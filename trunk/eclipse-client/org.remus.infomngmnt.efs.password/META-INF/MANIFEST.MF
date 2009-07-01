@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Password Encrypted Filesystem Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.efs.password;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.efs.password.Activator
-Bundle-Vendor: Tom Seidel - Remus Software
+Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.filesystem,
  org.eclipse.ui.ide;bundle-version="3.4.0",

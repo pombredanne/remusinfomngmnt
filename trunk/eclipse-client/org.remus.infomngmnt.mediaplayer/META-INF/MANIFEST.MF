@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mediaplayer Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.mediaplayer;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.mediaplayer.MediaPlayerActivator
-Bundle-Vendor: Tom Seidel - Remus Software
+Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.remus.infomngmnt.core;bundle-version="1.0.0",

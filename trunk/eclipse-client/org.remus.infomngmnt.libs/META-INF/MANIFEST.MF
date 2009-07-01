@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Libs Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.libs; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: lib/lucene-core-2.3.1.jar,
  lib/lucene-highlighter-2.3.1.jar
@@ -19,3 +19,4 @@ Export-Package: org.apache.lucene,
  org.apache.lucene.search.spans,
  org.apache.lucene.store,
  org.apache.lucene.util
+Bundle-Vendor: Remus Software

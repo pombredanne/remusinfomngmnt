@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Richhtml4eclipse Plug-in
 Bundle-SymbolicName: de.spiritlink.richhtml4eclipse
-Bundle-Version: 1.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: de.spiritlink.richhtml4eclipse.Activator
 Bundle-Vendor: Tom Seidel - Spiritlink GmbH
 Require-Bundle: org.eclipse.ui,

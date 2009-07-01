@@ -47,7 +47,7 @@
 			<arg value="-application" />
 			<arg value="org.eclipse.equinox.p2.publisher.CategoryPublisher" />
 			<arg value="-metadataRepository" />
-			<arg value="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite" />
+			<arg value="file:/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite" />
 			<arg value="-categoryDefinition" />
 			<arg value="${build.dir.location}/category.xml" />
 		</java>

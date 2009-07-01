@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.remus.infomngmnt.core;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  lib/groovy-all-1.6.2.jar
 Bundle-Activator: org.remus.infomngmnt.provider.InfomngmntEditPlugin$Implementation

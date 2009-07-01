@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Twitter Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.connector.twitter;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.connector.twitter.TwitterActivator
 Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.ui,

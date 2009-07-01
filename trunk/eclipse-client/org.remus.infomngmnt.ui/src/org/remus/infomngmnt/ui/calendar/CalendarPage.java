@@ -43,7 +43,6 @@ import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
-
 import org.remus.infomgmnt.provider.CalendarContentProvider;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.ccalendar.CCalendar;
@@ -148,7 +147,7 @@ public class CalendarPage extends InformationFormPage {
 		this.createAction = this.calendar.getCreateAction();
 		this.createAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin
 				.getDefault(), "icons/iconexperience/16/calendar_new.png"));
-		this.createAction.setText("Create new calender-entry");
+		this.createAction.setText("Create new calendar-entry");
 		this.removeAction = new BaseSelectionListenerAction(IDEWorkbenchMessages.Delete) {
 
 			@Override

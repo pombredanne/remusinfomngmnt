@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.remus.infomngmnt.core.feature_1.0.0.qualifier.jar" id="org.remus.infomngmnt.core.feature" version="1.0.0.qualifier">
+      <category name="rim.essentials"/>
+   </feature>
+   <feature url="features/org.remus.infomngmnt.infotypes.feature_1.0.0.qualifier.jar" id="org.remus.infomngmnt.infotypes.feature" version="1.0.0.qualifier">
+      <category name="rim.essentials"/>
+   </feature>
+   <feature url="features/org.remus.infomngmnt.repository.feature_1.0.0.qualifier.jar" id="org.remus.infomngmnt.repository.feature" version="1.0.0.qualifier">
+      <category name="rim.essentials"/>
+   </feature>
+   <category-def name="rim.essentials" label="RIM Essentials"/>
+</site>

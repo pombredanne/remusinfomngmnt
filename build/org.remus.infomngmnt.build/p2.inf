@@ -1,3 +1,0 @@
-instructions.configure=\
-  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,location:http${#58}//www.remus-software.org/nightly/updateSite,enabled:true);\
-  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,location:http${#58}//www.remus-software.org/nightly/updateSite,enabled:true);

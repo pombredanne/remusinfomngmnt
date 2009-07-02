@@ -24,6 +24,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -60,6 +62,11 @@ public class URLShorterSection extends AbstractTraySection {
 		gridData.widthHint = 130;
 		gridData.heightHint = SWT.DEFAULT;
 		urlText.setLayoutData(gridData);
+		urlText.addListener(SWT.DefaultSelection, new Listener() {
+			public void handleEvent(Event event) {
+				new ShrinkURLJob(urlText.getText()).schedule();
+			}
+		});
 		doCreateButton(parent);
 		final ProgressBar searchBar = new ProgressBar(parent, SWT.INDETERMINATE);
 		GridData gridData2 = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
@@ -71,14 +78,14 @@ public class URLShorterSection extends AbstractTraySection {
 			@Override
 			public void scheduled(final IJobChangeEvent event) {
 				if (!parent.isDisposed() && !parent.getDisplay().isDisposed()) {
-					checkSearchBar(searchBar, parent.getDisplay());
+					checkProgressBar(searchBar, parent.getDisplay());
 				}
 			}
 
 			@Override
 			public void done(final IJobChangeEvent event) {
 				if (!parent.isDisposed() && !parent.getDisplay().isDisposed()) {
-					checkSearchBar(searchBar, parent.getDisplay());
+					checkProgressBar(searchBar, parent.getDisplay());
 				}
 				if (event.getJob() instanceof ShrinkURLJob) {
 					Notification notification = InfomngmntFactory.eINSTANCE.createNotification();
@@ -119,7 +126,7 @@ public class URLShorterSection extends AbstractTraySection {
 			}
 		});
 
-		checkSearchBar(searchBar, parent.getDisplay());
+		checkProgressBar(searchBar, parent.getDisplay());
 
 	}
 
@@ -148,7 +155,7 @@ public class URLShorterSection extends AbstractTraySection {
 		createControl.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
 	}
 
-	protected void checkSearchBar(final ProgressBar progressBar, final Display display) {
+	protected void checkProgressBar(final ProgressBar progressBar, final Display display) {
 
 		display.asyncExec(new Runnable() {
 			public void run() {

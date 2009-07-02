@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.emf.edit.command.SetCommand;
-
 import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -331,7 +330,20 @@ public class NavigationDropHelper {
 								.createSynchronizationMetadata();
 						metadata.setRepositoryId(targetSyncData.getRepositoryId());
 						metadata.setSyncState(SynchronizationState.NOT_ADDED);
+						TreeIterator<EObject> eAllContents = ((EObject) object).eAllContents();
+						while (eAllContents.hasNext()) {
+							EObject eObject = eAllContents.next();
+							if (eObject instanceof SynchronizableObject) {
+								compoundCommand
+										.append(new SetCommand(
+												EditingUtil.getInstance()
+														.getNavigationEditingDomain(),
+												eObject,
+												InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+												EcoreUtil.copy(metadata)));
 
+							}
+						}
 						compoundCommand
 								.append(new SetCommand(
 										EditingUtil.getInstance().getNavigationEditingDomain(),

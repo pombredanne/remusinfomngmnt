@@ -33,7 +33,6 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-
 import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -147,8 +146,11 @@ public class NotificationPopupManager implements IPropertyChangeListener {
 				if (arg0.getTimeStamp() == null && arg1.getTimeStamp() == null) {
 					return 0;
 				}
-				if (arg0.getTimeStamp() != null) {
+				if (arg0.getTimeStamp() == null) {
 					return -1;
+				}
+				if (arg1.getTimeStamp() == null) {
+					return 1;
 				}
 
 				return arg0.getTimeStamp().compareTo(arg1.getTimeStamp());

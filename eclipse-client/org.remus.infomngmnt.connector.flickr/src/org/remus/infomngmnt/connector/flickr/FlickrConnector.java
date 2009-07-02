@@ -42,6 +42,7 @@ import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.remus.infomngmnt.Category;
@@ -172,6 +173,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				}
 
 			}
+		} else if (ID_FAVORITES.equals(remoteObject.getRepositoryTypeObjectId())) {
+			throw new RemoteException(StatusCreator
+					.newStatus("Adding own photos to favorites is not supported"));
 		}
 		return null;
 	}
@@ -210,6 +214,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		metadata.setTitle(unit.getLabel());
 		metadata.setDescription(unit.getDescription());
 		metadata.setPublicFlag(true);
+
 		if (unit.getKeywords() != null) {
 			metadata.setTags(Arrays.asList(StringUtils.split(unit.getKeywords(), " ")));
 		}
@@ -286,19 +291,21 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 */
 	public RemoteObject commit(final SynchronizableObject item2commit,
 			final IProgressMonitor monitor) throws RemoteException {
-		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(
+		RemoteObject remoteParentObject = getRemoteObjectBySynchronizableObject(
 				(SynchronizableObject) item2commit.eContainer(), monitor);
-		if (ID_SET_COLLECTION.equals(remoteObject.getRepositoryTypeObjectId())) {
-			if (item2commit instanceof Category) {
-				try {
-					Photoset create = getApi().getPhotosetsInterface().create(
-							((Category) item2commit).getLabel(), "", "");
-					return buildPhotoSet(create);
-				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error creating photoset", e));
-				}
+		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(item2commit, monitor);
+		if (ID_SET.equals(remoteObject.getRepositoryTypeObjectId())) {
+			try {
+				Photoset wrappedObject = (Photoset) remoteObject.getWrappedObject();
+				getApi().getPhotosetsInterface().editMeta(wrappedObject.getId(),
+						((Category) item2commit).getLabel(), wrappedObject.getDescription());
+				return buildPhotoSet(getApi().getPhotosetsInterface()
+						.getInfo(wrappedObject.getId()));
+			} catch (Exception e) {
+				throw new RemoteException(StatusCreator.newStatus("Error creating photoset", e));
 			}
-		} else if (ID_SET.equals(remoteObject.getRepositoryTypeObjectId())) {
+
+		} else if (ID_SET.equals(remoteParentObject.getRepositoryTypeObjectId())) {
 			if (item2commit instanceof InformationUnitListItem
 					&& ImagePlugin.TYPE_ID
 							.equals(((InformationUnitListItem) item2commit).getType())) {
@@ -309,14 +316,16 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 							monitor);
 					Photo wrappedObject = (Photo) remotePhoto.getWrappedObject();
 
-					return updateOrAddPhoto(remoteObject, adapter, wrappedObject.getId(),
-							((Photoset) remoteObject.getWrappedObject()).getId());
+					return updateOrAddPhoto(remoteParentObject, adapter, wrappedObject.getId(),
+							((Photoset) remoteParentObject.getWrappedObject()).getId());
 				} catch (Exception e) {
 					throw new RemoteException(StatusCreator.newStatus("Error commiting photo", e));
 				}
 
 			}
-
+		} else if (ID_FAVORITES.equals(remoteParentObject.getRepositoryTypeObjectId())) {
+			throw new RemoteException(StatusCreator
+					.newStatus("Committing images in favorites is not allowed"));
 		}
 		return null;
 	}
@@ -331,12 +340,60 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 */
 	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
 			throws RemoteException {
-		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(item, monitor);
-		Object wrappedObject = remoteObject.getWrappedObject();
-		if (wrappedObject instanceof Photo) {
-
+		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(
+				(SynchronizableObject) item.eContainer(), monitor);
+		RemoteObject remotePhoto = getRemoteObjectBySynchronizableObject(item, monitor);
+		if (remotePhoto == null) {
+			throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+					"Error resolving online item", item.toString())));
+		}
+		if (ID_SET.equals(remoteObject.getRepositoryTypeObjectId())) {
+			Photo wrappedObject = (Photo) remotePhoto.getWrappedObject();
+			deletePhotoFromSet(((Photoset) remoteObject.getWrappedObject()).getId(), wrappedObject
+					.getId());
+		}
+		if (ID_FAVORITES.equals(remoteObject.getRepositoryTypeObjectId())) {
+			Photo wrappedObject = (Photo) remotePhoto.getWrappedObject();
+			try {
+				getApi().getFavoritesInterface().remove(wrappedObject.getId());
+			} catch (Exception e) {
+				throw new RemoteException(StatusCreator.newStatus(
+						"Error deleting photo from favorites", e));
+			}
+		}
+		if (ID_FAVORITES.equals(remotePhoto.getRepositoryTypeObjectId())) {
+			throw new RemoteException(StatusCreator
+					.newStatus("Deleting the favorites folder is not allowed"));
+		}
+		if (ID_SET_COLLECTION.equals(remotePhoto.getRepositoryTypeObjectId())) {
+			try {
+				Photoset wrappedObject = (Photoset) remotePhoto.getWrappedObject();
+				PhotoList photos = getApi().getPhotosetsInterface().getPhotos(
+						wrappedObject.getId(), Integer.MAX_VALUE, 1);
+				for (Object object : photos) {
+					Photo photo = (Photo) object;
+					deletePhotoFromSet(wrappedObject.getId(), photo.getId());
+				}
+				getApi().getPhotosetsInterface().delete(wrappedObject.getId());
+			} catch (Exception e) {
+				throw new RemoteException(StatusCreator.newStatus("Error deleting photoset", e));
+			}
 		}
 
+	}
+
+	private void deletePhotoFromSet(String setId, String photoId) throws RemoteException {
+		try {
+			List allContexts = getApi().getPhotosInterface().getAllContexts(photoId);
+			if (allContexts.size() > 1) {
+				getApi().getPhotosetsInterface().removePhoto(setId, photoId);
+			} else {
+				getApi().getPhotosInterface().delete(photoId);
+			}
+		} catch (Exception e) {
+			throw new RemoteException(StatusCreator.newStatus(
+					"Error whilde removing photo from set", e));
+		}
 	}
 
 	/*
@@ -409,13 +466,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					Collections.singleton(Extras.LAST_UPDATE));
 			for (Object object : photos) {
 				Photo photo = (Photo) object;
-				RemoteObject remoteObject = InfomngmntFactory.eINSTANCE.createRemoteObject();
-				remoteObject.setHash(String.valueOf(photo.getLastUpdate().getTime()));
-				remoteObject.setId(photo.getId());
-				remoteObject.setName(photo.getTitle());
-				remoteObject.setUrl(FLICKR_URL + ID_FAVORITES + "/" + photo.getId());
-				remoteObject.setWrappedObject(photo);
-				returnValue.add(remoteObject);
+				returnValue.add(buildPhoto(photo, FLICKR_URL + ID_FAVORITES));
 			}
 		} catch (Exception e) {
 			throw new RemoteException(StatusCreator.newStatus(

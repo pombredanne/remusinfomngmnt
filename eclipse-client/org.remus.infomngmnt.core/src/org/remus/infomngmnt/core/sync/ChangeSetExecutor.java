@@ -92,11 +92,15 @@ public class ChangeSetExecutor {
 			List<InformationUnitListItem> allChildren = ModelUtil
 					.getAllChildren(remoteConvertedContainer,
 							InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
+			monitor.beginTask(NLS.bind("Checkout of element {0}", newLocalCateogries.getLabel()),
+					allChildren.size());
 			for (InformationUnitListItem informationUnitListItem : allChildren) {
-				monitor.beginTask(NLS.bind("Checkout of element {0}", informationUnitListItem
-						.getLabel()), allChildren.size());
 				try {
-					addLocalInfoUnit(informationUnitListItem, changeSetItem, monitor);
+					if (!monitor.isCanceled()) {
+						addLocalInfoUnit(informationUnitListItem, changeSetItem,
+								new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+						monitor.worked(1);
+					}
 				} catch (Exception e) {
 					InfomngmntEditPlugin.getPlugin().getLog().log(
 							StatusCreator.newStatus("Error checking out online-element", e));
@@ -347,6 +351,11 @@ public class ChangeSetExecutor {
 		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
 				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
 		RemoteObject addToRepository = itemByRepository.addToRepository(category, monitor);
+		if (addToRepository == null) {
+			throw new ChangeSetException(StatusCreator.newStatus(NLS.bind(
+					"Element \"{0}\" was not added, the repository connector skipped this item.",
+					category.getLabel())));
+		}
 		SynchronizationMetadata synchronizationMetaData = localCategory
 				.getSynchronizationMetaData();
 		synchronizationMetaData.setHash(addToRepository.getHash());
@@ -410,6 +419,11 @@ public class ChangeSetExecutor {
 		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
 				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
 		RemoteObject newHash = itemByRepository.commit(itemById, monitor);
+		if (newHash == null) {
+			throw new ChangeSetException(StatusCreator.newStatus(NLS.bind(
+					"Element \"{0}\" was not updated, the repository connector skipped this item.",
+					synchronizableObject.getLabel())));
+		}
 		itemById.getSynchronizationMetaData().setLastSynchronisation(new Date());
 		itemById.getSynchronizationMetaData().setHash(newHash.getHash());
 		itemById.getSynchronizationMetaData().setUrl(newHash.getUrl());
@@ -457,6 +471,11 @@ public class ChangeSetExecutor {
 				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
 		RemoteObject addToRepository = itemByRepository.addToRepository(synchronizableObject,
 				monitor);
+		if (addToRepository == null) {
+			throw new ChangeSetException(StatusCreator.newStatus(NLS.bind(
+					"Element \"{0}\" was not added, the repository connector skipped this item.",
+					synchronizableObject.getLabel())));
+		}
 		SynchronizationMetadata synchronizationMetaData = itemById.getSynchronizationMetaData();
 		synchronizationMetaData.setHash(addToRepository.getHash());
 

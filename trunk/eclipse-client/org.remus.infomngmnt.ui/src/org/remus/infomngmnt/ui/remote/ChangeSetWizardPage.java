@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
-
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -35,12 +34,14 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
 
 public class ChangeSetWizardPage extends WizardPage implements IValidatingWizard {
@@ -60,8 +61,8 @@ public class ChangeSetWizardPage extends WizardPage implements IValidatingWizard
 	public ChangeSetWizardPage(final ChangeSet changeSet) {
 		super("wizardPage");
 		this.changeSet = changeSet;
-		setTitle("Wizard Page title");
-		setDescription("Wizard Page description");
+		setTitle("Checkout of elements");
+		setDescription("Please select a category where the remote items are stored.");
 
 	}
 
@@ -77,7 +78,8 @@ public class ChangeSetWizardPage extends WizardPage implements IValidatingWizard
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
 		container.setLayout(gridLayout);
-		//
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
+				"icons/iconexperience/wizards/changeset_wizard.png"));
 
 		final Label parentCategoryLabel = new Label(container, SWT.NONE);
 		parentCategoryLabel.setText("Parent Category");

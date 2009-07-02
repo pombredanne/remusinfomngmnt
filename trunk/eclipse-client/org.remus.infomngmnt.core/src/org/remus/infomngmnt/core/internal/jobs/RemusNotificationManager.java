@@ -29,7 +29,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.osgi.util.NLS;
-
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NotificationCollection;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
@@ -89,7 +88,7 @@ public class RemusNotificationManager implements INotificationManagerManager {
 		};
 	};
 
-	protected void addNotification(final List<org.remus.infomngmnt.Notification> run) {
+	public void addNotification(final List<org.remus.infomngmnt.Notification> run) {
 		for (org.remus.infomngmnt.Notification notification : run) {
 			if ((this.allNotifications.getNotifcations().size() - 1) == InfomngmntEditPlugin
 					.getPlugin().getPreferenceStore().getInt(

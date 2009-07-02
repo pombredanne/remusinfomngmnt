@@ -83,30 +83,24 @@ public class ChangeSetManager {
 
 	private static final String COMPARE_FOLDER = "compare";
 
-	public ChangeSet createChangeSet(final Category cat,
-			final IProgressMonitor monitor) throws CoreException {
+	public ChangeSet createChangeSet(final Category cat, final IProgressMonitor monitor)
+			throws CoreException {
 		SynchronizationMetadata metaData = cat.getSynchronizationMetaData();
-		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin()
-				.getService(IRepositoryService.class).getRepositoryById(
-						metaData.getRepositoryId());
-		RemoteObject remoteObject = remoteRepository
-				.getRepositoryImplementation()
+		RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(metaData.getRepositoryId());
+		RemoteObject remoteObject = remoteRepository.getRepositoryImplementation()
 				.getRemoteObjectBySynchronizableObject(cat, monitor);
 		if (remoteObject != null && remoteObject instanceof RemoteContainer) {
-			return createChangeSet(
-					cat,
-					Collections
-							.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
-					remoteRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE,
-					monitor);
+			return createChangeSet(cat, Collections
+					.<RemoteContainer> singletonList((RemoteContainer) remoteObject),
+					remoteRepository, ChangeSetManager.MODE_CHECKOUT_REPLACE, monitor);
 		}
 		return null;
 	}
 
 	public ChangeSet createChangeSet(final Category localContainer,
-			final List<RemoteContainer> remoteContainers,
-			final RemoteRepository localRepository, final int mode,
-			final IProgressMonitor monitor) throws ChangeSetException {
+			final List<RemoteContainer> remoteContainers, final RemoteRepository localRepository,
+			final int mode, final IProgressMonitor monitor) throws ChangeSetException {
 
 		/*
 		 * At first we make sure that all elements are located within the same
@@ -130,8 +124,7 @@ public class ChangeSetManager {
 			/*
 			 * Now it's time to create a changeset
 			 */
-			ChangeSet createChangeSet = InfomngmntFactory.eINSTANCE
-					.createChangeSet();
+			ChangeSet createChangeSet = InfomngmntFactory.eINSTANCE.createChangeSet();
 
 			if (localContainer != null) {
 				createChangeSet.setTargetCategory(localContainer);
@@ -150,12 +143,11 @@ public class ChangeSetManager {
 			 * Next important step is to filter all RemoteContainers which are
 			 * children of other selected RemoteContainers.
 			 */
-			List<RemoteContainer> filteredList = CollectionUtils.filter(
-					remoteContainers, new CollectionFilter<RemoteContainer>() {
+			List<RemoteContainer> filteredList = CollectionUtils.filter(remoteContainers,
+					new CollectionFilter<RemoteContainer>() {
 
 						public boolean select(final RemoteContainer item) {
-							return !ModelUtil.containsParent(remoteContainers,
-									item);
+							return !ModelUtil.containsParent(remoteContainers, item);
 						}
 					});
 			/*
@@ -163,20 +155,16 @@ public class ChangeSetManager {
 			 * have to ask the repositories for the children and create a
 			 * datastructure that can be applied to the local datastructure.
 			 */
-			monitor.beginTask("Requesting objects from repository",
-					IProgressMonitor.UNKNOWN);
-			IRepository repositoryImplementation = repository
-					.getRepositoryImplementation();
+			monitor.beginTask("Requesting objects from repository", IProgressMonitor.UNKNOWN);
+			IRepository repositoryImplementation = repository.getRepositoryImplementation();
 			for (RemoteContainer remoteObject : filteredList) {
-				RemoteContainer copiedItem = (RemoteContainer) EcoreUtil
-						.copy(remoteObject);
+				RemoteContainer copiedItem = (RemoteContainer) EcoreUtil.copy(remoteObject);
 				ChangeSetItem createChangeSetItem = InfomngmntFactory.eINSTANCE
 						.createChangeSetItem();
 				createChangeSetItem.setRemoteOriginalObject(copiedItem);
 				createChangeSet.getChangeSetItems().add(createChangeSetItem);
 
-				Category createCategory = InfomngmntFactory.eINSTANCE
-						.createCategory();
+				Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
 				createCategory.setLabel(remoteObject.getName());
 
 				SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
@@ -187,19 +175,17 @@ public class ChangeSetManager {
 				metadata.setRepositoryId(repository.getId());
 				metadata.setUrl(remoteObject.getUrl());
 				createCategory.setSynchronizationMetaData(metadata);
-				createCategory
-						.setId(findId(createCategory, createChangeSetItem));
+				createCategory.setId(findId(createCategory, createChangeSetItem));
 				createChangeSetItem.setRemoteOriginalObject(copiedItem);
 				createChangeSetItem.setRemoteConvertedContainer(createCategory);
 				try {
-					monitor.setTaskName(NLS.bind(
-							"Contacting repository for item \"{0}\"",
+					monitor.setTaskName(NLS.bind("Contacting repository for item \"{0}\"",
 							copiedItem.getName()));
-					RemoteObject[] children = repositoryImplementation
-							.getChildren(monitor, copiedItem, false);
+					RemoteObject[] children = repositoryImplementation.getChildren(monitor,
+							copiedItem, false);
 					for (RemoteObject remoteObject2 : children) {
-						fillRemoteContainer(createChangeSetItem, remoteObject2,
-								repository, createCategory, monitor);
+						fillRemoteContainer(createChangeSetItem, remoteObject2, repository,
+								createCategory, monitor);
 					}
 				} catch (RemoteException e) {
 					throw new ChangeSetException(StatusCreator.newStatus(
@@ -226,16 +212,11 @@ public class ChangeSetManager {
 	 * @throws RemoteException
 	 */
 	public void fillRemoteContainer(final ChangeSetItem changeSetItem,
-			final RemoteObject remoteObject2,
-			final RemoteRepository remoteRepository,
-			final Category parentCategory, final IProgressMonitor monitor)
-			throws RemoteException {
-		monitor
-				.subTask(NLS
-						.bind("Found item \"{0}\"", remoteObject2.getName()));
+			final RemoteObject remoteObject2, final RemoteRepository remoteRepository,
+			final Category parentCategory, final IProgressMonitor monitor) throws RemoteException {
+		monitor.subTask(NLS.bind("Found item \"{0}\"", remoteObject2.getName()));
 		if (remoteObject2 instanceof RemoteContainer) {
-			Category createCategory = InfomngmntFactory.eINSTANCE
-					.createCategory();
+			Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
 
 			SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
 					.createSynchronizationMetadata();
@@ -254,23 +235,19 @@ public class ChangeSetManager {
 				changeSetItem.setRemoteConvertedContainer(createCategory);
 			}
 
-			RemoteObject[] children = remoteRepository
-					.getRepositoryImplementation().getChildren(
-							new NullProgressMonitor(),
-							(RemoteContainer) remoteObject2, false);
+			RemoteObject[] children = remoteRepository.getRepositoryImplementation().getChildren(
+					new NullProgressMonitor(), (RemoteContainer) remoteObject2, false);
 			for (RemoteObject newChildren : children) {
-				fillRemoteContainer(changeSetItem, newChildren,
-						remoteRepository, createCategory, monitor);
+				fillRemoteContainer(changeSetItem, newChildren, remoteRepository, createCategory,
+						monitor);
 			}
 		} else {
-			fillInfoObject(changeSetItem, remoteObject2, remoteRepository,
-					parentCategory);
+			fillInfoObject(changeSetItem, remoteObject2, remoteRepository, parentCategory);
 		}
 	}
 
 	private void fillInfoObject(final ChangeSetItem changeSetItem,
-			final RemoteObject remoteObject2,
-			final RemoteRepository remoteRepository,
+			final RemoteObject remoteObject2, final RemoteRepository remoteRepository,
 			final Category parentCategory) {
 		InformationUnitListItem createInformationUnitListItem = InfomngmntFactory.eINSTANCE
 				.createInformationUnitListItem();
@@ -278,9 +255,8 @@ public class ChangeSetManager {
 		// transfer the needed information
 
 		createInformationUnitListItem.setLabel(remoteObject2.getName());
-		createInformationUnitListItem
-				.setType(remoteRepository.getRepositoryImplementation()
-						.getTypeIdByObject(remoteObject2));
+		createInformationUnitListItem.setType(remoteRepository.getRepositoryImplementation()
+				.getTypeIdByObject(remoteObject2));
 
 		SynchronizationMetadata metadata = InfomngmntFactory.eINSTANCE
 				.createSynchronizationMetadata();
@@ -291,35 +267,26 @@ public class ChangeSetManager {
 		metadata.setUrl(remoteObject2.getUrl());
 		createInformationUnitListItem.setSynchronizationMetaData(metadata);
 		if (parentCategory != null) {
-			parentCategory.getInformationUnit().add(
-					createInformationUnitListItem);
+			parentCategory.getInformationUnit().add(createInformationUnitListItem);
 		}
-		InformationUnit prefetchedInformationUnit = remoteRepository
-				.getRepositoryImplementation().getPrefetchedInformationUnit(
-						remoteObject2);
-		changeSetItem.getRemoteFullObjectMap().put(
-				createInformationUnitListItem, prefetchedInformationUnit);
-		createInformationUnitListItem.setId(findId(
-				createInformationUnitListItem, changeSetItem));
+		InformationUnit prefetchedInformationUnit = remoteRepository.getRepositoryImplementation()
+				.getPrefetchedInformationUnit(remoteObject2);
+		changeSetItem.getRemoteFullObjectMap().put(createInformationUnitListItem,
+				prefetchedInformationUnit);
+		createInformationUnitListItem.setId(findId(createInformationUnitListItem, changeSetItem));
 		if (prefetchedInformationUnit != null) {
-			prefetchedInformationUnit.setId(createInformationUnitListItem
-					.getId());
+			prefetchedInformationUnit.setId(createInformationUnitListItem.getId());
 		}
 
 	}
 
-	private String findId(final Category createCategory,
-			final ChangeSetItem changeSetItem) {
-		Category localContainer = ((ChangeSet) changeSetItem.eContainer())
-				.getTargetCategory();
+	private String findId(final Category createCategory, final ChangeSetItem changeSetItem) {
+		Category localContainer = ((ChangeSet) changeSetItem.eContainer()).getTargetCategory();
 		if (localContainer != null) {
-			if (((SynchronizableObject) localContainer)
-					.getSynchronizationMetaData() != null
-					&& createCategory.getSynchronizationMetaData().getUrl()
-							.equals(
-									((SynchronizableObject) localContainer)
-											.getSynchronizationMetaData()
-											.getUrl())) {
+			if (((SynchronizableObject) localContainer).getSynchronizationMetaData() != null
+					&& createCategory.getSynchronizationMetaData().getUrl().equals(
+							((SynchronizableObject) localContainer).getSynchronizationMetaData()
+									.getUrl())) {
 				return localContainer.getId();
 			}
 			EObjectCondition typeRelationCondition = new EObjectCondition() {
@@ -331,19 +298,14 @@ public class ChangeSetManager {
 			EObjectCondition valueCondition = new EObjectCondition() {
 				@Override
 				public boolean isSatisfied(final EObject eObject) {
-					return ((SynchronizableObject) eObject)
-							.getSynchronizationMetaData() != null
-							&& createCategory
-									.getSynchronizationMetaData()
-									.getUrl()
-									.equals(
-											((SynchronizableObject) eObject)
-													.getSynchronizationMetaData()
-													.getUrl());
+					return ((SynchronizableObject) eObject).getSynchronizationMetaData() != null
+							&& createCategory.getSynchronizationMetaData().getUrl().equals(
+									((SynchronizableObject) eObject).getSynchronizationMetaData()
+											.getUrl());
 				}
 			};
-			SELECT select = new SELECT(new FROM(localContainer), new WHERE(
-					typeRelationCondition.AND(valueCondition)));
+			SELECT select = new SELECT(new FROM(localContainer), new WHERE(typeRelationCondition
+					.AND(valueCondition)));
 			IQueryResult execute = select.execute();
 			Set<? extends EObject> eObjects = execute.getEObjects();
 			if (eObjects.size() > 0) {
@@ -358,10 +320,8 @@ public class ChangeSetManager {
 
 	}
 
-	private String findId(final InformationUnitListItem infoUnit,
-			final ChangeSetItem changeSetItem) {
-		Category localContainer = ((ChangeSet) changeSetItem.eContainer())
-				.getTargetCategory();
+	private String findId(final InformationUnitListItem infoUnit, final ChangeSetItem changeSetItem) {
+		Category localContainer = ((ChangeSet) changeSetItem.eContainer()).getTargetCategory();
 		if (localContainer != null) {
 
 			EObjectCondition typeRelationCondition = new EObjectTypeRelationCondition(
@@ -369,26 +329,19 @@ public class ChangeSetManager {
 			EObjectCondition valueCondition = new EObjectCondition() {
 				@Override
 				public boolean isSatisfied(final EObject eObject) {
-					boolean b = ((SynchronizableObject) eObject)
-							.getSynchronizationMetaData() != null
-							&& infoUnit
-									.getSynchronizationMetaData()
-									.getUrl()
-									.equals(
-											((SynchronizableObject) eObject)
-													.getSynchronizationMetaData()
-													.getUrl())
-							&& ((SynchronizableObject) eObject)
-									.getSynchronizationMetaData()
+					boolean b = ((SynchronizableObject) eObject).getSynchronizationMetaData() != null
+							&& infoUnit.getSynchronizationMetaData().getUrl().equals(
+									((SynchronizableObject) eObject).getSynchronizationMetaData()
+											.getUrl())
+							&& ((SynchronizableObject) eObject).getSynchronizationMetaData()
 									.getSyncState() != SynchronizationState.IGNORED
-							&& ((SynchronizableObject) eObject)
-									.getSynchronizationMetaData()
+							&& ((SynchronizableObject) eObject).getSynchronizationMetaData()
 									.getSyncState() != SynchronizationState.NOT_ADDED;
 					return b;
 				}
 			};
-			SELECT select = new SELECT(new FROM(localContainer), new WHERE(
-					typeRelationCondition.AND(valueCondition)));
+			SELECT select = new SELECT(new FROM(localContainer), new WHERE(typeRelationCondition
+					.AND(valueCondition)));
 			IQueryResult execute = select.execute();
 			Set<? extends EObject> eObjects = execute.getEObjects();
 			if (eObjects.size() > 0) {
@@ -409,19 +362,23 @@ public class ChangeSetManager {
 	}
 
 	public DiffModel createDiffModel(final ChangeSetItem changeSetItem,
-			final Category targetCategory, final boolean replaceAllLocal)
-			throws ChangeSetException {
+			final Category targetCategory, final boolean replaceAllLocal) throws ChangeSetException {
 		DiffModel returnValue = null;
 		/*
 		 * We have to unset all local ids and replace them with the remote-hash.
 		 */
-		Category remoteCopy = (Category) EcoreUtil.copy(changeSetItem
-				.getRemoteConvertedContainer());
+		Category remoteCopy = (Category) EcoreUtil
+				.copy(changeSetItem.getRemoteConvertedContainer());
 		Category copy = (Category) EcoreUtil.copy(targetCategory);
 
 		CategoryUtil.recursivelySortId(remoteCopy);
 		CategoryUtil.recursivelySortId(copy);
 		filterIgnoredItems(copy);
+
+		/*
+		 * The root containers name must not be integrated within the compare.
+		 */
+		copy.setLabel(remoteCopy.getLabel());
 
 		TreeIterator<EObject> eAllContents = copy.eAllContents();
 		while (eAllContents.hasNext()) {
@@ -454,46 +411,38 @@ public class ChangeSetManager {
 					/*
 					 * Additionally we have to unset the workspace-path
 					 */
-					eObject
-							.eSet(
-									InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH,
-									"");
+					eObject.eSet(InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH, "");
 				}
 			}
 		}
 
 		EditingUtil.getInstance().saveObjectToResource(
 				remoteCopy,
-				InfomngmntEditPlugin.getPlugin().getStateLocation().append(
-						COMPARE_FOLDER).append(IdFactory.createNewId(null))
-						.addFileExtension("xml").toOSString());
+				InfomngmntEditPlugin.getPlugin().getStateLocation().append(COMPARE_FOLDER).append(
+						IdFactory.createNewId(null)).addFileExtension("xml").toOSString());
 
 		EditingUtil.getInstance().saveObjectToResource(
 				copy,
-				InfomngmntEditPlugin.getPlugin().getStateLocation().append(
-						COMPARE_FOLDER).append(IdFactory.createNewId(null))
-						.addFileExtension("xml").toOSString());
+				InfomngmntEditPlugin.getPlugin().getStateLocation().append(COMPARE_FOLDER).append(
+						IdFactory.createNewId(null)).addFileExtension("xml").toOSString());
 
 		MatchModel match;
 		try {
-			match = MatchService.doMatch(copy, remoteCopy, Collections
-					.<String, Object> emptyMap());
+			match = MatchService.doMatch(copy, remoteCopy, Collections.<String, Object> emptyMap());
 			returnValue = DiffService.doDiff(match, false);
 
 		} catch (Exception e) {
-			throw new ChangeSetException(StatusCreator.newStatus(
-					"Error computing difference", e));
+			throw new ChangeSetException(StatusCreator.newStatus("Error computing difference", e));
 		}
 		return returnValue;
 		// Computing differences
 	}
 
 	private void filterIgnoredItems(final Category copy) {
-		List<InformationUnitListItem> informationUnit = new ArrayList<InformationUnitListItem>(
-				copy.getInformationUnit());
+		List<InformationUnitListItem> informationUnit = new ArrayList<InformationUnitListItem>(copy
+				.getInformationUnit());
 		for (InformationUnitListItem informationUnitListItem : informationUnit) {
-			if (informationUnitListItem.getSynchronizationMetaData()
-					.getSyncState() == SynchronizationState.IGNORED) {
+			if (informationUnitListItem.getSynchronizationMetaData().getSyncState() == SynchronizationState.IGNORED) {
 				copy.getInformationUnit().remove(informationUnitListItem);
 			}
 		}
@@ -507,8 +456,8 @@ public class ChangeSetManager {
 
 	}
 
-	public void prepareSyncActions(final EList<DiffElement> diffModel,
-			final ChangeSetItem item, final Category targetCategory) {
+	public void prepareSyncActions(final EList<DiffElement> diffModel, final ChangeSetItem item,
+			final Category targetCategory) {
 		for (DiffElement diffElement : diffModel) {
 			/*
 			 * The diff model has an element which is not local present, We have
@@ -519,23 +468,20 @@ public class ChangeSetManager {
 				EObject rightElement = addOp.getRightElement();
 				if (rightElement instanceof AbstractInformationUnit) {
 
-					item.getSyncObjectActionMap().put(
-							(SynchronizableObject) rightElement,
+					item.getSyncObjectActionMap().put((SynchronizableObject) rightElement,
 							SynchronizationAction.ADD_LOCAL);
 
 				} else if (rightElement instanceof Category) {
 					// TODO implement for deleted items
 
-					item.getSyncCategoryActionMap().put(
-							(Category) rightElement,
+					item.getSyncCategoryActionMap().put((Category) rightElement,
 							SynchronizationAction.ADD_LOCAL);
 
 				}
 			}
 			if (diffElement instanceof DiffGroup) {
 				diffElement.getSubDiffElements();
-				prepareSyncActions(diffElement.getSubDiffElements(), item,
-						targetCategory);
+				prepareSyncActions(diffElement.getSubDiffElements(), item, targetCategory);
 			}
 			/*
 			 * An update on an attribute was detected. We have to find the
@@ -545,38 +491,29 @@ public class ChangeSetManager {
 				final UpdateAttribute addOp = (UpdateAttribute) diffElement;
 				EObject leftElementElement = addOp.getLeftElement();
 
-				EObject parentByClass = ModelUtil.getParentByClass(
-						leftElementElement,
+				EObject parentByClass = ModelUtil.getParentByClass(leftElementElement,
 						InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 				if (parentByClass == null) {
-					parentByClass = ModelUtil.getParentByClass(
-							leftElementElement,
+					parentByClass = ModelUtil.getParentByClass(leftElementElement,
 							InfomngmntPackage.Literals.CATEGORY);
 					if (parentByClass != null) {
 						Category categoryById = CategoryUtil
-								.getCategoryById(((Category) parentByClass)
-										.getId());
+								.getCategoryById(((Category) parentByClass).getId());
 						if (addOp.getAttribute() == InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH) {
-							if (categoryById.getSynchronizationMetaData()
-									.getSyncState() == SynchronizationState.LOCAL_EDITED) {
-								item.getSyncCategoryActionMap().put(
-										(Category) parentByClass,
+							if (categoryById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
 										SynchronizationAction.RESOLVE_CONFLICT);
 							} else {
-								item.getSyncObjectActionMap().put(
-										(Category) parentByClass,
+								item.getSyncObjectActionMap().put((Category) parentByClass,
 										SynchronizationAction.REPLACE_LOCAL);
 							}
 
 						} else {
-							if (categoryById.getSynchronizationMetaData()
-									.getSyncState() == SynchronizationState.LOCAL_EDITED) {
-								item.getSyncCategoryActionMap().put(
-										(Category) parentByClass,
+							if (categoryById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
 										SynchronizationAction.REPLACE_REMOTE);
 							} else {
-								item.getSyncCategoryActionMap().put(
-										(Category) parentByClass,
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
 										SynchronizationAction.REPLACE_LOCAL);
 							}
 						}
@@ -591,44 +528,31 @@ public class ChangeSetManager {
 					 */
 					SynchronizableObject itemById = null;
 					if (parentByClass instanceof AbstractInformationUnit) {
-						itemById = ApplicationModelPool
-								.getInstance()
-								.getItemById(
-										((AbstractInformationUnit) parentByClass)
-												.getId(),
-										new NullProgressMonitor());
+						itemById = ApplicationModelPool.getInstance().getItemById(
+								((AbstractInformationUnit) parentByClass).getId(),
+								new NullProgressMonitor());
 					} else {
-						itemById = CategoryUtil
-								.getCategoryById(((Category) parentByClass)
-										.getId());
+						itemById = CategoryUtil.getCategoryById(((Category) parentByClass).getId());
 					}
 
 					if (addOp.getAttribute() == InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH) {
-						if (itemById.getSynchronizationMetaData()
-								.getSyncState() == SynchronizationState.LOCAL_EDITED) {
-							item.getSyncObjectActionMap().put(
-									(SynchronizableObject) parentByClass,
+						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.RESOLVE_CONFLICT);
 						} else {
-							item.getSyncObjectActionMap().put(
-									(SynchronizableObject) parentByClass,
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.REPLACE_LOCAL);
 						}
 
 					} else {
-						if (itemById.getSynchronizationMetaData()
-								.getSyncState() == SynchronizationState.LOCAL_EDITED) {
-							item.getSyncObjectActionMap().put(
-									(SynchronizableObject) parentByClass,
+						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.REPLACE_REMOTE);
-						} else if (itemById.getSynchronizationMetaData()
-								.getSyncState() == SynchronizationState.LOCAL_DELETED) {
-							item.getSyncObjectActionMap().put(
-									(SynchronizableObject) parentByClass,
+						} else if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_DELETED) {
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.DELETE_REMOTE);
 						} else {
-							item.getSyncObjectActionMap().put(
-									(SynchronizableObject) parentByClass,
+							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.REPLACE_LOCAL);
 						}
 					}
@@ -644,27 +568,22 @@ public class ChangeSetManager {
 				if (leftElement instanceof SynchronizationMetadata) {
 					leftElement = leftElement.eContainer();
 				}
-				if (((SynchronizableObject) leftElement)
-						.getSynchronizationMetaData() != null
-						&& ((SynchronizableObject) leftElement)
-								.getSynchronizationMetaData().getSyncState() == SynchronizationState.NOT_ADDED) {
+				if (((SynchronizableObject) leftElement).getSynchronizationMetaData() != null
+						&& ((SynchronizableObject) leftElement).getSynchronizationMetaData()
+								.getSyncState() == SynchronizationState.NOT_ADDED) {
 					if (leftElement instanceof InformationUnitListItem) {
-						item.getSyncObjectActionMap().put(
-								(SynchronizableObject) leftElement,
+						item.getSyncObjectActionMap().put((SynchronizableObject) leftElement,
 								SynchronizationAction.ADD_REMOTE);
 					} else if (leftElement instanceof Category) {
-						item.getSyncCategoryActionMap().put(
-								(Category) leftElement,
+						item.getSyncCategoryActionMap().put((Category) leftElement,
 								SynchronizationAction.ADD_REMOTE);
 					}
 				} else {
 					if (leftElement instanceof InformationUnitListItem) {
-						item.getSyncObjectActionMap().put(
-								(SynchronizableObject) leftElement,
+						item.getSyncObjectActionMap().put((SynchronizableObject) leftElement,
 								SynchronizationAction.DELETE_LOCAL);
 					} else if (leftElement instanceof Category) {
-						item.getSyncCategoryActionMap().put(
-								(Category) leftElement,
+						item.getSyncCategoryActionMap().put((Category) leftElement,
 								SynchronizationAction.DELETE_LOCAL);
 					}
 				}
@@ -678,8 +597,7 @@ public class ChangeSetManager {
 		if (syncCategoryActionMap != null) {
 			Set<Category> keySet = syncCategoryActionMap.keySet();
 			for (Category category : keySet) {
-				syncCategoryActionMap.put(category,
-						SynchronizationAction.REPLACE_LOCAL);
+				syncCategoryActionMap.put(category, SynchronizationAction.REPLACE_LOCAL);
 			}
 		}
 		EMap<SynchronizableObject, SynchronizationAction> syncObjectActionMap = changeSetItem2
@@ -687,8 +605,7 @@ public class ChangeSetManager {
 		if (syncObjectActionMap != null) {
 			Set<SynchronizableObject> keySet = syncObjectActionMap.keySet();
 			for (SynchronizableObject synchronizableObject : keySet) {
-				syncObjectActionMap.put(synchronizableObject,
-						SynchronizationAction.REPLACE_LOCAL);
+				syncObjectActionMap.put(synchronizableObject, SynchronizationAction.REPLACE_LOCAL);
 			}
 		}
 
@@ -700,8 +617,7 @@ public class ChangeSetManager {
 		if (syncCategoryActionMap != null) {
 			Set<Category> keySet = syncCategoryActionMap.keySet();
 			for (Category category : keySet) {
-				SynchronizationAction synchronizationAction = syncCategoryActionMap
-						.get(category);
+				SynchronizationAction synchronizationAction = syncCategoryActionMap.get(category);
 				switch (synchronizationAction) {
 				case RESOLVE_CONFLICT:
 				case ADD_REMOTE:
@@ -719,8 +635,7 @@ public class ChangeSetManager {
 			Set<SynchronizableObject> keySet = new HashSet<SynchronizableObject>(
 					syncObjectActionMap.keySet());
 			for (SynchronizableObject object : keySet) {
-				SynchronizationAction synchronizationAction = syncObjectActionMap
-						.get(object);
+				SynchronizationAction synchronizationAction = syncObjectActionMap.get(object);
 				switch (synchronizationAction) {
 				case RESOLVE_CONFLICT:
 				case ADD_REMOTE:
@@ -749,24 +664,21 @@ public class ChangeSetManager {
 	 * @return
 	 * @throws ChangeSetException
 	 */
-	public ChangeSet syncSingleInformationUnit(
-			final InformationUnitListItem item, final IProgressMonitor monitor)
-			throws ChangeSetException {
+	public ChangeSet syncSingleInformationUnit(final InformationUnitListItem item,
+			final IProgressMonitor monitor) throws ChangeSetException {
 		ChangeSet changeSet = InfomngmntFactory.eINSTANCE.createChangeSet();
 		if (item.getSynchronizationMetaData() != null
 				&& item.getSynchronizationMetaData().getSyncState() != SynchronizationState.IGNORED
 				&& item.getSynchronizationMetaData().getSyncState() != SynchronizationState.LOCAL_DELETED
 				&& item.getSynchronizationMetaData().getSyncState() != SynchronizationState.NOT_ADDED) {
-			SynchronizationMetadata metaData = item
-					.getSynchronizationMetaData();
+			SynchronizationMetadata metaData = item.getSynchronizationMetaData();
 
 			/*
 			 * At first we call the remote-repository to find the appended
 			 * object within that repository.
 			 */
-			RemoteRepository remoteRepository = InfomngmntEditPlugin
-					.getPlugin().getService(IRepositoryService.class)
-					.getRepositoryById(metaData.getRepositoryId());
+			RemoteRepository remoteRepository = InfomngmntEditPlugin.getPlugin().getService(
+					IRepositoryService.class).getRepositoryById(metaData.getRepositoryId());
 			RemoteObject remoteObject;
 			try {
 				remoteObject = remoteRepository.getRepositoryImplementation()
@@ -775,9 +687,8 @@ public class ChangeSetManager {
 					/*
 					 * Item was removed on the repository
 					 */
-					throw new ChangeSetException(
-							StatusCreator
-									.newStatus("The requested item was not found on the repository."));
+					throw new ChangeSetException(StatusCreator
+							.newStatus("The requested item was not found on the repository."));
 				}
 			} catch (RemoteException e) {
 				throw new ChangeSetException(StatusCreator.newStatus(
@@ -789,19 +700,16 @@ public class ChangeSetManager {
 			 * We construct a copy of the local container, the category with
 			 * only this one item.
 			 */
-			Category localCopiedContainer = (Category) EcoreUtil.copy(item
-					.eContainer());
+			Category localCopiedContainer = (Category) EcoreUtil.copy(item.eContainer());
 			localCopiedContainer.getChildren().clear();
 			localCopiedContainer.getInformationUnit().clear();
 			localCopiedContainer.getInformationUnit().add(
 					(InformationUnitListItem) EcoreUtil.copy(item));
 			changeSet.setTargetCategory(localCopiedContainer);
 
-			RemoteObject copiedItem = (RemoteObject) EcoreUtil
-					.copy(remoteObject);
+			RemoteObject copiedItem = (RemoteObject) EcoreUtil.copy(remoteObject);
 
-			ChangeSetItem createChangeSetItem = InfomngmntFactory.eINSTANCE
-					.createChangeSetItem();
+			ChangeSetItem createChangeSetItem = InfomngmntFactory.eINSTANCE.createChangeSetItem();
 			changeSet.getChangeSetItems().add(createChangeSetItem);
 			createChangeSetItem.setLocalContainer(localCopiedContainer);
 
@@ -811,13 +719,10 @@ public class ChangeSetManager {
 			 * comparable item for the Diffprocessor to populate the needed
 			 * synchronization actions.
 			 */
-			Category copiedRemoteContainer = (Category) EcoreUtil
-					.copy(localCopiedContainer);
+			Category copiedRemoteContainer = (Category) EcoreUtil.copy(localCopiedContainer);
 			copiedRemoteContainer.getInformationUnit().clear();
-			createChangeSetItem
-					.setRemoteConvertedContainer(copiedRemoteContainer);
-			fillInfoObject(createChangeSetItem, copiedItem, remoteRepository,
-					copiedRemoteContainer);
+			createChangeSetItem.setRemoteConvertedContainer(copiedRemoteContainer);
+			fillInfoObject(createChangeSetItem, copiedItem, remoteRepository, copiedRemoteContainer);
 
 		}
 		return changeSet;

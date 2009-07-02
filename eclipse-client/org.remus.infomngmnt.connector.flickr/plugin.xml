@@ -9,6 +9,25 @@
             icon="icons/flickr.png"
             id="org.remus.infomngmnt.connector.flickr."
             name="Flickr">
+         <changeDefinition
+               id="org.remus.infomngmnt.connector.flickr.changeDefinition1"
+               informationType="IMAGE">
+            <changeObjectPath
+                  path="@keywords">
+            </changeObjectPath>
+            <changeObjectPath
+                  path="@label">
+            </changeObjectPath>
+            <changeObjectPath
+                  path="@description">
+            </changeObjectPath>
+            <changeObjectPath
+                  path="childValues[@type=&apos;originalFilePath&apos;]/@stringValue">
+            </changeObjectPath>
+            <changeObjectPath
+                  path="childValues[@type=&apos;links&apos;]">
+            </changeObjectPath>
+         </changeDefinition>
       </repository-connector>
    </extension>
    <extension

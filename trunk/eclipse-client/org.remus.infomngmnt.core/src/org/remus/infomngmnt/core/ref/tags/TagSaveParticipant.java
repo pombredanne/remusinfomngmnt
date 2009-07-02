@@ -17,11 +17,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
-
 import org.remus.infomngmnt.AvailableTags;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -104,7 +104,8 @@ public class TagSaveParticipant implements ISaveParticipant {
 		List<String> splitCopy = Collections.EMPTY_LIST;
 		List<String> split = Collections.EMPTY_LIST;
 		if (newValue.getKeywords() != null) {
-			split = new ArrayList<String>(Arrays.asList(newValue.getKeywords().split("\\W+")));
+			split = new ArrayList<String>(Arrays.asList(StringUtils.split(newValue.getKeywords(),
+					"\u0020")));
 			splitCopy = new ArrayList<String>(split);
 		}
 		List<Tag> tagsByInfoUnit = getTagsByInfoUnit(newValue);
@@ -125,9 +126,9 @@ public class TagSaveParticipant implements ISaveParticipant {
 
 	public void handleCreated(final InformationUnit newValue) {
 		if (newValue.getKeywords() != null) {
-			handleNewTags(Arrays.asList(newValue.getKeywords().split("\\W+")), newValue);
+			handleNewTags(new ArrayList<String>(Arrays.asList(StringUtils.split(newValue
+					.getKeywords(), "\u0020"))), newValue);
 		}
-
 	}
 
 	public void handleDeleted(final String informationUnitId) {

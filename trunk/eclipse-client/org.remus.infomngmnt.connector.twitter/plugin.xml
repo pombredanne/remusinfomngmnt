@@ -144,6 +144,12 @@
             preferencesclass="org.remus.infomngmnt.connector.twitter.desktop.TwitterSectionPreferences"
             sectionControl="org.remus.infomngmnt.connector.twitter.desktop.TwitterTraySection">
       </sectionBox>
+      <sectionBox
+            id="org.remus.infomngmnt.connector.twitter.urlShorter"
+            multiple="false"
+            name="Short URL"
+            sectionControl="org.remus.infomngmnt.connector.twitter.desktop.URLShorterSection">
+      </sectionBox>
    </extension>
    <extension
          point="org.remus.infomngmnt.core.job">

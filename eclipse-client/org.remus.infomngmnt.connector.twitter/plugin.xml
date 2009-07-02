@@ -75,11 +75,17 @@
                      <count
                            value="1">
                      </count>
-                     <iterate>
-                        <test
-                              property="org.remus.infomngmnt.iutypes.typeEquals"
-                              value="TWITTER">
-                        </test>
+                     <iterate
+                           ifEmpty="false">
+                        <and>
+                           <test
+                                 property="org.remus.infomngmnt.ui.canCommitOrReplace">
+                           </test>
+                           <test
+                                 property="org.remus.infomngmnt.ui.repositoryIdEquals"
+                                 value="org.remus.infomngmnt.connector.twitter.twitterConnector">
+                           </test>
+                        </and>
                      </iterate>
                   </and>
                </with>
@@ -142,9 +148,19 @@
    <extension
          point="org.remus.infomngmnt.core.job">
       <job
-            class="org.remus.infomngmnt.connector.twitter.jobs.RefreshTwitterJob"
+            class="org.remus.infomngmnt.connector.twitter.jobs.RefreshAllFriendsJob"
             id="org.remus.infomngmnt.connector.twitter.sync"
             name="Twitter All Friends Refresh">
+      </job>
+      <job
+            class="org.remus.infomngmnt.connector.twitter.jobs.RefreshDirectMessagesJob"
+            id="org.remus.infomngmnt.connector.twitter.directmessagesync"
+            name="Twitter Direct Messages Refresh">
+      </job>
+      <job
+            class="org.remus.infomngmnt.connector.twitter.jobs.RefreshRepliesJob"
+            id="org.remus.infomngmnt.connector.twitter.repliessync"
+            name="Twitter Replies Refresh">
       </job>
    </extension>
    <extension

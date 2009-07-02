@@ -230,6 +230,9 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 			} else {
 				if (id != null) {
 					friendsTimeline = getApi().getFriendsTimeline(new Paging(id));
+					if (friendsTimeline.size() == 0) {
+						friendsTimeline = getApi().getFriendsTimeline();
+					}
 				} else {
 					friendsTimeline = getApi().getFriendsTimeline(new Paging(1, 1));
 				}

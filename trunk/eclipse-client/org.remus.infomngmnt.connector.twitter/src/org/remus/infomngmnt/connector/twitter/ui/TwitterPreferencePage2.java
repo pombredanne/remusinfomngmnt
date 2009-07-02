@@ -24,7 +24,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.forms.widgets.FormText;
-
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
 
@@ -106,10 +105,20 @@ public class TwitterPreferencePage2 extends FieldEditorPreferencePage implements
 		IntegerFieldEditor searchFeeds = new IntegerFieldEditor(
 				TwitterPreferenceInitializer.RELOAD_SEARCH_FEEDS, "Search feeds", this.createGroup);
 		searchFeeds.fillIntoGrid(this.createGroup, 2);
+		IntegerFieldEditor shownMessage = new IntegerFieldEditor(
+				TwitterPreferenceInitializer.SHOWN_MESSAGE, "Visible Messages in Editor",
+				this.createGroup);
+		shownMessage.fillIntoGrid(this.createGroup, 2);
+		IntegerFieldEditor savedMessage = new IntegerFieldEditor(
+				TwitterPreferenceInitializer.SAVED_MESSAGES, "Saved Messages in Editor",
+				this.createGroup);
+		savedMessage.fillIntoGrid(this.createGroup, 2);
 		addField(friendsFeed);
 		addField(repliesFeed);
 		addField(directMessagesFeed);
 		addField(searchFeeds);
+		addField(shownMessage);
+		addField(savedMessage);
 
 	}
 

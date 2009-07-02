@@ -14,7 +14,6 @@ package org.remus.infomngmnt.connector.twitter.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 
 /**
@@ -55,7 +54,7 @@ public class TwitterPreferenceInitializer extends AbstractPreferenceInitializer 
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		this.store.setDefault(SHOWN_MESSAGE, 30);
+		this.store.setDefault(SHOWN_MESSAGE, 10);
 		this.store.setDefault(SAVED_MESSAGES, 200);
 		this.store.setDefault(CACHED_IMAGES, 200);
 		this.store.setDefault(RELOAD_ALL_FRIENDS_FEED, 4);

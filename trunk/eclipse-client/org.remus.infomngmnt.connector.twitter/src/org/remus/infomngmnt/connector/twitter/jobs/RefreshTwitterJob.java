@@ -27,7 +27,6 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 import org.eclipse.osgi.util.NLS;
-
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -37,11 +36,8 @@ import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationImportance;
 import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
-import org.remus.infomngmnt.connector.twitter.TwitterRepository;
-import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.InformationUtil;
@@ -50,7 +46,7 @@ import org.remus.infomngmnt.core.sync.SynchronizeSingleElementJob;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class RefreshTwitterJob extends AbstractJob {
+public abstract class RefreshTwitterJob extends AbstractJob {
 
 	/**
 	 * 
@@ -85,11 +81,7 @@ public class RefreshTwitterJob extends AbstractJob {
 		EObjectCondition isSynchronizableCondition = new EObjectCondition() {
 			@Override
 			public boolean isSatisfied(final EObject eObject) {
-				return ((SynchronizableObject) eObject).getSynchronizationMetaData() != null
-						&& ((SynchronizableObject) eObject).getSynchronizationMetaData()
-								.getSyncState() == SynchronizationState.IN_SYNC
-						&& ((SynchronizableObject) eObject).getSynchronizationMetaData().getUrl()
-								.endsWith("/" + TwitterRepository.ID_FRIENDS);
+				return isTwitterElementSatisfied(eObject);
 			}
 		};
 		SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
@@ -144,10 +136,6 @@ public class RefreshTwitterJob extends AbstractJob {
 		return returnValue;
 	}
 
-	@Override
-	public int getInterval() {
-		return TwitterActivator.getDefault().getPreferenceStore().getInt(
-				TwitterPreferenceInitializer.RELOAD_ALL_FRIENDS_FEED);
-	}
+	protected abstract boolean isTwitterElementSatisfied(EObject object);
 
 }

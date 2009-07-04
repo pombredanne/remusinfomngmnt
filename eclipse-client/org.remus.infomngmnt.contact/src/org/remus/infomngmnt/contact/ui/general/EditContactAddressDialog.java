@@ -16,6 +16,8 @@ package org.remus.infomngmnt.contact.ui.general;
  * 
  */
 import java.awt.geom.Point2D;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -43,7 +45,8 @@ import org.remus.infomngmnt.common.ui.jface.BindingStatusDialog;
 import org.remus.infomngmnt.common.ui.swt.CountryCombo;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.geodata.google.GMapsApi;
+import org.remus.infomngmnt.core.services.IGeoData;
+import org.remus.infomngmnt.ui.UIPlugin;
 
 public class EditContactAddressDialog extends BindingStatusDialog {
 
@@ -134,7 +137,7 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 		final GridData gd_getCoordinatesFromButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false);
 		this.getCoordinatesFromButton.setLayoutData(gd_getCoordinatesFromButton);
-		this.getCoordinatesFromButton.setText("Get Coordinates from Google");
+		this.getCoordinatesFromButton.setText("Get Coordinates");
 
 		createTextValueBindings();
 		createListener();
@@ -147,18 +150,27 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				try {
-					String curKey = GMapsApi.getApiKey();
-					if (curKey.length() < 1) {
+					IGeoData geoData = UIPlugin.getDefault().getService(IGeoData.class);
+					if (geoData == null) {
+						return;
+					}
+					if (geoData.canRetreiveGeoData() != null) {
 						showGMapsApiKeyErrorMessageBox();
 						return;
 					}
-					String curSearchValue = EditContactAddressDialog.this.tx_Locality.getText()
-							+ "+" + EditContactAddressDialog.this.tx_Pob.getText() + "+"
-							+ EditContactAddressDialog.this.tx_Postal.getText() + "+"
-							+ EditContactAddressDialog.this.tx_Region.getText() + "+"
-							+ EditContactAddressDialog.this.tx_Street.getText();
-					curSearchValue = curSearchValue.replace(" ", "+");
-					Point2D p2d = GMapsApi.getGeoCoordFromGMaps(curKey, curSearchValue);
+
+					Map<String, Object> options = new HashMap<String, Object>();
+					options.put(IGeoData.KEY_LOCALITY, EditContactAddressDialog.this.tx_Locality
+							.getText());
+					options.put(IGeoData.KEY_POST_CODE, EditContactAddressDialog.this.tx_Postal
+							.getText());
+					options.put(IGeoData.KEY_REGION, EditContactAddressDialog.this.tx_Region
+							.getText());
+					options.put(IGeoData.KEY_STREET, EditContactAddressDialog.this.tx_Street
+							.getText());
+					options.put(IGeoData.KEY_POST_OFFICE_BOX, EditContactAddressDialog.this.tx_Pob
+							.getText());
+					Point2D p2d = geoData.getCoordinates(options);
 					EditContactAddressDialog.this.tx_Longitude.setText(String.valueOf(p2d.getX()));
 					EditContactAddressDialog.this.tx_Latitude.setText(String.valueOf(p2d.getY()));
 				} catch (Exception e2) {

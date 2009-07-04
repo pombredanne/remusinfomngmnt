@@ -11,10 +11,6 @@ public boolean isDeletionWizard; * Copyright (c) 2009 Jan Hartwig, FEB Radebeul
  *******************************************************************************/
 package org.remus.infomngmnt.geodata.google;
 
-/**
- * @author Jan Hartwig <jhartwig@feb-radebeul.de>
- * 
- */
 import java.awt.geom.Point2D;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -22,29 +18,44 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jface.preference.IPreferenceStore;
+
+import org.remus.infomngmnt.core.services.IGeoData;
 import org.remus.infomngmnt.geodata.GeoDataActivator;
 import org.remus.infomngmnt.geodata.preferences.GeoDataPreferenceInitializer;
 
-public class GMapsApi {
+/**
+ * @author Jan Hartwig <jhartwig@feb-radebeul.de>
+ * 
+ */
+public class GMapsApi implements IGeoData {
 
-	public static String getApiKey() {
-		IPreferenceStore store = GeoDataActivator.getDefault()
-				.getPreferenceStore();
-		String string = store
-				.getString(GeoDataPreferenceInitializer.GOOGLE_API_KEY);
+	public String getApiKey() {
+		IPreferenceStore store = GeoDataActivator.getDefault().getPreferenceStore();
+		String string = store.getString(GeoDataPreferenceInitializer.GOOGLE_API_KEY);
 
 		return string;
 	}
 
-	public static Point2D getGeoCoordFromGMaps(final String gMapsApiKey,
-			final String searchValue) {
+	public String canRetreiveGeoData() {
+		if (getApiKey() != null && getApiKey().trim().length() > 0) {
+			return null;
+		}
+		return "You need an API Key from Google";
+	}
 
+	public Point2D getCoordinates(final Map<String, Object> values) {
 		Point2D p2d = new Point2D.Float();
 
-		String curUrl = "http://maps.google.com/maps/geo?q=" + searchValue
-				+ "&output=xml&key=" + gMapsApiKey;
+		String curSearchValue = values.get(KEY_LOCALITY) + "+" + values.get(KEY_POST_OFFICE_BOX)
+				+ "+" + values.get(KEY_POST_CODE) + "+" + values.get(KEY_REGION) + "+"
+				+ values.get(KEY_STREET);
+		curSearchValue = curSearchValue.replace(" ", "+");
+
+		String curUrl = "http://maps.google.com/maps/geo?q=" + curSearchValue + "&output=xml&key="
+				+ getApiKey();
 		List<String> result = new ArrayList<String>();
 
 		URL u;
@@ -75,8 +86,7 @@ public class GMapsApi {
 						for (int k = 0; k < s2.length; k++) {
 							if (s2[k].contains(",")) {
 								String[] s3 = s2[k].split(",");
-								p2d.setLocation(Double.valueOf(s3[0]), Double
-										.valueOf(s3[1]));
+								p2d.setLocation(Double.valueOf(s3[0]), Double.valueOf(s3[1]));
 							}
 						}
 					}

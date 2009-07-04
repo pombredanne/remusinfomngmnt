@@ -37,8 +37,9 @@ import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.model.StatusCreator;
-import org.remus.infomngmnt.geodata.google.GMapsApi;
+import org.remus.infomngmnt.core.services.IGeoData;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
+import org.remus.infomngmnt.ui.UIPlugin;
 
 public class ContactInformationRepresentation extends AbstractInformationRepresentation {
 
@@ -78,7 +79,12 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 		}
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("photo", imageHref);
-		parameterMap.put("mapskey", GMapsApi.getApiKey());
+		try {
+			parameterMap.put("mapskey", UIPlugin.getDefault().getService(IGeoData.class)
+					.getApiKey());
+		} catch (Exception e1) {
+			parameterMap.put("mapskey", "");
+		}
 		parameterMap.put("createMapsImage", ContactActivator.getDefault().getPreferenceStore()
 				.getBoolean(ContactPreferenceInitializer.SHOW_MAPS_IMAGE));
 		parameterMap.put("mapsWidth", Integer.toString(ContactActivator.getDefault()

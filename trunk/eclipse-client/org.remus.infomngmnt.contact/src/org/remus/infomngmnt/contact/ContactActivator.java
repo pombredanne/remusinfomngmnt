@@ -56,7 +56,7 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_NAME_PN_OTHERS = "pnOthers"; //$NON-NLS-1$
 
 	// group address
-	public static final String NODE_NAME_WORK_ADRESS = "wordAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_WORK_ADRESS = "workAdress"; //$NON-NLS-1$
 	public static final String NODE_NAME_HOME_ADRESS = "homeAdress"; //$NON-NLS-1$
 	public static final String NODE_NAME_INTERNAT_ADRESS = "internatAdress"; //$NON-NLS-1$
 	public static final String NODE_NAME_POSTAL_ADRESS = "postalAdress"; //$NON-NLS-1$

@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.core.model;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -45,6 +46,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.core.path.Path2ObjectMapper;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -173,6 +175,21 @@ public class InformationUtil {
 		InformationUnit unit = createNew(type);
 		unit.setDateValue(dateValue);
 		return unit;
+	}
+
+	public static Object preset(final InformationUnit unit, final Object value,
+			final String finalExpression, final String... childExpressions) {
+		StringWriter sw = new StringWriter();
+		for (String string : childExpressions) {
+			sw.append("childValues[@type=\'").append(string).append("\'/");
+		}
+		sw.append(finalExpression);
+		return preset(unit, sw.toString(), value);
+	}
+
+	public static Object preset(final InformationUnit unit, final String expression,
+			final Object value) {
+		return new Path2ObjectMapper(expression, unit, value).getObjectForPath(true, true);
 	}
 
 	public static String getFullReadablePath(final InformationUnitListItem item) {

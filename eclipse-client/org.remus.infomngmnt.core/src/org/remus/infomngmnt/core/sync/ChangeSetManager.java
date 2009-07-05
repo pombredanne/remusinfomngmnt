@@ -44,6 +44,7 @@ import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 import org.eclipse.osgi.util.NLS;
+
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
@@ -489,12 +490,12 @@ public class ChangeSetManager {
 			 */
 			if (diffElement instanceof UpdateAttribute) {
 				final UpdateAttribute addOp = (UpdateAttribute) diffElement;
-				EObject leftElementElement = addOp.getLeftElement();
+				EObject rightElement = addOp.getRightElement();
 
-				EObject parentByClass = ModelUtil.getParentByClass(leftElementElement,
+				EObject parentByClass = ModelUtil.getParentByClass(rightElement,
 						InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
 				if (parentByClass == null) {
-					parentByClass = ModelUtil.getParentByClass(leftElementElement,
+					parentByClass = ModelUtil.getParentByClass(rightElement,
 							InfomngmntPackage.Literals.CATEGORY);
 					if (parentByClass != null) {
 						Category categoryById = CategoryUtil

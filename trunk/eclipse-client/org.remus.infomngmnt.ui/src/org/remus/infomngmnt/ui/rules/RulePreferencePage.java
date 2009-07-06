@@ -571,7 +571,7 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 			this.infoType = infoType;
 			this.element = element;
 			setImageDescriptor(infoType.getImageDescriptor());
-			setText(infoType.getType());
+			setText(infoType.getName());
 		}
 
 		@Override

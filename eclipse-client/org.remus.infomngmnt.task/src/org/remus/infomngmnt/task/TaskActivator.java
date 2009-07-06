@@ -40,7 +40,7 @@ public class TaskActivator extends AbstractUIPlugin {
 
 	public static final String NODE_NAME_WORKED_UNIT_END = "workunitend"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_WORKED_UNIT_DESCRIPTION = "workunitend"; //$NON-NLS-1$
+	public static final String NODE_NAME_WORKED_UNIT_DESCRIPTION = "description"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_COMPLETED = "completed"; //$NON-NLS-1$
 

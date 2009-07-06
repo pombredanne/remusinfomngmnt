@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            buildHtml="true"
+            creationFactory="org.remus.infomngmnt.task.extension.TaskCreationFactory"
+            excludeFromIndex="false"
+            icon="icons/iconexperience/task.png"
+            name="Task"
+            presentation="org.remus.infomngmnt.task.extension.TaskInformationRepresentation"
+            type="TASK">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.urlTransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.rftTransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.task.ui.TaskEditPage"
+            icon="icons/iconexperience/task_edit.png"
+            id="org.remus.infomngmnt.task.editPage1"
+            label="Edit Task"
+            type="TASK">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.task.ui.WorkLogPage"
+            icon="icons/iconexperience/document_time.png"
+            id="org.remus.infomngmnt.task.worklog"
+            label="Worklog"
+            type="TASK">
+      </editPage>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.remus.infomngmnt.ui.business"
+            class="org.remus.infomngmnt.task.ui.wizard.NewTaskWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/task_new.png"
+            id="org.remus.infomngmnt.task.new"
+            name="Task">
+      </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.job">
+      <job
+            class="org.remus.infomngmnt.task.job.CheckTaskDueJob"
+            id="org.remus.infomngmnt.task.checkDue"
+            interval="10"
+            name="Check Due Date Job">
+      </job>
+   </extension>
+
+</plugin>

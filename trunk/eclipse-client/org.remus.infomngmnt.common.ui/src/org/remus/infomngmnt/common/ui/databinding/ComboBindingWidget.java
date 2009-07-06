@@ -64,7 +64,7 @@ public class ComboBindingWidget extends AbstractBindingWidget {
 		IViewerObservableValue swtType = ViewersObservables.observeSingleSelection(ccViewer);
 		IObservableValue emfType = EMFEditObservables.observeValue(getEditingDomain(), object,
 				feature);
-		setBinding(getBindingContext().bindValue(swtType, emfType, model2target, target2Model));
+		setBinding(getBindingContext().bindValue(swtType, emfType, target2Model, model2target));
 	}
 
 	/*

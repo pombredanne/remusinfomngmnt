@@ -86,8 +86,13 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 	@Override
 	protected final void createFormContent(final IManagedForm managedForm) {
 		this.rendered = true;
-		renderPage(managedForm);
-		bindValuesToUi();
+		try {
+			renderPage(managedForm);
+			bindValuesToUi();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected abstract void renderPage(IManagedForm managedForm);

@@ -20,8 +20,8 @@
 <#assign pnVoice = infoUnit["childValues[@type='pnVoice']/@stringValue"]>
 <#assign pnWork = infoUnit["childValues[@type='pnWork']/@stringValue"]>
 
-<#assign worklatitude = infoUnit["childValues[@type='wordAdress']/childValues[@type='latitude']/@stringValue"]>
-<#assign worklongtitude = infoUnit["childValues[@type='wordAdress']/childValues[@type='longitude']/@stringValue"]>
+<#assign worklatitude = infoUnit["childValues[@type='workAdress']/childValues[@type='latitude']/@stringValue"]>
+<#assign worklongtitude = infoUnit["childValues[@type='workAdress']/childValues[@type='longitude']/@stringValue"]>
 <#assign homelatitude = infoUnit["childValues[@type='homeAdress']/childValues[@type='latitude']/@stringValue"]>
 <#assign homelongitude = infoUnit["childValues[@type='homeAdress']/childValues[@type='longitude']/@stringValue"]>
 

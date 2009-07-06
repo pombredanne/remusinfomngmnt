@@ -188,46 +188,46 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 	}
 
 	private void createTextValueBindings() {
-		TextBindingWidget bindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget bindingWidget = BindingWidgetFactory.createTextBinding(
 				this.tx_Street, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_STREET),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Pob, this.provider);
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Pob, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Locality,
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Locality,
 				this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_LOCALITY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Region, this.provider);
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Region, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_REGION),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Postal, this.provider);
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Postal, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_POSTAL),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Longitude,
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Longitude,
 				this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_LONGITUDE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx_Latitude,
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Latitude,
 				this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_LATITUDE),

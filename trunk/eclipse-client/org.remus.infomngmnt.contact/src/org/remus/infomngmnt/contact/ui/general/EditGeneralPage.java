@@ -187,12 +187,12 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	}
 
 	private void createTextValueBindingsGroupPerson() {
-		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBinding(
 				this.tx_Role, this);
 		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_NAME_PERS_ROLE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBinding(
 				this.tx_Organisation, this);
 		createTextBindingWidget3.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_NAME_PERS_ORGANISATION),
@@ -384,17 +384,17 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	}
 
 	private void createTextValueBindingsGroupInternet() {
-		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBinding(
 				this.tx_Email, this);
 		createTextBindingWidget.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_MAIL_DEF),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBinding(
 				this.tx_Homepage, this);
 		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_FRONTPAGE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBinding(
 				this.tx_BlogFeed, this);
 		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_BLOG_FEED),

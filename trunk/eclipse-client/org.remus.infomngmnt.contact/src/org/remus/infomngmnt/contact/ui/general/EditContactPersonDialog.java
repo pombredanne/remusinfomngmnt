@@ -109,28 +109,28 @@ public class EditContactPersonDialog extends BindingStatusDialog {
 
 	private void bindValuesToUi() {
 
-		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		this.createTextBindingWidget = BindingWidgetFactory.createTextBinding(
 				this.tx_FirstName, this.editingDomainProvider);
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_FIRST),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(this.createTextBindingWidget.getBinding());
 
-		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		this.createTextBindingWidget = BindingWidgetFactory.createTextBinding(
 				this.tx_TitleAfterName, this.editingDomainProvider);
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_TITLE_AFTER),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(this.createTextBindingWidget.getBinding());
 
-		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		this.createTextBindingWidget = BindingWidgetFactory.createTextBinding(
 				this.tx_AdditionalName, this.editingDomainProvider);
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_ADDITIONAL),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(this.createTextBindingWidget.getBinding());
 
-		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		this.createTextBindingWidget = BindingWidgetFactory.createTextBinding(
 				this.tx_LastName, this.editingDomainProvider);
 		this.createTextBindingWidget.bindModel(InformationUtil.getChildByType(this.contact,
 				ContactActivator.NODE_NAME_PERS_NAME_LAST),

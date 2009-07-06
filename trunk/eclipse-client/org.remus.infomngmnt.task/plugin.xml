@@ -65,5 +65,14 @@
             name="Check Due Date Job">
       </job>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.common.ui.traySection">
+      <sectionBox
+            id="org.remus.infomngmnt.task.workLog"
+            multiple="false"
+            name="Work Logger"
+            sectionControl="org.remus.infomngmnt.task.tray.WorkLoggerTray">
+      </sectionBox>
+   </extension>
 
 </plugin>

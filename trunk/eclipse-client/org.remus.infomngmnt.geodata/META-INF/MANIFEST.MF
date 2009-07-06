@@ -10,5 +10,6 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.geodata.google
-Import-Package: org.remus.infomngmnt.core.services
+Import-Package: org.apache.commons.lang,
+ org.remus.infomngmnt.core.services
 Service-Component: OSGI-INF/googlegeo.xml

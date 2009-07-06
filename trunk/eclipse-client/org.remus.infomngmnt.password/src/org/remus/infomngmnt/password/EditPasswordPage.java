@@ -177,23 +177,23 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 	@Override
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
-		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget = BindingWidgetFactory.createTextBinding(
 				this.textUsername, this);
 		createTextBindingWidget.bindModel(InformationUtil.getChildByType(getModelObject(),
 				PasswordPlugin.NODE_USERNAME),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.textUrl, this);
+		createTextBindingWidget = BindingWidgetFactory.createTextBinding(this.textUrl, this);
 		createTextBindingWidget
 				.bindModel(InformationUtil
 						.getChildByType(getModelObject(), PasswordPlugin.NODE_URL),
 						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.textPassword,
+		createTextBindingWidget = BindingWidgetFactory.createTextBinding(this.textPassword,
 				this);
 		createTextBindingWidget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(
+		createTextBindingWidget = BindingWidgetFactory.createTextBinding(
 				this.textPasswordDecrypted, this);
 		createTextBindingWidget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);

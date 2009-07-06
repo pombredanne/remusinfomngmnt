@@ -10,6 +10,7 @@
 * Plaintext
 * Richtext
 * Link
+* Task
 * Contact
 * SourceCode
 * Password
@@ -286,5 +287,12 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="org.remus.infomngmnt.task"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

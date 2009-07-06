@@ -150,7 +150,7 @@ public class DesktopPanelPreferencePage extends PreferencePage implements IWorkb
 		this.avaialableTemplatesViewer = new TableViewer(avaiableTemplatesGroup, SWT.BORDER);
 		this.avaialableTemplatesViewer.getControl().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
-		sashForm_1.setWeights(new int[] { 7, 3 });
+		sashForm_1.setWeights(new int[] { 3, 7 });
 		this.avaialableTemplatesViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
 		this.avaialableTemplatesViewer.setLabelProvider(new LabelProvider() {
 			@Override

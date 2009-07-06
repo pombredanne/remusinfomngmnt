@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.common.ui.databinding;
 
+import org.eclipse.core.databinding.conversion.IConverter;
+import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.swt.widgets.Text;
@@ -38,6 +40,10 @@ public class BindingUtil {
 				.getDatabindingContext(), provider.getEditingDomain());
 		createTextBinding.bindModel(object, feature);
 		return createTextBinding;
+	}
+
+	public static EMFUpdateValueStrategy createUpdateStratyWithConverter(final IConverter converter) {
+		return (EMFUpdateValueStrategy) new EMFUpdateValueStrategy().setConverter(converter);
 	}
 
 }

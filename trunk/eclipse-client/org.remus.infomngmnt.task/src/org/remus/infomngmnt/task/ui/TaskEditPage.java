@@ -15,6 +15,8 @@ package org.remus.infomngmnt.task.ui;
 import java.text.NumberFormat;
 import java.util.Arrays;
 
+import org.eclipse.core.databinding.conversion.Converter;
+import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
@@ -33,6 +35,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.CheckBoxBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
@@ -44,6 +47,8 @@ import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.common.ui.swt.DateCombo;
 import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.task.TaskPriority;
+import org.remus.infomngmnt.task.TaskStatus;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 /**
@@ -231,6 +236,12 @@ public class TaskEditPage extends AbstractInformationFormPage {
 				TaskActivator.NODE_NAME_DUE_DATE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
 
+		DatePickerBindingWidget startComboBinding = BindingWidgetFactory.createDateComboBinding(
+				this.startsDate, this);
+		startComboBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
+				TaskActivator.NODE_NAME_STARTED),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
+
 		TextBindingWidget subjectBinding = BindingWidgetFactory.createTextBinding(this.subjectText,
 				this);
 		subjectBinding.bindModel(getModelObject(),
@@ -264,9 +275,52 @@ public class TaskEditPage extends AbstractInformationFormPage {
 				return getReminderString((Long) element);
 			}
 		});
+
 		notificationBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
 				TaskActivator.NODE_NAME_MINUTES_BEFORE_DUE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
+
+		ComboBindingWidget priorityBinding = BindingWidgetFactory.createComboBinding(
+				this.prioCombo, getDatabindingContext(), getEditingDomain());
+		priorityBinding.setInput(Arrays.asList(TaskPriority.values()));
+		priorityBinding.setLabelProvider(new LabelProvider());
+		EMFUpdateValueStrategy prioTarget2Model = BindingUtil
+				.createUpdateStratyWithConverter(new Converter(TaskPriority.class, String.class) {
+					public Object convert(Object fromObject) {
+						return ((TaskPriority) fromObject).getKey();
+					}
+				});
+		EMFUpdateValueStrategy prioModel2Target = BindingUtil
+				.createUpdateStratyWithConverter(new Converter(String.class, TaskPriority.class) {
+					public Object convert(Object fromObject) {
+						return TaskPriority.fromKey(fromObject.toString());
+					}
+				});
+		priorityBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
+				TaskActivator.NODE_NAME_PRIORITY),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, prioTarget2Model,
+				prioModel2Target);
+
+		ComboBindingWidget statusBinding = BindingWidgetFactory.createComboBinding(
+				this.statusCombo, getDatabindingContext(), getEditingDomain());
+		statusBinding.setInput(Arrays.asList(TaskStatus.values()));
+		statusBinding.setLabelProvider(new LabelProvider());
+		EMFUpdateValueStrategy statusTarget2Model = BindingUtil
+				.createUpdateStratyWithConverter(new Converter(TaskStatus.class, String.class) {
+					public Object convert(Object fromObject) {
+						return ((TaskStatus) fromObject).getKey();
+					}
+				});
+		EMFUpdateValueStrategy statusModel2Target = BindingUtil
+				.createUpdateStratyWithConverter(new Converter(String.class, TaskStatus.class) {
+					public Object convert(Object fromObject) {
+						return TaskStatus.fromKey(fromObject.toString());
+					}
+				});
+		statusBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
+				TaskActivator.NODE_NAME_STATUS),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, statusTarget2Model,
+				statusModel2Target);
 
 		TextBindingWidget assigneeBinding = BindingWidgetFactory.createTextBinding(
 				this.assigneeText, this);

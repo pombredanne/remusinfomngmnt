@@ -181,7 +181,7 @@ public class InformationUtil {
 			final String finalExpression, final String... childExpressions) {
 		StringWriter sw = new StringWriter();
 		for (String string : childExpressions) {
-			sw.append("childValues[@type=\'").append(string).append("\'/");
+			sw.append("childValues[@type=\'").append(string).append("\']/");
 		}
 		sw.append(finalExpression);
 		return preset(unit, sw.toString(), value);

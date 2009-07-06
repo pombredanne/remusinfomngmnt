@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Task Plugin
+Bundle-SymbolicName: org.remus.infomngmnt.task;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.task.TaskActivator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.remus.infomngmnt.core,
+ org.remus.infomngmnt.ui,
+ org.remus.infomngmnt.common.ui
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: org.remus.infomngmnt.task
+Import-Package: org.remus.infomngmnt.contact

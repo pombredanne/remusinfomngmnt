@@ -16,8 +16,13 @@ import java.io.InputStream;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
+import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.task.TaskActivator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -31,21 +36,35 @@ public class TaskInformationRepresentation extends AbstractInformationRepresenta
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
 	public String getBodyForIndexing(IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
+		String join = StringUtils.join(getValue().getStringValue(), "\n", InformationUtil
+				.getChildByType(getValue(), TaskActivator.NODE_NAME_ASIGNEE).getStringValue());
+		EList<InformationUnit> childValues = InformationUtil.getChildByType(getValue(),
+				TaskActivator.NODE_NAME_WORKED_UNITS).getChildValues();
+		for (InformationUnit informationUnit : childValues) {
+			join = StringUtils.join(InformationUtil.getChildByType(informationUnit,
+					TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION).getStringValue(), "\n");
+		}
+		return join;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.core.extension.AbstractInformationRepresentation#handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
+	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
 	public InputStream handleHtmlGeneration(IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -4,7 +4,7 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            buildHtml="true"
+            buildHtml="false"
             creationFactory="org.remus.infomngmnt.task.extension.TaskCreationFactory"
             excludeFromIndex="false"
             icon="icons/iconexperience/task.png"

@@ -28,7 +28,7 @@ public interface IGeoData {
 
 	String canRetreiveGeoData();
 
-	Point2D getCoordinates(Map<String, Object> values);
+	Point2D getCoordinates(Map<String, Object> values) throws Exception;
 
 	String getApiKey();
 

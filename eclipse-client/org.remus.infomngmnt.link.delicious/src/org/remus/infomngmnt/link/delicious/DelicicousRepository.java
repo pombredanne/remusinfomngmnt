@@ -135,6 +135,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		if (this.lastApiCall > 0) {
 			while ((System.currentTimeMillis() - this.lastApiCall) < 2000) {
 				try {
+					System.out.println("WAITING");
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					// do nothing

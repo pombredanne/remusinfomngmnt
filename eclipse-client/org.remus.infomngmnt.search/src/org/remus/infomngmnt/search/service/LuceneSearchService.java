@@ -57,7 +57,6 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.IInfoType;
@@ -291,8 +290,8 @@ public class LuceneSearchService {
 					}
 
 				};
-				writeIndexQueue.setUser(true);
-				writeIndexQueue.setPriority(Job.INTERACTIVE);
+				writeIndexQueue.setUser(false);
+				writeIndexQueue.setPriority(Job.BUILD);
 				writeIndexQueue.schedule();
 			}
 			schedule(500);

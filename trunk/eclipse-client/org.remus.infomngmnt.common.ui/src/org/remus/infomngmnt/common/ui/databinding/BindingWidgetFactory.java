@@ -18,12 +18,15 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.common.ui.richtext.RichTextWidget;
+import org.remus.infomngmnt.common.ui.swt.DateCombo;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -49,7 +52,7 @@ public class BindingWidgetFactory {
 		return textWidget;
 	}
 
-	public static TextBindingWidget createTextBindingWidget(final Text text,
+	public static TextBindingWidget createTextBinding(final Text text,
 			final IEMFEditBindingProvider provider) {
 		return createTextBinding(text, provider.getDatabindingContext(), provider
 				.getEditingDomain());
@@ -81,10 +84,17 @@ public class BindingWidgetFactory {
 
 	}
 
-	public static SpinnerBindingWidget createSpinner(final Spinner spinner,
+	public static SpinnerSliderBindingWidget createSpinner(final Spinner spinner,
 			final EMFDataBindingContext ctx, final EditingDomain domain) {
-		SpinnerBindingWidget bindingWidget = new SpinnerBindingWidget();
+		SpinnerSliderBindingWidget bindingWidget = new SpinnerSliderBindingWidget();
 		initControl(bindingWidget, ctx, domain, spinner);
+		return bindingWidget;
+	}
+
+	public static SpinnerSliderBindingWidget createSpinner(final Slider slider,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		SpinnerSliderBindingWidget bindingWidget = new SpinnerSliderBindingWidget();
+		initControl(bindingWidget, ctx, domain, slider);
 		return bindingWidget;
 	}
 
@@ -112,6 +122,34 @@ public class BindingWidgetFactory {
 			final EMFDataBindingContext ctx, final EditingDomain domain) {
 		CDateTimeBindingWidget bindingWidget = new CDateTimeBindingWidget();
 		initControl(bindingWidget, ctx, domain, control);
+		return bindingWidget;
+	}
+
+	public static DatePickerBindingWidget createDateComboBinding(final DateCombo combo,
+			final IEMFEditBindingProvider provider) {
+		return createDateComboBinding(combo, provider.getDatabindingContext(), provider
+				.getEditingDomain());
+
+	}
+
+	public static CheckBoxBindingWidget createCheckboxBinding(final Button control,
+			final IEMFEditBindingProvider provider) {
+		return createCheckboxBinding(control, provider.getDatabindingContext(), provider
+				.getEditingDomain());
+
+	}
+
+	public static CheckBoxBindingWidget createCheckboxBinding(final Button control,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		CheckBoxBindingWidget bindingWidget = new CheckBoxBindingWidget();
+		initControl(bindingWidget, ctx, domain, control);
+		return bindingWidget;
+	}
+
+	public static DatePickerBindingWidget createDateComboBinding(final DateCombo combo,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		DatePickerBindingWidget bindingWidget = new DatePickerBindingWidget();
+		initControl(bindingWidget, ctx, domain, combo);
 		return bindingWidget;
 	}
 

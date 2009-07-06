@@ -95,7 +95,7 @@ public class ComboAndTextFieldComposite extends Composite {
 	}
 
 	public void bindValuesToUi() {
-		this.createTextBindingWidget = BindingWidgetFactory.createTextBindingWidget(this.tx,
+		this.createTextBindingWidget = BindingWidgetFactory.createTextBinding(this.tx,
 				this.provider);
 		this.comboViewer.addSelectionChangedListener(this.listener);
 	}

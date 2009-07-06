@@ -291,74 +291,74 @@ public class EditMiscPage extends AbstractInformationFormPage {
 			}
 		});
 
-		TextBindingWidget createTextBindingWidget0 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget0 = BindingWidgetFactory.createTextBinding(
 				this.tx_Smime, this);
 		createTextBindingWidget0.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_MISC_MIME),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget2 = BindingWidgetFactory.createTextBinding(
 				this.tx_OpenGpg, this);
 		createTextBindingWidget2.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_MISC_PUBKEY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget1 = BindingWidgetFactory.createTextBinding(
 				this.tx_Assistant, this);
 		createTextBindingWidget1.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_NAME_ASSISTANT),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget3 = BindingWidgetFactory.createTextBinding(
 				this.tx_Bureau, this);
 		createTextBindingWidget3.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_BUREAU),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget4 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget4 = BindingWidgetFactory.createTextBinding(
 				this.tx_Department, this);
 		createTextBindingWidget4.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_DEPARTMENT),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget6 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget6 = BindingWidgetFactory.createTextBinding(
 				this.tx_NameManager, this);
 		createTextBindingWidget6.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_NAME_MANAGER),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget7 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget7 = BindingWidgetFactory.createTextBinding(
 				this.tx_NamePartner, this);
 		createTextBindingWidget7.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_NAME_PARTNER),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget8 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget8 = BindingWidgetFactory.createTextBinding(
 				this.tx_Nickname, this);
 		createTextBindingWidget8.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_NAME_NICK),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget10 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget10 = BindingWidgetFactory.createTextBinding(
 				this.tx_Job, this);
 		createTextBindingWidget10.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_JOB),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget11 = BindingWidgetFactory.createTextBindingWidget(
+		TextBindingWidget createTextBindingWidget11 = BindingWidgetFactory.createTextBinding(
 				this.tx_Title, this);
 		createTextBindingWidget11.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_TITLE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
 		TextBindingWidget createTextBindingWidget111 = BindingWidgetFactory
-				.createTextBindingWidget(this.tx_Birthday, this);
+				.createTextBinding(this.tx_Birthday, this);
 		createTextBindingWidget111.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_BIRTHDAY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
 		TextBindingWidget createTextBindingWidget112 = BindingWidgetFactory
-				.createTextBindingWidget(this.tx_Jubilee, this);
+				.createTextBinding(this.tx_Jubilee, this);
 		createTextBindingWidget112.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_JUBILEE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);

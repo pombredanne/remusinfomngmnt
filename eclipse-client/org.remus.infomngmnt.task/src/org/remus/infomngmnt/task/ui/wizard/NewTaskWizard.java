@@ -23,7 +23,7 @@ public class NewTaskWizard extends NewInfoObjectWizard {
 
 	public NewTaskWizard() {
 		super();
-		setWindowTitle("New unformatted text");
+		setWindowTitle("New Task");
 	}
 
 	@Override

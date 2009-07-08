@@ -708,6 +708,18 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 							}
 						});
 						menu.setDefaultItem(restoreItem);
+						MenuItem restoreTray = new MenuItem(menu, SWT.PUSH);
+						restoreTray.setText("Restore Desktop-Panel");
+						restoreTray.addSelectionListener(new SelectionAdapter() {
+							@Override
+							public void widgetSelected(final SelectionEvent e) {
+								if (ApplicationWorkbenchWindowAdvisor.this.window.getShell() == null
+										|| !ApplicationWorkbenchWindowAdvisor.this.window
+												.getShell().isVisible()) {
+									openDesktopWindow(shell);
+								}
+							}
+						});
 					}
 				});
 

@@ -192,6 +192,20 @@ public class InformationUtil {
 		return new Path2ObjectMapper(expression, unit, value).getObjectForPath(true, true);
 	}
 
+	public static Object getObjectByPath(final InformationUnit unit, final String expression) {
+		return Path2ObjectMapper.getObjectByExpression(expression, unit);
+	}
+
+	public static Object getObjectByPath(final InformationUnit unit, final String finalExpression,
+			final String... childExpressions) {
+		StringWriter sw = new StringWriter();
+		for (String string : childExpressions) {
+			sw.append("childValues[@type=\'").append(string).append("\']/");
+		}
+		sw.append(finalExpression);
+		return getObjectByPath(unit, sw.toString());
+	}
+
 	public static String getFullReadablePath(final InformationUnitListItem item) {
 		String text = CategoryUtil.categoryToString((Category) item.eContainer()) + "/"
 				+ item.getLabel();

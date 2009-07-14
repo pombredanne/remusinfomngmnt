@@ -32,11 +32,11 @@ import org.eclipse.osgi.util.NLS;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NotificationCollection;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.core.services.IJobExtensionService;
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

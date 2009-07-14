@@ -132,7 +132,7 @@ public class RecentlyUsedKeywordsImpl extends EObjectImpl implements RecentlyUse
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case InfomngmntPackage.RECENTLY_USED_KEYWORDS__MAXLENGTH:
-				return new Integer(getMaxlength());
+				return getMaxlength();
 			case InfomngmntPackage.RECENTLY_USED_KEYWORDS__KEYWORDS:
 				return getKeywords();
 		}
@@ -149,7 +149,7 @@ public class RecentlyUsedKeywordsImpl extends EObjectImpl implements RecentlyUse
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case InfomngmntPackage.RECENTLY_USED_KEYWORDS__MAXLENGTH:
-				setMaxlength(((Integer)newValue).intValue());
+				setMaxlength((Integer)newValue);
 				return;
 			case InfomngmntPackage.RECENTLY_USED_KEYWORDS__KEYWORDS:
 				getKeywords().clear();

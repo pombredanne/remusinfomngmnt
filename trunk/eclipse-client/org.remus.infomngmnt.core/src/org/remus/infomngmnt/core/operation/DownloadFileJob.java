@@ -34,7 +34,7 @@ import org.eclipse.ecf.filetransfer.identity.FileIDFactory;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.osgi.util.NLS;
 
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

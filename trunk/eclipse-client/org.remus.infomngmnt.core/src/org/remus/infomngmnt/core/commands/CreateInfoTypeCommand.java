@@ -32,10 +32,10 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -101,8 +101,8 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 				.setWorkspacePath(this.newFile.getFullPath().toOSString());
 		IInfoType type = InformationExtensionManager.getInstance().getInfoTypeByType(
 				newInformationUnit.getType());
-		if (type != null) {
-			Command handlePreSavingCommand = type.getCreationFactory().handlePreSaving(
+		if (type != null && type.getPostCreationHandler() != null) {
+			Command handlePreSavingCommand = type.getPostCreationHandler().handlePreSaving(
 					newInformationUnit, this.monitor);
 			if (handlePreSavingCommand != null && handlePreSavingCommand.canExecute()) {
 				append(handlePreSavingCommand);

@@ -195,7 +195,7 @@ public class BinaryReferenceImpl extends EObjectImpl implements BinaryReference 
 			case InfomngmntPackage.BINARY_REFERENCE__PROJECT_RELATIVE_PATH:
 				return getProjectRelativePath();
 			case InfomngmntPackage.BINARY_REFERENCE__DIRTY:
-				return isDirty() ? Boolean.TRUE : Boolean.FALSE;
+				return isDirty();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -215,7 +215,7 @@ public class BinaryReferenceImpl extends EObjectImpl implements BinaryReference 
 				setProjectRelativePath((String)newValue);
 				return;
 			case InfomngmntPackage.BINARY_REFERENCE__DIRTY:
-				setDirty(((Boolean)newValue).booleanValue());
+				setDirty((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
 
-import org.remus.infomngmnt.util.ValueObject;
+import org.remus.infomngmnt.common.core.util.ValueObject;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

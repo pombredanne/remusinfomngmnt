@@ -26,7 +26,7 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
-import org.remus.infomngmnt.core.path.Path2ObjectMapper;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -54,6 +54,8 @@ public class SyncStateParticipant implements ISaveParticipant {
 					IRepositoryService.class).getRepositoryById(
 					synchronizationMetadata.getRepositoryId());
 			if (itemById != null) {
+				InformationStructureRead readOld = InformationStructureRead.newSession(oldValue);
+				InformationStructureRead readNew = InformationStructureRead.newSession(newValue);
 				try {
 					AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin()
 							.getService(IRepositoryExtensionService.class).getItemByRepository(
@@ -63,30 +65,83 @@ public class SyncStateParticipant implements ISaveParticipant {
 					if (changeSetDefinitionForType != null) {
 						List<String> relevantObjectPaths = changeSetDefinitionForType
 								.getRelevantObjectPaths();
-						for (String string : relevantObjectPaths) {
-							Path2ObjectMapper newValueMapper = new Path2ObjectMapper(string,
-									newValue, null);
-							Path2ObjectMapper oldValueMapper = new Path2ObjectMapper(string,
-									oldValue, null);
-							Object newFragmentValue = newValueMapper.getObjectForPath(false, false);
-							Object oldFragmentValue = oldValueMapper.getObjectForPath(false, false);
-							boolean equals = false;
-							if (newFragmentValue instanceof EObject
-									&& oldFragmentValue instanceof EObject) {
-								equals = EcoreUtil.equals((EObject) newFragmentValue,
-										(EObject) oldFragmentValue);
-							} else if (newFragmentValue != null) {
-								equals = newFragmentValue.equals(oldFragmentValue);
-							} else if (oldFragmentValue != null) {
-								equals = oldFragmentValue.equals(newFragmentValue);
-							} else if (newFragmentValue == null && oldFragmentValue == null) {
-								equals = true;
-							}
-							if (!equals) {
+						for (String string2 : relevantObjectPaths) {
+							try {
+								EObject newFragmentValue = readOld.getChildByPath(string2
+										.split("/"));
+								EObject oldFragmentValue = readNew.getChildByPath(string2
+										.split("/"));
+								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
+								if (!equals) {
+									synchronizationMetadata
+											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									break;
+								}
+							} catch (RuntimeException e) {
 								synchronizationMetadata
 										.setSyncState(SynchronizationState.LOCAL_EDITED);
 								break;
+							}
 
+						}
+						List<String> relevantObjectPathValues = changeSetDefinitionForType
+								.getRelevantObjectPathValues();
+						for (String string2 : relevantObjectPathValues) {
+							try {
+								Object newFragmentValue = readOld
+										.getValueByPath(string2.split("/"));
+								Object oldFragmentValue = readNew
+										.getValueByPath(string2.split("/"));
+								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
+								if (!equals) {
+									synchronizationMetadata
+											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									break;
+								}
+							} catch (RuntimeException e) {
+								synchronizationMetadata
+										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								break;
+							}
+
+						}
+
+						List<String> relevantObjectIdValues = changeSetDefinitionForType
+								.getRelevantObjectIdValues();
+						for (String string2 : relevantObjectIdValues) {
+							try {
+								Object newFragmentValue = readOld.getValueByNodeId(string2);
+								Object oldFragmentValue = readNew.getValueByNodeId(string2);
+								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
+								if (!equals) {
+									synchronizationMetadata
+											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									break;
+
+								}
+							} catch (RuntimeException e) {
+								synchronizationMetadata
+										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								break;
+							}
+
+						}
+						List<String> relevantObjectIds = changeSetDefinitionForType
+								.getRelevantObjectIds();
+						for (String string2 : relevantObjectIds) {
+							try {
+								EObject oldFragmentValue = readOld.getChildByNodeId(string2);
+								EObject newFragmentValue = readNew.getChildByNodeId(string2);
+								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
+								if (!equals) {
+									synchronizationMetadata
+											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									break;
+								}
+							} catch (RuntimeException e) {
+								synchronizationMetadata
+										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								break;
 							}
 						}
 					} else {
@@ -99,6 +154,20 @@ public class SyncStateParticipant implements ISaveParticipant {
 			}
 		}
 
+	}
+
+	private boolean checkEqual(final Object oldFragmentValue, final Object newFragmentValue) {
+		boolean equals = false;
+		if (newFragmentValue instanceof EObject && oldFragmentValue instanceof EObject) {
+			equals = EcoreUtil.equals((EObject) newFragmentValue, (EObject) oldFragmentValue);
+		} else if (newFragmentValue != null) {
+			equals = newFragmentValue.equals(oldFragmentValue);
+		} else if (oldFragmentValue != null) {
+			equals = oldFragmentValue.equals(newFragmentValue);
+		} else if (newFragmentValue == null && oldFragmentValue == null) {
+			equals = true;
+		}
+		return equals;
 	}
 
 	public void handleCreated(final InformationUnit newValue) {

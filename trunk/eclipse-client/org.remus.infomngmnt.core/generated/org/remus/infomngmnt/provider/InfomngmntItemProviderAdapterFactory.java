@@ -798,6 +798,75 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.InformationStructureDefinition} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InformationStructureDefinitionItemProvider informationStructureDefinitionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.InformationStructureDefinition}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInformationStructureDefinitionAdapter() {
+		if (informationStructureDefinitionItemProvider == null) {
+			informationStructureDefinitionItemProvider = new InformationStructureDefinitionItemProvider(this);
+		}
+
+		return informationStructureDefinitionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.InformationStructureItem} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InformationStructureItemItemProvider informationStructureItemItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.InformationStructureItem}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInformationStructureItemAdapter() {
+		if (informationStructureItemItemProvider == null) {
+			informationStructureItemItemProvider = new InformationStructureItemItemProvider(this);
+		}
+
+		return informationStructureItemItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.DynamicStructure} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DynamicStructureItemProvider dynamicStructureItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.DynamicStructure}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDynamicStructureAdapter() {
+		if (dynamicStructureItemProvider == null) {
+			dynamicStructureItemProvider = new DynamicStructureItemProvider(this);
+		}
+
+		return dynamicStructureItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -847,7 +916,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
 			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class) || (((Class<?>)type).isInstance(adapter))) {
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -927,6 +996,9 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (notificationItemProvider != null) notificationItemProvider.dispose();
 		if (notificationCollectionItemProvider != null) notificationCollectionItemProvider.dispose();
 		if (stringToStringMapItemProvider != null) stringToStringMapItemProvider.dispose();
+		if (informationStructureDefinitionItemProvider != null) informationStructureDefinitionItemProvider.dispose();
+		if (informationStructureItemItemProvider != null) informationStructureItemItemProvider.dispose();
+		if (dynamicStructureItemProvider != null) dynamicStructureItemProvider.dispose();
 	}
 
 }

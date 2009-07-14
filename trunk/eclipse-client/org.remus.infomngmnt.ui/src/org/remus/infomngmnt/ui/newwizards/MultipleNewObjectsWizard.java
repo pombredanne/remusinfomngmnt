@@ -21,7 +21,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

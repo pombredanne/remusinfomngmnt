@@ -241,6 +241,22 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 				return createStringToStringMapAdapter();
 			}
 			@Override
+			public Adapter caseInformationStructureDefinition(InformationStructureDefinition object) {
+				return createInformationStructureDefinitionAdapter();
+			}
+			@Override
+			public Adapter caseInformationStructureItem(InformationStructureItem object) {
+				return createInformationStructureItemAdapter();
+			}
+			@Override
+			public Adapter caseInformationStructure(InformationStructure object) {
+				return createInformationStructureAdapter();
+			}
+			@Override
+			public Adapter caseDynamicStructure(DynamicStructure object) {
+				return createDynamicStructureAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -737,6 +753,62 @@ public class InfomngmntAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToStringMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.InformationStructureDefinition <em>Information Structure Definition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.InformationStructureDefinition
+	 * @generated
+	 */
+	public Adapter createInformationStructureDefinitionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.InformationStructureItem <em>Information Structure Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.InformationStructureItem
+	 * @generated
+	 */
+	public Adapter createInformationStructureItemAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.InformationStructure <em>Information Structure</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.InformationStructure
+	 * @generated
+	 */
+	public Adapter createInformationStructureAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.remus.infomngmnt.DynamicStructure <em>Dynamic Structure</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.remus.infomngmnt.DynamicStructure
+	 * @generated
+	 */
+	public Adapter createDynamicStructureAdapter() {
 		return null;
 	}
 

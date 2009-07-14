@@ -33,14 +33,14 @@
          point="org.eclipse.core.resources.builders">
       <builder>
          <run
-               class="org.remus.infomngmnt.core.builder.InformationBuilder">
+               class="org.remus.infomngmnt.core.internal.builder.InformationBuilder">
          </run></builder>
    </extension>
    <extension
          point="org.eclipse.core.runtime.adapters">
       <factory
             adaptableType="org.remus.infomngmnt.Category"
-            class="org.remus.infomngmnt.core.adapters.CategoryAdapterFactory">
+            class="org.remus.infomngmnt.core.internal.adapters.CategoryAdapterFactory">
          <adapter
                type="org.eclipse.core.resources.IProject">
          </adapter>
@@ -53,7 +53,7 @@
       </factory>
       <factory
             adaptableType="org.remus.infomngmnt.InformationUnitListItem"
-            class="org.remus.infomngmnt.core.adapters.InformationUnitListItemAdapterFactory">
+            class="org.remus.infomngmnt.core.internal.adapters.InformationUnitListItemAdapterFactory">
          <adapter
                type="org.remus.infomngmnt.InformationUnit">
          </adapter>
@@ -63,14 +63,14 @@
       </factory>
       <factory
             adaptableType="org.eclipse.core.resources.IFile"
-            class="org.remus.infomngmnt.core.adapters.FileAdapterFactory">
+            class="org.remus.infomngmnt.core.internal.adapters.FileAdapterFactory">
          <adapter
                type="org.remus.infomngmnt.InformationUnitListItem">
          </adapter>
       </factory>
       <factory
             adaptableType="org.remus.infomngmnt.InformationUnit"
-            class="org.remus.infomngmnt.core.adapters.InformationUnitAdapterFactory">
+            class="org.remus.infomngmnt.core.internal.adapters.InformationUnitAdapterFactory">
          <adapter
                type="org.remus.infomngmnt.InformationUnitListItem">
          </adapter>
@@ -88,7 +88,7 @@
    <extension
          point="org.remus.infomngmnt.core.postProjectHandle">
       <projectHandle
-            handle="org.remus.infomngmnt.core.builder.InformationBuilderHandle">
+            handle="org.remus.infomngmnt.core.internal.builder.InformationBuilderHandle">
       </projectHandle>
    </extension>
    <extension
@@ -128,7 +128,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="org.remus.infomngmnt.core.startup.InboxProjectStartup">
+            class="org.remus.infomngmnt.core.internal.startup.InboxProjectStartup">
       </startup>
    </extension>
    <extension

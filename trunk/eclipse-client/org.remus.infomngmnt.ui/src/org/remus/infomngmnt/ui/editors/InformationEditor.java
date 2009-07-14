@@ -81,13 +81,13 @@ import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 import org.remus.infomngmnt.ui.extension.IEditPage;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 import org.remus.infomngmnt.ui.views.LinkOutline;
+import org.remus.infomngmnt.util.EditingUtil;
 
 public class InformationEditor extends SharedHeaderFormEditor implements IEditingDomainProvider {
 

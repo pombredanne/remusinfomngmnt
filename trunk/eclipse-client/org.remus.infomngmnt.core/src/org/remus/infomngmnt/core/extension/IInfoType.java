@@ -17,12 +17,15 @@ import java.util.List;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.InformationStructureDefinition;
+import org.remus.infomngmnt.core.create.PostCreationHandler;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface IInfoType {
 
-	AbstractCreationFactory getCreationFactory();
+	PostCreationHandler getPostCreationHandler();
 
 	AbstractInformationRepresentation getInformationRepresentation();
 
@@ -35,6 +38,8 @@ public interface IInfoType {
 	List<String> getValidTransferTypeIds();
 
 	String getName();
+
+	InformationStructureDefinition getStructureDefinition();
 
 	boolean isBuildHtml();
 

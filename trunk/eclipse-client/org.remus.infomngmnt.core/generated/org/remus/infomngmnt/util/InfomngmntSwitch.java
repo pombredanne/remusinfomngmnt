@@ -348,6 +348,34 @@ public class InfomngmntSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case InfomngmntPackage.INFORMATION_STRUCTURE_DEFINITION: {
+				InformationStructureDefinition informationStructureDefinition = (InformationStructureDefinition)theEObject;
+				T result = caseInformationStructureDefinition(informationStructureDefinition);
+				if (result == null) result = caseInformationStructure(informationStructureDefinition);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.INFORMATION_STRUCTURE_ITEM: {
+				InformationStructureItem informationStructureItem = (InformationStructureItem)theEObject;
+				T result = caseInformationStructureItem(informationStructureItem);
+				if (result == null) result = caseInformationStructure(informationStructureItem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.INFORMATION_STRUCTURE: {
+				InformationStructure informationStructure = (InformationStructure)theEObject;
+				T result = caseInformationStructure(informationStructure);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case InfomngmntPackage.DYNAMIC_STRUCTURE: {
+				DynamicStructure dynamicStructure = (DynamicStructure)theEObject;
+				T result = caseDynamicStructure(dynamicStructure);
+				if (result == null) result = caseInformationStructureItem(dynamicStructure);
+				if (result == null) result = caseInformationStructure(dynamicStructure);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -845,6 +873,66 @@ public class InfomngmntSwitch<T> {
 	 * @generated
 	 */
 	public T caseStringToStringMap(Map.Entry<String, String> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Information Structure Definition</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Information Structure Definition</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInformationStructureDefinition(InformationStructureDefinition object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Information Structure Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Information Structure Item</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInformationStructureItem(InformationStructureItem object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Information Structure</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Information Structure</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInformationStructure(InformationStructure object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dynamic Structure</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dynamic Structure</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDynamicStructure(DynamicStructure object) {
 		return null;
 	}
 

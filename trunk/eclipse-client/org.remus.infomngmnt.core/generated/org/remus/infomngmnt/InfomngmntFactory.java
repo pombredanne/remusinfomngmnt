@@ -277,6 +277,33 @@ public interface InfomngmntFactory extends EFactory {
 	NotificationCollection createNotificationCollection();
 
 	/**
+	 * Returns a new object of class '<em>Information Structure Definition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Information Structure Definition</em>'.
+	 * @generated
+	 */
+	InformationStructureDefinition createInformationStructureDefinition();
+
+	/**
+	 * Returns a new object of class '<em>Information Structure Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Information Structure Item</em>'.
+	 * @generated
+	 */
+	InformationStructureItem createInformationStructureItem();
+
+	/**
+	 * Returns a new object of class '<em>Dynamic Structure</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dynamic Structure</em>'.
+	 * @generated
+	 */
+	DynamicStructure createDynamicStructure();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

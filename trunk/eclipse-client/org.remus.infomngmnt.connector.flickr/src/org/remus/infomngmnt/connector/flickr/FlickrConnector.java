@@ -45,6 +45,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
+import org.xml.sax.SAXException;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -58,9 +60,7 @@ import org.remus.infomngmnt.common.core.streams.StreamUtil;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.IRepository;
@@ -68,7 +68,9 @@ import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.xml.sax.SAXException;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.InformationUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.FlickrException;
@@ -382,7 +384,8 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 
 	}
 
-	private void deletePhotoFromSet(String setId, String photoId) throws RemoteException {
+	private void deletePhotoFromSet(final String setId, final String photoId)
+			throws RemoteException {
 		try {
 			List allContexts = getApi().getPhotosInterface().getAllContexts(photoId);
 			if (allContexts.size() > 1) {
@@ -549,8 +552,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
 					getTypeIdByObject(remoteObjectBySynchronizableObject));
 			if (infoTypeByType != null) {
-				InformationUnit informationUnit = infoTypeByType.getCreationFactory()
-						.createNewObject();
+				InformationStructureEdit edit = InformationStructureEdit.newSession(infoTypeByType
+						.getType());
+				InformationUnit informationUnit = edit.newInformationUnit();
 
 				informationUnit.setLabel(currentPhoto.getTitle());
 				/*
@@ -564,9 +568,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				}
 				informationUnit.setKeywords(StringUtils.join(tagValues, " "));
 				informationUnit.setDescription(currentPhoto.getDescription());
-				InformationUnit originalFilePath = InformationUtil.getChildByType(informationUnit,
-						ImagePlugin.ORIGINAL_FILEPATH);
-				originalFilePath.setStringValue("flickr." + currentPhoto.getOriginalFormat());
+
+				edit.setValue(informationUnit, ImagePlugin.ORIGINAL_FILEPATH, "flickr."
+						+ currentPhoto.getOriginalFormat());
 
 				try {
 					/*
@@ -575,8 +579,12 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					Collection exifs = getApi().getPhotosInterface().getExif(currentPhoto.getId(),
 							currentPhoto.getSecret());
 					if (exifs.size() > 0) {
-						InformationUnit exifNode = InformationUtil
-								.createNew(ImagePlugin.NODE_NAME_EXIF);
+						InformationUnit exifNode = edit.createSubType(ImagePlugin.NODE_NAME_EXIF,
+								null);
+						informationUnit.getChildValues().add(exifNode);
+
+						// FIXME old style
+
 						for (Object object : exifs) {
 							Exif exif = (Exif) object;
 							String stringValue = exif.getClean();
@@ -584,12 +592,15 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 								stringValue = exif.getRaw();
 							}
 							if (stringValue != null) {
-								InformationUnit exifDataNode = InformationUtil.createNew(exif
-										.getLabel(), stringValue);
-								exifNode.getChildValues().add(exifDataNode);
+								InformationUnit exifNodeItem = edit.createSubType(
+										ImagePlugin.NODE_NAME_EXIF_ITEM, null);
+								edit.setValue(exifNodeItem, ImagePlugin.NODE_NAME_EXIF_KEY, exif
+										.getLabel());
+								edit.setValue(exifNodeItem, ImagePlugin.NODE_NAME_EXIF_VALUE,
+										stringValue);
+								edit.addDynamicNode(informationUnit, exifNodeItem, null);
 							}
 						}
-						informationUnit.getChildValues().add(exifNode);
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -613,11 +624,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 						ImageData[] load = new ImageLoader().load(contents);
 						int width = load[0].width;
 						int height = load[0].height;
-						InformationUtil
-								.getChildByType(informationUnit, ImagePlugin.NODE_NAME_WIDTH)
-								.setLongValue(width);
-						InformationUtil.getChildByType(informationUnit,
-								ImagePlugin.NODE_NAME_HEIGHT).setLongValue(height);
+						edit.setValue(informationUnit, ImagePlugin.NODE_NAME_WIDTH, width);
+						edit.setValue(informationUnit, ImagePlugin.NODE_NAME_HEIGHT, height);
+
 						StreamCloser.closeStreams(contents);
 						this.tmpFile = tempFile;
 						/*
@@ -648,8 +657,8 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 								for (Object object : notes) {
 									Note note = (Note) object;
 									Rectangle bounds = note.getBounds();
-									InformationUnit createNew = InformationUtil
-											.createNew(ImagePlugin.NODE_NAME_LINK);
+									InformationUnit createNew = edit.createSubType(
+											ImagePlugin.NODE_NAME_LINK, null);
 									ShapableInfoDelegate shapableInfoDelegate = new ShapableInfoDelegate(
 											createNew, new Dimension(width2, height2),
 											tmpEditingdomain);
@@ -657,9 +666,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 									shapableInfoDelegate.setSize(bounds.getSize());
 									shapableInfoDelegate.setText(note.getText());
 									shapableInfoDelegate.dispose();
-									InformationUtil.getChildByType(informationUnit,
-											ImagePlugin.NODE_NAME_LINKS).getChildValues().add(
-											createNew);
+
+									edit.addDynamicNode(informationUnit, createNew, null);
+
 								}
 							}
 						}

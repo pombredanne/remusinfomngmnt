@@ -31,15 +31,14 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.IdFactory;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -52,8 +51,6 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 	private final ImportImageObject obj;
 
 	private File rootDirectory;
-
-	private IInfoType typeByType;
 
 	private EditingDomain editingDomain;
 
@@ -78,8 +75,9 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 				copy2Tmp.run(new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
 
 				monitor.setTaskName(NLS.bind("Adding image \"{0}\"", path.lastSegment()));
-				InformationUnit createNewObject = this.typeByType.getCreationFactory()
-						.createNewObject();
+				InformationUnit createNewObject = InformationStructureEdit.newSession(
+						ImagePlugin.TYPE_ID).newInformationUnit();
+
 				LoadImageRunnable loadImageRunnable = new LoadImageRunnable(true);
 				loadImageRunnable.setImagePath(copy2Tmp.getTmpFile().getLocation().toOSString());
 				loadImageRunnable.setDomain(this.editingDomain);
@@ -145,8 +143,6 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		this.rootDirectory = new File(this.obj.getDirectory());
 		this.rootCateogry = CategoryUtil.findCategory(this.obj.getCategory(), true);
-		this.typeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-				ImagePlugin.TYPE_ID);
 		try {
 			prepare(this.rootDirectory, monitor, this.rootCateogry);
 		} catch (InvocationTargetException e) {

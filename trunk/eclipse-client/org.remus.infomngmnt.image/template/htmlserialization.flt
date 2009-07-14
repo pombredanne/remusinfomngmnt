@@ -130,12 +130,14 @@
   		</div>
   		<table>
   			<#list exif as exifItem >
+  			<#assign exifKey = exifItem["childValues[@type='exifkey']"] >
+  			<#assign exifValue = exifItem["childValues[@type='exifvalue']"] >
   			<tr>
   				<td class="bold">
-  					${exifItem.@type?html}
+  					${exifKey.@stringValue?html}
   				</td>
   				<td>
-  					${exifItem.@stringValue?html}
+  					${exifValue.@stringValue?html}
   				</td>
   			</tr>
   			</#list>

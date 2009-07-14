@@ -24,7 +24,7 @@ import org.remus.infomngmnt.RuleAction;
 import org.remus.infomngmnt.RuleResult;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessElement;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
-import org.remus.infomngmnt.core.model.IdFactory;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -29,12 +29,12 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.service.ITrayService;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

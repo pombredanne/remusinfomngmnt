@@ -4,10 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            creationFactory="org.remus.infomngmnt.plaintext.extension.UnformattedTextCreationFactory"
             icon="icons/iconexperience/text.png"
             name="Unformatted Text"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="PLAINTEXT">
          <validTransfers
                transferId="org.remus.infomngmnt.core.htmltransfer">

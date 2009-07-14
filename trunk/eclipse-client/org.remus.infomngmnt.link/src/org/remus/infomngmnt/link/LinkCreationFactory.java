@@ -19,38 +19,20 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.create.PostCreationHandler;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.operation.IndexWebPageRunnable;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class LinkCreationFactory extends AbstractCreationFactory {
-
-	/**
-	 * 
-	 */
-	public LinkCreationFactory() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public InformationUnit createNewObject() {
-		InformationUnit returnValue = super.createNewObject();
-		returnValue.setType(LinkActivator.LINK_INFO_ID);
-		InformationUnit indexContent = InfomngmntFactory.eINSTANCE.createInformationUnit();
-		indexContent.setType(LinkActivator.NODE_INDEX);
-		returnValue.getChildValues().add(indexContent);
-		return returnValue;
-	}
+public class LinkCreationFactory extends PostCreationHandler {
 
 	@Override
 	public Command handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {

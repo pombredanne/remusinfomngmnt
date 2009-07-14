@@ -478,7 +478,7 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 			case InfomngmntPackage.NOTIFICATION__SEVERITY:
 				return getSeverity();
 			case InfomngmntPackage.NOTIFICATION__NOTICED:
-				return isNoticed() ? Boolean.TRUE : Boolean.FALSE;
+				return isNoticed();
 			case InfomngmntPackage.NOTIFICATION__MESSAGE:
 				return getMessage();
 			case InfomngmntPackage.NOTIFICATION__DETAILS:
@@ -514,7 +514,7 @@ public class NotificationImpl extends AdapterImpl implements Notification {
 				setSeverity((Severity)newValue);
 				return;
 			case InfomngmntPackage.NOTIFICATION__NOTICED:
-				setNoticed(((Boolean)newValue).booleanValue());
+				setNoticed((Boolean)newValue);
 				return;
 			case InfomngmntPackage.NOTIFICATION__MESSAGE:
 				setMessage((String)newValue);

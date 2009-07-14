@@ -22,11 +22,11 @@ import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.rules.PostProcessingResult;
 import org.remus.infomngmnt.core.rules.RuleProcessor;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 import org.remus.infomngmnt.ui.rules.ICreationTrigger;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

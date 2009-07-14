@@ -35,8 +35,8 @@ import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.contact.ui.general.CalendarDateChooser;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditMiscPage extends AbstractInformationFormPage {
 

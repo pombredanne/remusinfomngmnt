@@ -61,7 +61,6 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.view.AbstractScrolledTitledView;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.editor.SearchResultEditor;
@@ -69,6 +68,7 @@ import org.remus.infomngmnt.search.impl.SearchImpl;
 import org.remus.infomngmnt.search.provider.SearchPlugin;
 import org.remus.infomngmnt.search.service.IFavoriteSearchHandler;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -34,6 +34,7 @@ import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.osgi.util.NLS;
+
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -45,16 +46,14 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.connector.youtube.SiteInspector;
 import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
 import org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer;
-import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.OperationNotSupportedException;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 import org.remus.infomngmnt.video.VideoActivator;
 
 import com.google.gdata.client.youtube.YouTubeService;
@@ -297,11 +296,12 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 						this.tmpVideoFile, getFileReceiveAdapter());
 				downloadVidJob.run(monitor);
 			}
-			AbstractCreationFactory abstractCreationFactory = InformationExtensionManager
-					.getInstance().getInfoTypeByType(VideoActivator.TYPE_ID).getCreationFactory();
-			InformationUnit createNewObject = abstractCreationFactory.createNewObject();
-			InformationUtil.getChildByType(createNewObject, VideoActivator.NODE_NAME_MEDIATYPE)
-					.setStringValue("flv");
+
+			InformationStructureEdit edit = InformationStructureEdit
+					.newSession(VideoActivator.TYPE_ID);
+			InformationUnit createNewObject = edit.newInformationUnit();
+			edit.setValue(createNewObject, VideoActivator.NODE_NAME_MEDIATYPE, "flv");
+
 			RemoteObject remoteObjectBySynchronizableObject = getRemoteObjectBySynchronizableObject(
 					informationUnitListItem, monitor);
 			Object wrappedObject = remoteObjectBySynchronizableObject.getWrappedObject();
@@ -325,9 +325,6 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -362,21 +359,6 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 		}
 		return null;
-	}
-
-	private String getExternalUrl(final String url) {
-		try {
-			URL url2 = new URL(url);
-			String path = url2.getPath();
-			String[] split = path.split("/");
-			if (split.length > 0) {
-				String string = split[0];
-			}
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "";
 	}
 
 	@Override

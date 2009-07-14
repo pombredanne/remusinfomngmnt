@@ -41,11 +41,11 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.dialogs.IInputValidator;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class NewLinkWizardPage extends TitleAreaDialog {
 

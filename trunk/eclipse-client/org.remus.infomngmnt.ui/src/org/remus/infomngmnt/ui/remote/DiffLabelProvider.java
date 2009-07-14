@@ -32,9 +32,9 @@ import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.sync.SyncUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -4,10 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            creationFactory="org.remus.infomngmnt.sourcecode.core.SourceCodeCreationFactory"
             icon="icons/iconexperience/code_colored.png"
             name="Source Code"
             presentation="org.remus.infomngmnt.sourcecode.core.SourceCodeInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="SOURCE">
          <validTransfers
                transferId="org.remus.infomngmnt.core.texttransfer">

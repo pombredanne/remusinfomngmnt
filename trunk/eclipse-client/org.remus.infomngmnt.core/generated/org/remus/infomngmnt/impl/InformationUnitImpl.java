@@ -46,6 +46,7 @@ import org.remus.infomngmnt.Usage;
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#isBoolValue <em>Bool Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getBinaryValue <em>Binary Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDateValue <em>Date Value</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDoubleValue <em>Double Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getChildValues <em>Child Values</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getReferences <em>References</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getLinks <em>Links</em>}</li>
@@ -160,6 +161,26 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @ordered
 	 */
 	protected Date dateValue = DATE_VALUE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDoubleValue() <em>Double Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDoubleValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final double DOUBLE_VALUE_EDEFAULT = 0.0;
+
+	/**
+	 * The cached value of the '{@link #getDoubleValue() <em>Double Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDoubleValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected double doubleValue = DOUBLE_VALUE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getChildValues() <em>Child Values</em>}' containment reference list.
@@ -410,6 +431,27 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public double getDoubleValue() {
+		return doubleValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDoubleValue(double newDoubleValue) {
+		double oldDoubleValue = doubleValue;
+		doubleValue = newDoubleValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__DOUBLE_VALUE, oldDoubleValue, doubleValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<InformationUnit> getChildValues() {
 		if (childValues == null) {
 			childValues = new EObjectContainmentEList<InformationUnit>(InformationUnit.class, this, InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES);
@@ -597,13 +639,15 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__STRING_VALUE:
 				return getStringValue();
 			case InfomngmntPackage.INFORMATION_UNIT__LONG_VALUE:
-				return new Long(getLongValue());
+				return getLongValue();
 			case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
-				return isBoolValue() ? Boolean.TRUE : Boolean.FALSE;
+				return isBoolValue();
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
 				return getBinaryValue();
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 				return getDateValue();
+			case InfomngmntPackage.INFORMATION_UNIT__DOUBLE_VALUE:
+				return getDoubleValue();
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				return getChildValues();
 			case InfomngmntPackage.INFORMATION_UNIT__REFERENCES:
@@ -640,16 +684,19 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				setStringValue((String)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__LONG_VALUE:
-				setLongValue(((Long)newValue).longValue());
+				setLongValue((Long)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
-				setBoolValue(((Boolean)newValue).booleanValue());
+				setBoolValue((Boolean)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
 				setBinaryValue((byte[])newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 				setDateValue((Date)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_UNIT__DOUBLE_VALUE:
+				setDoubleValue((Double)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				getChildValues().clear();
@@ -710,6 +757,9 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 				setDateValue(DATE_VALUE_EDEFAULT);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__DOUBLE_VALUE:
+				setDoubleValue(DOUBLE_VALUE_EDEFAULT);
+				return;
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				getChildValues().clear();
 				return;
@@ -759,6 +809,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return BINARY_VALUE_EDEFAULT == null ? binaryValue != null : !BINARY_VALUE_EDEFAULT.equals(binaryValue);
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
 				return DATE_VALUE_EDEFAULT == null ? dateValue != null : !DATE_VALUE_EDEFAULT.equals(dateValue);
+			case InfomngmntPackage.INFORMATION_UNIT__DOUBLE_VALUE:
+				return doubleValue != DOUBLE_VALUE_EDEFAULT;
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				return childValues != null && !childValues.isEmpty();
 			case InfomngmntPackage.INFORMATION_UNIT__REFERENCES:
@@ -801,6 +853,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 		result.append(binaryValue);
 		result.append(", dateValue: ");
 		result.append(dateValue);
+		result.append(", doubleValue: ");
+		result.append(doubleValue);
 		result.append(", creationDate: ");
 		result.append(creationDate);
 		result.append(", description: ");

@@ -81,8 +81,6 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.calendar.CalendarEditor;
 import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
@@ -92,6 +90,8 @@ import org.remus.infomngmnt.ui.dnd.CustomDropTargetListener;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.link.NewLinkWizardPage;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

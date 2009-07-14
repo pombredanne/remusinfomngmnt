@@ -47,11 +47,13 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 
 	public static final String TRANSFERID_ATT = "transferId"; //$NON-NLS-1$
 
-	public static final String CREATION_FACTORY_ATT = "creationFactory"; //$NON-NLS-1$
+	public static final String POST_CREATION_ATT = "postCreationHandler"; //$NON-NLS-1$
 
 	public static final String PRESENTATION_ATT = "presentation"; //$NON-NLS-1$
 
 	public static final String TRANSFER_TYPE_NODENAME = "validTransfers"; //$NON-NLS-1$
+
+	public static final String STRUCTURE_DEFINITION = "structuredefinition"; //$NON-NLS-1$
 
 	private static InformationExtensionManager INSTANCE;
 
@@ -89,9 +91,10 @@ public class InformationExtensionManager extends PluginRegistryDynamic {
 					: Boolean.valueOf(configurationElement.getAttribute(BUILDHTML_ATT));
 			final InfoType infoType = new InfoType(configurationElement, configurationElement
 					.getContributor().getName(), configurationElement.getAttribute(NAME_ATT),
-					configurationElement.getAttribute(TYPE_ATT), CREATION_FACTORY_ATT,
+					configurationElement.getAttribute(TYPE_ATT), POST_CREATION_ATT,
 					configurationElement.getAttribute(ICON_ATT), buildHtml, Boolean
-							.valueOf(configurationElement.getAttribute(EXCLUDE_FROM_INDEX_ATT)));
+							.valueOf(configurationElement.getAttribute(EXCLUDE_FROM_INDEX_ATT)),
+					configurationElement.getAttribute(STRUCTURE_DEFINITION));
 			IConfigurationElement[] children = configurationElement
 					.getChildren(TRANSFER_TYPE_NODENAME);
 			List<String> validTransferIds = new ArrayList<String>();

@@ -26,7 +26,7 @@ import org.eclipse.ui.PlatformUI;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.fieldassist.SmartField;
-import org.remus.infomngmnt.core.model.CategoryUtil;
+import org.remus.infomngmnt.util.CategoryUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

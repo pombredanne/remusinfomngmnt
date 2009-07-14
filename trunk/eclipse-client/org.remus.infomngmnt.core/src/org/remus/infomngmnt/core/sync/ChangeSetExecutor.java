@@ -40,6 +40,7 @@ import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
+
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
@@ -61,15 +62,16 @@ import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
 import org.remus.infomngmnt.core.commands.DeleteInformationUnitCommand;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.IdFactory;
-import org.remus.infomngmnt.core.model.StatusCreator;
-import org.remus.infomngmnt.core.path.Path2ObjectMapper;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.remote.IChangeSetDefinition;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IdFactory;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -587,18 +589,30 @@ public class ChangeSetExecutor {
 		newRemoteInformationUnit.setId(synchronizableObject.getId());
 		InformationUnit adapter = (InformationUnit) itemById.getAdapter(InformationUnit.class);
 		if (changeSetDefinitionForType != null) {
+			InformationStructureRead readRemote = InformationStructureRead
+					.newSession(newRemoteInformationUnit);
+			InformationStructureEdit editLocal = InformationStructureEdit.newSession(adapter
+					.getType());
+			List<String> relevantObjectIdValues = changeSetDefinitionForType
+					.getRelevantObjectIdValues();
+			for (String string : relevantObjectIdValues) {
+				editLocal.setValue(adapter, string, readRemote.getValueByNodeId(string));
+			}
+			List<String> relevantObjectIds = changeSetDefinitionForType.getRelevantObjectIds();
+			for (String string : relevantObjectIds) {
+				editLocal.setObject(adapter, string, readRemote.getChildByNodeId(string));
+			}
+			List<String> relevantObjectPathValues = changeSetDefinitionForType
+					.getRelevantObjectPathValues();
+			for (String string : relevantObjectPathValues) {
+				editLocal.setValueByPath(adapter, readRemote.getValueByPath(string.split("/")),
+						string.split("/"));
+			}
 			List<String> relevantObjectPaths = changeSetDefinitionForType.getRelevantObjectPaths();
 			for (String string : relevantObjectPaths) {
-				Object object = Path2ObjectMapper.getObjectByExpression(string,
-						newRemoteInformationUnit);
-				Path2ObjectMapper path2ObjectMapper = new Path2ObjectMapper(string, adapter, object);
-				path2ObjectMapper.getObjectForPath(true, true);
+				// TODO needs to be implemented!!!
 			}
-			EditingUtil.getInstance().saveObjectToResource(adapter);
-			IFile file = (IFile) adapter.getAdapter(IFile.class);
-			if (file != null && file.exists()) {
-				file.getProject().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
-			}
+
 			/*
 			 * Binary references are replaced ALWAYS if repository supports
 			 * this.
@@ -618,6 +632,11 @@ public class ChangeSetExecutor {
 							editingDomain);
 					editingDomain.getCommandStack().execute(addFileCommand);
 				}
+			}
+			EditingUtil.getInstance().saveObjectToResource(adapter);
+			IFile file = (IFile) adapter.getAdapter(IFile.class);
+			if (file != null && file.exists()) {
+				file.getProject().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
 			}
 		} else {
 			Category parentCategory = (Category) itemById.eContainer();

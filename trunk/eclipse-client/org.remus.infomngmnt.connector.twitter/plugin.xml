@@ -12,9 +12,9 @@
          <changeDefinition
                id="org.remus.infomngmnt.connector.twitter.changeDefinition"
                informationType="TWITTER">
-            <changeObjectPath
-                  path="childValues[@type=&apos;messages&apos;]">
-            </changeObjectPath>
+            <changeObjectId
+                  path="messages">
+            </changeObjectId>
          </changeDefinition>
       </repository-connector>
    </extension>
@@ -30,11 +30,11 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="false"
-            creationFactory="org.remus.infomngmnt.connector.twitter.infotype.TwitterCreationFactory"
             excludeFromIndex="false"
             icon="icons/iconexperience/messages.png"
             name="Twitter Feed"
             presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="TWITTER">
       </information>
    </extension>

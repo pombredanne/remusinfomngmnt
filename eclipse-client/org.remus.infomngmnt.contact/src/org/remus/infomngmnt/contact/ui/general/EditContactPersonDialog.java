@@ -39,7 +39,7 @@ import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.IEMFEditBindingProvider;
 import org.remus.infomngmnt.common.ui.jface.BindingStatusDialog;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditContactPersonDialog extends BindingStatusDialog {
 

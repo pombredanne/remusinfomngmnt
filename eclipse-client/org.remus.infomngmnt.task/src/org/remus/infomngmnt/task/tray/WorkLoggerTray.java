@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.Action;
@@ -42,10 +41,11 @@ import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmt.common.ui.uimodel.TraySection;
 
 /**
@@ -228,18 +228,18 @@ public class WorkLoggerTray extends AbstractTraySection {
 	private void stopTracking() {
 		InformationUnit adapter = (InformationUnit) this.itemById.getAdapter(InformationUnit.class);
 		if (adapter != null) {
-			EList<InformationUnit> childValues = InformationUtil.getChildByType(adapter,
-					TaskActivator.NODE_NAME_WORKED_UNITS).getChildValues();
-			InformationUnit unit = InformationUtil.createNew(TaskActivator.NODE_NAME_WORKED_UNIT);
-			unit.getChildValues().add(
-					InformationUtil.createNew(TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION,
-							this.description));
-			unit.getChildValues().add(
-					InformationUtil.createNew(TaskActivator.NODE_NAME_WORKED_UNIT_STARTED,
-							this.startTime));
-			unit.getChildValues().add(
-					InformationUtil.createNew(TaskActivator.NODE_NAME_WORKED_UNIT_END, new Date()));
-			childValues.add(unit);
+
+			InformationStructureEdit edit = InformationStructureEdit
+					.newSession(TaskActivator.INFO_TYPE_ID);
+			InformationUnit informationUnit = edit.createSubType(
+					TaskActivator.NODE_NAME_WORKED_UNIT, null);
+			edit.addDynamicNode(adapter, informationUnit, null);
+			edit.setValue(informationUnit, TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION,
+					this.description);
+			edit.setValue(informationUnit, TaskActivator.NODE_NAME_WORKED_UNIT_STARTED,
+					this.startTime);
+			edit.setValue(informationUnit, TaskActivator.NODE_NAME_WORKED_UNIT_END, new Date());
+
 			EditingUtil.getInstance().saveObjectToResource(adapter);
 			this.startTime = null;
 		}

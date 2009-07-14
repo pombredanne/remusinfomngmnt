@@ -12,24 +12,23 @@
          <changeDefinition
                id="org.remus.infomngmnt.link.delicious.linkChange"
                informationType="LINK">
-            <changeObjectPath
-                  path="@label"></changeObjectPath>
-            <changeObjectPath
+            <changeObjectIdValue
+                  path="@label"></changeObjectIdValue>
+            <changeObjectIdValue
                   path="@keywords">
-            </changeObjectPath>
-            <changeObjectPath
+            </changeObjectIdValue>
+            <changeObjectIdValue
                   path="@description">
-            </changeObjectPath>
-            <changeObjectPath
-                  path="@stringValue">
-            </changeObjectPath>
+            </changeObjectIdValue>
+            <changeObjectIdValue
+                  path="LINK">
+            </changeObjectIdValue>
          </changeDefinition>
       </repository-connector>
    </extension>
    <extension
          point="org.remus.infomngmnt.ui.repositoryUI">
       <respository
-            actioncontributor="org.remus.infomngmnt.link.delicious.ui.DeliciousActionContributor"
             id="org.remus.infomngmnt.link.delicious.ui"
             newWizard="org.remus.infomngmnt.link.delicious.ui.NewDeliciousRepositoryWizard"
             repository-id="org.remus.infomngmnt.link.delicious">

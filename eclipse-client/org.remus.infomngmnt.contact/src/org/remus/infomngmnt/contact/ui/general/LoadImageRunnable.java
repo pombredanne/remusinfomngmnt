@@ -27,10 +27,10 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.streams.FileUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.InformationUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class LoadImageRunnable extends CancelableRunnable {
 

@@ -128,6 +128,9 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.NOTIFICATION: return createNotification();
 			case InfomngmntPackage.NOTIFICATION_COLLECTION: return createNotificationCollection();
 			case InfomngmntPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
+			case InfomngmntPackage.INFORMATION_STRUCTURE_DEFINITION: return createInformationStructureDefinition();
+			case InfomngmntPackage.INFORMATION_STRUCTURE_ITEM: return createInformationStructureItem();
+			case InfomngmntPackage.DYNAMIC_STRUCTURE: return createDynamicStructure();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -150,6 +153,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return createNotificationImportanceFromString(eDataType, initialValue);
 			case InfomngmntPackage.SEVERITY:
 				return createSeverityFromString(eDataType, initialValue);
+			case InfomngmntPackage.INFORMATION_STRUCTURE_TYPE:
+				return createInformationStructureTypeFromString(eDataType, initialValue);
 			case InfomngmntPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			default:
@@ -174,6 +179,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return convertNotificationImportanceToString(eDataType, instanceValue);
 			case InfomngmntPackage.SEVERITY:
 				return convertSeverityToString(eDataType, instanceValue);
+			case InfomngmntPackage.INFORMATION_STRUCTURE_TYPE:
+				return convertInformationStructureTypeToString(eDataType, instanceValue);
 			case InfomngmntPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			default:
@@ -466,6 +473,36 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InformationStructureDefinition createInformationStructureDefinition() {
+		InformationStructureDefinitionImpl informationStructureDefinition = new InformationStructureDefinitionImpl();
+		return informationStructureDefinition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InformationStructureItem createInformationStructureItem() {
+		InformationStructureItemImpl informationStructureItem = new InformationStructureItemImpl();
+		return informationStructureItem;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DynamicStructure createDynamicStructure() {
+		DynamicStructureImpl dynamicStructure = new DynamicStructureImpl();
+		return dynamicStructure;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -556,6 +593,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * @generated
 	 */
 	public String convertSeverityToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InformationStructureType createInformationStructureTypeFromString(EDataType eDataType, String initialValue) {
+		InformationStructureType result = InformationStructureType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertInformationStructureTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

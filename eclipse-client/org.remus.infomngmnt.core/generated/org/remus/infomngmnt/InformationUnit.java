@@ -31,6 +31,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.InformationUnit#isBoolValue <em>Bool Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getBinaryValue <em>Binary Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getDateValue <em>Date Value</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnit#getDoubleValue <em>Double Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getChildValues <em>Child Values</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getReferences <em>References</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}</li>
@@ -177,6 +178,32 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @generated
 	 */
 	void setDateValue(Date value);
+
+	/**
+	 * Returns the value of the '<em><b>Double Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Double Value</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Double Value</em>' attribute.
+	 * @see #setDoubleValue(double)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_DoubleValue()
+	 * @model
+	 * @generated
+	 */
+	double getDoubleValue();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getDoubleValue <em>Double Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Double Value</em>' attribute.
+	 * @see #getDoubleValue()
+	 * @generated
+	 */
+	void setDoubleValue(double value);
 
 	/**
 	 * Returns the value of the '<em><b>Child Values</b></em>' containment reference list.

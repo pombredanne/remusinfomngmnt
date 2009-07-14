@@ -21,8 +21,8 @@ import org.eclipse.emf.common.util.EList;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

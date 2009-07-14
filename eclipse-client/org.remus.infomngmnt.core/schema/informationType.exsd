@@ -89,13 +89,23 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="creationFactory" type="string" use="required">
+         <attribute name="postCreationHandler" type="string">
             <annotation>
                <documentation>
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.AbstractCreationFactory:"/>
+                  <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.creationfactory.PostCreationHandler:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="structuredefinition" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
                </appinfo>
             </annotation>
          </attribute>

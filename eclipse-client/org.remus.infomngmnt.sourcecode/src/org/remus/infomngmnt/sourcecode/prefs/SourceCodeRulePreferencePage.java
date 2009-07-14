@@ -32,9 +32,9 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.RuleValue;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -4,10 +4,11 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            creationFactory="org.remus.infomngmnt.link.LinkCreationFactory"
             icon="icons/iconexperience/link.png"
             name="Link"
+            postCreationHandler="org.remus.infomngmnt.link.LinkCreationFactory"
             presentation="org.remus.infomngmnt.link.LinkRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="LINK">
          <validTransfers
                transferId="org.remus.infomngmnt.core.texttransfer">

@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class PasswordPrompt extends StatusDialog {
 

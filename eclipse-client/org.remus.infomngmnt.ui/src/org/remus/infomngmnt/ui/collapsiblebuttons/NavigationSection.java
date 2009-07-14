@@ -71,7 +71,6 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.services.IRuleExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -81,6 +80,7 @@ import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.ui.views.MainViewPart;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

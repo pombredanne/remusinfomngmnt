@@ -40,13 +40,13 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.ui.editor.EditorUtil;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 import org.remus.infomngmnt.favoritesearch.util.SearchDiff;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchResult;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

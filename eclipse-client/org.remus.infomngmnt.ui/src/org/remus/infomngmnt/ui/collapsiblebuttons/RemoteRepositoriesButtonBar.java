@@ -52,8 +52,6 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.deferred.DeferredContentProvider;
@@ -61,6 +59,8 @@ import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

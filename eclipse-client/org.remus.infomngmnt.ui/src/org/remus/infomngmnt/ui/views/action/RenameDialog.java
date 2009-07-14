@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class RenameDialog extends StatusDialog {
 

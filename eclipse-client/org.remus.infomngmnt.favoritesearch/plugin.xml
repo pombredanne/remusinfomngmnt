@@ -5,11 +5,11 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="false"
-            creationFactory="org.remus.infomngmnt.favoritesearch.FavoriteSearchCreationFactory"
             excludeFromIndex="true"
             icon="icons/iconexperience/fav_search.png"
             name="Favorite Search"
             presentation="org.remus.infomngmnt.favoritesearch.SearchPresentation"
+            structuredefinition="structuredefinition.xmi"
             type="FAVSEARCH">
       </information>
    </extension>

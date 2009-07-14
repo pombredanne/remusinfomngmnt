@@ -36,13 +36,13 @@ import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessDialog;
 import org.remus.infomngmnt.common.ui.quickaccess.QuickAccessProvider;
-import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.rules.RuleProcessor;
 import org.remus.infomngmnt.core.services.IRuleService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.desktop.NewElementQuickAccessProider;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

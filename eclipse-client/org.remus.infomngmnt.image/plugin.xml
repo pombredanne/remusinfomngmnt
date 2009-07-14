@@ -4,10 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            creationFactory="org.remus.infomngmnt.image.core.ImageCreationFactory"
             icon="icons/iconexperience/photo_landscape.png"
             name="Photo/Graphics"
             presentation="org.remus.infomngmnt.image.core.ImageInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="IMAGE">
          <validTransfers
                transferId="org.remus.infomngmnt.core.imagetransfer">

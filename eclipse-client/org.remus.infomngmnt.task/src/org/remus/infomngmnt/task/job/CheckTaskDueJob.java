@@ -30,8 +30,8 @@ import org.remus.infomngmnt.NotificationImportance;
 import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

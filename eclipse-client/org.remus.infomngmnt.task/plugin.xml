@@ -5,11 +5,11 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="false"
-            creationFactory="org.remus.infomngmnt.task.extension.TaskCreationFactory"
             excludeFromIndex="false"
             icon="icons/iconexperience/task.png"
             name="Task"
             presentation="org.remus.infomngmnt.task.extension.TaskInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="TASK">
          <validTransfers
                transferId="org.remus.infomngmnt.core.filetransfer">

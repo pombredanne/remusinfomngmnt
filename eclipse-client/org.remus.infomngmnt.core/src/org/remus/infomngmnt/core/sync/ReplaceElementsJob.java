@@ -34,10 +34,10 @@ import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

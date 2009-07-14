@@ -29,8 +29,8 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

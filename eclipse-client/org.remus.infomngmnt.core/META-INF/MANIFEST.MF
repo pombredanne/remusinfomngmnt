@@ -11,9 +11,10 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.remus.infomngmnt,
  org.remus.infomngmnt.core,
- org.remus.infomngmnt.core.builder,
  org.remus.infomngmnt.core.commands,
+ org.remus.infomngmnt.core.create,
  org.remus.infomngmnt.core.extension,
+ org.remus.infomngmnt.core.internal.builder,
  org.remus.infomngmnt.core.jobs,
  org.remus.infomngmnt.core.model,
  org.remus.infomngmnt.core.operation,

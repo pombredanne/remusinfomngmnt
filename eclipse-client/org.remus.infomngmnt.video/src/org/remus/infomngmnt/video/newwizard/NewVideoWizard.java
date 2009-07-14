@@ -25,10 +25,10 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.core.transfertypes.FileTransferWrapper;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
+import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.video.VideoActivator;
 
 /**

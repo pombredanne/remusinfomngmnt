@@ -38,4 +38,10 @@ public interface IChangeSetDefinition {
 	 */
 	List<String> getRelevantObjectPaths();
 
+	List<String> getRelevantObjectPathValues();
+
+	List<String> getRelevantObjectIds();
+
+	List<String> getRelevantObjectIdValues();
+
 }

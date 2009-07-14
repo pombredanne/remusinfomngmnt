@@ -40,11 +40,11 @@ import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.CategoryUtil;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
+import org.remus.infomngmnt.util.CategoryUtil;
 
 public class ProjectManagementDialog extends TitleAreaDialog {
 

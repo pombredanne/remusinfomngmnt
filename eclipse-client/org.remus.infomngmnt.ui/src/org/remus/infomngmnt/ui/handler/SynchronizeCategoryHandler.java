@@ -38,11 +38,11 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.core.sync.ChangeSetExecutor;
 import org.remus.infomngmnt.core.sync.ChangeSetManager;
 import org.remus.infomngmnt.ui.remote.SynchronizationWizard;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -26,7 +26,7 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 
 import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.util.EditingUtil;
 
 public class Path2ObjectMapper {
 

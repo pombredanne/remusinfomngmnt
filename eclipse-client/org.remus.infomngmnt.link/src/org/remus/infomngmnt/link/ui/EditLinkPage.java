@@ -45,13 +45,13 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.operation.IndexWebPageRunnable;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.util.InformationUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -22,7 +22,7 @@ import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

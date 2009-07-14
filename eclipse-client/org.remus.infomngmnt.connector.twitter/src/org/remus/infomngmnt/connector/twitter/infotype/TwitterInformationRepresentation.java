@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

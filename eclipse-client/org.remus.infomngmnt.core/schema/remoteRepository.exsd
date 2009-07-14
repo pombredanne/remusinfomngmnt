@@ -2,9 +2,9 @@
 <!-- Schema file written by PDE -->
 <schema targetNamespace="org.remus.infomngmnt.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appinfo>
+      <appInfo>
          <meta.schema plugin="org.remus.infomngmnt.core" id="remoteRepository" name="remoteRepository"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter description of this extension point.]
       </documentation>
@@ -12,9 +12,9 @@
 
    <element name="extension">
       <annotation>
-         <appinfo>
+         <appInfo>
             <meta.element />
-         </appinfo>
+         </appInfo>
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
@@ -39,9 +39,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute translatable="true"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
@@ -64,9 +64,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute translatable="true"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="icon" type="string">
@@ -74,9 +74,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="resource"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string">
@@ -84,9 +84,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="java" basedOn="org.remus.infomngmnt.core.extension.AbstractExtensionRepository:org.remus.infomngmnt.core.remote.IRepository"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="credentialprovider" type="string">
@@ -94,9 +94,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="java"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
@@ -105,7 +105,12 @@
    <element name="changeDefinition">
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="changeObjectPath"/>
+            <choice>
+               <element ref="changeObjectPath"/>
+               <element ref="changeObjectId"/>
+               <element ref="changeObjectPathValue"/>
+               <element ref="changeObjectIdValue"/>
+            </choice>
          </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -119,15 +124,71 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="identifier" basedOn="org.remus.infomngmnt.core.informationType/information/@type"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <element name="changeObjectPath">
+      <annotation>
+         <documentation>
+            A path to a object within a structure definition. Use path only if you reference to a object-structure item which is referenced by another object-structure item, else use changeObjectId, examples homeadress/street
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="path" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="changeObjectPathValue">
+      <annotation>
+         <documentation>
+            A path to a object within a structure definition. Use path only if you reference to a object-structure item which is referenced by another object-structure item, else use changeObjectId, examples homeadress/street
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="path" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="changeObjectId">
+      <annotation>
+         <documentation>
+            A id within of an object within a structure definition.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="path" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="changeObjectIdValue">
+      <annotation>
+         <documentation>
+            A id within of an object within a structure definition.
+         </documentation>
+      </annotation>
       <complexType>
          <attribute name="path" type="string" use="required">
             <annotation>
@@ -140,36 +201,36 @@
    </element>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="since"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter the first release in which this extension point appears.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="examples"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter extension point usage example here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="apiinfo"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter API information here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="implementation"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter information about supplied implementation of this extension point.]
       </documentation>

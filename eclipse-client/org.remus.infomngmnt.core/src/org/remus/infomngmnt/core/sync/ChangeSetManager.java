@@ -64,15 +64,15 @@ import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.IdFactory;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.core.remote.RemoteUtil;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IdFactory;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -28,6 +28,12 @@ public class ImagePlugin extends AbstractUIPlugin {
 
 	public static final String NODE_NAME_LINK = "link";
 
+	public static final String NODE_NAME_EXIF_ITEM = "exifitem";
+
+	public static final String NODE_NAME_EXIF_KEY = "exifkey";
+
+	public static final String NODE_NAME_EXIF_VALUE = "exifvalue";
+
 	/**
 	 * The constructor
 	 */

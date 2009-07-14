@@ -35,11 +35,11 @@ import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.contact.core.ContactUtil;
 import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.services.IGeoData;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.util.InformationUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class ContactInformationRepresentation extends AbstractInformationRepresentation {
 

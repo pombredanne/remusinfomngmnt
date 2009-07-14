@@ -34,10 +34,10 @@ import org.remus.infomngmnt.ccalendar.service.ICalendarService;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.service.ICalendarStoreService;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

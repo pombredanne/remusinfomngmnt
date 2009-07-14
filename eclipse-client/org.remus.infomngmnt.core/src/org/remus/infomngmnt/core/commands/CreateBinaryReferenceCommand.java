@@ -27,8 +27,8 @@ import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

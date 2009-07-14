@@ -49,12 +49,12 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 
+import org.remus.infomngmnt.common.core.util.ValueObject;
 import org.remus.infomngmnt.common.ui.view.SelectionProviderIntermediate;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.service.ICollapsibleButtonExtensionService;
-import org.remus.infomngmnt.util.ValueObject;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

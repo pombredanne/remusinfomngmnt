@@ -22,7 +22,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 public class MessageComposite extends Composite {
 

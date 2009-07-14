@@ -31,9 +31,9 @@ import com.aetrion.flickr.people.User;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.flickr.FlickrCredentials;
 import org.remus.infomngmnt.connector.flickr.FlickrPlugin;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

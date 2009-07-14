@@ -12,21 +12,21 @@
          <changeDefinition
                id="org.remus.infomngmnt.connector.flickr.changeDefinition1"
                informationType="IMAGE">
-            <changeObjectPath
+            <changeObjectIdValue
                   path="@keywords">
-            </changeObjectPath>
-            <changeObjectPath
+            </changeObjectIdValue>
+            <changeObjectIdValue
                   path="@label">
-            </changeObjectPath>
-            <changeObjectPath
+            </changeObjectIdValue>
+            <changeObjectIdValue
                   path="@description">
-            </changeObjectPath>
-            <changeObjectPath
-                  path="childValues[@type=&apos;originalFilePath&apos;]/@stringValue">
-            </changeObjectPath>
-            <changeObjectPath
-                  path="childValues[@type=&apos;links&apos;]">
-            </changeObjectPath>
+            </changeObjectIdValue>
+            <changeObjectIdValue
+                  path="originFilePath">
+            </changeObjectIdValue>
+            <changeObjectId
+                  path="links">
+            </changeObjectId>
          </changeDefinition>
       </repository-connector>
    </extension>

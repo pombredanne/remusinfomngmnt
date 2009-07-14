@@ -151,7 +151,7 @@ public class UsageImpl extends EObjectImpl implements Usage {
 			case InfomngmntPackage.USAGE__LAST_ACCESS:
 				return getLastAccess();
 			case InfomngmntPackage.USAGE__ACCESS_COUNT:
-				return new Integer(getAccessCount());
+				return getAccessCount();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -168,7 +168,7 @@ public class UsageImpl extends EObjectImpl implements Usage {
 				setLastAccess((Date)newValue);
 				return;
 			case InfomngmntPackage.USAGE__ACCESS_COUNT:
-				setAccessCount(((Integer)newValue).intValue());
+				setAccessCount((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

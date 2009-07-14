@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -33,12 +34,11 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.util.StatusCreator;
 
 import del.icio.us.Delicious;
 import del.icio.us.DeliciousConstants;
@@ -178,9 +178,9 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	@Override
 	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
 		if (KEY_LINK.equals(remoteObject.getRepositoryTypeObjectId())) {
-			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-					LinkActivator.LINK_INFO_ID);
-			InformationUnit newObject = infoTypeByType.getCreationFactory().createNewObject();
+			InformationStructureEdit edit = InformationStructureEdit
+					.newSession(LinkActivator.LINK_INFO_ID);
+			InformationUnit newObject = edit.newInformationUnit();
 			Post post = (Post) remoteObject.getWrappedObject();
 			newObject.setLabel(remoteObject.getName());
 			newObject.setStringValue(post.getHref());

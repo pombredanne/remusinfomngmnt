@@ -4,10 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            creationFactory="org.remus.infomngmnt.richtext.presentation.RichTextCreationFactory"
             icon="icons/iconexperience/text_rich_colored.png"
             name="Rich Text"
             presentation="org.remus.infomngmnt.richtext.presentation.RichTextPresentation"
+            structuredefinition="structuredefinition.xmi"
             type="HTML">
          <validTransfers
                transferId="org.remus.infomngmnt.core.htmltransfer">

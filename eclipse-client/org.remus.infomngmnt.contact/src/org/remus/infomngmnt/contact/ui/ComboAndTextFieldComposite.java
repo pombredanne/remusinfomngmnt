@@ -32,7 +32,7 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.IEMFEditBindingProvider;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -328,7 +328,7 @@ public class CalendarEntryImpl extends EObjectImpl implements CalendarEntry {
 			case InfomngmntPackage.CALENDAR_ENTRY__ENTRY_TYPE:
 				return getEntryType();
 			case InfomngmntPackage.CALENDAR_ENTRY__REMINDER:
-				return new Integer(getReminder());
+				return getReminder();
 			case InfomngmntPackage.CALENDAR_ENTRY__TITLE:
 				return getTitle();
 		}
@@ -356,7 +356,7 @@ public class CalendarEntryImpl extends EObjectImpl implements CalendarEntry {
 				setEntryType((CalendarEntryType)newValue);
 				return;
 			case InfomngmntPackage.CALENDAR_ENTRY__REMINDER:
-				setReminder(((Integer)newValue).intValue());
+				setReminder((Integer)newValue);
 				return;
 			case InfomngmntPackage.CALENDAR_ENTRY__TITLE:
 				setTitle((String)newValue);

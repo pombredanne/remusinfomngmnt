@@ -33,10 +33,10 @@ import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceIniti
 import org.remus.infomngmnt.connector.twitter.ui.actions.Add2FavoriteActions;
 import org.remus.infomngmnt.connector.twitter.ui.actions.ReplyAction;
 import org.remus.infomngmnt.connector.twitter.ui.actions.RetweetAction;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.core.sync.SyncUtil;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

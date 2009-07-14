@@ -5,10 +5,10 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="true"
-            creationFactory="org.remus.infomngmnt.contact.core.ContactCreationFactory"
             icon="icons/iconexperience/contact.png"
             name="Contact"
             presentation="org.remus.infomngmnt.contact.ContactInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="CONTACT">
          <validTransfers
                transferId="org.remus.infomngmnt.core.texttransfer">

@@ -26,7 +26,7 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.RemusTransferType;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class NewRuleDialog extends StatusDialog {
 

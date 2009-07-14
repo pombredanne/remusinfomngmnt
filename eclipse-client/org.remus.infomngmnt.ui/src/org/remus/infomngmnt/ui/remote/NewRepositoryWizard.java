@@ -18,11 +18,11 @@ import org.eclipse.jface.wizard.Wizard;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.IdFactory;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

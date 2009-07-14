@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.osgi.util.NLS;
+
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -35,14 +36,13 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
-import org.remus.infomngmnt.core.extension.AbstractCreationFactory;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
+import org.remus.infomngmnt.util.InformationUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 import twitter4j.DirectMessage;
 import twitter4j.Paging;
@@ -316,9 +316,9 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	@SuppressWarnings("unchecked")
 	private InformationUnit createNewObject(final InformationUnitListItem informationUnitListItem)
 			throws RemoteException {
-		AbstractCreationFactory creationFactory = InformationExtensionManager.getInstance()
-				.getInfoTypeByType(TwitterActivator.INFOTYPE_ID).getCreationFactory();
-		InformationUnit createNewObject = creationFactory.createNewObject();
+
+		InformationUnit createNewObject = InformationStructureEdit.newSession(
+				TwitterActivator.INFOTYPE_ID).newInformationUnit();
 		InformationUnit childByType = InformationUtil.getChildByType(createNewObject,
 				TwitterActivator.MESSAGES_ID);
 		try {

@@ -27,8 +27,8 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class TweetDialog extends TitleAreaDialog {
 

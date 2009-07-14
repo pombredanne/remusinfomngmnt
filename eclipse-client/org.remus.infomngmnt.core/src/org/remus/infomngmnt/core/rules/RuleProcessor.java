@@ -42,13 +42,12 @@ import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.CorePlugin;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.services.IRuleExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -150,12 +149,9 @@ public class RuleProcessor {
 	@SuppressWarnings("unchecked")
 	public PostProcessingResult postProcessing(final Object value, final RuleAction ruleAction) {
 		String postProcessingInstructions = ruleAction.getPostProcessingInstructions();
-		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-				ruleAction.getInfoTypeId());
-		if (infoTypeByType == null) {
-			throw new IllegalArgumentException("Info type must not be null");
-		}
-		InformationUnit createNewObject = infoTypeByType.getCreationFactory().createNewObject();
+		InformationStructureEdit session = InformationStructureEdit.newSession(ruleAction
+				.getInfoTypeId());
+		InformationUnit createNewObject = session.newInformationUnit();
 		if (postProcessingInstructions != null) {
 			String script = getGroovyStub();
 			String join = StringUtils.join(script, "\n", postProcessingInstructions);

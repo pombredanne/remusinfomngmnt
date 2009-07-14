@@ -68,8 +68,8 @@ import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactUtil;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.contact.ui.ComboAndTextFieldComposite;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditGeneralPage extends AbstractInformationFormPage {
 

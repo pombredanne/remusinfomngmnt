@@ -40,15 +40,15 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.transfertypes.URLTransferWrapper;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.InformationUtil;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

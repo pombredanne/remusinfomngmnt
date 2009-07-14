@@ -22,7 +22,7 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.util.KeyValueObject;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

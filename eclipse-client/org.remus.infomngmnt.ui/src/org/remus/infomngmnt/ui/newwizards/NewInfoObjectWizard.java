@@ -38,15 +38,14 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.rules.ICreationTrigger;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * <p>
@@ -94,12 +93,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 	 * @return
 	 */
 	protected InformationUnit createNewInformationUnit() {
-		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-				getInfoTypeId());
-		if (infoTypeByType != null) {
-			return infoTypeByType.getCreationFactory().createNewObject();
-		}
-		return null;
+		return InformationStructureEdit.newSession(getInfoTypeId()).newInformationUnit();
 	}
 
 	/**

@@ -41,8 +41,8 @@ import org.remus.infomngmnt.connector.twitter.ui.MessageComposite;
 import org.remus.infomngmnt.connector.twitter.ui.MessageHyperLinkAdapter;
 import org.remus.infomngmnt.connector.twitter.ui.actions.TweetAction;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmt.common.ui.uimodel.TraySection;
 
 /**

@@ -53,11 +53,11 @@ import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.CategoryUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.dialogs.InfoUnitSelectionDialog;
 import org.remus.infomngmnt.ui.editors.EditorUtil;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

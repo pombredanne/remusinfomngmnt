@@ -28,11 +28,11 @@ import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
 
 import twitter4j.DirectMessage;
 import twitter4j.Status;
@@ -54,50 +54,42 @@ public class TwitterUtil {
 	public static final String HREF_KEYWORD_PREFIX = "keyword"; //$NON-NLS-1$
 
 	public static InformationUnit buildMessage(final Status status) {
-		InformationUnit returnValue = InformationUtil.createNew(TwitterActivator.MESSAGE_TYPE);
-		returnValue.getChildValues().add(
-				InformationUtil
-						.createNew(TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_INTERNAL_ID, status.getId()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_SRC_TYPE, status.getSource()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.REPLY_ID, status
-						.getInReplyToScreenName()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_USER_TYPE, status.getUser()
-						.getName()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_USER_ID_TYPE, status.getUser()
-						.getScreenName()));
 
+		InformationStructureEdit edit = InformationStructureEdit
+				.newSession(TwitterActivator.INFOTYPE_ID);
+
+		InformationUnit message = edit.createSubType(TwitterActivator.MESSAGE_TYPE, null);
+
+		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt());
+		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText());
+		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID, status.getId());
+		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE, status.getSource());
+		edit.setValue(message, TwitterActivator.REPLY_ID, status.getInReplyToScreenName());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, status.getUser().getName());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, status.getUser()
+				.getScreenName());
 		TwitterActivator.getDefault().getImageCache().checkCache(status.getUser().getScreenName(),
 				status.getUser().getProfileImageURL(), null);
-		return returnValue;
+
+		return message;
 	}
 
 	public static InformationUnit buildMessage(final DirectMessage status) {
-		InformationUnit returnValue = InformationUtil.createNew(TwitterActivator.MESSAGE_TYPE);
-		returnValue.getChildValues().add(
-				InformationUtil
-						.createNew(TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_INTERNAL_ID, status.getId()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_USER_TYPE, status.getSender()
-						.getName()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_USER_ID_TYPE, status.getSender()
-						.getScreenName()));
+		InformationStructureEdit edit = InformationStructureEdit
+				.newSession(TwitterActivator.INFOTYPE_ID);
+
+		InformationUnit message = edit.createSubType(TwitterActivator.MESSAGE_TYPE, null);
+
+		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt());
+		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText());
+		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID, status.getId());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, status.getSender().getName());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, status.getSender()
+				.getScreenName());
 		TwitterActivator.getDefault().getImageCache().checkCache(
 				status.getSender().getScreenName(), status.getSender().getProfileImageURL(), null);
 
-		return returnValue;
+		return message;
 	}
 
 	public static String parseUsers(final String content) {
@@ -185,30 +177,24 @@ public class TwitterUtil {
 
 	public static InformationUnit buildMessage(final Tweet status, final Twitter api)
 			throws TwitterException {
-		InformationUnit returnValue = InformationUtil.createNew(TwitterActivator.MESSAGE_TYPE);
-		returnValue.getChildValues().add(
-				InformationUtil
-						.createNew(TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_INTERNAL_ID, status.getId()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_SRC_TYPE, StringEscapeUtils
-						.unescapeXml(status.getSource())));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.REPLY_ID, status.getToUser()));
+
+		InformationStructureEdit edit = InformationStructureEdit
+				.newSession(TwitterActivator.INFOTYPE_ID);
+
+		InformationUnit message = edit.createSubType(TwitterActivator.MESSAGE_TYPE, null);
+
+		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt());
+		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText());
+		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID, status.getId());
+		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE, StringEscapeUtils
+				.unescapeXml(status.getSource()));
+		edit.setValue(message, TwitterActivator.REPLY_ID, status.getToUser());
 		User userDetail = api.getUserDetail(status.getFromUser());
-		returnValue.getChildValues()
-				.add(
-						InformationUtil.createNew(TwitterActivator.MESSAGE_USER_TYPE, userDetail
-								.getName()));
-		returnValue.getChildValues().add(
-				InformationUtil.createNew(TwitterActivator.MESSAGE_USER_ID_TYPE, userDetail
-						.getScreenName()));
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, userDetail.getName());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, userDetail.getScreenName());
 		TwitterActivator.getDefault().getImageCache().checkCache(userDetail.getScreenName(),
 				userDetail.getProfileImageURL(), null);
-		return returnValue;
+		return message;
 	}
 
 	public static boolean onlineActionsAvailable(final InformationUnitListItem adapter) {

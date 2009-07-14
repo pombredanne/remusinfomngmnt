@@ -33,6 +33,16 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.ImageData;
 
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.StatusCreator;
+
 import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
 import com.drew.metadata.Directory;
@@ -40,16 +50,6 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifDirectory;
-
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.model.EditingUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
-import org.remus.infomngmnt.core.model.StatusCreator;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.image.ImagePlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -99,6 +99,9 @@ public class LoadImageRunnable extends CancelableRunnable {
 						.matcher(this.imagePath).matches();
 				Metadata metadata = null;
 				List<InformationUnit> exifData = new ArrayList<InformationUnit>();
+				InformationStructureEdit edit = InformationStructureEdit
+						.newSession(ImagePlugin.TYPE_ID);
+				InformationStructureRead read = InformationStructureRead.newSession(this.infoUnit);
 				if (isJpgeg) {
 					try {
 						metadata = JpegMetadataReader.readMetadata(this.file);
@@ -107,23 +110,22 @@ public class LoadImageRunnable extends CancelableRunnable {
 						while (tagIterator.hasNext()) {
 							Tag object = (Tag) tagIterator.next();
 							try {
-								InformationUnit createInformationUnit = InfomngmntFactory.eINSTANCE
-										.createInformationUnit();
-								createInformationUnit.setType(object.getTagName());
-								createInformationUnit.setStringValue(object.getDescription());
-								exifData.add(createInformationUnit);
+								InformationUnit exifItem = edit.createSubType(
+										ImagePlugin.NODE_NAME_EXIF_ITEM, null);
+								edit.setValue(exifItem, ImagePlugin.NODE_NAME_EXIF_KEY, object
+										.getTagName());
+								edit.setValue(exifItem, ImagePlugin.NODE_NAME_EXIF_VALUE, object
+										.getDescription());
+								exifData.add(exifItem);
 							} catch (MetadataException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								// do nothing.
 							}
 						}
 					} catch (JpegProcessingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						// do nothing
 					}
 				}
-				InformationUnit childByType = InformationUtil.getChildByType(this.infoUnit,
-						ImagePlugin.NODE_NAME_EXIF);
+				InformationUnit childByType = read.getChildByNodeId(ImagePlugin.NODE_NAME_EXIF);
 				if (isJpgeg && metadata != null) {
 					if (childByType != null) {
 						cc.append(new RemoveCommand(this.domain, childByType,
@@ -131,8 +133,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 								childByType.getChildValues()));
 					} else {
 						if (exifData.size() > 0) {
-							childByType = InfomngmntFactory.eINSTANCE.createInformationUnit();
-							childByType.setType(ImagePlugin.NODE_NAME_EXIF);
+							childByType = edit.createSubType(ImagePlugin.NODE_NAME_EXIF, null);
 							cc.append(new AddCommand(this.domain, this.infoUnit.getChildValues(),
 									Collections.singleton(childByType)));
 						}
@@ -163,8 +164,8 @@ public class LoadImageRunnable extends CancelableRunnable {
 								.valueOf(imageData.height)));
 
 				if (this.setName) {
-					cc.append(new SetCommand(this.domain, InformationUtil.getChildByType(
-							this.infoUnit, ImagePlugin.ORIGINAL_FILEPATH),
+					cc.append(new SetCommand(this.domain, read
+							.getChildByNodeId(ImagePlugin.ORIGINAL_FILEPATH),
 							InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
 							this.imagePath));
 				}
@@ -191,9 +192,9 @@ public class LoadImageRunnable extends CancelableRunnable {
 
 	public void setImageNode(final InformationUnit infoUnit) {
 		this.infoUnit = infoUnit;
-		this.widhtImageNode = InformationUtil.getChildByType(infoUnit, ImagePlugin.NODE_NAME_WIDTH);
-		this.heightImageNode = InformationUtil.getChildByType(infoUnit,
-				ImagePlugin.NODE_NAME_HEIGHT);
+		InformationStructureRead read = InformationStructureRead.newSession(infoUnit);
+		this.widhtImageNode = read.getChildByNodeId(ImagePlugin.NODE_NAME_WIDTH);
+		this.heightImageNode = read.getChildByNodeId(ImagePlugin.NODE_NAME_HEIGHT);
 	}
 
 	public void setFile(final File file) {

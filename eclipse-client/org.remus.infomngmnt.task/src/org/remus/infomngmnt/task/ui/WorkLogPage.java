@@ -12,13 +12,11 @@
 
 package org.remus.infomngmnt.task.ui;
 
-import java.util.Collections;
 import java.util.Date;
 
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.databinding.EMFObservables;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
@@ -60,10 +58,11 @@ import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.impl.InformationUnitImpl;
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -198,21 +197,11 @@ public class WorkLogPage extends AbstractInformationFormPage {
 			Action addAction = new Action("Add") {
 				@Override
 				public void run() {
-					InformationUnit unit = InformationUtil
-							.createNew(TaskActivator.NODE_NAME_WORKED_UNIT);
-					unit.getChildValues().add(
-							InformationUtil
-									.createNew(TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION));
-					unit.getChildValues().add(
-							InformationUtil.createNew(TaskActivator.NODE_NAME_WORKED_UNIT_STARTED));
-					unit.getChildValues().add(
-							InformationUtil.createNew(TaskActivator.NODE_NAME_WORKED_UNIT_END));
-					Command create = AddCommand.create(getEditingDomain(),
-							InformationUtil.getChildByType(getModelObject(),
-									TaskActivator.NODE_NAME_WORKED_UNITS),
-							InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, Collections
-									.singleton(unit));
-					getEditingDomain().getCommandStack().execute(create);
+					InformationStructureEdit edit = InformationStructureEdit
+							.newSession(TaskActivator.INFO_TYPE_ID);
+					InformationUnit unit = edit.createSubType(TaskActivator.NODE_NAME_WORKED_UNIT,
+							null);
+					edit.addDynamicNode(getModelObject(), unit, getEditingDomain());
 				}
 
 				@Override

@@ -363,7 +363,7 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__URL:
 				return getUrl();
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__READONLY:
-				return isReadonly() ? Boolean.TRUE : Boolean.FALSE;
+				return isReadonly();
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION:
 				return getLastSynchronisation();
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__HASH:
@@ -371,7 +371,7 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
 				return getSyncState();
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
-				return isCurrentlySyncing() ? Boolean.TRUE : Boolean.FALSE;
+				return isCurrentlySyncing();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -391,7 +391,7 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				setUrl((String)newValue);
 				return;
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__READONLY:
-				setReadonly(((Boolean)newValue).booleanValue());
+				setReadonly((Boolean)newValue);
 				return;
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION:
 				setLastSynchronisation((Date)newValue);
@@ -403,7 +403,7 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				setSyncState((SynchronizationState)newValue);
 				return;
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
-				setCurrentlySyncing(((Boolean)newValue).booleanValue());
+				setCurrentlySyncing((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

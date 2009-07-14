@@ -32,7 +32,7 @@ import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
-import org.remus.infomngmnt.core.model.InformationUtil;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
@@ -96,6 +96,8 @@ public class EditSourcePage extends AbstractInformationFormPage {
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
 
+		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
+
 		BindingUtil.createTextAndBind(this.text, getModelObject(),
 				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, this);
 
@@ -107,8 +109,7 @@ public class EditSourcePage extends AbstractInformationFormPage {
 		ComboBindingWidget createComboBinding = BindingWidgetFactory.createComboBinding(this.combo,
 				this);
 		createComboBinding.setInput(SourceCodePlugin.getDefault().getSourceTypes().keySet());
-		InformationUnit srcTypeInfo = InformationUtil.getChildByType(getModelObject(),
-				SourceCodePlugin.SRCTYPE_NAME);
+		InformationUnit srcTypeInfo = read.getChildByNodeId(SourceCodePlugin.SRCTYPE_NAME);
 		createComboBinding.bindModel(srcTypeInfo,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 

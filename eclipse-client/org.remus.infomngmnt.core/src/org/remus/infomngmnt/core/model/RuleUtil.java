@@ -30,6 +30,7 @@ import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
 import org.remus.infomngmnt.core.services.IRuleService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

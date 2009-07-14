@@ -22,13 +22,13 @@ import org.eclipse.ui.part.EditorPart;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchResult;
 import org.remus.infomngmnt.search.service.ISearchCallBack;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -18,9 +18,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.program.Program;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.model.InformationUtil;
 import org.remus.infomngmnt.password.PasswordPlugin;
 import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

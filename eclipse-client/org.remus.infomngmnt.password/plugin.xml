@@ -5,10 +5,10 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="false"
-            creationFactory="org.remus.infomngmnt.password.core.PasswordCreationFactory"
             icon="icons/iconexperience/key.png"
             name="Password"
             presentation="org.remus.infomngmnt.password.AbstractInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
             type="PASSWORD">
          <validTransfers
                transferId="org.remus.infomngmnt.core.texttransfer">

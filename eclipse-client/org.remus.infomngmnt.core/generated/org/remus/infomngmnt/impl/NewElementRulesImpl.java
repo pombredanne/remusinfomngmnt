@@ -196,7 +196,7 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 			case InfomngmntPackage.NEW_ELEMENT_RULES__NAME:
 				return getName();
 			case InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE:
-				return isDeletable() ? Boolean.TRUE : Boolean.FALSE;
+				return isDeletable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -218,7 +218,7 @@ public class NewElementRulesImpl extends EObjectImpl implements NewElementRules 
 				setName((String)newValue);
 				return;
 			case InfomngmntPackage.NEW_ELEMENT_RULES__DELETABLE:
-				setDeletable(((Boolean)newValue).booleanValue());
+				setDeletable((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

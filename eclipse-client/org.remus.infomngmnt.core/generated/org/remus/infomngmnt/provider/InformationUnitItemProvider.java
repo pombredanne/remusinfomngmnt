@@ -73,6 +73,7 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 			addBoolValuePropertyDescriptor(object);
 			addBinaryValuePropertyDescriptor(object);
 			addDateValuePropertyDescriptor(object);
+			addDoubleValuePropertyDescriptor(object);
 			addReferencesPropertyDescriptor(object);
 			addLinksPropertyDescriptor(object);
 			addCreationDatePropertyDescriptor(object);
@@ -189,6 +190,28 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Double Value feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDoubleValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnit_doubleValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnit_doubleValue_feature", "_UI_InformationUnit_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT__DOUBLE_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.REAL_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -402,6 +425,7 @@ public class InformationUnitItemProvider extends AbstractInformationUnitItemProv
 			case InfomngmntPackage.INFORMATION_UNIT__BOOL_VALUE:
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_VALUE:
 			case InfomngmntPackage.INFORMATION_UNIT__DATE_VALUE:
+			case InfomngmntPackage.INFORMATION_UNIT__DOUBLE_VALUE:
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
 			case InfomngmntPackage.INFORMATION_UNIT__DESCRIPTION:
 			case InfomngmntPackage.INFORMATION_UNIT__KEYWORDS:

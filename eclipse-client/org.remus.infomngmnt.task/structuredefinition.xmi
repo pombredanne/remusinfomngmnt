@@ -6,9 +6,9 @@
   <structureItems type="STRING" label="The tasks priority" id="priority" createAlways="true"/>
   <structureItems type="DATE" label="The dates duedate" id="duedata" createAlways="true"/>
   <structureItems type="DATE" label="The tasks start date" id="started" createAlways="true"/>
-  <structureItems type="BOOLEAN" label="Boolean if the task has a reminder" id="notify" createAlways="true"/>
+  <structureItems type="STRING" label="Boolean if the task has a reminder" id="notify" createAlways="true"/>
   <structureItems type="LONG" label="How many minutes before due date the reminder is triggered" id="minutesbeforedue" createAlways="true"/>
-  <structureItems label="Boolean if the task is completed" id="completed" createAlways="true"/>
+  <structureItems type="STRING" label="Boolean if the task is completed" id="completed" createAlways="true"/>
   <structureItems label="Collection of worked units" id="workunits" createAlways="true">
     <structureItems xsi:type="infomngmnt:DynamicStructure" label="One single Unit of work" id="workunit" upperBound="-1">
       <structureItems type="DATE" label="Start date of the work unit" id="workunitstart" createAlways="true"/>

@@ -115,10 +115,16 @@ public class InformationStructureRead {
 							new Condition() {
 								@Override
 								public boolean isSatisfied(final Object arg0) {
-									return InformationUnitCreator.pathSatisfied2(
-											InformationStructureRead.this.unit, path);
+									return arg0 != null
+											&& arg0.toString().equals(path[path.length - 1]);
 								}
-							})));
+							}).AND(new EObjectCondition() {
+
+						@Override
+						public boolean isSatisfied(final EObject arg0) {
+							return InformationUnitCreator.pathSatisfied2(arg0, path);
+						}
+					})));
 			IQueryResult execute2 = innerSelect.execute();
 			if (execute2.size() == 0) {
 				// Node is defined, but not present. Ok, we return null.

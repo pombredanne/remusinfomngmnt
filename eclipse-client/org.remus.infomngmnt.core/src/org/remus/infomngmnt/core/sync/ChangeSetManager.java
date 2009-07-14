@@ -550,8 +550,14 @@ public class ChangeSetManager {
 							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.REPLACE_REMOTE);
 						} else if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_DELETED) {
-							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
-									SynchronizationAction.DELETE_REMOTE);
+							if (parentByClass instanceof Category) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
+										SynchronizationAction.DELETE_REMOTE);
+							} else {
+								item.getSyncObjectActionMap().put(
+										(SynchronizableObject) parentByClass,
+										SynchronizationAction.DELETE_REMOTE);
+							}
 						} else {
 							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
 									SynchronizationAction.REPLACE_LOCAL);

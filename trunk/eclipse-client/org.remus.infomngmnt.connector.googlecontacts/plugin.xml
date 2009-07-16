@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.googlecontacts.ContactsRepository"
+            credentialprovider="org.remus.infomngmnt.connector.googlecontacts.GoogleContactsCredentialProvider"
+            icon="icons/repository.png"
+            id="org.remus.infomngmnt.connector.googlecontacts.repository"
+            name="Google Contacts">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.googlecontacts.ui"
+            newWizard="org.remus.infomngmnt.connector.googlecontacts.ui.NewGoogleContactsRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.googlecontacts.repository">
+      </respository>
+   </extension>
+
+</plugin>

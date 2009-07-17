@@ -90,7 +90,8 @@ public class DeleteRepositoryAction extends DeleteAction {
 						AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin
 								.getPlugin().getService(IRepositoryExtensionService.class)
 								.getItemByRepository((RemoteRepository) object);
-						if (itemByRepository != null) {
+						if (itemByRepository != null
+								&& itemByRepository.getCredentialProvider() != null) {
 							itemByRepository.getCredentialProvider().delete();
 						}
 					} catch (CoreException e) {

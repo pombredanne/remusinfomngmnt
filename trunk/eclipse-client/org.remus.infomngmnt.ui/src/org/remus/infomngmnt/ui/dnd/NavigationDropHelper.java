@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.emf.edit.command.SetCommand;
+
 import org.remus.infomngmnt.Adapter;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -188,6 +189,8 @@ public class NavigationDropHelper {
 								.copy((EObject) object);
 						newObject.getSynchronizationMetaData().setSyncState(
 								SynchronizationState.LOCAL_DELETED);
+						newObject
+								.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
 						EReference newReference = null;
 						if (newObject instanceof Category) {
 							((Category) newObject).setId(IdFactory.createNewId(null));

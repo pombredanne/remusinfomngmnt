@@ -529,9 +529,10 @@ public class ChangeSetManager {
 					 */
 					SynchronizableObject itemById = null;
 					if (parentByClass instanceof AbstractInformationUnit) {
-						itemById = ApplicationModelPool.getInstance().getItemById(
-								((AbstractInformationUnit) parentByClass).getId(),
-								new NullProgressMonitor());
+						itemById = ApplicationModelPool.getInstance()
+								.getItemByIdLocalDeletedIncluded(
+										((AbstractInformationUnit) parentByClass).getId(),
+										new NullProgressMonitor());
 					} else {
 						itemById = CategoryUtil.getCategoryById(((Category) parentByClass).getId());
 					}

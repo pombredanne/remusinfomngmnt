@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -243,7 +242,7 @@ public class ChangeSetExecutor {
 					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
 							.getItemById(((InformationUnitListItem) synchronizableObject).getId(),
 									subProgressMonitor);
-					if (itemById != null) {
+					if (itemById != null && itemById.getSynchronizationMetaData() != null) {
 						itemById.getSynchronizationMetaData().setCurrentlySyncing(true);
 					}
 					SynchronizationAction synchronizationAction = item.getSyncObjectActionMap()
@@ -326,7 +325,7 @@ public class ChangeSetExecutor {
 					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
 							.getItemById(((InformationUnitListItem) synchronizableObject).getId(),
 									subProgressMonitor);
-					if (itemById != null) {
+					if (itemById != null && itemById.getSynchronizationMetaData() != null) {
 						itemById.getSynchronizationMetaData().setCurrentlySyncing(false);
 					}
 				}
@@ -435,8 +434,8 @@ public class ChangeSetExecutor {
 
 	private void deleteRemoteInfoUnit(final InformationUnitListItem synchronizableObject,
 			final IProgressMonitor monitor) throws CoreException {
-		InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
-				synchronizableObject.getId(), monitor);
+		InformationUnitListItem itemById = ApplicationModelPool.getInstance()
+				.getItemByIdLocalDeletedIncluded(synchronizableObject.getId(), monitor);
 		if (itemById == null) {
 			throw new ChangeSetException(
 					StatusCreator
@@ -634,10 +633,7 @@ public class ChangeSetExecutor {
 				}
 			}
 			EditingUtil.getInstance().saveObjectToResource(adapter);
-			IFile file = (IFile) adapter.getAdapter(IFile.class);
-			if (file != null && file.exists()) {
-				file.getProject().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
-			}
+
 		} else {
 			Category parentCategory = (Category) itemById.eContainer();
 			CompoundCommand cc = new CompoundCommand();
@@ -656,8 +652,16 @@ public class ChangeSetExecutor {
 			cc.append(command);
 			editingDomain.getCommandStack().execute(cc);
 		}
+
 		itemById = ApplicationModelPool.getInstance().getItemById(synchronizableObject.getId(),
 				monitor);
+		/*
+		 * FIXME: Dirty hack. We have to tell the syncstate participant that
+		 * this item is clean. At the moment the saveparticipants cannot divide
+		 * between an edit from the user or the changeset-executor.
+		 */
+		SyncStateParticipantNotfier.notifyClean(itemById.getId());
+
 		InformationUnit newInformationUnit = (InformationUnit) itemById
 				.getAdapter(InformationUnit.class);
 		if (newInformationUnit != null) {

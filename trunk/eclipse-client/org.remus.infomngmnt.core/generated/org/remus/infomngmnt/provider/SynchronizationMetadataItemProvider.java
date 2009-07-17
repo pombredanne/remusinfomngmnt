@@ -50,7 +50,7 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 	 * 
 	 * @generated
 	 */
-	public SynchronizationMetadataItemProvider(AdapterFactory adapterFactory) {
+	public SynchronizationMetadataItemProvider(final AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -61,8 +61,8 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addRepositoryIdPropertyDescriptor(object);
@@ -73,7 +73,7 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 			addSyncStatePropertyDescriptor(object);
 			addCurrentlySyncingPropertyDescriptor(object);
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -82,42 +82,33 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 	 * 
 	 * @generated
 	 */
-	protected void addRepositoryIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SynchronizationMetadata_repositoryId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_repositoryId_feature", "_UI_SynchronizationMetadata_type"),
-				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	protected void addRepositoryIdPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_SynchronizationMetadata_repositoryId_feature"), getString(
+						"_UI_PropertyDescriptor_description",
+						"_UI_SynchronizationMetadata_repositoryId_feature",
+						"_UI_SynchronizationMetadata_type"),
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID, true, false,
+				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Url feature.
-	 * <!-- begin-user-doc
+	 * This adds a property descriptor for the Url feature. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected void addUrlPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SynchronizationMetadata_url_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_url_feature", "_UI_SynchronizationMetadata_type"),
-				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__URL,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	protected void addUrlPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SynchronizationMetadata_url_feature"),
+				getString("_UI_PropertyDescriptor_description",
+						"_UI_SynchronizationMetadata_url_feature",
+						"_UI_SynchronizationMetadata_type"),
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__URL, true, false, false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -126,63 +117,50 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 	 * 
 	 * @generated
 	 */
-	protected void addReadonlyPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SynchronizationMetadata_readonly_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_readonly_feature", "_UI_SynchronizationMetadata_type"),
-				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__READONLY,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
+	protected void addReadonlyPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SynchronizationMetadata_readonly_feature"),
+				getString("_UI_PropertyDescriptor_description",
+						"_UI_SynchronizationMetadata_readonly_feature",
+						"_UI_SynchronizationMetadata_type"),
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__READONLY, true, false, false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Last Synchronisation feature.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected void addLastSynchronisationPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SynchronizationMetadata_lastSynchronisation_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_lastSynchronisation_feature", "_UI_SynchronizationMetadata_type"),
-				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	protected void addLastSynchronisationPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_SynchronizationMetadata_lastSynchronisation_feature"), getString(
+						"_UI_PropertyDescriptor_description",
+						"_UI_SynchronizationMetadata_lastSynchronisation_feature",
+						"_UI_SynchronizationMetadata_type"),
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__LAST_SYNCHRONISATION, true,
+				false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Hash feature.
-	 * <!-- begin-user-doc
+	 * This adds a property descriptor for the Hash feature. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected void addHashPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SynchronizationMetadata_hash_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_hash_feature", "_UI_SynchronizationMetadata_type"),
-				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	protected void addHashPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SynchronizationMetadata_hash_feature"),
+				getString("_UI_PropertyDescriptor_description",
+						"_UI_SynchronizationMetadata_hash_feature",
+						"_UI_SynchronizationMetadata_type"),
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH, true, false, false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -191,20 +169,15 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 	 * 
 	 * @generated
 	 */
-	protected void addSyncStatePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SynchronizationMetadata_syncState_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_syncState_feature", "_UI_SynchronizationMetadata_type"),
-				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	protected void addSyncStatePropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SynchronizationMetadata_syncState_feature"),
+				getString("_UI_PropertyDescriptor_description",
+						"_UI_SynchronizationMetadata_syncState_feature",
+						"_UI_SynchronizationMetadata_type"),
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE, true, false,
+				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -213,45 +186,41 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 	 * 
 	 * @generated
 	 */
-	protected void addCurrentlySyncingPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SynchronizationMetadata_currentlySyncing_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SynchronizationMetadata_currentlySyncing_feature", "_UI_SynchronizationMetadata_type"),
-				 InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
+	protected void addCurrentlySyncingPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_SynchronizationMetadata_currentlySyncing_feature"), getString(
+						"_UI_PropertyDescriptor_description",
+						"_UI_SynchronizationMetadata_currentlySyncing_feature",
+						"_UI_SynchronizationMetadata_type"),
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING, true,
+				false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
 	}
 
 	/**
-	 * This returns SynchronizationMetadata.gif.
-	 * <!-- begin-user-doc --> <!--
+	 * This returns SynchronizationMetadata.gif. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SynchronizationMetadata"));
+	public Object getImage(final Object object) {
+		return overlayImage(object, getResourceLocator().getImage(
+				"full/obj16/SynchronizationMetadata"));
 	}
 
 	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc
+	 * This returns the label text for the adapted class. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
-		String label = ((SynchronizationMetadata)object).getRepositoryId();
-		return label == null || label.length() == 0 ?
-			getString("_UI_SynchronizationMetadata_type") :
-			getString("_UI_SynchronizationMetadata_type") + " " + label;
+	public String getText(final Object object) {
+		String label = ((SynchronizationMetadata) object).getRepositoryId();
+		return label == null || label.length() == 0 ? getString("_UI_SynchronizationMetadata_type")
+				: getString("_UI_SynchronizationMetadata_type") + " " + label;
 	}
 
 	/**
@@ -275,10 +244,10 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 		case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_STATE:
 		case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
 			// We also have to update the parent item.
-			fireNotifyChanged(new ViewerNotification(notification, ((EObject) notification
-					.getNotifier()).eContainer().eContainer(), true, true));
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
 					false, true));
+			fireNotifyChanged(new ViewerNotification(notification, ((EObject) notification
+					.getNotifier()).eContainer().eContainer(), true, true));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -292,7 +261,8 @@ public class SynchronizationMetadataItemProvider extends AdapterItemProvider imp
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors,
+			final Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

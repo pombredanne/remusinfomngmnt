@@ -29,6 +29,7 @@ import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.core.sync.SyncStateParticipantNotfier;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
@@ -47,7 +48,7 @@ public class SyncStateParticipant implements ISaveParticipant {
 					|| synchronizationMetadata.getSyncState() == SynchronizationState.IGNORED) {
 				return;
 			}
-			if (synchronizationMetadata.isCurrentlySyncing()) {
+			if (SyncStateParticipantNotfier.isCleanAndClear(newValue.getId())) {
 				return;
 			}
 			RemoteRepository itemById = InfomngmntEditPlugin.getPlugin().getService(

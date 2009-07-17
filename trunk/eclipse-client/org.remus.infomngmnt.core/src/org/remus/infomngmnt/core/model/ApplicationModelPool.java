@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -26,8 +27,14 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
+import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectReferenceValueCondition;
+import org.eclipse.emf.query.statements.FROM;
+import org.eclipse.emf.query.statements.SELECT;
+import org.eclipse.emf.query.statements.WHERE;
 
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableTags;
@@ -35,6 +42,8 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.SynchronizationMetadata;
+import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.internal.cache.AvailableInformationCache;
@@ -71,21 +80,38 @@ public class ApplicationModelPool {
 					&& msg.getOldValue() instanceof InformationUnitListItem) {
 				ApplicationModelPool.this.cache
 						.remove(((InformationUnitListItem) msg.getOldValue()).getId());
+			} else if (msg.getEventType() == Notification.REMOVE
+					&& msg.getOldValue() instanceof Category) {
+				InformationUnitListItem[] allInfoUnitItems = CategoryUtil
+						.getAllInfoUnitItems((Category) msg.getOldValue());
+				for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
+					ApplicationModelPool.this.cache.remove(informationUnitListItem.getId());
+				}
 			} else if (msg.getEventType() == Notification.ADD
 					&& msg.getNewValue() instanceof InformationUnitListItem) {
-				ApplicationModelPool.this.cache
-						.addItem((InformationUnitListItem) msg.getNewValue());
+				addItem((InformationUnitListItem) msg.getNewValue());
 			} else if (msg.getEventType() == Notification.ADD
 					&& msg.getNewValue() instanceof Category) {
 				InformationUnitListItem[] allInfoUnitItems = CategoryUtil
 						.getAllInfoUnitItems((Category) msg.getNewValue());
 				for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
-					ApplicationModelPool.this.cache.addItem(informationUnitListItem);
+					addItem(informationUnitListItem);
 				}
 
 			}
 			EditingUtil.getInstance().saveObjectToResource(this.category);
 			super.notifyChanged(msg);
+		}
+
+		/**
+		 * adds an item to the cache, except, it is marked as deleted.
+		 */
+		private void addItem(final InformationUnitListItem item) {
+			if (item.getSynchronizationMetaData() == null
+					|| item.getSynchronizationMetaData().getSyncState() != SynchronizationState.LOCAL_DELETED) {
+				ApplicationModelPool.this.cache.addItem(item);
+			}
+
 		}
 	}
 
@@ -193,6 +219,37 @@ public class ApplicationModelPool {
 
 	public InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor) {
 		return this.cache.getItemById(id, monitor);
+	}
+
+	public InformationUnitListItem getItemByIdLocalDeletedIncluded(final String id,
+			final IProgressMonitor monitor) {
+		InformationUnitListItem itemById = this.cache.getItemById(id, monitor);
+		if (itemById == null) {
+			EObjectReferenceValueCondition condition = new EObjectReferenceValueCondition(
+					InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+					new EObjectCondition() {
+						@Override
+						public boolean isSatisfied(final EObject object) {
+							return object == null
+									|| ((SynchronizationMetadata) object).getSyncState() == SynchronizationState.LOCAL_DELETED;
+						}
+					});
+			EObjectCondition condition2 = new EObjectCondition() {
+
+				@Override
+				public boolean isSatisfied(final EObject eObject) {
+					return eObject instanceof InformationUnitListItem;
+				}
+
+			};
+			SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
+					.getRootCategories()), new WHERE(condition2.AND(condition)));
+			Set<? extends EObject> eObjects = select.execute().getEObjects();
+			if (eObjects.size() == 1) {
+				itemById = (InformationUnitListItem) eObjects.iterator().next();
+			}
+		}
+		return itemById;
 	}
 
 	public void clearCache() {

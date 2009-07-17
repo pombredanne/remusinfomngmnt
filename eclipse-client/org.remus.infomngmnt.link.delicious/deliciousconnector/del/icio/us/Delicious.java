@@ -48,6 +48,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
@@ -127,6 +128,8 @@ public class Delicious {
 				DeliciousConstants.USER_AGENT_VALUE);
 		httpClientParams
 				.setParameter(HttpClientParams.RETRY_HANDLER, defaultHttpMethodRetryHandler);
+		httpClientParams.setCookiePolicy(CookiePolicy.RFC_2109);
+
 		this.httpClient.setParams(httpClientParams);
 		this.httpClient.getState().setCredentials(AuthScope.ANY,
 				new UsernamePasswordCredentials(username, password));

@@ -37,14 +37,14 @@ import org.remus.infomngmnt.util.InformationUtil;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class CheckTaskDueJob extends AbstractJob {
+public class CheckBirthdayJob extends AbstractJob {
 
 	private final List<String> alreadyShown = new ArrayList<String>();
 
 	/**
 	 * 
 	 */
-	public CheckTaskDueJob() {
+	public CheckBirthdayJob() {
 		// TODO Auto-generated constructor stub
 	}
 

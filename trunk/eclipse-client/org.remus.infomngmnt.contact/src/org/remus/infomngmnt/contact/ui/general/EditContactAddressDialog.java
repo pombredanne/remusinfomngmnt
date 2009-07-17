@@ -88,8 +88,10 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 
 		final Label lb_Street = new Label(comp, SWT.NONE);
 		lb_Street.setText("Street");
-		this.tx_Street = new Text(comp, SWT.BORDER);
-		this.tx_Street.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		this.tx_Street = new Text(comp, SWT.BORDER | SWT.MULTI);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		layoutData.heightHint = 30;
+		this.tx_Street.setLayoutData(layoutData);
 
 		final Label lb_Pob = new Label(comp, SWT.NONE);
 		lb_Pob.setText("Post Office Box");
@@ -188,8 +190,8 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 	}
 
 	private void createTextValueBindings() {
-		TextBindingWidget bindingWidget = BindingWidgetFactory.createTextBinding(
-				this.tx_Street, this.provider);
+		TextBindingWidget bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Street,
+				this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_STREET),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
@@ -201,8 +203,7 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Locality,
-				this.provider);
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Locality, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_LOCALITY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
@@ -220,15 +221,13 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Longitude,
-				this.provider);
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Longitude, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_LONGITUDE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
-		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Latitude,
-				this.provider);
+		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Latitude, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
 				ContactActivator.NODE_NAME_ADRESS_LATITUDE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);

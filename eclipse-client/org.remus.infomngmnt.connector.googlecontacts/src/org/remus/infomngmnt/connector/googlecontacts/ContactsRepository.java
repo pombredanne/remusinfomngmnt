@@ -13,7 +13,10 @@ package org.remus.infomngmnt.connector.googlecontacts;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,6 +25,8 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.ImageLoader;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -31,24 +36,29 @@ import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import com.google.gdata.client.Query;
+import com.google.gdata.client.Service.GDataRequest;
 import com.google.gdata.client.contacts.ContactsService;
+import com.google.gdata.data.Link;
 import com.google.gdata.data.TextConstruct;
-import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.contacts.ContactFeed;
 import com.google.gdata.data.contacts.ContactGroupEntry;
 import com.google.gdata.data.contacts.ContactGroupFeed;
 import com.google.gdata.data.contacts.GroupMembershipInfo;
 import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ContentType;
 import com.google.gdata.util.ServiceException;
 
 /**
@@ -98,7 +108,13 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 						groupMembershipInfo.setHref(wrappedObject.getId());
 						repo.getGroupMembershipInfos().add(groupMembershipInfo);
 						ContactEntry insert = getApi().insert(new URL(this.contactFeed), repo);
-						return buildContact(insert);
+						addContactPhoto(insert, getApi(), (InformationUnitListItem) item);
+						ContactEntry entry = getApi().getEntry(
+								new URL(insert.getId().replace("/base/", "/full/")),
+								ContactEntry.class);
+						if (entry != null) {
+							return buildContact(entry, wrappedObject.getId());
+						}
 
 					}
 				} catch (Exception e) {
@@ -136,7 +152,14 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 						(ContactEntry) remoteObject.getWrappedObject());
 				try {
 					ContactEntry update = repo.update();
-					return buildContact(update);
+
+					/*
+					 * Adding photo
+					 */
+					addContactPhoto(update, getApi(), (InformationUnitListItem) item2commit);
+					RemoteObject remoteParent = getRemoteObjectBySynchronizableObject(
+							(SynchronizableObject) item2commit.eContainer(), monitor);
+					return buildContact(update, remoteParent.getId());
 				} catch (Exception e) {
 					throw new RemoteException(StatusCreator
 							.newStatus("Error updating a contact", e));
@@ -173,8 +196,8 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 		if (remoteObject != null) {
 			Object wrappedObject = remoteObject.getWrappedObject();
 			try {
-				if (wrappedObject instanceof CalendarEntry) {
-					((CalendarEntry) wrappedObject).delete();
+				if (wrappedObject instanceof ContactEntry) {
+					((ContactEntry) wrappedObject).delete();
 				} else if (wrappedObject instanceof ContactGroupEntry) {
 					((ContactGroupEntry) wrappedObject).delete();
 				}
@@ -211,7 +234,9 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 			myQuery.setStringCustomParameter("group", container.getId());
 			ContactFeed resultFeed = getApi().query(myQuery, ContactFeed.class);
 			for (ContactEntry entry : resultFeed.getEntries()) {
-				returnValue.add(buildContact(entry));
+				if (!entry.hasDeleted()) {
+					returnValue.add(buildContact(entry, container.getId()));
+				}
 			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -229,13 +254,13 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
 	}
 
-	private RemoteObject buildContact(final ContactEntry entry) {
+	private RemoteObject buildContact(final ContactEntry entry, final String parentId) {
 		RemoteObject createRemoteObject = InfomngmntFactory.eINSTANCE.createRemoteObject();
 		createRemoteObject.setHash(entry.getUpdated().toString());
 		createRemoteObject.setId(entry.getId());
 		createRemoteObject.setWrappedObject(entry);
 		createRemoteObject.setName(entry.getTitle().getPlainText());
-		createRemoteObject.setUrl(StringUtils.join(entry.getId()));
+		createRemoteObject.setUrl(StringUtils.join(parentId, "_", entry.getId()));
 		return createRemoteObject;
 	}
 
@@ -290,7 +315,29 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	@Override
 	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
 		ContactEntry wrappedObject = (ContactEntry) remoteObject.getWrappedObject();
-		return this.converter.fromRepo(wrappedObject);
+		Link photoLink = wrappedObject.getContactPhotoLink();
+		byte[] convertStreamToByte = new byte[0];
+		InformationUnit fromRepo = this.converter.fromRepo(wrappedObject);
+		try {
+			GDataRequest request = getApi().createLinkQueryRequest(photoLink);
+			request.execute();
+			InputStream resultStream = request.getResponseStream();
+			ImageLoader loader = new ImageLoader();
+			loader.load(resultStream);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			loader.save(baos, SWT.IMAGE_PNG);
+			convertStreamToByte = baos.toByteArray();
+			StreamCloser.closeStreams(resultStream);
+			if (convertStreamToByte != null && convertStreamToByte.length > 0) {
+				InformationStructureEdit edit = InformationStructureEdit
+						.newSession(ContactActivator.TYPE_ID);
+				edit.setValue(fromRepo, ContactActivator.NODE_NAME_RAWDATA_IMAGE,
+						convertStreamToByte);
+			}
+		} catch (Exception e) {
+			// No photo
+		}
+		return fromRepo;
 
 	}
 
@@ -305,6 +352,9 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
 			final IProgressMonitor monitor) throws RemoteException {
 		String url = object.getSynchronizationMetaData().getUrl();
+		if (url.equals(getRepositoryUrl())) {
+			return getRepositoryById(object.getSynchronizationMetaData().getRepositoryId());
+		}
 		if (object instanceof Category) {
 			try {
 				ContactGroupEntry entry = getApi().getEntry(
@@ -318,10 +368,13 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 			}
 		} else if (object instanceof InformationUnitListItem) {
 			try {
-				ContactEntry entry = getApi().getEntry(new URL(url.replace("/base/", "/full/")),
-						ContactEntry.class);
+				String[] split = url.split("_");
+				ContactGroupEntry cateEntry = getApi().getEntry(
+						new URL(split[0].replace("/base/", "/full/")), ContactGroupEntry.class);
+				ContactEntry entry = getApi().getEntry(
+						new URL(split[1].replace("/base/", "/full/")), ContactEntry.class);
 				if (entry != null) {
-					return buildContact(entry);
+					return buildContact(entry, cateEntry.getId());
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus("Error resolving online contact",
@@ -361,6 +414,28 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	public void login(final ILoginCallBack callback, final IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public static void addContactPhoto(final ContactEntry entry, final ContactsService service,
+			final InformationUnitListItem item) throws ServiceException, IOException {
+		Link photoLink = entry.getContactPhotoLink();
+		URL photoUrl = new URL(photoLink.getHref());
+		service.delete(photoUrl, photoLink.getEtag());
+		GDataRequest request = service.createRequest(GDataRequest.RequestType.UPDATE, photoUrl,
+				new ContentType("image/jpeg"));
+
+		OutputStream requestStream = request.getRequestStream();
+		InformationUnit adapter = (InformationUnit) item.getAdapter(InformationUnit.class);
+		if (adapter != null) {
+			InformationStructureRead read = InformationStructureRead.newSession(adapter);
+			byte[] valueByNodeId = (byte[]) read
+					.getValueByNodeId(ContactActivator.NODE_NAME_RAWDATA_IMAGE);
+			if (valueByNodeId != null && valueByNodeId.length > 0) {
+
+				requestStream.write(valueByNodeId);
+				request.execute();
+			}
+		}
 	}
 
 	/*

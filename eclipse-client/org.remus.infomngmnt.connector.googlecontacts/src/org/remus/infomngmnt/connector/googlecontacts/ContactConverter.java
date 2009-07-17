@@ -12,13 +12,15 @@
 
 package org.remus.infomngmnt.connector.googlecontacts;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.InformationUnit;
@@ -26,17 +28,25 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.contacts.Birthday;
 import com.google.gdata.data.contacts.ContactEntry;
+import com.google.gdata.data.contacts.Occupation;
+import com.google.gdata.data.extensions.AdditionalName;
+import com.google.gdata.data.extensions.City;
 import com.google.gdata.data.extensions.Email;
 import com.google.gdata.data.extensions.FamilyName;
-import com.google.gdata.data.extensions.FullName;
 import com.google.gdata.data.extensions.GivenName;
 import com.google.gdata.data.extensions.Im;
 import com.google.gdata.data.extensions.Name;
 import com.google.gdata.data.extensions.Organization;
 import com.google.gdata.data.extensions.PhoneNumber;
+import com.google.gdata.data.extensions.PoBox;
+import com.google.gdata.data.extensions.PostCode;
+import com.google.gdata.data.extensions.Region;
+import com.google.gdata.data.extensions.Street;
 import com.google.gdata.data.extensions.StructuredPostalAddress;
 
 /**
@@ -46,6 +56,7 @@ public class ContactConverter {
 
 	private static Map<String, String> staticPhoneTypeMapper;
 	private static Map<String, String> staticImTypeMapper;
+	private static Map<String, String> staticAdressTypeMapper;
 
 	static {
 		staticPhoneTypeMapper = new HashMap<String, String>();
@@ -79,6 +90,14 @@ public class ContactConverter {
 				ContactActivator.NODE_INSTMESS_ICQ);
 		staticImTypeMapper.put("http://schemas.google.com/g/2005#JABBER",
 				ContactActivator.NODE_INSTMESS_JABBER);
+
+		staticAdressTypeMapper = new HashMap<String, String>();
+		staticAdressTypeMapper.put("http://schemas.google.com/g/2005#home",
+				ContactActivator.NODE_NAME_HOME_ADRESS);
+		staticAdressTypeMapper.put("http://schemas.google.com/g/2005#work",
+				ContactActivator.NODE_NAME_WORK_ADRESS);
+		staticAdressTypeMapper.put("http://schemas.google.com/g/2005#other",
+				ContactActivator.NODE_NAME_OTHER_ADRESS);
 	}
 
 	static String getKeyByValue(final Map<String, String> collection, final String value) {
@@ -109,21 +128,7 @@ public class ContactConverter {
 			edit.setValue(newContact, ContactActivator.NODE_NAME_PERS_NAME_ADDITIONAL, entry
 					.getName().getAdditionalName().getValue());
 		}
-		if (entry.getName().hasFullName() && !entry.getName().hasGivenName()
-				&& !entry.getName().hasFamilyName()) {
-			String value = entry.getName().getFullName().getValue();
-			String[] split = value.split(" ");
-			if (split.length > 1) {
-				edit.setValue(newContact, ContactActivator.NODE_NAME_PERS_NAME_FIRST, split[0]);
-				String[] lastname = new String[split.length - 1];
-				System.arraycopy(split, 1, lastname, 0, split.length - 1);
-				edit.setValue(newContact, ContactActivator.NODE_NAME_PERS_NAME_LAST, StringUtils
-						.join(lastname, " "));
 
-			} else {
-				edit.setValue(newContact, ContactActivator.NODE_NAME_PERS_NAME_LAST, value);
-			}
-		}
 		List<Organization> organizations = entry.getOrganizations();
 		if (organizations != null && organizations.size() > 0) {
 			if (organizations.get(0).hasOrgName()) {
@@ -175,6 +180,9 @@ public class ContactConverter {
 			System.out.println(postalAddress.getRel());
 
 		}
+		entry.getContactPhotoLink();
+		IFile createTempFile = ResourceUtil.createTempFile();
+
 		return newContact;
 	}
 
@@ -189,8 +197,11 @@ public class ContactConverter {
 					.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_FIRST), NO_YOMI));
 			name.setFamilyName(new FamilyName((String) read
 					.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_LAST), NO_YOMI));
-			name.setFullName(new FullName(name.getGivenName().getValue() + " "
-					+ name.getFamilyName().getValue(), NO_YOMI));
+			String additionalName = (String) read
+					.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_ADDITIONAL);
+			if (additionalName != null && additionalName.trim().length() > 0) {
+				name.setAdditionalName(new AdditionalName(additionalName, NO_YOMI));
+			}
 			contact.setName(name);
 			contact.setContent(new PlainTextConstruct(adapter.getDescription()));
 
@@ -200,12 +211,15 @@ public class ContactConverter {
 				InformationStructureRead emailRead = InformationStructureRead.newSession(
 						informationUnit, ContactActivator.TYPE_ID);
 				Email primaryMail = new Email();
-				primaryMail.setAddress((String) emailRead
-						.getValueByNodeId(ContactActivator.NODE_MAIL));
-				primaryMail.setPrimary(primaryMail.getAddress() != null
-						&& primaryMail.getAddress().equals(
-								read.getValueByNodeId(ContactActivator.NODE_MAIL_DEF)));
-				contact.addEmailAddress(primaryMail);
+				String email = (String) emailRead.getValueByNodeId(ContactActivator.NODE_MAIL);
+				if (email != null && email.trim().length() > 0) {
+					primaryMail.setAddress(email);
+					primaryMail.setPrimary(primaryMail.getAddress() != null
+							&& primaryMail.getAddress().equals(
+									read.getValueByNodeId(ContactActivator.NODE_MAIL_DEF)));
+					primaryMail.setRel("http://schemas.google.com/g/2005#work");
+					contact.addEmailAddress(primaryMail);
+				}
 			}
 
 			contact.getImAddresses().clear();
@@ -233,6 +247,53 @@ public class ContactConverter {
 					contact.addPhoneNumber(phone);
 				}
 			}
+
+			contact.getStructuredPostalAddresses().clear();
+			values = staticAdressTypeMapper.values();
+			for (String string : values) {
+				/*
+				 * Workadress
+				 */
+				String street = ((String) read.getValueByPath(string,
+						ContactActivator.NODE_NAME_ADRESS_STREET));
+				String pob = ((String) read.getValueByPath(string,
+						ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+				String locality = ((String) read.getValueByPath(string,
+						ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+				String region = ((String) read.getValueByPath(string,
+						ContactActivator.NODE_NAME_ADRESS_REGION));
+				String postal = ((String) read.getValueByPath(string,
+						ContactActivator.NODE_NAME_ADRESS_POSTAL));
+				String country = ((String) read.getValueByPath(string,
+						ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+				if (street != null && street.trim().length() > 0 && locality != null
+						&& locality.trim().length() > 0) {
+					StructuredPostalAddress adress = new StructuredPostalAddress();
+					adress.setStreet(new Street(street == null ? "" : street));
+					if (pob != null) {
+						adress.setPobox(new PoBox(pob));
+					}
+					if (region != null && region.trim().length() > 0) {
+						adress.setRegion(new Region(region));
+					} else {
+						adress.setRegion(new Region("n.a."));
+					}
+					adress.setCity(new City(locality == null ? "" : locality));
+					adress.setPostcode(new PostCode(postal == null ? "" : postal));
+					adress.setRel(getKeyByValue(staticAdressTypeMapper, string));
+					contact.getStructuredPostalAddresses().add(adress);
+				}
+
+			}
+
+			Date date = (Date) read.getValueByNodeId(ContactActivator.NODE_DETAILS_BIRTHDAY);
+			if (date != null) {
+				Birthday birthday = new Birthday(new SimpleDateFormat("yyyy-MM-dd").format(date));
+				contact.setBirthday(birthday);
+			}
+			contact.setOccupation(new Occupation((String) read
+					.getValueByNodeId(ContactActivator.NODE_DETAILS_JOB)));
+
 			return contact;
 
 		}

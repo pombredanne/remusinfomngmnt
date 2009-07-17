@@ -69,7 +69,7 @@ public class NewGoogleContactsRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		newRemoteRepositry.setUrl("http://google.com/contacts");
+		newRemoteRepositry.setUrl("http://www.google.com/m8/feeds/");
 
 	}
 

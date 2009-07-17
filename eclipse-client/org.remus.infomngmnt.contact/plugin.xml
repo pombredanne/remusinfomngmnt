@@ -89,7 +89,7 @@
    <extension
          point="org.remus.infomngmnt.core.job">
       <job
-            class="org.remus.infomngmnt.contact.AbstractJob:1"
+            class="org.remus.infomngmnt.contact.ui.jobs.CheckBirthdayJob"
             id="org.remus.infomngmnt.contact.birthdayreminder"
             interval="30"
             name="Birthday-Reminder">

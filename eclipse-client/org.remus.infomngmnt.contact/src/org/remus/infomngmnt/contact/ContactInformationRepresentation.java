@@ -63,18 +63,16 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
 			try {
 				if (file.exists()) {
-					file.delete(true, monitor);
+					file.setContents(bais, true, false, monitor);
+				} else {
+					file.create(bais, true, monitor);
 				}
-				file.create(bais, true, monitor);
+
 			} catch (CoreException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} finally {
-				try {
-					bais.close();
-				} catch (IOException e) {
-					// do nothing... we've done our best.
-				}
+				StreamCloser.closeStreams(bais);
 			}
 		}
 		Map<String, Object> parameterMap = new HashMap<String, Object>();

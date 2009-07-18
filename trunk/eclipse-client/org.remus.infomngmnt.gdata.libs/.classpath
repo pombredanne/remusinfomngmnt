@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="libs/google-collect-1.0-rc2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-analytics-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-analytics-meta-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-appsforyourdomain-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-appsforyourdomain-meta-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-base-1.0.jar"/>
@@ -13,8 +16,8 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdata-client-meta-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-codesearch-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-codesearch-meta-2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdata-contacts-2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdata-contacts-meta-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-contacts-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-contacts-meta-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-core-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-docs-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-docs-meta-2.0.jar"/>
@@ -22,11 +25,13 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdata-finance-meta-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-health-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-health-meta-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-maps-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-maps-meta-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-media-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-photos-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-photos-meta-1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdata-spreadsheet-2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdata-spreadsheet-meta-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-spreadsheet-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdata-spreadsheet-meta-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-webmastertools-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-webmastertools-meta-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdata-youtube-2.0.jar"/>

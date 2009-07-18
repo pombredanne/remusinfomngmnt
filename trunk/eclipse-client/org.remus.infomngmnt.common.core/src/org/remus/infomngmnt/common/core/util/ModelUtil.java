@@ -129,7 +129,7 @@ public class ModelUtil {
 			final EStructuralFeature feature, final Object value) {
 		for (EObject object : list) {
 			Object eGet = object.eGet(feature);
-			if (eGet.equals(value)) {
+			if (eGet != null && eGet.equals(value)) {
 				return object;
 			}
 		}

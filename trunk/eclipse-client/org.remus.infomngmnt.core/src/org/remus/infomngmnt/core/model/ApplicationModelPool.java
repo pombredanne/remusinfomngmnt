@@ -192,8 +192,9 @@ public class ApplicationModelPool {
 			final Category category = EditingUtil.getInstance().getObjectFromFile(file,
 					InfomngmntPackage.eINSTANCE.getCategory(),
 					EditingUtil.getInstance().getNavigationEditingDomain());
-
-			category.eResource().eAdapters().add(new AdapterImplExtension(category));
+			if (category.getId() != null) {
+				category.eResource().eAdapters().add(new AdapterImplExtension(category));
+			}
 
 			this.model.getRootCategories().add(category);
 			EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources()

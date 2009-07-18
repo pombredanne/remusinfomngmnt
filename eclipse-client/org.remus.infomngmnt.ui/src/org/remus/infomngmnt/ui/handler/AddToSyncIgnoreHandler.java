@@ -18,12 +18,15 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.util.EditingUtil;
@@ -46,19 +49,35 @@ public class AddToSyncIgnoreHandler extends AbstractHandler {
 			CompoundCommand cc = new CompoundCommand();
 			List list = ((IStructuredSelection) currentSelection).toList();
 			for (Object object : list) {
-				if (object instanceof SynchronizableObject
-						&& ((SynchronizableObject) object).getSynchronizationMetaData() != null) {
-					cc.append(SetCommand.create(EditingUtil.getInstance()
-							.getNavigationEditingDomain(), ((SynchronizableObject) object)
-							.getSynchronizationMetaData(),
-							InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
-							SynchronizationState.IGNORED));
-				}
+				setIgnore(object, cc);
 			}
 			cc.setLabel("Ignoring items for synchronization");
 			EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().execute(cc);
 		}
 		return null;
+	}
+
+	private void setIgnore(final Object object, final CompoundCommand cc) {
+		if (object instanceof SynchronizableObject
+				&& ((SynchronizableObject) object).getSynchronizationMetaData() != null) {
+			cc.append(SetCommand.create(EditingUtil.getInstance().getNavigationEditingDomain(),
+					((SynchronizableObject) object).getSynchronizationMetaData(),
+					InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+					SynchronizationState.IGNORED));
+
+		}
+		if (object instanceof Category) {
+			EList<InformationUnitListItem> informationUnit = ((Category) object)
+					.getInformationUnit();
+			for (InformationUnitListItem informationUnitListItem : informationUnit) {
+				setIgnore(informationUnitListItem, cc);
+			}
+			EList<Category> children = ((Category) object).getChildren();
+			for (Category category : children) {
+				setIgnore(category, cc);
+			}
+		}
+
 	}
 
 }

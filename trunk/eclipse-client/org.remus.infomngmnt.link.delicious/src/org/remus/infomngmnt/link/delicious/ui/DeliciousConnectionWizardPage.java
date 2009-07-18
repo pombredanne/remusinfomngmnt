@@ -39,8 +39,8 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.ValidateConnectionJob;
 import org.remus.infomngmnt.core.security.CredentialProvider;
-import org.remus.infomngmnt.link.delicious.operations.ValidateConnectionJob;
 
 public class DeliciousConnectionWizardPage extends WizardPage {
 

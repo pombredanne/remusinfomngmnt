@@ -66,42 +66,10 @@
 		
 		<antcall target="checkoutPackage">
 			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
-			<param name="cvs.tag"  value="v1_3_4" />
-			<param name="cvs.package" value="org.eclipse.orbit/javax.xml" />
-			<param name="cvs.name" value="javax.xml"  />
-		</antcall>
-		
-		
-		<antcall target="checkoutPackage">
-			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
 			<param name="cvs.tag"  value="v1_2_13" />
 			<param name="cvs.package" value="org.eclipse.orbit/org.apache.log4j" />
 			<param name="cvs.name" value="org.apache.log4j"  />
 		</antcall>
-		
-		<antcall target="checkoutPackage">
-			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
-			<param name="cvs.tag"  value="v2_9_0" />
-			<param name="cvs.package" value="org.eclipse.orbit/org.apache.xerces" />
-			<param name="cvs.name" value="org.apache.xerces"  />
-
-		</antcall>
-		
-		<antcall target="checkoutPackage">
-			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
-			<param name="cvs.tag"  value="v1_2_0" />
-			<param name="cvs.package" value="org.eclipse.orbit/org.apache.xml.resolver" />
-			<param name="cvs.name" value="org.apache.xml.resolver"  />
-
-		</antcall>
-		
-		<antcall target="checkoutPackage">
-			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
-			<param name="cvs.tag"  value="v2_7_1" />
-			<param name="cvs.package" value="org.eclipse.orbit/org.apache.xml.serializer" />
-			<param name="cvs.name" value="org.apache.xml.serializer"  />
-		</antcall>
-		
 		
 		<antcall target="checkoutPackage">
 			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
@@ -115,15 +83,6 @@
 			<param name="cvs.tag"  value="HEAD" />
 			<param name="cvs.package" value="org.eclipse.equinox/components/bundles/org.eclipse.equinox.transforms.xslt" />
 			<param name="cvs.name" value="org.eclipse.equinox.transforms.xslt"  />
-		</antcall>
-		
-		
-
-		<antcall target="checkoutPackage">
-			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
-			<param name="cvs.tag"  value="HEAD" />
-			<param name="cvs.package" value="org.eclipse.equinox/compendium/bundles/org.eclipse.equinox.util" />
-			<param name="cvs.name" value="org.eclipse.equinox.util"  />
 		</antcall>
 		
 		<antcall target="checkoutPackage">

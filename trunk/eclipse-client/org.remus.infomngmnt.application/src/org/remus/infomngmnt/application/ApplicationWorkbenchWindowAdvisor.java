@@ -718,6 +718,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 												.getShell().isVisible()) {
 									openDesktopWindow(shell);
 								}
+								ApplicationWorkbenchWindowAdvisor.this.window.getShell()
+										.forceActive();
 							}
 						});
 					}

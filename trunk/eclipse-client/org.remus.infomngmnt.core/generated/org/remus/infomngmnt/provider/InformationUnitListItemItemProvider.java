@@ -172,7 +172,7 @@ public class InformationUnitListItemItemProvider extends AbstractInformationUnit
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
 					true, true));
 			fireNotifyChanged(new ViewerNotification(notification, ((EObject) notification
-					.getNotifier()).eContainer().eContainer(), true, true));
+					.getNotifier()).eContainer(), true, true));
 			return;
 		}
 		super.notifyChanged(notification);

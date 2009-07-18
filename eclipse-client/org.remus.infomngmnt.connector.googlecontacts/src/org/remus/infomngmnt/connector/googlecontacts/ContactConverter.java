@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.connector.googlecontacts;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -20,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.InformationUnit;
@@ -28,11 +28,11 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.contacts.Birthday;
 import com.google.gdata.data.contacts.ContactEntry;
+import com.google.gdata.data.contacts.Nickname;
 import com.google.gdata.data.contacts.Occupation;
 import com.google.gdata.data.extensions.AdditionalName;
 import com.google.gdata.data.extensions.City;
@@ -177,11 +177,46 @@ public class ContactConverter {
 
 		List<StructuredPostalAddress> postalAddresses = entry.getStructuredPostalAddresses();
 		for (StructuredPostalAddress postalAddress : postalAddresses) {
-			System.out.println(postalAddress.getRel());
+			String rel = postalAddress.getRel();
+			String string = staticAdressTypeMapper.get(rel);
+			if (string != null) {
+				if (postalAddress.hasCity()) {
+					edit.setValueByPath(newContact, postalAddress.getCity().getValue(), string,
+							ContactActivator.NODE_NAME_ADRESS_LOCALITY);
+				}
+				if (postalAddress.hasPobox()) {
+					edit.setValueByPath(newContact, postalAddress.getPobox().getValue(), string,
+							ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX);
+				}
+				if (postalAddress.hasStreet()) {
+					edit.setValueByPath(newContact, postalAddress.getStreet().getValue(), string,
+							ContactActivator.NODE_NAME_ADRESS_STREET);
+				}
+				if (postalAddress.hasPostcode()) {
+					edit.setValueByPath(newContact, postalAddress.getPostcode().getValue(), string,
+							ContactActivator.NODE_NAME_ADRESS_POSTAL);
+				}
+				if (postalAddress.hasRegion()) {
+					edit.setValueByPath(newContact, postalAddress.getRegion().getValue(), string,
+							ContactActivator.NODE_NAME_ADRESS_REGION);
+				}
+
+			}
 
 		}
-		entry.getContactPhotoLink();
-		IFile createTempFile = ResourceUtil.createTempFile();
+		if (entry.hasBirthday()) {
+			String when = entry.getBirthday().getWhen();
+			try {
+				Date parse = new SimpleDateFormat("yyyy-MM-dd").parse(when);
+				edit.setValue(newContact, ContactActivator.NODE_DETAILS_BIRTHDAY, parse);
+			} catch (ParseException e) {
+				// do nothing
+			}
+		}
+		if (entry.hasOccupation()) {
+			edit.setValue(newContact, ContactActivator.NODE_DETAILS_JOB, entry.getOccupation()
+					.getValue());
+		}
 
 		return newContact;
 	}
@@ -212,11 +247,16 @@ public class ContactConverter {
 						informationUnit, ContactActivator.TYPE_ID);
 				Email primaryMail = new Email();
 				String email = (String) emailRead.getValueByNodeId(ContactActivator.NODE_MAIL);
+				boolean primarySet = false;
 				if (email != null && email.trim().length() > 0) {
 					primaryMail.setAddress(email);
-					primaryMail.setPrimary(primaryMail.getAddress() != null
+					boolean b = primaryMail.getAddress() != null
 							&& primaryMail.getAddress().equals(
-									read.getValueByNodeId(ContactActivator.NODE_MAIL_DEF)));
+									read.getValueByNodeId(ContactActivator.NODE_MAIL_DEF));
+					primaryMail.setPrimary(b && !primarySet);
+					if (b) {
+						primarySet = true;
+					}
 					primaryMail.setRel("http://schemas.google.com/g/2005#work");
 					contact.addEmailAddress(primaryMail);
 				}
@@ -273,6 +313,7 @@ public class ContactConverter {
 					if (pob != null) {
 						adress.setPobox(new PoBox(pob));
 					}
+					// Region is required
 					if (region != null && region.trim().length() > 0) {
 						adress.setRegion(new Region(region));
 					} else {
@@ -294,6 +335,10 @@ public class ContactConverter {
 			contact.setOccupation(new Occupation((String) read
 					.getValueByNodeId(ContactActivator.NODE_DETAILS_JOB)));
 
+			String nick = (String) read.getValueByNodeId(ContactActivator.NODE_DETAILS_NAME_NICK);
+			if (nick != null && nick.trim().length() > 0) {
+				contact.setNickname(new Nickname(nick));
+			}
 			return contact;
 
 		}

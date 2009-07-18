@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.remus.infomngmnt.connector.googlecontacts.ui;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -37,6 +39,7 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.ValidateConnectionJob;
 import org.remus.infomngmnt.core.security.CredentialProvider;
 
 public class GoogleContactsConnectionWizardPage extends WizardPage {
@@ -122,19 +125,20 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 		final Button validateCredentialsButton = new Button(credentialsGroup, SWT.NONE);
 		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				// try {
-				// // getContainer().run(
-				// // true,
-				// // true,
-				// // new
-				// //
-				// ValidateConnectionJob(GoogleContactsConnectionWizardPage.this.repositoryDefinition));
-				// setErrorMessage(null);
-				// } catch (InvocationTargetException e) {
-				// setErrorMessage("Error validating your settings");
-				// } catch (InterruptedException e) {
-				// // do nothing
-				// }
+				try {
+					getContainer().run(
+							true,
+							true,
+							new ValidateConnectionJob(
+									GoogleContactsConnectionWizardPage.this.repositoryDefinition));
+					setErrorMessage(null);
+					setPageComplete(true);
+				} catch (InvocationTargetException e) {
+					setErrorMessage("Error validating your settings");
+					setPageComplete(false);
+				} catch (InterruptedException e) {
+					// do nothing
+				}
 
 			}
 		});

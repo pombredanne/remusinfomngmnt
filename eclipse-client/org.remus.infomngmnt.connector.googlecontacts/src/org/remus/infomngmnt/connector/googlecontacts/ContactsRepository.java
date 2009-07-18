@@ -456,6 +456,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	 */
 	public IStatus validate() {
 		try {
+			reset();
 			getApi();
 		} catch (RemoteException e) {
 			return e.getStatus();

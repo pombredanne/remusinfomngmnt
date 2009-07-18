@@ -11,6 +11,7 @@
 * Twitter
 * Youtube
 * Flickr
+* Google Contacts
    </description>
 
    <copyright url="http://remus-software.org/about-rim">
@@ -245,6 +246,13 @@ litigation.
 
    <plugin
          id="org.remus.infomngmnt.connector.flickr"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.remus.infomngmnt.connector.googlecontacts"
          download-size="0"
          install-size="0"
          version="0.0.0"

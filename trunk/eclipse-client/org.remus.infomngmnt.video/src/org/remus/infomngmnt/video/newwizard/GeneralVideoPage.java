@@ -63,7 +63,7 @@ public class GeneralVideoPage extends GeneralPage {
 		setTitle("New Video");
 		setMessage("This wizard enables you to create a new video from a file.");
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(VideoActivator.getDefault(),
-				"icons/iconexperience/video_wizard_title.png"));
+				"icons/iconexperience/wizards/video_wizard_title.png"));
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);

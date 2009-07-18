@@ -587,7 +587,7 @@ public class ChangeSetExecutor {
 		newRemoteInformationUnit.setLabel(synchronizableObject.getLabel());
 		newRemoteInformationUnit.setId(synchronizableObject.getId());
 		InformationUnit adapter = (InformationUnit) itemById.getAdapter(InformationUnit.class);
-		if (changeSetDefinitionForType != null) {
+		if (changeSetDefinitionForType != null && adapter != null) {
 			InformationStructureRead readRemote = InformationStructureRead
 					.newSession(newRemoteInformationUnit);
 			InformationStructureEdit editLocal = InformationStructureEdit.newSession(adapter

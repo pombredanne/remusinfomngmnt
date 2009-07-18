@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
+
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -105,7 +106,7 @@ public class DiffLabelProvider extends LabelProvider {
 						.bind("Ready to apply the following changes ({0})", group.getSubchanges());
 			}
 		} else if (element instanceof ModelElementChangeRightTarget) {
-			final ModelElementChangeRightTarget  addOp = (ModelElementChangeRightTarget) element;
+			final ModelElementChangeRightTarget addOp = (ModelElementChangeRightTarget) element;
 			EObject rightElement = addOp.getRightElement();
 			SynchronizationAction action = SyncUtil.getAction(this.changeSet, rightElement);
 			if (returnImage) {
@@ -151,6 +152,15 @@ public class DiffLabelProvider extends LabelProvider {
 							((Category) leftElement).getLabel());
 				} else if (leftElement instanceof AbstractInformationUnit) {
 					return NLS.bind("Element \"{0}\" will be added remotely",
+							((AbstractInformationUnit) leftElement).getLabel());
+				}
+				break;
+			case DELETE_LOCAL:
+				if (leftElement instanceof Category) {
+					return NLS.bind("Category \"{0}\" will be deleted locally",
+							((Category) leftElement).getLabel());
+				} else if (leftElement instanceof AbstractInformationUnit) {
+					return NLS.bind("Element \"{0}\" will be deleted locally",
 							((AbstractInformationUnit) leftElement).getLabel());
 				}
 				break;

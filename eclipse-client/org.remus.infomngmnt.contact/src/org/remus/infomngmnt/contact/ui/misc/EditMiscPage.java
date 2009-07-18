@@ -8,16 +8,14 @@ import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -30,11 +28,12 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.DatePickerBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.common.ui.swt.DateCombo;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
-import org.remus.infomngmnt.contact.ui.general.CalendarDateChooser;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 import org.remus.infomngmnt.util.InformationUtil;
 
@@ -50,10 +49,10 @@ public class EditMiscPage extends AbstractInformationFormPage {
 	private Text tx_Job;
 	private Text tx_Title;
 	private Text tx_Nickname;
-	private Text tx_Birthday;
 	private Text tx_NamePartner;
-	private Text tx_Jubilee;
 	private Label btImage;
+	private DateCombo birthDay;
+	private DateCombo jubileeDate;
 
 	public EditMiscPage() {
 		// TODO Auto-generated constructor stub
@@ -164,51 +163,51 @@ public class EditMiscPage extends AbstractInformationFormPage {
 	private void createGroupPerson(final Composite compositeGeneral) {
 		final Composite group_Person = this.toolkit.createComposite(compositeGeneral, SWT.NONE);
 		group_Person.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		group_Person.setLayout(UIUtil.createMarginLessGridLayout(5));
+		group_Person.setLayout(UIUtil.createMarginLessGridLayout(4));
 		this.toolkit.adapt(group_Person);
 		this.toolkit.createLabel(group_Person, "Nickname:");
 		this.tx_Nickname = this.toolkit.createText(group_Person, null, SWT.BORDER);
 		this.tx_Nickname.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
 		this.toolkit.createLabel(group_Person, "Birthday:");
-		this.tx_Birthday = this.toolkit.createText(group_Person, null);
-		this.tx_Birthday.setEditable(false);
-		this.tx_Birthday.setEnabled(false);
-
-		Button bt_EditBirthday = this.toolkit.createButton(group_Person, "Edit", SWT.NONE);
-		bt_EditBirthday.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				CalendarDateChooser cdd = new CalendarDateChooser(getSite().getShell(),
-						EditMiscPage.this.tx_Birthday.getText());
-				cdd.open();
-				if (cdd != null) {
-					EditMiscPage.this.tx_Birthday.setText(cdd.getSelectedDate());
-				}
-			}
-		});
+		Composite birthDayParent = this.toolkit.createComposite(group_Person);
+		GridLayout layout = new GridLayout(2, false);
+		layout.marginHeight = 2;
+		layout.marginWidth = 1;
+		layout.verticalSpacing = 2;
+		layout.horizontalSpacing = 2;
+		birthDayParent.setLayout(layout);
+		this.birthDay = new DateCombo(birthDayParent, SWT.FLAT);
+		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false).applyTo(
+				this.birthDay);
+		this.birthDay.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		this.toolkit.adapt(this.birthDay, false, false);
+		this.toolkit.paintBordersFor(birthDayParent);
+		GridData dueDateLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+		birthDayParent.setLayoutData(dueDateLayoutData);
+		this.toolkit.adapt(this.birthDay);
 
 		this.toolkit.createLabel(group_Person, "Name Of Partner:");
 		this.tx_NamePartner = this.toolkit.createText(group_Person, null, SWT.BORDER);
 		this.tx_NamePartner.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
 		this.toolkit.createLabel(group_Person, "Jubilee:");
-		this.tx_Jubilee = this.toolkit.createText(group_Person, null);
-		this.tx_Jubilee.setEditable(false);
-		this.tx_Jubilee.setEnabled(false);
-
-		Button bt_EditJubilee = this.toolkit.createButton(group_Person, "Edit", SWT.NONE);
-		bt_EditJubilee.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				CalendarDateChooser cdd = new CalendarDateChooser(getSite().getShell(),
-						EditMiscPage.this.tx_Jubilee.getText());
-				cdd.open();
-				if (cdd != null) {
-					EditMiscPage.this.tx_Jubilee.setText(cdd.getSelectedDate());
-				}
-			}
-		});
+		Composite jubileeParent = this.toolkit.createComposite(group_Person);
+		layout = new GridLayout(2, false);
+		layout.marginHeight = 2;
+		layout.marginWidth = 1;
+		layout.verticalSpacing = 2;
+		layout.horizontalSpacing = 2;
+		jubileeParent.setLayout(layout);
+		this.jubileeDate = new DateCombo(jubileeParent, SWT.FLAT);
+		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false).applyTo(
+				this.jubileeDate);
+		this.jubileeDate.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		this.toolkit.adapt(this.jubileeDate, false, false);
+		this.toolkit.paintBordersFor(jubileeParent);
+		GridData jubileeDateLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+		jubileeParent.setLayoutData(jubileeDateLayoutData);
+		this.toolkit.adapt(this.jubileeDate);
 	}
 
 	private void createGroupGeneral(final Composite compositeGeneral) {
@@ -351,16 +350,17 @@ public class EditMiscPage extends AbstractInformationFormPage {
 				ContactActivator.NODE_DETAILS_TITLE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		TextBindingWidget createTextBindingWidget111 = BindingWidgetFactory
-				.createTextBinding(this.tx_Birthday, this);
-		createTextBindingWidget111.bindModel(InformationUtil.getChildByType(getModelObject(),
+		DatePickerBindingWidget dateComboBinding = BindingWidgetFactory.createDateComboBinding(
+				this.birthDay, this);
+		dateComboBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_BIRTHDAY),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
 
-		TextBindingWidget createTextBindingWidget112 = BindingWidgetFactory
-				.createTextBinding(this.tx_Jubilee, this);
-		createTextBindingWidget112.bindModel(InformationUtil.getChildByType(getModelObject(),
+		DatePickerBindingWidget dateComboBinding2 = BindingWidgetFactory.createDateComboBinding(
+				this.jubileeDate, this);
+		dateComboBinding2.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_JUBILEE),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
+
 	}
 }

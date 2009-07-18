@@ -454,6 +454,10 @@ public class ChangeSetManager {
 				copy.getChildren().remove(category);
 			}
 		}
+		EList<Category> children2 = copy.getChildren();
+		for (Category category : children2) {
+			filterIgnoredItems(category);
+		}
 
 	}
 

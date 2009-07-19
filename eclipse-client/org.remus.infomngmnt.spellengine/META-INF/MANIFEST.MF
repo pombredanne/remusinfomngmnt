@@ -7,9 +7,9 @@ Bundle-Activator: org.remus.infomngmnt.spellengine.SpellActivator
 Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ui.workbench.texteditor;bundle-version="3.5.0",
- org.eclipse.jface.text;bundle-version="3.5.0",
- org.eclipse.core.variables;bundle-version="3.2.200",
- org.eclipse.ui.editors;bundle-version="3.5.0"
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.jface.text,
+ org.eclipse.core.variables,
+ org.eclipse.ui.editors
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

@@ -1,3 +1,5 @@
 instructions.configure=\
   addRepository(type:0,location:http${#58}//www.remus-software.org/nightly/updateSite);\
-  addRepository(type:1,location:http${#58}//www.remus-software.org/nightly/updateSite);
+  addRepository(type:1,location:http${#58}//www.remus-software.org/nightly/updateSite);\
+  addRepository(type:0,location:http${#58}//www.remus-software.org/updatesites/nightly/rimadditionals);\
+  addRepository(type:1,location:http${#58}//www.remus-software.org/updatesites/nightly/rimadditionals);

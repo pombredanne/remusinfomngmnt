@@ -32,6 +32,12 @@ public class StringUtils {
 		for (int i = 0, n = matchings.length; i < n; i++) {
 			String patternString = matchings[i];
 			if (patternString.trim().length() > 0) {
+				String filterString = "([\\/\\.\\,\\*\\+\\?\\|\\(\\)\\[\\]\\{\\}\\)])";
+				String replaceStr = "\\\\$1";
+				Pattern prePattern = Pattern.compile(filterString);
+				Matcher preMatcher = prePattern.matcher(patternString);
+				patternString = preMatcher.replaceAll(replaceStr);
+
 				Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
 				Matcher matcher = pattern.matcher(sourceString);
 				int matchcount = 0;

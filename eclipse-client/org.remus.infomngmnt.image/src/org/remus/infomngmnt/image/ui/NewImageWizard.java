@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
@@ -153,7 +154,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 				IRetrieveFileTransferContainerAdapter adapter = (IRetrieveFileTransferContainerAdapter) container
 						.getAdapter(IRetrieveFileTransferContainerAdapter.class);
 				final URL url = new URL(value.toString());
-				final IFile tmpFile = ResourceUtil.createTempFile("png");
+				final IFile tmpFile = ResourceUtil.createTempFile("jpeg");
 				final DownloadFileJob job = new DownloadFileJob(url, tmpFile, adapter);
 				ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
 				pmd.run(true, false, new IRunnableWithProgress() {
@@ -166,7 +167,16 @@ public class NewImageWizard extends NewInfoObjectWizard {
 						try {
 							ImageLoader loader = new ImageLoader();
 							InputStream contents = tmpFile.getContents();
-							loader.load(contents);
+							try {
+								loader.load(contents);
+							} catch (Exception e) {
+								throw new InvocationTargetException(
+										e,
+										NLS
+												.bind(
+														"Error while processing the dragged data. Check if \'\'{0}\'\' is dragable image-source.",
+														value.toString()));
+							}
 							InformationUnit width = InformationUtil.getChildByType(
 									NewImageWizard.this.newElement, ImagePlugin.NODE_NAME_WIDTH);
 							width.setLongValue(loader.data[0].width);

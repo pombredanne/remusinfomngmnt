@@ -45,6 +45,7 @@ import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.common.ui.swt.DateCombo;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.task.TaskPriority;
 import org.remus.infomngmnt.task.TaskStatus;
@@ -225,22 +226,22 @@ public class TaskEditPage extends AbstractInformationFormPage {
 
 	@Override
 	public void bindValuesToUi() {
+		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
+
 		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
 				this.description.getFTextField(), this);
-		textBindingWidget.bindModel(getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		textBindingWidget.bindModel(getModelObject(), read
+				.getFeatureByNodeId(TaskActivator.INFO_TYPE_ID));
 
 		DatePickerBindingWidget dateComboBinding = BindingWidgetFactory.createDateComboBinding(
 				this.dueDate, this);
-		dateComboBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_DUE_DATE),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
+		dateComboBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_DUE_DATE), read
+				.getFeatureByNodeId(TaskActivator.NODE_NAME_DUE_DATE));
 
 		DatePickerBindingWidget startComboBinding = BindingWidgetFactory.createDateComboBinding(
 				this.startsDate, this);
-		startComboBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_STARTED),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
+		startComboBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_STARTED), read
+				.getFeatureByNodeId(TaskActivator.NODE_NAME_STARTED));
 
 		TextBindingWidget subjectBinding = BindingWidgetFactory.createTextBinding(this.subjectText,
 				this);
@@ -249,21 +250,19 @@ public class TaskEditPage extends AbstractInformationFormPage {
 
 		SpinnerSliderBindingWidget sliderBindingWidget = BindingWidgetFactory.createSpinner(
 				this.slider, getDatabindingContext(), getEditingDomain());
-		sliderBindingWidget.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_COMPLETED_PERCENTAGE),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
+		sliderBindingWidget.bindModel(read
+				.getChildByNodeId(TaskActivator.NODE_NAME_COMPLETED_PERCENTAGE), read
+				.getFeatureByNodeId(TaskActivator.NODE_NAME_COMPLETED_PERCENTAGE));
 
 		CheckBoxBindingWidget completedBinding = BindingWidgetFactory.createCheckboxBinding(
 				this.completedCheckBox, this);
-		completedBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_COMPLETED),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		completedBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_COMPLETED), read
+				.getFeatureByNodeId(TaskActivator.NODE_NAME_COMPLETED));
 
 		CheckBoxBindingWidget notificationCheckBinding = BindingWidgetFactory
 				.createCheckboxBinding(this.notficiaionButton, this);
-		notificationCheckBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_NOTIFY),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		notificationCheckBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_NOTIFY),
+				read.getFeatureByNodeId(TaskActivator.NODE_NAME_NOTIFY));
 
 		ComboBindingWidget notificationBinding = BindingWidgetFactory.createComboBinding(
 				this.notificationCombo, getDatabindingContext(), getEditingDomain());

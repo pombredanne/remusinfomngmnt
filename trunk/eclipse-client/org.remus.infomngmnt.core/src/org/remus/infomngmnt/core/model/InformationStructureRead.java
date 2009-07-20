@@ -15,6 +15,7 @@ package org.remus.infomngmnt.core.model;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.query.conditions.Condition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectAttributeValueCondition;
@@ -133,6 +134,36 @@ public class InformationStructureRead {
 			EObject next2 = execute2.iterator().next();
 			return (InformationUnit) next2;
 		}
+	}
+
+	public EStructuralFeature getFeatureByNodeId(final String nodeId) {
+		if (nodeId.startsWith(ATTRIBUTE_ACCESSOR)) {
+			EList<EAttribute> eAttributes = this.unit.eClass().getEAllAttributes();
+			for (EAttribute eAttribute : eAttributes) {
+				if (nodeId.equals(StringUtils.join(ATTRIBUTE_ACCESSOR, eAttribute.getName()))) {
+					return eAttribute;
+				}
+			}
+		}
+		InformationStructure itemByNodeAndTypeId = getItemByNodeAndTypeId(nodeId, this.type);
+		if (itemByNodeAndTypeId != null) {
+			InformationStructureType structureType = itemByNodeAndTypeId.getType();
+			switch (structureType) {
+			case STRING:
+				return InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE;
+			case BINARY:
+				return InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE;
+			case BOOLEAN:
+				return InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
+			case DATE:
+				return InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
+			case DOUBLE:
+				return InfomngmntPackage.Literals.INFORMATION_UNIT__DOUBLE_VALUE;
+			case LONG:
+				return InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE;
+			}
+		}
+		throw new IllegalArgumentException();
 	}
 
 	public Object getValueByPath(final String... path) {

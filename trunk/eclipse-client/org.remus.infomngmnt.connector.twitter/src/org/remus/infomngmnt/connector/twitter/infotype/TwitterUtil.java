@@ -48,7 +48,7 @@ public class TwitterUtil {
 
 	public static final String REGEXP_USER = "@\\w+"; //$NON-NLS-1$
 	public static final String KEYWORD_REGEXP = "#\\w+"; //$NON-NLS-1$
-	public static final String URL_REGEXP = "((mailto\\:|(news|(ht|f)tp(s?))\\://){1}\\S+)"; //$NON-NLS-1$
+	public static final String URL_REGEXP = "((mailto\\:|(news|(ht|f)tp(s?))\\://){1}\\S+[^\\(\\)])"; //$NON-NLS-1$
 
 	public static final String HREF_USER_PREFIX = "user"; //$NON-NLS-1$
 	public static final String HREF_KEYWORD_PREFIX = "keyword"; //$NON-NLS-1$
@@ -153,7 +153,8 @@ public class TwitterUtil {
 	}
 
 	public static String parseContent(final String content) {
-		String escapeXml = StringEscapeUtils.escapeXml(content);
+		// String escapeXml = StringEscapeUtils.escapeXml(content);
+		String escapeXml = content;
 		StringWriter sw = new StringWriter();
 		sw.append("<form><p vspace=\"false\">");
 		escapeXml = parseUsers(escapeXml);

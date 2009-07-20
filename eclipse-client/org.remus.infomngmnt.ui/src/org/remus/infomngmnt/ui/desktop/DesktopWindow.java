@@ -99,11 +99,15 @@ public class DesktopWindow extends AbstractDesktopWindow {
 			createSection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 			Composite composite = this.toolkit.createComposite(createSection, SWT.NO_FOCUS);
 			createSection.setClient(composite);
-			AbstractTraySection implementation = traySection.getImplementation();
-			implementation.init(this.toolkit, traySection);
-			createSection.setText(implementation.getTitle());
-			implementation.createDetailsPart(composite);
-			this.traySections.add(implementation);
+			try {
+				AbstractTraySection implementation = traySection.getImplementation();
+				implementation.init(this.toolkit, traySection);
+				createSection.setText(implementation.getTitle());
+				implementation.createDetailsPart(composite);
+				this.traySections.add(implementation);
+			} catch (Exception e) {
+				// any exception occurred. skip this part.
+			}
 		}
 	}
 

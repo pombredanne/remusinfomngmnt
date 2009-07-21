@@ -12,6 +12,12 @@
 
 package org.remus.infomngmnt.core.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -24,6 +30,7 @@ import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 
+import org.remus.infomngmnt.DynamicStructure;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationStructure;
 import org.remus.infomngmnt.InformationStructureDefinition;
@@ -239,7 +246,7 @@ public class InformationStructureRead {
 		default:
 			break;
 		}
-		if (attToGet != null) {
+		if (attToGet != null && childByNodeId != null) {
 			return childByNodeId.eGet(attToGet);
 		}
 		return null;
@@ -321,6 +328,66 @@ public class InformationStructureRead {
 			return null;
 		}
 		return (InformationStructureItem) execute.getEObjects().iterator().next();
+	}
+
+	public Map<String, Object> getContentsAsStrucuturedMap() {
+		Map<String, Object> returnValue = new HashMap<String, Object>();
+		InformationStructureDefinition structureDefinition = getStructureDefinition(this.type);
+		returnValue.put(this.type, getValueByNodeId(this.type));
+		EList<InformationStructureItem> structureItems = structureDefinition.getStructureItems();
+		for (InformationStructureItem informationStructureItem : structureItems) {
+			addValues(informationStructureItem, returnValue, this);
+		}
+		returnValue.put("__label", this.unit.getLabel());
+		returnValue.put("__description", this.unit.getDescription());
+		returnValue.put("__keywords", this.unit.getKeywords());
+		returnValue.put("__datecreated", this.unit.getCreationDate());
+		return returnValue;
+
+	}
+
+	public Map<String, List<Map<String, Object>>> getDynamicContentAsStructuredMap() {
+		Map<String, List<Map<String, Object>>> returnValue = new HashMap<String, List<Map<String, Object>>>();
+		InformationStructureDefinition structureDefinition = getStructureDefinition(this.type);
+		SELECT select = new SELECT(new FROM(structureDefinition), new WHERE(new EObjectCondition() {
+			@Override
+			public boolean isSatisfied(final EObject arg0) {
+				return arg0.eClass() == InfomngmntPackage.Literals.DYNAMIC_STRUCTURE;
+			}
+		}));
+		IQueryResult execute = select.execute();
+		Set<? extends EObject> eObjects = execute.getEObjects();
+		for (EObject eObject : eObjects) {
+			DynamicStructure structure = (DynamicStructure) eObject;
+			EList<InformationUnit> dynamicList = getDynamicList(structure.getId());
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			for (InformationUnit informationUnit : dynamicList) {
+				InformationStructureRead infoRead = InformationStructureRead.newSession(
+						informationUnit, this.type);
+				Map<String, Object> dynamicItemValues = new HashMap<String, Object>();
+				EList<InformationStructureItem> structureItems = structure.getStructureItems();
+				for (InformationStructureItem informationStructureItem : structureItems) {
+					addValues(informationStructureItem, dynamicItemValues, infoRead);
+				}
+				list.add(dynamicItemValues);
+			}
+			returnValue.put(structure.getId(), list);
+		}
+		return returnValue;
+
+	}
+
+	private void addValues(final InformationStructureItem structure, final Map<String, Object> map,
+			final InformationStructureRead read) {
+		if (structure.eClass() != InfomngmntPackage.Literals.DYNAMIC_STRUCTURE) {
+			Object valueByNodeId = read.getValueByNodeId(structure.getId());
+			map.put(structure.getId(), valueByNodeId);
+		}
+		EList<InformationStructureItem> structureItems = structure.getStructureItems();
+		for (InformationStructureItem informationStructureItem : structureItems) {
+			addValues(informationStructureItem, map, read);
+		}
+
 	}
 
 	private static InformationStructureDefinition getStructureDefinition(final String type) {

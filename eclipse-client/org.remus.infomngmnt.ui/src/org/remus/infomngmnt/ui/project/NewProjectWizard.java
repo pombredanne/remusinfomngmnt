@@ -89,12 +89,14 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 */
 	private static final String PREFERRED_PERSPECTIVES = "preferredPerspectives"; //$NON-NLS-1$
 
-
-
 	public NewProjectWizard() {
 		setNeedsProgressMonitor(true);
+		setWindowTitle("New Project");
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override
@@ -107,19 +109,17 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 
 		updatePerspective();
 
-
 		return true;
 	}
 
 	private void createDescriptor() {
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
-			public void run(final IProgressMonitor monitor)
-			throws InvocationTargetException, InterruptedException {
+			public void run(final IProgressMonitor monitor) throws InvocationTargetException,
+					InterruptedException {
 				try {
-					ResourceUtil.createNewProject(
-							NewProjectWizard.this.newProject,
-							monitor, NewProjectWizard.this.page1.getDescriptionText());
+					ResourceUtil.createNewProject(NewProjectWizard.this.newProject, monitor,
+							NewProjectWizard.this.page1.getDescriptionText());
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				}
@@ -137,12 +137,13 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		}
 
 	}
+
 	/**
 	 * Stores the configuration element for the wizard. The config element will
 	 * be used in <code>performFinish</code> to set the result perspective.
 	 */
-	public void setInitializationData(final IConfigurationElement cfig,
-			final String propertyName, final Object data) {
+	public void setInitializationData(final IConfigurationElement cfig, final String propertyName,
+			final Object data) {
 		this.configElement = cfig;
 	}
 
@@ -153,14 +154,16 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		updatePerspective(this.configElement);
 	}
 
-
 	@Override
 	public void addPages() {
 		addPage(this.page1 = new NewInfoProjectWizardPage("newProject"));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
+	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		// TODO Auto-generated method stub
@@ -180,8 +183,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 * the same project resource without attempting to create it again.
 	 * </p>
 	 * 
-	 * @return the created project resource, or <code>null</code> if the
-	 *         project was not created
+	 * @return the created project resource, or <code>null</code> if the project
+	 *         was not created
 	 */
 	private IProject createNewProject() {
 		if (this.newProject != null) {
@@ -198,8 +201,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		}
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		final IProjectDescription description = workspace
-		.newProjectDescription(newProjectHandle.getName());
+		final IProjectDescription description = workspace.newProjectDescription(newProjectHandle
+				.getName());
 		description.setLocationURI(location);
 		postProjectCreation(description);
 
@@ -207,17 +210,12 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		// create the new project operation
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
-			public void run(final IProgressMonitor monitor)
-			throws InvocationTargetException {
-				CreateProjectOperation op = new CreateProjectOperation(
-						description, ResourceMessages.NewProject_windowTitle);
+			public void run(final IProgressMonitor monitor) throws InvocationTargetException {
+				CreateProjectOperation op = new CreateProjectOperation(description,
+						ResourceMessages.NewProject_windowTitle);
 				try {
-					PlatformUI.getWorkbench().getOperationSupport()
-					.getOperationHistory().execute(
-							op,
-							monitor,
-							WorkspaceUndoUtil
-							.getUIInfoAdapter(getShell()));
+					PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(
+							op, monitor, WorkspaceUndoUtil.getUIInfoAdapter(getShell()));
 				} catch (ExecutionException e) {
 					throw new InvocationTargetException(e);
 				}
@@ -230,38 +228,28 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			return null;
 		} catch (InvocationTargetException e) {
 			Throwable t = e.getTargetException();
-			if (t instanceof ExecutionException
-					&& t.getCause() instanceof CoreException) {
+			if (t instanceof ExecutionException && t.getCause() instanceof CoreException) {
 				CoreException cause = (CoreException) t.getCause();
 				StatusAdapter status;
 				if (cause.getStatus().getCode() == IResourceStatus.CASE_VARIANT_EXISTS) {
-					status = new StatusAdapter(
-							StatusUtil
-							.newStatus(
-									IStatus.WARNING,
-									NLS
-									.bind(
-											ResourceMessages.NewProject_caseVariantExistsError,
-											newProjectHandle
-											.getName()),
-											cause));
+					status = new StatusAdapter(StatusUtil.newStatus(IStatus.WARNING, NLS.bind(
+							ResourceMessages.NewProject_caseVariantExistsError, newProjectHandle
+									.getName()), cause));
 				} else {
-					status = new StatusAdapter(StatusUtil.newStatus(cause
-							.getStatus().getSeverity(),
+					status = new StatusAdapter(StatusUtil.newStatus(
+							cause.getStatus().getSeverity(),
 							ResourceMessages.NewProject_errorMessage, cause));
 				}
 				status.setProperty(StatusAdapter.TITLE_PROPERTY,
 						ResourceMessages.NewProject_errorMessage);
 				StatusManager.getManager().handle(status, StatusManager.BLOCK);
 			} else {
-				StatusAdapter status = new StatusAdapter(new Status(
-						IStatus.WARNING, IDEWorkbenchPlugin.IDE_WORKBENCH, 0,
-						NLS.bind(ResourceMessages.NewProject_internalError, t
-								.getMessage()), t));
+				StatusAdapter status = new StatusAdapter(new Status(IStatus.WARNING,
+						IDEWorkbenchPlugin.IDE_WORKBENCH, 0, NLS.bind(
+								ResourceMessages.NewProject_internalError, t.getMessage()), t));
 				status.setProperty(StatusAdapter.TITLE_PROPERTY,
 						ResourceMessages.NewProject_errorMessage);
-				StatusManager.getManager().handle(status,
-						StatusManager.LOG | StatusManager.BLOCK);
+				StatusManager.getManager().handle(status, StatusManager.LOG | StatusManager.BLOCK);
 			}
 			return null;
 		}
@@ -274,6 +262,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	private void postProjectCreation(final IProjectDescription description) {
 		ResourceUtil.postProjectCreation(description);
 	}
+
 	/**
 	 * Updates the perspective based on the current settings in the
 	 * Workbench/Perspectives preference page.
@@ -287,8 +276,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 * element to pass into this method.
 	 * </p>
 	 * 
-	 * @param configElement -
-	 *            the element we are updating with
+	 * @param configElement
+	 *            - the element we are updating with
 	 * 
 	 * @see IPreferenceConstants#OPM_NEW_WINDOW
 	 * @see IPreferenceConstants#OPM_ACTIVE_PAGE
@@ -305,14 +294,12 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		String perspSetting = PrefUtil.getAPIPreferenceStore().getString(
 				IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE);
 
-		String promptSetting = IDEWorkbenchPlugin.getDefault()
-		.getPreferenceStore().getString(
+		String promptSetting = IDEWorkbenchPlugin.getDefault().getPreferenceStore().getString(
 				IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
 
 		// Return if do not switch perspective setting and are not prompting
 		if (!(promptSetting.equals(MessageDialogWithToggle.PROMPT))
-				&& perspSetting
-				.equals(IWorkbenchPreferenceConstants.NO_NEW_PERSPECTIVE)) {
+				&& perspSetting.equals(IWorkbenchPreferenceConstants.NO_NEW_PERSPECTIVE)) {
 			return;
 		}
 
@@ -323,39 +310,32 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		}
 
 		// Map perspective id to descriptor.
-		IPerspectiveRegistry reg = PlatformUI.getWorkbench()
-		.getPerspectiveRegistry();
+		IPerspectiveRegistry reg = PlatformUI.getWorkbench().getPerspectiveRegistry();
 
 		// leave this code in - the perspective of a given project may map to
 		// activities other than those that the wizard itself maps to.
-		IPerspectiveDescriptor finalPersp = reg
-		.findPerspectiveWithId(finalPerspId);
+		IPerspectiveDescriptor finalPersp = reg.findPerspectiveWithId(finalPerspId);
 		if (finalPersp != null && finalPersp instanceof IPluginContribution) {
 			IPluginContribution contribution = (IPluginContribution) finalPersp;
 			if (contribution.getPluginId() != null) {
-				IWorkbenchActivitySupport workbenchActivitySupport = PlatformUI
-				.getWorkbench().getActivitySupport();
-				IActivityManager activityManager = workbenchActivitySupport
-				.getActivityManager();
-				IIdentifier identifier = activityManager
-				.getIdentifier(WorkbenchActivityHelper
+				IWorkbenchActivitySupport workbenchActivitySupport = PlatformUI.getWorkbench()
+						.getActivitySupport();
+				IActivityManager activityManager = workbenchActivitySupport.getActivityManager();
+				IIdentifier identifier = activityManager.getIdentifier(WorkbenchActivityHelper
 						.createUnifiedId(contribution));
 				Set idActivities = identifier.getActivityIds();
 
 				if (!idActivities.isEmpty()) {
-					Set enabledIds = new HashSet(activityManager
-							.getEnabledActivityIds());
+					Set enabledIds = new HashSet(activityManager.getEnabledActivityIds());
 
 					if (enabledIds.addAll(idActivities)) {
-						workbenchActivitySupport
-						.setEnabledActivityIds(enabledIds);
+						workbenchActivitySupport.setEnabledActivityIds(enabledIds);
 					}
 				}
 			}
 		} else {
 			IDEWorkbenchPlugin.log("Unable to find persective " //$NON-NLS-1$
-					+ finalPerspId
-					+ " in BasicNewProjectResourceWizard.updatePerspective"); //$NON-NLS-1$
+					+ finalPerspId + " in BasicNewProjectResourceWizard.updatePerspective"); //$NON-NLS-1$
 			return;
 		}
 
@@ -372,8 +352,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			}
 		}
 
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-		.getActiveWorkbenchWindow();
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window != null) {
 			IWorkbenchPage page = window.getActivePage();
 			if (page != null) {
@@ -381,8 +360,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 
 				// don't switch if the current perspective is a preferred
 				// perspective
-				if (currentPersp != null
-						&& preferredPerspIds.contains(currentPersp.getId())) {
+				if (currentPersp != null && preferredPerspIds.contains(currentPersp.getId())) {
 					return;
 				}
 			}
@@ -393,10 +371,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			}
 		}
 
-		int workbenchPerspectiveSetting = WorkbenchPlugin.getDefault()
-		.getPreferenceStore().getInt(
+		int workbenchPerspectiveSetting = WorkbenchPlugin.getDefault().getPreferenceStore().getInt(
 				IPreferenceConstants.OPEN_PERSP_MODE);
-
 
 		// replace active perspective setting otherwise
 		replaceCurrentPerspective(finalPersp);
@@ -408,8 +384,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	private static void replaceCurrentPerspective(final IPerspectiveDescriptor persp) {
 
 		// Get the active page.
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-		.getActiveWorkbenchWindow();
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window == null) {
 			return;
 		}
@@ -436,10 +411,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 */
 	private static boolean confirmPerspectiveSwitch(final IWorkbenchWindow window,
 			final IPerspectiveDescriptor finalPersp) {
-		IPreferenceStore store = IDEWorkbenchPlugin.getDefault()
-		.getPreferenceStore();
-		String pspm = store
-		.getString(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+		IPreferenceStore store = IDEWorkbenchPlugin.getDefault().getPreferenceStore();
+		String pspm = store.getString(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
 		if (!IDEInternalPreferences.PSPM_PROMPT.equals(pspm)) {
 			// Return whether or not we should always switch
 			return IDEInternalPreferences.PSPM_ALWAYS.equals(pspm);
@@ -447,18 +420,23 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		String desc = finalPersp.getDescription();
 		String message;
 		if (desc == null || desc.length() == 0) {
-			message = NLS.bind(ResourceMessages.NewProject_perspSwitchMessage,
-					finalPersp.getLabel());
+			message = NLS.bind(ResourceMessages.NewProject_perspSwitchMessage, finalPersp
+					.getLabel());
 		} else {
-			message = NLS.bind(
-					ResourceMessages.NewProject_perspSwitchMessageWithDesc,
+			message = NLS.bind(ResourceMessages.NewProject_perspSwitchMessageWithDesc,
 					new String[] { finalPersp.getLabel(), desc });
 		}
 
-		MessageDialogWithToggle dialog = MessageDialogWithToggle
-		.openYesNoQuestion(window.getShell(),
-				ResourceMessages.NewProject_perspSwitchTitle, message,
-				null /* use the default message for the toggle */,
+		MessageDialogWithToggle dialog = MessageDialogWithToggle.openYesNoQuestion(window
+				.getShell(), ResourceMessages.NewProject_perspSwitchTitle, message, null /*
+																						 * use
+																						 * the
+																						 * default
+																						 * message
+																						 * for
+																						 * the
+																						 * toggle
+																						 */,
 				false /* toggle is initially unchecked */, store,
 				IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
 		int result = dialog.getReturnCode();
@@ -475,8 +453,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			}
 
 			// update PROJECT_OPEN_NEW_PERSPECTIVE to correspond
-			PrefUtil.getAPIPreferenceStore().setValue(
-					IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE,
+			PrefUtil.getAPIPreferenceStore().setValue(IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE,
 					preferenceValue);
 		}
 		return result == IDialogConstants.YES_ID;
@@ -492,10 +469,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 *            the id to query.
 	 * @since 3.0
 	 */
-	private static void addPerspectiveAndDescendants(final List perspectiveIds,
-			final String id) {
-		IPerspectiveRegistry registry = PlatformUI.getWorkbench()
-		.getPerspectiveRegistry();
+	private static void addPerspectiveAndDescendants(final List perspectiveIds, final String id) {
+		IPerspectiveRegistry registry = PlatformUI.getWorkbench().getPerspectiveRegistry();
 		IPerspectiveDescriptor[] perspectives = registry.getPerspectives();
 		for (int i = 0; i < perspectives.length; i++) {
 			// @issue illegal ref to workbench internal class;
@@ -506,6 +481,5 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			}
 		}
 	}
-
 
 }

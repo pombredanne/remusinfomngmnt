@@ -29,6 +29,9 @@ import org.eclipse.ui.internal.ide.IIDEHelpContextIds;
 import org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea;
 import org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea.IErrorMessageReporter;
 
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.ui.UIPlugin;
+
 /**
  * Standard main page for a wizard that is creates a project resource.
  * <p>
@@ -36,11 +39,13 @@ import org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea.IErrorMes
  * </p>
  * <p>
  * Example usage:
+ * 
  * <pre>
- * mainPage = new WizardNewProjectCreationPage("basicNewProjectPage");
- * mainPage.setTitle("Project");
- * mainPage.setDescription("Create a new project resource.");
+ * mainPage = new WizardNewProjectCreationPage(&quot;basicNewProjectPage&quot;);
+ * mainPage.setTitle(&quot;Project&quot;);
+ * mainPage.setDescription(&quot;Create a new project resource.&quot;);
  * </pre>
+ * 
  * </p>
  */
 public class NewInfoProjectWizardPage extends WizardPage {
@@ -52,7 +57,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	Text projectNameField;
 
 	private final Listener nameModifyListener = new Listener() {
-		public void handleEvent(Event e) {
+		public void handleEvent(final Event e) {
 			setLocationForSelection();
 			boolean valid = validatePage();
 			setPageComplete(valid);
@@ -72,27 +77,29 @@ public class NewInfoProjectWizardPage extends WizardPage {
 		return this.descriptionText;
 	}
 
-
 	// constants
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
 	/**
 	 * Creates a new project creation wizard page.
-	 *
-	 * @param pageName the name of this page
+	 * 
+	 * @param pageName
+	 *            the name of this page
 	 */
-	public NewInfoProjectWizardPage(String pageName) {
+	public NewInfoProjectWizardPage(final String pageName) {
 		super(pageName);
 		setPageComplete(false);
 	}
 
-
-	/** (non-Javadoc)
-	 * Method declared on IDialogPage.
+	/**
+	 * (non-Javadoc) Method declared on IDialogPage.
 	 */
-	public void createControl(Composite parent) {
+	public void createControl(final Composite parent) {
 		Composite composite = new Composite(parent, SWT.NULL);
+		setTitle("New Project");
 
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
+				"icons/iconexperience/wizards/new_project_wizard.png"));
 
 		initializeDialogUnits(parent);
 
@@ -104,7 +111,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 
 		createProjectNameGroup(composite);
 		this.locationArea = new ProjectContentsLocationArea(getErrorReporter(), composite);
-		if(this.initialProjectFieldValue != null) {
+		if (this.initialProjectFieldValue != null) {
 			this.locationArea.updateProjectName(this.initialProjectFieldValue);
 		}
 
@@ -121,11 +128,10 @@ public class NewInfoProjectWizardPage extends WizardPage {
 		this.descriptionLabel = new Text(descriptionGroup, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
 		this.descriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		descriptionLabel.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(final Event event) {
 				NewInfoProjectWizardPage.this.descriptionText = ((Text) event.widget).getText();
 			}
 		});
-
 
 		// Scale the button based on the rest of the dialog
 		setButtonLayoutData(this.locationArea.getBrowseButton());
@@ -133,7 +139,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 		setPageComplete(validatePage());
 		// Show description on opening
 		setErrorMessage(null);
-		setMessage(null);
+		setMessage("Creates a new information project");
 		setControl(composite);
 		Dialog.applyDialogFont(composite);
 	}
@@ -153,33 +159,36 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	 *         original group will be returned.
 	 * @since 3.4
 	 */
-	public WorkingSetGroup createWorkingSetGroup(Composite composite,
-			IStructuredSelection selection, String[] supportedWorkingSetTypes) {
+	public WorkingSetGroup createWorkingSetGroup(final Composite composite,
+			final IStructuredSelection selection, final String[] supportedWorkingSetTypes) {
 		if (this.workingSetGroup != null)
 			return this.workingSetGroup;
-		this.workingSetGroup = new WorkingSetGroup(composite, selection,
-				supportedWorkingSetTypes);
+		this.workingSetGroup = new WorkingSetGroup(composite, selection, supportedWorkingSetTypes);
 		return this.workingSetGroup;
 	}
 
 	/**
 	 * Get an error reporter for the receiver.
+	 * 
 	 * @return IErrorMessageReporter
 	 */
 	private IErrorMessageReporter getErrorReporter() {
-		return new IErrorMessageReporter(){
-			/* (non-Javadoc)
-			 * @see org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea.IErrorMessageReporter#reportError(java.lang.String)
+		return new IErrorMessageReporter() {
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea
+			 * .IErrorMessageReporter#reportError(java.lang.String)
 			 */
-			public void reportError(String errorMessage, boolean infoOnly) {
+			public void reportError(final String errorMessage, final boolean infoOnly) {
 				if (infoOnly) {
 					setMessage(errorMessage, IStatus.INFO);
 					setErrorMessage(null);
-				}
-				else
+				} else
 					setErrorMessage(errorMessage);
 				boolean valid = errorMessage == null;
-				if(valid) {
+				if (valid) {
 					valid = validatePage();
 				}
 
@@ -190,10 +199,11 @@ public class NewInfoProjectWizardPage extends WizardPage {
 
 	/**
 	 * Creates the project name specification controls.
-	 *
-	 * @param parent the parent composite
+	 * 
+	 * @param parent
+	 *            the parent composite
 	 */
-	private final void createProjectNameGroup(Composite parent) {
+	private final void createProjectNameGroup(final Composite parent) {
 		// project specification group
 		Composite projectGroup = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
@@ -221,14 +231,11 @@ public class NewInfoProjectWizardPage extends WizardPage {
 		this.projectNameField.addListener(SWT.Modify, this.nameModifyListener);
 	}
 
-
 	/**
-	 * Returns the current project location path as entered by
-	 * the user, or its anticipated initial value.
-	 * Note that if the default has been returned the path
-	 * in a project description used to create a project
-	 * should not be set.
-	 *
+	 * Returns the current project location path as entered by the user, or its
+	 * anticipated initial value. Note that if the default has been returned the
+	 * path in a project description used to create a project should not be set.
+	 * 
 	 * @return the project location path or its anticipated initial value.
 	 */
 	public IPath getLocationPath() {
@@ -236,11 +243,9 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	}
 
 	/**
-    /**
-	 * Returns the current project location URI as entered by
-	 * the user, or <code>null</code> if a valid project location
-	 * has not been entered.
-	 *
+	 * /** Returns the current project location URI as entered by the user, or
+	 * <code>null</code> if a valid project location has not been entered.
+	 * 
 	 * @return the project location URI, or <code>null</code>
 	 * @since 3.2
 	 */
@@ -260,16 +265,15 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	 * @return the new project resource handle
 	 */
 	public IProject getProjectHandle() {
-		return ResourcesPlugin.getWorkspace().getRoot().getProject(
-				getProjectName());
+		return ResourcesPlugin.getWorkspace().getRoot().getProject(getProjectName());
 	}
 
 	/**
-	 * Returns the current project name as entered by the user, or its anticipated
-	 * initial value.
-	 *
-	 * @return the project name, its anticipated initial value, or <code>null</code>
-	 *   if no project name is known
+	 * Returns the current project name as entered by the user, or its
+	 * anticipated initial value.
+	 * 
+	 * @return the project name, its anticipated initial value, or
+	 *         <code>null</code> if no project name is known
 	 */
 	public String getProjectName() {
 		if (this.projectNameField == null) {
@@ -280,8 +284,8 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	}
 
 	/**
-	 * Returns the value of the project name field
-	 * with leading and trailing spaces removed.
+	 * Returns the value of the project name field with leading and trailing
+	 * spaces removed.
 	 * 
 	 * @return the project name in the field
 	 */
@@ -294,26 +298,25 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	}
 
 	/**
-	 * Sets the initial project name that this page will use when
-	 * created. The name is ignored if the createControl(Composite)
-	 * method has already been called. Leading and trailing spaces
-	 * in the name are ignored.
-	 * Providing the name of an existing project will not necessarily
-	 * cause the wizard to warn the user.  Callers of this method
-	 * should first check if the project name passed already exists
-	 * in the workspace.
+	 * Sets the initial project name that this page will use when created. The
+	 * name is ignored if the createControl(Composite) method has already been
+	 * called. Leading and trailing spaces in the name are ignored. Providing
+	 * the name of an existing project will not necessarily cause the wizard to
+	 * warn the user. Callers of this method should first check if the project
+	 * name passed already exists in the workspace.
 	 * 
-	 * @param name initial project name for this page
+	 * @param name
+	 *            initial project name for this page
 	 * 
 	 * @see IWorkspace#validateName(String, int)
 	 * 
 	 */
-	public void setInitialProjectName(String name) {
+	public void setInitialProjectName(final String name) {
 		if (name == null) {
 			this.initialProjectFieldValue = null;
 		} else {
 			this.initialProjectFieldValue = name.trim();
-			if(this.locationArea != null) {
+			if (this.locationArea != null) {
 				this.locationArea.updateProjectName(name.trim());
 			}
 		}
@@ -326,13 +329,11 @@ public class NewInfoProjectWizardPage extends WizardPage {
 		this.locationArea.updateProjectName(getProjectNameFieldValue());
 	}
 
-
 	/**
-	 * Returns whether this page's controls currently all contain valid
-	 * values.
-	 *
+	 * Returns whether this page's controls currently all contain valid values.
+	 * 
 	 * @return <code>true</code> if all controls are valid, and
-	 *   <code>false</code> if at least one is invalid
+	 *         <code>false</code> if at least one is invalid
 	 */
 	protected boolean validatePage() {
 		IWorkspace workspace = IDEWorkbenchPlugin.getPluginWorkspace();
@@ -344,8 +345,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 			return false;
 		}
 
-		IStatus nameStatus = workspace.validateName(projectFieldContents,
-				IResource.PROJECT);
+		IStatus nameStatus = workspace.validateName(projectFieldContents, IResource.PROJECT);
 		if (!nameStatus.isOK()) {
 			setErrorMessage(nameStatus.getMessage());
 			return false;
@@ -362,7 +362,8 @@ public class NewInfoProjectWizardPage extends WizardPage {
 		this.locationArea.setExistingProject(project);
 
 		String validLocationMessage = this.locationArea.checkValidLocation();
-		if (validLocationMessage != null) { // there is no destination location given
+		if (validLocationMessage != null) { // there is no destination location
+			// given
 			setErrorMessage(validLocationMessage);
 			return false;
 		}
@@ -376,7 +377,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	 * see @DialogPage.setVisible(boolean)
 	 */
 	@Override
-	public void setVisible(boolean visible) {
+	public void setVisible(final boolean visible) {
 		super.setVisible(visible);
 		if (visible) {
 			this.projectNameField.setFocus();
@@ -385,12 +386,12 @@ public class NewInfoProjectWizardPage extends WizardPage {
 
 	/**
 	 * Returns the useDefaults.
+	 * 
 	 * @return boolean
 	 */
 	public boolean useDefaults() {
 		return this.locationArea.isDefault();
 	}
-
 
 	/**
 	 * Return the selected working sets, if any. If this page is not configured

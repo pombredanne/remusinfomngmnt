@@ -1,0 +1,112 @@
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#setting url_escaping_charset="UTF-8">  
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="${.globals.jslibDir}/templates/images.js"></script>
+  <script src="${.globals.jslibDir}/js/curvycorners.js"></script>
+  <script type="text/JavaScript">
+	  window.onload = function()
+	  {
+	          settings = {
+	          tl: { radius: 5 },
+	          tr: { radius: 5 },
+	          bl: { radius: 0 },
+	          br: { radius: 0 },
+	          antiAlias: true,
+	          autoPad: true
+	      }
+	
+	      var myBoxObject = new curvyCorners(settings,"srccode");
+	      myBoxObject.applyCornersToAll();
+	  }
+</script>
+  <title>${data.__label}</title>
+  <style type="text/css">
+  	.systemfont,body,td {
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
+	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	
+}
+ </style>
+<body>
+	<#if data.received?has_content >
+	<div style="text-align:right; padding:0px; margin:0px">
+		${data.received?datetime?string.long}
+	</div>
+	</#if>
+	<div style="margin:5px;">
+		<table>
+			
+			<tr>
+				<td class="bold" colspan="2">${data.MAIL?html}</td>
+			</tr>
+			<tr>
+			<#if data.__keywords?has_content >
+				<td class="bold">Keywords:</td>
+				<td>${data.__keywords?html}</td>
+			</tr>
+			</#if>
+			<#if data.__description?has_content >
+			<tr>
+				<td class="bold">Description:</td>
+				<td>${data.__description?html}</td>
+			</tr>
+			</#if>
+			<#if data.sender?has_content >
+			<tr>
+				<td class="bold">Sender:</td>
+				<td>
+				<#if data.sender?has_content >
+				<a href="mailto:${data.sender?html}">${data.sender?html}</a>
+				<#else>
+				n.a.
+				</#if>
+				</td>
+			</tr>
+			</#if >
+			<#assign recipients = dynamic.recipients >
+			<#if (recipients?size > 0) >
+			<tr>
+				<td class="bold">Recipients:</td>
+				<td>
+				<#list recipients as item >
+				<a href="mailto:${item.recipient?html}">${item.recipient?html}</a>,
+				</#list>
+				</td>
+			</tr>
+			</#if >
+			<#assign ccs = dynamic.ccs >
+			<#if (recipients?size > 0) >
+			<tr>
+				<td class="bold">CC:</td>
+				<td>
+				<#list ccs as item >
+				<a href="mailto:${item.cc?html}">${item.cc?html}</a>,
+				</#list>
+				</td>
+			</tr>
+			</#if >
+		</table>
+	</div>
+	<div style="border-bottom:1px solid black;"></div>
+  	<div>
+  		<#if data.content?has_content >
+  			<#if data.contenttype?matches("HTML") >
+  			${data.content}
+  			<#else>
+  			${data.content?html?replace("\n","<br>")}
+  			</#if>
+  		</#if>
+  	</div>
+</body>
+</html>

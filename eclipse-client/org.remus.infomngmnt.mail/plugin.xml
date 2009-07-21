@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/mail.png"
+            name="Mail/News"
+            presentation="org.remus.infomngmnt.mail.extension.MailInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
+            type="MAIL">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.imagetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.rftTransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.remus.infomngmnt.ui.business"
+            class="org.remus.infomngmnt.mail.ui.NewMailWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/mail_new.png"
+            id="org.remus.infomngmnt.mail.newWizard"
+            name="Mail/Message">
+      </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.mail.ui.MailEditPage"
+            icon="icons/iconexperience/mail_edit.png"
+            id="org.remus.infomngmnt.mail.editPage"
+            label="Edit Mail"
+            type="MAIL">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.mail.ui.RecipentsEditPage"
+            icon="icons/iconexperience/businesspeople2.png"
+            id="org.remus.infomngmnt.mail.recipients"
+            label="Recipients"
+            type="MAIL">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.mail.ui.AttachmentsEditPage"
+            icon="icons/iconexperience/paperclip.png"
+            id="org.remus.infomngmnt.mail.attachments"
+            label="Attachments"
+            type="MAIL">
+      </editPage>
+   </extension>
+
+</plugin>

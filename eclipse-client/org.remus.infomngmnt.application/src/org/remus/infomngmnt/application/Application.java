@@ -85,7 +85,6 @@ public class Application implements IApplication {
 	 */
 	public Object start(final IApplicationContext appContext) throws Exception {
 		Display display = createDisplay();
-		Platform.getBundle("org.eclipse.equinox.ds").start();
 
 		try {
 

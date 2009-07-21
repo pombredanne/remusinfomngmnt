@@ -175,10 +175,10 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 			informationRepresentation.handlePreBuild(this.monitor);
 			if (infoTypeByType.isBuildHtml()) {
-				InputStream handleHtmlGeneration = infoTypeByType.getInformationRepresentation()
-						.handleHtmlGeneration(this.monitor);
 				IFile writeContent = null;
 				try {
+					InputStream handleHtmlGeneration = infoTypeByType
+							.getInformationRepresentation().handleHtmlGeneration(this.monitor);
 					writeContent = writeContent(resource, handleHtmlGeneration, this.monitor);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

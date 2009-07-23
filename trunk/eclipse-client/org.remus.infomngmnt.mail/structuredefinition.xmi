@@ -17,6 +17,6 @@
   <structureItems xsi:type="infomngmnt:DynamicStructure" label="A list of carbon copy recipients" id="ccs" createAlways="true" upperBound="-1">
     <structureItems type="STRING" id="cc"/>
   </structureItems>
-  <structureItems type="STRING" id="moreInfo"/>
+  <structureItems type="STRING" id="moreInfo" createAlways="true"/>
   <structureItems type="STRING" label="The email of the sender" id="sender" createAlways="true"/>
 </infomngmnt:InformationStructureDefinition>

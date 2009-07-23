@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.rss.RssConnector"
+            credentialprovider="org.remus.infomngmnt.connector.rss.RssCredentialProvider"
+            icon="icons/Feed-icon.png"
+            id="org.remus.infomngmnt.connector.rss"
+            name="RSS/Atom Feed">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.rss.respository1"
+            newWizard="org.remus.infomngmnt.connector.rss.ui.RssRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.rss">
+      </respository>
+   </extension>
+
+</plugin>

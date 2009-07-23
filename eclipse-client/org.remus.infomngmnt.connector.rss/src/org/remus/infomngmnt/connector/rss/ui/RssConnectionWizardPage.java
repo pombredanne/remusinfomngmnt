@@ -1,0 +1,163 @@
+/*******************************************************************************
+ * Copyright (c) 2008 Tom Seidel, Remus Software
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *
+ * Contributors:
+ *     Tom Seidel - initial API and implementation
+ *******************************************************************************/
+package org.remus.infomngmnt.connector.rss.ui;
+
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeansObservables;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
+
+import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.common.core.util.StringUtils;
+import org.remus.infomngmnt.connector.rss.RssConnector;
+import org.remus.infomngmnt.connector.rss.RssCredentialProvider;
+import org.remus.infomngmnt.core.remote.IRepository;
+
+public class RssConnectionWizardPage extends WizardPage {
+
+	private Text nameText;
+
+	private Text apiUrlText;
+	private RemoteRepository repository;
+	private IRepository repositoryDefinition;
+
+	/**
+	 * Create the wizard
+	 */
+	public RssConnectionWizardPage() {
+		super("wizardPage");
+		setTitle("RSS/Atom Connector");
+		setDescription("Enter a feed url");
+
+	}
+
+	/**
+	 * Create contents of the wizard
+	 * 
+	 * @param parent
+	 */
+	public void createControl(final Composite parent) {
+		Composite container = new Composite(parent, SWT.NULL);
+		container.setLayout(new GridLayout());
+		//
+
+		final Group group = new Group(container, SWT.NONE);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		final GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		group.setLayout(gridLayout);
+
+		final Label nameLabel = new Label(group, SWT.NONE);
+		nameLabel.setText("Name:");
+
+		this.nameText = new Text(group, SWT.BORDER);
+		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		final Label apiurlLabel = new Label(group, SWT.NONE);
+		apiurlLabel.setText("Feed-Url:");
+
+		this.apiUrlText = new Text(group, SWT.BORDER);
+		this.apiUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		new Label(group, SWT.NONE);
+
+		Composite composite = new Composite(group, SWT.NONE);
+		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		GridLayout gridLayout_2 = new GridLayout(2, false);
+		gridLayout_2.marginWidth = 0;
+		gridLayout_2.marginHeight = 0;
+		composite.setLayout(gridLayout_2);
+
+		final Button validateCredentialsButton = new Button(composite, SWT.NONE);
+		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				try {
+					getContainer().run(true, false, new IRunnableWithProgress() {
+						public void run(final IProgressMonitor monitor)
+								throws InvocationTargetException, InterruptedException {
+							IStatus validate = RssConnectionWizardPage.this.repositoryDefinition
+									.validate();
+							if (!validate.isOK()) {
+								throw new InvocationTargetException(validate.getException());
+							}
+							setErrorMessage(null);
+						}
+					});
+				} catch (InvocationTargetException e) {
+					setErrorMessage(StringUtils.join("Error validating repository (", e.getCause()
+							.getMessage(), ")"));
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		validateCredentialsButton.setText("Validate");
+
+		Button btnObtainFeedTitle = new Button(composite, SWT.NONE);
+		btnObtainFeedTitle.setBounds(0, 0, 75, 25);
+		btnObtainFeedTitle.setText("Obtain Feed Title");
+		btnObtainFeedTitle.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				String feedTitle = ((RssConnector) RssConnectionWizardPage.this.repositoryDefinition)
+						.getFeedTitle();
+				if (feedTitle != null) {
+					RssConnectionWizardPage.this.nameText.setText(feedTitle);
+				}
+			}
+		});
+
+		bindValuesToUi();
+		setControl(container);
+
+	}
+
+	public void setRemoteObject(final RemoteRepository repository) {
+		this.repository = repository;
+		this.repositoryDefinition = repository.getRepositoryImplementation();
+	}
+
+	public void bindValuesToUi() {
+		DataBindingContext ctx = new DataBindingContext();
+		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
+		ISWTObservableValue observeText = SWTObservables.observeText(this.nameText, SWT.Modify);
+		IObservableValue observeValue = EMFObservables.observeValue(this.repository,
+				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
+		ctx.bindValue(observeText, observeValue);
+		ISWTObservableValue observeText2 = SWTObservables.observeText(this.apiUrlText, SWT.Modify);
+		IObservableValue observeValue3 = BeansObservables.observeValue(this.repositoryDefinition
+				.getCredentialProvider(), RssCredentialProvider.URL);
+		IObservableValue observeValue2 = EMFObservables.observeValue(this.repository,
+				InfomngmntPackage.Literals.REMOTE_OBJECT__URL);
+		ctx.bindValue(observeText2, observeValue3);
+		ctx.bindValue(observeValue3, observeValue2);
+
+	}
+}

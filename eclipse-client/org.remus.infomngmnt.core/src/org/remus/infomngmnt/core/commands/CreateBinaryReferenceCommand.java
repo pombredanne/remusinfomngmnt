@@ -102,6 +102,10 @@ public class CreateBinaryReferenceCommand extends CompoundCommand implements
 		postExecute();
 	}
 
+	public IFile getTargetFile() {
+		return this.targetFile;
+	}
+
 	@Override
 	public void dispose() {
 		try {

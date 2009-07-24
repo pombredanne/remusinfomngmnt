@@ -14,6 +14,7 @@ package org.remus.infomngmnt.favoritesearch.ui;
 
 import java.text.SimpleDateFormat;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -209,7 +210,8 @@ public class SearchResultPage extends AbstractInformationFormPage {
 		sb.append("</p><p>");
 		sb.append("<img href=\"").append(result.getInfoType()).append("\"/>").append(" <a href=\"")
 				.append(index).append("|").append(result.getPath().toString()).append("\">")
-				.append(result.getTitle()).append("</a>").append("</p>");
+				.append(StringEscapeUtils.escapeXml(result.getTitle())).append("</a>").append(
+						"</p>");
 		return sb.toString();
 	}
 

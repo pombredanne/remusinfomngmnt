@@ -183,8 +183,8 @@ public class CommandFactory {
 		return new DeleteSynchronizedCategoryCommand(category, domain);
 	}
 
-	public static Command addFileToInfoUnit(final IFile file, final InformationUnit targetInfoUnit,
-			final EditingDomain domain) {
+	public static CreateBinaryReferenceCommand addFileToInfoUnit(final IFile file,
+			final InformationUnit targetInfoUnit, final EditingDomain domain) {
 		return new CreateBinaryReferenceCommand(file, targetInfoUnit, domain);
 	}
 }

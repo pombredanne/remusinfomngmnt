@@ -14,12 +14,33 @@ package org.remus.infomngmnt.connector.rss;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.cyberneko.html.parsers.DOMParser;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.ecf.core.ContainerCreateException;
+import org.eclipse.ecf.core.ContainerFactory;
+import org.eclipse.ecf.core.IContainer;
+import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -28,16 +49,22 @@ import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.commands.CreateBinaryReferenceCommand;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
+import com.sun.syndication.feed.synd.SyndCategory;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -56,6 +83,10 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			reset();
 		}
 	};
+
+	private IContainer container;
+
+	private IRetrieveFileTransferContainerAdapter fileReceiveAdapter;
 
 	/*
 	 * (non-Javadoc)
@@ -223,11 +254,18 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 				SyndContent object = (SyndContent) contents.get(0);
 				edit.setValue(newInformationUnit, MailActivator.NODE_NAME_CONTENT, object
 						.getValue());
-			}
-			if (entry.getDescription() != null) {
+			} else if (entry.getDescription() != null) {
 				edit.setValue(newInformationUnit, MailActivator.NODE_NAME_CONTENT, entry
 						.getDescription().getValue());
 			}
+			List categories = entry.getCategories();
+			List<String> cats = new ArrayList<String>();
+			for (Object object : categories) {
+				cats.add(((SyndCategory) object).getName());
+			}
+			String join = org.apache.commons.lang.StringUtils.join(cats, " ");
+			newInformationUnit.setKeywords(join);
+
 			return newInformationUnit;
 		}
 		return null;
@@ -241,13 +279,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	@Override
 	public void proceedLocalInformationUnitAfterSync(
 			final InformationUnit newOrUpdatedLocalInformationUnit, final IProgressMonitor monitor) {
-		InformationStructureEdit edit = InformationStructureEdit
-				.newSession(newOrUpdatedLocalInformationUnit.getType());
-		InformationStructureRead read = InformationStructureRead
-				.newSession(newOrUpdatedLocalInformationUnit);
-
-		String valueByNodeId = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
-
+		parseContent(newOrUpdatedLocalInformationUnit, monitor);
 	}
 
 	/*
@@ -290,69 +322,96 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		return this.api;
 	}
 
-	private void parseContent(final InformationUnit unit) {
-		// final DOMParser parser = new DOMParser();
-		// try {
-		// InputStream contents = tempFile.getContents();
-		// parser.parse(new org.apache.xerces.xni.parser.XMLInputSource(null,
-		// null, null,
-		// contents, "UTF-8"));
-		// final Document document = parser.getDocument();
-		// NodeList elementsByTagName = document.getElementsByTagName("head");
-		// for (int i = 0; i < elementsByTagName.getLength(); i++) {
-		// final Node node = elementsByTagName.item(i);
-		//
-		// NodeList childNodes = node.getChildNodes();
-		// while (childNodes.getLength() > 0) {
-		// node.removeChild(childNodes.item(0));
-		// }
-		// Element createElement = document.createElement("style");
-		// Attr createAttribute = document.createAttribute("type");
-		// createAttribute.setNodeValue("text/css");
-		// InputStream resourceAsStream = DownloadLatestNewsJob.class
-		// .getResourceAsStream("template.css");
-		// Text createComment = document.createTextNode(StreamUtil
-		// .convertStreamToString(resourceAsStream));
-		// createElement.setAttributeNode(createAttribute);
-		// createElement.appendChild(createComment);
-		// node.appendChild(createElement);
-		// break;
-		// }
-		// elementsByTagName = document.getElementsByTagName("a");
-		// for (int i = 0; i < elementsByTagName.getLength(); i++) {
-		// final Node node = elementsByTagName.item(i);
-		// ((Element) node).setAttribute("target", "_blank");
-		// String attribute = ((Element) node).getAttribute("href");
-		// // Joomla cuts all internal links...
-		// if (attribute.startsWith("/")) {
-		// ((Element) node).setAttribute("href", URL_PREFIX + attribute);
-		// }
-		// }
-		// final Transformer transformer =
-		// TransformerFactory.newInstance().newTransformer();
-		// transformer.setOutputProperty("omit-xml-declaration", "yes");
-		//
-		// final DOMSource source = new DOMSource(document);
-		// final StringWriter writer = new StringWriter();
-		//
-		// final StreamResult result = new StreamResult(writer);
-		// transformer.transform(source, result);
-		// tempFile.setContents(new
-		// ByteArrayInputStream(writer.toString().getBytes("UTF-8")),
-		// true, false, monitor);
-		//
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// } catch (TransformerFactoryConfigurationError e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+	private void parseContent(final InformationUnit unit, final IProgressMonitor monitor) {
+		InformationStructureRead read = InformationStructureRead.newSession(unit);
+		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		InformationStructureEdit edit = InformationStructureEdit.newSession(
+				MailActivator.INFO_TYPE_ID, editingDomain);
+		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
+		final DOMParser parser = new DOMParser();
+		try {
+			parser.parse(new InputSource(new StringReader(content)));
+			final Document document = parser.getDocument();
+
+			/*
+			 * Replace all imgs with
+			 */
+			NodeList elementsByTagName = document.getElementsByTagName("a");
+			for (int i = 0; i < elementsByTagName.getLength(); i++) {
+				final Node node = elementsByTagName.item(i);
+				((Element) node).setAttribute("target", "_blank");
+			}
+			elementsByTagName = document.getElementsByTagName("img");
+			for (int i = 0; i < elementsByTagName.getLength(); i++) {
+				final Node node = elementsByTagName.item(i);
+				String src = ((Element) node).getAttribute("src");
+				URL url = new URL(src);
+
+				IFile tmpFile;
+				String fileExtension = new Path(src).getFileExtension();
+				if (fileExtension == null || fileExtension.indexOf('?') != -1) {
+					fileExtension = "";
+					tmpFile = ResourceUtil.createTempFile();
+				} else {
+					tmpFile = ResourceUtil.createTempFile(fileExtension);
+				}
+				DownloadFileJob downloadFileJob = new DownloadFileJob(url, tmpFile,
+						getFileReceiveAdapter());
+				IStatus run = downloadFileJob.run(monitor);
+				if (run.isOK()) {
+					InformationUnit createSubType = edit.createSubType(
+							MailActivator.NODE_NAME_EMBEDDED, null);
+					edit.addDynamicNode(unit, createSubType, editingDomain);
+
+					CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory
+							.addFileToInfoUnit(tmpFile, createSubType, editingDomain);
+					editingDomain.getCommandStack().execute(addFileToInfoUnit);
+					IFile targetFile = addFileToInfoUnit.getTargetFile();
+					if (targetFile.exists()) {
+						String lastSegment = targetFile.getProjectRelativePath().lastSegment();
+						((Element) node).setAttribute("src",
+								org.remus.infomngmnt.common.core.util.StringUtils.join("cid:",
+										lastSegment));
+					}
+				}
+
+			}
+			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty("omit-xml-declaration", "yes");
+
+			final DOMSource source = new DOMSource(document);
+			final StringWriter writer = new StringWriter();
+
+			final StreamResult result = new StreamResult(writer);
+			transformer.transform(source, result);
+
+			edit.setValue(unit, MailActivator.NODE_NAME_CONTENT, writer.toString());
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public boolean onlyDownload() {
 		return true;
+	}
+
+	private IRetrieveFileTransferContainerAdapter getFileReceiveAdapter() {
+		if (this.container == null) {
+			try {
+				this.container = ContainerFactory.getDefault().createContainer();
+			} catch (final ContainerCreateException e) {
+				throw new RuntimeException("Error initializing sync-container", e);
+			}
+			this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
+					.getAdapter(IRetrieveFileTransferContainerAdapter.class);
+		}
+		return this.fileReceiveAdapter;
 	}
 
 }

@@ -2,12 +2,14 @@ package org.remus.infomngmnt.ui.editors;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.GridData;
@@ -22,8 +24,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.streams.StreamUtil;
 import org.remus.infomngmnt.jslib.JavaScriptSnippets;
 import org.remus.infomngmnt.jslib.TemplateLocation;
+import org.remus.infomngmnt.util.EditingUtil;
 
 public class ViewPage extends InformationFormPage {
 
@@ -61,9 +66,25 @@ public class ViewPage extends InformationFormPage {
 						public void run() {
 							if (!ViewPage.this.browser.isDisposed()) {
 								if (ViewPage.this.binFile.exists()) {
-									ViewPage.this.browser
-											.setUrl(EditorUtil
-													.computeBinFileLocation((IFileEditorInput) getEditorInput()));
+									if (ViewPage.this.binFile.getLocationURI().getScheme() != null
+											&& EditingUtil.FILEHISTORYKEEPINGSCHEME
+													.equals(ViewPage.this.binFile.getLocationURI()
+															.getScheme())) {
+										ViewPage.this.browser
+												.setUrl(EditorUtil
+														.computeBinFileLocation((IFileEditorInput) getEditorInput()));
+									} else {
+										try {
+											InputStream contents = ViewPage.this.binFile
+													.getContents();
+											ViewPage.this.browser.setText(StreamUtil
+													.convertStreamToString(contents));
+											StreamCloser.closeStreams(contents);
+										} catch (CoreException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
 								} else {
 									ViewPage.this.browser.setUrl(TemplateLocation.getLoadingUrl());
 								}
@@ -117,8 +138,21 @@ public class ViewPage extends InformationFormPage {
 		toolkit.paintBordersFor(this.browser);
 
 		if (this.binFile.exists()) {
-			this.browser.setUrl(EditorUtil
-					.computeBinFileLocation((IFileEditorInput) getEditorInput()));
+			if (this.binFile.getLocationURI().getScheme() != null
+					&& EditingUtil.FILEHISTORYKEEPINGSCHEME.equals(this.binFile.getLocationURI()
+							.getScheme())) {
+				this.browser.setUrl(EditorUtil
+						.computeBinFileLocation((IFileEditorInput) getEditorInput()));
+			} else {
+				try {
+					InputStream contents = this.binFile.getContents();
+					this.browser.setText(StreamUtil.convertStreamToString(contents));
+					StreamCloser.closeStreams(contents);
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		} else {
 			this.browser.setUrl(TemplateLocation.getLoadingUrl());
 		}

@@ -198,4 +198,8 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 	public boolean multiple() {
 		return true;
 	}
+
+	public boolean onlyDownload() {
+		return false;
+	}
 }

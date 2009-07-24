@@ -86,7 +86,7 @@ public abstract class AbstractRepository implements IRepository {
 	}
 
 	public void proceedLocalInformationUnitAfterSync(
-			final InformationUnit newOrUpdatedLocalInformationUnit) {
+			final InformationUnit newOrUpdatedLocalInformationUnit, final IProgressMonitor monitor) {
 		// does nothing by default
 	}
 

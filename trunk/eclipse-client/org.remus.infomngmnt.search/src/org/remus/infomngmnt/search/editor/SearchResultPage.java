@@ -76,15 +76,22 @@ public class SearchResultPage extends FormPage {
 
 		} else {
 			for (int i = 0, n = result.size(); i < n; i++) {
-				final FormText formText = toolkit.createFormText(body, true);
-				formText
-						.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
-				formText.setText(buildSearchResultSting(result.get(i), i, n), true, false);
-				formText.setImage(result.get(i).getInfoType(), InformationExtensionManager
-						.getInstance().getInfoTypeByType(result.get(i).getInfoType()).getImage());
-				formText.addHyperlinkListener(hyperLinkListener);
-				final Label label = toolkit.createSeparator(body, SWT.HORIZONTAL);
-				label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
+				try {
+					final FormText formText = toolkit.createFormText(body, true);
+					formText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
+							TableWrapData.TOP));
+					formText.setText(buildSearchResultSting(result.get(i), i, n), true, false);
+					formText.setImage(result.get(i).getInfoType(), InformationExtensionManager
+							.getInstance().getInfoTypeByType(result.get(i).getInfoType())
+							.getImage());
+					formText.addHyperlinkListener(hyperLinkListener);
+					final Label label = toolkit.createSeparator(body, SWT.HORIZONTAL);
+					label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
+							TableWrapData.TOP));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 		}
@@ -104,7 +111,8 @@ public class SearchResultPage extends FormPage {
 		sb.append("</p><p>");
 		sb.append("<img href=\"").append(result.getInfoType()).append("\"/>").append(" <a href=\"")
 				.append(index).append("|").append(result.getPath().toString()).append("\">")
-				.append(result.getTitle()).append("</a>").append("</p><p>").append(
+				.append(StringEscapeUtils.escapeXml(result.getTitle())).append("</a>").append(
+						"</p><p>").append(
 						StringEscapeUtils.escapeXml(result.getText()).replaceAll(
 								"\\{highlight-start\\}", "<b>").replaceAll("\\{highlight-end\\}",
 								"</b>")).append("</p></form>");

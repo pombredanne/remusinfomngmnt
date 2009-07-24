@@ -50,12 +50,18 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 
 	public CreateInfoTypeCommand(final InformationUnit newInformationUnit,
 			final Category parentCategory, final IProgressMonitor monitor) {
-		this(newInformationUnit, parentCategory, monitor, null);
+		this(newInformationUnit, parentCategory, monitor, null, -1);
 	}
 
 	public CreateInfoTypeCommand(final InformationUnit newInformationUnit,
 			final Category parentCategory, final IProgressMonitor monitor,
 			final InformationUnitListItem alreadyCreatedElement) {
+		this(newInformationUnit, parentCategory, monitor, alreadyCreatedElement, -1);
+	}
+
+	public CreateInfoTypeCommand(final InformationUnit newInformationUnit,
+			final Category parentCategory, final IProgressMonitor monitor,
+			final InformationUnitListItem alreadyCreatedElement, final int index) {
 		this.newInformationUnit = newInformationUnit;
 		this.parentCategory = parentCategory;
 		if (monitor == null) {
@@ -86,9 +92,17 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 			this.createInformationUnitListItem.setLabel(newInformationUnit.getLabel());
 			this.createInformationUnitListItem.setType(newInformationUnit.getType());
 
-			append(new CreateChildCommand(EditingUtil.getInstance().getNavigationEditingDomain(),
-					parentCategory, InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
-					this.createInformationUnitListItem, Collections.EMPTY_LIST));
+			if (index >= 0) {
+				append(new CreateChildCommand(EditingUtil.getInstance()
+						.getNavigationEditingDomain(), parentCategory,
+						InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
+						this.createInformationUnitListItem, index, Collections.EMPTY_LIST));
+			} else {
+				append(new CreateChildCommand(EditingUtil.getInstance()
+						.getNavigationEditingDomain(), parentCategory,
+						InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
+						this.createInformationUnitListItem, Collections.EMPTY_LIST));
+			}
 		} else {
 			this.createInformationUnitListItem = alreadyCreatedElement;
 			newInformationUnit.setId(alreadyCreatedElement.getId());

@@ -93,6 +93,7 @@ public class ChangeSetExecutor {
 			List<InformationUnitListItem> allChildren = ModelUtil
 					.getAllChildren(remoteConvertedContainer,
 							InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
+			Collections.reverse(allChildren);
 			monitor.beginTask(NLS.bind("Checkout of element {0}", newLocalCateogries.getLabel()),
 					allChildren.size());
 			for (InformationUnitListItem informationUnitListItem : allChildren) {
@@ -526,7 +527,7 @@ public class ChangeSetExecutor {
 
 		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		CompoundCommand createInfotype = CommandFactory.CREATE_INFOTYPE(newRemoteInformationUnit,
-				parentCategory);
+				parentCategory, null, 0);
 		IFile[] binaryReferences = itemByRepository.getBinaryReferences(synchronizableObject,
 				monitor);
 		for (IFile iFile : binaryReferences) {
@@ -541,7 +542,7 @@ public class ChangeSetExecutor {
 		InformationUnit newInformationUnit = (InformationUnit) localListItem
 				.getAdapter(InformationUnit.class);
 		if (newInformationUnit != null) {
-			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit);
+			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor);
 		}
 		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
@@ -665,7 +666,7 @@ public class ChangeSetExecutor {
 		InformationUnit newInformationUnit = (InformationUnit) itemById
 				.getAdapter(InformationUnit.class);
 		if (newInformationUnit != null) {
-			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit);
+			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor);
 		}
 		Command setSycnMetadata = SetCommand.create(editingDomain, itemById,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,

@@ -128,7 +128,12 @@ public class CommandFactory {
 
 	public static CompoundCommand CREATE_INFOTYPE(final InformationUnit newItem,
 			final Category parentCategory, final IProgressMonitor monitor) {
-		return new CreateInfoTypeCommand(newItem, parentCategory, monitor);
+		return CREATE_INFOTYPE(newItem, parentCategory, monitor, -1);
+	}
+
+	public static CompoundCommand CREATE_INFOTYPE(final InformationUnit newItem,
+			final Category parentCategory, final IProgressMonitor monitor, final int index) {
+		return new CreateInfoTypeCommand(newItem, parentCategory, monitor, null, index);
 	}
 
 	public static CompoundCommand CREATE_INFOTYPE_FROM_EXISTING_LISTITEM(

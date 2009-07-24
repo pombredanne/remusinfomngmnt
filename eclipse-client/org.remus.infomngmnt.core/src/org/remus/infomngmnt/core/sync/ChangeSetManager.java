@@ -377,6 +377,26 @@ public class ChangeSetManager {
 		filterIgnoredItems(copy);
 
 		/*
+		 * If a repository is a readonly connector, we have to customize the
+		 * repository. We're deleting all content within the local container and
+		 * removing all elements that are local present in the remote container.
+		 * The result is a container that contains only the item that are on the
+		 * repository and not local (including the local deleted entries).
+		 */
+		if (!replaceAllLocal
+				&& copy.getSynchronizationMetaData() != null
+				&& copy.getSynchronizationMetaData().getRepositoryId() != null
+				&& InfomngmntEditPlugin.getPlugin().getService(IRepositoryService.class)
+						.getRepositoryById(copy.getSynchronizationMetaData().getRepositoryId()) != null
+				&& InfomngmntEditPlugin.getPlugin().getService(IRepositoryService.class)
+						.getRepositoryById(copy.getSynchronizationMetaData().getRepositoryId())
+						.getRepositoryImplementation().onlyDownload()) {
+			deleteAllNonEmptyRemoteItems(remoteCopy);
+			copy.getChildren().clear();
+			copy.getInformationUnit().clear();
+		}
+
+		/*
 		 * The root containers name must not be integrated within the compare.
 		 */
 		copy.setLabel(remoteCopy.getLabel());
@@ -437,6 +457,33 @@ public class ChangeSetManager {
 		}
 		return returnValue;
 		// Computing differences
+	}
+
+	private void deleteAllNonEmptyRemoteItems(final Category remoteCopy) {
+		EList<Category> children = remoteCopy.getChildren();
+		List<Category> cat2delete = new ArrayList<Category>();
+		List<InformationUnitListItem> items2delete = new ArrayList<InformationUnitListItem>();
+		for (Category category : children) {
+			if (CategoryUtil.getCategoryById(category.getId()) != null) {
+				cat2delete.add(category);
+			} else {
+				deleteAllNonEmptyRemoteItems(category);
+			}
+		}
+		EList<InformationUnitListItem> informationUnit = remoteCopy.getInformationUnit();
+		for (InformationUnitListItem informationUnitListItem : informationUnit) {
+			if (ApplicationModelPool.getInstance().getItemByIdLocalDeletedIncluded(
+					informationUnitListItem.getId(), new NullProgressMonitor()) != null) {
+				items2delete.add(informationUnitListItem);
+			}
+		}
+		for (Category cat : cat2delete) {
+			remoteCopy.getChildren().remove(cat);
+		}
+		for (InformationUnitListItem listItem : items2delete) {
+			remoteCopy.getInformationUnit().remove(listItem);
+		}
+
 	}
 
 	private void filterIgnoredItems(final Category copy) {

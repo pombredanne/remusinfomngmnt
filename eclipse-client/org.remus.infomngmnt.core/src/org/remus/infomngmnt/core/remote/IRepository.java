@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -126,7 +127,8 @@ public interface IRepository {
 	 * @param unit
 	 *            the new or updated local information unit
 	 */
-	void proceedLocalInformationUnitAfterSync(InformationUnit newOrUpdatedLocalInformationUnit);
+	void proceedLocalInformationUnitAfterSync(InformationUnit newOrUpdatedLocalInformationUnit,
+			IProgressMonitor monitor);
 
 	/**
 	 * Returns a definition which properties within an information unit are
@@ -143,5 +145,7 @@ public interface IRepository {
 	boolean hasBinaryReferences();
 
 	boolean multiple();
+
+	boolean onlyDownload();
 
 }

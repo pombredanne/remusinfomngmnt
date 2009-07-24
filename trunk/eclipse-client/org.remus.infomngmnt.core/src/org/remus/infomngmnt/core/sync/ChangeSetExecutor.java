@@ -543,7 +543,9 @@ public class ChangeSetExecutor {
 				.getAdapter(InformationUnit.class);
 		if (newInformationUnit != null) {
 			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor);
+			EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
 		}
+		SyncStateParticipantNotfier.notifyClean(newInformationUnit.getId());
 		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
 				synchronizableObject.getSynchronizationMetaData());
@@ -656,18 +658,19 @@ public class ChangeSetExecutor {
 
 		itemById = ApplicationModelPool.getInstance().getItemById(synchronizableObject.getId(),
 				monitor);
+
+		InformationUnit newInformationUnit = (InformationUnit) itemById
+				.getAdapter(InformationUnit.class);
+		if (newInformationUnit != null) {
+			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor);
+			EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
+		}
 		/*
 		 * FIXME: Dirty hack. We have to tell the syncstate participant that
 		 * this item is clean. At the moment the saveparticipants cannot divide
 		 * between an edit from the user or the changeset-executor.
 		 */
 		SyncStateParticipantNotfier.notifyClean(itemById.getId());
-
-		InformationUnit newInformationUnit = (InformationUnit) itemById
-				.getAdapter(InformationUnit.class);
-		if (newInformationUnit != null) {
-			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor);
-		}
 		Command setSycnMetadata = SetCommand.create(editingDomain, itemById,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
 				synchronizableObject.getSynchronizationMetaData());

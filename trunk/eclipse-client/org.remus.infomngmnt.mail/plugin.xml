@@ -62,5 +62,14 @@
             type="MAIL">
       </editPage>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.ui.infotypes"
+            class="org.remus.infomngmnt.mail.ui.MailPreferencePage"
+            id="org.remus.infomngmnt.mail.preferences"
+            name="Mail">
+      </page>
+   </extension>
 
 </plugin>

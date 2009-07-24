@@ -60,6 +60,7 @@ public class MailActivator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
+
 		plugin = this;
 	}
 

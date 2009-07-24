@@ -102,7 +102,7 @@
   	<div>
   		<#if data.content?has_content >
   			<#if data.contenttype?matches("HTML") >
-  			${data.content}
+  			${additionals.embeddedContent}
   			<#else>
   			${data.content?html?replace("\n","<br>")}
   			</#if>

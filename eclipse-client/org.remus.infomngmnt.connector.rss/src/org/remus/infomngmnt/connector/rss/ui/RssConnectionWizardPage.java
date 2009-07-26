@@ -32,11 +32,13 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.common.core.util.StringUtils;
+import org.remus.infomngmnt.connector.rss.RssActivator;
 import org.remus.infomngmnt.connector.rss.RssConnector;
 import org.remus.infomngmnt.connector.rss.RssCredentialProvider;
 import org.remus.infomngmnt.core.remote.IRepository;
@@ -48,6 +50,10 @@ public class RssConnectionWizardPage extends WizardPage {
 	private Text apiUrlText;
 	private RemoteRepository repository;
 	private IRepository repositoryDefinition;
+
+	private Spinner refreshRateSpinner;
+
+	private Spinner deleteSpinner;
 
 	/**
 	 * Create the wizard
@@ -134,6 +140,26 @@ public class RssConnectionWizardPage extends WizardPage {
 			}
 		});
 
+		final Group group2 = new Group(container, SWT.NONE);
+		group2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		group2.setText("Properties");
+		final GridLayout gridLayout2 = new GridLayout();
+		gridLayout2.numColumns = 2;
+		group2.setLayout(gridLayout2);
+		Label refreshLabel = new Label(group2, SWT.NONE);
+		refreshLabel.setText("Refresh feed (minutes)");
+		this.refreshRateSpinner = new Spinner(group2, SWT.BORDER);
+		this.refreshRateSpinner.setMinimum(1);
+		this.refreshRateSpinner.setMaximum(200);
+		this.refreshRateSpinner.setIncrement(1);
+
+		Label deleteLabel = new Label(group2, SWT.NONE);
+		deleteLabel.setText("Delete feed-entries older than (days):");
+		this.deleteSpinner = new Spinner(group2, SWT.BORDER);
+		this.deleteSpinner.setMinimum(1);
+		this.deleteSpinner.setMaximum(200);
+		this.deleteSpinner.setIncrement(1);
+
 		bindValuesToUi();
 		setControl(container);
 
@@ -156,6 +182,28 @@ public class RssConnectionWizardPage extends WizardPage {
 				.getCredentialProvider(), RssCredentialProvider.URL);
 		IObservableValue observeValue2 = EMFObservables.observeValue(this.repository,
 				InfomngmntPackage.Literals.REMOTE_OBJECT__URL);
+
+		this.refreshRateSpinner.setSelection(Integer.parseInt(this.repository.getOptions().get(
+				RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL)));
+		this.refreshRateSpinner.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				RssConnectionWizardPage.this.repository.getOptions().put(
+						RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL,
+						String.valueOf(RssConnectionWizardPage.this.refreshRateSpinner
+								.getSelection()));
+			}
+		});
+
+		this.deleteSpinner.setSelection(Integer.parseInt(this.repository.getOptions().get(
+				RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY)));
+		this.deleteSpinner.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				RssConnectionWizardPage.this.repository.getOptions().put(
+						RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY,
+						String.valueOf(RssConnectionWizardPage.this.deleteSpinner.getSelection()));
+			}
+		});
+
 		ctx.bindValue(observeText2, observeValue3);
 		ctx.bindValue(observeValue3, observeValue2);
 

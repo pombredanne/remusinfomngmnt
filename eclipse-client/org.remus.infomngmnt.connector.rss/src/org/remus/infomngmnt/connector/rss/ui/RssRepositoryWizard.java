@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.widgets.Composite;
 
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.connector.rss.RssActivator;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 
 /**
@@ -69,7 +70,9 @@ public class RssRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		// do nothing
+		newRemoteRepositry.getOptions().put(RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL, "5");
+		newRemoteRepositry.getOptions().put(RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY,
+				"30");
 	}
 
 }

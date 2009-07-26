@@ -19,5 +19,13 @@
             repository-id="org.remus.infomngmnt.connector.rss">
       </respository>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.core.job">
+      <job
+            class="org.remus.infomngmnt.connector.rss.jobs.RefreshRssJob"
+            id="org.remus.infomngmnt.connector.rss.refreshJob"
+            name="Refreh RSS Job">
+      </job>
+   </extension>
 
 </plugin>

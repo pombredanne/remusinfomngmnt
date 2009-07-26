@@ -32,6 +32,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -43,9 +45,11 @@ import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.jslib.StyleProvider;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.mail.preferences.MailPreferenceInitializer;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -79,6 +83,16 @@ public class MailInformationRepresentation extends AbstractInformationRepresenta
 							ContentType.HTML.getKey())) {
 				additionals.put("embeddedContent", parseContent());
 			}
+			IPreferenceStore preferenceStore = MailActivator.getDefault().getPreferenceStore();
+			additionals.put("bodycss", StyleProvider
+					.getCssSystemFontDefinition(PreferenceConverter.getFontDataArray(
+							preferenceStore, MailPreferenceInitializer.BODY_FONT), "body"));
+			additionals.put("headercss", StyleProvider.getCssSystemFontDefinition(
+					PreferenceConverter.getFontDataArray(preferenceStore,
+							MailPreferenceInitializer.HEADER_FONT), "h1"));
+			additionals.put("subheadercss", StyleProvider.getCssSystemFontDefinition(
+					PreferenceConverter.getFontDataArray(preferenceStore,
+							MailPreferenceInitializer.SUB_HEADER_FONT), "h2,h3,h4"));
 			templateIs = FileLocator.openStream(Platform.getBundle(MailActivator.PLUGIN_ID),
 					new Path("template/htmlserialization.flt"), false);
 			FreemarkerRenderer.getInstance().process(MailActivator.PLUGIN_ID, templateIs,

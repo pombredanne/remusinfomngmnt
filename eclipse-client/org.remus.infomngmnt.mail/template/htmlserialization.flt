@@ -24,7 +24,7 @@
 </script>
   <title>${data.__label}</title>
   <style type="text/css">
-  	.systemfont,body,td {
+  	.systemfont,td {
 		font-family: ${.globals.defaultFont};
 		font-style: ${.globals.defaultFontStyle};
 		font-size: ${.globals.defaultFontSize}pt;
@@ -37,10 +37,13 @@
 	}
 	
 }
+ ${additionals.bodycss}
+ ${additionals.headercss}
+ ${additionals.subheadercss}
  </style>
 <body>
 	<#if data.received?has_content >
-	<div style="text-align:right; padding:0px; margin:0px">
+	<div style="text-align:right; padding:0px; margin:0px" class="systemfont">
 		${data.received?datetime?string.long}
 	</div>
 	</#if>

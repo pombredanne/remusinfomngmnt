@@ -11,9 +11,13 @@ public class RssActivator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.rss";
 
+	public static final String REPOSITORY_OPTIONS_REFRESH_INTERVAL = "REPOSITORY_OPTIONS_REFRESH_INTERVAL";
+	public static final String REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY = "REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY";
+
+	public static final String REPOSITORY_ID = "org.remus.infomngmnt.connector.rss"; //$NON-NLS-1$
 	// The shared instance
 	private static RssActivator plugin;
-	
+
 	/**
 	 * The constructor
 	 */
@@ -22,25 +26,33 @@ public class RssActivator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
-	public void start(BundleContext context) throws Exception {
+	@Override
+	public void start(final BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
-	public void stop(BundleContext context) throws Exception {
+	@Override
+	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static RssActivator getDefault() {

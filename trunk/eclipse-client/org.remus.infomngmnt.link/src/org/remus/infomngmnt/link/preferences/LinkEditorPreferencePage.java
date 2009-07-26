@@ -8,7 +8,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.preference.BooleanFieldEditor;
@@ -109,12 +108,12 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage implemen
 									IFile tmpFile = ResourceUtil.createTempFile("png");
 									WebshotUtil.performWebShot(adapter.getStringValue(), tmpFile
 											.getLocation().toOSString());
-									EList<BinaryReference> binaryReferences = adapter
+									BinaryReference binaryReferences = adapter
 											.getBinaryReferences();
 									CompoundCommand cc = new CompoundCommand();
-									for (BinaryReference binaryReference : binaryReferences) {
-										cc.append(new DeleteBinaryReferenceCommand(binaryReference,
-												editingDomain));
+									if (binaryReferences != null) {
+										cc.append(new DeleteBinaryReferenceCommand(
+												binaryReferences, editingDomain));
 									}
 									cc.append(CommandFactory.addFileToInfoUnit(tmpFile, adapter,
 											editingDomain));

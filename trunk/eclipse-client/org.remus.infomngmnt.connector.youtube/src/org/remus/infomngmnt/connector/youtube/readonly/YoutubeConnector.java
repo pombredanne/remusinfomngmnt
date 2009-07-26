@@ -362,9 +362,12 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	@Override
-	public IFile[] getBinaryReferences(final InformationUnitListItem remoteListItem,
-			final IProgressMonitor monitor) {
-		return new IFile[] { this.tmpVideoFile };
+	public IFile getBinaryReferences(final InformationUnit localInfoFragment,
+			final IProgressMonitor monitor) throws RemoteException {
+		if (VideoActivator.TYPE_ID.equals(localInfoFragment.getType())) {
+			return this.tmpVideoFile;
+		}
+		return null;
 	}
 
 	/**
@@ -513,6 +516,11 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	public void reset() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean onlyDownload() {
+		return true;
 	}
 
 	@Override

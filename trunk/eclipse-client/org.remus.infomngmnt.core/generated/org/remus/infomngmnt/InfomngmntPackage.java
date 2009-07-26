@@ -298,7 +298,7 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__CALENDAR_ENTRY = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 13;
 
 	/**
-	 * The feature id for the '<em><b>Binary References</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Binary References</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -906,7 +906,7 @@ public interface InfomngmntPackage extends EPackage {
 	int RULE_VALUE__CALENDAR_ENTRY = INFORMATION_UNIT__CALENDAR_ENTRY;
 
 	/**
-	 * The feature id for the '<em><b>Binary References</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Binary References</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2666,10 +2666,10 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getInformationUnit_CalendarEntry();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.InformationUnit#getBinaryReferences <em>Binary References</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.remus.infomngmnt.InformationUnit#getBinaryReferences <em>Binary References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Binary References</em>'.
+	 * @return the meta object for the containment reference '<em>Binary References</em>'.
 	 * @see org.remus.infomngmnt.InformationUnit#getBinaryReferences()
 	 * @see #getInformationUnit()
 	 * @generated
@@ -4425,7 +4425,7 @@ public interface InfomngmntPackage extends EPackage {
 		EReference INFORMATION_UNIT__CALENDAR_ENTRY = eINSTANCE.getInformationUnit_CalendarEntry();
 
 		/**
-		 * The meta object literal for the '<em><b>Binary References</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Binary References</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

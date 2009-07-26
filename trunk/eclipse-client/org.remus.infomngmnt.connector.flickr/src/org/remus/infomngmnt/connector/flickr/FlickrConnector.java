@@ -222,7 +222,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		}
 		IFile adapter = (IFile) unit.getAdapter(IFile.class);
 		IPath append = adapter.getProject().getFullPath().append(ResourceUtil.BINARY_FOLDER)
-				.append(unit.getBinaryReferences().get(0).getProjectRelativePath());
+				.append(unit.getBinaryReferences().getProjectRelativePath());
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(append);
 		InputStream contents = file.getContents();
 		String upload = getApi().getUploader().upload(StreamUtil.convertStreamToByte(contents),
@@ -528,10 +528,12 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	}
 
 	@Override
-	public IFile[] getBinaryReferences(final InformationUnitListItem remoteListItem,
+	public IFile getBinaryReferences(final InformationUnit localInfoFragment,
 			final IProgressMonitor monitor) throws RemoteException {
-		return new IFile[] { this.tmpFile };
-
+		if (localInfoFragment.getType().equals(ImagePlugin.TYPE_ID)) {
+			return this.tmpFile;
+		}
+		return null;
 	}
 
 	/*

@@ -107,9 +107,9 @@ public class EditLinkPage extends AbstractInformationFormPage {
 				WebshotUtil.performWebShot(getModelObject().getStringValue(), tmpFile.getLocation()
 						.toOSString());
 				CompoundCommand cc = new CompoundCommand();
-				if (getModelObject().getBinaryReferences().size() > 0) {
+				if (getModelObject().getBinaryReferences() != null) {
 					DeleteBinaryReferenceCommand command = new DeleteBinaryReferenceCommand(
-							getModelObject().getBinaryReferences().get(0), getEditingDomain());
+							getModelObject().getBinaryReferences(), getEditingDomain());
 					cc.append(command);
 				}
 				cc.append(CommandFactory.addFileToInfoUnit(tmpFile, getModelObject(),

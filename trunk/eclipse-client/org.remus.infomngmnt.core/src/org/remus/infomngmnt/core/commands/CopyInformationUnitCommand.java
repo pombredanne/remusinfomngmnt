@@ -25,12 +25,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.EditingUtil;
 
@@ -52,7 +52,8 @@ public class CopyInformationUnitCommand implements Command {
 		this.fullObject = (InformationUnit) affectedObject.getAdapter(InformationUnit.class);
 		this.sourceBinaryReferences = new ArrayList<IFile>();
 		this.targetBinaryReferences = new ArrayList<IFile>();
-		EList<BinaryReference> binaryReferences = this.fullObject.getBinaryReferences();
+		InformationStructureRead read = InformationStructureRead.newSession(this.fullObject);
+		List<BinaryReference> binaryReferences = read.getBinaryReferences();
 		for (BinaryReference binaryReference : binaryReferences) {
 			binaryReference.getProjectRelativePath();
 			this.sourceBinaryReferences.add(ResourcesPlugin.getWorkspace().getRoot().getProject(

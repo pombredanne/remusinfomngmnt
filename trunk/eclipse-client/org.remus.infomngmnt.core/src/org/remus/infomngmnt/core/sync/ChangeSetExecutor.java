@@ -12,7 +12,6 @@
 
 package org.remus.infomngmnt.core.sync;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +39,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 
-import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
@@ -528,12 +526,20 @@ public class ChangeSetExecutor {
 		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		CompoundCommand createInfotype = CommandFactory.CREATE_INFOTYPE(newRemoteInformationUnit,
 				parentCategory, null, 0);
-		IFile[] binaryReferences = itemByRepository.getBinaryReferences(synchronizableObject,
-				monitor);
-		for (IFile iFile : binaryReferences) {
-			Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile,
-					newRemoteInformationUnit, editingDomain);
-			createInfotype.append(addFileCommand);
+		InformationStructureRead read = InformationStructureRead
+				.newSession(newRemoteInformationUnit);
+		List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences();
+		for (String string : nodeIdsWithBinaryContent) {
+			InformationUnit childByNodeId = read.getChildByNodeId(string);
+			if (childByNodeId != null) {
+				IFile file = itemByRepository.getBinaryReferences(childByNodeId, monitor);
+				if (file != null && file.exists()) {
+					Command addFileCommand = CommandFactory.addFileToInfoUnit(file, childByNodeId,
+							editingDomain);
+					createInfotype.append(addFileCommand);
+				}
+			}
+
 		}
 		editingDomain.getCommandStack().execute(createInfotype);
 		InformationUnitListItem localListItem = (InformationUnitListItem) newRemoteInformationUnit
@@ -542,10 +548,11 @@ public class ChangeSetExecutor {
 		InformationUnit newInformationUnit = (InformationUnit) localListItem
 				.getAdapter(InformationUnit.class);
 		if (newInformationUnit != null) {
-			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor);
-			EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
+			if (itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor)) {
+				EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
+				SyncStateParticipantNotfier.notifyClean(newInformationUnit.getId());
+			}
 		}
-		SyncStateParticipantNotfier.notifyClean(newInformationUnit.getId());
 		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
 				synchronizableObject.getSynchronizationMetaData());
@@ -620,19 +627,36 @@ public class ChangeSetExecutor {
 			 * this.
 			 */
 			if (itemByRepository.hasBinaryReferences()) {
-				List<BinaryReference> binaryReferences2 = new ArrayList<BinaryReference>(adapter
-						.getBinaryReferences());
-				for (BinaryReference binaryReference : binaryReferences2) {
-					DeleteBinaryReferenceCommand command = new DeleteBinaryReferenceCommand(
-							binaryReference, editingDomain);
-					editingDomain.getCommandStack().execute(command);
-				}
-				IFile[] binaryReferences = itemByRepository.getBinaryReferences(
-						synchronizableObject, monitor);
-				for (IFile iFile : binaryReferences) {
-					Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile, adapter,
-							editingDomain);
-					editingDomain.getCommandStack().execute(addFileCommand);
+				InformationStructureRead read = InformationStructureRead.newSession(adapter);
+				/*
+				 * Search for nodes that _can_ have binary references
+				 */
+				List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences();
+				for (String string : nodeIdsWithBinaryContent) {
+					InformationUnit childByNodeId = read.getChildByNodeId(string);
+					if (childByNodeId != null) {
+						/*
+						 * if present delete the old one
+						 */
+						if (childByNodeId.getBinaryReferences() != null) {
+							DeleteBinaryReferenceCommand command = new DeleteBinaryReferenceCommand(
+									childByNodeId.getBinaryReferences(), editingDomain);
+							editingDomain.getCommandStack().execute(command);
+						}
+						/*
+						 * Ask the repo for binary references
+						 */
+						IFile file = itemByRepository.getBinaryReferences(childByNodeId, monitor);
+						if (file != null && file.exists()) {
+							/*
+							 * Append
+							 */
+							Command addFileCommand = CommandFactory.addFileToInfoUnit(file,
+									childByNodeId, editingDomain);
+							editingDomain.getCommandStack().execute(addFileCommand);
+						}
+					}
+
 				}
 			}
 			EditingUtil.getInstance().saveObjectToResource(adapter);
@@ -645,12 +669,25 @@ public class ChangeSetExecutor {
 			CompoundCommand command = CommandFactory.CREATE_INFOTYPE_FROM_EXISTING_LISTITEM(
 					newRemoteInformationUnit, parentCategory, monitor, itemById);
 
-			IFile[] binaryReferences = itemByRepository.getBinaryReferences(synchronizableObject,
-					monitor);
-			for (IFile iFile : binaryReferences) {
-				Command addFileCommand = CommandFactory.addFileToInfoUnit(iFile,
-						newRemoteInformationUnit, editingDomain);
-				command.append(addFileCommand);
+			InformationStructureRead read = InformationStructureRead
+					.newSession(newRemoteInformationUnit);
+			/*
+			 * Search for nodes that _can_ have binary references
+			 */
+			List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences();
+			for (String string : nodeIdsWithBinaryContent) {
+				InformationUnit childByNodeId = read.getChildByNodeId(string);
+				if (childByNodeId != null) {
+					IFile file = itemByRepository.getBinaryReferences(childByNodeId, monitor);
+					if (file != null && file.exists()) {
+						/*
+						 * Append
+						 */
+						Command addFileCommand = CommandFactory.addFileToInfoUnit(file,
+								childByNodeId, editingDomain);
+						command.append(addFileCommand);
+					}
+				}
 			}
 			cc.append(command);
 			editingDomain.getCommandStack().execute(cc);
@@ -662,8 +699,9 @@ public class ChangeSetExecutor {
 		InformationUnit newInformationUnit = (InformationUnit) itemById
 				.getAdapter(InformationUnit.class);
 		if (newInformationUnit != null) {
-			itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor);
-			EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
+			if (itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor)) {
+				EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
+			}
 		}
 		/*
 		 * FIXME: Dirty hack. We have to tell the syncstate participant that

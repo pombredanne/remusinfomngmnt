@@ -38,29 +38,20 @@ import org.remus.infomngmnt.InformationStructureType;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getType <em>
- * Type</em>}</li>
- * <li>
- * {@link org.remus.infomngmnt.impl.InformationStructureImpl#getStructureItems
- * <em>Structure Items</em>}</li>
- * <li>
- * {@link org.remus.infomngmnt.impl.InformationStructureImpl#getReferencedStructureItems
- * <em>Referenced Structure Items</em>}</li>
- * <li>
- * {@link org.remus.infomngmnt.impl.InformationStructureImpl#isCanHaveBinaryReferences
- * <em>Can Have Binary References</em>}</li>
- * <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getLabel <em>
- * Label</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getStructureItems <em>Structure Items</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getReferencedStructureItems <em>Referenced Structure Items</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#isCanHaveBinaryReferences <em>Can Have Binary References</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class InformationStructureImpl extends EObjectImpl implements InformationStructure {
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -70,7 +61,6 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -89,10 +79,9 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	protected EList<InformationStructureItem> structureItems;
 
 	/**
-	 * The cached value of the '{@link #getReferencedStructureItems()
-	 * <em>Referenced Structure Items</em>}' reference list. <!-- begin-user-doc
+	 * The cached value of the '{@link #getReferencedStructureItems() <em>Referenced Structure Items</em>}' reference list.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @see #getReferencedStructureItems()
 	 * @generated
 	 * @ordered
@@ -100,10 +89,9 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	protected EList<InformationStructureItem> referencedStructureItems;
 
 	/**
-	 * The default value of the '{@link #isCanHaveBinaryReferences()
-	 * <em>Can Have Binary References</em>}' attribute. <!-- begin-user-doc -->
+	 * The default value of the '{@link #isCanHaveBinaryReferences() <em>Can Have Binary References</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #isCanHaveBinaryReferences()
 	 * @generated
 	 * @ordered
@@ -111,10 +99,9 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	protected static final boolean CAN_HAVE_BINARY_REFERENCES_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isCanHaveBinaryReferences()
-	 * <em>Can Have Binary References</em>}' attribute. <!-- begin-user-doc -->
+	 * The cached value of the '{@link #isCanHaveBinaryReferences() <em>Can Have Binary References</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #isCanHaveBinaryReferences()
 	 * @generated
 	 * @ordered
@@ -124,7 +111,6 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getLabel()
 	 * @generated
 	 * @ordered
@@ -134,7 +120,6 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	/**
 	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getLabel()
 	 * @generated
 	 * @ordered
@@ -143,7 +128,6 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected InformationStructureImpl() {
@@ -152,7 +136,6 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -162,238 +145,208 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public InformationStructureType getType() {
-		return this.type;
+		return type;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	public void setType(final InformationStructureType newType) {
-		InformationStructureType oldType = this.type;
-		this.type = newType == null ? TYPE_EDEFAULT : newType;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					InfomngmntPackage.INFORMATION_STRUCTURE__TYPE, oldType, this.type));
-		}
+	public void setType(InformationStructureType newType) {
+		InformationStructureType oldType = type;
+		type = newType == null ? TYPE_EDEFAULT : newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_STRUCTURE__TYPE, oldType, type));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<InformationStructureItem> getStructureItems() {
-		if (this.structureItems == null) {
-			this.structureItems = new EObjectContainmentEList<InformationStructureItem>(
-					InformationStructureItem.class, this,
-					InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS);
+		if (structureItems == null) {
+			structureItems = new EObjectContainmentEList<InformationStructureItem>(InformationStructureItem.class, this, InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS);
 		}
-		return this.structureItems;
+		return structureItems;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<InformationStructureItem> getReferencedStructureItems() {
-		if (this.referencedStructureItems == null) {
-			this.referencedStructureItems = new EObjectResolvingEList<InformationStructureItem>(
-					InformationStructureItem.class, this,
-					InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS);
+		if (referencedStructureItems == null) {
+			referencedStructureItems = new EObjectResolvingEList<InformationStructureItem>(InformationStructureItem.class, this, InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS);
 		}
-		return this.referencedStructureItems;
+		return referencedStructureItems;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public boolean isCanHaveBinaryReferences() {
-		return this.canHaveBinaryReferences;
+		return canHaveBinaryReferences;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	public void setCanHaveBinaryReferences(final boolean newCanHaveBinaryReferences) {
-		boolean oldCanHaveBinaryReferences = this.canHaveBinaryReferences;
-		this.canHaveBinaryReferences = newCanHaveBinaryReferences;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES,
-					oldCanHaveBinaryReferences, this.canHaveBinaryReferences));
-		}
+	public void setCanHaveBinaryReferences(boolean newCanHaveBinaryReferences) {
+		boolean oldCanHaveBinaryReferences = canHaveBinaryReferences;
+		canHaveBinaryReferences = newCanHaveBinaryReferences;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES, oldCanHaveBinaryReferences, canHaveBinaryReferences));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getLabel() {
-		return this.label;
+		return label;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	public void setLabel(final String newLabel) {
-		String oldLabel = this.label;
-		this.label = newLabel;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					InfomngmntPackage.INFORMATION_STRUCTURE__LABEL, oldLabel, this.label));
-		}
+	public void setLabel(String newLabel) {
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_STRUCTURE__LABEL, oldLabel, label));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(final InternalEObject otherEnd, final int featureID,
-			final NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
-			return ((InternalEList<?>) getStructureItems()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
+				return ((InternalEList<?>)getStructureItems()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
-			return getType();
-		case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
-			return getStructureItems();
-		case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-			return getReferencedStructureItems();
-		case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
-			return isCanHaveBinaryReferences();
-		case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
-			return getLabel();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
+				return getType();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
+				return getStructureItems();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
+				return getReferencedStructureItems();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
+				return isCanHaveBinaryReferences();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
+				return getLabel();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(final int featureID, final Object newValue) {
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
-			setType((InformationStructureType) newValue);
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
-			getStructureItems().clear();
-			getStructureItems().addAll((Collection<? extends InformationStructureItem>) newValue);
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-			getReferencedStructureItems().clear();
-			getReferencedStructureItems().addAll(
-					(Collection<? extends InformationStructureItem>) newValue);
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
-			setCanHaveBinaryReferences((Boolean) newValue);
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
-			setLabel((String) newValue);
-			return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
+				setType((InformationStructureType)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
+				getStructureItems().clear();
+				getStructureItems().addAll((Collection<? extends InformationStructureItem>)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
+				getReferencedStructureItems().clear();
+				getReferencedStructureItems().addAll((Collection<? extends InformationStructureItem>)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
+				setCanHaveBinaryReferences((Boolean)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
+				setLabel((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(final int featureID) {
+	public void eUnset(int featureID) {
 		switch (featureID) {
-		case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
-			setType(TYPE_EDEFAULT);
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
-			getStructureItems().clear();
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-			getReferencedStructureItems().clear();
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
-			setCanHaveBinaryReferences(CAN_HAVE_BINARY_REFERENCES_EDEFAULT);
-			return;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
-			setLabel(LABEL_EDEFAULT);
-			return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
+				getStructureItems().clear();
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
+				getReferencedStructureItems().clear();
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
+				setCanHaveBinaryReferences(CAN_HAVE_BINARY_REFERENCES_EDEFAULT);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(final int featureID) {
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
-			return this.type != TYPE_EDEFAULT;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
-			return this.structureItems != null && !this.structureItems.isEmpty();
-		case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-			return this.referencedStructureItems != null
-					&& !this.referencedStructureItems.isEmpty();
-		case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
-			return this.canHaveBinaryReferences != CAN_HAVE_BINARY_REFERENCES_EDEFAULT;
-		case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
-			return LABEL_EDEFAULT == null ? this.label != null : !LABEL_EDEFAULT.equals(this.label);
+			case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
+				return type != TYPE_EDEFAULT;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
+				return structureItems != null && !structureItems.isEmpty();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
+				return referencedStructureItems != null && !referencedStructureItems.isEmpty();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
+				return canHaveBinaryReferences != CAN_HAVE_BINARY_REFERENCES_EDEFAULT;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (type: ");
-		result.append(this.type);
+		result.append(type);
 		result.append(", canHaveBinaryReferences: ");
-		result.append(this.canHaveBinaryReferences);
+		result.append(canHaveBinaryReferences);
 		result.append(", label: ");
-		result.append(this.label);
+		result.append(label);
 		result.append(')');
 		return result.toString();
 	}

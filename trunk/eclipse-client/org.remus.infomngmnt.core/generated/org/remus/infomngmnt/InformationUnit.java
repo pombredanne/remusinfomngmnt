@@ -374,19 +374,29 @@ public interface InformationUnit extends AbstractInformationUnit {
 	EList<CalendarEntry> getCalendarEntry();
 
 	/**
-	 * Returns the value of the '<em><b>Binary References</b></em>' containment reference list.
-	 * The list contents are of type {@link org.remus.infomngmnt.BinaryReference}.
+	 * Returns the value of the '<em><b>Binary References</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Binary References</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Binary References</em>' containment reference list.
+	 * @return the value of the '<em>Binary References</em>' containment reference.
+	 * @see #setBinaryReferences(BinaryReference)
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_BinaryReferences()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<BinaryReference> getBinaryReferences();
+	BinaryReference getBinaryReferences();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnit#getBinaryReferences <em>Binary References</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Binary References</em>' containment reference.
+	 * @see #getBinaryReferences()
+	 * @generated
+	 */
+	void setBinaryReferences(BinaryReference value);
 
 } // InformationUnit

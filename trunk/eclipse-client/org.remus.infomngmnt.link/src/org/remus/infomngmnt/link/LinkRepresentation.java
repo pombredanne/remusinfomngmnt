@@ -55,11 +55,10 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 
 	@Override
 	public void handlePreBuild(final IProgressMonitor monitor) {
-		if (getValue().getBinaryReferences().size() > 0) {
+		if (getValue().getBinaryReferences() != null) {
 			this.imageHref = getFile().getProject().getLocation()
 					.append(ResourceUtil.BINARY_FOLDER).append(
-							getValue().getBinaryReferences().get(0).getProjectRelativePath())
-					.toOSString();
+							getValue().getBinaryReferences().getProjectRelativePath()).toOSString();
 		}
 	}
 

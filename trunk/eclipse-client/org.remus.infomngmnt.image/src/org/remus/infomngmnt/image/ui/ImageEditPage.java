@@ -130,7 +130,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				IFile firstBinaryReferenceFile = InformationUtil
-						.getFirstBinaryReferenceFile(getModelObject());
+						.getBinaryReferenceFile(getModelObject());
 				if (firstBinaryReferenceFile != null) {
 					Program.launch(firstBinaryReferenceFile.getLocation().toOSString());
 				}
@@ -174,7 +174,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 						pmd.run(true, false, loadImageRunnable);
 						ImageEditPage.this.newTmpFile = runnable.getTmpFile();
 						Command command = SetCommand.create(getEditingDomain(), getModelObject()
-								.getBinaryReferences().get(0),
+								.getBinaryReferences(),
 								InfomngmntPackage.Literals.BINARY_REFERENCE__DIRTY, true);
 						getEditingDomain().getCommandStack().execute(command);
 					} catch (InvocationTargetException e1) {
@@ -256,10 +256,9 @@ public class ImageEditPage extends AbstractInformationFormPage {
 
 	@Override
 	public void doSave(final IProgressMonitor monitor) {
-		if (getModelObject().getBinaryReferences().get(0).isDirty()) {
+		if (getModelObject().getBinaryReferences().isDirty()) {
 			ChangeBinaryReference command = new ChangeBinaryReference(getModelObject()
-					.getBinaryReferences().get(0), this.newTmpFile,
-					ImageEditPage.this.editingDomain);
+					.getBinaryReferences(), this.newTmpFile, ImageEditPage.this.editingDomain);
 			getEditingDomain().getCommandStack().execute(command);
 		}
 	};

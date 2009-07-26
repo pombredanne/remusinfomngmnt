@@ -85,7 +85,7 @@ public class GeneralVideoPage extends GeneralPage {
 		gd_nameText.horizontalSpan = 2;
 		this.mediaTypeText.setLayoutData(gd_nameText);
 
-		if (this.unit.getBinaryReferences().size() == 0) {
+		if (this.unit.getBinaryReferences() == null) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
 			this.fileNameText = new Text(group, SWT.BORDER);

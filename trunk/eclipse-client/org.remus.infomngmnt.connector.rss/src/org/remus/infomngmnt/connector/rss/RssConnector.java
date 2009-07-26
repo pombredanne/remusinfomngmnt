@@ -277,9 +277,9 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * for offline-reading.
 	 */
 	@Override
-	public void proceedLocalInformationUnitAfterSync(
+	public boolean proceedLocalInformationUnitAfterSync(
 			final InformationUnit newOrUpdatedLocalInformationUnit, final IProgressMonitor monitor) {
-		parseContent(newOrUpdatedLocalInformationUnit, monitor);
+		return parseContent(newOrUpdatedLocalInformationUnit, monitor);
 	}
 
 	/*
@@ -322,13 +322,14 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		return this.api;
 	}
 
-	private void parseContent(final InformationUnit unit, final IProgressMonitor monitor) {
+	private boolean parseContent(final InformationUnit unit, final IProgressMonitor monitor) {
 		InformationStructureRead read = InformationStructureRead.newSession(unit);
 		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		InformationStructureEdit edit = InformationStructureEdit.newSession(
 				MailActivator.INFO_TYPE_ID, editingDomain);
 		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
 		final DOMParser parser = new DOMParser();
+		boolean changed = false;
 		try {
 			parser.parse(new InputSource(new StringReader(content)));
 			final Document document = parser.getDocument();
@@ -340,6 +341,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
 				final Node node = elementsByTagName.item(i);
 				((Element) node).setAttribute("target", "_blank");
+				changed = true;
 			}
 			elementsByTagName = document.getElementsByTagName("img");
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
@@ -372,6 +374,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 						((Element) node).setAttribute("src",
 								org.remus.infomngmnt.common.core.util.StringUtils.join("cid:",
 										lastSegment));
+						changed = true;
 					}
 				}
 
@@ -394,6 +397,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return changed;
 	}
 
 	@Override

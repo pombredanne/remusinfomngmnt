@@ -92,7 +92,7 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 		long height = InformationUtil.getChildByType(getValue(), VideoActivator.NODE_NAME_HEIGHT)
 				.getLongValue();
 		this.videoHref = getFile().getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
-				getValue().getBinaryReferences().get(0).getProjectRelativePath()).getLocation();
+				getValue().getBinaryReferences().getProjectRelativePath()).getLocation();
 		/*
 		 * Next: build the html snippet for displaying the media and put them
 		 * into a collection This collection will be passed to freemark. The

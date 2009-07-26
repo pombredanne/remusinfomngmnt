@@ -35,11 +35,10 @@ import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.remus.infomngmnt.impl.RemoteRepositoryImpl#getOptions <em>
- * Options</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.RemoteRepositoryImpl#getOptions <em>Options</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteRepository {
@@ -47,7 +46,6 @@ public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteR
 	/**
 	 * The cached value of the '{@link #getOptions() <em>Options</em>}' map.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @see #getOptions()
 	 * @generated
 	 * @ordered
@@ -62,7 +60,6 @@ public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteR
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected RemoteRepositoryImpl() {
@@ -71,7 +68,6 @@ public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteR
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,16 +77,13 @@ public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteR
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EMap<String, String> getOptions() {
-		if (this.options == null) {
-			this.options = new EcoreEMap<String, String>(
-					InfomngmntPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class,
-					this, InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS);
+		if (options == null) {
+			options = new EcoreEMap<String,String>(InfomngmntPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS);
 		}
-		return this.options;
+		return options;
 	}
 
 	/**
@@ -117,77 +110,68 @@ public class RemoteRepositoryImpl extends RemoteContainerImpl implements RemoteR
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(final InternalEObject otherEnd, final int featureID,
-			final NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
-			return ((InternalEList<?>) getOptions()).basicRemove(otherEnd, msgs);
+			case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
+				return ((InternalEList<?>)getOptions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
-			if (coreType) {
-				return getOptions();
-			} else {
-				return getOptions().map();
-			}
+			case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
+				if (coreType) return getOptions();
+				else return getOptions().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(final int featureID, final Object newValue) {
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
-			((EStructuralFeature.Setting) getOptions()).set(newValue);
-			return;
+			case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
+				((EStructuralFeature.Setting)getOptions()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(final int featureID) {
+	public void eUnset(int featureID) {
 		switch (featureID) {
-		case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
-			getOptions().clear();
-			return;
+			case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
+				getOptions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(final int featureID) {
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
-			return this.options != null && !this.options.isEmpty();
+			case InfomngmntPackage.REMOTE_REPOSITORY__OPTIONS:
+				return options != null && !options.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -79,11 +79,11 @@ public class InformationUtil {
 		return returnValue;
 	}
 
-	public static IFile getFirstBinaryReferenceFile(final InformationUnit unit) {
+	public static IFile getBinaryReferenceFile(final InformationUnit unit) {
 		IFile infoFile = (IFile) unit.getAdapter(IFile.class);
-		if (infoFile != null && unit.getBinaryReferences().size() > 0) {
+		if (infoFile != null && unit.getBinaryReferences() != null) {
 			return infoFile.getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
-					unit.getBinaryReferences().get(0).getProjectRelativePath());
+					unit.getBinaryReferences().getProjectRelativePath());
 		}
 		return null;
 	}

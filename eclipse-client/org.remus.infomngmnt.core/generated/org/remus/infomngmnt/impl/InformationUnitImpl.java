@@ -293,14 +293,14 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	protected EList<CalendarEntry> calendarEntry;
 
 	/**
-	 * The cached value of the '{@link #getBinaryReferences() <em>Binary References</em>}' containment reference list.
+	 * The cached value of the '{@link #getBinaryReferences() <em>Binary References</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getBinaryReferences()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<BinaryReference> binaryReferences;
+	protected BinaryReference binaryReferences;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -601,11 +601,42 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<BinaryReference> getBinaryReferences() {
-		if (binaryReferences == null) {
-			binaryReferences = new EObjectContainmentEList<BinaryReference>(BinaryReference.class, this, InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES);
-		}
+	public BinaryReference getBinaryReferences() {
 		return binaryReferences;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetBinaryReferences(BinaryReference newBinaryReferences, NotificationChain msgs) {
+		BinaryReference oldBinaryReferences = binaryReferences;
+		binaryReferences = newBinaryReferences;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES, oldBinaryReferences, newBinaryReferences);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBinaryReferences(BinaryReference newBinaryReferences) {
+		if (newBinaryReferences != binaryReferences) {
+			NotificationChain msgs = null;
+			if (binaryReferences != null)
+				msgs = ((InternalEObject)binaryReferences).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES, null, msgs);
+			if (newBinaryReferences != null)
+				msgs = ((InternalEObject)newBinaryReferences).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES, null, msgs);
+			msgs = basicSetBinaryReferences(newBinaryReferences, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES, newBinaryReferences, newBinaryReferences));
 	}
 
 	/**
@@ -623,7 +654,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
 				return ((InternalEList<?>)getCalendarEntry()).basicRemove(otherEnd, msgs);
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
-				return ((InternalEList<?>)getBinaryReferences()).basicRemove(otherEnd, msgs);
+				return basicSetBinaryReferences(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -727,8 +758,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				getCalendarEntry().addAll((Collection<? extends CalendarEntry>)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
-				getBinaryReferences().clear();
-				getBinaryReferences().addAll((Collection<? extends BinaryReference>)newValue);
+				setBinaryReferences((BinaryReference)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -785,7 +815,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				getCalendarEntry().clear();
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
-				getBinaryReferences().clear();
+				setBinaryReferences((BinaryReference)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -828,7 +858,7 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__CALENDAR_ENTRY:
 				return calendarEntry != null && !calendarEntry.isEmpty();
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
-				return binaryReferences != null && !binaryReferences.isEmpty();
+				return binaryReferences != null;
 		}
 		return super.eIsSet(featureID);
 	}

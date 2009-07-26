@@ -90,7 +90,7 @@ public interface IRepository {
 	/**
 	 * @return
 	 */
-	IFile[] getBinaryReferences(InformationUnitListItem remoteListItem, IProgressMonitor monitor)
+	IFile getBinaryReferences(InformationUnit localInfoFragment, IProgressMonitor monitor)
 			throws RemoteException;
 
 	/**
@@ -127,7 +127,7 @@ public interface IRepository {
 	 * @param unit
 	 *            the new or updated local information unit
 	 */
-	void proceedLocalInformationUnitAfterSync(InformationUnit newOrUpdatedLocalInformationUnit,
+	boolean proceedLocalInformationUnitAfterSync(InformationUnit newOrUpdatedLocalInformationUnit,
 			IProgressMonitor monitor);
 
 	/**

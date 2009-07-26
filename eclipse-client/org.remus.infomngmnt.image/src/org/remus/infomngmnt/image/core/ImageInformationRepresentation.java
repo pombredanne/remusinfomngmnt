@@ -104,8 +104,7 @@ public class ImageInformationRepresentation extends AbstractInformationRepresent
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		this.imageHref = getFile().getProject().getLocation().append(ResourceUtil.BINARY_FOLDER)
-				.append(getValue().getBinaryReferences().get(0).getProjectRelativePath())
-				.toOSString();
+				.append(getValue().getBinaryReferences().getProjectRelativePath()).toOSString();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {

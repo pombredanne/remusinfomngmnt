@@ -25,11 +25,11 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -49,7 +49,8 @@ public class MoveInformationUnitCommand implements Command {
 
 		InformationUnit fullObject = (InformationUnit) affectedObject
 				.getAdapter(InformationUnit.class);
-		EList<BinaryReference> binaryReferences = fullObject.getBinaryReferences();
+		InformationStructureRead read = InformationStructureRead.newSession(fullObject);
+		List<BinaryReference> binaryReferences = read.getBinaryReferences();
 		this.sourceBinaryReferences = new ArrayList<IFile>();
 		this.targetBinaryReferences = new ArrayList<IFile>();
 		for (BinaryReference binaryReference : binaryReferences) {

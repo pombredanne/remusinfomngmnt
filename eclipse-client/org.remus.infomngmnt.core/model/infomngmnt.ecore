@@ -27,8 +27,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keywords" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="calendarEntry" upperBound="-1"
         eType="#//CalendarEntry" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="binaryReferences" upperBound="-1"
-        eType="#//BinaryReference" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="binaryReferences" eType="#//BinaryReference"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BinaryReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"

@@ -30,6 +30,7 @@ import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 
+import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.DynamicStructure;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationStructure;
@@ -396,6 +397,44 @@ public class InformationStructureRead {
 		InformationStructureDefinition structureDefinition = infoTypeByType
 				.getStructureDefinition();
 		return structureDefinition;
+	}
+
+	public List<String> getNodeIdsWithBinaryReferences() {
+		InformationStructureDefinition structureDefinition = getStructureDefinition(this.type);
+		SELECT select = new SELECT(
+				new FROM(structureDefinition),
+				new WHERE(
+						new EObjectAttributeValueCondition(
+								InfomngmntPackage.Literals.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES,
+								new Condition() {
+									@Override
+									public boolean isSatisfied(final Object arg0) {
+										return (Boolean) arg0;
+									}
+								})));
+		IQueryResult execute = select.execute();
+		Set<? extends EObject> eObjects = execute.getEObjects();
+		List<String> returnValue = new ArrayList<String>();
+		for (EObject eObject : eObjects) {
+			if (eObject instanceof InformationStructureDefinition) {
+				returnValue.add(this.type);
+			} else if (eObject instanceof InformationStructureItem) {
+				returnValue.add(((InformationStructureItem) eObject).getId());
+			}
+		}
+		return returnValue;
+	}
+
+	public List<BinaryReference> getBinaryReferences() {
+		List<String> nodeIdsWithBinaryReferences = getNodeIdsWithBinaryReferences();
+		List<BinaryReference> returnValue = new ArrayList<BinaryReference>();
+		for (String string : nodeIdsWithBinaryReferences) {
+			InformationUnit childByNodeId = getChildByNodeId(string);
+			if (childByNodeId != null && childByNodeId.getBinaryReferences() != null) {
+				returnValue.add(childByNodeId.getBinaryReferences());
+			}
+		}
+		return returnValue;
 	}
 
 }

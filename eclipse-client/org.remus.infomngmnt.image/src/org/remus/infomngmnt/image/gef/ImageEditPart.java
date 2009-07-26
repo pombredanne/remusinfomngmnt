@@ -111,7 +111,7 @@ class ImageEditPart extends AbstractGraphicalEditPart implements Adapter, IEditi
 		try {
 			InputStream bis = ((IResource) getCastedModel().getAdapter(IFile.class)).getProject()
 					.getFolder(ResourceUtil.BINARY_FOLDER).getFile(
-							getCastedModel().getBinaryReferences().get(0).getProjectRelativePath())
+							getCastedModel().getBinaryReferences().getProjectRelativePath())
 					.getContents();
 			ImageData imageData = new ImageData(bis).scaledTo((int) this.width, (int) this.height);
 			final Image image = ImageDescriptor.createFromImageData(imageData).createImage();

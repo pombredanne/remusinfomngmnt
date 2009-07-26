@@ -25,6 +25,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class MailPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	/**
+	 * @wbp.parser.constructor
 	 * 
 	 */
 	public MailPreferencePage() {
@@ -34,7 +35,7 @@ public class MailPreferencePage extends PreferencePage implements IWorkbenchPref
 	/**
 	 * @param title
 	 */
-	public MailPreferencePage(String title) {
+	public MailPreferencePage(final String title) {
 		super(title);
 		// TODO Auto-generated constructor stub
 	}
@@ -43,24 +44,31 @@ public class MailPreferencePage extends PreferencePage implements IWorkbenchPref
 	 * @param title
 	 * @param image
 	 */
-	public MailPreferencePage(String title, ImageDescriptor image) {
+	public MailPreferencePage(final String title, final ImageDescriptor image) {
 		super(title, image);
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse
+	 * .swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
-	public void init(IWorkbench workbench) {
+	public void init(final IWorkbench workbench) {
 		// TODO Auto-generated method stub
 
 	}

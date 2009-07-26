@@ -46,6 +46,7 @@ public class StyleProvider {
 		});
 		return returnValue[0];
 	}
+
 	public static String getSystemFontStyle() {
 		final String[] returnValue = new String[1];
 		getDisplay().syncExec(new Runnable() {
@@ -66,6 +67,7 @@ public class StyleProvider {
 		});
 		return returnValue[0];
 	}
+
 	public static int getSystemFontSize() {
 		final int[] returnValue = new int[1];
 		getDisplay().syncExec(new Runnable() {
@@ -88,9 +90,9 @@ public class StyleProvider {
 				Font systemFont = StyleProvider.getDisplay().getSystemFont();
 				FontData[] fontData = systemFont.getFontData();
 				if (fontData.length > 0) {
-					sw.append(".systemfont,body {\n")
-					.append("font-family: " + fontData[0].getName() + ";\n")
-					.append("font-size: " + fontData[0].getHeight() + "pt;\n");
+					sw.append(".systemfont,body {\n").append(
+							"font-family: " + fontData[0].getName() + ";\n").append(
+							"font-size: " + fontData[0].getHeight() + "pt;\n");
 					int style = fontData[0].getStyle();
 					if ((style & SWT.BOLD) != 0) {
 						sw.append("font-weight:bold;\n");
@@ -107,23 +109,44 @@ public class StyleProvider {
 
 	}
 
-	public static void createGradientImage(
-			final Color color1,
-			final Color color2,
-			final int style,
-			final int width,
-			final int height,
-			final String targetLocation) {
+	public static String getCssSystemFontDefinition(final FontData[] fontData,
+			final String styleName) {
+		final StringWriter sw = new StringWriter();
+		final String[] returnValue = new String[1];
+		getDisplay().syncExec(new Runnable() {
+			public void run() {
+				if (fontData.length > 0) {
+					sw.append(styleName).append(" {\n").append(
+							"font-family: " + fontData[0].getName() + ";\n").append(
+							"font-size: " + fontData[0].getHeight() + "pt;\n");
+					int style = fontData[0].getStyle();
+					if ((style & SWT.BOLD) != 0) {
+						sw.append("font-weight:bold;\n");
+					}
+					if ((style & SWT.ITALIC) != 0) {
+						sw.append("font-stlye:italic;\n");
+					}
+					sw.append("}\n");
+				}
+				returnValue[0] = sw.toString();
+			}
+		});
+		return returnValue[0];
+
+	}
+
+	public static void createGradientImage(final Color color1, final Color color2, final int style,
+			final int width, final int height, final String targetLocation) {
 
 		getDisplay().syncExec(new Runnable() {
 			public void run() {
-				Image returnValue = new Image(getDisplay(),width,height);
+				Image returnValue = new Image(getDisplay(), width, height);
 				GC gc = new GC(returnValue);
 				gc.setForeground(color1);
 				gc.setBackground(color2);
 				gc.fillGradientRectangle(0, 0, width, height, style == SWT.VERTICAL);
 				ImageLoader imageLoader = new ImageLoader();
-				imageLoader.data = new ImageData[] {returnValue.getImageData()};
+				imageLoader.data = new ImageData[] { returnValue.getImageData() };
 				imageLoader.save(targetLocation, SWT.IMAGE_PNG);
 				gc.dispose();
 			}
@@ -143,7 +166,6 @@ public class StyleProvider {
 		return returnValue[0];
 	}
 
-
 	static Display getDisplay() {
 		if (Display.getCurrent() != null) {
 			return Display.getCurrent();
@@ -152,7 +174,7 @@ public class StyleProvider {
 	}
 
 	public static String convertColor(final int r, final int g, final int b) {
-		java.awt.Color color = new java.awt.Color(r,g,b);
+		java.awt.Color color = new java.awt.Color(r, g, b);
 		return Integer.toHexString(color.getRGB() & 0x00ffffff);
 	}
 

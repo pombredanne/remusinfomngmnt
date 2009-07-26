@@ -61,15 +61,76 @@
             label="Attachments"
             type="MAIL">
       </editPage>
+      <editorAction
+            commandId="org.remus.infomngmnt.mail.openBrowser"
+            typeId="MAIL">
+      </editorAction>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.remus.infomngmnt.ui.infotypes"
-            class="org.remus.infomngmnt.mail.ui.MailPreferencePage"
+            class="org.remus.infomngmnt.mail.ui.MailPreferencePage2"
             id="org.remus.infomngmnt.mail.preferences"
             name="Mail">
       </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+         <menu
+               icon="icons/iconexperience/mail.png"
+               id="org.remus.infomngmnt.mail.contextmenu"
+               label="Mail/News"
+               mnemonic="m">
+            <command
+                  commandId="org.remus.infomngmnt.mail.openBrowser"
+                  style="push">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.remus.infomngmnt.iutypes.typeEquals"
+                           value="MAIL">
+                     </test>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.remus.infomngmnt.mail.openBrowser"
+            name="Read full Mail/News">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.mail.openBrowser"
+            icon="icons/iconexperience/window_earth.png">
+      </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.remus.infomngmnt.mail.handler.OpenMailInBrowserHandler"
+            commandId="org.remus.infomngmnt.mail.openBrowser">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.mail.preferences.MailPreferenceInitializer">
+      </initializer>
    </extension>
 
 </plugin>

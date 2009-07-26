@@ -12,6 +12,9 @@
 
 package org.remus.infomngmnt.ui.handlerutil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ISelection;
@@ -39,6 +42,26 @@ public class InformationHandlerUtil {
 			}
 		}
 		return unit;
+	}
+
+	public static List<InformationUnit> getInformationUnitsFromExecutionEvent(
+			final ExecutionEvent event) {
+		List<InformationUnit> units = new ArrayList<InformationUnit>();
+		if (HandlerUtil.getActivePart(event) instanceof InformationEditor) {
+			units.add(((InformationEditor) HandlerUtil.getActivePart(event)).getPrimaryModel());
+		} else {
+			ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
+			if (currentSelection instanceof IStructuredSelection) {
+				List list = ((IStructuredSelection) currentSelection).toList();
+				for (Object object : list) {
+					if (object instanceof IAdaptable) {
+						units.add((InformationUnit) ((IAdaptable) object)
+								.getAdapter(InformationUnit.class));
+					}
+				}
+			}
+		}
+		return units;
 	}
 
 }

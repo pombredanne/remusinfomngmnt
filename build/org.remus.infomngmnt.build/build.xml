@@ -107,6 +107,13 @@
 		</antcall>
 		
 		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/tools" />
+			<param name="cvs.tag"  value="v1_0" />
+			<param name="cvs.package" value="org.eclipse.orbit/org.jdom" />
+			<param name="cvs.name" value="org.jdom"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
 			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 			<param name="cvs.tag"  value="HEAD" />
 			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.cwt" />

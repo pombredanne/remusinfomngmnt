@@ -26,6 +26,12 @@
             id="org.remus.infomngmnt.connector.rss.refreshJob"
             name="Refreh RSS Job">
       </job>
+      <job
+            class="org.remus.infomngmnt.connector.rss.jobs.DeleteOldEntriesJob"
+            id="org.remus.infomngmnt.connector.rss.deleteOld"
+            interval="1"
+            name="Delete Old RSS Entries">
+      </job>
    </extension>
 
 </plugin>

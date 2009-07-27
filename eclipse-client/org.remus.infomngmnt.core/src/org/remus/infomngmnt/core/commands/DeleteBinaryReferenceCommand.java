@@ -96,14 +96,14 @@ public class DeleteBinaryReferenceCommand extends CompoundCommand {
 
 	@Override
 	public void dispose() {
-		if (this.cachedFile.exists()) {
-			try {
-				this.cachedFile.delete(true, null);
-			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		// if (this.cachedFile.exists()) {
+		// try {
+		// this.cachedFile.delete(true, null);
+		// } catch (CoreException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
 		super.dispose();
 	}
 

@@ -12,6 +12,9 @@
 
 package org.remus.infomngmnt.core.model;
 
+import java.util.Map;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
@@ -120,6 +123,16 @@ public class InformationStructureEdit {
 	public void addDynamicNode(final InformationUnit baseObject, final InformationUnit dynamicNode,
 			final EditingDomain editingDomain) {
 		this.creator.addDynamicNode(baseObject, dynamicNode, editingDomain);
+	}
+
+	/**
+	 * @param baseObject
+	 * @param dynamicNode
+	 * @param editingDomain
+	 */
+	public void addDynamicNode(final InformationUnit baseObject, final InformationUnit dynamicNode,
+			final EditingDomain editingDomain, final Map<String, IFile> binaryNodeIdToFileMap) {
+		this.creator.addDynamicNode(baseObject, dynamicNode, editingDomain, binaryNodeIdToFileMap);
 	}
 
 }

@@ -14,6 +14,7 @@ package org.remus.infomngmnt.connector.rss;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
@@ -139,8 +140,10 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			throws RemoteException {
 		if (container instanceof RemoteRepository && !showOnlyContainers) {
 			List<RemoteObject> returnValue = new ArrayList<RemoteObject>();
+			XmlReader xmlReader = null;
 			try {
-				SyndFeed build = getApi().build(new XmlReader(new URL(getRepositoryUrl())));
+				xmlReader = new XmlReader(new URL(getRepositoryUrl()));
+				SyndFeed build = getApi().build(xmlReader);
 				List entries = build.getEntries();
 				for (Object object : entries) {
 					returnValue.add(buildFeedEntry((SyndEntry) object));
@@ -148,6 +151,14 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 				return returnValue.toArray(new RemoteObject[returnValue.size()]);
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus("Error getting feed entries", e));
+			} finally {
+				if (xmlReader != null) {
+					try {
+						xmlReader.close();
+					} catch (IOException e) {
+						// do nothing
+					}
+				}
 			}
 		}
 		return new RemoteObject[0];
@@ -213,10 +224,20 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	}
 
 	public String getFeedTitle() {
+		XmlReader xmlReader = null;
 		try {
-			return getApi().build(new XmlReader(new URL(getRepositoryUrl()))).getTitle();
+			xmlReader = new XmlReader(new URL(getRepositoryUrl()));
+			return getApi().build(xmlReader).getTitle();
 		} catch (Exception e) {
 
+		} finally {
+			if (xmlReader != null) {
+				try {
+					xmlReader.close();
+				} catch (IOException e) {
+					// do nothing
+				}
+			}
 		}
 		return null;
 	}
@@ -329,6 +350,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 				MailActivator.INFO_TYPE_ID, editingDomain);
 		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
 		final DOMParser parser = new DOMParser();
+
 		boolean changed = false;
 		try {
 			parser.parse(new InputSource(new StringReader(content)));

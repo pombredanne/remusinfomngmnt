@@ -32,13 +32,16 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * JFace Action which unsets all {@link SynchronizationMetadata} on the
@@ -101,6 +104,10 @@ public class DeleteRepositoryAction extends DeleteAction {
 			}
 		}
 		super.run();
+		RepositoryCollection repositories = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositories();
+		EditingUtil.getInstance().saveObjectToResource(repositories);
+
 	}
 
 	public DeleteRepositoryAction() {

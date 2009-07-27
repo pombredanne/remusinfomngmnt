@@ -47,19 +47,29 @@ public class MailPreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		FontData[] fontData = UIUtil.getDisplay().getSystemFont().getFontData();
-		PreferenceConverter.setDefault(this.store, BODY_FONT, fontData);
+		UIUtil.getDisplay().asyncExec(new Runnable() {
 
-		for (FontData fontData2 : fontData) {
-			fontData2.setHeight(fontData2.getHeight() + 2);
-			fontData2.setStyle(SWT.BOLD);
-		}
-		PreferenceConverter.setDefault(this.store, SUB_HEADER_FONT, fontData);
-		for (FontData fontData2 : fontData) {
-			fontData2.setHeight(fontData2.getHeight() + 2);
-			fontData2.setStyle(SWT.BOLD);
-		}
-		PreferenceConverter.setDefault(this.store, HEADER_FONT, fontData);
+			public void run() {
+				FontData[] fontData = UIUtil.getDisplay().getSystemFont().getFontData();
+				PreferenceConverter.setDefault(MailPreferenceInitializer.this.store, BODY_FONT,
+						fontData);
+
+				for (FontData fontData2 : fontData) {
+					fontData2.setHeight(fontData2.getHeight() + 2);
+					fontData2.setStyle(SWT.BOLD);
+				}
+				PreferenceConverter.setDefault(MailPreferenceInitializer.this.store,
+						SUB_HEADER_FONT, fontData);
+				for (FontData fontData2 : fontData) {
+					fontData2.setHeight(fontData2.getHeight() + 2);
+					fontData2.setStyle(SWT.BOLD);
+				}
+				PreferenceConverter.setDefault(MailPreferenceInitializer.this.store, HEADER_FONT,
+						fontData);
+
+			}
+
+		});
 
 	}
 

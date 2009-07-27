@@ -77,6 +77,14 @@
 				</td>
 			</tr>
 			</#if >
+			<#if (dynamic.attachments?size > 0) >
+			<tr>
+				<td class="bold">Attachments:</td>
+				<td>
+					${dynamic.attachments?size} Attachment(s). Switch to attachments tab.
+				</td>
+			</tr>
+			</#if >
 			<#assign recipients = dynamic.recipients >
 			<#if (recipients?size > 0) >
 			<tr>

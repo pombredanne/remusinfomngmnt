@@ -16,8 +16,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -39,8 +44,10 @@ import org.remus.infomngmnt.InformationStructureDefinition;
 import org.remus.infomngmnt.InformationStructureItem;
 import org.remus.infomngmnt.InformationStructureType;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.util.EditingUtil;
 
 /**
@@ -162,14 +169,24 @@ public class InformationUnitCreator {
 
 	public void addDynamicNode(final InformationUnit baseObject, final InformationUnit dynamicNode,
 			final EditingDomain editingDomain) {
-		InformationStructureDefinition structureDefinition = getStructureDefinition(baseObject
-				.getType());
 		EditingDomain domain;
 		if (editingDomain == null) {
 			domain = EditingUtil.getInstance().createNewEditingDomain();
 		} else {
 			domain = editingDomain;
 		}
+		Command addCommand = getAddCommand(baseObject, dynamicNode, domain);
+		if (addCommand != null) {
+			domain.getCommandStack().execute(addCommand);
+		}
+
+	}
+
+	private Command getAddCommand(final InformationUnit baseObject,
+			final InformationUnit dynamicNode, final EditingDomain editingDomain) {
+		InformationStructureDefinition structureDefinition = getStructureDefinition(baseObject
+				.getType());
+
 		/*
 		 * At first we search for the parent node where to put this dynamic
 		 * node.
@@ -211,11 +228,13 @@ public class InformationUnitCreator {
 						"Searching for the dynamic node was not successful");
 			}
 			EObject next2 = execute2.iterator().next();
-			Command create = AddCommand.create(domain, next2,
+			Command create = AddCommand.create(editingDomain, next2,
 					InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, Collections
 							.singleton(dynamicNode));
-			domain.getCommandStack().execute(create);
+			return create;
 		}
+		return null;
+
 	}
 
 	public void setObject(final InformationUnit anyParentUnit, final String nodeId,
@@ -498,6 +517,34 @@ public class InformationUnitCreator {
 			}
 		}
 		return false;
+	}
+
+	public void addDynamicNode(final InformationUnit baseObject, final InformationUnit dynamicNode,
+			final EditingDomain editingDomain, final Map<String, IFile> binaryNodeIdToFileMap) {
+		EditingDomain domain;
+		CompoundCommand cc = new CompoundCommand();
+		if (editingDomain == null) {
+			domain = EditingUtil.getInstance().createNewEditingDomain();
+		} else {
+			domain = editingDomain;
+		}
+		Command addCommand = getAddCommand(baseObject, dynamicNode, domain);
+		if (addCommand != null) {
+			cc.append(addCommand);
+		}
+		Set<String> keySet = binaryNodeIdToFileMap.keySet();
+		InformationStructureRead read = InformationStructureRead.newSession(dynamicNode, baseObject
+				.getType());
+		List<String> allowedNodes = read.getNodeIdsWithBinaryReferences();
+		for (String string : keySet) {
+			if (allowedNodes.contains(string)) {
+				cc.append(CommandFactory.addFileToInfoUnit(binaryNodeIdToFileMap.get(string), read
+						.getChildByNodeId(string), editingDomain));
+			}
+		}
+		cc.setLabel("Add item");
+		domain.getCommandStack().execute(cc);
+
 	}
 
 }

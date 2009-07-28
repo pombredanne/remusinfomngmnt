@@ -130,7 +130,7 @@
       <sectionBox
             id="org.remus.infomngmnt.ui.notificationBox"
             multiple="false"
-            name="Notifications"
+            name="Notification"
             preferencesclass="org.remus.infomngmnt.ui.notification.NotificationTrayPreferences"
             sectionControl="org.remus.infomngmnt.ui.notification.NotificationTraySection">
       </sectionBox>

@@ -55,11 +55,19 @@ public class NotificationDialog extends PopupDialog {
 		// SWT.DEFAULT,
 		// Math.max((Math.min(this.notifications2Show.size(),
 		// NotificationControl.VISIBLE_NOTIFICATIONS) * 25) + 100, 100));
-		Point display = this.parent2.toDisplay(0, -getShell().getSize().y);
+		int x = 0;
+		int y = -getShell().getSize().y;
+		Point display = this.parent2.toDisplay(x, y);
 		if (display.y < 0) {
-			display = this.parent2.toDisplay(0, 20);
+			y = 20;
 		}
-		getShell().setLocation(display);
+		if (display.x + getShell().getSize().x > getShell().getMonitor().getBounds().width) {
+			x -= display.x + getShell().getSize().x - getShell().getMonitor().getBounds().width;
+		}
+		if (display.x < 0) {
+			x -= display.x;
+		}
+		getShell().setLocation(this.parent2.toDisplay(x, y));
 
 		getShell().setFocus();
 
@@ -117,4 +125,5 @@ public class NotificationDialog extends PopupDialog {
 		}
 
 	}
+
 }

@@ -24,9 +24,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -115,9 +115,10 @@ public class RemusNotificationManager implements INotificationManagerManager {
 		this.allNotifications = EditingUtil.getInstance().getObjectFromFileUri(
 				URI.createFileURI(append.toOSString()),
 				InfomngmntPackage.Literals.NOTIFICATION_COLLECTION, null);
-		this.allNotifications.eAdapters().add(new AdapterImpl() {
+		this.allNotifications.eAdapters().add(new EContentAdapter() {
 			@Override
 			public void notifyChanged(final Notification msg) {
+				super.notifyChanged(msg);
 				if (msg.getNotifier() instanceof ResourceImpl) {
 					return;
 				}

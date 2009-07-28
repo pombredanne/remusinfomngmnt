@@ -119,8 +119,34 @@ public class SyncUtil {
 					notification.setImage(infoType.getImage());
 				}
 				notification.setTimeStamp(new Date());
-				notification.setMessage(NLS.bind("Updated \"{0}\"", item.getLabel()));
-				notification.getAffectedInfoUnitIds().add(item.getId());
+				SynchronizationAction synchronizationAction = changeSetItem
+						.getSyncObjectActionMap().get(synchronizableObject);
+				switch (synchronizationAction) {
+				case ADD_LOCAL:
+					notification.setMessage(NLS.bind("NEW: \"{0}\"", item.getLabel()));
+					notification.getAffectedInfoUnitIds().add(item.getId());
+					break;
+				case REPLACE_LOCAL:
+					notification.setMessage(NLS.bind("UPDATED: \"{0}\"", item.getLabel()));
+					notification.getAffectedInfoUnitIds().add(item.getId());
+					break;
+				case DELETE_LOCAL:
+					notification.setMessage(NLS.bind("DELETED: \"{0}\"", item.getLabel()));
+					break;
+				case REPLACE_REMOTE:
+					notification.setMessage(NLS.bind("REMOTE UPDATED: \"{0}\"", item.getLabel()));
+					notification.getAffectedInfoUnitIds().add(item.getId());
+					break;
+				case ADD_REMOTE:
+					notification.setMessage(NLS.bind("REMOTE NEW: \"{0}\"", item.getLabel()));
+					notification.getAffectedInfoUnitIds().add(item.getId());
+					break;
+				case DELETE_REMOTE:
+					notification.setMessage(NLS.bind("REMOTE DELETED: \"{0}\"", item.getLabel()));
+					break;
+				default:
+					break;
+				}
 				notification.setImportance(NotificationImportance.MEDIUM);
 				// notification.setSource(synchronizableObject.getSynchronizationMetaData()
 				// .getRepositoryId());

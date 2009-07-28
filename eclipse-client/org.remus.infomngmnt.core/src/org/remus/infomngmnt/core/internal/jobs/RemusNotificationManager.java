@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.osgi.util.NLS;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NotificationCollection;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
@@ -93,9 +94,10 @@ public class RemusNotificationManager implements INotificationManagerManager {
 			if ((this.allNotifications.getNotifcations().size() - 1) == InfomngmntEditPlugin
 					.getPlugin().getPreferenceStore().getInt(
 							PreferenceInitializer.MAX_SAVED_NOTIFICATIONS)) {
-				this.allNotifications.getNotifcations().remove(0);
+				this.allNotifications.getNotifcations().remove(
+						this.allNotifications.getNotifcations().size() - 1);
 			}
-			this.allNotifications.getNotifcations().add(
+			this.allNotifications.getNotifcations().add(0,
 					(org.remus.infomngmnt.Notification) EcoreUtil.copy(notification));
 		}
 

@@ -27,6 +27,7 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 import org.eclipse.osgi.util.NLS;
+
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -114,8 +115,8 @@ public abstract class RefreshTwitterJob extends AbstractJob {
 										TwitterActivator.getDefault(), "/icons/twitter.png"));
 
 								notification.setTimeStamp(new Date());
-								notification.setMessage(NLS
-										.bind("Updated \"{0}\"", item.getLabel()));
+								notification.setMessage(NLS.bind("UPDATED: \"{0}\"", item
+										.getLabel()));
 								notification.setDetails(InformationUtil.getChildByType(
 										informationUnit, TwitterActivator.MESSAGE_CONTENT_TYPE)
 										.getStringValue());

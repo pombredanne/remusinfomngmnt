@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationImportance;
@@ -56,15 +57,15 @@ public class URLShorterSection extends AbstractTraySection {
 		gridLayout.marginTop = 0;
 		gridLayout.marginWidth = 0;
 		parent.setLayout(gridLayout);
-		urlText = this.toolkit.createText(parent, "", SWT.NO_BACKGROUND);
+		this.urlText = this.toolkit.createText(parent, "", SWT.NO_BACKGROUND);
 
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gridData.widthHint = 130;
 		gridData.heightHint = SWT.DEFAULT;
-		urlText.setLayoutData(gridData);
-		urlText.addListener(SWT.DefaultSelection, new Listener() {
-			public void handleEvent(Event event) {
-				new ShrinkURLJob(urlText.getText()).schedule();
+		this.urlText.setLayoutData(gridData);
+		this.urlText.addListener(SWT.DefaultSelection, new Listener() {
+			public void handleEvent(final Event event) {
+				new ShrinkURLJob(URLShorterSection.this.urlText.getText()).schedule();
 			}
 		});
 		doCreateButton(parent);
@@ -92,7 +93,7 @@ public class URLShorterSection extends AbstractTraySection {
 					if (event.getResult().isOK()) {
 						notification.setTimeStamp(new Date());
 						notification.setMessage("The shortened URL is now in your clipboard");
-						notification.setImportance(NotificationImportance.MEDIUM);
+						notification.setImportance(NotificationImportance.LOW);
 						notification.setSeverity(Severity.OK);
 						UIUtil.getDisplay().asyncExec(new Runnable() {
 
@@ -130,7 +131,7 @@ public class URLShorterSection extends AbstractTraySection {
 
 	}
 
-	void doCreateButton(Composite parent) {
+	void doCreateButton(final Composite parent) {
 		ToolBarManager returnValue = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL
 				| SWT.NO_BACKGROUND);
 		ToolBar createControl = returnValue.createControl(parent);
@@ -143,7 +144,7 @@ public class URLShorterSection extends AbstractTraySection {
 		IAction searchAction = new Action("", IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				new ShrinkURLJob(urlText.getText()).schedule();
+				new ShrinkURLJob(URLShorterSection.this.urlText.getText()).schedule();
 			}
 		};
 		searchAction.setToolTipText("Search");
@@ -181,20 +182,20 @@ public class URLShorterSection extends AbstractTraySection {
 		private String shortenURl;
 		static Object FAMILY = new Object();
 
-		public ShrinkURLJob(String url) {
+		public ShrinkURLJob(final String url) {
 			super("Shring url");
 			this.url = url;
 		}
 
 		@Override
-		public boolean belongsTo(Object family) {
+		public boolean belongsTo(final Object family) {
 			return FAMILY == family;
 		}
 
 		@Override
-		protected IStatus run(IProgressMonitor monitor) {
+		protected IStatus run(final IProgressMonitor monitor) {
 			try {
-				shortenURl = ShrinkURLUtils.getBitLyUrl(url);
+				this.shortenURl = ShrinkURLUtils.getBitLyUrl(this.url);
 			} catch (Exception e) {
 				return StatusCreator.newStatus("Error creating shortened url", e);
 			}
@@ -203,7 +204,7 @@ public class URLShorterSection extends AbstractTraySection {
 		}
 
 		public String getShortenURl() {
-			return shortenURl;
+			return this.shortenURl;
 		}
 
 	}

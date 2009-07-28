@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 
 import org.remus.infomngmnt.common.core.util.StringUtils;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 
 public class Path2ObjectMapper {
@@ -157,10 +158,13 @@ public class Path2ObjectMapper {
 										 * Getting the newChild-Descriptors from
 										 * the editing domain.
 										 */
+										DisposableEditingDomain createNewEditingDomain = EditingUtil
+												.getInstance().createNewEditingDomain();
 										Collection<?> newChildDescriptors = adapt
 												.getNewChildDescriptors(currentObjectInstance,
-														EditingUtil.getInstance()
-																.createNewEditingDomain(), false);
+														createNewEditingDomain, false);
+										createNewEditingDomain.dispose();
+
 										/*
 										 * Iterating through the
 										 * newChildDescriptors to get the

@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -36,6 +35,7 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.service.ICalendarStoreService;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
 
@@ -57,10 +57,11 @@ public class CalendarServiceImpl implements ICalendarService {
 		calendarEntry.setStart(startingTime);
 		calendarEntry.setEnd(endTime);
 		calendarEntry.setReminder(-1);
-		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		NewCalendarEntryDialog dialog = new NewCalendarEntryDialog(UIUtil.getDisplay()
 				.getActiveShell(), calendarEntry, editingDomain, null);
 		dialog.open();
+		editingDomain.dispose();
 		return null;
 	}
 

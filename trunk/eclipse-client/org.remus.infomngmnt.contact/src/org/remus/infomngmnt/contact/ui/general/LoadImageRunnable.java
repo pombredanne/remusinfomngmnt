@@ -15,6 +15,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -93,6 +94,9 @@ public class LoadImageRunnable extends CancelableRunnable {
 							LoadImageRunnable.this.domain.getCommandStack().execute(cc);
 						} else {
 							cc.execute();
+						}
+						if (LoadImageRunnable.this.domain instanceof IDisposable) {
+							((IDisposable) LoadImageRunnable.this.domain).dispose();
 						}
 					}
 				});

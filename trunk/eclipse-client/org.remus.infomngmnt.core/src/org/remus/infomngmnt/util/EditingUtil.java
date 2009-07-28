@@ -385,8 +385,8 @@ public class EditingUtil {
 		return this.editingDomain;
 	}
 
-	public EditingDomain createNewEditingDomain() {
-		return new AdapterFactoryEditingDomain(this.adapterFactory, new BasicCommandStack());
+	public DisposableEditingDomain createNewEditingDomain() {
+		return new DisposableEditingDomain(this.adapterFactory, new BasicCommandStack());
 	}
 
 	public ComposedAdapterFactory getAdapterFactory() {

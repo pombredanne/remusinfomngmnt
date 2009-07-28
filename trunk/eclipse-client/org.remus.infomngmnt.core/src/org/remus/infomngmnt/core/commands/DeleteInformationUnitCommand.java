@@ -48,6 +48,7 @@ import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 
 /**
@@ -63,7 +64,7 @@ public class DeleteInformationUnitCommand implements Command {
 
 	private final EditingDomain domain;
 
-	private EditingDomain referenceDomain;
+	private DisposableEditingDomain referenceDomain;
 
 	private Map<EObject, Collection<EStructuralFeature.Setting>> usages;
 
@@ -213,6 +214,9 @@ public class DeleteInformationUnitCommand implements Command {
 
 	private void preExecute() {
 		Collection<InfoUnit2PathMapper> values = this.map.values();
+		if (this.referenceDomain != null) {
+			this.referenceDomain.dispose();
+		}
 		this.referenceDomain = EditingUtil.getInstance().createNewEditingDomain();
 		List<InformationUnit> relevantObjects = new ArrayList<InformationUnit>();
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {

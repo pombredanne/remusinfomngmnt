@@ -85,6 +85,7 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IRuleService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.AbstractCreationPreferencePage;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 
 /**
@@ -99,7 +100,7 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 	private EMFDataBindingContext ctx;
 	private NewElementRules selectedRuleSet;
 	private TreeViewer treeViewer;
-	private EditingDomain editingDomain;
+	private DisposableEditingDomain editingDomain;
 
 	// action
 	private RuleCutAction cutAction;
@@ -429,6 +430,12 @@ public class RulePreferencePage extends PreferencePage implements IWorkbenchPref
 		// }
 		// }
 		return false;
+	}
+
+	@Override
+	public void dispose() {
+		this.editingDomain.dispose();
+		super.dispose();
 	}
 
 	protected void fillContextMenu(final IMenuManager manager) {

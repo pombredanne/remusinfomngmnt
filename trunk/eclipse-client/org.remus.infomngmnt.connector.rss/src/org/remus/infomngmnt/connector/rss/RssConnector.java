@@ -38,7 +38,6 @@ import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -65,6 +64,7 @@ import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -357,7 +357,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 
 	private boolean parseContent(final InformationUnit unit, final IProgressMonitor monitor) {
 		InformationStructureRead read = InformationStructureRead.newSession(unit);
-		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		InformationStructureEdit edit = InformationStructureEdit.newSession(
 				MailActivator.INFO_TYPE_ID, editingDomain);
 		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
@@ -430,6 +430,8 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		} catch (TransformerFactoryConfigurationError e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			editingDomain.dispose();
 		}
 		return changed;
 	}

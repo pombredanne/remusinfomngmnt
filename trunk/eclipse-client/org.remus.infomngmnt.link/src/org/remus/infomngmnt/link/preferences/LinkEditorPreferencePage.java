@@ -9,7 +9,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -35,6 +34,7 @@ import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 
@@ -94,7 +94,7 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage implemen
 					@Override
 					protected IStatus run(final IProgressMonitor monitor) {
 
-						EditingDomain editingDomain = EditingUtil.getInstance()
+						DisposableEditingDomain editingDomain = EditingUtil.getInstance()
 								.createNewEditingDomain();
 						Set<? extends EObject> allItemsByType = InformationUtil
 								.getAllItemsByType(LinkActivator.LINK_INFO_ID);
@@ -124,6 +124,7 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage implemen
 							}
 						}
 						editingDomain.getCommandStack().flush();
+						editingDomain.dispose();
 						return Status.OK_STATUS;
 					}
 

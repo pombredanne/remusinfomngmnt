@@ -25,7 +25,6 @@ import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -47,6 +46,7 @@ import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
@@ -70,12 +70,14 @@ public class NewImageWizard extends NewInfoObjectWizard {
 		IFile tmpFile = ((GeneralImagePage) this.page1).getTmpFile();
 
 		if (tmpFile != null) {
-			EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+			DisposableEditingDomain editingDomain = EditingUtil.getInstance()
+					.createNewEditingDomain();
 			LoadImageRunnable loadImageRunnable = new LoadImageRunnable();
 			loadImageRunnable.setImagePath(tmpFile.getLocation().toOSString());
 			loadImageRunnable.setImageNode(this.newElement);
 			loadImageRunnable.setDomain(editingDomain);
 			editingDomain.getCommandStack().flush();
+			editingDomain.dispose();
 			try {
 				getContainer().run(true, false, loadImageRunnable);
 			} catch (InvocationTargetException e) {

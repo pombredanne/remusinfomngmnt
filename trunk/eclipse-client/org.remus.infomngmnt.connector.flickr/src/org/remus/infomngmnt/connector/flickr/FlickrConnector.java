@@ -41,7 +41,6 @@ import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
@@ -68,6 +67,7 @@ import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
@@ -252,7 +252,8 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		EList<InformationUnit> comments = InformationUtil.getChildByType(unit,
 				ImagePlugin.NODE_NAME_LINKS).getChildValues();
 
-		EditingDomain tempEditingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain tempEditingDomain = EditingUtil.getInstance()
+				.createNewEditingDomain();
 		for (InformationUnit informationUnit : comments) {
 			ShapableInfoDelegate delegate = new ShapableInfoDelegate(informationUnit,
 					new Dimension(width, height), tempEditingDomain);
@@ -281,6 +282,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			getApi().getFavoritesInterface().add(upload);
 			returnValue.setUrl(FLICKR_URL + ID_FAVORITES + "/" + sw.toString());
 		}
+		tempEditingDomain.dispose();
 		return returnValue;
 	}
 
@@ -634,7 +636,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 						/*
 						 * now we can grab all the notes.
 						 */
-						EditingDomain tmpEditingdomain = EditingUtil.getInstance()
+						DisposableEditingDomain tmpEditingdomain = EditingUtil.getInstance()
 								.createNewEditingDomain();
 						Collection notes = currentPhoto.getNotes();
 						if (notes.size() > 0) {
@@ -674,6 +676,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 								}
 							}
 						}
+						tmpEditingdomain.dispose();
 
 					}
 				} catch (MalformedURLException e) {

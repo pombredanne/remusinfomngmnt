@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.osgi.util.NLS;
 
@@ -37,6 +36,7 @@ import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
 
@@ -52,7 +52,7 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 
 	private File rootDirectory;
 
-	private EditingDomain editingDomain;
+	private DisposableEditingDomain editingDomain;
 
 	private Category rootCateogry;
 
@@ -152,6 +152,7 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.editingDomain.dispose();
 		return Status.OK_STATUS;
 	}
 }

@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.Category;
@@ -66,6 +65,7 @@ import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
 import org.remus.infomngmnt.util.StatusCreator;
@@ -387,12 +387,14 @@ public class ChangeSetExecutor {
 		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
 				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
 		itemByRepository.deleteFromRepository(localCategory, monitor);
-		EditingDomain createNewEditingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain createNewEditingDomain = EditingUtil.getInstance()
+				.createNewEditingDomain();
 
 		Command create = DeleteCommand.create(createNewEditingDomain, Collections
 				.singletonList(localCategory));
 		createNewEditingDomain.getCommandStack().execute(create);
 		createNewEditingDomain.getCommandStack().flush();
+		createNewEditingDomain.dispose();
 
 	}
 
@@ -446,12 +448,14 @@ public class ChangeSetExecutor {
 		AbstractExtensionRepository itemByRepository = InfomngmntEditPlugin.getPlugin().getService(
 				IRepositoryExtensionService.class).getItemByRepository(remoteRepository);
 		itemByRepository.deleteFromRepository(itemById, monitor);
-		EditingDomain createNewEditingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain createNewEditingDomain = EditingUtil.getInstance()
+				.createNewEditingDomain();
 
 		Command create = DeleteCommand.create(createNewEditingDomain, Collections
 				.singletonList(itemById));
 		createNewEditingDomain.getCommandStack().execute(create);
 		createNewEditingDomain.getCommandStack().flush();
+		createNewEditingDomain.dispose();
 
 	}
 
@@ -494,11 +498,12 @@ public class ChangeSetExecutor {
 					StatusCreator
 							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
 		}
-		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		Command deleteInfounit = CommandFactory.DELETE_INFOUNIT_WITHOUT_SYNC_CHECK(Collections
 				.<InformationUnitListItem> singletonList(itemById), editingDomain);
 		editingDomain.getCommandStack().execute(deleteInfounit);
 		editingDomain.getCommandStack().flush();
+		editingDomain.dispose();
 	}
 
 	private void addLocalInfoUnit(final InformationUnitListItem synchronizableObject,
@@ -523,7 +528,7 @@ public class ChangeSetExecutor {
 		Category eContainer = (Category) synchronizableObject.eContainer();
 		Category parentCategory = CategoryUtil.getCategoryById(eContainer.getId());
 
-		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		CompoundCommand createInfotype = CommandFactory.CREATE_INFOTYPE(newRemoteInformationUnit,
 				parentCategory, null, 0);
 
@@ -560,6 +565,7 @@ public class ChangeSetExecutor {
 		synchronizableObject.setId(newInformationUnit.getId());
 		editingDomain.getCommandStack().execute(setSycnMetadata);
 		editingDomain.getCommandStack().flush();
+		editingDomain.dispose();
 	}
 
 	private void replaceLocalInfoUnit(final InformationUnitListItem synchronizableObject,
@@ -572,7 +578,7 @@ public class ChangeSetExecutor {
 							.newStatus("Invalid state. A information unit synchronize was requested, but the local item was not found."));
 		}
 
-		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 
 		/*
 		 * Replacing is a bit difficult. We cannot delete the old and creating a
@@ -716,6 +722,7 @@ public class ChangeSetExecutor {
 				synchronizableObject.getSynchronizationMetaData());
 		editingDomain.getCommandStack().execute(setSycnMetadata);
 		editingDomain.getCommandStack().flush();
+		editingDomain.dispose();
 	}
 
 	private void addLocalCategory(final Category category, final Category localParentCategory,
@@ -738,10 +745,11 @@ public class ChangeSetExecutor {
 
 	private void deleteLocalCategory(final Category category) {
 		Category localCategory = CategoryUtil.getCategoryById(category.getId());
-		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		Command deleteCategory = CommandFactory.DELETE_CATEGORY(localCategory, editingDomain);
 		editingDomain.getCommandStack().execute(deleteCategory);
 		editingDomain.getCommandStack().flush();
+		editingDomain.dispose();
 	}
 
 	private void replaceLocalCategory(final Category category) throws ChangeSetException {

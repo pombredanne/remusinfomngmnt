@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
@@ -38,6 +37,7 @@ import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 
 /**
@@ -86,7 +86,7 @@ public class DeleteOldEntriesJob extends AbstractJob {
 				IQueryResult execute = select.execute();
 				Set<? extends EObject> eObjects = execute.getEObjects();
 				CompoundCommand compoundCommand = new CompoundCommand();
-				EditingDomain domain = EditingUtil.getInstance().createNewEditingDomain();
+				DisposableEditingDomain domain = EditingUtil.getInstance().createNewEditingDomain();
 				for (EObject eObject : eObjects) {
 					compoundCommand.append(CommandFactory.DELETE_INFOUNIT(Collections
 							.singletonList((InformationUnitListItem) eObject), domain));
@@ -95,6 +95,7 @@ public class DeleteOldEntriesJob extends AbstractJob {
 					domain.getCommandStack().execute(compoundCommand);
 				}
 				domain.getCommandStack().flush();
+				domain.dispose();
 			}
 		}
 		return null;

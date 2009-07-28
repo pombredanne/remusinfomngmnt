@@ -59,6 +59,7 @@ import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -70,7 +71,7 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 
 	private TreeViewer viewer;
 	private RemoteRepositoryContextMenu actionBar;
-	private final EditingDomain editingDomain;
+	private final DisposableEditingDomain editingDomain;
 	private AddRemoteRepositoryAction addRepAction;
 	private StackLayout stackLayout;
 	private final AdapterImpl checkRepositoryCountAdapter = new AdapterImpl() {
@@ -235,6 +236,7 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 		if (this.viewer != null) {
 			this.viewer.removeSelectionChangedListener(this.actionBar);
 			this.repositories.eAdapters().remove(this.checkRepositoryCountAdapter);
+			this.editingDomain.dispose();
 		}
 	}
 

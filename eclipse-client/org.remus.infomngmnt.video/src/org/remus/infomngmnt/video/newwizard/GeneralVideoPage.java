@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,6 +28,7 @@ import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.video.VideoActivator;
@@ -43,7 +43,7 @@ public class GeneralVideoPage extends GeneralPage {
 	protected String tmpText;
 	private IFile tmpFile;
 
-	private EditingDomain editingDomain;
+	private DisposableEditingDomain editingDomain;
 	private Text mediaTypeText;
 
 	public GeneralVideoPage(final Category category) {
@@ -158,6 +158,12 @@ public class GeneralVideoPage extends GeneralPage {
 			}
 		});
 
+	}
+
+	@Override
+	public void dispose() {
+		this.editingDomain.dispose();
+		super.dispose();
 	}
 
 	/**

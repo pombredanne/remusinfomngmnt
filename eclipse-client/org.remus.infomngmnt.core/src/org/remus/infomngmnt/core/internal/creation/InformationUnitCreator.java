@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.query.conditions.Condition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectAttributeValueCondition;
@@ -179,6 +180,9 @@ public class InformationUnitCreator {
 		if (addCommand != null) {
 			domain.getCommandStack().execute(addCommand);
 		}
+		if (domain instanceof IDisposable) {
+			((IDisposable) domain).dispose();
+		}
 
 	}
 
@@ -281,6 +285,9 @@ public class InformationUnitCreator {
 			Command create = SetCommand.create(domain, eContainer,
 					InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, value, indexOf);
 			domain.getCommandStack().execute(create);
+			if (domain instanceof IDisposable) {
+				((IDisposable) domain).dispose();
+			}
 		}
 
 	}
@@ -380,6 +387,9 @@ public class InformationUnitCreator {
 				}
 				Command create = SetCommand.create(domain, next2, attToSet, value);
 				domain.getCommandStack().execute(create);
+				if (domain instanceof IDisposable) {
+					((IDisposable) domain).dispose();
+				}
 			}
 		}
 
@@ -481,6 +491,9 @@ public class InformationUnitCreator {
 					}
 					Command create = SetCommand.create(domain, next2, attToSet, value);
 					domain.getCommandStack().execute(create);
+					if (domain instanceof IDisposable) {
+						((IDisposable) domain).dispose();
+					}
 				}
 			}
 		}
@@ -544,6 +557,9 @@ public class InformationUnitCreator {
 		}
 		cc.setLabel("Add item");
 		domain.getCommandStack().execute(cc);
+		if (domain instanceof IDisposable) {
+			((IDisposable) domain).dispose();
+		}
 
 	}
 

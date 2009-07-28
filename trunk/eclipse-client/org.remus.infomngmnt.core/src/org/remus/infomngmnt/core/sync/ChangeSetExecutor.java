@@ -526,6 +526,7 @@ public class ChangeSetExecutor {
 		EditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 		CompoundCommand createInfotype = CommandFactory.CREATE_INFOTYPE(newRemoteInformationUnit,
 				parentCategory, null, 0);
+
 		InformationStructureRead read = InformationStructureRead
 				.newSession(newRemoteInformationUnit);
 		List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences();
@@ -556,6 +557,7 @@ public class ChangeSetExecutor {
 		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
 				synchronizableObject.getSynchronizationMetaData());
+		synchronizableObject.setId(newInformationUnit.getId());
 		editingDomain.getCommandStack().execute(setSycnMetadata);
 		editingDomain.getCommandStack().flush();
 	}

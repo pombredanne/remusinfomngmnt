@@ -15,6 +15,7 @@ package org.remus.infomngmnt.connector.rss;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
@@ -32,6 +33,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
@@ -50,6 +52,7 @@ import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.commands.CreateBinaryReferenceCommand;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
@@ -140,25 +143,29 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			throws RemoteException {
 		if (container instanceof RemoteRepository && !showOnlyContainers) {
 			List<RemoteObject> returnValue = new ArrayList<RemoteObject>();
-			XmlReader xmlReader = null;
+			InputStream xmlReader = null;
+			InputSource is = null;
 			try {
-				xmlReader = new XmlReader(new URL(getRepositoryUrl()));
-				SyndFeed build = getApi().build(xmlReader);
+				IFile tempFile = ResourceUtil.createTempFile();
+				DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(getRepositoryUrl()),
+						tempFile, getFileReceiveAdapter());
+				downloadFileJob.run(new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+				xmlReader = tempFile.getContents();
+				is = new InputSource(xmlReader);
+				SyndFeed build = getApi().build(is);
 				List entries = build.getEntries();
 				for (Object object : entries) {
 					returnValue.add(buildFeedEntry((SyndEntry) object));
 				}
+				tempFile.delete(true, false, new SubProgressMonitor(monitor,
+						IProgressMonitor.UNKNOWN));
+
 				return returnValue.toArray(new RemoteObject[returnValue.size()]);
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus("Error getting feed entries", e));
 			} finally {
-				if (xmlReader != null) {
-					try {
-						xmlReader.close();
-					} catch (IOException e) {
-						// do nothing
-					}
-				}
+				StreamCloser.closeStreams(xmlReader);
+				is = null;
 			}
 		}
 		return new RemoteObject[0];
@@ -336,10 +343,15 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	}
 
 	private synchronized SyndFeedInput getApi() {
-		if (this.api == null) {
-			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
-			this.api = new SyndFeedInput();
+		/*
+		 * We have to do this, else the SynndFeedInput is eating more and more
+		 * memory and we end up with OutOfMemoryError :(
+		 */
+		if (this.api != null) {
+			reset();
 		}
+		getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
+		this.api = new SyndFeedInput();
 		return this.api;
 	}
 

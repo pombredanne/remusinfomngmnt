@@ -14,6 +14,8 @@ package org.remus.infomngmnt.ui.notification;
 
 import java.util.Collection;
 
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -29,10 +31,19 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Notification;
+import org.remus.infomngmnt.common.service.ITrayService;
+import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.editors.EditorUtil;
+import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.ui.views.NotificationView;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -81,9 +92,20 @@ public class NotificationControl extends Composite {
 						| SWT.NO_FOCUS);
 
 				itemLink.setText(notification.getMessage());
-				if (notification.getImage() != null && notification.getImage() instanceof Image) {
-					itemLink.setImage((Image) notification.getImage());
+				if (notification.getAffectedInfoUnitIds().size() > 0
+						&& ApplicationModelPool.getInstance().getItemById(
+								notification.getAffectedInfoUnitIds().get(0), null) != null) {
+					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
+							.getItemById(notification.getAffectedInfoUnitIds().get(0), null);
+					ILabelProvider navigatorDecoratingLabelProvider = new NavigatorDecoratingLabelProvider(
+							new AdapterFactoryLabelProvider(EditingUtil.getInstance()
+									.getAdapterFactory()));
+					Image image = navigatorDecoratingLabelProvider.getImage(itemById);
+					if (image != null) {
+						itemLink.setImage(image);
+					}
 				} else {
+
 					itemLink.setImage(NotificationUtil.getImageBySeverity(notification
 							.getSeverity()));
 				}
@@ -93,6 +115,10 @@ public class NotificationControl extends Composite {
 					public void linkActivated(final HyperlinkEvent e) {
 						notification.setNoticed(true);
 						EditorUtil.openInfoUnit(notification.getAffectedInfoUnitIds().get(0));
+						ITrayService trayService = getTrayService();
+						if (trayService != null && trayService.isMinimized()) {
+							trayService.restoreFromTray(UIUtil.getPrimaryWindow().getShell());
+						}
 						if (NotificationControl.this.window != null) {
 							NotificationControl.this.window.close();
 						}
@@ -115,6 +141,10 @@ public class NotificationControl extends Composite {
 				try {
 					IViewPart findView = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 							.getActivePage().showView(NotificationView.VIEW_ID);
+					ITrayService trayService = getTrayService();
+					if (trayService != null && trayService.isMinimized()) {
+						trayService.restoreFromTray(UIUtil.getPrimaryWindow().getShell());
+					}
 					if (NotificationControl.this.window != null) {
 						NotificationControl.this.window.close();
 					}
@@ -142,6 +172,18 @@ public class NotificationControl extends Composite {
 
 	protected void doDispose() {
 		dispose();
+
+	}
+
+	public ITrayService getTrayService() {
+		final BundleContext bundleContext = InfomngmntEditPlugin.getPlugin().getBundle()
+				.getBundleContext();
+		final ServiceReference serviceReference = bundleContext
+				.getServiceReference(ITrayService.class.getName());
+		if (serviceReference != null) {
+			return (ITrayService) bundleContext.getService(serviceReference);
+		}
+		return null;
 
 	}
 

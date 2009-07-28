@@ -102,7 +102,9 @@ public class DesktopWindow extends AbstractDesktopWindow {
 			try {
 				AbstractTraySection implementation = traySection.getImplementation();
 				implementation.init(this.toolkit, traySection);
-				createSection.setText(implementation.getTitle());
+				if (implementation.getTitle() != null) {
+					createSection.setText(implementation.getTitle());
+				}
 				implementation.createDetailsPart(composite);
 				this.traySections.add(implementation);
 			} catch (Exception e) {

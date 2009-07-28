@@ -37,6 +37,7 @@ public class TrayConfigurationManager {
 
 	public static final String SEARCH_BOX_ID = "org.remus.infomngmnt.ui.searchBox"; //$NON-NLS-1$
 	public static final String DROP_BOX_ID = "org.remus.infomngmnt.ui.dropBox"; //$NON-NLS-1$
+	public static final String NOTIFICATION_BOX = "org.remus.infomngmnt.ui.notificationBox"; //$NON-NLS-1$
 
 	public static final String PATH_TO_TRAY_CONFIG_FILE = "tray/trayconfig.xml"; //$NON-NLS-1$
 
@@ -105,6 +106,16 @@ public class TrayConfigurationManager {
 		dropTraySection.getPreferenceOptions().put(DropSectionPreferencePage.RULESET_KEY,
 				IRuleService.DEFAULT_RULENAME);
 		returnValue.getSections().add(dropTraySection);
+
+		// Notifications
+		ITraySectionDefinition notifcationBox = TraySectionManager.getInstance()
+				.getSectionDefinitionById(DROP_BOX_ID);
+		TraySection notificationTraySection = UIModelFactory.eINSTANCE.createTraySection();
+		dropTraySection.setImage(notifcationBox.getImage());
+		dropTraySection.setImplementation(notifcationBox.getImplementation());
+		dropTraySection.setName(notifcationBox.getLabel());
+		dropTraySection.setTemplateId(notifcationBox.getId());
+		returnValue.getSections().add(notificationTraySection);
 
 		return returnValue;
 	}

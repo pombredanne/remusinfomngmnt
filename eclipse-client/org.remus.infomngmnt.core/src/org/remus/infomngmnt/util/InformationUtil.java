@@ -37,6 +37,7 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
 
+import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
@@ -86,6 +87,13 @@ public class InformationUtil {
 					unit.getBinaryReferences().getProjectRelativePath());
 		}
 		return null;
+	}
+
+	public static IFile binaryReferenceToFile(final BinaryReference ref,
+			final InformationUnit containingInformationUnit) {
+		IFile infoFile = (IFile) containingInformationUnit.getAdapter(IFile.class);
+		return infoFile.getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
+				ref.getProjectRelativePath());
 	}
 
 	public static List<DiffElement> computeDiffs(final InformationUnit obj1,

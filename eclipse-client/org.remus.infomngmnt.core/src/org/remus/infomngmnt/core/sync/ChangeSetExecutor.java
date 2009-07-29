@@ -34,6 +34,7 @@ import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.osgi.util.NLS;
@@ -87,7 +88,13 @@ public class ChangeSetExecutor {
 			Category remoteConvertedContainer = changeSetItem.getRemoteConvertedContainer();
 			Category newLocalCateogries = removeInfoUnits((Category) EcoreUtil
 					.copy(remoteConvertedContainer));
-			changeset.getTargetCategory().getChildren().add(newLocalCateogries);
+			DisposableEditingDomain createNewEditingDomain = EditingUtil.getInstance()
+					.createNewEditingDomain();
+			Command create = AddCommand.create(createNewEditingDomain, changeset
+					.getTargetCategory(), InfomngmntPackage.Literals.CATEGORY__CHILDREN,
+					newLocalCateogries);
+			createNewEditingDomain.getCommandStack().execute(create);
+			createNewEditingDomain.dispose();
 			List<InformationUnitListItem> allChildren = ModelUtil
 					.getAllChildren(remoteConvertedContainer,
 							InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM);
@@ -553,17 +560,17 @@ public class ChangeSetExecutor {
 
 		InformationUnit newInformationUnit = (InformationUnit) localListItem
 				.getAdapter(InformationUnit.class);
+		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
+				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+				synchronizableObject.getSynchronizationMetaData());
+		synchronizableObject.setId(newInformationUnit.getId());
+		editingDomain.getCommandStack().execute(setSycnMetadata);
 		if (newInformationUnit != null) {
 			if (itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor)) {
 				EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
 				SyncStateParticipantNotfier.notifyClean(newInformationUnit.getId());
 			}
 		}
-		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
-				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
-				synchronizableObject.getSynchronizationMetaData());
-		synchronizableObject.setId(newInformationUnit.getId());
-		editingDomain.getCommandStack().execute(setSycnMetadata);
 		editingDomain.getCommandStack().flush();
 		editingDomain.dispose();
 	}

@@ -282,7 +282,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 				.getViewer()
 				: null;
 		if (viewerProvider != null) {
-
+			this.refreshAction.setViewer(viewerProvider);
 		}
 
 		this.undoAction.update();

@@ -552,7 +552,7 @@ public class InformationUnitCreator {
 		for (String string : keySet) {
 			if (allowedNodes.contains(string)) {
 				cc.append(CommandFactory.addFileToInfoUnit(binaryNodeIdToFileMap.get(string), read
-						.getChildByNodeId(string), editingDomain));
+						.getChildByNodeId(string), domain));
 			}
 		}
 		cc.setLabel("Add item");

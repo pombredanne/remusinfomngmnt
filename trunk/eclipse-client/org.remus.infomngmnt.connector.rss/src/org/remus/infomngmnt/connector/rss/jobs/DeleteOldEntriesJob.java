@@ -77,6 +77,8 @@ public class DeleteOldEntriesJob extends AbstractJob {
 										((InformationUnitListItem) arg0)
 												.getSynchronizationMetaData().getRepositoryId())
 								&& ((InformationUnit) ((InformationUnitListItem) arg0)
+										.getAdapter(InformationUnit.class)) != null
+								&& ((InformationUnit) ((InformationUnitListItem) arg0)
 										.getAdapter(InformationUnit.class)).getCreationDate()
 										.getTime()
 										+ (parseInt * 1000 * 60 * 60 * 24) > System

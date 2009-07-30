@@ -266,6 +266,7 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	}
 
 	private void initInput() {
+		this.viewer.setUseHashlookup(true);
 		this.viewer.setInput(ApplicationModelPool.getInstance().getModel());
 
 		this.viewer.setExpandedElements(this.expandedElements.toArray(new Object[0]));

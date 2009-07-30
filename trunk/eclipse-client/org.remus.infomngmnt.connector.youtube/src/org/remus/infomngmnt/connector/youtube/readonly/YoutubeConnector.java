@@ -57,6 +57,7 @@ import org.remus.infomngmnt.util.StatusCreator;
 import org.remus.infomngmnt.video.VideoActivator;
 
 import com.google.gdata.client.youtube.YouTubeService;
+import com.google.gdata.data.media.mediarss.MediaCategory;
 import com.google.gdata.data.youtube.PlaylistEntry;
 import com.google.gdata.data.youtube.PlaylistFeed;
 import com.google.gdata.data.youtube.PlaylistLinkEntry;
@@ -200,12 +201,19 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		StringWriter sw = new StringWriter();
 		YouTubeMediaGroup mediaGroup = videoEntry.getMediaGroup();
 		if (mediaGroup != null) {
-			sw.append(mediaGroup.getDescription().getPlainTextContent());
-			List<String> keywords = mediaGroup.getKeywords().getKeywords();
-			StringBuilder sb = new StringBuilder();
-			for (String string : keywords) {
-				sb.append(string);
+			if (mediaGroup.getDescription() != null) {
+
+				sw.append(mediaGroup.getDescription().getPlainTextContent());
 			}
+			List<MediaCategory> keywordsGroup = mediaGroup.getCategories();
+			StringBuilder sb = new StringBuilder();
+			if (keywordsGroup != null) {
+				for (MediaCategory mediaCategory : keywordsGroup) {
+
+					sb.append(mediaCategory.getContent());
+				}
+			}
+
 		}
 		instance.update(sw.toString().getBytes());
 		RemoteObject remoteVideo = InfomngmntFactory.eINSTANCE.createRemoteObject();
@@ -291,10 +299,21 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			DownloadFileJob downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash,
 					true), this.tmpVideoFile, getFileReceiveAdapter());
 			IStatus run = downloadVidJob.run(monitor);
-			if (run.getSeverity() != Status.OK) {
-				downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash, false),
-						this.tmpVideoFile, getFileReceiveAdapter());
-				downloadVidJob.run(monitor);
+			try {
+				/*
+				 * If no hd video is present in former versions the request
+				 * returned http error, at the moment it streams a file with 0
+				 * bytes. curious.
+				 */
+				if (run.getSeverity() != Status.OK
+						|| this.tmpVideoFile.getContents().available() == 0) {
+					downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash, false),
+							this.tmpVideoFile, getFileReceiveAdapter());
+					downloadVidJob.run(monitor);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 			InformationStructureEdit edit = InformationStructureEdit
@@ -308,8 +327,10 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			if (wrappedObject instanceof VideoEntry) {
 				YouTubeMediaGroup mediaGroup = ((VideoEntry) wrappedObject).getMediaGroup();
 				if (mediaGroup != null) {
-					createNewObject.setDescription(mediaGroup.getDescription()
-							.getPlainTextContent());
+					if (mediaGroup.getDescription() != null) {
+						createNewObject.setDescription(mediaGroup.getDescription()
+								.getPlainTextContent());
+					}
 					List<String> keywords = mediaGroup.getKeywords().getKeywords();
 					StringBuilder sb = new StringBuilder();
 					for (String string : keywords) {

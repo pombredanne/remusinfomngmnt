@@ -14,9 +14,9 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="${.globals.jslibDir}/templates/images.js"></script>
-  <script src="${.globals.jslibDir}/js/curvycorners.js"></script>
-  <script src="${.globals.jslibDir}/js/overlib.js"></script>
+  <script src="${.globals.jslibDir}templates/images.js"></script>
+  <script src="${.globals.jslibDir}js/curvycorners.js"></script>
+  <script src="${.globals.jslibDir}js/overlib.js"></script>
   <script type="text/JavaScript">
       var countLayers = ${linkCount};
       var overlaysShown = false;

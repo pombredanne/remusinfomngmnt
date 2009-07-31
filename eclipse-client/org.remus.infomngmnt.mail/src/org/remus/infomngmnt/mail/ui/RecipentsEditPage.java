@@ -38,6 +38,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.contact.shared.MailPersonDialog;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mail.MailActivator;

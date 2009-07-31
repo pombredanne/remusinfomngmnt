@@ -19,8 +19,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
 
-import de.spiritlink.richhtml4eclipse.widgets.HtmlComposer;
-
 import org.remus.infomngmnt.common.ui.richtext.actions.BackColorAction;
 import org.remus.infomngmnt.common.ui.richtext.actions.BoldAction;
 import org.remus.infomngmnt.common.ui.richtext.actions.BulletListAction;
@@ -56,6 +54,8 @@ import org.remus.infomngmnt.common.ui.richtext.actions.SupAction;
 import org.remus.infomngmnt.common.ui.richtext.actions.ToggleVisualAidAction;
 import org.remus.infomngmnt.common.ui.richtext.actions.UnderLineAction;
 
+import de.spiritlink.richhtml4eclipse.widgets.HtmlComposer;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -81,6 +81,18 @@ public class ActionConfiguration {
 		tbm.add(new Separator());
 		tbm.add(new SubAction(composer));
 		tbm.add(new SupAction(composer));
+	}
+
+	public static void fillSimpleTextFormattingToolbar(final HtmlComposer composer,
+			final ToolBarManager tbm) {
+		tbm.add(new BoldAction(composer));
+		tbm.add(new ItalicAction(composer));
+		tbm.add(new UnderLineAction(composer));
+		tbm.add(new StrikeThroughAction(composer));
+		tbm.add(new Separator());
+		tbm.add(new BulletListAction(composer));
+		tbm.add(new NumListAction(composer));
+		tbm.add(new Separator());
 	}
 
 	public static void fillColorFormattingToolbar(final HtmlComposer composer,

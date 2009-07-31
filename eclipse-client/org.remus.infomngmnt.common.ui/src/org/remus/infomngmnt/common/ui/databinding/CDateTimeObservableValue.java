@@ -15,10 +15,9 @@ import org.eclipse.swt.SWT;
  */
 public class CDateTimeObservableValue extends WidgetValueProperty {
 
-	
 	public CDateTimeObservableValue() {
-		super(SWT.Selection);
-		
+		super(SWT.Modify);
+
 	}
 
 	/*
@@ -40,12 +39,12 @@ public class CDateTimeObservableValue extends WidgetValueProperty {
 	 * #doGetValue()
 	 */
 	@Override
-	protected Object doGetValue(Object source) {
+	protected Object doGetValue(final Object source) {
 		return ((CDateTime) source).getSelection();
 	}
 
 	@Override
-	protected void doSetValue(final Object source, Object value) {
+	protected void doSetValue(final Object source, final Object value) {
 		((CDateTime) source).setSelection((Date) value);
 	}
 }

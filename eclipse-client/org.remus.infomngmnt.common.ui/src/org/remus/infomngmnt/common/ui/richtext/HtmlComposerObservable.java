@@ -56,7 +56,6 @@ public class HtmlComposerObservable extends AbstractObservableValue {
 
 								@Override
 								public Object getNewValue() {
-									System.out.println(HtmlComposerObservable.this.newValue);
 									return HtmlComposerObservable.this.newValue;
 								}
 

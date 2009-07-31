@@ -211,7 +211,7 @@ public class HtmlComposer {
 	private static String resolveBaseHtml(final int style) {
 		try {
 			String path = BASE_PATH;
-			if ((style & SWT.SIMPLE) == 0) {
+			if ((style & SWT.SIMPLE) != 0) {
 				path = SIMPLE_PATH;
 			}
 			return FileLocator.resolve(Activator.getDefault().getBundle().getEntry(path))

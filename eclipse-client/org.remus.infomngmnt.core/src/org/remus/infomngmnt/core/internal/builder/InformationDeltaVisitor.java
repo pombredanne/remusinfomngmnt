@@ -27,7 +27,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.command.SetCommand;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
@@ -45,6 +47,7 @@ import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -220,7 +223,11 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			String label = objectFromFile.getLabel();
 			String label2 = ((AbstractInformationUnit) adapter).getLabel();
 			if (label != null && !label.equals(label2)) {
-				((AbstractInformationUnit) adapter).setLabel(label);
+				DisposableEditingDomain domain = EditingUtil.getInstance().createNewEditingDomain();
+				Command create = SetCommand.create(domain, adapter,
+						InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, label);
+				domain.getCommandStack().execute(create);
+				domain.dispose();
 			}
 		}
 

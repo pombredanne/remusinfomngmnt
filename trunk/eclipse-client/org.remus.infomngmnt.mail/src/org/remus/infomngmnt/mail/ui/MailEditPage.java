@@ -39,6 +39,7 @@ import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
+import org.remus.infomngmnt.contact.shared.ContactsWithEmailSmartField;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;

@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.ProgressAdapter;
 import org.eclipse.swt.browser.ProgressEvent;
@@ -55,6 +56,8 @@ public class HtmlComposer {
 
 	/** The real path to the tinyMce HTML Page */
 	public static final String BASE_PATH = "tiny_mce/base/base.htm"; //$NON-NLS-1$
+	/** Simple html base path */
+	public static final String SIMPLE_PATH = "tiny_mce/base/simple.htm"; //$NON-NLS-1$
 
 	/** Indicating a command sequence start from tinyMCE */
 	public static final String START = "START"; //$NON-NLS-1$
@@ -186,7 +189,7 @@ public class HtmlComposer {
 	 *            the style bits
 	 */
 	public HtmlComposer(final Composite parent, final int style) {
-		this(parent, style, resolveBaseHtml());
+		this(parent, style, resolveBaseHtml(style));
 	}
 
 	public HtmlComposer(final Composite parent, final int style, final String absPathToTinyMCE) {
@@ -205,9 +208,13 @@ public class HtmlComposer {
 		return this.browser;
 	}
 
-	private static String resolveBaseHtml() {
+	private static String resolveBaseHtml(final int style) {
 		try {
-			return FileLocator.resolve(Activator.getDefault().getBundle().getEntry(BASE_PATH))
+			String path = BASE_PATH;
+			if ((style & SWT.SIMPLE) == 0) {
+				path = SIMPLE_PATH;
+			}
+			return FileLocator.resolve(Activator.getDefault().getBundle().getEntry(path))
 					.toString();
 		} catch (IOException e) {
 			throw new IllegalStateException("Invalid state", e); //$NON-NLS-1$

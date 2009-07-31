@@ -16,6 +16,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.xml.transform.Transformer;
@@ -33,6 +34,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -54,6 +57,11 @@ import org.remus.infomngmnt.common.ui.richtext.actions.InsertEditImageAction;
 import org.remus.infomngmnt.common.ui.richtext.actions.InsertEditLinkAction;
 import org.remus.infomngmnt.common.ui.richtext.actions.UnlinkAction;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+
+import de.spiritlink.richhtml4eclipse.widgets.AllActionConstants;
+import de.spiritlink.richhtml4eclipse.widgets.EventConstants;
+import de.spiritlink.richhtml4eclipse.widgets.JavaScriptCommands;
+import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -157,6 +165,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 	@Override
 	public void doSave(final IProgressMonitor monitor) {
 		monitor.setTaskName("Pre-save formatting...");
+		doSaveEditor();
 		final DOMParser parser = new DOMParser();
 
 		try {
@@ -184,6 +193,29 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		}
 
 		super.doSave(monitor);
+	}
+
+	private void doSaveEditor() {
+		final String[] html = new String[1];
+		Listener listener = new Listener() {
+			public void handleEvent(final Event event) {
+				Properties evtProps = (Properties) event.data;
+				if (evtProps.getProperty(PropertyConstants.COMMAND).equals(
+						AllActionConstants.GET_HTML)) {
+					html[0] = evtProps.getProperty(PropertyConstants.VALUE) == null ? "" : evtProps.getProperty(PropertyConstants.VALUE); //$NON-NLS-1$ 
+				}
+			}
+		};
+		this.richtext.getComposer().addListener(EventConstants.ALL, listener);
+		this.richtext.getComposer().execute(JavaScriptCommands.GET_HTML);
+		while (html[0] == null) {
+			if (!getSite().getShell().getDisplay().readAndDispatch()) {
+				getSite().getShell().getDisplay().sleep();
+			}
+		}
+		getModelObject().setStringValue(html[0]);
+		this.richtext.getComposer().removeListener(EventConstants.ALL, listener);
+
 	}
 
 	private static String[] getFontList() {

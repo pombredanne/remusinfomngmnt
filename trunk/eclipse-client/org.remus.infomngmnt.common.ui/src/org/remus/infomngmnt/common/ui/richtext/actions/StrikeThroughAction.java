@@ -33,39 +33,47 @@ import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
  */
 public class StrikeThroughAction extends Action implements Listener {
 
-private HtmlComposer composer = null;
-    
-    public StrikeThroughAction(HtmlComposer composer) {
-        super("", IAction.AS_CHECK_BOX);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/themes/advanced/images/strikethrough.gif"));
-        this.composer = composer;
-        this.composer.addListener(EventConstants.STRIKETHROUGH, this);
-    }
-    
-   
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.STRIKETHROUGH);
-    }
+	private HtmlComposer composer = null;
 
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties props = (Properties) event.data;
-        if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
-            // current selection/cursor is bold --> set the action checked
-            setChecked(true);
-        } else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(false);
-        } else if (event.type == EventConstants.ALL && AllActionConstants.RESET_ALL.equals(props.getProperty(PropertyConstants.COMMAND))) {
-            // callback if the cursor changed, reset the state.
-            setChecked(false);
-        }
-    }
+	public StrikeThroughAction(final HtmlComposer composer) {
+		super("Strikethrough", IAction.AS_CHECK_BOX);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/themes/advanced/images/strikethrough.gif"));
+		this.composer = composer;
+		this.composer.addListener(EventConstants.STRIKETHROUGH, this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.STRIKETHROUGH);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties props = (Properties) event.data;
+		if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
+			// current selection/cursor is bold --> set the action checked
+			setChecked(true);
+		} else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(false);
+		} else if (event.type == EventConstants.ALL
+				&& AllActionConstants.RESET_ALL
+						.equals(props.getProperty(PropertyConstants.COMMAND))) {
+			// callback if the cursor changed, reset the state.
+			setChecked(false);
+		}
+	}
 
 }

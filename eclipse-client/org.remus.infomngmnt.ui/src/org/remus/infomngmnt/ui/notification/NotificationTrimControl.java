@@ -12,11 +12,12 @@
 
 package org.remus.infomngmnt.ui.notification;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.osgi.util.NLS;
@@ -115,7 +116,8 @@ public class NotificationTrimControl extends Composite {
 	}
 
 	protected void buildHyperLink() {
-		EList<Notification> notifcations = this.allNotifications.getNotifcations();
+		List<Notification> notifcations = new ArrayList<Notification>(this.allNotifications
+				.getNotifcations());
 		this.notifications2Show.clear();
 		int i = 0;
 		for (Notification notification : notifcations) {

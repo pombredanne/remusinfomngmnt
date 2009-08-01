@@ -36,6 +36,7 @@ import org.remus.infomngmnt.ui.views.NewWizardMenu;
 import org.remus.infomngmnt.ui.views.action.DeleteNavigationAction;
 import org.remus.infomngmnt.ui.views.action.RefreshTreeAction;
 import org.remus.infomngmnt.ui.views.action.RenameAction;
+import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 /**
@@ -135,7 +136,8 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		this.actionBars = actionBars;
 		final ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
-		this.deleteAction = new DeleteNavigationAction(removeAllReferencesOnDelete());
+		this.deleteAction = new DeleteNavigationAction(EditingUtil.getInstance()
+				.getNavigationEditingDomain(), removeAllReferencesOnDelete());
 		this.deleteAction.setImageDescriptor(sharedImages
 				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		this.deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete");

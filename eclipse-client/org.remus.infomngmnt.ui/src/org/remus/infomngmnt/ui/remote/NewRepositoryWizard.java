@@ -12,15 +12,19 @@
 
 package org.remus.infomngmnt.ui.remote;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 
 import org.remus.infomngmnt.InfomngmntFactory;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
 
@@ -47,7 +51,14 @@ public abstract class NewRepositoryWizard extends Wizard {
 		RepositoryCollection repositories = InfomngmntEditPlugin.getPlugin().getService(
 				IRepositoryService.class).getRepositories();
 		if (!this.editMode) {
-			repositories.getRepositories().add(this.repository);
+			DisposableEditingDomain domain = EditingUtil.getInstance().createNewEditingDomain();
+			Command create = AddCommand
+					.create(domain, repositories,
+							InfomngmntPackage.Literals.REPOSITORY_COLLECTION__REPOSITORIES,
+							this.repository);
+			domain.getCommandStack().execute(create);
+			domain.dispose();
+
 		}
 		EditingUtil.getInstance().saveObjectToResource(repositories);
 		return true;

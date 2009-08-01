@@ -24,6 +24,8 @@ import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 import org.remus.infomngmnt.ui.views.action.CheckoutAction;
+import org.remus.infomngmnt.util.DisposableEditingDomain;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * This is a contributor for an editor, multi-page or otherwise, that implements
@@ -89,7 +91,10 @@ public class RemoteRepositoryContextMenu implements IMenuListener, IPropertyList
 	public void init(final IActionBars actionBars) {
 		final ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
-		this.deleteAction = new DeleteRepositoryAction(removeAllReferencesOnDelete());
+		DisposableEditingDomain createNewEditingDomain = EditingUtil.getInstance()
+				.createNewEditingDomain();
+		this.deleteAction = new DeleteRepositoryAction(createNewEditingDomain,
+				removeAllReferencesOnDelete());
 		this.deleteAction.setImageDescriptor(sharedImages
 				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		this.deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete");

@@ -62,6 +62,7 @@ public class DeleteRepositoryAction extends DeleteAction {
 	 */
 	@Override
 	public void run() {
+
 		if (MessageDialog.openConfirm(UIUtil.getDisplay().getActiveShell(), "Confirm delte",
 				"All associated information units will be disconnected from repository. Continue?")) {
 			List list = getStructuredSelection().toList();

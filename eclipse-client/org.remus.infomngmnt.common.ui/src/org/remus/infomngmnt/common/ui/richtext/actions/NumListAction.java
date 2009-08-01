@@ -31,39 +31,47 @@ import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
  * @author Tom Seidel <tom.seidel@spiritlink.de>
  * 
  */
-public class NumListAction extends Action implements Listener{
-    private HtmlComposer composer = null;
+public class NumListAction extends Action implements Listener {
+	private HtmlComposer composer = null;
 
-    public NumListAction(HtmlComposer composer) {
-        super("", IAction.AS_CHECK_BOX);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/themes/advanced/images/numlist.gif"));
-        this.composer = composer;
-        this.composer.addListener(EventConstants.NUMLIST, this);
-    }
+	public NumListAction(final HtmlComposer composer) {
+		super("Numeric list", IAction.AS_CHECK_BOX);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/themes/advanced/images/numlist.gif"));
+		this.composer = composer;
+		this.composer.addListener(EventConstants.NUMLIST, this);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.NUMLIST);
+	}
 
-
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.NUMLIST);
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties props = (Properties) event.data;
-        if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(true);
-        } else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(false);
-        } else if (event.type == EventConstants.ALL && AllActionConstants.RESET_ALL.equals(props.getProperty(PropertyConstants.COMMAND))) {
-            // callback if the cursor changed, reset the state.
-            setChecked(false);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties props = (Properties) event.data;
+		if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(true);
+		} else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(false);
+		} else if (event.type == EventConstants.ALL
+				&& AllActionConstants.RESET_ALL
+						.equals(props.getProperty(PropertyConstants.COMMAND))) {
+			// callback if the cursor changed, reset the state.
+			setChecked(false);
+		}
+	}
 
 }

@@ -23,24 +23,26 @@ import de.spiritlink.richhtml4eclipse.widgets.JavaScriptCommands;
  * @author Tom Seidel <tom.seidel@spiritlink.de>
  * 
  */
-public class RemoveFormatAction extends Action  {
-    
-    private HtmlComposer composer = null;
-    
-    public RemoveFormatAction(HtmlComposer composer) {
-        super("", IAction.AS_PUSH_BUTTON);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/themes/advanced/images/removeformat.gif"));
-        this.composer = composer;
-        
-    }
-    
-   
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.REMOVE_FORMAT);
-    }
+public class RemoveFormatAction extends Action {
+
+	private HtmlComposer composer = null;
+
+	public RemoveFormatAction(final HtmlComposer composer) {
+		super("Remove Format", IAction.AS_PUSH_BUTTON);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/themes/advanced/images/removeformat.gif"));
+		this.composer = composer;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.REMOVE_FORMAT);
+	}
 }

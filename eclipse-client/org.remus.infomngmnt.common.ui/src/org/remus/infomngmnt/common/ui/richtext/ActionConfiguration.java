@@ -93,12 +93,16 @@ public class ActionConfiguration {
 		tbm.add(new BulletListAction(composer));
 		tbm.add(new NumListAction(composer));
 		tbm.add(new Separator());
+		tbm.add(new OutdentAction(composer));
+		tbm.add(new IndentAction(composer));
+		tbm.add(new Separator());
 	}
 
 	public static void fillColorFormattingToolbar(final HtmlComposer composer,
 			final ToolBarManager tbm) {
 		tbm.add(new ForegroundAction(composer));
 		tbm.add(new BackColorAction(composer));
+		tbm.add(new RemoveFormatAction(composer));
 
 	}
 

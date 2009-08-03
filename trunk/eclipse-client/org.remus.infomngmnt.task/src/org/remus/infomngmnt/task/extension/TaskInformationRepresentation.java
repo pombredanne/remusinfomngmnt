@@ -52,8 +52,15 @@ public class TaskInformationRepresentation extends AbstractInformationRepresenta
 			instance.set(Calendar.HOUR, 0);
 			instance.set(Calendar.MINUTE, 0);
 			instance.set(Calendar.SECOND, 0);
+			instance.set(Calendar.AM_PM, Calendar.AM);
 			createCalendarEntry.setStart(instance.getTime());
+			instance = Calendar.getInstance();
+			instance.setTime(dueDate);
 			instance.add(Calendar.DAY_OF_YEAR, 1);
+			instance.set(Calendar.HOUR, 0);
+			instance.set(Calendar.MINUTE, 0);
+			instance.set(Calendar.SECOND, 0);
+			instance.set(Calendar.AM_PM, Calendar.AM);
 			createCalendarEntry.setEnd(instance.getTime());
 			return new CalendarEntry[] { createCalendarEntry };
 		}

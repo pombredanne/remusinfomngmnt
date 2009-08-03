@@ -11,7 +11,6 @@
 
 package org.remus.infomngmnt.ccalendar.actions;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,14 +27,14 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.remus.infomngmnt.calendar.model.Task;
 
+import org.remus.infomngmnt.calendar.model.Task;
 
 /**
  * @author jeremy
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ *         TODO To change the template for this generated type comment go to
+ *         Window - Preferences - Java - Code Style - Code Templates
  */
 public class RemoveAction extends Action implements ISelectionChangedListener {
 	public static final String ID = "org.aspencloud.calypso.ui.actions.RemoveAction";
@@ -51,27 +50,29 @@ public class RemoveAction extends Action implements ISelectionChangedListener {
 		setToolTipText("Delete");
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 		setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		setDisabledImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
+		setDisabledImageDescriptor(sharedImages
+				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
 
 		setEnabled(false);
 	}
 
 	@Override
 	public void run() {
-		if(!this.provider.getSelection().isEmpty()) {
+		if (!this.provider.getSelection().isEmpty()) {
 			Shell shell = new Shell(Display.getCurrent().getActiveShell());
 			MessageBox msg = new MessageBox(shell, SWT.ICON_WARNING | SWT.YES | SWT.NO);
 			msg.setText("Delete");
 			msg.setMessage("Are you sure?");
 			int rval = msg.open();
-			if(rval == SWT.NO) {
+			if (rval == SWT.NO) {
 				return;
 			}
 
 			List list = new ArrayList();
-			for(Iterator i = ((IStructuredSelection) this.provider.getSelection()).iterator(); i.hasNext(); ) {
+			for (Iterator i = ((IStructuredSelection) this.provider.getSelection()).iterator(); i
+					.hasNext();) {
 				Object o = i.next();
-				if(o instanceof Task) {
+				if (o instanceof Task) {
 					Task task = (Task) o;
 
 					list.add(task);
@@ -79,13 +80,22 @@ public class RemoveAction extends Action implements ISelectionChangedListener {
 				}
 			}
 
-			if(!list.isEmpty()) {
+			if (!list.isEmpty()) {
 				CalypsoEdit.delete(list);
 			}
 		}
 	}
 
 	public void selectionChanged(final SelectionChangedEvent event) {
+		List list = ((IStructuredSelection) event.getSelection()).toList();
+		for (Object object : list) {
+			if (object instanceof Task) {
+				if (((Task) object).isReadonly()) {
+					setEnabled(false);
+					return;
+				}
+			}
+		}
 		setEnabled(!this.provider.getSelection().isEmpty());
 	}
 }

@@ -72,6 +72,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 	private FormText thisWeekFormText;
 
 	private FormText nextWeekFormText;
+	private Section today;
 
 	/**
 	 * 
@@ -150,17 +151,17 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 	}
 
 	private void createTodaySection() {
-		final Section today = getToolkit().createSection(this.sform.getBody(), SECTION_STYLE);
+		this.today = getToolkit().createSection(this.sform.getBody(), SECTION_STYLE);
 		// today.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		today.setText("Today");
+		this.today.setText("Today");
 
 		TableWrapData td = new TableWrapData();
 		td.align = TableWrapData.FILL;
 		td.grabHorizontal = true;
-		today.setLayoutData(td);
+		this.today.setLayoutData(td);
 
-		this.todayFormText = getToolkit().createFormText(today, false);
-		today.setClient(this.todayFormText);
+		this.todayFormText = getToolkit().createFormText(this.today, false);
+		this.today.setClient(this.todayFormText);
 		buildTodayList();
 
 	}
@@ -319,13 +320,14 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		}
 		sw.append("</form>");
 		this.nextWeekFormText.setText(sw.toString(), true, false);
-		this.sform.reflow(false);
+		this.sform.redraw();
 	}
 
 	public void handleDirtyTimeSpan(final TimeSpan timespan) {
 		getViewSite().getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				TimeSpan todaytimeSpan = getTodaytimeSpan();
+				clearLists();
 				if (timespan.contains(todaytimeSpan) || todaytimeSpan.overlaps(timespan)
 						|| todaytimeSpan.contains(timespan)) {
 					buildTodayList();
@@ -338,8 +340,16 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 				if (timespan.contains(nextWeekTimeSpan) || nextWeekTimeSpan.overlaps(timespan)) {
 					buildNextWeekList();
 				}
+				CalendarSection.this.today.redraw();
 			}
 		});
+
+	}
+
+	protected void clearLists() {
+		this.nextWeekFormText.setText("<form><p>No Events</p></form>", true, false);
+		this.todayFormText.setText("<form><p>No Events</p></form>", true, false);
+		this.thisWeekFormText.setText("<form><p>No Events</p></form>", true, false);
 
 	}
 
@@ -368,12 +378,12 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		startDate.add(Calendar.DATE, 1);
 		startDate.set(Calendar.HOUR, 0);
 		startDate.set(Calendar.MINUTE, 0);
-		startDate.set(Calendar.SECOND, 0);
+		startDate.set(Calendar.SECOND, 1);
 		startDate.set(Calendar.AM_PM, Calendar.AM);
 
 		Calendar endDate = Calendar.getInstance();
 		endDate.setTime(now);
-		// endDate.add(Calendar.WEEK_OF_YEAR, 1);
+		endDate.add(Calendar.WEEK_OF_YEAR, 1);
 		endDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		endDate.set(Calendar.HOUR, 11);
 		endDate.set(Calendar.MINUTE, 59);
@@ -395,7 +405,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 
 		Calendar endDate = Calendar.getInstance();
 		endDate.setTime(now);
-		endDate.add(Calendar.WEEK_OF_YEAR, 1);
+		endDate.add(Calendar.WEEK_OF_YEAR, 2);
 		endDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		endDate.set(Calendar.HOUR, 11);
 		endDate.set(Calendar.MINUTE, 59);

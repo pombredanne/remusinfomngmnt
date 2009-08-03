@@ -226,11 +226,11 @@ public class CalendarView extends ViewPart implements ISelectionChangedListener 
 	}
 
 	public void selectionChanged(final SelectionChangedEvent event) {
+		this.removeAction.selectionChanged(event);
 		updateActions();
 	}
 
 	private void updateActions() {
-		// removeAction.update();
 	}
 
 	@Override

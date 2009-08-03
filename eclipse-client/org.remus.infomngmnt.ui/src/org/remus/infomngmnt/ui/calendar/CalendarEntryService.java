@@ -25,6 +25,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -323,17 +324,36 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 					+ convertDate(timespan.getEndDate()) + "]");
 			flagList.add(Occur.SHOULD);
 		}
+		List<String> termList2 = new ArrayList<String>();
+		List<String> fieldList2 = new ArrayList<String>();
+		List<Occur> flagList2 = new ArrayList<Occur>();
+
+		if (timespan.getStartDate() != null && timespan.getEndDate() != null) {
+			fieldList2.add(STARTDATE);
+			termList2.add("[0 TO " + convertDate(timespan.getStartDate()) + "]");
+			flagList2.add(Occur.MUST);
+			fieldList2.add(ENDATE);
+			termList2.add("[" + convertDate(timespan.getEndDate()) + " TO " + Long.MAX_VALUE + "]");
+			flagList2.add(Occur.MUST);
+		}
 
 		try {
 			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
 					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
 					.toArray(new Occur[flagList.size()]), getAnalyser());
+			Query spanQuery = MultiFieldQueryParser.parse(termList2.toArray(new String[termList2
+					.size()]), fieldList2.toArray(new String[fieldList2.size()]), flagList2
+					.toArray(new Occur[flagList2.size()]), getAnalyser());
+			final BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(tagQuery, Occur.SHOULD);
+			booleanQuery.add(spanQuery, Occur.SHOULD);
+
 			IIndexSearchOperation operation = new IIndexSearchOperation() {
 
 				public void read(final IndexSearcher reader) {
 					try {
 
-						TopDocs search = reader.search(tagQuery, null, 1000);
+						TopDocs search = reader.search(booleanQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {

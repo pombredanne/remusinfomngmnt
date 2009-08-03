@@ -70,17 +70,26 @@ public class CalendarEntryUtil {
 	}
 
 	public static String setFormTextRepresentation(final Task entry, final boolean printEvents) {
-		CalendarEntry calendarEntry = convert(entry);
+		return setFormTextRepresentation(entry, printEvents, false);
+	}
+
+	public static String setFormTextRepresentation(final Task entry, final boolean printEvents,
+			final boolean keepId) {
+		CalendarEntry calendarEntry = convert(entry, keepId);
 		return setFormTextRepresentation(calendarEntry, printEvents);
 	}
 
-	private static CalendarEntry convert(final Task entry) {
+	private static CalendarEntry convert(final Task entry, final boolean keepId) {
 		CalendarEntry calendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
 		calendarEntry.setStart(entry.getStart().getDate());
 		calendarEntry.setEnd(entry.getEnd().getDate());
 		calendarEntry.setReminder(entry.getNotification());
 		calendarEntry.setTitle(entry.getName());
-		calendarEntry.setId(entry.getId().split("_")[1]);
+		if (!keepId) {
+			calendarEntry.setId(entry.getId().split("_")[1]);
+		} else {
+			calendarEntry.setId(entry.getId());
+		}
 		calendarEntry.setEntryType(CalendarEntryTypeStrings.convert(entry.getType()));
 		return calendarEntry;
 	}

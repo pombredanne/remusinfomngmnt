@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.aspencloud.calypso.util.TimeSpan;
 import org.eclipse.nebula.widgets.calendarcombo.ColorCache;
 import org.eclipse.nebula.widgets.calendarcombo.DefaultColorManager;
@@ -32,6 +33,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IExpansionListener;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormText;
@@ -51,6 +54,7 @@ import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.calendar.CalendarEditor;
 import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
+import org.remus.infomngmnt.ui.editors.EditorUtil;
 import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.service.ICalendarStoreService;
 
@@ -73,6 +77,15 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 
 	private FormText nextWeekFormText;
 	private Section today;
+
+	private final HyperlinkAdapter hyperLinkAdapter = new HyperlinkAdapter() {
+		@Override
+		public void linkActivated(final HyperlinkEvent e) {
+			String href = (String) e.getHref();
+			String[] split = StringUtils.split(href, "_");
+			EditorUtil.openInfoUnit(split[0]);
+		}
+	};
 
 	/**
 	 * 
@@ -128,6 +141,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		nextWeek.setLayoutData(td);
 
 		this.nextWeekFormText = getToolkit().createFormText(nextWeek, false);
+		this.nextWeekFormText.addHyperlinkListener(this.hyperLinkAdapter);
 		nextWeek.setClient(this.nextWeekFormText);
 		buildNextWeekList();
 
@@ -145,6 +159,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		thisWeek.setLayoutData(td);
 
 		this.thisWeekFormText = getToolkit().createFormText(thisWeek, false);
+		this.thisWeekFormText.addHyperlinkListener(this.hyperLinkAdapter);
 		thisWeek.setClient(this.thisWeekFormText);
 		buildThisWeekList();
 
@@ -161,6 +176,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		this.today.setLayoutData(td);
 
 		this.todayFormText = getToolkit().createFormText(this.today, false);
+		this.todayFormText.addHyperlinkListener(this.hyperLinkAdapter);
 		this.today.setClient(this.todayFormText);
 		buildTodayList();
 
@@ -248,7 +264,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		for (Task entry : calendarEntry) {
 			sw.append("<p>");
 			// sw.append("<li>");
-			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false));
+			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false, true));
 			// sw.append("</li>");
 			sw.append("</p>");
 		}
@@ -281,7 +297,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		for (Task entry : calendarEntry) {
 			sw.append("<p>");
 			// sw.append("<li>");
-			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false));
+			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false, true));
 			// sw.append("</li>");
 			sw.append("</p>");
 		}
@@ -314,7 +330,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		for (Task entry : calendarEntry) {
 			sw.append("<p>");
 			// sw.append("<li>");
-			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false));
+			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false, true));
 			// sw.append("</li>");
 			sw.append("</p>");
 		}
@@ -328,18 +344,12 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 			public void run() {
 				TimeSpan todaytimeSpan = getTodaytimeSpan();
 				clearLists();
-				if (timespan.contains(todaytimeSpan) || todaytimeSpan.overlaps(timespan)
-						|| todaytimeSpan.contains(timespan)) {
-					buildTodayList();
-				}
-				TimeSpan thisWeekTimeSpan = getThisWeekTimeSpan();
-				if (timespan.contains(thisWeekTimeSpan) || thisWeekTimeSpan.overlaps(timespan)) {
-					buildThisWeekList();
-				}
-				TimeSpan nextWeekTimeSpan = getNextWeekTimeSpan();
-				if (timespan.contains(nextWeekTimeSpan) || nextWeekTimeSpan.overlaps(timespan)) {
-					buildNextWeekList();
-				}
+				buildTodayList();
+
+				buildThisWeekList();
+
+				buildNextWeekList();
+
 				CalendarSection.this.today.redraw();
 			}
 		});

@@ -35,6 +35,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.CalendarEntryType;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.calendar.model.EndEvent;
 import org.remus.infomngmnt.calendar.model.ModelFactory;
@@ -179,7 +180,7 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 		});
 	}
 
-	public void update(final InformationUnit unit) {
+	public void update(final InformationUnit unit, final CalendarEntry[] calendarContributions) {
 		final List<TimeSpan> timespansForInfoUnitId = getTimespansForInfoUnitId(unit.getId());
 		final Term term = new Term(INFOID, unit.getId());
 
@@ -187,6 +188,10 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 			public void write(final IndexWriter indexWriter) {
 				indexWriter.setUseCompoundFile(false);
 				try {
+					List<TimeSpan> timespansForInfoUnitId2 = getTimespansForInfoUnitId(unit.getId());
+					for (TimeSpan timeSpan : timespansForInfoUnitId2) {
+						timespansForInfoUnitId.add(timeSpan);
+					}
 					indexWriter.deleteDocuments(term);
 					// If we're ready with updating the index we have to fire an
 					// event to
@@ -201,6 +206,19 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 						timespansForInfoUnitId.add(new TimeSpan(calendarEntry2.getStart(),
 								calendarEntry2.getEnd()));
 
+					}
+					for (CalendarEntry additionalEntry : calendarContributions) {
+						additionalEntry.eUnset(InfomngmntPackage.Literals.CALENDAR_ENTRY__ID);
+						additionalEntry.setId(unit.getId());
+						additionalEntry.setReminder(0);
+						additionalEntry.setEntryType(CalendarEntryType.ONE_TIME);
+						if (additionalEntry.getTitle() == null) {
+							additionalEntry.setTitle(unit.getLabel());
+						}
+
+						add(unit, additionalEntry);
+						timespansForInfoUnitId.add(new TimeSpan(additionalEntry.getStart(),
+								additionalEntry.getEnd()));
 					}
 					fireDirtyTimeSpan(calculateBiggestTimeSpan(timespansForInfoUnitId));
 				} catch (CorruptIndexException e) {
@@ -332,6 +350,7 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 								task.setStart(createStartEvent);
 								task.setType(CalendarEntryTypeStrings.convert(CalendarEntryType
 										.get(doc.get(TASKTYPE))));
+								task.setReadonly(doc.get(INFOID).equals(doc.get(ENTRYID)));
 								try {
 									task.setNotification(Integer.parseInt(doc.get(NOTIFICATION)));
 								} catch (NumberFormatException e) {

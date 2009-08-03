@@ -23,12 +23,12 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -175,8 +175,11 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 
 		public void buildSingleInfoUnit(final InformationUnit objectFromFile,
 				final IInfoType infoTypeByType, final IFile resource) {
-			EList<CalendarEntry> calendarEntry = objectFromFile.getCalendarEntry();
-			this.storeService.update(objectFromFile);
+			AbstractInformationRepresentation representation = infoTypeByType
+					.getInformationRepresentation();
+			representation.setValue(objectFromFile);
+			CalendarEntry[] calendarContributions = representation.getCalendarContributions();
+			this.storeService.update(objectFromFile, calendarContributions);
 		}
 
 		public void setMonitor(final IProgressMonitor monitor) {

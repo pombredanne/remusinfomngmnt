@@ -52,7 +52,6 @@ public class InfoType implements IInfoType {
 	private Image image;
 	private final String type;
 	private PostCreationHandler createFactory;
-	private AbstractInformationRepresentation informationRepresentation;
 	private final String contributor;
 	private final String createFactoryClass;
 	private final String imageFilePath;
@@ -111,15 +110,12 @@ public class InfoType implements IInfoType {
 	}
 
 	public AbstractInformationRepresentation getInformationRepresentation() {
-		if (this.informationRepresentation == null) {
-			try {
-				this.informationRepresentation = (AbstractInformationRepresentation) this.configurationElement
-						.createExecutableExtension(InformationExtensionManager.PRESENTATION_ATT);
-			} catch (final CoreException e) {
-				// TODO Logging
-			}
+		try {
+			return (AbstractInformationRepresentation) this.configurationElement
+					.createExecutableExtension(InformationExtensionManager.PRESENTATION_ATT);
+		} catch (CoreException e) {
+			return null;
 		}
-		return this.informationRepresentation;
 	}
 
 	public String getType() {

@@ -402,20 +402,20 @@ public class CEventImpl extends EObjectImpl implements CEvent {
 			case ModelPackage.CEVENT__NAME:
 				return getName();
 			case ModelPackage.CEVENT__DATE_ABSOLUTE:
-				return isDateAbsolute() ? Boolean.TRUE : Boolean.FALSE;
+				return isDateAbsolute();
 			case ModelPackage.CEVENT__DATE:
 				return getDate();
 			case ModelPackage.CEVENT__REFERENCE_EVENT:
 				if (resolve) return getReferenceEvent();
 				return basicGetReferenceEvent();
 			case ModelPackage.CEVENT__ALARM:
-				return isAlarm() ? Boolean.TRUE : Boolean.FALSE;
+				return isAlarm();
 			case ModelPackage.CEVENT__PREDECESSORS:
 				return getPredecessors();
 			case ModelPackage.CEVENT__SUCCESSORS:
 				return getSuccessors();
 			case ModelPackage.CEVENT__ALARM_DUE:
-				return isAlarmDue() ? Boolean.TRUE : Boolean.FALSE;
+				return isAlarmDue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -433,7 +433,7 @@ public class CEventImpl extends EObjectImpl implements CEvent {
 				setName((String)newValue);
 				return;
 			case ModelPackage.CEVENT__DATE_ABSOLUTE:
-				setDateAbsolute(((Boolean)newValue).booleanValue());
+				setDateAbsolute((Boolean)newValue);
 				return;
 			case ModelPackage.CEVENT__DATE:
 				setDate((Date)newValue);
@@ -442,7 +442,7 @@ public class CEventImpl extends EObjectImpl implements CEvent {
 				setReferenceEvent((CEvent)newValue);
 				return;
 			case ModelPackage.CEVENT__ALARM:
-				setAlarm(((Boolean)newValue).booleanValue());
+				setAlarm((Boolean)newValue);
 				return;
 			case ModelPackage.CEVENT__PREDECESSORS:
 				getPredecessors().clear();
@@ -453,7 +453,7 @@ public class CEventImpl extends EObjectImpl implements CEvent {
 				getSuccessors().addAll((Collection<? extends CEvent>)newValue);
 				return;
 			case ModelPackage.CEVENT__ALARM_DUE:
-				setAlarmDue(((Boolean)newValue).booleanValue());
+				setAlarmDue((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

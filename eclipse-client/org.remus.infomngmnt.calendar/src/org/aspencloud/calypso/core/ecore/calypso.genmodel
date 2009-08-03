@@ -37,6 +37,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/notification"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute calypso.ecore#//Task/readonly"/>
     </genClasses>
     <genClasses ecoreClass="calypso.ecore#//ClearedEvent">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference calypso.ecore#//ClearedEvent/task"/>

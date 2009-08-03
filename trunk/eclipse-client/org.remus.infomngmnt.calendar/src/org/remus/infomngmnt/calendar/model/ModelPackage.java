@@ -270,13 +270,22 @@ public interface ModelPackage extends EPackage {
 	int TASK__NOTIFICATION = 11;
 
 	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__READONLY = 12;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 12;
+	int TASK_FEATURE_COUNT = 13;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.calendar.model.impl.ClearedEventImpl <em>Cleared Event</em>}' class.
@@ -959,6 +968,17 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTask_Notification();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.calendar.model.Task#isReadonly <em>Readonly</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Readonly</em>'.
+	 * @see org.remus.infomngmnt.calendar.model.Task#isReadonly()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_Readonly();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.calendar.model.ClearedEvent <em>Cleared Event</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1274,6 +1294,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK__NOTIFICATION = eINSTANCE.getTask_Notification();
+
+		/**
+		 * The meta object literal for the '<em><b>Readonly</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__READONLY = eINSTANCE.getTask_Readonly();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.calendar.model.impl.ClearedEventImpl <em>Cleared Event</em>}' class.

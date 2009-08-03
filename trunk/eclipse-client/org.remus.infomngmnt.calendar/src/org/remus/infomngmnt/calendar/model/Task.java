@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getType <em>Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.Task#getNotification <em>Notification</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.calendar.model.Task#isReadonly <em>Readonly</em>}</li>
  * </ul>
  * </p>
  *
@@ -360,5 +361,31 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void setNotification(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Readonly</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Readonly</em>' attribute.
+	 * @see #setReadonly(boolean)
+	 * @see org.remus.infomngmnt.calendar.model.ModelPackage#getTask_Readonly()
+	 * @model
+	 * @generated
+	 */
+	boolean isReadonly();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.calendar.model.Task#isReadonly <em>Readonly</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Readonly</em>' attribute.
+	 * @see #isReadonly()
+	 * @generated
+	 */
+	void setReadonly(boolean value);
 
 } // Task

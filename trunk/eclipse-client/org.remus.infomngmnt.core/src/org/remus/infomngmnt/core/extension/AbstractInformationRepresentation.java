@@ -25,6 +25,7 @@ import org.eclipse.emf.compare.diff.metamodel.AttributeChange;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.emf.ecore.EAttribute;
 
+import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.util.EditingUtil;
@@ -118,6 +119,10 @@ public abstract class AbstractInformationRepresentation {
 	 */
 	public String getTitleForIndexing(final IProgressMonitor monitor) throws CoreException {
 		return getValue().getLabel();
+	}
+
+	public CalendarEntry[] getCalendarContributions() {
+		return new CalendarEntry[0];
 	}
 
 	/**

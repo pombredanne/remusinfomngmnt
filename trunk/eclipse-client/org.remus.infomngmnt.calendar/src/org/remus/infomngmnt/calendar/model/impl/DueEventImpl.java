@@ -55,7 +55,7 @@ public class DueEventImpl extends CEventImpl implements DueEvent {
 	 * @generated
 	 */
 	public Task getTask() {
-		if (eContainerFeatureID != ModelPackage.DUE_EVENT__TASK) return null;
+		if (eContainerFeatureID() != ModelPackage.DUE_EVENT__TASK) return null;
 		return (Task)eContainer();
 	}
 
@@ -75,7 +75,7 @@ public class DueEventImpl extends CEventImpl implements DueEvent {
 	 * @generated
 	 */
 	public void setTask(Task newTask) {
-		if (newTask != eInternalContainer() || (eContainerFeatureID != ModelPackage.DUE_EVENT__TASK && newTask != null)) {
+		if (newTask != eInternalContainer() || (eContainerFeatureID() != ModelPackage.DUE_EVENT__TASK && newTask != null)) {
 			if (EcoreUtil.isAncestor(this, newTask))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -127,7 +127,7 @@ public class DueEventImpl extends CEventImpl implements DueEvent {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ModelPackage.DUE_EVENT__TASK:
 				return eInternalContainer().eInverseRemove(this, ModelPackage.TASK__DUE, Task.class, msgs);
 		}

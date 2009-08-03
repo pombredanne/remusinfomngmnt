@@ -55,7 +55,7 @@ public class StartEventImpl extends CEventImpl implements StartEvent {
 	 * @generated
 	 */
 	public Task getTask() {
-		if (eContainerFeatureID != ModelPackage.START_EVENT__TASK) return null;
+		if (eContainerFeatureID() != ModelPackage.START_EVENT__TASK) return null;
 		return (Task)eContainer();
 	}
 
@@ -75,7 +75,7 @@ public class StartEventImpl extends CEventImpl implements StartEvent {
 	 * @generated
 	 */
 	public void setTask(Task newTask) {
-		if (newTask != eInternalContainer() || (eContainerFeatureID != ModelPackage.START_EVENT__TASK && newTask != null)) {
+		if (newTask != eInternalContainer() || (eContainerFeatureID() != ModelPackage.START_EVENT__TASK && newTask != null)) {
 			if (EcoreUtil.isAncestor(this, newTask))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -127,7 +127,7 @@ public class StartEventImpl extends CEventImpl implements StartEvent {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ModelPackage.START_EVENT__TASK:
 				return eInternalContainer().eInverseRemove(this, ModelPackage.TASK__START, Task.class, msgs);
 		}

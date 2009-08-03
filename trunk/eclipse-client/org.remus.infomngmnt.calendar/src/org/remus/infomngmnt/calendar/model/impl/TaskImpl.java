@@ -41,6 +41,7 @@ import org.remus.infomngmnt.calendar.model.Tasklist;
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#getNotification <em>Notification</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.calendar.model.impl.TaskImpl#isReadonly <em>Readonly</em>}</li>
  * </ul>
  * </p>
  *
@@ -228,6 +229,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected int notification = NOTIFICATION_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReadonly()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean READONLY_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReadonly()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean readonly = READONLY_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -315,7 +336,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated
 	 */
 	public Tasklist getOwner() {
-		if (eContainerFeatureID != ModelPackage.TASK__OWNER) return null;
+		if (eContainerFeatureID() != ModelPackage.TASK__OWNER) return null;
 		return (Tasklist)eContainer();
 	}
 
@@ -335,7 +356,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated
 	 */
 	public void setOwner(Tasklist newOwner) {
-		if (newOwner != eInternalContainer() || (eContainerFeatureID != ModelPackage.TASK__OWNER && newOwner != null)) {
+		if (newOwner != eInternalContainer() || (eContainerFeatureID() != ModelPackage.TASK__OWNER && newOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -611,6 +632,27 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReadonly() {
+		return readonly;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReadonly(boolean newReadonly) {
+		boolean oldReadonly = readonly;
+		readonly = newReadonly;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TASK__READONLY, oldReadonly, readonly));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -667,7 +709,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ModelPackage.TASK__OWNER:
 				return eInternalContainer().eInverseRemove(this, ModelPackage.TASKLIST__TASKS, Tasklist.class, msgs);
 		}
@@ -685,7 +727,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case ModelPackage.TASK__NAME:
 				return getName();
 			case ModelPackage.TASK__PRIORITY:
-				return new Integer(getPriority());
+				return getPriority();
 			case ModelPackage.TASK__DETAILS:
 				return getDetails();
 			case ModelPackage.TASK__OWNER:
@@ -699,13 +741,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case ModelPackage.TASK__CLEARED:
 				return getCleared();
 			case ModelPackage.TASK__PROGRESS:
-				return new Double(getProgress());
+				return getProgress();
 			case ModelPackage.TASK__ID:
 				return getId();
 			case ModelPackage.TASK__TYPE:
 				return getType();
 			case ModelPackage.TASK__NOTIFICATION:
-				return new Integer(getNotification());
+				return getNotification();
+			case ModelPackage.TASK__READONLY:
+				return isReadonly();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -722,7 +766,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				setName((String)newValue);
 				return;
 			case ModelPackage.TASK__PRIORITY:
-				setPriority(((Integer)newValue).intValue());
+				setPriority((Integer)newValue);
 				return;
 			case ModelPackage.TASK__DETAILS:
 				setDetails((String)newValue);
@@ -743,7 +787,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				setCleared((ClearedEvent)newValue);
 				return;
 			case ModelPackage.TASK__PROGRESS:
-				setProgress(((Double)newValue).doubleValue());
+				setProgress((Double)newValue);
 				return;
 			case ModelPackage.TASK__ID:
 				setId((String)newValue);
@@ -752,7 +796,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				setType((TaskType)newValue);
 				return;
 			case ModelPackage.TASK__NOTIFICATION:
-				setNotification(((Integer)newValue).intValue());
+				setNotification((Integer)newValue);
+				return;
+			case ModelPackage.TASK__READONLY:
+				setReadonly((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -802,6 +849,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case ModelPackage.TASK__NOTIFICATION:
 				setNotification(NOTIFICATION_EDEFAULT);
 				return;
+			case ModelPackage.TASK__READONLY:
+				setReadonly(READONLY_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -838,6 +888,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return type != TYPE_EDEFAULT;
 			case ModelPackage.TASK__NOTIFICATION:
 				return notification != NOTIFICATION_EDEFAULT;
+			case ModelPackage.TASK__READONLY:
+				return readonly != READONLY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -866,6 +918,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(type);
 		result.append(", notification: ");
 		result.append(notification);
+		result.append(", readonly: ");
+		result.append(readonly);
 		result.append(')');
 		return result.toString();
 	}

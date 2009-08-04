@@ -35,6 +35,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IWorkbenchPage;
@@ -267,6 +268,41 @@ public class UIUtil {
 		} else {
 			return new Point(section.getInt("x"), section.getInt("y"));
 		}
+	}
+
+	/**
+	 * Gets the highest possible width on the given y position
+	 * 
+	 * @param y
+	 * @return
+	 */
+	public static int getHighestDisplayWidth(final int y) {
+		int returnValue = 0;
+		Monitor[] monitors = getDisplay().getMonitors();
+		for (Monitor monitor : monitors) {
+			if (monitor.getBounds().y <= y && (y + monitor.getBounds().height) >= y) {
+				returnValue = Math.max(returnValue, monitor.getBounds().x
+						+ monitor.getBounds().width);
+			}
+		}
+		return returnValue;
+	}
+
+	/**
+	 * Gets the highest possible height for the given x position
+	 * 
+	 * @param y
+	 * @return
+	 */
+	public static int getHighestDisplayHeight(final int x) {
+		int returnValue = 0;
+		Monitor[] monitors = getDisplay().getMonitors();
+		for (Monitor monitor : monitors) {
+			if (monitor.getBounds().x <= x && (x + monitor.getBounds().width) >= x) {
+				returnValue = Math.max(returnValue, monitor.getBounds().height);
+			}
+		}
+		return returnValue;
 	}
 
 	public static Point getDialogSettingsInitialSize(final AbstractUIPlugin plugin,

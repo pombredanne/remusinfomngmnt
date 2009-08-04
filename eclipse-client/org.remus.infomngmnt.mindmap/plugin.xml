@@ -22,6 +22,7 @@
             category="org.remus.infomngmnt.ui.business"
             class="org.remus.infomngmnt.mindmap.ui.NewMindmapWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/mindmap_new.png"
             id="org.remus.infomngmnt.mindmap.new"
             name="MindMap">
       </wizard>
@@ -30,6 +31,7 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.mindmap.ui.MindMapEditPage"
+            icon="icons/iconexperience/mindmap_edit.png"
             id="org.remus.infomngmnt.mindmap.editPage1"
             label="Edit MindMap"
             type="MINDMAP">

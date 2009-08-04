@@ -76,7 +76,7 @@ public class NewMindmapWizard extends NewInfoObjectWizard {
 		this.page1.setTitle("New Mindmap");
 		this.page1.setMessage("This wizard enables you to create a new meeting protocol");
 		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(MindmapActivator
-				.getDefault(), "icons/iconexperience/new_wizard.png"));
+				.getDefault(), "icons/iconexperience/new-wizard.png"));
 	}
 
 	@Override

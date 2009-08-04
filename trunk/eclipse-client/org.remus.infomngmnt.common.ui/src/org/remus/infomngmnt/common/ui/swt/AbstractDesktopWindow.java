@@ -277,12 +277,12 @@ public abstract class AbstractDesktopWindow extends Window {
 		titleTextLabel.addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(final MouseEvent e) {
 				if (AbstractDesktopWindow.this.moveMode) {
-					Point cursorLocation = AbstractDesktopWindow.this.display
-							.getCursorLocation();
-					getShell().setLocation(
-							cursorLocation.x - AbstractDesktopWindow.this.xOffset - 20,
-							cursorLocation.y - AbstractDesktopWindow.this.yOffset - 5);
-					saveLocation(getShell());
+					Point cursorLocation = AbstractDesktopWindow.this.display.getCursorLocation();
+					Point shellLocation = new Point(cursorLocation.x
+							- AbstractDesktopWindow.this.xOffset - 20, cursorLocation.y
+							- AbstractDesktopWindow.this.yOffset - 5);
+					getShell().setLocation(shellLocation);
+					saveLocation(shellLocation);
 				}
 
 			}
@@ -341,7 +341,7 @@ public abstract class AbstractDesktopWindow extends Window {
 		});
 	}
 
-	protected void saveLocation(final Shell shell2) {
+	protected void saveLocation(final Point location) {
 		// does nothing by default
 
 	}
@@ -498,8 +498,8 @@ public abstract class AbstractDesktopWindow extends Window {
 			@Override
 			public void controlResized(final ControlEvent e) {
 				Rectangle clArea = titleCircle.getClientArea();
-				AbstractDesktopWindow.this.lastUsedBgImage = new Image(
-						titleCircle.getDisplay(), clArea.width, clArea.height);
+				AbstractDesktopWindow.this.lastUsedBgImage = new Image(titleCircle.getDisplay(),
+						clArea.width, clArea.height);
 				GC gc = new GC(AbstractDesktopWindow.this.lastUsedBgImage);
 
 				/* Gradient */
@@ -658,8 +658,8 @@ public abstract class AbstractDesktopWindow extends Window {
 								if (AbstractDesktopWindow.this.fadeJob != null) {
 									AbstractDesktopWindow.this.fadeJob.cancelAndWait(false);
 								}
-								AbstractDesktopWindow.this.fadeJob = SwtFadeUtil.fastFadeIn(
-										shell, new IFadeListener() {
+								AbstractDesktopWindow.this.fadeJob = SwtFadeUtil.fastFadeIn(shell,
+										new IFadeListener() {
 											public void faded(final Shell shell, final int alpha) {
 												if (shell.isDisposed()) {
 													return;
@@ -702,12 +702,13 @@ public abstract class AbstractDesktopWindow extends Window {
 	}
 
 	protected Point fixupDisplayBounds(final Point tipSize, final Point location) {
+
 		if (this.respectDisplayBounds || this.respectMonitorBounds) {
 			Rectangle bounds;
 			Point rightBounds = new Point(tipSize.x + location.x, tipSize.y + location.y);
 
 			if (this.respectMonitorBounds) {
-				bounds = this.shell.getDisplay().getPrimaryMonitor().getBounds();
+				bounds = UIUtil.getMonitorForLocation(location).getBounds();
 			} else {
 				bounds = getPrimaryClientArea();
 			}

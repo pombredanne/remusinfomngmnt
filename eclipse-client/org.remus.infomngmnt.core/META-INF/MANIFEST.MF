@@ -57,7 +57,8 @@ Service-Component: OSGI-INF/ruleextensions.xml,
  OSGI-INF/saveparticipantextensions.xml,
  OSGI-INF/referencedunitstore.xml,
  OSGI-INF/jobs.xml,
- OSGI-INF/notificationmanager.xml
+ OSGI-INF/notificationmanager.xml,
+ OSGI-INF/binaryreferencesstore.xml
 Import-Package: org.apache.log4j
 
 

@@ -42,6 +42,8 @@ import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IBinaryReferenceStore;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -62,11 +64,15 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	private final IReferencedUnitStore referenceService;
 
+	private final IBinaryReferenceStore binaryReferenceService;
+
 	public InformationDeltaVisitor() {
 		this.referenceService = InfomngmntEditPlugin.getPlugin().getService(
 				IReferencedUnitStore.class);
 		this.saveParticipantService = InfomngmntEditPlugin.getPlugin().getService(
 				ISaveParticipantExtensionService.class);
+		this.binaryReferenceService = InfomngmntEditPlugin.getPlugin().getService(
+				IBinaryReferenceStore.class);
 	}
 
 	public boolean visit(final IResourceDelta delta) throws CoreException {
@@ -82,6 +88,30 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			if (resourceDelta.getResource().getParent() != null
 					&& resourceDelta.getResource().getParent().getName().equals(
 							ResourceUtil.SETTINGS_FOLDER)) {
+				return;
+			}
+			if (resourceDelta.getResource().getParent() != null
+					&& resourceDelta.getResource().getParent().getName().equals(
+							ResourceUtil.BINARY_FOLDER)) {
+				// referenced binaries. we have to track the changes
+				switch (resourceDelta.getKind()) {
+				case IResourceDelta.CHANGED:
+					String infoUnit = this.binaryReferenceService.getReferencedInfoUnitIdByPath(
+							resourceDelta.getResource().getProject().getName(), resourceDelta
+									.getResource().getName());
+					if (infoUnit != null) {
+						InformationUnitListItem itemById = ApplicationModelPool.getInstance()
+								.getItemById(infoUnit, this.monitor);
+						if (itemById != null) {
+							IInfoType refInfoType = InformationExtensionManager.getInstance()
+									.getInfoTypeByType(itemById.getType());
+							InformationUnit adapter = (InformationUnit) itemById
+									.getAdapter(InformationUnit.class);
+							buildSingleInfoUnit(adapter, refInfoType, (IFile) adapter
+									.getAdapter(IFile.class));
+						}
+					}
+				}
 				return;
 			}
 
@@ -145,6 +175,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 					String lastSegment = resourceDelta.getResource().getFullPath()
 							.removeFileExtension().lastSegment();
 					this.referenceService.delete(lastSegment);
+					this.binaryReferenceService.delete(lastSegment);
 					this.saveParticipantService.fireEvent(ISaveParticipantExtensionService.DELETED,
 							lastSegment, null);
 					break;
@@ -159,7 +190,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 		try {
 			resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
-
+			this.binaryReferenceService.update(objectFromFile);
 			AbstractInformationRepresentation informationRepresentation = infoTypeByType
 					.getInformationRepresentation();
 			informationRepresentation.setValue(objectFromFile);

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="binaryreferencestore">
+   <implementation class="org.remus.infomngmnt.core.ref.binaries.BinaryReferenceStore"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.core.services.IBinaryReferenceStore"/>
+   </service>
+</component>

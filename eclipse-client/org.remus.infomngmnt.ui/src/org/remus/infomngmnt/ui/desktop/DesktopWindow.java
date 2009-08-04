@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -191,9 +192,9 @@ public class DesktopWindow extends AbstractDesktopWindow {
 	}
 
 	@Override
-	protected void saveLocation(final Shell shell2) {
+	protected void saveLocation(final Point location) {
 		PreferenceConverter.setValue(UIPlugin.getDefault().getPreferenceStore(),
-				UIPreferenceInitializer.DESKTOP_LOCATION, shell2.getLocation());
+				UIPreferenceInitializer.DESKTOP_LOCATION, location);
 	}
 
 }

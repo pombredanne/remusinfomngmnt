@@ -15,6 +15,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 import org.remus.infomngmnt.Notification;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 
 /**
@@ -58,11 +59,16 @@ public class NotificationDialog extends PopupDialog {
 		int x = 0;
 		int y = -getShell().getSize().y;
 		Point display = this.parent2.toDisplay(x, y);
+		int highestDisplayWidth = 0;
 		if (display.y < 0) {
 			y = 20;
+			highestDisplayWidth = UIUtil.getHighestDisplayWidth(y);
+		} else {
+			highestDisplayWidth = UIUtil.getHighestDisplayWidth(display.y);
 		}
-		if (display.x + getShell().getSize().x > getShell().getMonitor().getBounds().width) {
-			x -= display.x + getShell().getSize().x - getShell().getMonitor().getBounds().width;
+		// int highestDisplayHeight = UIUtil.getHighestDisplayHeight(x)
+		if (display.x + getShell().getSize().x > highestDisplayWidth) {
+			x -= display.x + getShell().getSize().x - highestDisplayWidth;
 		}
 		if (display.x < 0) {
 			x -= display.x;

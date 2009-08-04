@@ -65,6 +65,10 @@
             commandId="org.remus.infomngmnt.mail.openBrowser"
             typeId="MAIL">
       </editorAction>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.mail.ui.NewMailWizard"
+            typeId="MAIL">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">

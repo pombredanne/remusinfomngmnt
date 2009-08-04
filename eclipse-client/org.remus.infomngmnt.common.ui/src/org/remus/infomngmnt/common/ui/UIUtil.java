@@ -288,6 +288,16 @@ public class UIUtil {
 		return returnValue;
 	}
 
+	public static Monitor getMonitorForLocation(final Point location) {
+		Monitor[] monitors = Display.getDefault().getMonitors();
+		for (Monitor monitor : monitors) {
+			if (monitor.getBounds().contains(location)) {
+				return monitor;
+			}
+		}
+		return Display.getDefault().getPrimaryMonitor();
+	}
+
 	/**
 	 * Gets the highest possible height for the given x position
 	 * 

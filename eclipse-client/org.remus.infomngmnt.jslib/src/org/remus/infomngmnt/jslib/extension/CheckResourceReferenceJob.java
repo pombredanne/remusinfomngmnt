@@ -20,7 +20,6 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -48,7 +47,7 @@ public class CheckResourceReferenceJob extends Job {
 
 	public static final String REF_PROJECT_NAME = "__internal_referencedLibraries"; //$NON-NLS-1$
 
-	public static final String EXTENSION_POINT_ID =	PLUGIN_ID + ".browserReferenceResource"; //$NON-NLS-1$
+	public static final String EXTENSION_POINT_ID = PLUGIN_ID + ".browserReferenceResource"; //$NON-NLS-1$
 
 	public static final String ATT_ID = "id"; //$NON-NLS-1$
 	public static final String ATT_RESOURCE = "resource"; //$NON-NLS-1$
@@ -58,8 +57,11 @@ public class CheckResourceReferenceJob extends Job {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.
+	 * IProgressMonitor)
 	 */
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
@@ -72,43 +74,42 @@ public class CheckResourceReferenceJob extends Job {
 				project.open(monitor);
 			}
 		} catch (CoreException e1) {
-			new Status(
-					IStatus.ERROR,
-					PLUGIN_ID,
-					NLS.bind("Error creating/opening project {0}", project.getName()));
+			new Status(IStatus.ERROR, PLUGIN_ID, NLS.bind("Error creating/opening project {0}",
+					project.getName()));
 		}
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 				EXTENSION_POINT_ID);
-		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+		final IConfigurationElement[] configurationElements = extensionPoint
+				.getConfigurationElements();
 		for (IConfigurationElement iConfigurationElement : configurationElements) {
 			String contributor = iConfigurationElement.getContributor().getName();
-			String contributorVersion = (String) Platform.getBundle(contributor).getHeaders().get(Constants.BUNDLE_VERSION);
-			Path resourcePath = new Path(iConfigurationElement.getAttribute(
-					ATT_RESOURCE));
-			String id = iConfigurationElement.getAttribute(
-					ATT_ID);
+			String contributorVersion = (String) Platform.getBundle(contributor).getHeaders().get(
+					Constants.BUNDLE_VERSION);
+			Path resourcePath = new Path(iConfigurationElement.getAttribute(ATT_RESOURCE));
+			String id = iConfigurationElement.getAttribute(ATT_ID);
 
 			IFolder folder = project.getFolder(contributor);
 			if (!folder.exists()) {
 				try {
 					folder.create(true, true, monitor);
 				} catch (CoreException e) {
-					new Status(
-							IStatus.ERROR,
-							PLUGIN_ID,
-							NLS.bind("Error creating folder {0}", folder.getName()));
+					new Status(IStatus.ERROR, PLUGIN_ID, NLS.bind("Error creating folder {0}",
+							folder.getName()));
 				}
 			} else {
-				try {
-					IResource[] members = folder.members();
-					for (IResource iResource : members) {
-						if (!iResource.getName().equals(contributorVersion)) {
-							iResource.delete(true, monitor);
-						}
-					}
-				} catch (CoreException e) {
-					// skip..
-				}
+				// We must not delete this entries since they can be
+				// referenced in other
+				// non build sources.
+				/*
+				 * try {
+				 * 
+				 * IResource[] members = folder.members(); for (IResource
+				 * iResource : members) { if
+				 * (!iResource.getName().equals(contributorVersion)) {
+				 * iResource.delete(true, monitor); } }
+				 * 
+				 * } catch (CoreException e) { // skip.. }
+				 */
 			}
 			IFolder versionFolder = folder.getFolder(contributorVersion);
 			if (!versionFolder.exists()) {
@@ -122,21 +123,20 @@ public class CheckResourceReferenceJob extends Job {
 			IFile file = null;
 			InputStream openStream = null;
 			try {
-				file = versionFolder.getFile(new Path(id).addFileExtension(resourcePath.getFileExtension()));
+				file = versionFolder.getFile(new Path(id).addFileExtension(resourcePath
+						.getFileExtension()));
 				if (!file.exists()) {
-					openStream = FileLocator.openStream(
-							Platform.getBundle(contributor),
+					openStream = FileLocator.openStream(Platform.getBundle(contributor),
 							resourcePath, false);
 					file.create(openStream, true, monitor);
 				}
-				map.put(
-						id.replaceAll("\\.", "_"), 
-						URI.createFileURI(file.getLocation().toOSString()).toString());
+				map.put(id.replaceAll("\\.", "_"), URI.createFileURI(
+						file.getLocation().toOSString()).toString());
 			} catch (Exception e) {
-//				Activator.getDefault().getLog().log(new Status(
-//						IStatus.ERROR,
-//						Activator.PLUGIN_ID,
-//						NLS.bind("Error extracting {0} to {1}", id, file)));
+				// Activator.getDefault().getLog().log(new Status(
+				// IStatus.ERROR,
+				// Activator.PLUGIN_ID,
+				// NLS.bind("Error extracting {0} to {1}", id, file)));
 			} finally {
 				if (openStream != null) {
 					try {

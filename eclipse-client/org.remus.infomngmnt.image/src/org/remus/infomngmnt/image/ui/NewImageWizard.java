@@ -156,7 +156,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 				IRetrieveFileTransferContainerAdapter adapter = (IRetrieveFileTransferContainerAdapter) container
 						.getAdapter(IRetrieveFileTransferContainerAdapter.class);
 				final URL url = new URL(value.toString());
-				final IFile tmpFile = ResourceUtil.createTempFile("jpeg");
+				final IFile tmpFile = ResourceUtil.createTempFile();
 				final DownloadFileJob job = new DownloadFileJob(url, tmpFile, adapter);
 				ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
 				pmd.run(true, false, new IRunnableWithProgress() {

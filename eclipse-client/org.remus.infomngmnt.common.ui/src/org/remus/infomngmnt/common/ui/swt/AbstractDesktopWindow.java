@@ -159,7 +159,7 @@ public abstract class AbstractDesktopWindow extends Window {
 	protected int yOffset;
 
 	public AbstractDesktopWindow(final Display display) {
-		this(display, SWT.NO_TRIM | SWT.ON_TOP | SWT.NO_FOCUS | SWT.TOOL);
+		this(display, SWT.NO_TRIM | SWT.ON_TOP | SWT.TOOL);
 	}
 
 	public AbstractDesktopWindow(final Display display, final int style) {

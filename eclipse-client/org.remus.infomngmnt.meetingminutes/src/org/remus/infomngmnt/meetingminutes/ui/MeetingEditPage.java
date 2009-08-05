@@ -144,7 +144,7 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		Label subjectLabel = toolkit.createLabel(client, "Name");
 		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.subjectText = toolkit.createText(client, "");
+		this.subjectText = toolkit.createText(client, "", SWT.BORDER);
 		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(this.subjectText);
 		Label receivedLabel = toolkit.createLabel(client, "Date");
@@ -169,14 +169,14 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		Label contentTypeLabel = toolkit.createLabel(client, "Location");
 		contentTypeLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.placeText = toolkit.createText(client, "");
+		this.placeText = toolkit.createText(client, "", SWT.BORDER);
 		this.placeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		addControl(this.placeText);
 
 		Label moderatorLabel = toolkit.createLabel(client, "Moderator");
 		moderatorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.moderator = toolkit.createText(client, "");
+		this.moderator = toolkit.createText(client, "", SWT.BORDER);
 		this.moderator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		new ContactsWithEmailSmartField(this.moderator);
 		addControl(this.moderator);

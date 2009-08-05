@@ -123,7 +123,7 @@ public class MailEditPage extends AbstractInformationFormPage {
 		Label subjectLabel = toolkit.createLabel(client, "Subject");
 		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.subjectText = toolkit.createText(client, "");
+		this.subjectText = toolkit.createText(client, "", SWT.BORDER);
 		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(this.subjectText);
 		Label receivedLabel = toolkit.createLabel(client, "Received");
@@ -143,7 +143,7 @@ public class MailEditPage extends AbstractInformationFormPage {
 		Label senderLabel = toolkit.createLabel(client, "Sender");
 		senderLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.senderText = toolkit.createText(client, "");
+		this.senderText = toolkit.createText(client, "", SWT.BORDER);
 		this.senderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		new ContactsWithEmailSmartField(this.senderText);
 		addControl(this.senderText);

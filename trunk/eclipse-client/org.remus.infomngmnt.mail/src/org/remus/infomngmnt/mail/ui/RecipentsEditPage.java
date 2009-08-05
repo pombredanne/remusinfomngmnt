@@ -88,7 +88,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		Table createTable = toolkit.createTable(client, SWT.V_SCROLL);
+		Table createTable = toolkit.createTable(client, SWT.V_SCROLL | SWT.BORDER);
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 100).grab(true, false).span(1, 3).applyTo(
 				createTable);
 		this.recipientsTableViewer = new TableViewer(createTable);
@@ -170,7 +170,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		Table createTable = toolkit.createTable(client, SWT.V_SCROLL);
+		Table createTable = toolkit.createTable(client, SWT.V_SCROLL | SWT.BORDER);
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 100).grab(true, false).span(1, 3).applyTo(
 				createTable);
 		this.ccTableViewer = new TableViewer(createTable);

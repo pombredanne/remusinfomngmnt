@@ -109,12 +109,12 @@ public class TrayConfigurationManager {
 
 		// Notifications
 		ITraySectionDefinition notifcationBox = TraySectionManager.getInstance()
-				.getSectionDefinitionById(DROP_BOX_ID);
+				.getSectionDefinitionById(NOTIFICATION_BOX);
 		TraySection notificationTraySection = UIModelFactory.eINSTANCE.createTraySection();
-		dropTraySection.setImage(notifcationBox.getImage());
-		dropTraySection.setImplementation(notifcationBox.getImplementation());
-		dropTraySection.setName(notifcationBox.getLabel());
-		dropTraySection.setTemplateId(notifcationBox.getId());
+		notificationTraySection.setImage(notifcationBox.getImage());
+		notificationTraySection.setImplementation(notifcationBox.getImplementation());
+		notificationTraySection.setName(notifcationBox.getLabel());
+		notificationTraySection.setTemplateId(notifcationBox.getId());
 		returnValue.getSections().add(notificationTraySection);
 
 		return returnValue;

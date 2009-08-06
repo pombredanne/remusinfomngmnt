@@ -106,6 +106,13 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.combo = new Combo(parent, SWT.NONE);
 		this.toolkit.adapt(this.combo, true, true);
 		this.combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.combo.addListener(SWT.DefaultSelection, new Listener() {
+
+			public void handleEvent(final Event event) {
+				handleSearchButtonPressed();
+			}
+
+		});
 
 		this.toolkit.createHyperlink(parent, "Learn more about search syntax...", SWT.NONE);
 

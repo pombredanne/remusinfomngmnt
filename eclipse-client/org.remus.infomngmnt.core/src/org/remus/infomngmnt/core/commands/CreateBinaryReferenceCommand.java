@@ -12,15 +12,13 @@
 
 package org.remus.infomngmnt.core.commands;
 
-import java.util.Collections;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.edit.command.CreateChildCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.remus.infomngmnt.BinaryReference;
@@ -42,6 +40,7 @@ public class CreateBinaryReferenceCommand extends CompoundCommand implements
 	private IFile targetFile;
 	private final IPath path;
 	private IProject targetProject;
+	private final String id;
 
 	public CreateBinaryReferenceCommand(final IFile tmpFile, final InformationUnit targetInfoUnit,
 			final EditingDomain editingDomain) {
@@ -50,13 +49,29 @@ public class CreateBinaryReferenceCommand extends CompoundCommand implements
 		this.editingDomain = editingDomain;
 
 		BinaryReference binaryReference = InfomngmntFactory.eINSTANCE.createBinaryReference();
-		String id = IdFactory.createId();
-		binaryReference.setId(id);
-		this.path = new Path(id).addFileExtension(tmpFile.getFileExtension());
+		this.id = IdFactory.createId();
+		binaryReference.setId(this.id);
+		this.path = new Path(this.id).addFileExtension(tmpFile.getFileExtension());
 		binaryReference.setProjectRelativePath(this.path.toString());
-		append(new CreateChildCommand(editingDomain, targetInfoUnit,
-				InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_REFERENCES, binaryReference,
-				Collections.EMPTY_LIST));
+		/*
+		 * If the target info fragment already has a binary-references with an
+		 * id we just setting the new file.
+		 */
+		if (targetInfoUnit.getBinaryReferences() != null
+				&& targetInfoUnit.getBinaryReferences().getId() != null) {
+			append(SetCommand.create(editingDomain, targetInfoUnit.getBinaryReferences(),
+					InfomngmntPackage.Literals.BINARY_REFERENCE__PROJECT_RELATIVE_PATH, this.path
+							.toString()));
+		} else {
+			append(SetCommand
+					.create(editingDomain, targetInfoUnit,
+							InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_REFERENCES,
+							binaryReference));
+		}
+	}
+
+	public final String getCreatedId() {
+		return this.id;
 	}
 
 	@Override

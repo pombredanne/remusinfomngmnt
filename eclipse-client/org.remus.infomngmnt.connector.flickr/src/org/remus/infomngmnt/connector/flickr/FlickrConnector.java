@@ -530,8 +530,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	}
 
 	@Override
-	public IFile getBinaryReferences(final InformationUnit localInfoFragment,
-			final IProgressMonitor monitor) throws RemoteException {
+	public IFile getBinaryReferences(final InformationUnitListItem remoteObject,
+			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
+			throws RemoteException {
 		if (localInfoFragment.getType().equals(ImagePlugin.TYPE_ID)) {
 			return this.tmpFile;
 		}
@@ -736,6 +737,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#getRepositoryUrl()
 	 */
+	@Override
 	public String getRepositoryUrl() {
 		return FLICKR_URL;
 	}
@@ -779,6 +781,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#validate()
 	 */
+	@Override
 	public IStatus validate() {
 		// TODO Auto-generated method stub
 		return null;

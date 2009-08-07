@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.graphics.Image;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -75,12 +76,17 @@ public abstract class AbstractRepository implements IRepository {
 		return this.credentialProvider;
 	}
 
+	public String getRepositoryUrl() {
+		return "";
+	}
+
 	public void setCredentialProvider(final ICredentialProvider credentialProvider) {
 		this.credentialProvider = credentialProvider;
 	}
 
-	public IFile getBinaryReferences(final InformationUnit localInfoFragment,
-			final IProgressMonitor monitor) throws RemoteException {
+	public IFile getBinaryReferences(final InformationUnitListItem syncObject,
+			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
+			throws RemoteException {
 		return null;
 	}
 
@@ -104,6 +110,10 @@ public abstract class AbstractRepository implements IRepository {
 
 	public void setLocalRepositoryId(final String localRepositoryId) {
 		this.localRepositoryId = localRepositoryId;
+	}
+
+	public IStatus validate() {
+		return Status.OK_STATUS;
 	}
 
 	public boolean hasBinaryReferences() {

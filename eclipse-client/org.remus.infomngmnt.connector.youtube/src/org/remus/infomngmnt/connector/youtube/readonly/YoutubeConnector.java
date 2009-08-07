@@ -383,8 +383,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	}
 
 	@Override
-	public IFile getBinaryReferences(final InformationUnit localInfoFragment,
-			final IProgressMonitor monitor) throws RemoteException {
+	public IFile getBinaryReferences(final InformationUnitListItem remoteObject,
+			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
+			throws RemoteException {
 		if (VideoActivator.TYPE_ID.equals(localInfoFragment.getType())) {
 			return this.tmpVideoFile;
 		}
@@ -468,6 +469,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		return null;
 	}
 
+	@Override
 	public String getRepositoryUrl() {
 		return NLS.bind(getPreferences().getString(PreferenceInitializer.GDATA_SERVER_URL),
 				getCredentialProvider().getUserName());
@@ -549,6 +551,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		return true;
 	}
 
+	@Override
 	public IStatus validate() {
 		try {
 			getYoutubeService().getFeed(getFavoritesUrl(), VideoFeed.class);

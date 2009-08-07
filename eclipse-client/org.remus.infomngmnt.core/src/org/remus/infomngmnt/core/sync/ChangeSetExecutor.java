@@ -541,16 +541,37 @@ public class ChangeSetExecutor {
 
 		InformationStructureRead read = InformationStructureRead
 				.newSession(newRemoteInformationUnit);
-		List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences();
+		List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences(null);
 		for (String string : nodeIdsWithBinaryContent) {
-			InformationUnit childByNodeId = read.getChildByNodeId(string);
-			if (childByNodeId != null) {
-				IFile file = itemByRepository.getBinaryReferences(childByNodeId, monitor);
-				if (file != null && file.exists()) {
-					Command addFileCommand = CommandFactory.addFileToInfoUnit(file, childByNodeId,
-							editingDomain);
-					createInfotype.append(addFileCommand);
+			String inContainedDynamicNode = read.getInContainedDynamicNode(string);
+			if (inContainedDynamicNode != null) {
+				EList<InformationUnit> dynamicList = read.getDynamicList(inContainedDynamicNode);
+				for (InformationUnit informationUnit : dynamicList) {
+					InformationStructureRead dynamicRead = InformationStructureRead.newSession(
+							informationUnit, newRemoteInformationUnit.getType());
+					InformationUnit childByNodeId = dynamicRead.getChildByNodeId(string);
+					if (childByNodeId != null) {
+						IFile file = itemByRepository.getBinaryReferences(synchronizableObject,
+								childByNodeId, monitor);
+						if (file != null && file.exists()) {
+							Command addFileCommand = CommandFactory.addFileToInfoUnit(file,
+									childByNodeId, editingDomain);
+							createInfotype.append(addFileCommand);
+						}
+					}
 				}
+			} else {
+				InformationUnit childByNodeId = read.getChildByNodeId(string);
+				if (childByNodeId != null) {
+					IFile file = itemByRepository.getBinaryReferences(synchronizableObject,
+							childByNodeId, monitor);
+					if (file != null && file.exists()) {
+						Command addFileCommand = CommandFactory.addFileToInfoUnit(file,
+								childByNodeId, editingDomain);
+						createInfotype.append(addFileCommand);
+					}
+				}
+
 			}
 
 		}
@@ -646,7 +667,7 @@ public class ChangeSetExecutor {
 				/*
 				 * Search for nodes that _can_ have binary references
 				 */
-				List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences();
+				List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences(null);
 				for (String string : nodeIdsWithBinaryContent) {
 					InformationUnit childByNodeId = read.getChildByNodeId(string);
 					if (childByNodeId != null) {
@@ -661,7 +682,8 @@ public class ChangeSetExecutor {
 						/*
 						 * Ask the repo for binary references
 						 */
-						IFile file = itemByRepository.getBinaryReferences(childByNodeId, monitor);
+						IFile file = itemByRepository.getBinaryReferences(synchronizableObject,
+								childByNodeId, monitor);
 						if (file != null && file.exists()) {
 							/*
 							 * Append
@@ -689,11 +711,12 @@ public class ChangeSetExecutor {
 			/*
 			 * Search for nodes that _can_ have binary references
 			 */
-			List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences();
+			List<String> nodeIdsWithBinaryContent = read.getNodeIdsWithBinaryReferences(null);
 			for (String string : nodeIdsWithBinaryContent) {
 				InformationUnit childByNodeId = read.getChildByNodeId(string);
 				if (childByNodeId != null) {
-					IFile file = itemByRepository.getBinaryReferences(childByNodeId, monitor);
+					IFile file = itemByRepository.getBinaryReferences(synchronizableObject,
+							childByNodeId, monitor);
 					if (file != null && file.exists()) {
 						/*
 						 * Append

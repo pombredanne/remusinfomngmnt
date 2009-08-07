@@ -54,6 +54,14 @@ public interface IRepository {
 
 	void login(ILoginCallBack callback, IProgressMonitor monitor);
 
+	/**
+	 * Returns a url which stands for the repository. The repository should be
+	 * only used by the repository implementation itself if necessary the url
+	 * that is required for synchronization is stored in the
+	 * {@link RemoteContainer}s
+	 * 
+	 * @return
+	 */
 	String getRepositoryUrl();
 
 	RemoteObject[] getChildren(IProgressMonitor monitor, RemoteContainer container,
@@ -90,8 +98,8 @@ public interface IRepository {
 	/**
 	 * @return
 	 */
-	IFile getBinaryReferences(InformationUnit localInfoFragment, IProgressMonitor monitor)
-			throws RemoteException;
+	IFile getBinaryReferences(InformationUnitListItem syncParentObject,
+			InformationUnit localInfoFragment, IProgressMonitor monitor) throws RemoteException;
 
 	/**
 	 * Commits a {@link SynchronizableObject}. This can be a {@link Category} or

@@ -226,6 +226,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#getRepositoryUrl()
 	 */
+	@Override
 	public String getRepositoryUrl() {
 		return ((RssCredentialProvider) getCredentialProvider()).getUrl();
 	}
@@ -337,6 +338,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#validate()
 	 */
+	@Override
 	public IStatus validate() {
 		// TODO Auto-generated method stub
 		return null;
@@ -404,10 +406,9 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 					editingDomain.getCommandStack().execute(addFileToInfoUnit);
 					IFile targetFile = addFileToInfoUnit.getTargetFile();
 					if (targetFile.exists()) {
-						String lastSegment = targetFile.getProjectRelativePath().lastSegment();
 						((Element) node).setAttribute("src",
 								org.remus.infomngmnt.common.core.util.StringUtils.join("cid:",
-										lastSegment));
+										addFileToInfoUnit.getCreatedId()));
 						changed = true;
 					}
 				}

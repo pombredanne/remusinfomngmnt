@@ -88,7 +88,7 @@ public class RemoteRepositoryDeferredAdapter implements IDeferredWorkbenchAdapte
 	 * )
 	 */
 	public ISchedulingRule getRule(final Object object) {
-		return this.itemById.getRule();
+		return null /* this.itemById.getRule() */;
 	}
 
 	/*

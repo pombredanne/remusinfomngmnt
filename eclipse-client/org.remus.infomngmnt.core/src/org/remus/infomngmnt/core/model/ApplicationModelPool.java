@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -97,7 +98,20 @@ public class ApplicationModelPool {
 				for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
 					addItem(informationUnitListItem);
 				}
-
+			} else if (msg.getEventType() == Notification.ADD_MANY
+					&& msg.getNewValue() instanceof EList) {
+				EList newItems = (EList) msg.getNewValue();
+				for (Object object : newItems) {
+					if (object instanceof InformationUnitListItem) {
+						addItem((InformationUnitListItem) object);
+					} else if (object instanceof Category) {
+						InformationUnitListItem[] allInfoUnitItems = CategoryUtil
+								.getAllInfoUnitItems((Category) object);
+						for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
+							addItem(informationUnitListItem);
+						}
+					}
+				}
 			}
 			EditingUtil.getInstance().saveObjectToResource(this.category);
 			super.notifyChanged(msg);

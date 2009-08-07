@@ -399,10 +399,32 @@ public class InformationStructureRead {
 		return structureDefinition;
 	}
 
-	public List<String> getNodeIdsWithBinaryReferences() {
-		InformationStructureDefinition structureDefinition = getStructureDefinition(this.type);
+	public String getInContainedDynamicNode(final String nodeId) {
+		InformationStructure itemByNodeAndTypeId = getItemByNodeAndTypeId(nodeId, this.type);
+		while (itemByNodeAndTypeId instanceof InformationStructureItem
+				&& itemByNodeAndTypeId.eContainer() != null) {
+			if (itemByNodeAndTypeId.eClass() == InfomngmntPackage.Literals.DYNAMIC_STRUCTURE) {
+				return ((InformationStructureItem) itemByNodeAndTypeId).getId();
+			}
+			itemByNodeAndTypeId = (InformationStructure) itemByNodeAndTypeId.eContainer();
+			if (!(itemByNodeAndTypeId instanceof InformationStructureItem)) {
+				System.out.println("TEST");
+				break;
+			}
+		}
+		return null;
+
+	}
+
+	public List<String> getNodeIdsWithBinaryReferences(final String nodeId) {
+		InformationStructure searchScope;
+		if (nodeId == null) {
+			searchScope = getStructureDefinition(this.type);
+		} else {
+			searchScope = getItemByNodeAndTypeId(nodeId, this.type);
+		}
 		SELECT select = new SELECT(
-				new FROM(structureDefinition),
+				new FROM(searchScope),
 				new WHERE(
 						new EObjectAttributeValueCondition(
 								InfomngmntPackage.Literals.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES,
@@ -419,19 +441,57 @@ public class InformationStructureRead {
 			if (eObject instanceof InformationStructureDefinition) {
 				returnValue.add(this.type);
 			} else if (eObject instanceof InformationStructureItem) {
+
 				returnValue.add(((InformationStructureItem) eObject).getId());
+
 			}
 		}
 		return returnValue;
 	}
 
+	/**
+	 * Searches for all binary references within the given node.
+	 * 
+	 * @return
+	 */
 	public List<BinaryReference> getBinaryReferences() {
-		List<String> nodeIdsWithBinaryReferences = getNodeIdsWithBinaryReferences();
+		return getBinaryReferences(null, true);
+	}
+
+	/**
+	 * Searches through the structure definition for nodes that can have binary
+	 * references and returns the value of the node, if set and leaves the nodes
+	 * that <i>can</i> have binary nodes.
+	 * 
+	 * @param nodeId
+	 *            the scope to search. If null, all possible binary references
+	 *            within the StructureDefinition will be checked.
+	 * @param checkForDynamics
+	 *            additional search for dynamic references. It's recommended
+	 *            always to use <code>true</code> since the given nodeId could
+	 *            be present multiple times in the given information unit.
+	 * @return a list of all set binary references within the node which id
+	 *         equals the parameter nodeId.
+	 */
+	public List<BinaryReference> getBinaryReferences(final String nodeId,
+			final boolean checkForDynamics) {
+		List<String> nodeIdsWithBinaryReferences = getNodeIdsWithBinaryReferences(nodeId);
 		List<BinaryReference> returnValue = new ArrayList<BinaryReference>();
 		for (String string : nodeIdsWithBinaryReferences) {
-			InformationUnit childByNodeId = getChildByNodeId(string);
-			if (childByNodeId != null && childByNodeId.getBinaryReferences() != null) {
-				returnValue.add(childByNodeId.getBinaryReferences());
+			String inContainedDynamicNode = getInContainedDynamicNode(string);
+			if (checkForDynamics && inContainedDynamicNode != null) {
+				EList<InformationUnit> dynamicList = getDynamicList(inContainedDynamicNode);
+				for (InformationUnit informationUnit : dynamicList) {
+					InformationStructureRead dynamicRead = InformationStructureRead.newSession(
+							informationUnit, this.type);
+					returnValue.addAll(dynamicRead.getBinaryReferences(inContainedDynamicNode,
+							false));
+				}
+			} else {
+				InformationUnit childByNodeId = getChildByNodeId(string);
+				if (childByNodeId != null && childByNodeId.getBinaryReferences() != null) {
+					returnValue.add(childByNodeId.getBinaryReferences());
+				}
 			}
 		}
 		return returnValue;

@@ -89,11 +89,13 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 
 		@Override
 		public Image getImage(final Object element) {
-			InformationStructureRead read = InformationStructureRead.newSession(
-					(InformationUnit) element, MeetingMinutesActivator.INFO_TYPE_ID);
-			if (read.getBinaryReferences().size() > 0 && read.getBinaryReferences().get(0) != null) {
-				String projectRelativePath = read.getBinaryReferences().get(0)
-						.getProjectRelativePath();
+			InformationUnit element2 = (InformationUnit) element;
+			InformationStructureRead read = InformationStructureRead.newSession(element2,
+					MeetingMinutesActivator.INFO_TYPE_ID);
+			List<BinaryReference> binaryReferences = read.getBinaryReferences(element2.getType(),
+					false);
+			if (binaryReferences.size() > 0 && binaryReferences.get(0) != null) {
+				String projectRelativePath = binaryReferences.get(0).getProjectRelativePath();
 				String fileExtension = new Path(projectRelativePath).getFileExtension();
 				if (fileExtension == null) {
 					fileExtension = "";

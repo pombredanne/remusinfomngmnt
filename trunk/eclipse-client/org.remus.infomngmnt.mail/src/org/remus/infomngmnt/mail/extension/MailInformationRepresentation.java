@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -40,6 +41,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.common.core.streams.HTMLStripReader;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.StringUtils;
@@ -122,9 +124,17 @@ public class MailInformationRepresentation extends AbstractInformationRepresenta
 				String src = ((Element) node).getAttribute("src");
 				if (src.startsWith("cid:")) {
 					String substring = src.substring(4);
-					String osString = getFile().getProject().getLocation().append(
-							ResourceUtil.BINARY_FOLDER).append(substring).toOSString();
-					((Element) node).setAttribute("src", URI.createFileURI(osString).toString());
+					List<BinaryReference> binaryReferences = read.getBinaryReferences(
+							MailActivator.NODE_NAME_EMBEDDEDS, true);
+					for (BinaryReference binaryReference : binaryReferences) {
+						if (binaryReference.getId().equals(substring)) {
+							String osString = getFile().getProject().getLocation().append(
+									ResourceUtil.BINARY_FOLDER).append(
+									binaryReference.getProjectRelativePath()).toOSString();
+							((Element) node).setAttribute("src", URI.createFileURI(osString)
+									.toString());
+						}
+					}
 				}
 			}
 			final Transformer transformer = TransformerFactory.newInstance().newTransformer();

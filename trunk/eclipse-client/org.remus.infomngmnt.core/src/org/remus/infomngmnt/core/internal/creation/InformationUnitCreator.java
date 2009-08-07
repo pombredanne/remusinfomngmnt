@@ -548,7 +548,7 @@ public class InformationUnitCreator {
 		Set<String> keySet = binaryNodeIdToFileMap.keySet();
 		InformationStructureRead read = InformationStructureRead.newSession(dynamicNode, baseObject
 				.getType());
-		List<String> allowedNodes = read.getNodeIdsWithBinaryReferences();
+		List<String> allowedNodes = read.getNodeIdsWithBinaryReferences(dynamicNode.getType());
 		for (String string : keySet) {
 			if (allowedNodes.contains(string)) {
 				cc.append(CommandFactory.addFileToInfoUnit(binaryNodeIdToFileMap.get(string), read

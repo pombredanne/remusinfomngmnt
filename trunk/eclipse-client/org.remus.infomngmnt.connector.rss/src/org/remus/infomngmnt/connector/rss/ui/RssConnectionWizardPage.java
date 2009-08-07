@@ -113,9 +113,9 @@ public class RssConnectionWizardPage extends WizardPage {
 							if (!validate.isOK()) {
 								throw new InvocationTargetException(validate.getException());
 							}
-							setErrorMessage(null);
 						}
 					});
+					setErrorMessage(null);
 				} catch (InvocationTargetException e) {
 					setErrorMessage(StringUtils.join("Error validating repository (", e.getCause()
 							.getMessage(), ")"));

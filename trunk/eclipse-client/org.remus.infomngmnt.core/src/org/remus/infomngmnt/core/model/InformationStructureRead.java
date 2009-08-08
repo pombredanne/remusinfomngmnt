@@ -53,6 +53,12 @@ public class InformationStructureRead {
 
 	public static final String ATTRIBUTE_ACCESSOR = "@"; //$NON-NLS-1$
 
+	/**
+	 * A string list where all node ids are stored which are children or
+	 * subchildren of a dynamic node.
+	 */
+	private List<String> multipleNodeIds;
+
 	public InformationStructureRead(final InformationUnit unit, final String type) {
 		this.unit = unit;
 		this.type = type;
@@ -399,6 +405,13 @@ public class InformationStructureRead {
 		return structureDefinition;
 	}
 
+	/**
+	 * Returns the name of the dynamic node where the given node id is
+	 * contained.
+	 * 
+	 * @param nodeId
+	 * @return the node id of the dynamic node, else <code>null</code>
+	 */
 	public String getInContainedDynamicNode(final String nodeId) {
 		InformationStructure itemByNodeAndTypeId = getItemByNodeAndTypeId(nodeId, this.type);
 		while (itemByNodeAndTypeId instanceof InformationStructureItem
@@ -408,7 +421,6 @@ public class InformationStructureRead {
 			}
 			itemByNodeAndTypeId = (InformationStructure) itemByNodeAndTypeId.eContainer();
 			if (!(itemByNodeAndTypeId instanceof InformationStructureItem)) {
-				System.out.println("TEST");
 				break;
 			}
 		}

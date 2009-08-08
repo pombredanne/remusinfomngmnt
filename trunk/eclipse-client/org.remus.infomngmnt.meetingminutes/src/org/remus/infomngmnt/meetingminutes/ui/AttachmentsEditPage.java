@@ -296,7 +296,8 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				for (Object object : list) {
 					InformationStructureRead read = InformationStructureRead.newSession(
 							(InformationUnit) object, MeetingMinutesActivator.INFO_TYPE_ID);
-					List<BinaryReference> binaryReferences = read.getBinaryReferences();
+					List<BinaryReference> binaryReferences = read.getBinaryReferences(
+							((InformationUnit) object).getType(), false);
 					for (BinaryReference binaryReference : binaryReferences) {
 						cc.append(new DeleteBinaryReferenceCommand(binaryReference,
 								getEditingDomain()));

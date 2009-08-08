@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.folder.FolderConnector"
+            icon="icons/iconexperience/folder.png"
+            id="org.remus.infomngmnt.connector.folder.folder"
+            name="Local Folder">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.folder.ui"
+            newWizard="org.remus.infomngmnt.connector.folder.ui.NewFolderRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.folder.folder">
+      </respository>
+   </extension>
+
+</plugin>

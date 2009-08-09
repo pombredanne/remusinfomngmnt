@@ -52,7 +52,13 @@ public class DesktopWindow extends AbstractDesktopWindow {
 
 	public DesktopWindow(final Display display) {
 		super(display);
-		int style = SWT.NO_TRIM | SWT.TOOL;
+		int style;
+		if (UIPlugin.getDefault().getPreferenceStore().getBoolean(
+				UIPreferenceInitializer.DESKTOP_PANEL_WINDOW_TRIMMINGS)) {
+			style = SWT.MIN;
+		} else {
+			style = SWT.NO_TRIM | SWT.TOOL;
+		}
 		if (UIPlugin.getDefault().getPreferenceStore().getBoolean(
 				UIPreferenceInitializer.DESKTOP_PANEL_ALWAYS_ON_TOP)) {
 			style |= SWT.ON_TOP;

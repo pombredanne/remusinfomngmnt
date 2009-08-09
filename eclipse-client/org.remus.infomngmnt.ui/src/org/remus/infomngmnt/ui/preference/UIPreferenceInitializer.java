@@ -40,6 +40,7 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 	public static final String DESKTOP_PANEL_TRANSPARENCY = "DESKTOP_PANEL_TRANSPARENCY"; //$NON-NLS-1$
 	public static final String DESKTOP_PANEL_TRANSPARENCY_PERCENTAGE = "DESKTOP_PANEL_TRANSPARENCY_PERCENTAGE"; //$NON-NLS-1$
 	public static final String DESKTOP_PANEL_ALWAYS_ON_TOP = "DESKTOP_PANEL_ALWAYS_ON_TOP"; //$NON-NLS-1$
+	public static final String DESKTOP_PANEL_WINDOW_TRIMMINGS = "DESKTOP_PANEL_WINDOW_TRIMMINGS"; //$NON-NLS-1$
 	public static final String DESKTOP_PANEL_WIDTH = "DESKTOP_PANEL_WIDTH"; //$NON-NLS-1$
 
 	/**
@@ -72,6 +73,7 @@ public class UIPreferenceInitializer extends AbstractPreferenceInitializer {
 		this.store.setDefault(DESKTOP_PANEL_TRANSPARENCY_PERCENTAGE, 50);
 		this.store.setDefault(DESKTOP_PANEL_ALWAYS_ON_TOP, true);
 		this.store.setDefault(DESKTOP_PANEL_WIDTH, 200);
+		this.store.setDefault(DESKTOP_PANEL_WINDOW_TRIMMINGS, false);
 	}
 
 }

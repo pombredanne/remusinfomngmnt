@@ -24,27 +24,26 @@ import de.spiritlink.richhtml4eclipse.widgets.JavaScriptCommands;
  */
 public class InsertLayerAction extends Action {
 
-    private HtmlComposer composer = null;
+	private HtmlComposer composer = null;
 
-    public InsertLayerAction(HtmlComposer composer) {
-        super("", IAction.AS_PUSH_BUTTON); //$NON-NLS-1$
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", //$NON-NLS-1$
-        "tiny_mce/jscripts/tiny_mce/plugins/layer/images/insert_layer.gif")); //$NON-NLS-1$
-        this.composer = composer;
-       
+	public InsertLayerAction(final HtmlComposer composer) {
+		super("Insert new layer", IAction.AS_PUSH_BUTTON); //$NON-NLS-1$
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse", //$NON-NLS-1$
+				"tiny_mce/jscripts/tiny_mce/plugins/layer/images/insert_layer.gif")); //$NON-NLS-1$
+		this.composer = composer;
 
-    }
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.INSERT_LAYER);
 
+	}
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.INSERT_LAYER);
-        
-    }
-    
-   
 }

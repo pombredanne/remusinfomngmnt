@@ -32,45 +32,48 @@ import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
  */
 public class MakeLayerAbsoluteAction extends Action implements Listener {
 
-    private HtmlComposer composer = null;
+	private HtmlComposer composer = null;
 
-    public MakeLayerAbsoluteAction(HtmlComposer composer) {
-        super("", IAction.AS_CHECK_BOX); //$NON-NLS-1$
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", //$NON-NLS-1$
-        "tiny_mce/jscripts/tiny_mce/plugins/layer/images/absolute.gif")); //$NON-NLS-1$
-        this.composer = composer;
-        this.composer.addListener(EventConstants.LAYER_ABSOLUTE, this);
-       
+	public MakeLayerAbsoluteAction(final HtmlComposer composer) {
+		super("Toggle absolute positioning", IAction.AS_CHECK_BOX); //$NON-NLS-1$
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse", //$NON-NLS-1$
+				"tiny_mce/jscripts/tiny_mce/plugins/layer/images/absolute.gif")); //$NON-NLS-1$
+		this.composer = composer;
+		this.composer.addListener(EventConstants.LAYER_ABSOLUTE, this);
 
-    }
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.LAYER_ABSOLUTE);
 
+	}
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.LAYER_ABSOLUTE);
-        
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties props = (Properties) event.data;
+		if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(true);
+		} else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(false);
+		} else if (event.type == EventConstants.ALL
+				&& AllActionConstants.RESET_ALL
+						.equals(props.getProperty(PropertyConstants.COMMAND))) {
+			// callback if the cursor changed, reset the state.
+			setChecked(false);
+		}
+	}
 
-
-
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties props = (Properties) event.data;
-        if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(true);
-        } else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(false);
-        } else if (event.type == EventConstants.ALL && AllActionConstants.RESET_ALL.equals(props.getProperty(PropertyConstants.COMMAND))) {
-            // callback if the cursor changed, reset the state.
-            setChecked(false);
-        }
-    }
-    
-   
 }

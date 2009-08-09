@@ -20,11 +20,11 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.common.ui.richtext.dialogs.ImageDialog;
+
 import de.spiritlink.richhtml4eclipse.widgets.EventConstants;
 import de.spiritlink.richhtml4eclipse.widgets.HtmlComposer;
 import de.spiritlink.richhtml4eclipse.widgets.JavaScriptCommands;
-
-import org.remus.infomngmnt.common.ui.richtext.dialogs.ImageDialog;
 
 /**
  * 
@@ -33,79 +33,71 @@ import org.remus.infomngmnt.common.ui.richtext.dialogs.ImageDialog;
  */
 public class InsertEditImageAction extends Action implements Listener {
 
-    private HtmlComposer composer = null;
-    private String source = null;
-    private String alt = null;
-    private String border = null;
-    private String hsapce = null;
-    private String vspace = null;
-    private String width =  null;
-    private String height = null;
-    private String align = null;
+	private HtmlComposer composer = null;
+	private String source = null;
+	private String alt = null;
+	private String border = null;
+	private String hsapce = null;
+	private String vspace = null;
+	private String width = null;
+	private String height = null;
+	private String align = null;
 
-    public InsertEditImageAction(HtmlComposer composer) {
-        super("", IAction.AS_CHECK_BOX);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/themes/advanced/images/image.gif"));
-        this.composer = composer;
-        this.composer.addListener(EventConstants.IMAGE, this);
-    }
+	public InsertEditImageAction(final HtmlComposer composer) {
+		super("Insert/Edit image", IAction.AS_CHECK_BOX);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/themes/advanced/images/image.gif"));
+		this.composer = composer;
+		this.composer.addListener(EventConstants.IMAGE, this);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		ImageDialog dialog = new ImageDialog(this.composer.getShell(), this.source, this.alt,
+				this.border, this.hsapce, this.vspace, this.width, this.height, this.align);
+		if (dialog.open() == IDialogConstants.OK_ID) {
+			this.composer.execute(JavaScriptCommands.INSERT_IMAGE(dialog.getSource(), dialog
+					.getAlt(), dialog.getBorder(), dialog.getHspace(), dialog.getVspace(), dialog
+					.getWidth(), dialog.getHeight(), dialog.getAlign()));
+		}
+	}
 
-
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        ImageDialog dialog = new ImageDialog(
-                this.composer.getShell(),
-                this.source,
-                this.alt,
-                this.border,
-                this.hsapce,
-                this.vspace,
-                this.width,
-                this.height,
-                this.align);
-        if (dialog.open() == IDialogConstants.OK_ID) {
-            this.composer.execute(JavaScriptCommands.INSERT_IMAGE(
-                    dialog.getSource(), 
-                    dialog.getAlt(),
-                    dialog.getBorder(), 
-                    dialog.getHspace(), 
-                    dialog.getVspace(),
-                    dialog.getWidth(),
-                    dialog.getHeight(),
-                    dialog.getAlign()));
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties evtProps = (Properties) event.data;
-        if (event.type != EventConstants.ALL) {
-            setChecked(true);
-            this.source = evtProps.getProperty("src"); //$NON-NLS-1$
-            this.width = evtProps.getProperty("width"); //$NON-NLS-1$
-            this.height = evtProps.getProperty("height"); //$NON-NLS-1$
-            this.border = evtProps.getProperty("border"); //$NON-NLS-1$
-            this.alt = evtProps.getProperty("alt"); //$NON-NLS-1$
-            this.align = evtProps.getProperty("align"); //$NON-NLS-1$
-            this.hsapce = evtProps.getProperty("hspace"); //$NON-NLS-1$
-            this.vspace = evtProps.getProperty("vspace"); //$NON-NLS-1$
-        } else {
-            setChecked(false);
-            this.source = null;
-            this.alt = null;
-            this.border = null;
-            this.hsapce = null;
-            this.vspace = null;
-            this.width = null;
-            this.height = null;
-            this.align = null;
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties evtProps = (Properties) event.data;
+		if (event.type != EventConstants.ALL) {
+			setChecked(true);
+			this.source = evtProps.getProperty("src"); //$NON-NLS-1$
+			this.width = evtProps.getProperty("width"); //$NON-NLS-1$
+			this.height = evtProps.getProperty("height"); //$NON-NLS-1$
+			this.border = evtProps.getProperty("border"); //$NON-NLS-1$
+			this.alt = evtProps.getProperty("alt"); //$NON-NLS-1$
+			this.align = evtProps.getProperty("align"); //$NON-NLS-1$
+			this.hsapce = evtProps.getProperty("hspace"); //$NON-NLS-1$
+			this.vspace = evtProps.getProperty("vspace"); //$NON-NLS-1$
+		} else {
+			setChecked(false);
+			this.source = null;
+			this.alt = null;
+			this.border = null;
+			this.hsapce = null;
+			this.vspace = null;
+			this.width = null;
+			this.height = null;
+			this.align = null;
+		}
+	}
 
 }

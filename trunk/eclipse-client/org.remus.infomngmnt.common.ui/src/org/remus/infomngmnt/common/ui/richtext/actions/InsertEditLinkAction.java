@@ -20,13 +20,13 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.common.ui.richtext.dialogs.LinkDialog;
+
 import de.spiritlink.richhtml4eclipse.widgets.ComposerStatus;
 import de.spiritlink.richhtml4eclipse.widgets.EventConstants;
 import de.spiritlink.richhtml4eclipse.widgets.HtmlComposer;
 import de.spiritlink.richhtml4eclipse.widgets.JavaScriptCommands;
 import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
-
-import org.remus.infomngmnt.common.ui.richtext.dialogs.LinkDialog;
 
 /**
  * 
@@ -35,54 +35,61 @@ import org.remus.infomngmnt.common.ui.richtext.dialogs.LinkDialog;
  */
 public class InsertEditLinkAction extends Action implements Listener {
 
-    private HtmlComposer composer = null;
+	private HtmlComposer composer = null;
 
-    private String href = null;
-    private String title = null;
-    private String target = null;
-    private String clazz = null;
+	private String href = null;
+	private String title = null;
+	private String target = null;
+	private String clazz = null;
 
+	public InsertEditLinkAction(final HtmlComposer composer) {
+		super("Insert/Edit link", IAction.AS_CHECK_BOX);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/themes/advanced/images/link.gif"));
+		this.composer = composer;
+		this.composer.addListener(EventConstants.LINK, this);
+	}
 
-    public InsertEditLinkAction(HtmlComposer composer) {
-        super("", IAction.AS_CHECK_BOX);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/themes/advanced/images/link.gif"));
-        this.composer = composer;
-        this.composer.addListener(EventConstants.LINK, this);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		LinkDialog dialog = new LinkDialog(this.composer.getShell(), this.href, this.title,
+				this.target, this.clazz);
+		if (dialog.open() == IDialogConstants.OK_ID) {
+			this.composer.execute(JavaScriptCommands.INSERT_LINK(dialog.getHref(), dialog
+					.getTitel(), dialog.getTarget(), dialog.getClazz()));
+		}
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties evtProps = (Properties) event.data;
+		if (event.type != EventConstants.ALL
+				&& ComposerStatus.SELECTED.equals(evtProps.getProperty(PropertyConstants.STATUS))) {
 
+			setChecked(true);
+			this.href = evtProps.getProperty("href");
+			this.target = evtProps.getProperty("target");
+			this.title = evtProps.getProperty("title");
+			this.clazz = evtProps.getProperty("class");
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        LinkDialog dialog = new LinkDialog(this.composer.getShell(),this.href,this.title,this.target,this.clazz);
-        if (dialog.open() == IDialogConstants.OK_ID) {
-            this.composer.execute(JavaScriptCommands.INSERT_LINK(
-                    dialog.getHref(), dialog.getTitel(), dialog.getTarget(), dialog.getClazz()));
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties evtProps = (Properties) event.data;
-        if (event.type != EventConstants.ALL && ComposerStatus.SELECTED.equals(evtProps.getProperty(PropertyConstants.STATUS))) {
-
-            setChecked(true);
-            this.href = evtProps.getProperty("href");
-            this.target = evtProps.getProperty("target");
-            this.title = evtProps.getProperty("title");
-            this.clazz = evtProps.getProperty("class");
-
-        } else {
-            setChecked(false);
-            this.href = null;
-            this.target = null;
-            this.title = null;
-            this.clazz = null;
-        }
-    }
+		} else {
+			setChecked(false);
+			this.href = null;
+			this.target = null;
+			this.title = null;
+			this.clazz = null;
+		}
+	}
 }

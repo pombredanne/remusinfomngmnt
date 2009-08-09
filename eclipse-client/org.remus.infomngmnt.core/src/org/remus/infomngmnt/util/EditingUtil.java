@@ -87,7 +87,7 @@ public class EditingUtil {
 		this.adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		this.editingDomain = new AdapterFactoryEditingDomain(this.adapterFactory,
 				new BasicCommandStack());
-		this.navigationEditingDomain = new AdapterFactoryEditingDomain(this.adapterFactory,
+		this.navigationEditingDomain = new RIMEditingDomain(this.adapterFactory,
 				new BasicCommandStack());
 		this.editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
 				.put(InfomngmntPackage.eNS_URI, InfomngmntPackage.eINSTANCE);

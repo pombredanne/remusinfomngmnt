@@ -169,6 +169,12 @@
             id="org.remus.infomngmnt.ui.userinterface"
             name="User Interface">
       </page>
+      <page
+            category="org.remus.infomngmnt.ui.desktop"
+            class="org.remus.infomngmnt.ui.preference.DesktopPanelAppearancePreferencePage"
+            id="org.remus.infomngmnt.ui.desktoppanel"
+            name="Desktop-Panel">
+      </page>
    </extension>
    <extension
          point="org.remus.infomngmnt.common.ui.trayAction">

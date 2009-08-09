@@ -159,12 +159,7 @@ public abstract class AbstractDesktopWindow extends Window {
 	protected int yOffset;
 
 	public AbstractDesktopWindow(final Display display) {
-		this(display, SWT.NO_TRIM | SWT.ON_TOP | SWT.TOOL);
-	}
-
-	public AbstractDesktopWindow(final Display display, final int style) {
 		super(new Shell(display));
-		setShellStyle(style);
 
 		this.display = display;
 		this.resources = new LocalResourceManager(JFaceResources.getResources());
@@ -472,7 +467,12 @@ public abstract class AbstractDesktopWindow extends Window {
 
 		/* Outer Composite holding the controls */
 		final Composite outerCircle = new Composite(parent, SWT.NO_FOCUS);
-		outerCircle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		int initialWidth = getInitialWidth();
+		if (initialWidth > 0) {
+			layoutData.widthHint = initialWidth;
+		}
+		outerCircle.setLayoutData(layoutData);
 
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginWidth = 0;
@@ -555,7 +555,7 @@ public abstract class AbstractDesktopWindow extends Window {
 		layout.marginHeight = 0;
 
 		outerContentCircle.setLayout(layout);
-		outerContentCircle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		outerContentCircle.setLayoutData(layoutData);
 		outerContentCircle.setBackground(outerCircle.getBackground());
 
 		/* Middle composite to show a 1px black line around the content controls */
@@ -571,12 +571,12 @@ public abstract class AbstractDesktopWindow extends Window {
 		layout.marginLeft = 5;
 
 		middleContentCircle.setLayout(layout);
-		middleContentCircle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		middleContentCircle.setLayoutData(layoutData);
 		middleContentCircle.setBackground(this.color.getBorder());
 
 		/* Inner composite containing the content controls */
 		final Composite innerContentCircle = new Composite(middleContentCircle, SWT.NO_FOCUS);
-		innerContentCircle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		innerContentCircle.setLayoutData(layoutData);
 
 		layout = new GridLayout(1, false);
 		layout.marginWidth = 0;
@@ -586,6 +586,7 @@ public abstract class AbstractDesktopWindow extends Window {
 
 		((GridLayout) innerContentCircle.getLayout()).marginLeft = 5;
 		((GridLayout) innerContentCircle.getLayout()).marginRight = 2;
+
 		innerContentCircle.setBackground(this.shell.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		middleContentCircle.addControlListener(new ControlAdapter() {
 			@Override
@@ -745,6 +746,10 @@ public abstract class AbstractDesktopWindow extends Window {
 		}
 		return null;
 
+	}
+
+	protected int getInitialWidth() {
+		return 0;
 	}
 
 }

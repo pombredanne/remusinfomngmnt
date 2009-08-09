@@ -52,6 +52,13 @@ public class DesktopWindow extends AbstractDesktopWindow {
 
 	public DesktopWindow(final Display display) {
 		super(display);
+		int style = SWT.NO_TRIM | SWT.TOOL;
+		if (UIPlugin.getDefault().getPreferenceStore().getBoolean(
+				UIPreferenceInitializer.DESKTOP_PANEL_ALWAYS_ON_TOP)) {
+			style |= SWT.ON_TOP;
+		}
+		setShellStyle(style);
+
 		this.display = display;
 	}
 
@@ -112,6 +119,7 @@ public class DesktopWindow extends AbstractDesktopWindow {
 				// any exception occurred. skip this part.
 			}
 		}
+
 	}
 
 	@Override
@@ -145,7 +153,18 @@ public class DesktopWindow extends AbstractDesktopWindow {
 			this.transparancyJob.cancelAndWait(false);
 			this.transparancyJob.done(Status.OK_STATUS);
 		}
-		this.transparancyJob = SwtFadeUtil.fadeOut(getShell(), 120, new IFadeListener() {
+		int transpLevel = UIPlugin.getDefault().getPreferenceStore().getInt(
+				UIPreferenceInitializer.DESKTOP_PANEL_TRANSPARENCY_PERCENTAGE);
+		boolean showTransparency = UIPlugin.getDefault().getPreferenceStore().getBoolean(
+				UIPreferenceInitializer.DESKTOP_PANEL_TRANSPARENCY);
+		int alphaValue = 120;
+		if (transpLevel >= 0 && transpLevel <= 50) {
+			alphaValue = Double.valueOf((100 - transpLevel) * 2.55).intValue();
+		}
+		if (!showTransparency) {
+			alphaValue = 255;
+		}
+		this.transparancyJob = SwtFadeUtil.fadeOut(getShell(), alphaValue, new IFadeListener() {
 			public void faded(final Shell shell, final int alpha) {
 				if (!shell.isDisposed()) {
 					if (alpha == 0) {
@@ -195,6 +214,12 @@ public class DesktopWindow extends AbstractDesktopWindow {
 	protected void saveLocation(final Point location) {
 		PreferenceConverter.setValue(UIPlugin.getDefault().getPreferenceStore(),
 				UIPreferenceInitializer.DESKTOP_LOCATION, location);
+	}
+
+	@Override
+	protected int getInitialWidth() {
+		return UIPlugin.getDefault().getPreferenceStore().getInt(
+				UIPreferenceInitializer.DESKTOP_PANEL_WIDTH);
 	}
 
 }

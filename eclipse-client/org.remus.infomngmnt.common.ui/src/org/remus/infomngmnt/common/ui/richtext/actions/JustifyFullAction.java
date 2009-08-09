@@ -31,40 +31,48 @@ import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
  * @author Tom Seidel <tom.seidel@spiritlink.de>
  * 
  */
-public class JustifyFullAction extends Action implements Listener{
-    private HtmlComposer composer = null;
+public class JustifyFullAction extends Action implements Listener {
+	private HtmlComposer composer = null;
 
-    public JustifyFullAction(HtmlComposer composer) {
-        super("", IAction.AS_CHECK_BOX);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/themes/advanced/images/justifyfull.gif"));
-        this.composer = composer;
-        this.composer.addListener(EventConstants.JUSTIFYFULL, this);
-    }
+	public JustifyFullAction(final HtmlComposer composer) {
+		super("Align full", IAction.AS_CHECK_BOX);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/themes/advanced/images/justifyfull.gif"));
+		this.composer = composer;
+		this.composer.addListener(EventConstants.JUSTIFYFULL, this);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.JUSTIFYFULL);
+	}
 
-
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.JUSTIFYFULL);
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties props = (Properties) event.data;
-        if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
-            // current selection/cursor is bold --> set the action checked
-            setChecked(true);
-        } else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(false);
-        } else if (event.type == EventConstants.ALL && AllActionConstants.RESET_ALL.equals(props.getProperty(PropertyConstants.COMMAND))) {
-            // callback if the cursor changed, reset the state.
-            setChecked(false);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties props = (Properties) event.data;
+		if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
+			// current selection/cursor is bold --> set the action checked
+			setChecked(true);
+		} else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(false);
+		} else if (event.type == EventConstants.ALL
+				&& AllActionConstants.RESET_ALL
+						.equals(props.getProperty(PropertyConstants.COMMAND))) {
+			// callback if the cursor changed, reset the state.
+			setChecked(false);
+		}
+	}
 
 }

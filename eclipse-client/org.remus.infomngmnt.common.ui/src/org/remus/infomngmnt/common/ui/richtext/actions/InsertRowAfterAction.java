@@ -31,38 +31,46 @@ import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
  * @author Tom Seidel <tom.seidel@spiritlink.de>
  * 
  */
-public class InsertRowAfterAction extends Action implements Listener{
-    private HtmlComposer composer = null;
+public class InsertRowAfterAction extends Action implements Listener {
+	private HtmlComposer composer = null;
 
-    public InsertRowAfterAction(HtmlComposer composer) {
-        super("", IAction.AS_PUSH_BUTTON);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/plugins/table/images/table_insert_row_after.gif"));
-        this.composer = composer;
-        this.composer.addListener(EventConstants.INSERT_ROW_AFTER, this);
-    }
+	public InsertRowAfterAction(final HtmlComposer composer) {
+		super("Insert row after", IAction.AS_PUSH_BUTTON);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/plugins/table/images/table_insert_row_after.gif"));
+		this.composer = composer;
+		this.composer.addListener(EventConstants.INSERT_ROW_AFTER, this);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.INSERT_ROW_AFTER);
+	}
 
-
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.INSERT_ROW_AFTER);
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties props = (Properties) event.data;
-        if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setEnabled(true);
-        } else if (ComposerStatus.DISABLED.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setEnabled(false);
-        } else if (event.type == EventConstants.ALL && AllActionConstants.RESET_ALL.equals(props.getProperty(PropertyConstants.COMMAND))) {
-            setEnabled(false);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties props = (Properties) event.data;
+		if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setEnabled(true);
+		} else if (ComposerStatus.DISABLED.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setEnabled(false);
+		} else if (event.type == EventConstants.ALL
+				&& AllActionConstants.RESET_ALL
+						.equals(props.getProperty(PropertyConstants.COMMAND))) {
+			setEnabled(false);
+		}
+	}
 
 }

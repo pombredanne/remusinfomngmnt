@@ -31,38 +31,46 @@ import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
  * @author Tom Seidel <tom.seidel@spiritlink.de>
  * 
  */
-public class JustifyCenterAction extends Action implements Listener{
-    private HtmlComposer composer = null;
+public class JustifyCenterAction extends Action implements Listener {
+	private HtmlComposer composer = null;
 
-    public JustifyCenterAction(HtmlComposer composer) {
-        super("", IAction.AS_CHECK_BOX);
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin("de.spiritlink.richhtml4eclipse", "tiny_mce/jscripts/tiny_mce/themes/advanced/images/justifycenter.gif"));
-        this.composer = composer;
-        this.composer.addListener(EventConstants.JUSTIFYCENTER, this);
-    }
+	public JustifyCenterAction(final HtmlComposer composer) {
+		super("Align center", IAction.AS_CHECK_BOX);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				"de.spiritlink.richhtml4eclipse",
+				"tiny_mce/jscripts/tiny_mce/themes/advanced/images/justifycenter.gif"));
+		this.composer = composer;
+		this.composer.addListener(EventConstants.JUSTIFYCENTER, this);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		this.composer.execute(JavaScriptCommands.JUSTIFYCENTER);
+	}
 
-
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-        this.composer.execute(JavaScriptCommands.JUSTIFYCENTER);
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent(Event event) {
-        Properties props = (Properties) event.data;
-        if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(true);
-        } else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
-            setChecked(false);
-        } else if (event.type == EventConstants.ALL && AllActionConstants.RESET_ALL.equals(props.getProperty(PropertyConstants.COMMAND))) {
-            setChecked(false);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.
+	 * Event)
+	 */
+	public void handleEvent(final Event event) {
+		Properties props = (Properties) event.data;
+		if (ComposerStatus.SELECTED.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(true);
+		} else if (ComposerStatus.NORMAL.equals(props.getProperty(PropertyConstants.STATUS))) {
+			setChecked(false);
+		} else if (event.type == EventConstants.ALL
+				&& AllActionConstants.RESET_ALL
+						.equals(props.getProperty(PropertyConstants.COMMAND))) {
+			setChecked(false);
+		}
+	}
 
 }

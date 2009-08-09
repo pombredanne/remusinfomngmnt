@@ -670,6 +670,45 @@ public class ChangeSetManager {
 
 	}
 
+	public void committAllLocal(final ChangeSetItem changeSetItem2) {
+		EMap<Category, SynchronizationAction> syncCategoryActionMap = changeSetItem2
+				.getSyncCategoryActionMap();
+		if (syncCategoryActionMap != null) {
+			Set<Category> keySet = syncCategoryActionMap.keySet();
+			for (Category category : keySet) {
+				SynchronizationAction synchronizationAction = syncCategoryActionMap.get(category);
+				switch (synchronizationAction) {
+				case RESOLVE_CONFLICT:
+				case REPLACE_LOCAL:
+				case ADD_LOCAL:
+				case DELETE_LOCAL:
+					syncCategoryActionMap.remove(category);
+				default:
+					break;
+				}
+			}
+		}
+		EMap<SynchronizableObject, SynchronizationAction> syncObjectActionMap = changeSetItem2
+				.getSyncObjectActionMap();
+		if (syncObjectActionMap != null) {
+			Set<SynchronizableObject> keySet = new HashSet<SynchronizableObject>(
+					syncObjectActionMap.keySet());
+			for (SynchronizableObject object : keySet) {
+				SynchronizationAction synchronizationAction = syncObjectActionMap.get(object);
+				switch (synchronizationAction) {
+				case RESOLVE_CONFLICT:
+				case REPLACE_LOCAL:
+				case ADD_LOCAL:
+				case DELETE_LOCAL:
+					syncObjectActionMap.remove(object);
+				default:
+					break;
+				}
+			}
+		}
+
+	}
+
 	public void updateFromRemote(final ChangeSetItem changeSet) {
 		EMap<Category, SynchronizationAction> syncCategoryActionMap = changeSet
 				.getSyncCategoryActionMap();

@@ -210,6 +210,8 @@ public class DiffLabelProvider extends LabelProvider {
 				"icons/iconexperience/decorator/commit_to_server.png");
 		Image updateDecorator = ResourceManager.getPluginImage(UIPlugin.getDefault(),
 				"icons/iconexperience/decorator/update_from_server.png");
+		Image conflictDecorator = ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				"icons/iconexperience/decorator/confchg_ov.gif");
 
 		switch (syncAction) {
 		case ADD_LOCAL:
@@ -236,6 +238,9 @@ public class DiffLabelProvider extends LabelProvider {
 					ResourceManager.TOP_RIGHT);
 			return ResourceManager.decorateImage(decorateImage, removeDecorator,
 					ResourceManager.BOTTOM_LEFT);
+		case RESOLVE_CONFLICT:
+			return ResourceManager.decorateImage(baseImage, conflictDecorator,
+					ResourceManager.TOP_RIGHT);
 		default:
 			break;
 		}

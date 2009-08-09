@@ -598,21 +598,27 @@ public class ChangeSetManager {
 						}
 
 					} else {
-						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
-							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
-									SynchronizationAction.REPLACE_REMOTE);
-						} else if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_DELETED) {
-							if (parentByClass instanceof Category) {
-								item.getSyncCategoryActionMap().put((Category) parentByClass,
-										SynchronizationAction.DELETE_REMOTE);
+						if (item.getSyncObjectActionMap().get(parentByClass) == null) {
+							if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
+
+								item.getSyncObjectActionMap().put(
+										(SynchronizableObject) parentByClass,
+										SynchronizationAction.REPLACE_REMOTE);
+
+							} else if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_DELETED) {
+								if (parentByClass instanceof Category) {
+									item.getSyncCategoryActionMap().put((Category) parentByClass,
+											SynchronizationAction.DELETE_REMOTE);
+								} else {
+									item.getSyncObjectActionMap().put(
+											(SynchronizableObject) parentByClass,
+											SynchronizationAction.DELETE_REMOTE);
+								}
 							} else {
 								item.getSyncObjectActionMap().put(
 										(SynchronizableObject) parentByClass,
-										SynchronizationAction.DELETE_REMOTE);
+										SynchronizationAction.REPLACE_LOCAL);
 							}
-						} else {
-							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
-									SynchronizationAction.REPLACE_LOCAL);
 						}
 					}
 				}

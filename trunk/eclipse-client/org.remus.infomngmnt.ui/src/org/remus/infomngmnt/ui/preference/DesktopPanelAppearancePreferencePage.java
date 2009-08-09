@@ -51,13 +51,15 @@ public class DesktopPanelAppearancePreferencePage extends FieldEditorPreferenceP
 		{
 			ScaleFieldEditor scaleFieldEditor = new ScaleFieldEditor(
 					UIPreferenceInitializer.DESKTOP_PANEL_TRANSPARENCY_PERCENTAGE,
-					"Maximal Transparency (in %)", getFieldEditorParent(), 0, 100, 1, 10);
+					"Maximal Transparency", getFieldEditorParent(), 0, 100, 1, 10);
 			scaleFieldEditor.setMaximum(50);
 			scaleFieldEditor.setIncrement(10);
 			addField(scaleFieldEditor);
 		}
 		addField(new BooleanFieldEditor(UIPreferenceInitializer.DESKTOP_PANEL_ALWAYS_ON_TOP,
 				"Always on top", BooleanFieldEditor.DEFAULT, getFieldEditorParent()));
+		addField(new BooleanFieldEditor(UIPreferenceInitializer.DESKTOP_PANEL_WINDOW_TRIMMINGS,
+				"Show Trimmings", BooleanFieldEditor.DEFAULT, getFieldEditorParent()));
 	}
 
 	public void init(final IWorkbench workbench) {

@@ -21,6 +21,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
@@ -55,6 +56,19 @@ public class BindingWidgetFactory {
 	public static TextBindingWidget createTextBinding(final Text text,
 			final IEMFEditBindingProvider provider) {
 		return createTextBinding(text, provider.getDatabindingContext(), provider
+				.getEditingDomain());
+	}
+	
+	public static LabelBindingWidget createLabelBinding(final Label label,
+			final EMFDataBindingContext ctx, final EditingDomain domain) {
+		LabelBindingWidget labelWidget = new LabelBindingWidget();
+		initControl(labelWidget, ctx, domain, label);
+		return labelWidget;
+	}
+	
+	public static LabelBindingWidget createTextBinding(final Label label,
+			final IEMFEditBindingProvider provider) {
+		return createLabelBinding(label, provider.getDatabindingContext(), provider
 				.getEditingDomain());
 	}
 

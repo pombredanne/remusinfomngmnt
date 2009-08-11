@@ -215,7 +215,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/reminder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/title"/>
     </genClasses>
-    <genClasses ecoreClass="infomngmnt.ecore#//Notification">
+    <genClasses ecoreClass="infomngmnt.ecore#//Notification" labelFeature="#//infomngmnt/Notification/message">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/timeStamp"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/importance"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/severity"/>

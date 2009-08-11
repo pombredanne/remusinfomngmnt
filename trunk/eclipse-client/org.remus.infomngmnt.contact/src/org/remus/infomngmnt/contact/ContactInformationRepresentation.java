@@ -19,6 +19,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,12 +31,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.osgi.util.NLS;
 
+import org.remus.infomngmnt.CalendarEntry;
+import org.remus.infomngmnt.CalendarEntryType;
+import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.contact.core.ContactUtil;
 import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.services.IGeoData;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.ui.UIPlugin;
@@ -47,6 +54,35 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public CalendarEntry[] getCalendarContributions() {
+		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+		Date birthday = (Date) read.getValueByNodeId(ContactActivator.NODE_DETAILS_BIRTHDAY);
+		if (birthday != null) {
+			CalendarEntry createCalendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
+			Calendar instance = Calendar.getInstance();
+			instance.setTime(birthday);
+			instance.set(Calendar.HOUR, 0);
+			instance.set(Calendar.MINUTE, 0);
+			instance.set(Calendar.SECOND, 0);
+			instance.set(Calendar.AM_PM, Calendar.AM);
+			createCalendarEntry.setStart(instance.getTime());
+			instance = Calendar.getInstance();
+			instance.setTime(birthday);
+			instance.add(Calendar.DAY_OF_YEAR, 1);
+			instance.set(Calendar.HOUR, 0);
+			instance.set(Calendar.MINUTE, 0);
+			instance.set(Calendar.SECOND, 0);
+			instance.set(Calendar.AM_PM, Calendar.AM);
+			createCalendarEntry.setEnd(instance.getTime());
+			createCalendarEntry.setEntryType(CalendarEntryType.ANNUAL);
+			createCalendarEntry.setTitle(NLS.bind("Birthday of {0}", ContactUtil
+					.getFormattedName(getValue())));
+			return new CalendarEntry[] { createCalendarEntry };
+		}
+		return super.getCalendarContributions();
 	}
 
 	@Override

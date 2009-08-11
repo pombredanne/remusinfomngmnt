@@ -248,8 +248,8 @@ public class SearchHistoryView extends AbstractScrolledTitledView {
 			FormToolkit toolkit = this.form.getToolkit();
 			this.s1 = toolkit.createSection(parent, Section.DESCRIPTION);
 			this.s1.marginWidth = 10;
-			this.s1.setText("Type Two Details");
-			this.s1.setDescription("Sets the properties of the selected customer.");
+			this.s1.setText("Search Details");
+			this.s1.setDescription("Details of the selected search.");
 			GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 			gridData.widthHint = SWT.DEFAULT;
 			gridData.heightHint = SWT.DEFAULT;

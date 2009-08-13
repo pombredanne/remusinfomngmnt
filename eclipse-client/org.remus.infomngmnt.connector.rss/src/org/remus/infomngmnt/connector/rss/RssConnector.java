@@ -173,7 +173,11 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 
 	private RemoteObject buildFeedEntry(final SyndEntry object) {
 		RemoteObject returnValue = InfomngmntFactory.eINSTANCE.createRemoteObject();
-		returnValue.setHash(String.valueOf(object.getPublishedDate().getTime()));
+		if (object.getPublishedDate() != null) {
+			returnValue.setHash(String.valueOf(object.getPublishedDate().getTime()));
+		} else {
+			returnValue.setHash(object.getUri());
+		}
 		returnValue.setUrl(object.getUri());
 		returnValue.setId(object.getUri());
 		returnValue.setWrappedObject(object);

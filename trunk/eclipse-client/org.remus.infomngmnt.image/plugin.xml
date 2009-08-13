@@ -15,6 +15,9 @@
          <validTransfers
                transferId="org.remus.infomngmnt.core.urlTransfer">
          </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
       </information>
    </extension>
    <extension

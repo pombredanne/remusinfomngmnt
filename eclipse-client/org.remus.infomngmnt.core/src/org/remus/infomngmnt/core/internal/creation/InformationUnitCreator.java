@@ -299,7 +299,7 @@ public class InformationUnitCreator {
 		if (nodeId.startsWith(ATTRIBUTE_ACCESSOR)) {
 			EList<EAttribute> eAttributes = anyParentUnit.eClass().getEAllAttributes();
 			for (EAttribute eAttribute : eAttributes) {
-				if (eAttribute.isChangeable()) {
+				if (eAttribute.isChangeable() && eAttribute.getName().equals(nodeId.substring(1))) {
 					anyParentUnit.eSet(eAttribute, value);
 					return;
 				}

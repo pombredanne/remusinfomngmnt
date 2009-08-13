@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,15 @@ import org.remus.infomngmnt.util.StatusCreator;
  */
 public class RuleProcessor {
 
+	private static final String DESCRIPTION = "description";
+	private static final String KEYWORDS = "keywords";
+	private static final String LABEL = "label";
+	private static final String CATEGORY = "category";
+	private static final String DYNAMIC_VALUES = "dynamicValues";
+	private static final String FILE_MAP = "fileMap";
+	private static final String VALUE_MAP = "valueMap";
+	private static final String INPUT = "input";
+	private static final String FEATURE_MAP = "featureMap";
 	private static RuleProcessor INSTANCE;
 
 	public static RuleProcessor getInstance() {
@@ -100,7 +110,7 @@ public class RuleProcessor {
 			try {
 				String groovyMatcher = ruleAction.getGroovyMatcher();
 				Binding binding = new Binding();
-				binding.setVariable("input", ruleResult.getValue());
+				binding.setVariable(INPUT, ruleResult.getValue());
 				GroovyShell gse = new GroovyShell(binding);
 				Object evaluate = gse.evaluate(groovyMatcher);
 				if (evaluate instanceof Boolean && (Boolean) evaluate) {
@@ -156,24 +166,37 @@ public class RuleProcessor {
 			String script = getGroovyStub();
 			String join = StringUtils.join(script, "\n", postProcessingInstructions);
 			Binding binding = new Binding();
-			binding.setVariable("input", value);
-			binding.setVariable("featureMap", new HashMap<String, Object>());
-			binding.setVariable("category", "");
+			binding.setVariable(INPUT, value);
+			binding.setVariable(FEATURE_MAP, new HashMap<String, Object>());
+			binding.setVariable(VALUE_MAP, new HashMap<String, Object>());
+			binding.setVariable(FILE_MAP, new HashMap<String, Object>());
+			binding.setVariable(DYNAMIC_VALUES, new HashMap<Object, String>());
+			binding.setVariable(CATEGORY, "");
+			binding.setVariable(LABEL, "");
+			binding.setVariable(KEYWORDS, "");
+			binding.setVariable(DESCRIPTION, "");
 			GroovyShell gse = new GroovyShell(binding);
 			try {
 				gse.evaluate(join);
-				Map<String, Object> variable = (Map<String, Object>) binding
-						.getVariable("featureMap");
-				RulePostProcessor postProcessing = new RulePostProcessor(createNewObject, variable);
+				Map<String, Object> featureMap = (Map<String, Object>) binding
+						.getVariable(FEATURE_MAP);
+				Map<String, Object> valueMap = (Map<String, Object>) binding.getVariable(VALUE_MAP);
+				Map<String, Object> fileMap = (Map<String, Object>) binding.getVariable(FILE_MAP);
+				Map<Object, String> dynamicValues = (Map<Object, String>) binding
+						.getVariable(DYNAMIC_VALUES);
+				RulePostProcessor postProcessing = new RulePostProcessor(binding.getVariable(
+						CATEGORY).toString(), binding.getVariable(LABEL).toString(), binding
+						.getVariable(KEYWORDS).toString(), binding.getVariable(DESCRIPTION)
+						.toString(), featureMap, fileMap, valueMap, dynamicValues, createNewObject);
 				postProcessing.process();
-				return new PostProcessingResult(binding.getVariable("category").toString(),
-						createNewObject);
+				return new PostProcessingResult(binding.getVariable(CATEGORY).toString(),
+						createNewObject, fileMap);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		return new PostProcessingResult("", createNewObject);
+		return new PostProcessingResult("", createNewObject, Collections.EMPTY_MAP);
 	}
 
 	private String getGroovyStub() {

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<infomngmnt:AvailableRuleDefinitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0">
+<infomngmnt:AvailableRuleDefinitions xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0">
   <newElementRules name="Default">
     <transferTypes name="Dropped/Pasted URL" id="org.remus.infomngmnt.core.urlTransfer">
       <actions infoTypeId="PLAINTEXT"/>
       <actions name="Photo from URL" infoTypeId="IMAGE"/>
       <actions name="Password for URL" infoTypeId="PASSWORD"/>
-      <actions name="Regular Link" infoTypeId="LINK" />
+      <actions name="Regular Link" infoTypeId="LINK"/>
     </transferTypes>
     <transferTypes name="Dropped/Pasted File(s)" id="org.remus.infomngmnt.core.filetransfer">
-      <actions infoTypeId="VIDEO"/>
+      <actions infoTypeId="VIDEO" groovyMatcher="return input.length > 0 &amp;&amp; (input[0].endsWith(&quot;.avi&quot;) || input[0].endsWith(&quot;.mpg&quot;) || input[0].endsWith(&quot;.mpeg&quot;) || input[0].endsWith(&quot;.flv&quot;) || input[0].endsWith(&quot;.mp4&quot;))"/>
+      <actions infoTypeId="IMAGE" groovyMatcher="return input.length > 0 &amp;&amp; (input[0].endsWith(&quot;.bmp&quot;) || input[0].endsWith(&quot;.png&quot;) || input[0].endsWith(&quot;.jpg&quot;) || input[0].endsWith(&quot;.flv&quot;) || input[0].endsWith(&quot;.jpeg&quot;) || input[0].endsWith(&quot;.gif&quot;))"/>
     </transferTypes>
     <transferTypes name="Dropped/Pasted HTML-Content" id="org.remus.infomngmnt.core.htmltransfer">
       <actions infoTypeId="PLAINTEXT"/>
       <actions infoTypeId="HTML"/>
+      <actions infoTypeId="MEETING" postProcessingInstructions="setValue(&quot;log&quot;,input)"/>
+      <actions infoTypeId="MAIL" postProcessingInstructions="setValue(&quot;contenttype&quot;,&quot;HTML&quot;)&#xD;&#xA;setValue(&quot;content&quot;,input)&#xD;&#xA;setValue(&quot;received&quot;,new Date())"/>
     </transferTypes>
     <transferTypes name="Dropped/Pasted RichText-Content" id="org.remus.infomngmnt.core.rftTransfer"/>
     <transferTypes name="Dropped/Pasted Image or Image-Data" id="org.remus.infomngmnt.core.imagetransfer">
@@ -20,11 +23,14 @@
     </transferTypes>
     <transferTypes name="Dropped/Pasted Text-Content" id="org.remus.infomngmnt.core.texttransfer">
       <actions infoTypeId="PLAINTEXT"/>
-      <actions infoTypeId="PASSWORD" postProcessingInstructions="preset(&quot;@stringValue&quot;,input);"/>
-      <actions name="Java SourceCode" infoTypeId="SOURCE" postProcessingInstructions="preset(&quot;childValues[@type='srcType']/@stringValue&quot;,&quot;Java&quot;);" />
-      <actions infoTypeId="LINK" />
-      <actions name="Contact from E-Mail" infoTypeId="CONTACT" postProcessingInstructions="preset(&quot;childValues[@type='emails']/childValues[@type='email']/@stringValue&quot;,input);&#xD;&#xA;category=&quot;Inbox/My contacts&quot;"/>
-      <actions name="" infoTypeId="SOURCE" />
+      <actions infoTypeId="PASSWORD" postProcessingInstructions="setValue(&quot;PASSWORD&quot;,input);"/>
+      <actions name="Java SourceCode" infoTypeId="SOURCE" postProcessingInstructions="preset(&quot;childValues[@type='srcType']/@stringValue&quot;,&quot;Java&quot;);"/>
+      <actions infoTypeId="LINK"/>
+      <actions name="Contact from E-Mail" infoTypeId="CONTACT" postProcessingInstructions="addDynamicValue(&quot;email&quot;,input)&#xD;&#xA;setValue(&quot;emaildef&quot;,input)&#xD;&#xA;category=&quot;Inbox/My contacts&quot;"/>
+      <actions name="" infoTypeId="SOURCE"/>
+      <actions name="Meeting minutes (today)" infoTypeId="MEETING" postProcessingInstructions="setValue(&quot;log&quot;,input)&#xD;&#xA;setValue(&quot;meetingtime&quot;,new Date())"/>
+      <actions name="Task with Medium priority" infoTypeId="TASK" postProcessingInstructions="setValue(&quot;TASK&quot;,input)&#xD;&#xA;setValue(&quot;prio&quot;,&quot;P2&quot;)"/>
+      <actions infoTypeId="MAIL" postProcessingInstructions="setValue(&quot;contenttype&quot;,&quot;PLAIN&quot;)&#xD;&#xA;setValue(&quot;content&quot;,input)&#xD;&#xA;setValue(&quot;MAIL&quot;,&quot;Dropped Text&quot;)&#xD;&#xA;setValue(&quot;received&quot;,new Date())"/>
     </transferTypes>
   </newElementRules>
 </infomngmnt:AvailableRuleDefinitions>

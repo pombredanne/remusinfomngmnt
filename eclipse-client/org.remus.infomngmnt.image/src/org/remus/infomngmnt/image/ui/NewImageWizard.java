@@ -40,7 +40,9 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
+import org.remus.infomngmnt.core.transfertypes.FileTransferWrapper;
 import org.remus.infomngmnt.core.transfertypes.URLTransferWrapper;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
@@ -140,15 +142,32 @@ public class NewImageWizard extends NewInfoObjectWizard {
 			}
 			((GeneralImagePage) this.page1).setTmpFile(tmpFile);
 
-			InformationUnit width = InformationUtil.getChildByType(this.newElement,
-					ImagePlugin.NODE_NAME_WIDTH);
-			width.setLongValue(((ImageData) value).width);
-			InformationUnit height = InformationUtil.getChildByType(this.newElement,
-					ImagePlugin.NODE_NAME_HEIGHT);
-			height.setLongValue(((ImageData) value).height);
-			InformationUnit origFilePath = InformationUtil.getChildByType(this.newElement,
-					ImagePlugin.ORIGINAL_FILEPATH);
-			origFilePath.setStringValue("clipboard.png");
+			InformationStructureEdit edit = InformationStructureEdit
+					.newSession(ImagePlugin.TYPE_ID);
+			edit.setValue(this.newElement, ImagePlugin.NODE_NAME_WIDTH, ((ImageData) value).width);
+			edit
+					.setValue(this.newElement, ImagePlugin.NODE_NAME_HEIGHT,
+							((ImageData) value).height);
+			edit.setValue(this.newElement, ImagePlugin.ORIGINAL_FILEPATH, "clipboard.png");
+
+		} else if (transferType instanceof FileTransferWrapper) {
+			ImageLoader imageLoader = new ImageLoader();
+			imageLoader.load(((String[]) value)[0]);
+			ImageData data = imageLoader.data[0];
+			IFile tmpFile = ResourceUtil.createTempFile("png");
+			imageLoader.save(tmpFile.getLocation().toOSString(), SWT.IMAGE_PNG);
+			try {
+				tmpFile.refreshLocal(IResource.DEPTH_INFINITE, null);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			((GeneralImagePage) this.page1).setTmpFile(tmpFile);
+			InformationStructureEdit edit = InformationStructureEdit
+					.newSession(ImagePlugin.TYPE_ID);
+			edit.setValue(this.newElement, ImagePlugin.NODE_NAME_WIDTH, data.width);
+			edit.setValue(this.newElement, ImagePlugin.NODE_NAME_HEIGHT, data.height);
+			edit.setValue(this.newElement, ImagePlugin.ORIGINAL_FILEPATH, ((String[]) value)[0]);
 
 		} else if (transferType instanceof URLTransferWrapper) {
 			try {

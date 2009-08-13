@@ -15,8 +15,8 @@ package org.remus.infomngmnt.core.rules;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
-
+import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.path.Path2ObjectMapper;
 
 /**
@@ -24,12 +24,28 @@ import org.remus.infomngmnt.core.path.Path2ObjectMapper;
  */
 public class RulePostProcessor {
 
-	private final EObject object2perform;
+	private final InformationUnit object2perform;
 	private final Map<String, Object> values;
+	private final Map<String, Object> fileMap;
+	private final Map<Object, String> dynamicValues;
+	private final Map<String, Object> valueMap;
+	private final String lableString;
+	private final String keyWordString;
+	private final String descriptionString;
 
-	public RulePostProcessor(final EObject object2perform, final Map<String, Object> values) {
-		this.object2perform = object2perform;
-		this.values = values;
+	public RulePostProcessor(final String categoryString, final String lableString,
+			final String keyWordString, final String descriptionString,
+			final Map<String, Object> featureMap, final Map<String, Object> fileMap,
+			final Map<String, Object> valueMap, final Map<Object, String> dynamicValues,
+			final InformationUnit createNewObject) {
+		this.lableString = lableString;
+		this.keyWordString = keyWordString;
+		this.descriptionString = descriptionString;
+		this.values = featureMap;
+		this.fileMap = fileMap;
+		this.valueMap = valueMap;
+		this.dynamicValues = dynamicValues;
+		this.object2perform = createNewObject;
 
 	}
 
@@ -38,6 +54,21 @@ public class RulePostProcessor {
 		for (String string : keySet) {
 			new Path2ObjectMapper(string, this.object2perform, this.values.get(string))
 					.getObjectForPath(true, true);
+		}
+		InformationStructureEdit edit = InformationStructureEdit.newSession(this.object2perform
+				.getType());
+		Set<String> keySet2 = this.valueMap.keySet();
+		for (String string : keySet2) {
+			edit.setValue(this.object2perform, string, this.valueMap.get(string));
+		}
+		edit.setValue(this.object2perform, "@label", this.lableString);
+		edit.setValue(this.object2perform, "@description", this.descriptionString);
+		edit.setValue(this.object2perform, "@keywords", this.keyWordString);
+		Set<Object> keySet3 = this.dynamicValues.keySet();
+		for (Object object : keySet3) {
+			String string = this.dynamicValues.get(object);
+			InformationUnit subType = edit.createSubType(string, object);
+			edit.addDynamicNode(this.object2perform, subType, null);
 		}
 	}
 }

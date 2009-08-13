@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.core.rules;
 
+import java.util.Map;
+
 import org.remus.infomngmnt.InformationUnit;
 
 /**
@@ -23,9 +25,13 @@ public class PostProcessingResult {
 
 	private final InformationUnit informationUnit;
 
-	PostProcessingResult(final String categoryString, final InformationUnit informationUnit) {
+	private final Map<String, Object> fileMap;
+
+	PostProcessingResult(final String categoryString, final InformationUnit informationUnit,
+			final Map<String, Object> fileMap) {
 		this.categoryString = categoryString;
 		this.informationUnit = informationUnit;
+		this.fileMap = fileMap;
 	}
 
 	/**
@@ -40,6 +46,10 @@ public class PostProcessingResult {
 	 */
 	public InformationUnit getInformationUnit() {
 		return this.informationUnit;
+	}
+
+	public Map<String, Object> getFileMap() {
+		return this.fileMap;
 	}
 
 }

@@ -44,6 +44,10 @@
             label="Worklog"
             type="TASK">
       </editPage>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.task.ui.wizard.NewTaskWizard"
+            typeId="TASK">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

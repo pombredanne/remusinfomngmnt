@@ -18,6 +18,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
@@ -78,6 +80,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Notification;
+import org.remus.infomngmnt.NotificationCollection;
 import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.common.ui.databinding.Date2StringConverter;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
@@ -102,6 +105,13 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 	private DisposableEditingDomain domain;
 	private NotificationMasterBlock masterDetail;
 	private MenuManager contextMenu;
+
+	private final Adapter changeAdapter = new AdapterImpl() {
+		@Override
+		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
+			NotificationView.this.masterDetail.viewer.refresh();
+		};
+	};
 
 	/*
 	 * (non-Javadoc)
@@ -166,6 +176,14 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 
 	}
 
+	@Override
+	public void dispose() {
+		NotificationCollection allNotifications = UIPlugin.getDefault().getService(
+				INotificationManagerManager.class).getAllNotifications();
+		allNotifications.eAdapters().remove(this.changeAdapter);
+		super.dispose();
+	}
+
 	private class NotificationMasterBlock extends MasterDetailsBlock {
 
 		TableViewer viewer;
@@ -219,8 +237,10 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 							return null;
 						}
 					});
-			this.viewer.setInput(UIPlugin.getDefault()
-					.getService(INotificationManagerManager.class).getAllNotifications());
+			NotificationCollection allNotifications = UIPlugin.getDefault().getService(
+					INotificationManagerManager.class).getAllNotifications();
+			allNotifications.eAdapters().add(NotificationView.this.changeAdapter);
+			this.viewer.setInput(allNotifications);
 			this.viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 				public void selectionChanged(final SelectionChangedEvent event) {
 					NotificationMasterBlock.this.managedForm.fireSelectionChanged(spart, event
@@ -282,8 +302,8 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 			FormToolkit toolkit = this.form.getToolkit();
 			this.s1 = toolkit.createSection(parent, Section.DESCRIPTION);
 			this.s1.marginWidth = 10;
-			this.s1.setText("Search Details");
-			this.s1.setDescription("Details of the selected search.");
+			this.s1.setText("Notification Details");
+			this.s1.setDescription("Details of the selected notification.");
 			GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 			gridData.widthHint = SWT.DEFAULT;
 			gridData.heightHint = SWT.DEFAULT;
@@ -422,7 +442,7 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 				NotificationDetailsPage.this.affectedIULabel.setText("None", false, false);
 			}
 
-			part.refresh();
+			this.form.reflow(true);
 		}
 	}
 

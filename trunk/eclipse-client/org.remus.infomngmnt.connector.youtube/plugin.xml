@@ -14,7 +14,6 @@
    <extension
          point="org.remus.infomngmnt.ui.repositoryUI">
       <respository
-            actioncontributor="org.remus.infomngmnt.connector.youtube.readonly.YoutubeActionContributor"
             id="org.remus.infomngmnt.connector.youtube.respository1"
             newWizard="org.remus.infomngmnt.connector.youtube.readonly.NewReadonlyYoutubeRepositoryWizard"
             repository-id="org.remus.infomngmnt.connector.youtube">

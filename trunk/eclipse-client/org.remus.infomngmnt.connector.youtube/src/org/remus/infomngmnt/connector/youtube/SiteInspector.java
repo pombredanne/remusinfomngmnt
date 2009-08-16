@@ -13,9 +13,14 @@
 package org.remus.infomngmnt.connector.youtube;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 
@@ -25,22 +30,32 @@ import org.remus.infomngmnt.common.core.streams.StreamUtil;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class SiteInspector {
-	public static final String REGEXP_STRING = "(fullscreenUrl\\W=\\W.*t=)([^&]+)(.*)";
+	public static final String REGEXP_STRING = "(\"fmt_url_map\": \")(.+)(\")";
 
-	public static String getHash(final IFile file) throws CoreException {
+	public static Map<String, String> getUrlMap(final IFile file) throws CoreException {
 		InputStream contents = file.getContents();
 		String convertStreamToString = StreamUtil.convertStreamToString(contents);
 
 		Pattern compile = Pattern.compile(REGEXP_STRING);
 		Matcher matcher = compile.matcher(convertStreamToString);
+		Map<String, String> returnValue = new HashMap<String, String>();
 		if (matcher.find()) {
-			return matcher.group(2);
+			String escapeJavaScript;
+			try {
+				escapeJavaScript = URLDecoder.decode(matcher.group(2), "UTF-8");
+				String[] split = StringUtils.split(escapeJavaScript, ",");
+				for (String string : split) {
+					String[] split2 = StringUtils.split(string, "|");
+					if (split2.length == 2) {
+						returnValue.put(split2[0], split2[1]);
+					}
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		// if (matcher.groupCount() == 3) {
-		// return matcher.toMatchResult().group(2);
-		// }
-
-		return null;
+		return returnValue;
 	}
 
 	public static String getId(final String url) {

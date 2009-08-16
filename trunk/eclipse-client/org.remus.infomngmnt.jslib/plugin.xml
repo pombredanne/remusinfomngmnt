@@ -7,5 +7,20 @@
       <startup
             class="org.remus.infomngmnt.jslib.ImageExtractor"></startup>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.jslib.curvycorner"
+            resource="js/curvycorners.js">
+      </referenceResource>
+      <referenceResource
+            id="org.remus.infomngmnt.jslib.overlib"
+            resource="js/overlib.js">
+      </referenceResource>
+      <referenceResource
+            id="org.remus.infomngmnt.jslib.images"
+            resource="templates/images.js">
+      </referenceResource>
+   </extension>
 
 </plugin>

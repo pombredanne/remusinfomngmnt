@@ -21,6 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -293,28 +294,15 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			DownloadFileJob downloadWebsiteJob = new DownloadFileJob(new URL(url), tempFile,
 					getFileReceiveAdapter());
 			downloadWebsiteJob.run(monitor);
-			String hash = SiteInspector.getHash(tempFile);
-			String youtTubeId = SiteInspector.getId(url);
 			this.tmpVideoFile = ResourceUtil.createTempFile("flv");
-			DownloadFileJob downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash,
-					true), this.tmpVideoFile, getFileReceiveAdapter());
-			IStatus run = downloadVidJob.run(monitor);
-			try {
-				/*
-				 * If no hd video is present in former versions the request
-				 * returned http error, at the moment it streams a file with 0
-				 * bytes. curious.
-				 */
-				if (run.getSeverity() != Status.OK
-						|| this.tmpVideoFile.getContents().available() == 0) {
-					downloadVidJob = new DownloadFileJob(getDownloadUrl(youtTubeId, hash, false),
-							this.tmpVideoFile, getFileReceiveAdapter());
-					downloadVidJob.run(monitor);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			URL downloadUrl = getDownloadUrl(tempFile, true);
+			if (downloadUrl == null) {
+				throw new RemoteException(StatusCreator
+						.newStatus("Error calculating download url."));
 			}
+			DownloadFileJob downloadVidJob = new DownloadFileJob(downloadUrl, this.tmpVideoFile,
+					getFileReceiveAdapter());
+			downloadVidJob.run(monitor);
 
 			InformationStructureEdit edit = InformationStructureEdit
 					.newSession(VideoActivator.TYPE_ID);
@@ -505,18 +493,29 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	}
 
-	private URL getDownloadUrl(final String id, final String hash, final boolean hd) {
+	private URL getDownloadUrl(final IFile content, final boolean hd) {
 		String url;
-		if (hd) {
-			url = NLS.bind(getPreferences().getString(
-					PreferenceInitializer.HIGH_DEFINITION_DOWNLOAD_URL), id, hash);
-		} else {
-			url = NLS.bind(getPreferences().getString(
-					PreferenceInitializer.HIGH_QUALITY_DOWNLOAD_URL), id, hash);
-		}
+
+		// if (hd) {
+		// url = NLS.bind(getPreferences().getString(
+		// PreferenceInitializer.HIGH_DEFINITION_DOWNLOAD_URL), this.id, hash);
+		// } else {
+		// url = NLS.bind(getPreferences().getString(
+		// PreferenceInitializer.HIGH_QUALITY_DOWNLOAD_URL), this.id, hash);
+		// }
 		try {
-			return new URL(url);
+			Map<String, String> urlMap = SiteInspector.getUrlMap(content);
+			if (urlMap.get("22") != null) {
+				return new URL(urlMap.get("22"));
+			} else if (urlMap.get("34") != null) {
+				return new URL(urlMap.get("34"));
+			} else if (urlMap.get("5") != null) {
+				return new URL(urlMap.get("5"));
+			}
 		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -65,7 +65,11 @@ public class MailInformationRepresentation extends AbstractInformationRepresenta
 		InformationStructureRead read = InformationStructureRead.newSession(getValue());
 		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
 		try {
-			content = HTMLStripReader.strip(content);
+			if (content != null) {
+				content = HTMLStripReader.strip(content);
+			} else {
+				content = "";
+			}
 		} catch (IOException e) {
 			content = "";
 		}

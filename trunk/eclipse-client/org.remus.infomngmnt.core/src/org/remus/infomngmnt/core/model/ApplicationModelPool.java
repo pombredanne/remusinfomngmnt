@@ -25,12 +25,17 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectReferenceValueCondition;
 import org.eclipse.emf.query.statements.FROM;
@@ -192,7 +197,15 @@ public class ApplicationModelPool {
 			for (ISaveParticipant iSaveParticipant : allItems) {
 				iSaveParticipant.handleClean(project);
 			}
-			getModel().getRootCategories().remove(itemByValue);
+			ItemProvider provider = new ItemProvider(getModel().getRootCategories());
+			provider.getChildren().remove(itemByValue);
+			AdapterFactoryEditingDomain editingDomain = EditingUtil.getInstance()
+					.getNavigationEditingDomain();
+			Command command = SetCommand.create(editingDomain, getModel(),
+					InfomngmntPackage.Literals.APPLICATION_ROOT__ROOT_CATEGORIES, provider
+							.getChildren());
+			editingDomain.getCommandStack().execute(command);
+			// getModel().getRootCategories().remove(itemByValue);
 		}
 		project.close(new NullProgressMonitor());
 		clearCache();
@@ -203,16 +216,19 @@ public class ApplicationModelPool {
 		if (project.isOpen()) {
 			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
 					+ ResourceUtil.PRIMARY_CONTENT_FILE));
+			AdapterFactoryEditingDomain navigationEditingDomain = EditingUtil.getInstance()
+					.getNavigationEditingDomain();
 			final Category category = EditingUtil.getInstance().getObjectFromFile(file,
-					InfomngmntPackage.eINSTANCE.getCategory(),
-					EditingUtil.getInstance().getNavigationEditingDomain());
+					InfomngmntPackage.eINSTANCE.getCategory(), navigationEditingDomain);
 			if (category.getId() != null) {
 				category.eResource().eAdapters().add(new AdapterImplExtension(category));
 			}
 
+			Command command = AddCommand.create(navigationEditingDomain, this.model,
+					InfomngmntPackage.Literals.APPLICATION_ROOT__ROOT_CATEGORIES, category);
+			navigationEditingDomain.getCommandStack().execute(command);
 			this.model.getRootCategories().add(category);
-			EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources()
-					.add(category.eResource());
+			navigationEditingDomain.getResourceSet().getResources().add(category.eResource());
 
 		}
 

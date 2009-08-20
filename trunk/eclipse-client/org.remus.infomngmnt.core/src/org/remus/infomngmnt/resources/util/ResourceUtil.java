@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -25,18 +26,23 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.common.core.streams.FileUtil;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.internal.builder.InformationBuilder;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
+import org.remus.infomngmnt.util.StatusCreator;
 
 public class ResourceUtil {
 
@@ -463,4 +469,31 @@ public class ResourceUtil {
 
 	}
 
+	public static void cleanUp(final IProgressMonitor monitor) throws CoreException {
+		monitor.beginTask("Clean up", IProgressMonitor.UNKNOWN);
+		monitor.setTaskName("Deleting temporary files");
+		ResourcesPlugin.getWorkspace().getRoot().getProject(ResourceUtil.PROJECT_NAME_TMP).delete(
+				true, new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+		IProject[] relevantProjects = getRelevantProjects();
+		for (IProject iProject : relevantProjects) {
+			IFolder folder = iProject.getFolder(CMDSTACK_FOLDER);
+			if (folder.exists()) {
+				IResource[] members = folder.members();
+				monitor.setTaskName(NLS.bind("Deleting temporary files of project\'\'{0}\'\'",
+						folder.getProject().getName()));
+				for (IResource iResource : members) {
+					iResource.delete(true,
+							new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+				}
+			}
+		}
+		File file = InfomngmntEditPlugin.getPlugin().getStateLocation().append("compare").toFile();
+		try {
+			monitor.setTaskName("Deleting compare folder");
+			FileUtil.delete(file);
+		} catch (IOException e) {
+			throw new CoreException(StatusCreator.newStatus("Error deleting compare folder", e));
+		}
+
+	}
 }

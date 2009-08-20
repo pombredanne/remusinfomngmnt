@@ -39,8 +39,12 @@ public class RefreshTreeAction extends Action {
 		if (this.viewer != null) {
 			if (this.viewer instanceof StructuredViewer) {
 				List list = ((IStructuredSelection) this.viewer.getSelection()).toList();
-				for (Object object : list) {
-					((StructuredViewer) this.viewer).refresh(object, true);
+				if (list.size() > 0) {
+					for (Object object : list) {
+						((StructuredViewer) this.viewer).refresh(object, true);
+					}
+				} else {
+					this.viewer.refresh();
 				}
 			} else {
 				this.viewer.refresh();

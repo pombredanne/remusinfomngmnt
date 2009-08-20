@@ -42,6 +42,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
+import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
 import org.remus.infomngmnt.common.ui.html.DownloadMissingUrlJob;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
@@ -143,8 +144,10 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 
 			final StreamResult result = new StreamResult(writer);
 			transformer.transform(source, result);
-			tempFile.setContents(new ByteArrayInputStream(writer.toString().getBytes("UTF-8")),
-					true, false, monitor);
+			ByteArrayInputStream source2 = new ByteArrayInputStream(writer.toString().getBytes(
+					"UTF-8"));
+			tempFile.setContents(source2, true, false, monitor);
+			StreamCloser.closeStreams(source2, contents);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

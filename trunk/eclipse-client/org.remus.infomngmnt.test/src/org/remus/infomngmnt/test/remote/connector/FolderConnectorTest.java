@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -63,6 +64,7 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.core.sync.ChangeSetExecutor;
 import org.remus.infomngmnt.core.sync.ChangeSetManager;
@@ -83,6 +85,8 @@ import org.remus.infomngmnt.util.IdFactory;
 public class FolderConnectorTest {
 
 	public static final String URL = "C:\\repositoryTest"; //$NON-NLS-1$
+
+	public static final String UPDATED_VALUE = "UPDATED_VALUE"; //$NON-NLS-1$
 
 	@Before
 	public void createRepo() throws Exception {
@@ -223,6 +227,77 @@ public class FolderConnectorTest {
 	}
 
 	@Test
+	public void remoteEdited() throws Exception {
+		commitAfterCreation();
+		Category category = CategoryUtil.findCategory("Inbox", false).getChildren().get(0);
+		InformationUnitListItem syncItem = category.getInformationUnit().get(0);
+		InformationUnit adapter = (InformationUnit) syncItem.getAdapter(InformationUnit.class);
+		File file = new File(URL + File.separator + "INFO_" + adapter.getId() + File.separator
+				+ adapter.getId() + ResourceUtil.DOT_FILE_EXTENSION);
+		file.setLastModified(System.currentTimeMillis());
+
+		final ChangeSetManager manager = new ChangeSetManager();
+		ChangeSet changeSet = manager.createChangeSet(category, new NullProgressMonitor());
+		ChangeSetItem changeSetItem = changeSet.getChangeSetItems().get(0);
+		DiffModel createDiffModel = manager.createDiffModel(changeSetItem, category);
+		manager.prepareSyncActions(createDiffModel.getOwnedElements(), changeSetItem, category);
+		Entry<SynchronizableObject, SynchronizationAction> entry = changeSetItem
+				.getSyncObjectActionMap().get(0);
+		assertSame(SynchronizationAction.REPLACE_LOCAL, entry.getValue());
+	}
+
+	@Test
+	public void updateFromRemote() throws Exception {
+		remoteEdited();
+		Category category = CategoryUtil.findCategory("Inbox", false).getChildren().get(0);
+		InformationUnitListItem syncItem = category.getInformationUnit().get(0);
+		final ChangeSetManager manager = new ChangeSetManager();
+		ChangeSet changeSet = manager.createChangeSet(category, new NullProgressMonitor());
+		ChangeSetItem changeSetItem = changeSet.getChangeSetItems().get(0);
+		DiffModel createDiffModel = manager.createDiffModel(changeSetItem, category);
+		manager.prepareSyncActions(createDiffModel.getOwnedElements(), changeSetItem, category);
+		ChangeSetExecutor executor = new ChangeSetExecutor();
+		executor.setChangeSet(changeSet);
+		executor.synchronize(createDiffModel.getOwnedElements(), changeSetItem,
+				new NullProgressMonitor(), category);
+		assertSame(SynchronizationState.IN_SYNC, syncItem.getSynchronizationMetaData()
+				.getSyncState());
+	}
+
+	@Test
+	public void updateFromValue() throws Exception {
+		commitAfterCreation();
+		Category category = CategoryUtil.findCategory("Inbox", false).getChildren().get(0);
+		InformationUnitListItem syncItem = category.getInformationUnit().get(0);
+
+		File file = new File(URL + File.separator + "INFO_" + syncItem.getId() + File.separator
+				+ syncItem.getId() + ResourceUtil.DOT_FILE_EXTENSION);
+		InformationUnit objectFromFileUri = EditingUtil.getInstance().getObjectFromFileUri(
+				URI.createFileURI(file.getAbsolutePath()),
+				InfomngmntPackage.Literals.INFORMATION_UNIT, null);
+		InformationStructureEdit edit = InformationStructureEdit.newSession(objectFromFileUri
+				.getType());
+		edit.setValue(objectFromFileUri, MailActivator.NODE_NAME_CONTENT, UPDATED_VALUE);
+		EditingUtil.getInstance().saveObjectToResource(objectFromFileUri);
+
+		final ChangeSetManager manager = new ChangeSetManager();
+		ChangeSet changeSet = manager.createChangeSet(category, new NullProgressMonitor());
+		ChangeSetItem changeSetItem = changeSet.getChangeSetItems().get(0);
+		DiffModel createDiffModel = manager.createDiffModel(changeSetItem, category);
+		manager.prepareSyncActions(createDiffModel.getOwnedElements(), changeSetItem, category);
+		ChangeSetExecutor executor = new ChangeSetExecutor();
+		executor.setChangeSet(changeSet);
+		executor.synchronize(createDiffModel.getOwnedElements(), changeSetItem,
+				new NullProgressMonitor(), category);
+
+		InformationUnit adapter = (InformationUnit) syncItem.getAdapter(InformationUnit.class);
+		InformationStructureRead read = InformationStructureRead.newSession(adapter);
+		Object valueByNodeId = read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
+		assertEquals(UPDATED_VALUE, valueByNodeId);
+
+	}
+
+	@Test
 	public void localDelete() throws Exception {
 		commitAfterCreation();
 		InformationUnitListItem committedItem = CategoryUtil.findCategory("Inbox", false)
@@ -238,6 +313,37 @@ public class FolderConnectorTest {
 		assertNotNull(deletedItem);
 		assertSame(deletedItem.getSynchronizationMetaData().getSyncState(),
 				SynchronizationState.LOCAL_DELETED);
+
+	}
+
+	@Test
+	public void remoteDelete() throws Exception {
+		commitAfterCreation();
+		Category category = CategoryUtil.findCategory("Inbox", false).getChildren().get(0);
+		InformationUnitListItem committedItem = category.getInformationUnit().get(0);
+		Command deleteINFOUNIT = CommandFactory.DELETE_INFOUNIT(Collections
+				.singletonList(committedItem), EditingUtil.getInstance()
+				.getNavigationEditingDomain());
+		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().execute(
+				deleteINFOUNIT);
+
+		InformationUnitListItem deletedItem = ApplicationModelPool.getInstance()
+				.getItemByIdLocalDeletedIncluded(committedItem.getId(), new NullProgressMonitor());
+
+		final ChangeSetManager manager = new ChangeSetManager();
+		ChangeSet changeSet = manager.createChangeSet(category, new NullProgressMonitor());
+		ChangeSetItem changeSetItem = changeSet.getChangeSetItems().get(0);
+		DiffModel createDiffModel = manager.createDiffModel(changeSetItem, category);
+		manager.prepareSyncActions(createDiffModel.getOwnedElements(), changeSetItem, category);
+		ChangeSetExecutor executor = new ChangeSetExecutor();
+		executor.setChangeSet(changeSet);
+		executor.synchronize(createDiffModel.getOwnedElements(), changeSetItem,
+				new NullProgressMonitor(), category);
+
+		File file = new File(URL + File.separator + "INFO_" + deletedItem.getId() + File.separator
+				+ deletedItem.getId() + ResourceUtil.DOT_FILE_EXTENSION);
+
+		assertTrue("Remote data was not deleted", !file.exists());
 
 	}
 

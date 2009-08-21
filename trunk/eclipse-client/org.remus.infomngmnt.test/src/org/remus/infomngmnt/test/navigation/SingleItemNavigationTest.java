@@ -12,24 +12,31 @@
 
 package org.remus.infomngmnt.test.navigation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 
 import junit.framework.Assert;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.ui.actions.WorkspaceModifyDelegatingOperation;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.commands.DeleteCategoryCommand;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.test.util.InfoItemUtils;
+import org.remus.infomngmnt.util.CategoryUtil;
 import org.remus.infomngmnt.util.EditingUtil;
 
 /**
@@ -53,11 +60,32 @@ public class SingleItemNavigationTest {
 		this.subCategory = InfoItemUtils.createNewCategory(CAT_SUB_SUB_1, "Inbox/" + CAT_SUB_1);
 	}
 
+	@After
 	public void cleanUp() {
-		DeleteCategoryCommand deleteCategoryCommand = new DeleteCategoryCommand(
-				this.createCategory, EditingUtil.getInstance().getNavigationEditingDomain());
-		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().execute(
-				deleteCategoryCommand);
+		final Category category = CategoryUtil.findCategory("Inbox", false).getChildren().get(0);
+
+		WorkspaceModifyDelegatingOperation operation = new WorkspaceModifyDelegatingOperation(
+				new IRunnableWithProgress() {
+					public void run(final IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException {
+						Command deleteCategoryCommand = CommandFactory
+								.DELETE_SYNCHRONIZABLE_CATEGORY(category, EditingUtil.getInstance()
+										.getNavigationEditingDomain());
+						EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
+								.execute(deleteCategoryCommand);
+					}
+				});
+		try {
+			new ProgressMonitorDialog(UIUtil.getDisplay().getActiveShell()).run(true, true,
+					operation);
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Test

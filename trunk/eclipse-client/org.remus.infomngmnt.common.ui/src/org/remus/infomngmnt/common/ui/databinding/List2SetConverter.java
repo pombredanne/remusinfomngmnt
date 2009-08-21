@@ -29,7 +29,7 @@ public class List2SetConverter {
 
 	public static IObservableSet create(final IObservableList source) {
 		final boolean[] flag = new boolean[] { false };
-		final IObservableSet set = new WritableSet();
+		final IObservableSet set = new WritableSet(source, null);
 		source.addListChangeListener(new IListChangeListener() {
 			public void handleListChange(final ListChangeEvent event) {
 				if (flag[0]) {

@@ -23,5 +23,24 @@
             type="FAVSEARCH">
       </editPage>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="formheading:org.remus.infomngmnt.search.ui.view.SearchView?after=additions">
+         <command
+               commandId="org.remus.infomngmnt.favoritesearch.loadFavSearch"
+               icon="icons/iconexperience/fav_search.png"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.remus.infomngmnt.favoritesearch.handler.LoadFavoriteSearchHandler"
+            id="org.remus.infomngmnt.favoritesearch.loadFavSearch"
+            name="Load Favorite Search">
+      </command>
+   </extension>
 
 </plugin>

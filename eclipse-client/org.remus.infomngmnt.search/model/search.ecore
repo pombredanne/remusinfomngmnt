@@ -15,11 +15,12 @@
         eType="#//SearchResult" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="idSearch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="projects" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SearchScope">
     <eLiterals name="ALL" literal="All resources"/>
-    <eLiterals name="SELECTED_INFO_UNIT" value="1" literal="Selected "/>
-    <eLiterals name="OPEN_EDITORS" value="2" literal="Opened Editors"/>
+    <eLiterals name="PROJECTS" value="1" literal="In Projects..."/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SearchResult">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="infoId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

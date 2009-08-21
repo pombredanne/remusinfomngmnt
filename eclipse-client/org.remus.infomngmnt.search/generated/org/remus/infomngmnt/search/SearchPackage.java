@@ -152,13 +152,22 @@ public interface SearchPackage extends EPackage {
 	int SEARCH__ID_SEARCH = 7;
 
 	/**
+	 * The feature id for the '<em><b>Projects</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEARCH__PROJECTS = 8;
+
+	/**
 	 * The number of structural features of the '<em>Search</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SEARCH_FEATURE_COUNT = 8;
+	int SEARCH_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.search.impl.SearchResultImpl <em>Result</em>}' class.
@@ -568,6 +577,17 @@ public interface SearchPackage extends EPackage {
 	EAttribute getSearch_IdSearch();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.remus.infomngmnt.search.Search#getProjects <em>Projects</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Projects</em>'.
+	 * @see org.remus.infomngmnt.search.Search#getProjects()
+	 * @see #getSearch()
+	 * @generated
+	 */
+	EAttribute getSearch_Projects();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.search.SearchResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -952,6 +972,14 @@ public interface SearchPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SEARCH__ID_SEARCH = eINSTANCE.getSearch_IdSearch();
+
+		/**
+		 * The meta object literal for the '<em><b>Projects</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SEARCH__PROJECTS = eINSTANCE.getSearch_Projects();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.search.impl.SearchResultImpl <em>Result</em>}' class.

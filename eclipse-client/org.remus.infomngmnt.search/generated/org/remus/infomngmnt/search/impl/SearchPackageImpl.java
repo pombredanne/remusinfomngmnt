@@ -138,20 +138,10 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link SearchPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -163,7 +153,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		if (isInited) return (SearchPackage)EPackage.Registry.INSTANCE.getEPackage(SearchPackage.eNS_URI);
 
 		// Obtain or create and register package
-		SearchPackageImpl theSearchPackage = (SearchPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof SearchPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new SearchPackageImpl());
+		SearchPackageImpl theSearchPackage = (SearchPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SearchPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SearchPackageImpl());
 
 		isInited = true;
 
@@ -176,6 +166,9 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		// Mark meta-data to indicate it can't be changed
 		theSearchPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(SearchPackage.eNS_URI, theSearchPackage);
 		return theSearchPackage;
 	}
 
@@ -258,6 +251,15 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 	 */
 	public EAttribute getSearch_IdSearch() {
 		return (EAttribute)searchEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSearch_Projects() {
+		return (EAttribute)searchEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -540,6 +542,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		createEReference(searchEClass, SEARCH__RESULT);
 		createEAttribute(searchEClass, SEARCH__ID);
 		createEAttribute(searchEClass, SEARCH__ID_SEARCH);
+		createEAttribute(searchEClass, SEARCH__PROJECTS);
 
 		searchResultEClass = createEClass(SEARCH_RESULT);
 		createEAttribute(searchResultEClass, SEARCH_RESULT__INFO_ID);
@@ -618,6 +621,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		initEReference(getSearch_Result(), this.getSearchResult(), null, "result", null, 0, -1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearch_Id(), ecorePackage.getEString(), "id", null, 1, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSearch_IdSearch(), ecorePackage.getEBoolean(), "idSearch", null, 0, 1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSearch_Projects(), ecorePackage.getEString(), "projects", null, 0, -1, Search.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(searchResultEClass, SearchResult.class, "SearchResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSearchResult_InfoId(), ecorePackage.getEString(), "infoId", null, 0, 1, SearchResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -652,8 +656,7 @@ public class SearchPackageImpl extends EPackageImpl implements SearchPackage {
 		// Initialize enums and add enum literals
 		initEEnum(searchScopeEEnum, SearchScope.class, "SearchScope");
 		addEEnumLiteral(searchScopeEEnum, SearchScope.ALL);
-		addEEnumLiteral(searchScopeEEnum, SearchScope.SELECTED_INFO_UNIT);
-		addEEnumLiteral(searchScopeEEnum, SearchScope.OPEN_EDITORS);
+		addEEnumLiteral(searchScopeEEnum, SearchScope.PROJECTS);
 
 		// Initialize data types
 		initEDataType(imageEDataType, Image.class, "Image", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

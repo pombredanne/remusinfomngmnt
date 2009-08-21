@@ -48,6 +48,7 @@ import org.remus.infomngmnt.search.SearchScope;
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#isIdSearch <em>Id Search</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.impl.SearchImpl#getProjects <em>Projects</em>}</li>
  * </ul>
  * </p>
  *
@@ -193,6 +194,16 @@ public class SearchImpl extends EObjectImpl implements Search {
 	 * @ordered
 	 */
 	protected boolean idSearch = ID_SEARCH_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getProjects() <em>Projects</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProjects()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> projects;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -368,6 +379,18 @@ public class SearchImpl extends EObjectImpl implements Search {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getProjects() {
+		if (projects == null) {
+			projects = new EDataTypeUniqueEList<String>(String.class, this, SearchPackage.SEARCH__PROJECTS);
+		}
+		return projects;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -400,7 +423,9 @@ public class SearchImpl extends EObjectImpl implements Search {
 			case SearchPackage.SEARCH__ID:
 				return getId();
 			case SearchPackage.SEARCH__ID_SEARCH:
-				return isIdSearch() ? Boolean.TRUE : Boolean.FALSE;
+				return isIdSearch();
+			case SearchPackage.SEARCH__PROJECTS:
+				return getProjects();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -438,7 +463,11 @@ public class SearchImpl extends EObjectImpl implements Search {
 				setId((String)newValue);
 				return;
 			case SearchPackage.SEARCH__ID_SEARCH:
-				setIdSearch(((Boolean)newValue).booleanValue());
+				setIdSearch((Boolean)newValue);
+				return;
+			case SearchPackage.SEARCH__PROJECTS:
+				getProjects().clear();
+				getProjects().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -476,6 +505,9 @@ public class SearchImpl extends EObjectImpl implements Search {
 			case SearchPackage.SEARCH__ID_SEARCH:
 				setIdSearch(ID_SEARCH_EDEFAULT);
 				return;
+			case SearchPackage.SEARCH__PROJECTS:
+				getProjects().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -504,6 +536,8 @@ public class SearchImpl extends EObjectImpl implements Search {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case SearchPackage.SEARCH__ID_SEARCH:
 				return idSearch != ID_SEARCH_EDEFAULT;
+			case SearchPackage.SEARCH__PROJECTS:
+				return projects != null && !projects.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -532,6 +566,8 @@ public class SearchImpl extends EObjectImpl implements Search {
 		result.append(id);
 		result.append(", idSearch: ");
 		result.append(idSearch);
+		result.append(", projects: ");
+		result.append(projects);
 		result.append(')');
 		return result.toString();
 	}

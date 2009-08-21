@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.remus.infomngmnt.search.Search#getResult <em>Result</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.Search#getId <em>Id</em>}</li>
  *   <li>{@link org.remus.infomngmnt.search.Search#isIdSearch <em>Id Search</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.search.Search#getProjects <em>Projects</em>}</li>
  * </ul>
  * </p>
  *
@@ -234,5 +235,21 @@ public interface Search extends EObject {
 	 * @generated
 	 */
 	void setIdSearch(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Projects</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Projects</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Projects</em>' attribute list.
+	 * @see org.remus.infomngmnt.search.SearchPackage#getSearch_Projects()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getProjects();
 
 } // Search

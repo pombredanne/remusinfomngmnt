@@ -34,6 +34,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
@@ -41,6 +42,7 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchScope;
 import org.remus.infomngmnt.search.service.ILuceneCustomizer;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
 
@@ -256,31 +258,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 			termList.add(termStringBuilder.toString());
 			flagList.add(Occur.MUST);
 		}
-		switch (search.getScope()) {
-		case SELECTED_INFO_UNIT:
-			// later --> Thread issues
-			/*
-			 * ISelection selection =
-			 * PlatformUI.getWorkbench().getActiveWorkbenchWindow
-			 * ().getSelectionService().getSelection(); if (selection instanceof
-			 * IStructuredSelection) { ((IStructuredSelection)
-			 * selection).toList(); }
-			 */
-			break;
-		case OPEN_EDITORS:
-			// later --> Thread issues
-			/*
-			 * IEditorReference[] editorReferences =
-			 * PlatformUI.getWorkbench().getActiveWorkbenchWindow
-			 * ().getActivePage().getEditorReferences(); for (IEditorReference
-			 * editorReference : editorReferences) {
-			 * 
-			 * }
-			 */
-			break;
-		default:
-			break;
-		}
+
 		Query mustHaveQuery = null;
 		try {
 			mustHaveQuery = MultiFieldQueryParser.parse(termList
@@ -317,7 +295,19 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 	}
 
 	public IProject[] getProjectsToSearch(final org.remus.infomngmnt.search.Search search) {
-		// scope comes later.
+		if (search.getScope() == SearchScope.PROJECTS) {
+			EList<String> projects = search.getProjects();
+			List<IProject> returnValue = new ArrayList<IProject>();
+			for (String string : projects) {
+				IProject project = ResourceUtil.getProject(string);
+				if (project != null) {
+					returnValue.add(project);
+				}
+			}
+			if (returnValue.size() > 0) {
+				return returnValue.toArray(new IProject[returnValue.size()]);
+			}
+		}
 		return ResourceUtil.getRelevantProjects();
 	}
 

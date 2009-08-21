@@ -16,6 +16,8 @@ import org.eclipse.core.databinding.observable.set.SetDiff;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -71,6 +73,7 @@ import org.remus.infomngmnt.common.ui.swt.DateCombo;
 import org.remus.infomngmnt.common.ui.view.AbstractScrolledTitledView;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.Search;
@@ -101,6 +104,16 @@ public class SearchView extends AbstractScrolledTitledView {
 	private CheckboxTableViewer viewer;
 	private HashSet<IInfoType> checkedElements;
 	private CheckboxTableViewer newCheckList;
+	private final Adapter rootCatAdapter = new AdapterImpl() {
+		@Override
+		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
+			getSite().getShell().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					initCheckListInput();
+				}
+			});
+		}
+	};
 
 	/**
 	 * Create contents of the view part
@@ -293,6 +306,7 @@ public class SearchView extends AbstractScrolledTitledView {
 				handleSearchButtonPressed();
 			}
 		});
+		ApplicationModelPool.getInstance().getModel().eAdapters().add(this.rootCatAdapter);
 
 		initEditingDomain();
 		initDataBinding();
@@ -311,6 +325,13 @@ public class SearchView extends AbstractScrolledTitledView {
 		}
 		LuceneSearchService.getInstance().search(this.currentSearch, true);
 
+	}
+
+	@Override
+	public void dispose() {
+		ApplicationModelPool.getInstance().getModel().eAdapters().remove(this.rootCatAdapter);
+		this.ctx.dispose();
+		super.dispose();
 	}
 
 	private void initDataBinding() {
@@ -395,12 +416,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		ISWTObservableValue uObsText = SWTObservables.observeText(this.combo);
 		this.ctx.bindValue(uObsText, mObsText, null, null);
 
-		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
-		List<String> projects = new ArrayList<String>();
-		for (IProject iProject : relevantProjects) {
-			projects.add(iProject.getName());
-		}
-		this.newCheckList.setInput(projects);
+		initCheckListInput();
 		IViewerObservableSet observeCheckedElements = ViewersObservables.observeCheckedElements(
 				this.newCheckList, String.class);
 
@@ -408,6 +424,16 @@ public class SearchView extends AbstractScrolledTitledView {
 		IObservableList observeList3 = EMFObservables.observeList(this.currentSearch,
 				SearchPackage.Literals.SEARCH__PROJECTS);
 		this.ctx.bindSet(observeCheckedElements, List2SetConverter.create(observeList3));
+
+	}
+
+	private void initCheckListInput() {
+		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
+		List<String> projects = new ArrayList<String>();
+		for (IProject iProject : relevantProjects) {
+			projects.add(iProject.getName());
+		}
+		this.newCheckList.setInput(projects);
 
 	}
 

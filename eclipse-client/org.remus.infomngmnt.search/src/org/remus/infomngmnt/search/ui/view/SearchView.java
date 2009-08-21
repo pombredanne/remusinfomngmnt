@@ -275,7 +275,6 @@ public class SearchView extends AbstractScrolledTitledView {
 
 		GridDataFactory.createFrom(new GridData(SWT.FILL, SWT.BEGINNING, true, false)).hint(-1, 50)
 				.applyTo(this.newCheckList.getControl());
-		this.newCheckList.getControl().setEnabled(this.selectedInfoUnit.getSelection());
 		this.selectedInfoUnit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -405,6 +404,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		IViewerObservableSet observeCheckedElements = ViewersObservables.observeCheckedElements(
 				this.newCheckList, String.class);
 
+		this.newCheckList.getControl().setEnabled(this.selectedInfoUnit.getSelection());
 		IObservableList observeList3 = EMFObservables.observeList(this.currentSearch,
 				SearchPackage.Literals.SEARCH__PROJECTS);
 		this.ctx.bindSet(observeCheckedElements, List2SetConverter.create(observeList3));
@@ -471,6 +471,15 @@ public class SearchView extends AbstractScrolledTitledView {
 			this.savedSearchHandler = new SavedSearchesHandler();
 		}
 		return this.savedSearchHandler;
+	}
+
+	public void setCurrentSearch(final Search search) {
+		if (this.ctx != null) {
+			this.ctx.dispose();
+		}
+		this.currentSearch = search;
+		initDataBinding();
+
 	}
 
 }

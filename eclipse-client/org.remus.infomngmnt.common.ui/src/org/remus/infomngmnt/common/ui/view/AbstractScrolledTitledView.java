@@ -7,15 +7,19 @@
  *******************************************************************************/
 package org.remus.infomngmnt.common.ui.view;
 
+import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -69,6 +73,12 @@ public abstract class AbstractScrolledTitledView extends ViewPart {
 		createViewContents(client);
 		this.form.layout(true);
 		initializeToolBar();
+
+		this.form.getToolBarManager().add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		IMenuService menuService = (IMenuService) getSite().getService(IMenuService.class);
+		menuService.populateContributionManager((ContributionManager) getToolbarManager(),
+				"formheading:" + getSite().getId()); //$NON-NLS-1$
+		this.form.getToolBarManager().update(true);
 
 	}
 

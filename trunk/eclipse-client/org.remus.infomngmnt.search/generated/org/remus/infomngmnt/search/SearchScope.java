@@ -41,24 +41,14 @@ public enum SearchScope implements Enumerator {
 	ALL(0, "ALL", "All resources"),
 
 	/**
-	 * The '<em><b>SELECTED INFO UNIT</b></em>' literal object.
+	 * The '<em><b>PROJECTS</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SELECTED_INFO_UNIT_VALUE
+	 * @see #PROJECTS_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SELECTED_INFO_UNIT(1, "SELECTED_INFO_UNIT", "Selected "),
-
-	/**
-	 * The '<em><b>OPEN EDITORS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #OPEN_EDITORS_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	OPEN_EDITORS(2, "OPEN_EDITORS", "Opened Editors");
+	PROJECTS(1, "PROJECTS", "In Projects...");
 
 	/**
 	 * The '<em><b>ALL</b></em>' literal value.
@@ -76,34 +66,19 @@ public enum SearchScope implements Enumerator {
 	public static final int ALL_VALUE = 0;
 
 	/**
-	 * The '<em><b>SELECTED INFO UNIT</b></em>' literal value.
+	 * The '<em><b>PROJECTS</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>SELECTED INFO UNIT</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>PROJECTS</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #SELECTED_INFO_UNIT
-	 * @model literal="Selected "
+	 * @see #PROJECTS
+	 * @model literal="In Projects..."
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SELECTED_INFO_UNIT_VALUE = 1;
-
-	/**
-	 * The '<em><b>OPEN EDITORS</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>OPEN EDITORS</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #OPEN_EDITORS
-	 * @model literal="Opened Editors"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int OPEN_EDITORS_VALUE = 2;
+	public static final int PROJECTS_VALUE = 1;
 
 	/**
 	 * An array of all the '<em><b>Scope</b></em>' enumerators.
@@ -114,8 +89,7 @@ public enum SearchScope implements Enumerator {
 	private static final SearchScope[] VALUES_ARRAY =
 		new SearchScope[] {
 			ALL,
-			SELECTED_INFO_UNIT,
-			OPEN_EDITORS,
+			PROJECTS,
 		};
 
 	/**
@@ -167,8 +141,7 @@ public enum SearchScope implements Enumerator {
 	public static SearchScope get(int value) {
 		switch (value) {
 			case ALL_VALUE: return ALL;
-			case SELECTED_INFO_UNIT_VALUE: return SELECTED_INFO_UNIT;
-			case OPEN_EDITORS_VALUE: return OPEN_EDITORS;
+			case PROJECTS_VALUE: return PROJECTS;
 		}
 		return null;
 	}

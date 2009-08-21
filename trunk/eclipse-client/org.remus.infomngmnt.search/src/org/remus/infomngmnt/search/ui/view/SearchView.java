@@ -1,7 +1,9 @@
 package org.remus.infomngmnt.search.ui.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.databinding.UpdateListStrategy;
@@ -12,6 +14,7 @@ import org.eclipse.core.databinding.observable.set.ISetChangeListener;
 import org.eclipse.core.databinding.observable.set.SetChangeEvent;
 import org.eclipse.core.databinding.observable.set.SetDiff;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
@@ -28,6 +31,7 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.IViewerObservableSet;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -35,10 +39,11 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.nebula.widgets.calendarcombo.DefaultSettings;
 import org.eclipse.nebula.widgets.calendarcombo.ISettings;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -54,15 +59,19 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.databinding.CalendarComboModelToTarget;
-import org.remus.infomngmnt.common.ui.databinding.CalendarComboTargetToModel;
+import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.common.ui.databinding.DatePickerBindingWidget;
+import org.remus.infomngmnt.common.ui.databinding.List2SetConverter;
 import org.remus.infomngmnt.common.ui.databinding.RadioButtonGroupEnumBinding;
+import org.remus.infomngmnt.common.ui.swt.DateCombo;
 import org.remus.infomngmnt.common.ui.view.AbstractScrolledTitledView;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchPackage;
@@ -83,15 +92,15 @@ public class SearchView extends AbstractScrolledTitledView {
 	public static final String ID = "org.remus.infomngmnt.search.ui.view.SearchView"; //$NON-NLS-1$
 	private static final int SECTION_STYLE = ExpandableComposite.TITLE_BAR
 			| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED;
-	private CalendarCombo fromDate;
-	private CalendarCombo toDate;
+	private DateCombo fromDate;
+	private DateCombo toDate;
 	private final ISettings calendarSettings = new DefaultSettings();
 	private Button allScopeButton;
 	private Button selectedInfoUnit;
-	private Button openEditorScopeButton;
 	private LatestSearchStrings latestSearchStrings;
 	private CheckboxTableViewer viewer;
 	private HashSet<IInfoType> checkedElements;
+	private CheckboxTableViewer newCheckList;
 
 	/**
 	 * Create contents of the view part
@@ -140,7 +149,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true);
 
 		gd_table.widthHint = 1; // https://bugs.eclipse.org/bugs/show_bug.cgi?id=215997
-
+		gd_table.heightHint = 120;
 		tableComposite.setLayoutData(gd_table);
 
 		this.viewer = new CheckboxTableViewer(this.table);
@@ -210,17 +219,37 @@ public class SearchView extends AbstractScrolledTitledView {
 		GridData gd_fromLabel = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
 		fromLabel.setLayoutData(gd_fromLabel);
 
-		this.fromDate = new CalendarCombo(composite_2, SWT.READ_ONLY, this.calendarSettings, null,
-				false);
-		this.fromDate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridLayout dateLayout = new GridLayout(2, false);
+		dateLayout.marginHeight = 2;
+		dateLayout.marginWidth = 1;
+		dateLayout.verticalSpacing = 2;
+		dateLayout.horizontalSpacing = 2;
+		Composite fromParent = this.toolkit.createComposite(composite_2);
+		fromParent.setLayout(dateLayout);
+		this.fromDate = new DateCombo(fromParent, SWT.FLAT);
+		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false).applyTo(
+				this.fromDate);
+		this.fromDate.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		this.toolkit.adapt(this.fromDate, false, false);
+		this.toolkit.paintBordersFor(fromParent);
+		GridData dueDateLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+		fromParent.setLayoutData(dueDateLayoutData);
+		this.toolkit.adapt(this.fromDate);
 
 		final Label toLabel = this.toolkit.createLabel(composite_2, "to:", SWT.NONE);
 		final GridData gd_toLabel = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
 		toLabel.setLayoutData(gd_toLabel);
 
-		this.toDate = new CalendarCombo(composite_2, SWT.READ_ONLY, this.calendarSettings, null,
-				false);
-		this.toDate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		Composite toParent = this.toolkit.createComposite(composite_2);
+		toParent.setLayout(dateLayout);
+		this.toDate = new DateCombo(toParent, SWT.FLAT);
+		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false)
+				.applyTo(this.toDate);
+		this.toDate.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		this.toolkit.adapt(this.toDate, false, false);
+		this.toolkit.paintBordersFor(toParent);
+		toParent.setLayoutData(dueDateLayoutData);
+		this.toolkit.adapt(this.toDate);
 
 		final Section scopeSection = this.toolkit.createSection(parent, SECTION_STYLE);
 		scopeSection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -236,12 +265,24 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.allScopeButton = this.toolkit.createButton(composite_1, SearchScope.ALL.getLiteral(),
 				SWT.RADIO);
 		this.allScopeButton.setLayoutData(gd_scopeButtons);
-		this.selectedInfoUnit = this.toolkit.createButton(composite_1,
-				SearchScope.SELECTED_INFO_UNIT.getLiteral(), SWT.RADIO);
+		this.selectedInfoUnit = this.toolkit.createButton(composite_1, SearchScope.PROJECTS
+				.getLiteral(), SWT.RADIO);
 		this.selectedInfoUnit.setLayoutData(gd_scopeButtons);
-		this.openEditorScopeButton = this.toolkit.createButton(composite_1,
-				SearchScope.OPEN_EDITORS.getLiteral(), SWT.RADIO);
-		this.openEditorScopeButton.setLayoutData(gd_scopeButtons);
+
+		this.newCheckList = CheckboxTableViewer.newCheckList(composite_1, SWT.BORDER);
+		this.newCheckList.setContentProvider(UIUtil.getArrayContentProviderInstance());
+		this.newCheckList.setLabelProvider(new LabelProvider());
+
+		GridDataFactory.createFrom(new GridData(SWT.FILL, SWT.BEGINNING, true, false)).hint(-1, 50)
+				.applyTo(this.newCheckList.getControl());
+		this.newCheckList.getControl().setEnabled(this.selectedInfoUnit.getSelection());
+		this.selectedInfoUnit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				SearchView.this.newCheckList.getControl().setEnabled(
+						((Button) e.widget).getSelection());
+			}
+		});
 
 		final Label label = this.toolkit.createSeparator(parent, SWT.HORIZONTAL);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -277,20 +318,14 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.ctx = new EMFDataBindingContext();
 
 		// from-date
-		IObservableValue mObsFrom = EMFEditObservables.observeValue(Realm.getDefault(),
-				this.editingDomain, this.currentSearch, SearchPackage.Literals.SEARCH__DATE_START);
-		ISWTObservableValue uObsFrom = SWTObservables.observeText(this.fromDate.getCombo());
-		this.ctx.bindValue(uObsFrom, mObsFrom, new CalendarComboTargetToModel(this.fromDate,
-				this.calendarSettings), new CalendarComboModelToTarget(this.fromDate,
-				this.calendarSettings));
+		DatePickerBindingWidget dateComboBinding = BindingWidgetFactory.createDateComboBinding(
+				this.fromDate, this.ctx, this.editingDomain);
+		dateComboBinding.bindModel(this.currentSearch, SearchPackage.Literals.SEARCH__DATE_START);
 
 		// to-date
-		IObservableValue mObsTo = EMFEditObservables.observeValue(Realm.getDefault(),
-				this.editingDomain, this.currentSearch, SearchPackage.Literals.SEARCH__END_DATE);
-		ISWTObservableValue uObsTo = SWTObservables.observeText(this.toDate.getCombo());
-		this.ctx.bindValue(uObsTo, mObsTo, new CalendarComboTargetToModel(this.toDate,
-				this.calendarSettings), new CalendarComboModelToTarget(this.toDate,
-				this.calendarSettings));
+		DatePickerBindingWidget dateComboBinding2 = BindingWidgetFactory.createDateComboBinding(
+				this.toDate, this.ctx, this.editingDomain);
+		dateComboBinding2.bindModel(this.currentSearch, SearchPackage.Literals.SEARCH__END_DATE);
 
 		// scope
 		IObservableValue mObsAllScope = EMFEditObservables.observeValue(Realm.getDefault(),
@@ -298,8 +333,7 @@ public class SearchView extends AbstractScrolledTitledView {
 
 		Map<Button, Enumerator> buttonMapping = new HashMap<Button, Enumerator>();
 		buttonMapping.put(this.allScopeButton, SearchScope.ALL);
-		buttonMapping.put(this.selectedInfoUnit, SearchScope.SELECTED_INFO_UNIT);
-		buttonMapping.put(this.openEditorScopeButton, SearchScope.OPEN_EDITORS);
+		buttonMapping.put(this.selectedInfoUnit, SearchScope.PROJECTS);
 		RadioButtonGroupEnumBinding radioButtonCtx = new RadioButtonGroupEnumBinding(buttonMapping,
 				this.ctx);
 		radioButtonCtx.setDefault(this.currentSearch.getScope());
@@ -361,6 +395,19 @@ public class SearchView extends AbstractScrolledTitledView {
 				SearchPackage.Literals.SEARCH__SEARCH_STRING);
 		ISWTObservableValue uObsText = SWTObservables.observeText(this.combo);
 		this.ctx.bindValue(uObsText, mObsText, null, null);
+
+		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
+		List<String> projects = new ArrayList<String>();
+		for (IProject iProject : relevantProjects) {
+			projects.add(iProject.getName());
+		}
+		this.newCheckList.setInput(projects);
+		IViewerObservableSet observeCheckedElements = ViewersObservables.observeCheckedElements(
+				this.newCheckList, String.class);
+
+		IObservableList observeList3 = EMFObservables.observeList(this.currentSearch,
+				SearchPackage.Literals.SEARCH__PROJECTS);
+		this.ctx.bindSet(observeCheckedElements, List2SetConverter.create(observeList3));
 
 	}
 

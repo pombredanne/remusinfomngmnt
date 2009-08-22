@@ -13,12 +13,13 @@
 package org.remus.infomngmnt.ui.views.action;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -30,9 +31,11 @@ import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.sync.AbstractSynchronizationJob;
 import org.remus.infomngmnt.core.sync.ChangeSetException;
 import org.remus.infomngmnt.core.sync.ChangeSetExecutor;
 import org.remus.infomngmnt.core.sync.ChangeSetManager;
@@ -76,7 +79,12 @@ public class CheckoutAction extends BaseSelectionListenerAction {
 				WizardDialog wz = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
 						checkoutWizard);
 				if (wz.open() == IDialogConstants.OK_ID) {
-					Job job = new Job("Checkout of selected element") {
+					AbstractSynchronizationJob job = new AbstractSynchronizationJob(
+							"Checkout of selected element") {
+						@Override
+						protected List<? extends SynchronizableObject> getAffectedObjects() {
+							return Collections.singletonList(checkoutWizard.getTargetCategory());
+						}
 
 						@Override
 						protected IStatus run(final IProgressMonitor monitor) {
@@ -86,6 +94,7 @@ public class CheckoutAction extends BaseSelectionListenerAction {
 							return Status.OK_STATUS;
 						}
 					};
+					job.doPrepare();
 					job.setUser(true);
 					job.schedule();
 

@@ -13,6 +13,8 @@
 package org.remus.infomngmnt.ui.handler;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -39,6 +41,7 @@ import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.sync.AbstractSynchronizationJob;
 import org.remus.infomngmnt.core.sync.ChangeSetExecutor;
 import org.remus.infomngmnt.core.sync.ChangeSetManager;
 import org.remus.infomngmnt.ui.remote.SynchronizationWizard;
@@ -113,7 +116,12 @@ public class SynchronizeCategoryHandler extends AbstractHandler {
 					WizardDialog wz = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
 							synchronizationWizard);
 					if (wz.open() == IDialogConstants.OK_ID) {
-						Job job = new Job("Synchronizing objects") {
+						AbstractSynchronizationJob job = new AbstractSynchronizationJob(
+								"Synchronizing objects") {
+							@Override
+							protected List<Category> getAffectedObjects() {
+								return Collections.singletonList(cat);
+							}
 
 							@Override
 							protected IStatus run(final IProgressMonitor monitor) {
@@ -132,6 +140,7 @@ public class SynchronizeCategoryHandler extends AbstractHandler {
 								return Status.OK_STATUS;
 							}
 						};
+						job.doPrepare();
 						job.setUser(true);
 						job.schedule();
 					}

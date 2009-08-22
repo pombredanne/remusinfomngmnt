@@ -284,26 +284,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	public InformationUnit getFullObject(final InformationUnitListItem informationUnitListItem,
 			final IProgressMonitor monitor) {
-		SynchronizationMetadata adapter = (SynchronizationMetadata) informationUnitListItem
-				.getAdapter(SynchronizationMetadata.class);
-		String url = NLS.bind(getPreferences().getString(PreferenceInitializer.VIDEO_HTML_URL),
-				getVideoIdFromUrl(adapter.getUrl()));
-
-		IFile tempFile = ResourceUtil.createTempFile();
 		try {
-			DownloadFileJob downloadWebsiteJob = new DownloadFileJob(new URL(url), tempFile,
-					getFileReceiveAdapter());
-			downloadWebsiteJob.run(monitor);
-			this.tmpVideoFile = ResourceUtil.createTempFile("flv");
-			URL downloadUrl = getDownloadUrl(tempFile, true);
-			if (downloadUrl == null) {
-				throw new RemoteException(StatusCreator
-						.newStatus("Error calculating download url."));
-			}
-			DownloadFileJob downloadVidJob = new DownloadFileJob(downloadUrl, this.tmpVideoFile,
-					getFileReceiveAdapter());
-			downloadVidJob.run(monitor);
-
 			InformationStructureEdit edit = InformationStructureEdit
 					.newSession(VideoActivator.TYPE_ID);
 			InformationUnit createNewObject = edit.newInformationUnit();
@@ -327,12 +308,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 					createNewObject.setKeywords(sb.toString());
 				}
 			}
-			// runnable.run(monitor);
-			tempFile.delete(true, monitor);
 			return createNewObject;
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -374,8 +350,30 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	public IFile getBinaryReferences(final InformationUnitListItem remoteObject,
 			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
 			throws RemoteException {
-		if (VideoActivator.TYPE_ID.equals(localInfoFragment.getType())) {
-			return this.tmpVideoFile;
+		SynchronizationMetadata adapter = (SynchronizationMetadata) remoteObject
+				.getAdapter(SynchronizationMetadata.class);
+		String url = NLS.bind(getPreferences().getString(PreferenceInitializer.VIDEO_HTML_URL),
+				getVideoIdFromUrl(adapter.getUrl()));
+		IFile tempFile = ResourceUtil.createTempFile();
+		try {
+			DownloadFileJob downloadWebsiteJob = new DownloadFileJob(new URL(url), tempFile,
+					getFileReceiveAdapter());
+			downloadWebsiteJob.run(monitor);
+			URL downloadUrl = getDownloadUrl(tempFile, true);
+			if (downloadUrl == null) {
+				throw new RemoteException(StatusCreator
+						.newStatus("Error calculating download url."));
+			}
+			IFile videoFile = ResourceUtil.createTempFile("flv");
+
+			DownloadFileJob downloadVidJob = new DownloadFileJob(downloadUrl, videoFile,
+					getFileReceiveAdapter());
+			downloadVidJob.run(monitor);
+			if (VideoActivator.TYPE_ID.equals(localInfoFragment.getType())) {
+				return videoFile;
+			}
+		} catch (Exception e) {
+
 		}
 		return null;
 	}

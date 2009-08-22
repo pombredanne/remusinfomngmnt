@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.osgi.util.NLS;
@@ -42,13 +41,31 @@ import org.remus.infomngmnt.util.EditingUtil;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class CommitElementsJob extends Job {
+public class CommitElementsJob extends AbstractSynchronizationJob {
 
 	private final List<SynchronizableObject> objects;
+	private List<SynchronizableObject> filteredList;
 
 	public CommitElementsJob(final List<SynchronizableObject> objects) {
 		super(NLS.bind("Committing {0} element(s)", objects.size()));
 		this.objects = objects;
+		doPrepare();
+	}
+
+	@Override
+	public void doPrepare() {
+		this.filteredList = CollectionUtils.filter(this.objects,
+				new CollectionFilter<SynchronizableObject>() {
+					public boolean select(final SynchronizableObject item) {
+						return !ModelUtil.containsParent(CommitElementsJob.this.objects, item);
+					}
+				});
+		super.doPrepare();
+	}
+
+	@Override
+	protected List<SynchronizableObject> getAffectedObjects() {
+		return this.filteredList;
 	}
 
 	/*
@@ -59,15 +76,9 @@ public class CommitElementsJob extends Job {
 	 */
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		List<SynchronizableObject> filteredList = CollectionUtils.filter(this.objects,
-				new CollectionFilter<SynchronizableObject>() {
-					public boolean select(final SynchronizableObject item) {
-						return !ModelUtil.containsParent(CommitElementsJob.this.objects, item);
-					}
-				});
 		monitor.beginTask(getName(), this.objects.size() == 1 ? IProgressMonitor.UNKNOWN
 				: this.objects.size());
-		for (SynchronizableObject synchronizableObject : filteredList) {
+		for (SynchronizableObject synchronizableObject : this.filteredList) {
 
 			monitor.setTaskName(NLS.bind("Try to commit \"{0}\" to remote-repository",
 					synchronizableObject.getSynchronizationMetaData().getUrl()));

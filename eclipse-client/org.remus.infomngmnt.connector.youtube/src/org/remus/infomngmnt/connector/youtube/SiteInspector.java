@@ -47,7 +47,11 @@ public class SiteInspector {
 				for (String string : split) {
 					String[] split2 = StringUtils.split(string, "|");
 					if (split2.length == 2) {
-						returnValue.put(split2[0], split2[1]);
+						String data = split2[1];
+						if (data.endsWith("\"")) {
+							data = data.substring(0, data.length() - 1);
+						}
+						returnValue.put(split2[0], data);
 					}
 				}
 			} catch (UnsupportedEncodingException e) {

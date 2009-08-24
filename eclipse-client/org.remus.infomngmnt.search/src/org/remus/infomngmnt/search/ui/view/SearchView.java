@@ -49,6 +49,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -60,8 +61,11 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.common.ui.UIUtil;
@@ -79,7 +83,9 @@ import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.SearchScope;
+import org.remus.infomngmnt.search.preferences.SearchPreferenceInitializer;
 import org.remus.infomngmnt.search.provider.SearchItemProviderAdapterFactory;
+import org.remus.infomngmnt.search.provider.SearchPlugin;
 import org.remus.infomngmnt.search.save.SavedSearchesHandler;
 import org.remus.infomngmnt.search.service.LuceneSearchService;
 
@@ -136,7 +142,15 @@ public class SearchView extends AbstractScrolledTitledView {
 
 		});
 
-		this.toolkit.createHyperlink(parent, "Learn more about search syntax...", SWT.NONE);
+		Hyperlink hyperlink = this.toolkit.createHyperlink(parent,
+				"Learn more about search syntax...", SWT.NONE);
+		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(final HyperlinkEvent e) {
+				Program.launch(SearchPlugin.getPlugin().getPreferenceStore().getString(
+						SearchPreferenceInitializer.URL_SEARCH_SYNTAX));
+			}
+		});
 
 		final Section typeSection = this.toolkit.createSection(parent, SECTION_STYLE);
 		typeSection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));

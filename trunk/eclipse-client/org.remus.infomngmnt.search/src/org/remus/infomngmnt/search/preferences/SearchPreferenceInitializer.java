@@ -24,6 +24,7 @@ public class SearchPreferenceInitializer extends AbstractPreferenceInitializer {
 
 	public static final String KEEP_X_SEARCHES_IN_HISTORY = "KEEP_X_SEARCHES_IN_HISTORY"; //$NON-NLS-1$
 	public static final String LOCAL_SEARCH_FOLDER = "LOCAL_SEARCH_FOLDER"; //$NON-NLS-1$#
+	public static final String URL_SEARCH_SYNTAX = "URL_SEARCH_SYNTAX"; //$NON-NLS-1$#
 	private final IPreferenceStore store;
 
 	/**
@@ -33,13 +34,18 @@ public class SearchPreferenceInitializer extends AbstractPreferenceInitializer {
 		this.store = SearchPlugin.getPlugin().getPreferenceStore();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#
+	 * initializeDefaultPreferences()
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
 		this.store.setDefault(KEEP_X_SEARCHES_IN_HISTORY, 20);
 		this.store.setDefault(LOCAL_SEARCH_FOLDER, "localsearches"); //$NON-NLS-1$
+		this.store.setDefault(URL_SEARCH_SYNTAX,
+				"http://remus-software.org/user-documentation/13-search/43-search-syntax"); //$NON-NLS-1$
 
 	}
 

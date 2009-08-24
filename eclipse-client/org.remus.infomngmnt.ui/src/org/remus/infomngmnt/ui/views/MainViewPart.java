@@ -285,7 +285,11 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 				item.saveState(child);
 			}
 		}
-		memento.putString(ACTIVE_BAR, this.activeButtonBar.getId());
+		if (this.activeButtonBar != null) {
+			memento.putString(ACTIVE_BAR, this.activeButtonBar.getId());
+		} else {
+			memento.putString(ACTIVE_BAR, this.items.get(0).getId());
+		}
 		memento.putInteger(VISIBLE_BUTTONS, this.cb.getNumVisibleButtons());
 		super.saveState(memento);
 	}

@@ -80,7 +80,7 @@ public class RefreshRssJob extends AbstractJob {
 					Date date = this.lastRefresh.get(remoteRepository.getId());
 					int parseInt = Integer.parseInt(remoteRepository.getOptions().get(
 							RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL));
-					if (date.getTime() + (parseInt * 60 * 1000) > System.currentTimeMillis()) {
+					if (date.getTime() + (parseInt * 60 * 1000) <= System.currentTimeMillis()) {
 						refresh = true;
 					}
 				} else {

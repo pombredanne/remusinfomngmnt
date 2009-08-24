@@ -47,7 +47,11 @@ public class DisposableEditingDomain extends AdapterFactoryEditingDomain impleme
 	public void dispose() {
 		AdapterFactory adapterFactory2 = getAdapterFactory();
 		if (adapterFactory2 instanceof IDisposable) {
-			((IDisposable) adapterFactory2).dispose();
+			try {
+				((IDisposable) adapterFactory2).dispose();
+			} catch (Exception e) {
+				// do nothing.
+			}
 		}
 
 	}

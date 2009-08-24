@@ -43,7 +43,7 @@ public class RetweetAction extends Action {
 	@Override
 	public void run() {
 		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), StringUtils
-				.join("RT @", this.id2, ":", this.message));
+				.join("RT @", this.id2, ":"), this.repositoryId);
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			SendMessageJob job = new SendMessageJob(dialog.getMessage(), this.repositoryId);
 			job.setUser(true);
@@ -51,5 +51,4 @@ public class RetweetAction extends Action {
 		}
 		super.run();
 	}
-
 }

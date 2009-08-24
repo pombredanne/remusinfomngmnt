@@ -41,7 +41,8 @@ public class OpenTweetDialog extends AbstractHandler {
 		InformationUnit unit = InformationHandlerUtil.getInformationUnitFromExecutionEvent(event);
 		InformationUnitListItem adapter = (InformationUnitListItem) unit
 				.getAdapter(InformationUnitListItem.class);
-		TweetDialog tweetDialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), null);
+		TweetDialog tweetDialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), null,
+				adapter.getSynchronizationMetaData().getRepositoryId());
 		if (tweetDialog.open() == IDialogConstants.OK_ID) {
 			Job sendMessageJob = new SendMessageJob(tweetDialog.getMessage(), adapter
 					.getSynchronizationMetaData().getRepositoryId());

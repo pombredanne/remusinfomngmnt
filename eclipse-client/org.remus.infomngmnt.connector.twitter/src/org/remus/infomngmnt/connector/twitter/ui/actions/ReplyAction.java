@@ -43,7 +43,7 @@ public class ReplyAction extends Action {
 	@Override
 	public void run() {
 		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), StringUtils
-				.join("@", this.userName, " "));
+				.join("@", this.userName, " "), this.repositoryId);
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			SendMessageJob job = new SendMessageJob(dialog.getMessage(), this.repositoryId,
 					this.replyId, null);

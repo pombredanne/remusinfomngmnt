@@ -35,7 +35,8 @@ public class TweetAction extends Action {
 
 	@Override
 	public void run() {
-		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), "");
+		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), "",
+				this.repositoryId);
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			SendMessageJob job = new SendMessageJob(dialog.getMessage(), this.repositoryId);
 			job.setUser(true);

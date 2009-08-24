@@ -41,7 +41,7 @@ public class SendDirectMessageAction extends Action {
 	@Override
 	public void run() {
 		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), StringUtils
-				.join(this.id2, " "));
+				.join(this.id2, " "), this.repositoryId);
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			SendMessageJob job = new SendMessageJob(dialog.getMessage(), this.repositoryId, null,
 					this.id2);

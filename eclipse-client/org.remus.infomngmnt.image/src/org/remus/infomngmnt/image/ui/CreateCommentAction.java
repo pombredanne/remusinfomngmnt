@@ -48,7 +48,7 @@ public class CreateCommentAction extends Action implements IEditingDomainHolder 
 				new java.awt.Dimension(300, 300), this.editingDomain);
 		shapableInfoDelegate.setLocation(new java.awt.Point(10, 10));
 		shapableInfoDelegate.setSize(new java.awt.Dimension(30, 30));
-		AddCommand add = new AddCommand(this.editingDomain, childByType,
+		AddCommand add = (AddCommand) AddCommand.create(this.editingDomain, childByType,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, shapableInfoDelegate
 						.getOrigInfoObject());
 		add.setLabel("Add new comment");

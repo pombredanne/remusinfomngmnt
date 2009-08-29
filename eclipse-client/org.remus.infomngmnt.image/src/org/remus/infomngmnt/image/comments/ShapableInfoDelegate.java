@@ -79,7 +79,7 @@ public class ShapableInfoDelegate extends AdapterImpl {
 
 	public void setText(final String text) {
 		InformationUnit textUnit = createSubNodeOnDemand(TEXT);
-		SetCommand setCommand = new SetCommand(this.domain, textUnit,
+		SetCommand setCommand = (SetCommand) SetCommand.create(this.domain, textUnit,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, text);
 		setCommand.setDescription("Setting comment");
 		this.domain.getCommandStack().execute(setCommand);
@@ -97,10 +97,10 @@ public class ShapableInfoDelegate extends AdapterImpl {
 		InformationUnit diwWidth = createSubNodeOnDemand(TYPE_DIMENSIONWIDTH);
 		InformationUnit diwHeight = createSubNodeOnDemand(TYPE_DIMENSIONHEIGHT);
 		CompoundCommand cc = new CompoundCommand();
-		cc.append(new SetCommand(this.domain, diwWidth,
+		cc.append(SetCommand.create(this.domain, diwWidth,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Math
 						.round((double) size.width / this.imageDimensions.width * 1000)));
-		cc.append(new SetCommand(this.domain, diwHeight,
+		cc.append(SetCommand.create(this.domain, diwHeight,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Math
 						.round((double) size.height / this.imageDimensions.height * 1000)));
 		cc.setDescription("Set size");
@@ -111,10 +111,10 @@ public class ShapableInfoDelegate extends AdapterImpl {
 		InformationUnit locX = createSubNodeOnDemand(LOCATION_X);
 		InformationUnit locY = createSubNodeOnDemand(LOCATION_Y);
 		CompoundCommand cc = new CompoundCommand();
-		cc.append(new SetCommand(this.domain, locX,
+		cc.append(SetCommand.create(this.domain, locX,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Math
 						.round((double) location.x / this.imageDimensions.width * 1000)));
-		cc.append(new SetCommand(this.domain, locY,
+		cc.append(SetCommand.create(this.domain, locY,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Math
 						.round((double) location.y / this.imageDimensions.height * 1000)));
 		cc.setDescription("Set location");

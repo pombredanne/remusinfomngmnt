@@ -156,16 +156,16 @@ public class LoadImageRunnable extends CancelableRunnable {
 				InputStream is = new FileInputStream(this.file);
 				// Reading src & height of the image:
 				ImageData imageData = new ImageData(is);
-				cc.append(new SetCommand(this.domain, this.widhtImageNode,
+				cc.append(SetCommand.create(this.domain, this.widhtImageNode,
 						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Long
 								.valueOf(imageData.width)));
 
-				cc.append(new SetCommand(this.domain, this.heightImageNode,
+				cc.append(SetCommand.create(this.domain, this.heightImageNode,
 						InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Long
 								.valueOf(imageData.height)));
 
 				if (this.setName) {
-					cc.append(new SetCommand(this.domain, read
+					cc.append(SetCommand.create(this.domain, read
 							.getChildByNodeId(ImagePlugin.ORIGINAL_FILEPATH),
 							InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
 							this.imagePath));

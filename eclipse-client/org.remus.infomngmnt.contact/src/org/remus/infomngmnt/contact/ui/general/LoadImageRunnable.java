@@ -69,7 +69,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 					baos.close();
 				}
 
-				cc.append(new SetCommand(this.domain, this.rawImageDataNode,
+				cc.append(SetCommand.create(this.domain, this.rawImageDataNode,
 						InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, bytesFromFile));
 
 				InformationUnit childByType = InformationUtil.getChildByType(this.infoUnit,
@@ -83,8 +83,8 @@ public class LoadImageRunnable extends CancelableRunnable {
 
 				InputStream is = new FileInputStream(this.file);
 
-				cc.append(new SetCommand(this.domain, InformationUtil.getChildByType(this.infoUnit,
-						ContactActivator.ORIGINAL_FILEPATH),
+				cc.append(SetCommand.create(this.domain, InformationUtil.getChildByType(
+						this.infoUnit, ContactActivator.ORIGINAL_FILEPATH),
 						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, this.imagePath));
 
 				cc.setLabel("Set new image");

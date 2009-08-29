@@ -46,7 +46,7 @@ public class DeleteBinaryReferenceCommand extends CompoundCommand {
 				this.oldValue.getProjectRelativePath());
 		this.cachedFile = this.project.getFolder(ResourceUtil.CMDSTACK_FOLDER).getFile(
 				this.oldValue.getProjectRelativePath());
-		append(new DeleteCommand(editingDomain, Collections.singleton(this.oldValue)));
+		append(DeleteCommand.create(editingDomain, Collections.singleton(this.oldValue)));
 	}
 
 	@Override

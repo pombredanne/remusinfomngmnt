@@ -80,7 +80,7 @@ public class LoadFromFileRunnable extends CancelableRunnable {
 			try {
 				if (this.domain != null) {
 					final CompoundCommand cc = new CompoundCommand();
-					cc.append(new SetCommand(this.domain, this.rawDataNode,
+					cc.append(SetCommand.create(this.domain, this.rawDataNode,
 							InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE, FileUtil
 									.getBytesFromFile(this.file, monitor)));
 					cc.setLabel("Set new bytes");

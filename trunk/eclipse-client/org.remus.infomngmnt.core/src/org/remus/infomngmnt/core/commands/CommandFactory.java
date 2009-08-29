@@ -144,7 +144,7 @@ public class CommandFactory {
 
 	public static Command SET_WORKSPACEPATH(final InformationUnitListItem item,
 			final String newPath, final EditingDomain editingDomain) {
-		return new SetCommand(editingDomain, item,
+		return SetCommand.create(editingDomain, item,
 				InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH, newPath);
 	}
 
@@ -160,7 +160,7 @@ public class CommandFactory {
 
 	public static Command REMOVE_SYNCDATACOMMAND(final SynchronizableObject synchronizableObject,
 			final EditingDomain domain) {
-		return new SetCommand(domain, synchronizableObject,
+		return SetCommand.create(domain, synchronizableObject,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA, null);
 	}
 

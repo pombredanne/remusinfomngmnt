@@ -16,9 +16,12 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.SetCommand;
 
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteRepository;
@@ -31,6 +34,7 @@ import org.remus.infomngmnt.core.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.core.sync.SyncStateParticipantNotfier;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -74,13 +78,11 @@ public class SyncStateParticipant implements ISaveParticipant {
 										.split("/"));
 								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
 								if (!equals) {
-									synchronizationMetadata
-											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									createSetCommandAndExecute(synchronizationMetadata);
 									break;
 								}
 							} catch (RuntimeException e) {
-								synchronizationMetadata
-										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								createSetCommandAndExecute(synchronizationMetadata);
 								break;
 							}
 
@@ -95,13 +97,11 @@ public class SyncStateParticipant implements ISaveParticipant {
 										.getValueByPath(string2.split("/"));
 								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
 								if (!equals) {
-									synchronizationMetadata
-											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									createSetCommandAndExecute(synchronizationMetadata);
 									break;
 								}
 							} catch (RuntimeException e) {
-								synchronizationMetadata
-										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								createSetCommandAndExecute(synchronizationMetadata);
 								break;
 							}
 
@@ -115,14 +115,12 @@ public class SyncStateParticipant implements ISaveParticipant {
 								Object oldFragmentValue = readNew.getValueByNodeId(string2);
 								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
 								if (!equals) {
-									synchronizationMetadata
-											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									createSetCommandAndExecute(synchronizationMetadata);
 									break;
 
 								}
 							} catch (RuntimeException e) {
-								synchronizationMetadata
-										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								createSetCommandAndExecute(synchronizationMetadata);
 								break;
 							}
 
@@ -135,18 +133,16 @@ public class SyncStateParticipant implements ISaveParticipant {
 								EObject newFragmentValue = readNew.getChildByNodeId(string2);
 								boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
 								if (!equals) {
-									synchronizationMetadata
-											.setSyncState(SynchronizationState.LOCAL_EDITED);
+									createSetCommandAndExecute(synchronizationMetadata);
 									break;
 								}
 							} catch (RuntimeException e) {
-								synchronizationMetadata
-										.setSyncState(SynchronizationState.LOCAL_EDITED);
+								createSetCommandAndExecute(synchronizationMetadata);
 								break;
 							}
 						}
 					} else {
-						synchronizationMetadata.setSyncState(SynchronizationState.LOCAL_EDITED);
+						createSetCommandAndExecute(synchronizationMetadata);
 					}
 				} catch (CoreException e) {
 					// TODO Auto-generated catch block
@@ -155,6 +151,14 @@ public class SyncStateParticipant implements ISaveParticipant {
 			}
 		}
 
+	}
+
+	private void createSetCommandAndExecute(final SynchronizationMetadata synchronizationMetadata) {
+		Command create = SetCommand.create(EditingUtil.getInstance().getNavigationEditingDomain(),
+				synchronizationMetadata,
+				InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+				SynchronizationState.LOCAL_EDITED);
+		create.execute();
 	}
 
 	private boolean checkEqual(final Object oldFragmentValue, final Object newFragmentValue) {

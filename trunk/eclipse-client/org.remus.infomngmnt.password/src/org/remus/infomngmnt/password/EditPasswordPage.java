@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.remus.infomngmnt.password;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
@@ -164,7 +165,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 				PasswordGenerationDialog dialog = new PasswordGenerationDialog(
 						getSite().getShell(), getModelObject());
 				if (dialog.open() == IDialogConstants.OK_ID) {
-					SetCommand command = new SetCommand(EditPasswordPage.this.editingDomain,
+					Command command = SetCommand.create(EditPasswordPage.this.editingDomain,
 							getModelObject(),
 							InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, dialog
 									.getSelectedPassword());
@@ -189,8 +190,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 						.getChildByType(getModelObject(), PasswordPlugin.NODE_URL),
 						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		createTextBindingWidget = BindingWidgetFactory.createTextBinding(this.textPassword,
-				this);
+		createTextBindingWidget = BindingWidgetFactory.createTextBinding(this.textPassword, this);
 		createTextBindingWidget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		createTextBindingWidget = BindingWidgetFactory.createTextBinding(

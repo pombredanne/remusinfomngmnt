@@ -247,7 +247,7 @@ public class NavigationDropHelper {
 						/*
 						 * Transfer the new repository-id
 						 */
-						compoundCommand.append(new SetCommand(EditingUtil.getInstance()
+						compoundCommand.append(SetCommand.create(EditingUtil.getInstance()
 								.getNavigationEditingDomain(), ((SynchronizableObject) object)
 								.getSynchronizationMetaData(),
 								InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID,
@@ -255,7 +255,7 @@ public class NavigationDropHelper {
 						/*
 						 * Set the state to "not added"
 						 */
-						compoundCommand.append(new SetCommand(EditingUtil.getInstance()
+						compoundCommand.append(SetCommand.create(EditingUtil.getInstance()
 								.getNavigationEditingDomain(), ((SynchronizableObject) object)
 								.getSynchronizationMetaData(),
 								InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
@@ -263,14 +263,14 @@ public class NavigationDropHelper {
 						/*
 						 * Remove the Hash
 						 */
-						compoundCommand.append(new SetCommand(EditingUtil.getInstance()
+						compoundCommand.append(SetCommand.create(EditingUtil.getInstance()
 								.getNavigationEditingDomain(), ((SynchronizableObject) object)
 								.getSynchronizationMetaData(),
 								InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH, null));
 						/*
 						 * Remove the url
 						 */
-						compoundCommand.append(new SetCommand(EditingUtil.getInstance()
+						compoundCommand.append(SetCommand.create(EditingUtil.getInstance()
 								.getNavigationEditingDomain(), ((SynchronizableObject) object)
 								.getSynchronizationMetaData(),
 								InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__URL, null));
@@ -283,28 +283,30 @@ public class NavigationDropHelper {
 								 * Transfer the new repository-id
 								 */
 								compoundCommand
-										.append(new SetCommand(
-												EditingUtil.getInstance()
-														.getNavigationEditingDomain(),
-												((SynchronizableObject) eObject)
-														.getSynchronizationMetaData(),
-												InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID,
-												repositoryId));
+										.append(SetCommand
+												.create(
+														EditingUtil.getInstance()
+																.getNavigationEditingDomain(),
+														((SynchronizableObject) eObject)
+																.getSynchronizationMetaData(),
+														InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__REPOSITORY_ID,
+														repositoryId));
 								/*
 								 * Set the state to "not added"
 								 */
 								compoundCommand
-										.append(new SetCommand(
-												EditingUtil.getInstance()
-														.getNavigationEditingDomain(),
-												((SynchronizableObject) eObject)
-														.getSynchronizationMetaData(),
-												InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
-												SynchronizationState.NOT_ADDED));
+										.append(SetCommand
+												.create(
+														EditingUtil.getInstance()
+																.getNavigationEditingDomain(),
+														((SynchronizableObject) eObject)
+																.getSynchronizationMetaData(),
+														InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+														SynchronizationState.NOT_ADDED));
 								/*
 								 * Remove the Hash
 								 */
-								compoundCommand.append(new SetCommand(EditingUtil.getInstance()
+								compoundCommand.append(SetCommand.create(EditingUtil.getInstance()
 										.getNavigationEditingDomain(),
 										((SynchronizableObject) eObject)
 												.getSynchronizationMetaData(),
@@ -313,7 +315,7 @@ public class NavigationDropHelper {
 								/*
 								 * Remove the url
 								 */
-								compoundCommand.append(new SetCommand(EditingUtil.getInstance()
+								compoundCommand.append(SetCommand.create(EditingUtil.getInstance()
 										.getNavigationEditingDomain(),
 										((SynchronizableObject) eObject)
 												.getSynchronizationMetaData(),
@@ -338,21 +340,24 @@ public class NavigationDropHelper {
 							EObject eObject = eAllContents.next();
 							if (eObject instanceof SynchronizableObject) {
 								compoundCommand
-										.append(new SetCommand(
-												EditingUtil.getInstance()
-														.getNavigationEditingDomain(),
-												eObject,
-												InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
-												EcoreUtil.copy(metadata)));
+										.append(SetCommand
+												.create(
+														EditingUtil.getInstance()
+																.getNavigationEditingDomain(),
+														eObject,
+														InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+														EcoreUtil.copy(metadata)));
 
 							}
 						}
 						compoundCommand
-								.append(new SetCommand(
-										EditingUtil.getInstance().getNavigationEditingDomain(),
-										(EObject) object,
-										InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
-										metadata));
+								.append(SetCommand
+										.create(
+												EditingUtil.getInstance()
+														.getNavigationEditingDomain(),
+												object,
+												InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
+												metadata));
 
 					}
 				}

@@ -350,30 +350,33 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	public IFile getBinaryReferences(final InformationUnitListItem remoteObject,
 			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
 			throws RemoteException {
-		SynchronizationMetadata adapter = (SynchronizationMetadata) remoteObject
-				.getAdapter(SynchronizationMetadata.class);
-		String url = NLS.bind(getPreferences().getString(PreferenceInitializer.VIDEO_HTML_URL),
-				getVideoIdFromUrl(adapter.getUrl()));
-		IFile tempFile = ResourceUtil.createTempFile();
-		try {
-			DownloadFileJob downloadWebsiteJob = new DownloadFileJob(new URL(url), tempFile,
-					getFileReceiveAdapter());
-			downloadWebsiteJob.run(monitor);
-			URL downloadUrl = getDownloadUrl(tempFile, true);
-			if (downloadUrl == null) {
-				throw new RemoteException(StatusCreator
-						.newStatus("Error calculating download url."));
-			}
-			IFile videoFile = ResourceUtil.createTempFile("flv");
+		if (VideoActivator.TYPE_ID.equals(localInfoFragment.getType())) {
+			SynchronizationMetadata adapter = (SynchronizationMetadata) remoteObject
+					.getAdapter(SynchronizationMetadata.class);
+			String url = NLS.bind(getPreferences().getString(PreferenceInitializer.VIDEO_HTML_URL),
+					getVideoIdFromUrl(adapter.getUrl()));
+			IFile tempFile = ResourceUtil.createTempFile();
+			try {
+				DownloadFileJob downloadWebsiteJob = new DownloadFileJob(new URL(url), tempFile,
+						getFileReceiveAdapter());
+				downloadWebsiteJob.run(monitor);
+				URL downloadUrl = getDownloadUrl(tempFile, true);
+				if (downloadUrl == null) {
+					throw new RemoteException(StatusCreator
+							.newStatus("Error calculating download url."));
+				}
+				IFile videoFile = ResourceUtil.createTempFile("flv");
 
-			DownloadFileJob downloadVidJob = new DownloadFileJob(downloadUrl, videoFile,
-					getFileReceiveAdapter());
-			downloadVidJob.run(monitor);
-			if (VideoActivator.TYPE_ID.equals(localInfoFragment.getType())) {
-				return videoFile;
-			}
-		} catch (Exception e) {
+				DownloadFileJob downloadVidJob = new DownloadFileJob(downloadUrl, videoFile,
+						getFileReceiveAdapter());
+				IStatus run = downloadVidJob.run(monitor);
 
+				if (VideoActivator.TYPE_ID.equals(localInfoFragment.getType())) {
+					return videoFile;
+				}
+			} catch (Exception e) {
+
+			}
 		}
 		return null;
 	}

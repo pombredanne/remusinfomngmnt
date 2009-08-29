@@ -21,6 +21,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -56,7 +57,7 @@ public class DeleteSynchronizedCategoryCommand implements Command {
 						domain));
 			}
 		} else {
-			deleteCommand.append(new DeleteCommand(domain, Collections.singleton(category)));
+			deleteCommand.append(DeleteCommand.create(domain, Collections.singleton(category)));
 		}
 
 		this.affectedChildren = ModelUtil.getAllChildren(category,

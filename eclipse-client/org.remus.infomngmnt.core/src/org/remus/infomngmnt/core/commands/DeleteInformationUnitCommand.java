@@ -107,12 +107,12 @@ public class DeleteInformationUnitCommand implements Command {
 							InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
 							SynchronizationState.LOCAL_DELETED));
 				} else {
-					this.delegateCommand.append(new DeleteCommand(domain, Collections
+					this.delegateCommand.append(DeleteCommand.create(domain, Collections
 							.singleton(informationUnitListItem)));
 				}
 			}
 		} else {
-			this.delegateCommand.append(new DeleteCommand(domain, items));
+			this.delegateCommand.append(DeleteCommand.create(domain, items));
 
 		}
 		for (InformationUnitListItem informationUnitListItem : items) {

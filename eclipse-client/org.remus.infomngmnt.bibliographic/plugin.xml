@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/book.png"
+            icon="icons/iconexperience/book_blue.png"
             name="Book"
             presentation="org.remus.infomngmnt.bibliographic.extension.BookRepresentation"
             structuredefinition="structuredefinition/book.xmi"
@@ -22,7 +22,7 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/article.png"
+            icon="icons/iconexperience/newspaper.png"
             name="Article"
             presentation="org.remus.infomngmnt.bibliographic.extension.ArticleRepresentation"
             structuredefinition="structuredefinition/article.xmi"
@@ -48,7 +48,7 @@
             category="org.remus.infomngmnt.bibliographic.category"
             class="org.remus.infomngmnt.bibliographic.ui.NewBookWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
-            icon="icons/book.png"
+            icon="icons/iconexperience/book_blue_new.png"
             id="org.remus.infomngmnt.bibliographic.newBookWizard"
             name="Book">
       </wizard>
@@ -56,7 +56,7 @@
             category="org.remus.infomngmnt.bibliographic.category"
             class="org.remus.infomngmnt.bibliographic.ui.NewArticleWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
-            icon="icons/article.png"
+            icon="icons/iconexperience/newspaper_new.png"
             id="org.remus.infomngmnt.bibliographic.newArticleWizard"
             name="Article">
       </wizard>
@@ -65,14 +65,14 @@
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.bibliographic.ui.BookEditPage"
-            icon="icons/book.png"
+            icon="icons/iconexperience/book_blue_edit.png"
             id="org.remus.infomngmnt.bibliographic.ui.editBookPage"
             label="Edit Book"
             type="BOOK">
       </editPage>
       <editPage
             editpage="org.remus.infomngmnt.bibliographic.ui.ArticleEditPage"
-            icon="icons/article.png"
+            icon="icons/iconexperience/newspaper_edit.png"
             id="org.remus.infomngmnt.bibliographic.ui.editArticlePage"
             label="Edit Article"
             type="ARTICLE">

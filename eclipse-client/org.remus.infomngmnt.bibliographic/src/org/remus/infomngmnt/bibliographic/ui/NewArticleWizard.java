@@ -19,7 +19,7 @@ import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
  * New Wizard for information unit "Article"
  * 
  * @author Andreas Deinlein <dev@deasw.com>
- *
+ * 
  */
 public class NewArticleWizard extends NewInfoObjectWizard {
 
@@ -27,18 +27,20 @@ public class NewArticleWizard extends NewInfoObjectWizard {
 		super();
 		setWindowTitle("New Article");
 	}
-	
+
 	@Override
-	protected String getInfoTypeId() {		
+	protected String getInfoTypeId() {
 		return BibliographicActivator.ARTICLE_TYPE_ID;
 	}
 
-	
 	@Override
 	public void addPages() {
 		super.addPages();
 		this.page1.setTitle("New Article");
-		this.page1.setMessage("This wizard enables you to create a new information unit for an \"Article\" from a journal or magazine");
-		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(BibliographicActivator.getDefault(), "icons/article.png"));
+		this.page1
+				.setMessage("This wizard enables you to create a new information unit for an \"Article\" from a journal or magazine");
+		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				BibliographicActivator.getDefault(),
+				"icons/iconexperience/newspaper_new_wizard.png"));
 	}
 }

@@ -19,7 +19,7 @@ import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
  * New Wizard for information unit "Book"
  * 
  * @author Andreas Deinlein <dev@deasw.com>
- *
+ * 
  */
 public class NewBookWizard extends NewInfoObjectWizard {
 
@@ -27,18 +27,19 @@ public class NewBookWizard extends NewInfoObjectWizard {
 		super();
 		setWindowTitle("New Book");
 	}
-	
+
 	@Override
-	protected String getInfoTypeId() {		
+	protected String getInfoTypeId() {
 		return BibliographicActivator.BOOK_TYPE_ID;
 	}
 
-	
 	@Override
 	public void addPages() {
 		super.addPages();
 		this.page1.setTitle("New Book");
-		this.page1.setMessage("This wizard enables you to create a new information unit for a \"Book\"");
-		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(BibliographicActivator.getDefault(), "icons/book.png"));
+		this.page1
+				.setMessage("This wizard enables you to create a new information unit for a \"Book\"");
+		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				BibliographicActivator.getDefault(), "icons/iconexperience/book_new_wizard.png"));
 	}
 }

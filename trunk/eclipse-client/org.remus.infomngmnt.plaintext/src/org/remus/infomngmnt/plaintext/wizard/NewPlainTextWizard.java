@@ -12,7 +12,11 @@
 
 package org.remus.infomngmnt.plaintext.wizard;
 
+import org.eclipse.core.runtime.CoreException;
+
+import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.plaintext.Activator;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
@@ -38,6 +42,12 @@ public class NewPlainTextWizard extends NewInfoObjectWizard {
 		this.page1.setMessage("This wizard enables you to create new unformatted text units");
 		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(Activator
 				.getDefault(), "icons/iconexperience/new_wizard.png"));
+	}
+
+	@Override
+	protected void setDefaults(final Object value, final RuleValue ruleValue,
+			final TransferWrapper transferType) throws CoreException {
+		this.newElement.setStringValue(String.valueOf(value));
 	}
 
 }

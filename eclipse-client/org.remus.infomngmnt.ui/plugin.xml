@@ -576,12 +576,14 @@
                   class="org.remus.infomngmnt.ui.notification.NotificationTrimArea">
             </control>
          </toolbar>
+         <!--
          <toolbar
                id="org.remus.infomngmnt.ui.todayToolbar">
             <control
                   class="org.remus.infomngmnt.ui.calendar.TodayTrimArea">
             </control>
          </toolbar>
+         -->
       </menuContribution>
    </extension>
    <extension

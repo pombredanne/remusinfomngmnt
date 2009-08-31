@@ -83,8 +83,10 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.extension.AbstractDelegationEditorPart;
 import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 import org.remus.infomngmnt.ui.extension.IEditPage;
+import org.remus.infomngmnt.ui.extension.ISourcePage;
 import org.remus.infomngmnt.ui.extension.UIExtensionManager;
 import org.remus.infomngmnt.ui.views.LinkOutline;
 import org.remus.infomngmnt.util.EditingUtil;
@@ -334,6 +336,26 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 					setPageImage(i + offset, editPageByType.get(i).getImage().createImage());
 				}
 				setPageText(i + offset, editPageByType.get(i).getLabel());
+			}
+			List<ISourcePage> sourcePage = UIExtensionManager.getInstance().getSourcePageByType(
+					getPrimaryModel().getType());
+			offset = offset + editPageByType.size();
+			for (int i = 0, n = sourcePage.size(); i < n; i++) {
+				AbstractDelegationEditorPart currentSourcePage = sourcePage.get(i).getSourcePage();
+				try {
+					IEditorPart createEditor = currentSourcePage.createEditor();
+					IEditorInput createEditorInput = currentSourcePage
+							.createEditorInput(getPrimaryModel());
+					if (createEditor != null && createEditorInput != null) {
+						addPage(createEditor, createEditorInput);
+						if (sourcePage.get(i).getImage() != null) {
+							setPageImage(i + offset, sourcePage.get(i).getImage().createImage());
+						}
+						setPageText(i + offset, sourcePage.get(i).getLabel());
+					}
+				} catch (Exception e) {
+					// do nothing..
+				}
 			}
 
 		} catch (final PartInitException e) {
@@ -926,7 +948,10 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	@Override
 	public Object getAdapter(final Class adapter) {
 		if (adapter.equals(IContentOutlinePage.class)) {
-			return getContentOutline();
+			if (this.pages.get(getCurrentPage()) instanceof ViewPage
+					|| this.pages.get(getCurrentPage()) instanceof AbstractInformationFormPage) {
+				return getContentOutline();
+			}
 		}
 		return super.getAdapter(adapter);
 	}

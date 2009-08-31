@@ -61,6 +61,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISaveablePart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
@@ -347,6 +348,14 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 					IEditorInput createEditorInput = currentSourcePage
 							.createEditorInput(getPrimaryModel());
 					if (createEditor != null && createEditorInput != null) {
+						createEditor.addPropertyListener(new IPropertyListener() {
+							public void propertyChanged(final Object source, final int propId) {
+								firePropertyChange(propId);
+								if (propId == IEditorPart.PROP_DIRTY) {
+									setDirty(true);
+								}
+							}
+						});
 						addPage(createEditor, createEditorInput);
 						if (sourcePage.get(i).getImage() != null) {
 							setPageImage(i + offset, sourcePage.get(i).getImage().createImage());

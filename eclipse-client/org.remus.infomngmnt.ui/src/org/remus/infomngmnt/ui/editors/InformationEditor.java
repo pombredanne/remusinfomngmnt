@@ -348,6 +348,7 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 					IEditorInput createEditorInput = currentSourcePage
 							.createEditorInput(getPrimaryModel());
 					if (createEditor != null && createEditorInput != null) {
+						addPage(createEditor, createEditorInput);
 						createEditor.addPropertyListener(new IPropertyListener() {
 							public void propertyChanged(final Object source, final int propId) {
 								firePropertyChange(propId);
@@ -356,7 +357,6 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 								}
 							}
 						});
-						addPage(createEditor, createEditorInput);
 						if (sourcePage.get(i).getImage() != null) {
 							setPageImage(i + offset, sourcePage.get(i).getImage().createImage());
 						}

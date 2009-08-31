@@ -17,9 +17,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public interface IEditPage {
+public interface ISourcePage {
 
-	AbstractInformationFormPage getEditPage();
+	AbstractDelegationEditorPart getSourcePage();
 
 	String getType();
 

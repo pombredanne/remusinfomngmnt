@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.Platform;
 
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.internal.extension.EditPage;
+import org.remus.infomngmnt.ui.internal.extension.SourcePage;
 import org.remus.infomngmnt.ui.rules.ICreationTrigger;
 
 /**
@@ -46,6 +47,11 @@ public class UIExtensionManager {
 	public static final String LABEL_ATT = "label"; //$NON-NLS-1$
 
 	public static final String EDIT_PAGE_ATT = "editpage"; //$NON-NLS-1$
+
+	// ///-----------------------
+	public static final String SOURCE_NODE_NAME = "sourcepage"; //$NON-NLS-1$
+
+	public static final String SOURCE_CONTRIBUTOR_ATT = "pagecontributor"; //$NON-NLS-1$
 
 	// ///-----------------------
 
@@ -72,6 +78,8 @@ public class UIExtensionManager {
 
 	private Map<String, List<IEditPage>> items;
 
+	private Map<String, List<ISourcePage>> sourcePage;
+
 	private Map<String, Map<String, AbstractCreationPreferencePage>> preferencePages;
 
 	private Map<String, IConfigurationElement> creationTrigger;
@@ -95,6 +103,7 @@ public class UIExtensionManager {
 
 	private void init() {
 		this.items = new HashMap<String, List<IEditPage>>();
+		this.sourcePage = new HashMap<String, List<ISourcePage>>();
 		this.preferencePages = new HashMap<String, Map<String, AbstractCreationPreferencePage>>();
 		this.creationTrigger = new HashMap<String, IConfigurationElement>();
 		this.commandIds = new HashMap<String, List<String>>();
@@ -141,6 +150,17 @@ public class UIExtensionManager {
 				}
 				List<String> list = this.commandIds.get(typeId);
 				list.add(configurationElement.getAttribute(COMMAND_ID_ATT));
+			} else if (configurationElement.getName().equals(SOURCE_NODE_NAME)) {
+
+				final ISourcePage sourcePage = new SourcePage(configurationElement,
+						configurationElement.getContributor().getName(), configurationElement
+								.getAttribute(TYPE_ATT), configurationElement.getAttribute(ID_ATT),
+						configurationElement.getAttribute(LABEL_ATT), configurationElement
+								.getAttribute(ICON_ATT));
+				if (this.sourcePage.get(configurationElement.getAttribute(TYPE_ATT)) == null) {
+					this.sourcePage.put(sourcePage.getType(), new ArrayList<ISourcePage>());
+				}
+				this.sourcePage.get(sourcePage.getType()).add(sourcePage);
 			}
 		}
 	}
@@ -151,6 +171,14 @@ public class UIExtensionManager {
 			return Collections.EMPTY_LIST;
 		}
 		return this.items.get(type);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ISourcePage> getSourcePageByType(final String type) {
+		if (this.sourcePage.get(type) == null) {
+			return Collections.EMPTY_LIST;
+		}
+		return this.sourcePage.get(type);
 	}
 
 	public AbstractCreationPreferencePage getPreferencePageByTransferAndTypeId(

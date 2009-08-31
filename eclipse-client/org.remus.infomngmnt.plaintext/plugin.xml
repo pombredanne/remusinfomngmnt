@@ -44,6 +44,10 @@
             commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
             typeId="PLAINTEXT">
       </editorAction>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.plaintext.wizard.NewPlainTextWizard"
+            typeId="PLAINTEXT">
+      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

@@ -66,12 +66,13 @@ public class FileUtil {
 	 */
 	static void recursiveDelete(final File dirPath) {
 		String[] ls = dirPath.list();
-
-		for (int idx = 0; idx < ls.length; idx++) {
-			File file = new File(dirPath, ls[idx]);
-			if (file.isDirectory())
-				recursiveDelete(file);
-			file.delete();
+		if (ls != null) {
+			for (int idx = 0; idx < ls.length; idx++) {
+				File file = new File(dirPath, ls[idx]);
+				if (file.isDirectory())
+					recursiveDelete(file);
+				file.delete();
+			}
 		}
 	}
 

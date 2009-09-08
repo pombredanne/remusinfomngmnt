@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Jan Hartwig - initial API and implementation
+ *     Tom Seidel - RIMINFOTYPES-22
  *******************************************************************************/
 package org.remus.infomngmnt.contact;
 
@@ -19,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,8 +54,144 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 
 	@Override
 	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
+		StringWriter sw = new StringWriter();
+		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_TITLE));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_FIRST));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_ADDITIONAL));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_LAST));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_NAME_PERS_NAME_TITLE_AFTER));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_NAME_PERS_ROLE));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_NAME_PERS_ORGANISATION));
+
+		// Workadress
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_WORK_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_STREET));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_WORK_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_WORK_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_WORK_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_REGION));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_WORK_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_WORK_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+
+		// Homeadress
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_HOME_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_STREET));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_HOME_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_HOME_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_HOME_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_REGION));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_HOME_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_HOME_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+
+		// internat Adress
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_STREET));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_REGION));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+
+		// postal adress
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_POSTAL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_STREET));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_POSTAL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_POSTAL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_POSTAL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_REGION));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_POSTAL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_POSTAL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+
+		// parcel adress
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_PARCEL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_STREET));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_PARCEL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_PARCEL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_PARCEL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_REGION));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_PARCEL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_PARCEL_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+
+		// domestic adress
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_DOMESTIC_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_STREET));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_DOMESTIC_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_DOMESTIC_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_DOMESTIC_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_REGION));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_DOMESTIC_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_DOMESTIC_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+
+		// other adress
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_OTHER_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_STREET));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_OTHER_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_OTHER_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_OTHER_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_REGION));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_OTHER_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_POSTAL));
+		appendToSearch(sw, read.getValueByPath(ContactActivator.NODE_NAME_OTHER_ADRESS,
+				ContactActivator.NODE_NAME_ADRESS_COUNTRY));
+
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_MAIL_DEF));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_AIM));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_GADU));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_GROUPWISE));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_ICQ));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_IRC));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_JABBER));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_MSN));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_MEANWHILE));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_SKYPE));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_INSTMESS_YAHOO));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_BLOG_FEED));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_FRONTPAGE));
+
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_DEPARTMENT));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_BUREAU));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_NAME_MANAGER));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_NAME_ASSISTANT));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_JOB));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_TITLE));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_NAME_NICK));
+		appendToSearch(sw, read.getValueByNodeId(ContactActivator.NODE_DETAILS_NOTES));
+
+		return sw.toString();
+	}
+
+	private void appendToSearch(final StringWriter sw, final Object object) {
+		if (object != null && object.toString().trim().length() > 0) {
+			sw.append(object.toString()).append(" ");
+		}
 	}
 
 	@Override

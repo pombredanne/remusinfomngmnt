@@ -207,7 +207,9 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 				handleSelection((CollapsibleButtonBar) button.getData());
 			}
 		});
-		this.cb.addPaintListener(new PaintListener() {
+		// RIMCORE-83: selectItemAndLoad is only working if the toolbar was
+		// rendered.
+		this.cb.getToolbarComposite().addPaintListener(new PaintListener() {
 			public void paintControl(final PaintEvent e) {
 				if (!created.getObject()) {
 					MainViewPart.this.cb.layout(true);
@@ -227,7 +229,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 						MainViewPart.this.cb.selectItemAndLoad((CustomButton) MainViewPart.this.cb
 								.getItems().get(0));
 					}
-					MainViewPart.this.cb.removePaintListener(this);
+					MainViewPart.this.cb.getToolbarComposite().removePaintListener(this);
 				}
 
 			}

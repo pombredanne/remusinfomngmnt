@@ -81,7 +81,7 @@ public class DeleteOldEntriesJob extends AbstractJob {
 								&& ((InformationUnit) ((InformationUnitListItem) arg0)
 										.getAdapter(InformationUnit.class)).getCreationDate()
 										.getTime()
-										+ (parseInt * 1000 * 60 * 60 * 24) > System
+										+ (Long.valueOf(parseInt) * 1000L * 60L * 60L * 24L) < System
 										.currentTimeMillis();
 					}
 				}));

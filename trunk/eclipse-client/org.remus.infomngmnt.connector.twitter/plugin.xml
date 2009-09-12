@@ -168,6 +168,12 @@
             id="org.remus.infomngmnt.connector.twitter.repliessync"
             name="Twitter Replies Refresh">
       </job>
+      <job
+            class="org.remus.infomngmnt.connector.twitter.jobs.DeleteOldMessagesJob"
+            id="org.remus.infomngmnt.connector.twitter.deleteOldMessages"
+            interval="30"
+            name="DeleteOldMessageJob">
+      </job>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">

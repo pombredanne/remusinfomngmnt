@@ -28,7 +28,7 @@ public class TweetAction extends Action {
 
 	public TweetAction(final String repositoryId) {
 		this.repositoryId = repositoryId;
-		setText("Tweet new mesage");
+		setText("Tweet new message");
 		setToolTipText("Tweet new message");
 
 	}

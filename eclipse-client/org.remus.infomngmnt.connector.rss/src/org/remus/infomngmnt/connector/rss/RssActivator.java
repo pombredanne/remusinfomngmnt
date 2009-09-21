@@ -13,6 +13,7 @@ public class RssActivator extends AbstractUIPlugin {
 
 	public static final String REPOSITORY_OPTIONS_REFRESH_INTERVAL = "REPOSITORY_OPTIONS_REFRESH_INTERVAL";
 	public static final String REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY = "REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY";
+	public static final String REPOSITORY_OPTIONS_BASIC_AUTHENTICATION = "REPOSITORY_OPTIONS_BASIC_AUTHENTICATION";
 
 	public static final String REPOSITORY_ID = "org.remus.infomngmnt.connector.rss"; //$NON-NLS-1$
 	// The shared instance

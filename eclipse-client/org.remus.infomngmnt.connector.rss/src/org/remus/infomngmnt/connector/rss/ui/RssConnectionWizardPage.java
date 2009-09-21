@@ -14,6 +14,7 @@ package org.remus.infomngmnt.connector.rss.ui;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -42,6 +43,7 @@ import org.remus.infomngmnt.connector.rss.RssActivator;
 import org.remus.infomngmnt.connector.rss.RssConnector;
 import org.remus.infomngmnt.connector.rss.RssCredentialProvider;
 import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.security.CredentialProvider;
 
 public class RssConnectionWizardPage extends WizardPage {
 
@@ -54,6 +56,10 @@ public class RssConnectionWizardPage extends WizardPage {
 	private Spinner refreshRateSpinner;
 
 	private Spinner deleteSpinner;
+
+	private Button authentificationButton;
+	private Text userNameText;
+	private Text passwordText;
 
 	/**
 	 * Create the wizard
@@ -72,6 +78,7 @@ public class RssConnectionWizardPage extends WizardPage {
 	 */
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
+
 		container.setLayout(new GridLayout());
 		//
 
@@ -160,9 +167,31 @@ public class RssConnectionWizardPage extends WizardPage {
 		this.deleteSpinner.setMaximum(200);
 		this.deleteSpinner.setIncrement(1);
 
+		final Group group3 = new Group(container, SWT.NONE);
+		group3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		group3.setText("Authentication");
+		GridLayout gridLayout_1 = new GridLayout();
+		gridLayout_1.numColumns = 2;
+		group3.setLayout(gridLayout_1);
+		this.authentificationButton = new Button(group3, SWT.CHECK);
+		this.authentificationButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
+				2, 1));
+		this.authentificationButton.setText("Use authentication");
+		Label username = new Label(group3, SWT.NONE);
+		username.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		username.setText("Username");
+
+		this.userNameText = new Text(group3, SWT.BORDER);
+		this.userNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label lblPassword = new Label(group3, SWT.NONE);
+		lblPassword.setText("Password");
+
+		this.passwordText = new Text(group3, SWT.BORDER | SWT.PASSWORD);
+		this.passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
 		bindValuesToUi();
 		setControl(container);
-
 	}
 
 	public void setRemoteObject(final RemoteRepository repository) {
@@ -203,9 +232,41 @@ public class RssConnectionWizardPage extends WizardPage {
 						String.valueOf(RssConnectionWizardPage.this.deleteSpinner.getSelection()));
 			}
 		});
+		this.authentificationButton.setSelection(Boolean.valueOf(this.repository.getOptions().get(
+				RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION)));
+		ISWTObservableValue authEnabledObservable = SWTObservables
+				.observeSelection(this.authentificationButton);
+		ISWTObservableValue userNameEnabledObservable = SWTObservables
+				.observeEnabled(this.userNameText);
+		ISWTObservableValue passWordEnabledObservable = SWTObservables
+				.observeEnabled(this.passwordText);
+		ctx.bindValue(authEnabledObservable, userNameEnabledObservable, null,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)).updateTargetToModel();
+		ctx.bindValue(authEnabledObservable, passWordEnabledObservable, null,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)).updateTargetToModel();
+		this.authentificationButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				RssConnectionWizardPage.this.repository.getOptions().put(
+						RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION,
+						String.valueOf(RssConnectionWizardPage.this.authentificationButton
+								.getSelection()));
+			}
+		});
+
+		IObservableValue userNameModel = BeansObservables.observeValue(this.repositoryDefinition
+				.getCredentialProvider(), CredentialProvider.USER_NAME);
+		IObservableValue passwordModel = BeansObservables.observeValue(this.repositoryDefinition
+				.getCredentialProvider(), CredentialProvider.PASSWORD);
+
+		ISWTObservableValue userNameTarget = SWTObservables.observeText(this.userNameText,
+				SWT.Modify);
+		ISWTObservableValue passwordTarget = SWTObservables.observeText(this.passwordText,
+				SWT.Modify);
 
 		ctx.bindValue(observeText2, observeValue3);
 		ctx.bindValue(observeValue3, observeValue2);
+		ctx.bindValue(userNameTarget, userNameModel);
+		ctx.bindValue(passwordTarget, passwordModel);
 
 	}
 }

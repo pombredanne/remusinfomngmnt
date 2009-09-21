@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
+import org.eclipse.ecf.core.security.ConnectContextFactory;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -61,8 +62,10 @@ import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
+import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
@@ -334,6 +337,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 */
 	public void reset() {
 		this.api = null;
+		this.container = null;
 		getCredentialProvider().removePropertyChangeListener(this.credentialsMovedListener);
 	}
 
@@ -358,6 +362,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		}
 		getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		this.api = new SyndFeedInput();
+
 		return this.api;
 	}
 
@@ -455,8 +460,16 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			}
 			this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
 					.getAdapter(IRetrieveFileTransferContainerAdapter.class);
+			RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
+					IRepositoryService.class).getRepositoryById(getLocalRepositoryId());
+			if (Boolean.valueOf(repositoryById.getOptions().get(
+					RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION))) {
+				this.fileReceiveAdapter.setConnectContextForAuthentication(ConnectContextFactory
+						.createUsernamePasswordConnectContext(
+								getCredentialProvider().getUserName(), getCredentialProvider()
+										.getPassword()));
+			}
 		}
 		return this.fileReceiveAdapter;
 	}
-
 }

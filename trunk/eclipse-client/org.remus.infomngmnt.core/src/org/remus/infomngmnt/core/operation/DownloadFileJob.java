@@ -138,6 +138,8 @@ public class DownloadFileJob extends Job {
 			return StatusCreator.newStatus("Error while downloading", e);
 		} catch (final FileCreateException e) {
 			return StatusCreator.newStatus("Error while downloading", e);
+		} catch (final Exception e) {
+			return StatusCreator.newStatus("Error while downloading", e);
 		} finally {
 			try {
 				if (out != null) {

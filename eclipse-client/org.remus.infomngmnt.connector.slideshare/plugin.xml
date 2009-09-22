@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.slideshare.SlideshareConnector"
+            credentialprovider="org.remus.infomngmnt.connector.slideshare.SlideshareCredentialProvider"
+            icon="icons/slideshare.png"
+            id="org.remus.infomngmnt.connector.slideshare"
+            name="Slideshare">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.slideshar"
+            newWizard="org.remus.infomngmnt.connector.slideshare.ui.NewSlideshareRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.slideshare">
+      </respository>
+   </extension>
+
+</plugin>

@@ -75,7 +75,7 @@
 			</#if>
 			<tr>
 				<td class="bold">Link:</td>
-				<td><a target="_blank" href="${infoUnit.@stringValue?html}">${infoUnit.@stringValue?html}<a></td>
+				<td><a href="javascript:openFile('${infoUnit.@stringValue?j_string}');">${infoUnit.@stringValue?html}<a></td>
 			</tr>
 		</table>
 		</p>

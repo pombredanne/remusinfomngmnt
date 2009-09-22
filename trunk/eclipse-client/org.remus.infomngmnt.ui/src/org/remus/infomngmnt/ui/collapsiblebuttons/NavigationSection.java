@@ -65,6 +65,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
@@ -183,6 +184,12 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 						} catch (PartInitException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						}
+					} else if (object instanceof Category) {
+						if (NavigationSection.this.viewer.getExpandedState(object)) {
+							NavigationSection.this.viewer.collapseToLevel(object, 1);
+						} else {
+							NavigationSection.this.viewer.expandToLevel(object, 1);
 						}
 					}
 				}

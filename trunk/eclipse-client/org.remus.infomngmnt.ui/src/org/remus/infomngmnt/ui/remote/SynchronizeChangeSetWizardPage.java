@@ -1,9 +1,12 @@
 package org.remus.infomngmnt.ui.remote;
 
+import java.util.Collection;
+
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.compare.util.AdapterUtils;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -13,12 +16,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
+
 import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
 
-public class SynchronizeChangeSetWizardPage extends WizardPage {
+public class SynchronizeChangeSetWizardPage extends WizardPage implements IMenuListener {
 
 	private Tree tree;
 	private final DiffModel diffModel;
@@ -61,13 +67,13 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 
 		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-//		 this.treeViewer.setLabelProvider(new
-//		 AdapterFactoryLabelProvider(AdapterUtils
-//		 .getAdapterFactory()));
-//		 this.treeViewer.setContentProvider(new
-//		 AdapterFactoryContentProvider(AdapterUtils
-//		 .getAdapterFactory()));
-		
+		// this.treeViewer.setLabelProvider(new
+		// AdapterFactoryLabelProvider(AdapterUtils
+		// .getAdapterFactory()));
+		// this.treeViewer.setContentProvider(new
+		// AdapterFactoryContentProvider(AdapterUtils
+		// .getAdapterFactory()));
+
 		this.diffLabelProvider = new DiffLabelProvider();
 		this.diffLabelProvider.setChangeSet(this.changeSet);
 		this.treeViewer.setLabelProvider(this.diffLabelProvider);
@@ -76,6 +82,11 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 				.setContentProvider(new DiffContentProvider(AdapterUtils.getAdapterFactory()));
 
 		this.treeViewer.setInput(this.diffModel);
+		MenuManager contextMenu = new MenuManager("#PopUpMenu");
+		contextMenu.setRemoveAllWhenShown(true);
+		contextMenu.addMenuListener(this);
+		final Menu menu = contextMenu.createContextMenu(this.treeViewer.getControl());
+
 		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent event) {
 				System.out.println(event.getSelection());
@@ -84,9 +95,27 @@ public class SynchronizeChangeSetWizardPage extends WizardPage {
 		});
 
 		setControl(container);
+		checkConflicts();
+	}
+
+	private void checkConflicts() {
+		Collection<SynchronizationAction> values = this.changeSet.getSyncObjectActionMap().values();
+		if (values.contains(SynchronizationAction.RESOLVE_CONFLICT)) {
+			setErrorMessage("Please resolve the conflicts manually");
+			setPageComplete(false);
+		} else {
+			setErrorMessage(null);
+			setPageComplete(true);
+		}
+
 	}
 
 	protected void validatePage() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void menuAboutToShow(final IMenuManager manager) {
 		// TODO Auto-generated method stub
 
 	}

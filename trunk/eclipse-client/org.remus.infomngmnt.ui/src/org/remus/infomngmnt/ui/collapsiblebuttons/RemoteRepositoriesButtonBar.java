@@ -19,10 +19,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -47,11 +45,10 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.IHandlerService;
 
+import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.deferred.DeferredContentProvider;
@@ -59,9 +56,9 @@ import org.remus.infomngmnt.ui.extension.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.extension.IRepositoryUI;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 import org.remus.infomngmnt.ui.service.IRepositoryExtensionService;
+import org.remus.infomngmnt.ui.views.action.CheckoutAction;
 import org.remus.infomngmnt.util.DisposableEditingDomain;
 import org.remus.infomngmnt.util.EditingUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -150,6 +147,7 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 
 	private void hookActions() {
 		this.addRepAction = new AddRemoteRepositoryAction();
+		this.addRepAction.setViewSite(getViewSite());
 
 	}
 
@@ -167,6 +165,12 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 								wizardClass);
 						wizardClass.init(new StructuredSelection(object));
 						wizDialog.open();
+					}
+				} else if (object instanceof RemoteContainer) {
+					CheckoutAction checkoutAction = new CheckoutAction();
+					checkoutAction.selectionChanged(new StructuredSelection(object));
+					if (checkoutAction.isEnabled()) {
+						checkoutAction.run();
 					}
 				}
 			}
@@ -202,6 +206,7 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 		this.actionBar = new RemoteRepositoryContextMenu();
 		this.actionBar.init(getViewSite().getActionBars());
 		this.actionBar.setActiveDomain(this);
+		this.actionBar.setViewSite(getViewSite());
 		this.viewer.addSelectionChangedListener(this.actionBar);
 		contextMenu.addMenuListener(this.actionBar);
 		final Menu menu = contextMenu.createContextMenu(this.viewer.getControl());
@@ -251,31 +256,6 @@ public class RemoteRepositoriesButtonBar extends CollapsibleButtonBar implements
 
 	public Viewer getViewer() {
 		return this.viewer;
-	}
-
-	private class AddRemoteRepositoryAction extends Action {
-		public static final String CMD_ID = "org.remus.infomngmnt.ui.newRepository"; //$NON-NLS-1$
-		private IHandlerService service;
-
-		AddRemoteRepositoryAction() {
-			setToolTipText("Add new repository");
-			setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
-					"icons/iconexperience/16/server_new.png"));
-		}
-
-		@Override
-		public void run() {
-			if (this.service == null) {
-				this.service = (IHandlerService) getViewSite().getService(IHandlerService.class);
-			}
-			try {
-				this.service.executeCommand(CMD_ID, null);
-			} catch (Exception e) {
-				ErrorDialog.openError(getViewSite().getShell(), "Error executing command",
-						"Error creating new repository", StatusCreator.newStatus(e.getMessage()));
-			}
-
-		}
 	}
 
 }

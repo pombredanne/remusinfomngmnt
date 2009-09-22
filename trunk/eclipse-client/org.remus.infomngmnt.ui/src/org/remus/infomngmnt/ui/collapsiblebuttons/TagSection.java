@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.Tag;
@@ -130,6 +131,13 @@ public class TagSection extends CollapsibleButtonBar {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+					} else if (object instanceof Tag) {
+						
+							if (TagSection.this.viewer.getExpandedState(object)) {
+								TagSection.this.viewer.collapseToLevel(object, 1);
+							} else {
+								TagSection.this.viewer.expandToLevel(object, 1);
+							}
 					}
 				}
 			}

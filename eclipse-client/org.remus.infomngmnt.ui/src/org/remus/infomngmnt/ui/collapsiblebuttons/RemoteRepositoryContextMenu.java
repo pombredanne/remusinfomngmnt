@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -73,6 +74,10 @@ public class RemoteRepositoryContextMenu implements IMenuListener, IPropertyList
 
 	private RefreshRemoteObjectAction refreshAction;
 
+	private IViewSite viewSite;
+
+	private org.remus.infomngmnt.ui.collapsiblebuttons.AddRemoteRepositoryAction newAction;
+
 	/**
 	 * This creates an instance of the contributor.
 	 */
@@ -101,7 +106,7 @@ public class RemoteRepositoryContextMenu implements IMenuListener, IPropertyList
 		this.refreshAction = new RefreshRemoteObjectAction();
 		this.checktOutAction = new CheckoutAction();
 		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), this.deleteAction);
-
+		this.newAction = new AddRemoteRepositoryAction();
 		actionBars.updateActionBars();
 	}
 
@@ -206,6 +211,7 @@ public class RemoteRepositoryContextMenu implements IMenuListener, IPropertyList
 		menuManager.add(new Separator());
 		menuManager.add(this.refreshAction);
 		menuManager.add(new Separator());
+		menuManager.add(this.newAction);
 		menuManager.add(this.deleteAction);
 		menuManager.add(new Separator());
 
@@ -240,6 +246,12 @@ public class RemoteRepositoryContextMenu implements IMenuListener, IPropertyList
 	 */
 	public void selectionChanged(final SelectionChangedEvent event) {
 		update();
+	}
+
+	public void setViewSite(final IViewSite viewSite) {
+		this.viewSite = viewSite;
+		this.newAction.setViewSite(viewSite);
+
 	}
 
 }

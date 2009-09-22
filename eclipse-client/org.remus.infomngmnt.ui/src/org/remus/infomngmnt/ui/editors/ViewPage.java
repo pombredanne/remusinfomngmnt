@@ -12,8 +12,10 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.BrowserFunction;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -159,6 +161,7 @@ public class ViewPage extends InformationFormPage {
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this.binFileListener);
 		LoadingBarMessageProvider.getInstance().addPropertyChangeListener(getInfoId(),
 				this.loadingMessageListener);
+		new OpenFileFunction(this.browser, "openFile");
 	}
 
 	@Override
@@ -172,6 +175,23 @@ public class ViewPage extends InformationFormPage {
 	private String getInfoId() {
 		return ((IFileEditorInput) getEditorInput()).getFile().getProjectRelativePath()
 				.removeFileExtension().lastSegment();
+	}
+
+	private class OpenFileFunction extends BrowserFunction {
+
+		public OpenFileFunction(final Browser browser, final String name) {
+			super(browser, name);
+		}
+
+		@Override
+		public Object function(final Object[] arguments) {
+			if (arguments.length == 1) {
+				String string = arguments[0].toString();
+				Program.launch(string);
+			}
+			return null;
+		}
+
 	}
 
 }

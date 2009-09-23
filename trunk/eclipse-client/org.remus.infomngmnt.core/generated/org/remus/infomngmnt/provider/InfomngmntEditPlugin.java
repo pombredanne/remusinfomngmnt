@@ -14,6 +14,7 @@
  */
 package org.remus.infomngmnt.provider;
 
+import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.EMFPlugin;
@@ -22,6 +23,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
@@ -91,6 +93,7 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 
 		private IPreferenceStore preferenceStore;
 		private INotificationManagerManager service;
+		private ServiceTracker proxyServiceTracker;
 
 		/**
 		 * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -130,6 +133,20 @@ public final class InfomngmntEditPlugin extends EMFPlugin {
 			if (serviceReference != null) {
 				Object service = getBundle().getBundleContext().getService(serviceReference);
 				return (T) service;
+			}
+			return null;
+		}
+
+		public IProxyService getProxyService() {
+			try {
+				if (this.proxyServiceTracker == null) {
+					this.proxyServiceTracker = new ServiceTracker(getBundle().getBundleContext(),
+							IProxyService.class.getName(), null);
+					this.proxyServiceTracker.open();
+				}
+				return (IProxyService) this.proxyServiceTracker.getService();
+			} catch (Exception e) {
+				// do nothing
 			}
 			return null;
 		}

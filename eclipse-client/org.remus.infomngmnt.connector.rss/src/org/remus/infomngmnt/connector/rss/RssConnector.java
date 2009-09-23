@@ -382,13 +382,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			/*
 			 * Replace all imgs with
 			 */
-			NodeList elementsByTagName = document.getElementsByTagName("a");
-			for (int i = 0; i < elementsByTagName.getLength(); i++) {
-				final Node node = elementsByTagName.item(i);
-				((Element) node).setAttribute("target", "_blank");
-				changed = true;
-			}
-			elementsByTagName = document.getElementsByTagName("img");
+			NodeList elementsByTagName = document.getElementsByTagName("img");
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
 				final Node node = elementsByTagName.item(i);
 				String src = ((Element) node).getAttribute("src");

@@ -38,6 +38,8 @@ import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.util.Proxy;
+import org.remus.infomngmnt.util.ProxyUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import del.icio.us.Delicious;
@@ -122,6 +124,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#getRepositoryUrl()
 	 */
+	@Override
 	public String getRepositoryUrl() {
 		return DeliciousConstants.API_ENDPOINT;
 	}
@@ -146,12 +149,20 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
 			this.api = new Delicious(getCredentialProvider().getUserName(), getCredentialProvider()
 					.getPassword());
+			Proxy proxyByUrl = ProxyUtil.getProxyByUrl(DeliciousConstants.API_ENDPOINT);
+			if (proxyByUrl != null) {
+				this.api.setProxyConfiguration(proxyByUrl.getAddress().getHostName(), proxyByUrl
+						.getAddress().getPort());
+				this.api.setProxyAuthenticationConfiguration(proxyByUrl.getUsername(), proxyByUrl
+						.getPassword());
+			}
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
 		this.lastApiCall = System.currentTimeMillis();
 		return this.api;
 	}
 
+	@Override
 	public IStatus validate() {
 		try {
 			getApi().getRecentPosts();

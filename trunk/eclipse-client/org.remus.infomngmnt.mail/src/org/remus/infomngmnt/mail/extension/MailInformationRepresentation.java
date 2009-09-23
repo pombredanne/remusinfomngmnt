@@ -26,6 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.cyberneko.html.parsers.DOMParser;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -141,6 +142,14 @@ public class MailInformationRepresentation extends AbstractInformationRepresenta
 					}
 				}
 			}
+			elementsByTagName = document.getElementsByTagName("a");
+			for (int i = 0; i < elementsByTagName.getLength(); i++) {
+				final Node node = elementsByTagName.item(i);
+				((Element) node).setAttribute("target", "");
+				String attribute = ((Element) node).getAttribute("href");
+				((Element) node).setAttribute("href", StringUtils.join("javascript:openFile(\'",
+						StringEscapeUtils.escapeJavaScript(attribute), "\');"));
+			}
 			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty("omit-xml-declaration", "yes");
 
@@ -155,5 +164,4 @@ public class MailInformationRepresentation extends AbstractInformationRepresenta
 		}
 		return content;
 	}
-
 }

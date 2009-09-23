@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.connector.slideshare;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -20,8 +21,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sf.slidesharejava.Constants;
+import net.sf.slidesharejava.SlideShareException;
 import net.sf.slidesharejava.Slideshare;
 import net.sf.slidesharejava.beans.Contact;
+import net.sf.slidesharejava.beans.ConverstionState;
 import net.sf.slidesharejava.beans.Group;
 import net.sf.slidesharejava.beans.SearchResult;
 import net.sf.slidesharejava.beans.Slideshow;
@@ -41,6 +45,7 @@ import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 
+import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
@@ -59,6 +64,8 @@ import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.onlineresource.OnlineResourceActivator;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.util.Proxy;
+import org.remus.infomngmnt.util.ProxyUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -72,12 +79,15 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 	private static final String URL_MYSEARCHES = "http://slideshare.net/mysearches/";
 	private static final String URL_GROUP = "http://slideshare.net/group/";
 	private static final String URL_CONTACTS = "http://slideshare.net/contacts/";
+	private static final String URL_SLIDESHARE_ID = "http://slideshare.net/id/";
 
 	public static final String ID_FRAGMENT = "id"; //$NON-NLS-1$
 	public static final String USERTAGS_FRAGMENT = "usertags"; //$NON-NLS-1$
 	public static final String MYSEARCHES_FRAGMENT = "mysearches"; //$NON-NLS-1$
+	public static final String MYSLIDES_FRAGMENT = "myslides"; //$NON-NLS-1$
 	public static final String GROUP_FRAGMENT = "group"; //$NON-NLS-1$
 	public static final String CONTACT_FRAGMENT = "contacts"; //$NON-NLS-1$
+	private static final String URL_MY_SLIDESHARE_ID = URL_MYSLIDES + ID_FRAGMENT;
 
 	/**
 	 * 
@@ -99,7 +109,7 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 	 */
 	public RemoteObject addToRepository(final SynchronizableObject item,
 			final IProgressMonitor monitor) throws RemoteException {
-		// TODO Auto-generated method stub
+		// not supported
 		return null;
 	}
 
@@ -112,7 +122,7 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 	 */
 	public RemoteObject commit(final SynchronizableObject item2commit,
 			final IProgressMonitor monitor) throws RemoteException {
-		// TODO Auto-generated method stub
+		// not supported
 		return null;
 	}
 
@@ -126,7 +136,35 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 	 */
 	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		if (item instanceof InformationUnitListItem) {
+			String url = item.getSynchronizationMetaData().getUrl();
+			Path path = new Path(url);
+			if (ID_FRAGMENT.equals(path.segment(path.segmentCount() - 2))
+					&& MYSLIDES_FRAGMENT.equals(path.segment(path.segmentCount() - 3))) {
+				try {
+					Slideshow slideShow = getApi().getSlideShow(path.lastSegment(), null, true);
+					SlideshowTag[] tags = slideShow.getTags();
+					List<String> newTags = new ArrayList<String>();
+					for (SlideshowTag slideshowTag : tags) {
+						if (!slideshowTag.getName().equals(
+								((Category) item.eContainer()).getLabel())) {
+							newTags.add(slideshowTag.getName());
+						}
+					}
+					getApi().editSlideShow(slideShow.getId(), slideShow.getTitle(),
+							slideShow.getDescription(),
+							org.apache.commons.lang.StringUtils.join(newTags, " "),
+							slideShow.isPrivateSlide(), slideShow.isSecretUrl(),
+							slideShow.isAllowEmbed(), slideShow.isSharedWithContacts());
+				} catch (SlideShareException e) {
+					// do nothing
+				} catch (IOException e) {
+					throw new RemoteException(StatusCreator.newStatus(
+							"Error deleting slides from tag category", e));
+				}
+			}
+
+		}
 
 	}
 
@@ -162,7 +200,8 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 			SearchResult result = (SearchResult) container.getWrappedObject();
 			Slideshow[] slideshows = result.getSlideshows();
 			for (Slideshow slideshow : slideshows) {
-				returnValue.add(buildSlideShow(slideshow));
+				if (slideshow.getStatus() == ConverstionState.CONVERTED)
+					returnValue.add(buildSlideShow(slideshow, false));
 			}
 		} else if (!showOnlyContainers && container.getWrappedObject() instanceof UserGroup) {
 			UserGroup group = (UserGroup) container.getWrappedObject();
@@ -170,7 +209,8 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 				Group slidesByGroup = getApi().getSlidesByGroup(group.getQueryName(), true);
 				Slideshow[] slideshows = slidesByGroup.getSlideshows();
 				for (Slideshow slideshow : slideshows) {
-					returnValue.add(buildSlideShow(slideshow));
+					if (slideshow.getStatus() == ConverstionState.CONVERTED)
+						returnValue.add(buildSlideShow(slideshow, false));
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus("Error getting groups", e));
@@ -181,7 +221,8 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 						((Contact) container.getWrappedObject()).getUserName(), true);
 				Slideshow[] slideshows = slidesByUser.getSlideshows();
 				for (Slideshow slideshow : slideshows) {
-					returnValue.add(buildSlideShow(slideshow));
+					if (slideshow.getStatus() == ConverstionState.CONVERTED)
+						returnValue.add(buildSlideShow(slideshow, false));
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus("Error getting users slide", e));
@@ -281,8 +322,9 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 			for (Slideshow slideshow : slideshows) {
 				SlideshowTag[] tags = slideshow.getTags();
 				for (SlideshowTag slideshowTag : tags) {
-					if (slideshowTag.getName().equals(name)) {
-						returnValue.add(buildSlideShow(slideshow));
+					if (slideshowTag.getName().equals(name)
+							&& slideshow.getStatus() == ConverstionState.CONVERTED) {
+						returnValue.add(buildSlideShow(slideshow, true));
 						break;
 					}
 				}
@@ -294,10 +336,10 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 		return returnValue;
 	}
 
-	private RemoteObject buildSlideShow(final Slideshow slideshow) {
+	private RemoteObject buildSlideShow(final Slideshow slideshow, final boolean ownSlides) {
 		RemoteObject slideShow = InfomngmntFactory.eINSTANCE.createRemoteObject();
 		slideShow.setId(slideshow.getId());
-		slideShow.setName(slideshow.getTitle());
+		slideShow.setName(StringEscapeUtils.unescapeXml(slideshow.getTitle()));
 		String hash = null;
 		if (slideshow.getUpdateDate() != null) {
 			hash = String.valueOf(slideshow.getUpdateDate().getTime());
@@ -305,7 +347,11 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 			hash = String.valueOf(slideshow.getCreationDate().getTime());
 		}
 		slideShow.setHash(hash);
-		slideShow.setUrl("http://slideshare.net/id/" + slideshow.getId());
+		if (ownSlides) {
+			slideShow.setUrl(StringUtils.join(URL_MYSLIDES, ID_FRAGMENT, "/", slideShow.getId()));
+		} else {
+			slideShow.setUrl(URL_SLIDESHARE_ID + slideshow.getId());
+		}
 		slideShow.setWrappedObject(slideshow);
 		return slideShow;
 	}
@@ -472,7 +518,9 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 		if (ID_FRAGMENT.equals(path.segment(path.segmentCount() - 2))) {
 			try {
 				Slideshow slideShow = getApi().getSlideShow(path.lastSegment(), null, true);
-				return buildSlideShow(slideShow);
+				if (slideShow.getStatus() == ConverstionState.CONVERTED)
+					return buildSlideShow(slideShow, MYSLIDES_FRAGMENT.equals(path.segment(path
+							.segmentCount() - 3)));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -565,8 +613,17 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 	}
 
 	public Slideshare getApi() {
-		return new Slideshare(SlideshareActivator.API_KEY, SlideshareActivator.SHARED_SECRED,
-				getCredentialProvider().getUserName(), getCredentialProvider().getPassword());
+		Slideshare slideshare = new Slideshare(SlideshareActivator.API_KEY,
+				SlideshareActivator.SHARED_SECRED, getCredentialProvider().getUserName(),
+				getCredentialProvider().getPassword());
+		Proxy proxyByUrl = ProxyUtil.getProxyByUrl(Constants.API_ENDPOINT);
+		if (proxyByUrl != null) {
+			slideshare.setProxyConfiguration(proxyByUrl.getAddress().getHostName(), proxyByUrl
+					.getAddress().getPort());
+			slideshare.setProxyAuthenticationConfiguration(proxyByUrl.getUsername(), proxyByUrl
+					.getPassword());
+		}
+		return slideshare;
 	}
 
 	private IRetrieveFileTransferContainerAdapter getFileReceiveAdapter() {

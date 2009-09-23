@@ -28,6 +28,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.lang.StringUtils;
 import org.cyberneko.html.parsers.DOMParser;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -184,7 +185,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		returnValue.setUrl(object.getUri());
 		returnValue.setId(object.getUri());
 		returnValue.setWrappedObject(object);
-		returnValue.setName(object.getTitle());
+		returnValue.setName(StringUtils.remove(object.getTitle(), "\n"));
 		return returnValue;
 	}
 

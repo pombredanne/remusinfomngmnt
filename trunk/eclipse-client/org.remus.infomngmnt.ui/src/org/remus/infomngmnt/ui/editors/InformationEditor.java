@@ -50,12 +50,10 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -497,11 +495,16 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 
 	private IManagedForm headerForm2;
 
+	private int tabHeight;
+
 	@Override
 	protected void createPages() {
 		super.createPages();
-		if (getPageCount() == 1 && getContainer() instanceof CTabFolder) {
-			((CTabFolder) getContainer()).setTabHeight(0);
+		if (getContainer() instanceof CTabFolder) {
+			this.tabHeight = ((CTabFolder) getContainer()).getTabHeight();
+			if (getPageCount() == 1) {
+				((CTabFolder) getContainer()).setTabHeight(0);
+			}
 		}
 		getPrimaryModel().eAdapters().add(this.dirtyAdapter);
 		getPrimaryModel().eAdapters().add(this.labelChangeAdapter);
@@ -842,11 +845,14 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	 */
 	protected void showTabs() {
 		if (getPageCount() > 1) {
-			setPageText(0, getString("_UI_SelectionPage_label"));
-			if (getContainer() instanceof CTabFolder) {
-				((CTabFolder) getContainer()).setTabHeight(SWT.DEFAULT);
-				final Point point = getContainer().getSize();
-				getContainer().setSize(point.x, point.y - 6);
+			// setPageText(0, getString("_UI_SelectionPage_label"));
+			// if (getContainer() instanceof CTabFolder) {
+			// ((CTabFolder) getContainer()).setTabHeight(SWT.DEFAULT);
+			// final Point point = getContainer().getSize();
+			// getContainer().setSize(point.x, point.y - 6);
+			// }
+			if (getPageCount() == 1 && getContainer() instanceof CTabFolder) {
+				((CTabFolder) getContainer()).setTabHeight(this.tabHeight);
 			}
 		}
 	}

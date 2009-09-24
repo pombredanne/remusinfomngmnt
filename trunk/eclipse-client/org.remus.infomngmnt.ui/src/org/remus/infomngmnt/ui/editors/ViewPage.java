@@ -10,6 +10,7 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.BrowserFunction;
@@ -186,8 +187,11 @@ public class ViewPage extends InformationFormPage {
 		@Override
 		public Object function(final Object[] arguments) {
 			if (arguments.length == 1) {
-				String string = arguments[0].toString();
-				Program.launch(string);
+				Path path = new Path(arguments[0].toString());
+				if (path.getDevice() != null) {
+					String string = arguments[0].toString();
+					Program.launch(string);
+				}
 			}
 			return null;
 		}

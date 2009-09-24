@@ -15,12 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeansObservables;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.observable.value.IValueChangeListener;
-import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
@@ -52,20 +49,22 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
+import org.remus.infomngmnt.connector.twitter.TwitterCredentials;
+import org.remus.infomngmnt.connector.twitter.TwitterRepository;
 import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.security.CredentialProvider;
+
+import twitter4j.TwitterException;
 
 public class TwitterConnectionWizardPage extends WizardPage {
 
 	private TableViewer tableViewer;
 	private Text nameText;
-	private Text passwordText;
-	private Text userNameText;
 	private RemoteRepository repository;
 	private IRepository repositoryDefinition;
 	private boolean manualName;
 	private WritableList searchList;
 	private Button removeButton;
+	private Button btnGrantAccessOn;
 
 	/**
 	 * Create the wizard
@@ -106,48 +105,40 @@ public class TwitterConnectionWizardPage extends WizardPage {
 			}
 		});
 
-		final Group credentialsGroup = new Group(container, SWT.NONE);
-		credentialsGroup.setText("Credentials");
-		final GridData gd_credentialsGroup = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		credentialsGroup.setLayoutData(gd_credentialsGroup);
-		final GridLayout gridLayout_1 = new GridLayout();
-		gridLayout_1.numColumns = 2;
-		credentialsGroup.setLayout(gridLayout_1);
+		this.nameText.setText(String.format("%s@%s",
+				((TwitterCredentials) this.repositoryDefinition.getCredentialProvider())
+						.getInternalId(), "twitter"));
+		new Label(group, SWT.NONE);
 
-		final Label usernameLabel = new Label(credentialsGroup, SWT.NONE);
-		usernameLabel.setText("Username");
-
-		this.userNameText = new Text(credentialsGroup, SWT.BORDER);
-		final GridData gd_userNameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		this.userNameText.setLayoutData(gd_userNameText);
-
-		final Label passwordLabel = new Label(credentialsGroup, SWT.NONE);
-		passwordLabel.setText("Password");
-
-		this.passwordText = new Text(credentialsGroup, SWT.BORDER | SWT.PASSWORD);
-		final GridData gd_passwordText = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		this.passwordText.setLayoutData(gd_passwordText);
-		new Label(credentialsGroup, SWT.NONE);
-
-		final Button validateCredentialsButton = new Button(credentialsGroup, SWT.NONE);
-		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
+		this.btnGrantAccessOn = new Button(group, SWT.NONE);
+		this.btnGrantAccessOn
+				.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		this.btnGrantAccessOn.setText("Grant Access on twitter.com");
+		this.btnGrantAccessOn.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				// getContainer().run(
-				// true,
-				// true,
-				// new
-				// ValidateConnectionJob(TwitterConnectionWizardPage.this.repositoryDefinition));
-				setErrorMessage(null);
-
+				OAuthDialog oAuthDialog = new OAuthDialog(getShell());
+				if (oAuthDialog.open() == IDialogConstants.OK_ID) {
+					try {
+						TwitterConnectionWizardPage.this.repositoryDefinition
+								.getCredentialProvider().setUserName(oAuthDialog.getToken());
+						TwitterConnectionWizardPage.this.repositoryDefinition
+								.getCredentialProvider().setPassword(oAuthDialog.getTokenSecret());
+						String userId = StringUtils
+								.trim(((TwitterRepository) TwitterConnectionWizardPage.this.repositoryDefinition)
+										.getApi().verifyCredentials().getName());
+						((TwitterCredentials) TwitterConnectionWizardPage.this.repositoryDefinition
+								.getCredentialProvider()).setInternalId(userId);
+						if (!TwitterConnectionWizardPage.this.manualName) {
+							TwitterConnectionWizardPage.this.nameText.setText(String.format(
+									"%s@%s", userId, "twitter"));
+						}
+					} catch (TwitterException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		});
-		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false);
-		validateCredentialsButton.setLayoutData(gd_validateCredentialsButton);
-		validateCredentialsButton.setText("Validate credentials");
-
-		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition
-				.getCredentialProvider().getUserName(), "twitter"));
 
 		final Group group_1 = new Group(container, SWT.NONE);
 		group_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -209,9 +200,8 @@ public class TwitterConnectionWizardPage extends WizardPage {
 	}
 
 	public void bindValuesToUi() {
-		DataBindingContext ctx = new DataBindingContext();
-		EMFDataBindingContext ectx = new EMFDataBindingContext();
 
+		EMFDataBindingContext ctx = new EMFDataBindingContext();
 		this.searchList = new WritableList(new ArrayList<String>(Arrays
 				.asList(org.apache.commons.lang.StringUtils.split((this.repository).getOptions()
 						.get(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY), "|"))), String.class);
@@ -226,29 +216,11 @@ public class TwitterConnectionWizardPage extends WizardPage {
 		});
 
 		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
-		IObservableValue beanUserName = BeansObservables.observeValue(this.repositoryDefinition
-				.getCredentialProvider(), CredentialProvider.USER_NAME);
-		ISWTObservableValue swtUserName = SWTObservables.observeText(this.userNameText, SWT.Modify);
-		ctx.bindValue(swtUserName, beanUserName, null, null);
-		ISWTObservableValue swtPassword = SWTObservables.observeText(this.passwordText, SWT.Modify);
-		IObservableValue beanPassword = BeansObservables.observeValue(this.repositoryDefinition
-				.getCredentialProvider(), CredentialProvider.PASSWORD);
-		ctx.bindValue(swtPassword, beanPassword, null, null);
 
 		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
 		IObservableValue emfName = EMFObservables.observeValue(this.repository,
 				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
-		ectx.bindValue(swtName, emfName, null, null);
-
-		swtUserName.addValueChangeListener(new IValueChangeListener() {
-			public void handleValueChange(final ValueChangeEvent event) {
-				if (!TwitterConnectionWizardPage.this.manualName) {
-					String userName = (String) event.getObservableValue().getValue();
-					TwitterConnectionWizardPage.this.nameText.setText(String.format("%s@%s",
-							userName, "twitter"));
-				}
-			}
-		});
+		ctx.bindValue(swtName, emfName, null, null);
 	}
 
 	public List getSearchList() {

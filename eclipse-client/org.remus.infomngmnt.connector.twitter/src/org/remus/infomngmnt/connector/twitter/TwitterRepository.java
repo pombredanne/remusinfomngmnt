@@ -70,6 +70,10 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 
 	public static final String KEY_TWITTER_FEED = "twitterfeed"; //$NON-NLS-1$
 
+	public static final String CONSUMER_KEY = "omhaenBOi32GmCWpIZCKQ"; //$NON-NLS-1$
+
+	public static final String CONSUMER_SECRET = "T1ptIaPDBgnM1S2gtjZGZRSU9YhB4Er5fhJkFywsKm0"; //$NON-NLS-1$
+
 	/**
 	 * 
 	 */
@@ -464,6 +468,7 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#getRepositoryUrl()
 	 */
+	@Override
 	public String getRepositoryUrl() {
 		return "http://twitter.com/";
 	}
@@ -507,6 +512,7 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#validate()
 	 */
+	@Override
 	public IStatus validate() {
 		try {
 			getApi().verifyCredentials();
@@ -520,14 +526,12 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	public Twitter getApi() {
 		if (this.api == null) {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
-			this.api = new Twitter(getCredentialProvider().getUserName(), getCredentialProvider()
-					.getPassword());
-			this.api.setUserAgent("Remus");
-			this.api.setSource("Remus");
-
+			this.api = new Twitter();
+			this.api.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+			this.api.setOAuthAccessToken(getCredentialProvider().getUserName(),
+					getCredentialProvider().getPassword());
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
 		return this.api;
 	}
-
 }

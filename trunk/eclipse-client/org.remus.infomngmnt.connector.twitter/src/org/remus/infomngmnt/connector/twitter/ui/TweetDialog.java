@@ -35,6 +35,7 @@ import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.jobs.UploadImageJob;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.security.CredentialProvider;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -135,14 +136,31 @@ public class TweetDialog extends TitleAreaDialog {
 				fd.setFilterExtensions(new String[] { "*.jpg", "*.png", "*.gif" });
 				final String open = fd.open();
 				if (open != null) {
-					ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
-					UploadImageJob job = new UploadImageJob(open, TweetDialog.this.repositoryId);
-					try {
-						pmd.run(true, true, job);
-						TweetDialog.this.styledText.getFTextField().insert(job.getUrl());
-					} catch (Exception e) {
-						setErrorMessage("Error while uploading image");
+					CredentialProvider credentialProvider = new CredentialProvider() {
 
+					};
+					credentialProvider.setGroup("twitpic");
+					credentialProvider.setIdentifier("twitpic");
+					TwitPicPasswordPrompt twitPicPasswordPrompt = new TwitPicPasswordPrompt(
+							getShell(), credentialProvider.getUserName(), credentialProvider
+									.getPassword());
+					if (twitPicPasswordPrompt.open() == IDialogConstants.OK_ID) {
+						if (twitPicPasswordPrompt.isSave()) {
+							credentialProvider.setUserName(twitPicPasswordPrompt.getUsername());
+							credentialProvider.setPassword(twitPicPasswordPrompt.getPwd());
+						} else {
+							credentialProvider.delete();
+						}
+						ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
+						UploadImageJob job = new UploadImageJob(open, twitPicPasswordPrompt
+								.getUsername(), twitPicPasswordPrompt.getPwd());
+						try {
+							pmd.run(true, true, job);
+							TweetDialog.this.styledText.getFTextField().insert(job.getUrl());
+						} catch (Exception e) {
+							setErrorMessage("Error while uploading image");
+
+						}
 					}
 
 				}
@@ -161,13 +179,30 @@ public class TweetDialog extends TitleAreaDialog {
 					IFile createTempFile = ResourceUtil.createTempFile("png");
 					String osString = createTempFile.getLocation().toOSString();
 					loader.save(osString, SWT.IMAGE_PNG);
-					ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
-					UploadImageJob job = new UploadImageJob(osString, TweetDialog.this.repositoryId);
-					try {
-						pmd.run(true, true, job);
-						TweetDialog.this.styledText.getFTextField().insert(job.getUrl());
-					} catch (Exception e) {
-						setErrorMessage("Error while uploading image");
+					CredentialProvider credentialProvider = new CredentialProvider() {
+
+					};
+					credentialProvider.setGroup("twitpic");
+					credentialProvider.setIdentifier("twitpic");
+					TwitPicPasswordPrompt twitPicPasswordPrompt = new TwitPicPasswordPrompt(
+							getShell(), credentialProvider.getUserName(), credentialProvider
+									.getPassword());
+					if (twitPicPasswordPrompt.open() == IDialogConstants.OK_ID) {
+						if (twitPicPasswordPrompt.isSave()) {
+							credentialProvider.setUserName(twitPicPasswordPrompt.getUsername());
+							credentialProvider.setPassword(twitPicPasswordPrompt.getPwd());
+						} else {
+							credentialProvider.delete();
+						}
+						ProgressMonitorDialog pmd = new ProgressMonitorDialog(getShell());
+						UploadImageJob job = new UploadImageJob(osString, twitPicPasswordPrompt
+								.getUsername(), twitPicPasswordPrompt.getPwd());
+						try {
+							pmd.run(true, true, job);
+							TweetDialog.this.styledText.getFTextField().insert(job.getUrl());
+						} catch (Exception e) {
+							setErrorMessage("Error while uploading image");
+						}
 					}
 				} else {
 					setErrorMessage("Clipboard content is not an image");

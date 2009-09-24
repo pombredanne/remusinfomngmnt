@@ -39,11 +39,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.StatusCreator;
-
-import twitter4j.Twitter;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -56,15 +53,18 @@ public class UploadImageJob extends CancelableRunnable {
 
 	private String url;
 
-	private final String repositoryId;
+	private final String username;
+
+	private final String password;
 
 	public final String getUrl() {
 		return this.url;
 	}
 
-	public UploadImageJob(final String filePath, final String repositoryId) {
+	public UploadImageJob(final String filePath, final String username, final String password) {
 		this.filePath = filePath;
-		this.repositoryId = repositoryId;
+		this.username = username;
+		this.password = password;
 
 	}
 
@@ -78,9 +78,9 @@ public class UploadImageJob extends CancelableRunnable {
 
 			ArrayList<Part> partList = new ArrayList<Part>();
 			fileInputStream = new FileInputStream(this.filePath);
-			Twitter twitterApi = TwitterUtil.getTwitterApi(this.repositoryId);
-			partList.add(new StringPart("username", twitterApi.getUserId()));
-			partList.add(new StringPart("password", twitterApi.getPassword()));
+
+			partList.add(new StringPart("username", this.username));
+			partList.add(new StringPart("password", this.password));
 			String fileExtension = new Path(this.filePath).getFileExtension();
 			partList.add(new FilePart("media", new ByteArrayPartSource("image." + fileExtension,
 					StreamUtil.convertStreamToByte(fileInputStream)), "image/" + fileExtension,

@@ -62,9 +62,21 @@ public class DiffLabelProvider extends LabelProvider {
 						return ResourceManager.getPluginImage(UIPlugin.getDefault(),
 								"icons/iconexperience/16/server_client_exchange.png");
 					}
-				} else if (parent instanceof Category && ((Category) parent).getId() != null) {
+				} else if (parent instanceof Category && ((Category) parent).getId() != null
+						&& this.changeSet.getSyncCategoryActionMap().get(parent) == null) {
 					if (returnImage) {
 						return getImageFromModel(parent);
+					} else {
+						return NLS.bind("{0} ({1})", ((Category) parent).getLabel(), group
+								.getSubchanges());
+					}
+				} else if (parent instanceof Category && ((Category) parent).getId() != null
+						&& this.changeSet.getSyncCategoryActionMap().get(parent) != null) {
+					SynchronizationAction action = SyncUtil.getAction(this.changeSet, parent);
+					if (returnImage) {
+						Image imageFromModel = getImageFromModel(parent);
+						return decorateImage(imageFromModel, action);
+
 					} else {
 						return NLS.bind("{0} ({1})", ((Category) parent).getLabel(), group
 								.getSubchanges());

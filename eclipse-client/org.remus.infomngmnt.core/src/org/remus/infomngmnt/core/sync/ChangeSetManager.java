@@ -564,6 +564,9 @@ public class ChangeSetManager {
 							if (categoryById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
 								item.getSyncCategoryActionMap().put((Category) parentByClass,
 										SynchronizationAction.REPLACE_REMOTE);
+							} else if (categoryById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_DELETED) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
+										SynchronizationAction.DELETE_REMOTE);
 							} else {
 								item.getSyncCategoryActionMap().put((Category) parentByClass,
 										SynchronizationAction.REPLACE_LOCAL);

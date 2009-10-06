@@ -89,6 +89,10 @@ public class DiffLabelProvider extends LabelProvider {
 						case DELETE_REMOTE:
 							return NLS.bind("Element \"{0}\" will be deleted at the repository",
 									((AbstractInformationUnit) parent).getLabel());
+						case RESOLVE_CONFLICT:
+							return NLS.bind(
+									"Element \"{0}\" has conflicts. Right-click to resolve",
+									((AbstractInformationUnit) parent).getLabel());
 						default:
 							break;
 						}

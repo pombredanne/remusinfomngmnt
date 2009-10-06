@@ -10,6 +10,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -84,8 +85,11 @@ public class SynchronizeChangeSetWizardPage extends WizardPage implements IMenuL
 		this.treeViewer.setInput(this.diffModel);
 		MenuManager contextMenu = new MenuManager("#PopUpMenu");
 		contextMenu.setRemoveAllWhenShown(true);
-		contextMenu.addMenuListener(this);
+		SyncActionsContextMenu syncActionsContextMenu = new SyncActionsContextMenu(this);
+		syncActionsContextMenu.setChangeSet(this.changeSet);
+		contextMenu.addMenuListener(syncActionsContextMenu);
 		final Menu menu = contextMenu.createContextMenu(this.treeViewer.getControl());
+		this.treeViewer.getControl().setMenu(menu);
 
 		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent event) {
@@ -98,7 +102,7 @@ public class SynchronizeChangeSetWizardPage extends WizardPage implements IMenuL
 		checkConflicts();
 	}
 
-	private void checkConflicts() {
+	void checkConflicts() {
 		Collection<SynchronizationAction> values = this.changeSet.getSyncObjectActionMap().values();
 		if (values.contains(SynchronizationAction.RESOLVE_CONFLICT)) {
 			setErrorMessage("Please resolve the conflicts manually");
@@ -118,6 +122,10 @@ public class SynchronizeChangeSetWizardPage extends WizardPage implements IMenuL
 	public void menuAboutToShow(final IMenuManager manager) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public Viewer getViewer() {
+		return this.treeViewer;
 	}
 
 }

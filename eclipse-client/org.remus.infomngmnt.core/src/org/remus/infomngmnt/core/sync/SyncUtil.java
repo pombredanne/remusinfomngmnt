@@ -158,4 +158,81 @@ public class SyncUtil {
 
 	}
 
+	public static void changeSynchronizationAction(final ChangeSetItem changeSetItem,
+			final SynchronizableObject object, final SynchronizationAction newAction) {
+		SynchronizationAction action = getAction(changeSetItem, object);
+		switch (action) {
+		case ADD_LOCAL:
+			if (newAction == SynchronizationAction.REPLACE_REMOTE) {
+				if (object instanceof Category) {
+					changeSetItem.getSyncCategoryActionMap().put((Category) object,
+							SynchronizationAction.DELETE_REMOTE);
+				} else if (object instanceof InformationUnitListItem) {
+					changeSetItem.getSyncObjectActionMap().put(object,
+							SynchronizationAction.DELETE_REMOTE);
+				}
+				return;
+			}
+		case DELETE_LOCAL:
+			if (newAction == SynchronizationAction.REPLACE_REMOTE) {
+				if (object instanceof Category) {
+					changeSetItem.getSyncCategoryActionMap().put((Category) object,
+							SynchronizationAction.ADD_REMOTE);
+				} else if (object instanceof InformationUnitListItem) {
+					changeSetItem.getSyncObjectActionMap().put(object,
+							SynchronizationAction.ADD_REMOTE);
+				}
+				return;
+			}
+		case REPLACE_LOCAL:
+		case REPLACE_REMOTE:
+		case RESOLVE_CONFLICT:
+			if (newAction == SynchronizationAction.REPLACE_REMOTE) {
+				if (object instanceof Category) {
+					changeSetItem.getSyncCategoryActionMap().put((Category) object,
+							SynchronizationAction.REPLACE_REMOTE);
+				} else if (object instanceof InformationUnitListItem) {
+					changeSetItem.getSyncObjectActionMap().put(object,
+							SynchronizationAction.REPLACE_REMOTE);
+				}
+				return;
+
+			}
+			if (newAction == SynchronizationAction.REPLACE_LOCAL) {
+				if (object instanceof Category) {
+					changeSetItem.getSyncCategoryActionMap().put((Category) object,
+							SynchronizationAction.REPLACE_LOCAL);
+				} else if (object instanceof InformationUnitListItem) {
+					changeSetItem.getSyncObjectActionMap().put(object,
+							SynchronizationAction.REPLACE_LOCAL);
+				}
+				return;
+			}
+			break;
+		case ADD_REMOTE:
+			if (newAction == SynchronizationAction.REPLACE_LOCAL) {
+				if (object instanceof Category) {
+					changeSetItem.getSyncCategoryActionMap().put((Category) object,
+							SynchronizationAction.DELETE_LOCAL);
+				} else if (object instanceof InformationUnitListItem) {
+					changeSetItem.getSyncObjectActionMap().put(object,
+							SynchronizationAction.DELETE_LOCAL);
+				}
+				return;
+			}
+		case DELETE_REMOTE:
+			if (newAction == SynchronizationAction.REPLACE_LOCAL) {
+				if (object instanceof Category) {
+					changeSetItem.getSyncCategoryActionMap().put((Category) object,
+							SynchronizationAction.REPLACE_LOCAL);
+				} else if (object instanceof InformationUnitListItem) {
+					changeSetItem.getSyncObjectActionMap().put(object,
+							SynchronizationAction.REPLACE_LOCAL);
+				}
+				return;
+			}
+		default:
+			break;
+		}
+	}
 }

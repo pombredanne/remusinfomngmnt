@@ -12,13 +12,19 @@
 
 package org.remus.infomngmnt.core.ref;
 
+import java.util.concurrent.Callable;
+
 import org.apache.lucene.search.IndexSearcher;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public interface IIndexSearchOperation {
+public abstract class IndexSearchOperation<T> implements Callable<T> {
 
-	void read(IndexSearcher reader);
+	protected final IndexSearcher reader;
+
+	public IndexSearchOperation(final IndexSearcher searcher) {
+		this.reader = searcher;
+	}
 
 }

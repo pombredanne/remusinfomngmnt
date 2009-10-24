@@ -15,6 +15,7 @@ package org.remus.infomngmnt.ui.calendar;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,6 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -45,7 +45,7 @@ import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 import org.remus.infomngmnt.ccalendar.service.ICalendarChangeSupport;
 import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
-import org.remus.infomngmnt.core.ref.IIndexSearchOperation;
+import org.remus.infomngmnt.core.ref.IndexSearchOperation;
 import org.remus.infomngmnt.core.ref.IIndexWriteOperation;
 import org.remus.infomngmnt.core.ref.LuceneStore;
 import org.remus.infomngmnt.ui.service.ICalendarStoreService;
@@ -258,7 +258,6 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 	}
 
 	private List<TimeSpan> getTimespansForInfoUnitId(final String infoUnitId) {
-		final List<TimeSpan> returnValue = new ArrayList<TimeSpan>();
 		List<String> termList = new ArrayList<String>();
 		List<String> fieldList = new ArrayList<String>();
 		List<Occur> flagList = new ArrayList<Occur>();
@@ -271,10 +270,14 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
 					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
 					.toArray(new Occur[flagList.size()]), getAnalyser());
-			IIndexSearchOperation operation = new IIndexSearchOperation() {
-				public void read(final IndexSearcher reader) {
+			IndexSearchOperation<List<TimeSpan>> operation = new IndexSearchOperation<List<TimeSpan>>(
+					getIndexSearcher()) {
+
+				public List<TimeSpan> call() throws Exception {
+					List<TimeSpan> returnValue = new ArrayList<TimeSpan>();
 					try {
-						TopDocs search = getIndexSearcher().search(tagQuery, null, 1000);
+
+						TopDocs search = this.reader.search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
@@ -294,21 +297,19 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
+					return returnValue;
 				}
 
 			};
-			readAndWait(operation);
+			return read(operation);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return returnValue;
+		return Collections.EMPTY_LIST;
 	}
 
-	public synchronized Tasklist getItems(final TimeSpan timespan) {
-		final Tasklist taskList = ModelFactory.eINSTANCE.createTasklist();
+	public Tasklist getItems(final TimeSpan timespan) {
 		List<String> termList = new ArrayList<String>();
 		List<String> fieldList = new ArrayList<String>();
 		List<Occur> flagList = new ArrayList<Occur>();
@@ -348,12 +349,13 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 			booleanQuery.add(tagQuery, Occur.SHOULD);
 			booleanQuery.add(spanQuery, Occur.SHOULD);
 
-			IIndexSearchOperation operation = new IIndexSearchOperation() {
-
-				public void read(final IndexSearcher reader) {
+			IndexSearchOperation<Tasklist> operation = new IndexSearchOperation<Tasklist>(
+					getIndexSearcher()) {
+				public Tasklist call() throws Exception {
+					final Tasklist taskList = ModelFactory.eINSTANCE.createTasklist();
 					try {
 
-						TopDocs search = reader.search(booleanQuery, null, 1000);
+						TopDocs search = this.reader.search(booleanQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
@@ -390,16 +392,16 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
+					return taskList;
 				}
 
 			};
-			readAndWait(operation);
+			return read(operation);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return taskList;
+		return null;
 
 	}
 

@@ -23,7 +23,6 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -33,7 +32,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.ref.IIndexSearchOperation;
+import org.remus.infomngmnt.core.ref.IndexSearchOperation;
 import org.remus.infomngmnt.core.ref.IIndexWriteOperation;
 import org.remus.infomngmnt.core.ref.LuceneStore;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
@@ -168,29 +167,31 @@ public class ReferencedUnitStore extends LuceneStore implements IReferencedUnitS
 	}
 
 	public String[] getReferencedInfoUnitIds(final String informationUnitId) {
-		final List<String> returnValue = new ArrayList<String>();
-		List<String> termList = new ArrayList<String>();
-		List<String> fieldList = new ArrayList<String>();
-		List<Occur> flagList = new ArrayList<Occur>();
+
+		final List<String> termList = new ArrayList<String>();
+		final List<String> fieldList = new ArrayList<String>();
+		final List<Occur> flagList = new ArrayList<Occur>();
 
 		fieldList.add(REFINFOID);
 		termList.add(informationUnitId);
 		flagList.add(Occur.SHOULD);
 
 		try {
-			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
-					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
-					.toArray(new Occur[flagList.size()]), getAnalyser());
-			IIndexSearchOperation operation = new IIndexSearchOperation() {
 
-				public void read(final IndexSearcher reader) {
+			IndexSearchOperation<List<String>> operation = new IndexSearchOperation<List<String>>(
+					getIndexSearcher()) {
+				public List<String> call() throws Exception {
+					Query tagQuery = MultiFieldQueryParser.parse(termList
+							.toArray(new String[termList.size()]), fieldList
+							.toArray(new String[fieldList.size()]), flagList
+							.toArray(new Occur[flagList.size()]), getAnalyser());
+					final List<String> returnValue = new ArrayList<String>();
 					try {
-
-						TopDocs search = reader.search(tagQuery, null, 1000);
+						TopDocs search = this.reader.search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
-								Document doc = getIndexSearcher().doc(scoreDoc.doc);
+								Document doc = this.reader.doc(scoreDoc.doc);
 								returnValue.add(doc.get(INFOID));
 							} catch (CorruptIndexException e) {
 								// TODO Auto-generated catch block
@@ -204,15 +205,15 @@ public class ReferencedUnitStore extends LuceneStore implements IReferencedUnitS
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
+					return returnValue;
 				}
-
 			};
-			readAndWait(operation);
+			List<String> read = read(operation);
+			return read.toArray(new String[read.size()]);
 		} catch (Exception e) {
 			// we do nothing.
 		}
-		return returnValue.toArray(new String[returnValue.size()]);
+		return new String[0];
 	}
 
 }

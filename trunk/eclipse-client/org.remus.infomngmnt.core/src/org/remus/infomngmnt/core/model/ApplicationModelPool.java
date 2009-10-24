@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -41,6 +42,7 @@ import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectRefer
 import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
+import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.AvailableTags;
@@ -65,6 +67,8 @@ import org.remus.infomngmnt.util.EditingUtil;
 public class ApplicationModelPool {
 
 	private final AvailableInformationCache cache;
+
+	private final Logger log = Logger.getLogger(ApplicationModelPool.class);
 
 	private final class AdapterImplExtension extends EContentAdapter {
 		private final Category category;
@@ -167,8 +171,10 @@ public class ApplicationModelPool {
 	private final ApplicationRoot model;
 
 	private ApplicationModelPool() {
+		this.log.debug("Initializing datamodel");
 		this.model = InfomngmntFactory.eINSTANCE.createApplicationRoot();
 		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
+		this.log.debug("Found relevant projects: " + relevantProjects.length);
 		for (IProject project : relevantProjects) {
 			addToModel(project);
 		}
@@ -210,6 +216,7 @@ public class ApplicationModelPool {
 
 	public void addToModel(final IProject project) {
 		if (project.isOpen()) {
+			this.log.debug(NLS.bind("Adding project {0} to pool", project.getName()));
 			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
 					+ ResourceUtil.PRIMARY_CONTENT_FILE));
 			AdapterFactoryEditingDomain navigationEditingDomain = EditingUtil.getInstance()

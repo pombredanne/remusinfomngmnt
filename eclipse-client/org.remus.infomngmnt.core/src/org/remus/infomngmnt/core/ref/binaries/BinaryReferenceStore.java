@@ -21,7 +21,6 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -31,7 +30,7 @@ import org.eclipse.core.resources.IFile;
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.ref.IIndexSearchOperation;
+import org.remus.infomngmnt.core.ref.IndexSearchOperation;
 import org.remus.infomngmnt.core.ref.IIndexWriteOperation;
 import org.remus.infomngmnt.core.ref.LuceneStore;
 import org.remus.infomngmnt.core.services.IBinaryReferenceStore;
@@ -118,9 +117,7 @@ public class BinaryReferenceStore extends LuceneStore implements IBinaryReferenc
 		});
 	}
 
-	public synchronized String getReferencedInfoUnitIdByPath(final String projectName,
-			final String fileName) {
-		final String[] returnValue = new String[1];
+	public String getReferencedInfoUnitIdByPath(final String projectName, final String fileName) {
 		List<String> termList = new ArrayList<String>();
 		List<String> fieldList = new ArrayList<String>();
 		List<Occur> flagList = new ArrayList<Occur>();
@@ -136,17 +133,18 @@ public class BinaryReferenceStore extends LuceneStore implements IBinaryReferenc
 			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
 					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
 					.toArray(new Occur[flagList.size()]), getAnalyser());
-			IIndexSearchOperation operation = new IIndexSearchOperation() {
+			IndexSearchOperation<String> operation = new IndexSearchOperation<String>(
+					getIndexSearcher()) {
 
-				public void read(final IndexSearcher reader) {
+				public String call() throws Exception {
 					try {
 
-						TopDocs search = reader.search(tagQuery, null, 1000);
+						TopDocs search = this.reader.search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
-								Document doc = getIndexSearcher().doc(scoreDoc.doc);
-								returnValue[0] = doc.get(INFOID);
+								Document doc = this.reader.doc(scoreDoc.doc);
+								return doc.get(INFOID);
 							} catch (CorruptIndexException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -159,15 +157,15 @@ public class BinaryReferenceStore extends LuceneStore implements IBinaryReferenc
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
+					return null;
 				}
 
 			};
-			readAndWait(operation);
+			return read(operation);
 		} catch (Exception e) {
 			// we do nothing.
 		}
-		return returnValue[0];
+		return null;
 	}
 
 }

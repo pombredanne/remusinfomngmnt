@@ -14,7 +14,14 @@ package org.remus.infomngmnt.core.ref;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.CorruptIndexException;
@@ -24,7 +31,6 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
@@ -39,48 +45,53 @@ public abstract class LuceneStore {
 
 	private IndexWriter writer;
 
-	final ISchedulingRule mutexRule = new ISchedulingRule() {
-		public boolean isConflicting(final ISchedulingRule rule) {
-			return rule == LuceneStore.this.mutexRule;
-		}
+	private final Lock lock = new ReentrantLock();
 
-		public boolean contains(final ISchedulingRule rule) {
-			return rule == LuceneStore.this.mutexRule;
-		}
-	};
+	protected Logger log = Logger.getLogger(LuceneStore.class);
+
+	private final ExecutorService executor;
 
 	protected LuceneStore(final String fileUrl) {
 		this.fileUrl = fileUrl;
+		this.executor = Executors.newCachedThreadPool();
 	}
 
-	protected final void read(final IIndexSearchOperation operation) {
-		IndexSearcher indexSearcher2 = getIndexSearcher();
-		operation.read(indexSearcher2);
-	}
-
-	protected final synchronized void readAndWait(final IIndexSearchOperation operation) {
-		// job.schedule();
-		IndexSearcher indexSearcher2 = getIndexSearcher();
-		operation.read(indexSearcher2);
-
+	protected final <T> T read(final IndexSearchOperation<T> operation) {
+		this.log.debug("Reading from Lucene store");
+		this.lock.lock();
+		Future<T> submit = this.executor.submit(operation);
+		T returnValue = null;
+		try {
+			returnValue = submit.get();
+			this.log.debug("Returned result --> " + returnValue.toString());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+		} finally {
+			this.lock.unlock();
+		}
+		return returnValue;
 	}
 
 	protected final void write(final IIndexWriteOperation operation) {
+		this.lock.lock();
 		IndexWriter indexWriter = getIndexWriter();
-		operation.write(indexWriter);
 		try {
+			operation.write(indexWriter);
 			indexWriter.flush();
-		} catch (CorruptIndexException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			this.log.error("Error writing to lucene store", e);
+		} finally {
+			relaseIndexSearcher();
+			this.lock.unlock();
 		}
-		relaseIndexSearcher();
 	}
 
-	public IndexSearcher getIndexSearcher() {
+	public synchronized IndexSearcher getIndexSearcher() {
 		if (this.indexSearcher == null) {
 			try {
 				this.indexSearcher = new IndexSearcher(getIndexDirectory());
@@ -100,13 +111,13 @@ public abstract class LuceneStore {
 				.toFile();
 		if (!file.exists()) {
 			file.mkdirs();
-			try {
-				this.writer = new IndexWriter(file, getAnalyser(), true);
-				closeIndexWriter();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// try {
+			// this.writer = new IndexWriter(file, getAnalyser(), true);
+			// closeIndexWriter();
+			// } catch (Exception e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 		}
 		try {
 			return FSDirectory.getDirectory(file);

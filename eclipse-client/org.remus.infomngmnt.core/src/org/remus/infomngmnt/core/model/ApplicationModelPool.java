@@ -157,13 +157,9 @@ public class ApplicationModelPool {
 
 	private static ApplicationModelPool INSTANCE;
 
-	public static ApplicationModelPool getInstance() {
+	public static synchronized ApplicationModelPool getInstance() {
 		if (INSTANCE == null) {
-			synchronized (ApplicationModelPool.class) {
-				if (INSTANCE == null) {
-					INSTANCE = new ApplicationModelPool();
-				}
-			}
+			INSTANCE = new ApplicationModelPool();
 		}
 		return INSTANCE;
 	}

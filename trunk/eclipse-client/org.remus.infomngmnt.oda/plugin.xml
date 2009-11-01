@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="org.remus.infomngmnt.oda"
+         point="org.eclipse.datatools.connectivity.oda.dataSource">
+      <dataSource
+            driverClass="org.remus.infomngmnt.oda.core.impl.Driver"
+            defaultDisplayName="%data.source.name"
+            setThreadContextClassLoader="false"
+            odaVersion="3.2"
+            id="org.remus.infomngmnt.oda">
+         <properties>
+            <property
+                  allowsEmptyValueAsNull="false"
+                  canInherit="true"
+                  defaultDisplayName="Path to root-element"
+                  isEncryptable="false"
+                  name="rootElement"
+                  type="string">
+            </property>
+            <property
+                  allowsEmptyValueAsNull="true"
+                  canInherit="true"
+                  defaultDisplayName="Information type"
+                  isEncryptable="false"
+                  name="informationType"
+                  type="string">
+            </property>
+            <property
+                  allowsEmptyValueAsNull="true"
+                  canInherit="true"
+                  defaultDisplayName="Base Selection"
+                  isEncryptable="false"
+                  name="baseSelection"
+                  type="string">
+            </property></properties>
+      </dataSource>
+      <dataSet
+            defaultDisplayName="%data.set.name"
+            id="org.remus.infomngmnt.oda.dataSet">
+         <properties>
+            <property
+                  name="property1"
+                  allowsEmptyValueAsNull="true"
+                  defaultDisplayName="Property 1"
+                  type="string"
+                  isEncryptable="false">
+            </property>
+         </properties>
+         <dataTypeMapping
+               nativeDataTypeCode="0"
+               odaScalarDataType="String"
+               nativeDataType="String">
+         </dataTypeMapping>
+         <dataTypeMapping
+               nativeDataTypeCode="5"
+               odaScalarDataType="Double"
+               nativeDataType="Double">
+         </dataTypeMapping>
+         <dataTypeMapping
+               nativeDataTypeCode="2"
+               odaScalarDataType="Decimal"
+               nativeDataType="BigDecimal">
+         </dataTypeMapping>
+         <dataTypeMapping
+               nativeDataTypeCode="1"
+               odaScalarDataType="Date"
+               nativeDataType="Date">
+         </dataTypeMapping>
+         <dataTypeMapping
+               nativeDataTypeCode="3"
+               odaScalarDataType="Boolean"
+               nativeDataType="Boolean">
+         </dataTypeMapping>
+      </dataSet>
+   </extension>
+   <extension
+         point="org.eclipse.datatools.connectivity.connectionProfile">
+      <category
+            name="%data.source.name"
+            parentCategory="org.eclipse.datatools.connectivity.oda.profileCategory"
+            id="org.remus.infomngmnt.oda">
+      </category>
+      <connectionProfile
+            pingFactory="org.eclipse.datatools.connectivity.oda.profile.OdaConnectionFactory"
+            name="%connection.profile.name"
+            category="org.remus.infomngmnt.oda"
+            id="org.remus.infomngmnt.oda">
+      </connectionProfile>
+      <connectionFactory
+            name="ODA Connection Factory"
+            profile="org.remus.infomngmnt.oda"
+            class="org.eclipse.datatools.connectivity.oda.profile.OdaConnectionFactory"
+            id="org.eclipse.datatools.connectivity.oda.IConnection">
+      </connectionFactory>
+   </extension>
+
+</plugin>

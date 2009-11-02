@@ -286,7 +286,8 @@ public class InformationStructureRead {
 		return getChildByNodeId(node).getChildValues();
 	}
 
-	static InformationStructure getItemByNodeAndTypeId(final String nodeId, final String typeId) {
+	public static InformationStructure getItemByNodeAndTypeId(final String nodeId,
+			final String typeId) {
 		InformationStructureDefinition structureDefinition = getStructureDefinition(typeId);
 		if (nodeId.equals(typeId)) {
 			return structureDefinition;
@@ -309,7 +310,8 @@ public class InformationStructureRead {
 		return (InformationStructureItem) execute.getEObjects().iterator().next();
 	}
 
-	static InformationStructure getItemByPathAndTypeId(final String typeId, final String... path) {
+	public static InformationStructure getItemByPathAndTypeId(final String typeId,
+			final String... path) {
 		final InformationStructureDefinition structureDefinition = getStructureDefinition(typeId);
 		EObjectAttributeValueCondition itemIdCondition = new EObjectAttributeValueCondition(
 				InfomngmntPackage.Literals.INFORMATION_STRUCTURE_ITEM__ID, new Condition() {

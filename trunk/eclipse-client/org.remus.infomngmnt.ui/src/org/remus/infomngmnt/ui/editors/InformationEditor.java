@@ -80,6 +80,7 @@ import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.progress.DelayedRunnable;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.extension.AbstractDelegationEditorPart;
@@ -231,6 +232,8 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 			}
 		}
 	};
+
+	private DelayedRunnable refreshRunnable;
 
 	private final Adapter labelChangeAdapter = new AdapterImpl() {
 		@Override
@@ -430,10 +433,21 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				this.savedResources.clear();
 			}
 		} else if (!this.changedResources.isEmpty()) {
-			this.changedResources.removeAll(this.savedResources);
-			handleChangedResources();
-			this.changedResources.clear();
-			this.savedResources.clear();
+			if (this.refreshRunnable != null && !this.refreshRunnable.isRunning()) {
+				this.refreshRunnable.cancel();
+				this.refreshRunnable = null;
+			}
+			this.refreshRunnable = new DelayedRunnable() {
+				@Override
+				protected void runDelayed() {
+					InformationEditor.this.changedResources
+							.removeAll(InformationEditor.this.savedResources);
+					handleChangedResources();
+					InformationEditor.this.changedResources.clear();
+					InformationEditor.this.savedResources.clear();
+				}
+			};
+			getSite().getShell().getDisplay().timerExec(2000, this.refreshRunnable);
 		}
 	}
 

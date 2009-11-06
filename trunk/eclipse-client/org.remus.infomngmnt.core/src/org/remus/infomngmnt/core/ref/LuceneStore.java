@@ -47,7 +47,7 @@ public abstract class LuceneStore {
 
 	private final Lock lock = new ReentrantLock();
 
-	protected Logger log = Logger.getLogger(LuceneStore.class);
+	protected Logger log = Logger.getLogger(getClass());
 
 	private final ExecutorService executor;
 
@@ -81,12 +81,14 @@ public abstract class LuceneStore {
 		this.lock.lock();
 		IndexWriter indexWriter = getIndexWriter();
 		try {
+			this.log.debug("Writung to index");
 			operation.write(indexWriter);
 			indexWriter.flush();
 		} catch (Exception e) {
 			this.log.error("Error writing to lucene store", e);
 		} finally {
 			relaseIndexSearcher();
+			this.log.debug("Released index searcher.");
 			this.lock.unlock();
 		}
 	}

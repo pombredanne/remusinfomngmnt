@@ -35,6 +35,7 @@ import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.CategoryUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -83,18 +84,21 @@ public class SynchronizeItemsJob extends AbstractJob {
 				.AND(isSyncRootFolderCondition)));
 		Set<? extends EObject> eObjects = select.execute().getEObjects();
 		for (final EObject eObject : eObjects) {
+			// sometimes the category is not complete.
+			final Category category = CategoryUtil.findCategory(CategoryUtil
+					.categoryToString((Category) eObject), false);
 			AbstractSynchronizationJob job = new AbstractSynchronizationJob(NLS.bind(
-					"Refreshing Sync-Item \'\'{0}\'\'", ((Category) eObject).getLabel())) {
+					"Refreshing Sync-Item \'\'{0}\'\'", category.getLabel())) {
 				@Override
 				protected List<? extends SynchronizableObject> getAffectedObjects() {
-					return Collections.singletonList((Category) eObject);
+					return Collections.singletonList(category);
 				}
 
 				@Override
 				protected IStatus run(final IProgressMonitor monitor) {
 					try {
-						Notification synchronizeCategory = SyncUtil.synchronizeCategory(
-								(Category) eObject, monitor);
+						Notification synchronizeCategory = SyncUtil.synchronizeCategory(category,
+								monitor);
 						InfomngmntEditPlugin.getPlugin().getService(
 								INotificationManagerManager.class).addNotification(
 								synchronizeCategory.getChildren());

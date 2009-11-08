@@ -12,30 +12,28 @@
             odaVersion="3.2"
             id="org.remus.infomngmnt.oda">
          <properties>
-            <property
-                  allowsEmptyValueAsNull="false"
-                  canInherit="true"
-                  defaultDisplayName="Path to root-element"
-                  isEncryptable="false"
-                  name="rootElement"
-                  type="string">
-            </property>
-            <property
-                  allowsEmptyValueAsNull="true"
-                  canInherit="true"
-                  defaultDisplayName="Information type"
-                  isEncryptable="false"
-                  name="informationType"
-                  type="string">
-            </property>
-            <property
-                  allowsEmptyValueAsNull="true"
-                  canInherit="true"
-                  defaultDisplayName="Base Selection"
-                  isEncryptable="false"
-                  name="baseSelection"
-                  type="string">
-            </property></properties>
+            <propertyGroup
+                  defaultDisplayName="Connection Properties"
+                  name="connectionProperties">
+               <property
+                     canInherit="true"
+                     defaultDisplayName="Path to root-element"
+                     name="rootElement"
+                     type="string">
+               </property>
+               <property
+                     canInherit="true"
+                     defaultDisplayName="Information type"
+                     name="informationType"
+                     type="string">
+               </property>
+               <property
+                     canInherit="true"
+                     defaultDisplayName="Base Selection"
+                     name="baseSelection"
+                     type="string">
+               </property>
+            </propertyGroup></properties>
       </dataSource>
       <dataSet
             defaultDisplayName="%data.set.name"

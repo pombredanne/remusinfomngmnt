@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -35,6 +36,7 @@ import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.oda.core.QuerySerializer;
 import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.oda.Column;
 import org.remus.oda.Dataset;
 import org.remus.oda.OdaFactory;
@@ -108,25 +110,32 @@ public class Query implements IQuery {
 
 	private org.remus.oda.ResultSet buildResult() throws OdaException {
 		org.remus.oda.ResultSet result = OdaFactory.eINSTANCE.createResultSet();
-		String path = this.dataset.getSelection().getPath();
-		Category findCategory = CategoryUtil.findCategory(path, false);
-		if (findCategory == null) {
-			throw new OdaException("Category not found");
-		}
 		final IInfoType infoTypeByType = InformationExtensionManager.getInstance()
 				.getInfoTypeByType(this.dataset.getSelection().getInfoTypeId());
 		if (infoTypeByType == null) {
 			throw new OdaException(NLS.bind("Infotype\'\'{0}\'\' not installed", this.dataset
 					.getSelection().getInfoTypeId()));
 		}
-		InformationUnitListItem[] allInfoUnitItems = CategoryUtil.getAllInfoUnitItems(findCategory);
-		List<InformationUnitListItem> filter = CollectionUtils.filter(Arrays
-				.asList(allInfoUnitItems), new CollectionFilter<InformationUnitListItem>() {
-
-			public boolean select(final InformationUnitListItem item) {
-				return item.getType().equals(infoTypeByType.getType());
+		String path = this.dataset.getSelection().getPath();
+		Category findCategory = CategoryUtil.findCategory(path, false);
+		List<InformationUnitListItem> filter;
+		if (findCategory == null) {
+			InformationUnitListItem findItemByPath = InformationUtil.findItemByPath(path);
+			if (findItemByPath == null) {
+				throw new OdaException("Category or info-unit not found");
 			}
-		});
+			filter = Collections.singletonList(findItemByPath);
+		} else {
+			InformationUnitListItem[] allInfoUnitItems = CategoryUtil
+					.getAllInfoUnitItems(findCategory);
+			filter = CollectionUtils.filter(Arrays.asList(allInfoUnitItems),
+					new CollectionFilter<InformationUnitListItem>() {
+
+						public boolean select(final InformationUnitListItem item) {
+							return item.getType().equals(infoTypeByType.getType());
+						}
+					});
+		}
 		for (InformationUnitListItem informationUnitListItem : filter) {
 			InformationUnit unit = (InformationUnit) informationUnitListItem
 					.getAdapter(InformationUnit.class);

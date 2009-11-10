@@ -56,6 +56,7 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.DynamicStructure;
 import org.remus.infomngmnt.InformationStructureDefinition;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
@@ -64,6 +65,7 @@ import org.remus.infomngmnt.ui.category.CategorySmartField;
 import org.remus.infomngmnt.ui.structuredefinition.StructureDefinitionLabelProvider;
 import org.remus.infomngmnt.util.CategoryUtil;
 import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -129,7 +131,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 	@Override
 	public void createPageCustomControl(final Composite composite) {
 		Group group = new Group(composite, SWT.NONE);
-		group.setLayout(new GridLayout(3, false));
+		group.setLayout(new GridLayout(4, false));
 
 		Label lblSource = new Label(group, SWT.NONE);
 		lblSource.setText("Source");
@@ -138,7 +140,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button btnBrowse = new Button(group, SWT.NONE);
-		btnBrowse.setText("Browse...");
+		btnBrowse.setText("Select category");
 		btnBrowse.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
@@ -176,6 +178,47 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 			}
 
 		});
+		Button btnBrowse2 = new Button(group, SWT.NONE);
+		btnBrowse2.setText("Select info-item");
+		btnBrowse2.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event event) {
+				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+						EditingUtil.getInstance().getAdapterFactory());
+				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
+						adapterFactoryLabelProvider, adapterFactoryContentProvider);
+				dialog.setAllowMultiple(false);
+				dialog.setDoubleClickSelects(true);
+				dialog.setValidator(new ISelectionStatusValidator() {
+					public IStatus validate(final Object[] selection) {
+						if (selection.length == 0 || selection[0] instanceof Category) {
+							return StatusCreator.newStatus("No element selected...");
+						}
+						return StatusCreator.newStatus(IStatus.OK, "", null);
+					}
+				});
+				dialog.addFilter(new ViewerFilter() {
+					@Override
+					public boolean select(final Viewer viewer, final Object parentElement,
+							final Object element) {
+						return element instanceof Category
+								|| element instanceof InformationUnitListItem;
+					}
+				});
+				dialog.setInput(ApplicationModelPool.getInstance().getModel());
+
+				dialog.setInitialSelection(InformationUtil
+						.findItemByPath(RemusDataSourceWizard.this.text.getText()));
+				if (dialog.open() == IDialogConstants.OK_ID) {
+					Object[] result = dialog.getResult();
+					InformationUnitListItem selectedItem = (InformationUnitListItem) result[0];
+					RemusDataSourceWizard.this.text.setText(InformationUtil
+							.getFullReadablePath(selectedItem));
+				}
+			}
+
+		});
 
 		new CategorySmartField(this.text);
 
@@ -183,7 +226,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 		lblInformationtype.setText("Information-Type");
 
 		this.combo = new Combo(group, SWT.READ_ONLY);
-		this.combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		this.combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		this.comboViewer = new ComboViewer(this.combo);
 		this.comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.comboViewer.setLabelProvider(new LabelProvider() {
@@ -198,7 +241,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 		lblEntrypoint.setText("Entry-Point");
 
 		this.text_1 = new Text(group, SWT.BORDER);
-		this.text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		this.text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		Button button = new Button(group, SWT.NONE);
 		button.setText("Browse...");

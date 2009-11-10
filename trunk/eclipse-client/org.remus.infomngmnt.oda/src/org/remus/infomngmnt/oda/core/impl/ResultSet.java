@@ -178,7 +178,7 @@ public class ResultSet implements IResultSet {
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSet#getDate(int)
 	 */
 	public Date getDate(final int index) throws OdaException {
-		return (Date) getObjectFromRow(index);
+		return new Date(((java.util.Date) getObjectFromRow(index)).getTime());
 	}
 
 	/*

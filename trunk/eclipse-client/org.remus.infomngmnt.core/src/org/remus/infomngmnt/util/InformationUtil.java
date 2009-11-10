@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.diff.metamodel.AttributeChange;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
@@ -45,6 +47,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.internal.creation.InformationUnitCreator;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
@@ -209,6 +212,20 @@ public class InformationUtil {
 		}
 		sw.append(finalExpression);
 		return getObjectByPath(unit, sw.toString());
+	}
+
+	public static InformationUnitListItem findItemByPath(final String path) {
+		Path path2 = new Path(path);
+		IPath removeLastSegments = path2.removeLastSegments(1);
+		Category findCategory = CategoryUtil.findCategory(removeLastSegments.toString(), false);
+		if (findCategory != null) {
+			return (InformationUnitListItem) ModelUtil.getItemByValue(findCategory
+					.getInformationUnit(),
+					InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, path2
+							.lastSegment());
+		}
+		return null;
+
 	}
 
 	public static String getFullReadablePath(final InformationUnitListItem item) {

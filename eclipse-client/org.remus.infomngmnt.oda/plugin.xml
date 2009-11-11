@@ -64,7 +64,7 @@
          </dataTypeMapping>
          <dataTypeMapping
                nativeDataTypeCode="1"
-               odaScalarDataType="Date"
+               odaScalarDataType="Timestamp"
                nativeDataType="Date">
          </dataTypeMapping>
          <dataTypeMapping

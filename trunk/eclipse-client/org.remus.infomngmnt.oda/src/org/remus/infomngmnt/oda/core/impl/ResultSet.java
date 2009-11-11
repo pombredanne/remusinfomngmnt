@@ -211,8 +211,7 @@ public class ResultSet implements IResultSet {
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSet#getTimestamp(int)
 	 */
 	public Timestamp getTimestamp(final int index) throws OdaException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return new Timestamp(((java.util.Date) getObjectFromRow(index)).getTime());
 	}
 
 	/*

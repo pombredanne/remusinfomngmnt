@@ -17,7 +17,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -36,6 +38,10 @@ public class WizardValidatingUtil {
 				if (text2 instanceof Text) {
 					text2.addListener(SWT.Modify, listener);
 				} else if (text2 instanceof Button) {
+					text2.addListener(SWT.Selection, listener);
+				} else if (text2 instanceof Table) {
+					text2.addListener(SWT.Selection, listener);
+				} else if (text2 instanceof Tree) {
 					text2.addListener(SWT.Selection, listener);
 				}
 			}

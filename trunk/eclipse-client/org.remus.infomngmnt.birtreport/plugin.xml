@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="reporttemplate" name="reporttemplate" schema="schema/reporttemplate.exsd"/>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            buildHtml="true"
+            excludeFromIndex="true"
+            icon="icons/report.gif"
+            name="Report"
+            presentation="org.remus.infomngmnt.birtreport.extension.BirtReportRepresentation"
+            structuredefinition="structuredefinition.xmi"
+            type="REPORT">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.birtreport.ui.ReportParameterPage"
+            id="org.remus.infomngmnt.birtreport.editPage"
+            label="Edit Report-Parameters"
+            type="REPORT">
+      </editPage>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.birtreport.wizard.NewReportWizard"
+            typeId="REPORT">
+      </creationUiTrigger>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.birtreport.reporttemplate">
+      <parametertype
+            class="org.remus.infomngmnt.birtreport.ui.CategorySelectorControl"
+            id="org.remus.infomngmnt.birtreport.categoryselector">
+      </parametertype>
+      <parametertype
+            class="org.remus.infomngmnt.birtreport.ui.InfoTypeSelector"
+            id="org.remus.infomngmnt.birtreport.infotypeselector">
+      </parametertype>
+      <parametertype
+            class="org.remus.infomngmnt.birtreport.ui.SpinnerSelectorControl"
+            id="org.remus.infomngmnt.birtreport.spinner">
+      </parametertype>
+      <template
+            id="org.remus.infomngmnt.birtreport.blanktemplate"
+            label="Blank Report"
+            rptfile="templates/blank_report.rptdesign">
+      </template>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.remus.infomngmnt.ui.business"
+            class="org.remus.infomngmnt.birtreport.wizard.NewReportWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/report.gif"
+            id="org.remus.infomngmnt.report.new"
+            name="Report">
+      </wizard>
+	</extension>
+</plugin>

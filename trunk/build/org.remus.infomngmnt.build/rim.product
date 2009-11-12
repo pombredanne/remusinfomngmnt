@@ -11,7 +11,7 @@
 
    <launcherArgs>
       <programArgs>-nl en -clean</programArgs>
-      <vmArgs>-Dosgi.framework.extensions=org.eclipse.equinox.transforms.hook</vmArgs>
+      <vmArgs>-Dosgi.framework.extensions=org.eclipse.equinox.transforms.hook -XX:MaxPermSize=256m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 

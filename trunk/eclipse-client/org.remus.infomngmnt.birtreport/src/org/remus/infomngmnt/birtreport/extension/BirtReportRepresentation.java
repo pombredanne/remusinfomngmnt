@@ -24,6 +24,8 @@ import java.util.Set;
 import org.eclipse.birt.report.viewer.ViewerPlugin;
 import org.eclipse.birt.report.viewer.utilities.WebViewer;
 import org.eclipse.birt.report.viewer.utilities.WebappAccessor;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
@@ -70,7 +72,18 @@ public class BirtReportRepresentation extends AbstractInformationRepresentation 
 	 */
 	@Override
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+
+		String createURL = createURL("run", WebViewer.HTML, getValue());
+		StringReader stringReader = new StringReader(
+				"<html><head><meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=" + createURL
+						+ "\"></head><body></body></html>");
+		return new ReaderInputStream(stringReader);
+	}
+
+	public static String createURL(final String servletName, final String format,
+			final InformationUnit infoValue) {
+
+		InformationStructureRead read = InformationStructureRead.newSession(infoValue);
 		Map<String, String> params = new HashMap<String, String>();
 		EList<InformationUnit> dynamicList = read.getDynamicList(ReportActivator.NODE_NAME_PARAMS);
 		for (InformationUnit informationUnit : dynamicList) {
@@ -86,24 +99,14 @@ public class BirtReportRepresentation extends AbstractInformationRepresentation 
 			params.put(name, value);
 		}
 
-		String reportLocation = getFile().getProject().getLocation().append(
-				ResourceUtil.BINARY_FOLDER).append(
-				getValue().getBinaryReferences().getProjectRelativePath()).toOSString();
-
-		String createURL = createURL("run", URI.createFileURI(reportLocation).toString(),
-				WebViewer.HTML, params);
-		StringReader stringReader = new StringReader(
-				"<html><head><meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=" + createURL
-						+ "\"></head><body></body></html>");
-		return new ReaderInputStream(stringReader);
-	}
-
-	private static String createURL(final String servletName, final String report,
-			final String format, final Map<String, String> params) {
+		String reportLocation = ((IResource) infoValue.getAdapter(IFile.class)).getProject()
+				.getLocation().append(ResourceUtil.BINARY_FOLDER).append(
+						infoValue.getBinaryReferences().getProjectRelativePath()).toOSString();
 		String encodedReportName = null;
 		String encodedDocumentName = null;
 
 		try {
+			String report = URI.createFileURI(reportLocation).toString();
 			encodedReportName = URLEncoder.encode(report, "utf-8"); //$NON-NLS-1$
 		} catch (UnsupportedEncodingException e) {
 			// Do nothing

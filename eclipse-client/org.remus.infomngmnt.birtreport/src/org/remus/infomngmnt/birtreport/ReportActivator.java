@@ -1,6 +1,7 @@
 package org.remus.infomngmnt.birtreport;
 
 import org.eclipse.birt.report.viewer.ViewerPlugin;
+import org.eclipse.birt.report.viewer.utilities.SocketUtil;
 import org.eclipse.birt.report.viewer.utilities.WebViewer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -40,7 +41,24 @@ public class ReportActivator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		WebViewer.startup(ViewerPlugin.WEBAPP_CONTEXT);
+		/*
+		 * At the first usage of reporting functionalities we acquire an open
+		 * port to run the internal app-server at. This value is saved.
+		 */
+		new Thread("Setting port") {
+			@Override
+			public void run() {
+				int port = ViewerPlugin.getDefault().getPluginPreferences().getInt("port");
+				if (port <= 0) {
+					int findUnusedLocalPort = SocketUtil.findUnusedLocalPort();
+					ViewerPlugin.getDefault().getPluginPreferences().setValue("port",
+							findUnusedLocalPort);
+					ViewerPlugin.getDefault().savePluginPreferences();
+
+				}
+				WebViewer.startup(ViewerPlugin.WEBAPP_CONTEXT);
+			};
+		}.start();
 		plugin = this;
 	}
 

@@ -14,10 +14,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
+import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.extension.IReportTemplate;
 import org.remus.infomngmnt.birtreport.extension.ITemplateParameter;
 import org.remus.infomngmnt.birtreport.extension.ParameterControlManager;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 
 public class ParameterSelectionPage extends WizardPage {
 
@@ -105,8 +107,6 @@ public class ParameterSelectionPage extends WizardPage {
 	 */
 	public ParameterSelectionPage() {
 		super("parameterSelection");
-		setTitle("Report Parameter Selection");
-		setDescription("The template needs additional parameters.");
 	}
 
 	/**
@@ -115,6 +115,10 @@ public class ParameterSelectionPage extends WizardPage {
 	 * @param parent
 	 */
 	public void createControl(final Composite parent) {
+		setTitle("Report Parameter Selection");
+		setDescription("The template needs additional parameters.");
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(ReportActivator.getDefault(),
+				"icons/create_report_wizard.gif"));
 		this.container = new Composite(parent, SWT.NULL);
 		this.container.setLayout(this.stackLayout = new StackLayout());
 		buildTemplateUi();

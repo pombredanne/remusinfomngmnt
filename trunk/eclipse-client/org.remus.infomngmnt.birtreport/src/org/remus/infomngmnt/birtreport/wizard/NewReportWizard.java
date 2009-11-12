@@ -56,7 +56,7 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	 * 
 	 */
 	public NewReportWizard() {
-		// TODO Auto-generated constructor stub
+		setWindowTitle("New Report");
 	}
 
 	/*

@@ -37,8 +37,6 @@ import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -51,7 +49,7 @@ public class GeneralReportPage extends GeneralPage {
 	private IFile tmpFile;
 
 	private final WritableValue tmpFileObservable = new WritableValue(null, null);
-	private DisposableEditingDomain editingDomain;
+
 	private Tree tree;
 	private Button btnCreateFromReport;
 	private Button btnCreateFromBirt;
@@ -62,7 +60,6 @@ public class GeneralReportPage extends GeneralPage {
 	 */
 	public GeneralReportPage(final Category category) {
 		super(category);
-		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 
 	}
 
@@ -77,7 +74,7 @@ public class GeneralReportPage extends GeneralPage {
 		setTitle("New Report");
 		setMessage("This wizard enables you to create a new report.");
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(ReportActivator.getDefault(),
-				"icons/iconexperience/wizards/video_wizard_title.png"));
+				"icons/create_report_wizard.gif"));
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
@@ -240,7 +237,6 @@ public class GeneralReportPage extends GeneralPage {
 
 	@Override
 	public void dispose() {
-		this.editingDomain.dispose();
 		super.dispose();
 	}
 

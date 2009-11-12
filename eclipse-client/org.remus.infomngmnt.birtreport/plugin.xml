@@ -30,6 +30,14 @@
             class="org.remus.infomngmnt.birtreport.wizard.NewReportWizard"
             typeId="REPORT">
       </creationUiTrigger>
+      <editorAction
+            commandId="org.remus.infomngmnt.birtreport.openExternal"
+            typeId="REPORT">
+      </editorAction>
+      <editorAction
+            commandId="org.remus.infomngmnt.birtreport.pdf"
+            typeId="REPORT">
+      </editorAction>
    </extension>
    <extension
          point="org.remus.infomngmnt.birtreport.reporttemplate">
@@ -70,4 +78,28 @@
             name="Report">
       </wizard>
 	</extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.remus.infomngmnt.birtreport.handler.OpenInBrowserHandler"
+            id="org.remus.infomngmnt.birtreport.openExternal"
+            name="Open Report in Browser">
+      </command>
+      <command
+            defaultHandler="org.remus.infomngmnt.birtreport.handler.ViewAsPdfHandler"
+            id="org.remus.infomngmnt.birtreport.pdf"
+            name="View as PDF">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.birtreport.openExternal"
+            icon="icons/preview_html.gif">
+      </image>
+      <image
+            commandId="org.remus.infomngmnt.birtreport.pdf"
+            icon="icons/nuvola/pdf.png">
+      </image>
+   </extension>
 </plugin>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.birtreport.reporttemplate">
+      <template
+            category="org.remus.infomngmnt.reports.twitter.category"
+            id="org.remus.infomngmnt.reports.twitter.1"
+            label="Twitter Top Posters"
+            rptfile="template/twitter_top_posters.rptdesign">
+         <parameter
+               label="Twitter-Feed"
+               name="source"
+               parametertype="org.remus.infomngmnt.birtreport.infotypeselector">
+            <parameterclassparameter
+                  name="infotype"
+                  value="TWITTER">
+            </parameterclassparameter>
+            <parameterclassparameter
+                  name="dialogtitle"
+                  value="Please select a twitter feed">
+            </parameterclassparameter>
+            <parameterclassparameter
+                  name="dialogmessage"
+                  value="Select a twitter feed from the list">
+            </parameterclassparameter>
+         </parameter>
+         <parameter
+               label="Top n"
+               name="n"
+               parametertype="org.remus.infomngmnt.birtreport.spinner">
+            <parameterclassparameter
+                  name="min"
+                  value="1">
+            </parameterclassparameter>
+            <parameterclassparameter
+                  name="default"
+                  value="3">
+            </parameterclassparameter>
+            <parameterclassparameter
+                  name="max"
+                  value="10">
+            </parameterclassparameter>
+         </parameter>
+      </template>
+      <templatecategory
+            id="org.remus.infomngmnt.reports.twitter.category"
+            label="Twitter">
+      </templatecategory>
+   </extension>
+
+</plugin>

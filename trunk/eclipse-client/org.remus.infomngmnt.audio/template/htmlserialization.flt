@@ -1,0 +1,72 @@
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#setting url_escaping_charset="UTF-8">  
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_images}"></script>
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_curvycorner}"></script>
+  <script type="text/JavaScript">
+	  window.onload = function()
+	  {
+	          settings = {
+	          tl: { radius: 5 },
+	          tr: { radius: 5 },
+	          bl: { radius: 0 },
+	          br: { radius: 0 },
+	          antiAlias: true,
+	          autoPad: true
+	      }
+	
+	      var myBoxObject = new curvyCorners(settings,"audioplayer");
+	      myBoxObject.applyCornersToAll();
+	  }
+</script>
+  <title>${data.__label}</title>
+  <style type="text/css">
+  	.systemfont,td {
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
+	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	</style>
+  ${additionals.mediaplayerheader}
+</head>
+<body>
+	<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+	<div style="margin:5px;">
+		<table>
+			<tr>
+				<td class="bold">Audio Name:</td>
+				<td>${data.__label?html}</td>
+			</tr>
+			<#if data.__keywords?has_content >
+			<tr>
+				<td class="bold">Keywords:</td>
+				<td>${data.__keywords?html}</td>
+			</tr>
+			</#if>
+			<#if data.__description?has_content >
+			<tr>
+				<td class="bold">Description:</td>
+				<td>${data.__description?html}</td>
+			</tr>
+			</#if>
+		</table>
+	</div>
+  	<div>
+  		<div class="audioplayer" style="margin: 0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  			<span class="systemfont" style="font-weight:bold;">Audioplayer</span>
+  		</div>
+  		
+  			${additionals.mediaplayer}
+  		
+  	</div>
+</body>
+</html>

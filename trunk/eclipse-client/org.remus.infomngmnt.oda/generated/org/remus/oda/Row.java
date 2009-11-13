@@ -37,7 +37,7 @@ public interface Row extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute list.
 	 * @see org.remus.oda.OdaPackage#getRow_Value()
-	 * @model
+	 * @model unique="false"
 	 * @generated
 	 */
 	EList<Object> getValue();

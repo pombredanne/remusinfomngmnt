@@ -27,7 +27,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Row">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" unique="false" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
   </eClassifiers>
 </ecore:EPackage>

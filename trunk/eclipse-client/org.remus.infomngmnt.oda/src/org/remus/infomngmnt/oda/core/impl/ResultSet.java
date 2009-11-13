@@ -178,7 +178,11 @@ public class ResultSet implements IResultSet {
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSet#getDate(int)
 	 */
 	public Date getDate(final int index) throws OdaException {
-		return new Date(((java.util.Date) getObjectFromRow(index)).getTime());
+		java.util.Date objectFromRow = (java.util.Date) getObjectFromRow(index);
+		if (objectFromRow != null) {
+			return new Date(objectFromRow.getTime());
+		}
+		return null;
 	}
 
 	/*
@@ -211,7 +215,11 @@ public class ResultSet implements IResultSet {
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSet#getTimestamp(int)
 	 */
 	public Timestamp getTimestamp(final int index) throws OdaException {
-		return new Timestamp(((java.util.Date) getObjectFromRow(index)).getTime());
+		Object objectFromRow = getObjectFromRow(index);
+		if (objectFromRow != null) {
+			return new Timestamp(((java.util.Date) objectFromRow).getTime());
+		}
+		return null;
 	}
 
 	/*

@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.birtreport.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -44,7 +45,8 @@ public class TextParameterControl extends AbstractParameterControl {
 	 */
 	@Override
 	public void createPartControl(final Composite parent) {
-		Text text = new Text(parent, SWT.NONE);
+		Text text = new Text(parent, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		text.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(final Event event) {
 				TextParameterControl.this.value = ((Text) event.widget).getText();

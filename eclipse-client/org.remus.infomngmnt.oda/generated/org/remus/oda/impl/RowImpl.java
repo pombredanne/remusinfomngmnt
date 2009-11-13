@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.remus.oda.OdaPackage;
 import org.remus.oda.Row;
@@ -69,7 +70,7 @@ public class RowImpl extends EObjectImpl implements Row {
 	 */
 	public EList<Object> getValue() {
 		if (value == null) {
-			value = new EDataTypeUniqueEList<Object>(Object.class, this, OdaPackage.ROW__VALUE);
+			value = new EDataTypeEList<Object>(Object.class, this, OdaPackage.ROW__VALUE);
 		}
 		return value;
 	}

@@ -157,14 +157,12 @@ public class RssConnectionWizardPage extends WizardPage {
 		refreshLabel.setText("Refresh feed (minutes)");
 		this.refreshRateSpinner = new Spinner(group2, SWT.BORDER);
 		this.refreshRateSpinner.setMinimum(1);
-		this.refreshRateSpinner.setMaximum(200);
 		this.refreshRateSpinner.setIncrement(1);
 
 		Label deleteLabel = new Label(group2, SWT.NONE);
 		deleteLabel.setText("Delete feed-entries older than (days):");
 		this.deleteSpinner = new Spinner(group2, SWT.BORDER);
 		this.deleteSpinner.setMinimum(1);
-		this.deleteSpinner.setMaximum(200);
 		this.deleteSpinner.setIncrement(1);
 
 		final Group group3 = new Group(container, SWT.NONE);

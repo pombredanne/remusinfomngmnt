@@ -446,7 +446,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		return true;
 	}
 
-	private IRetrieveFileTransferContainerAdapter getFileReceiveAdapter() {
+	protected IRetrieveFileTransferContainerAdapter getFileReceiveAdapter() {
 		if (this.container == null) {
 			try {
 				this.container = ContainerFactory.getDefault().createContainer();

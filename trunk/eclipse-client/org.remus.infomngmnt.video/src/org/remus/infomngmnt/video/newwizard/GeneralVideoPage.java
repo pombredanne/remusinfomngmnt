@@ -43,7 +43,7 @@ public class GeneralVideoPage extends GeneralPage {
 	protected String tmpText;
 	private IFile tmpFile;
 
-	private DisposableEditingDomain editingDomain;
+	private final DisposableEditingDomain editingDomain;
 	private Text mediaTypeText;
 
 	public GeneralVideoPage(final Category category) {
@@ -54,6 +54,7 @@ public class GeneralVideoPage extends GeneralPage {
 
 	public GeneralVideoPage(final InformationUnitListItem selection) {
 		super(selection);
+		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 	}
 
 	@Override

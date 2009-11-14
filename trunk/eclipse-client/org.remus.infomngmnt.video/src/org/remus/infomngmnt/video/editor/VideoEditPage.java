@@ -139,15 +139,15 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		});
 		new Label(composite, SWT.NONE);
 
-		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite, "Change image",
-				SWT.NONE);
+		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite,
+				"Change video file", SWT.NONE);
 		changeImageHyperlink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		changeImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				FileDialog fd = new FileDialog(getSite().getShell());
-				fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" });
-				fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
+				fd.setFilterExtensions(new String[] { "*.avi;*.mpg;*.mpeg;*.mp4;*.flv" });
+				fd.setFilterNames(new String[] { "Supported Videos (AVI,MPG,MPEG,MP4,FLV)" });
 				String open = fd.open();
 				if (open != null) {
 

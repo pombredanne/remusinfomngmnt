@@ -84,19 +84,7 @@
 		    <zipfileset dir="${build.dir.location}/customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
 		
-		<tar destfile="N.RIM/RIM-linux.gtk.x86_64.tar.gz" compression="gzip">
-		  <zipfileset src="N.RIM/RIM-linux.gtk.x86_64.zip"/>
-		</tar>
-		<tar destfile="N.RIM/RIM-linux.gtk.x86.tar.gz" compression="gzip">
-		  <zipfileset src="N.RIM/RIM-linux.gtk.x86.zip"/>
-		</tar>
-		<tar destfile="N.RIM/RIM-macosx.carbon.ppc.tar.gz" compression="gzip">
-		  <zipfileset src="N.RIM/RIM-macosx.carbon.ppc.zip"/>
-		</tar>
-		<tar destfile="N.RIM/RIM-macosx.cocoa.x86.tar.gz" compression="gzip">
-		  <zipfileset src="N.RIM/RIM-macosx.cocoa.x86.zip"/>
-		</tar>
-
+		
 		
 		
 		

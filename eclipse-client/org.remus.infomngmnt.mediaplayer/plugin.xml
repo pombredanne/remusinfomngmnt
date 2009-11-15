@@ -40,6 +40,14 @@
                name="mpeg">
          </supportedmediatype>
       </mediaplayer>
+      <mediaplayer
+            class="org.remus.infomngmnt.mediaplayer.mp3.Mp3Player"
+            id="org.remus.infomngmnt.mediaplayer.mp3Player"
+            name="MP3 Player">
+         <supportedmediatype
+               name="mp3">
+         </supportedmediatype>
+      </mediaplayer>
    </extension>
 
 </plugin>

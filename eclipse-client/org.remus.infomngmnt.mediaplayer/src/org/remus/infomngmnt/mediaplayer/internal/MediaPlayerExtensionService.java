@@ -14,13 +14,17 @@ package org.remus.infomngmnt.mediaplayer.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.mediaplayer.MediaPlayerActivator;
@@ -41,6 +45,31 @@ public class MediaPlayerExtensionService extends PluginRegistryDynamic implement
 		super(EXTENSION_POINT);
 
 	}
+
+	public static IMediaPlayer UNKNOW = new IMediaPlayer() {
+
+		public List<String> getSupportedMediaTypes() {
+			return Collections.<String> emptyList();
+		}
+
+		public String getName() {
+			return "Unknown";
+		}
+
+		public String getId() {
+			return "unknown";
+		}
+
+		public String buildHtml(final IPath mediaFilePath, final int widht, final int height,
+				final Map<String, String> options) {
+			return NLS.bind("No player installed for mediatype {0}", mediaFilePath
+					.getFileExtension());
+		}
+
+		public String buildHeaderScript() {
+			return "";
+		}
+	};
 
 	@Override
 	protected void init() {
@@ -80,7 +109,7 @@ public class MediaPlayerExtensionService extends PluginRegistryDynamic implement
 				return player;
 			}
 		}
-		return null;
+		return UNKNOW;
 	}
 
 	public Collection<IMediaPlayer> getAllPlayers() {

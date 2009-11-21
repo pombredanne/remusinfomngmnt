@@ -84,6 +84,7 @@ import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.desktop.DesktopWindow;
+import org.remus.infomngmnt.ui.perspective.Perspective;
 import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
 import org.remus.infomngmnt.welcome.WelcomeEditor;
 
@@ -315,7 +316,10 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 
 			public void run() throws Exception {
 				if (UIPlugin.getDefault().getPreferenceStore().getBoolean(
-						UIPreferenceInitializer.SHOW_WELCOME)) {
+						UIPreferenceInitializer.SHOW_WELCOME)
+						&& Perspective.PERSPECTIVE_ID.equals(PlatformUI.getWorkbench()
+								.getActiveWorkbenchWindow().getActivePage().getPerspective()
+								.getId())) {
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 							.openEditor(new org.remus.infomngmnt.welcome.WelcomeEditorInput(),
 									WelcomeEditor.EDITOR_ID);

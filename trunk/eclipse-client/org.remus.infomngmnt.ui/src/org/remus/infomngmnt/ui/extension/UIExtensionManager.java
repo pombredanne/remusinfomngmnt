@@ -74,6 +74,10 @@ public class UIExtensionManager {
 
 	public static final String CLASS_ATT = "class"; //$NON-NLS-1$
 
+	// ///-----------------------
+
+	public static final String EDITOR_TRIM_NODE_NAME = "editortrimcontribution"; //$NON-NLS-1$
+
 	private static UIExtensionManager INSTANCE;
 
 	private Map<String, List<IEditPage>> items;
@@ -85,6 +89,8 @@ public class UIExtensionManager {
 	private Map<String, IConfigurationElement> creationTrigger;
 
 	private Map<String, List<String>> commandIds;
+
+	private Map<String, String> trimContributions;
 
 	public static UIExtensionManager getInstance() {
 		if (INSTANCE == null) {
@@ -107,6 +113,7 @@ public class UIExtensionManager {
 		this.preferencePages = new HashMap<String, Map<String, AbstractCreationPreferencePage>>();
 		this.creationTrigger = new HashMap<String, IConfigurationElement>();
 		this.commandIds = new HashMap<String, List<String>>();
+		this.trimContributions = new HashMap<String, String>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 				EXTENSION_POINT);
 		final IConfigurationElement[] configurationElements = extensionPoint
@@ -161,6 +168,9 @@ public class UIExtensionManager {
 					this.sourcePage.put(sourcePage.getType(), new ArrayList<ISourcePage>());
 				}
 				this.sourcePage.get(sourcePage.getType()).add(sourcePage);
+			} else if (configurationElement.getName().equals(EDITOR_TRIM_NODE_NAME)) {
+				this.trimContributions.put(configurationElement.getAttribute(TYPE_ID_ATT),
+						configurationElement.getAttribute(COMMAND_ID_ATT));
 			}
 		}
 	}
@@ -201,6 +211,10 @@ public class UIExtensionManager {
 
 	public List<String> getCommandIdsByTypeId(final String type) {
 		return this.commandIds.get(type);
+	}
+
+	public String getEditorTrimCommandIdByTypeId(final String type) {
+		return this.trimContributions.get(type);
 	}
 
 }

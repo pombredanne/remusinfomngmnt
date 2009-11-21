@@ -44,6 +44,10 @@
             class="org.remus.infomngmnt.mindmap.ui.NewMindmapWizard"
             typeId="MINDMAP">
       </creationUiTrigger>
+      <editortrimcontribution
+            commandId="org.remus.infomngmnt.mindmap.openMindMapEditor"
+            typeId="MINDMAP">
+      </editortrimcontribution>
    </extension>
    <extension
          point="org.eclipse.core.runtime.adapters">

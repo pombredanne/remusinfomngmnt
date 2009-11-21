@@ -18,8 +18,10 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 
 import org.remus.infomngmnt.BinaryReference;
@@ -60,9 +62,13 @@ public class OpenMindMapEditorHandler extends AbstractHandler {
 			IWorkbenchPage activePage = UIUtil.getPrimaryWindow().getActivePage();
 			try {
 				IDE.openEditor(activePage, binaryReferenceToFile);
-				activePage.showView("org.xmind.ui.StylesView");
-				activePage.showView("org.xmind.ui.MarkerView");
-				activePage.showView("org.xmind.ui.ThemesView");
+				IPerspectiveDescriptor findPerspectiveWithId = PlatformUI.getWorkbench()
+						.getPerspectiveRegistry().findPerspectiveWithId(
+								"org.xmind.ui.perspective.mindmapping");
+				if (findPerspectiveWithId != null) {
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+							.setPerspective(findPerspectiveWithId);
+				}
 			} catch (PartInitException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

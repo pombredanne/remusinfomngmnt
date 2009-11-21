@@ -72,21 +72,21 @@ public class EditorTrim extends WorkbenchWindowControlContribution {
 	protected Control createControl(final Composite parent) {
 		this.listener = new IPartListener() {
 			public void partOpened(final IWorkbenchPart part) {
-				System.out.println("TEST");
+				// do nothing
 			}
 
 			public void partDeactivated(final IWorkbenchPart part) {
-				System.out.println("TEST");
+				// do nothing
 
 			}
 
 			public void partClosed(final IWorkbenchPart part) {
-				System.out.println("TEST");
+				// do nothing
 
 			}
 
 			public void partBroughtToTop(final IWorkbenchPart part) {
-				System.out.println("TEST");
+				// do nothing
 
 			}
 

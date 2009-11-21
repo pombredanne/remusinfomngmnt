@@ -571,6 +571,13 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.trim.status">
          <toolbar
+               id="org.remus.infomngmnt.ui.trimtoolbar2">
+            <control
+                  class="org.remus.infomngmnt.ui.internal.editortrim.EditorTrim"
+                  id="org.remus.infomngmnt.ui.internal.editortrim.EditorTrim">
+            </control>
+         </toolbar>
+         <toolbar
                id="org.remus.infomngmnt.ui.trimtoolbar">
             <control
                   class="org.remus.infomngmnt.ui.notification.NotificationTrimArea">

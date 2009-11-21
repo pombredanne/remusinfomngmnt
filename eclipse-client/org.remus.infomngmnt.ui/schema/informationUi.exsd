@@ -24,6 +24,7 @@
                <element ref="creationUiTrigger"/>
                <element ref="editorAction"/>
                <element ref="sourcepage"/>
+               <element ref="editortrimcontribution"/>
             </choice>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -236,6 +237,31 @@
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="org.remus.infomngmnt.ui.extension.AbstractDelegationEditorPart:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="editortrimcontribution">
+      <complexType>
+         <attribute name="typeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="identifier" basedOn="org.remus.infomngmnt.core.informationType/information/@type"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="commandId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ui.commands/command/@id"/>
                </appInfo>
             </annotation>
          </attribute>

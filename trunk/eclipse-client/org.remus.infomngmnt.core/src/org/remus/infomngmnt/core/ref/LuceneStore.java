@@ -51,9 +51,12 @@ public abstract class LuceneStore {
 
 	private final ExecutorService executor;
 
+	private final IIndexCleaner cleanService;
+
 	protected LuceneStore(final String fileUrl) {
 		this.fileUrl = fileUrl;
 		this.executor = Executors.newCachedThreadPool();
+		this.cleanService = InfomngmntEditPlugin.getPlugin().getService(IIndexCleaner.class);
 	}
 
 	protected final <T> T read(final IndexSearchOperation<T> operation) {
@@ -61,6 +64,7 @@ public abstract class LuceneStore {
 		this.lock.lock();
 		Future<T> submit = this.executor.submit(operation);
 		T returnValue = null;
+		boolean errorOccured = false;
 		try {
 			returnValue = submit.get();
 			this.log.debug("Returned result --> " + returnValue.toString());
@@ -68,11 +72,27 @@ public abstract class LuceneStore {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errorOccured = true;
 		} catch (Exception e) {
 		} finally {
 			this.lock.unlock();
+			if (errorOccured) {
+				// TODO we need a self-healing procedure for broken indexes.
+				// Deferring
+
+				// rebuild();
+				// return read(operation);
+				// if (errorOccured && this.cleanService != null &&
+				// this.cleanService.proceedCleanUp()) {
+				// this.cleanService.cleanIndexAndRebuild(this.fileUrl);
+				// this.lock.unlock();
+				// // do it again.
+				// return read(operation);
+				// } else {
+				// this.lock.unlock();
+				// }
+			}
+
 		}
 		return returnValue;
 	}
@@ -151,6 +171,30 @@ public abstract class LuceneStore {
 		return this.writer;
 	}
 
+	protected void rebuild() {
+		relaseIndexSearcher();
+		closeIndexWriter();
+		if (this.writer == null) {
+			try {
+
+				if (IndexReader.isLocked(getIndexDirectory())) {
+					IndexReader.unlock(getIndexDirectory());
+				}
+				this.writer = new IndexWriter(getIndexDirectory(), getAnalyser(), true);
+				this.writer.setUseCompoundFile(false);
+			} catch (CorruptIndexException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (LockObtainFailedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 	protected Analyzer getAnalyser() {
 		return new StandardAnalyzer();
 	}
@@ -168,8 +212,10 @@ public abstract class LuceneStore {
 
 	protected void closeIndexWriter() {
 		try {
-			this.writer.flush();
-			this.writer.close();
+			if (this.writer != null) {
+				this.writer.flush();
+				this.writer.close();
+			}
 		} catch (CorruptIndexException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

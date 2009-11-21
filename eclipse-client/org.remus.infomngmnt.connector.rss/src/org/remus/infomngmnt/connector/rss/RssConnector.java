@@ -453,18 +453,18 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			} catch (final ContainerCreateException e) {
 				throw new RuntimeException("Error initializing sync-container", e);
 			}
-			this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
-					.getAdapter(IRetrieveFileTransferContainerAdapter.class);
-			RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
-					IRepositoryService.class).getRepositoryById(getLocalRepositoryId());
-			if (Boolean.valueOf(repositoryById.getOptions().get(
-					RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION))) {
-				this.fileReceiveAdapter.setConnectContextForAuthentication(ConnectContextFactory
-						.createUsernamePasswordConnectContext(
-								getCredentialProvider().getUserName(), getCredentialProvider()
-										.getPassword()));
-			}
 		}
+		this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
+				.getAdapter(IRetrieveFileTransferContainerAdapter.class);
+		RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
+				IRepositoryService.class).getRepositoryById(getLocalRepositoryId());
+		if (Boolean.valueOf(repositoryById.getOptions().get(
+				RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION))) {
+			this.fileReceiveAdapter.setConnectContextForAuthentication(ConnectContextFactory
+					.createUsernamePasswordConnectContext(getCredentialProvider().getUserName(),
+							getCredentialProvider().getPassword()));
+		}
+
 		return this.fileReceiveAdapter;
 	}
 }

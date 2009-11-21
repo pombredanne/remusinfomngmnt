@@ -54,6 +54,7 @@ import org.remus.infomngmnt.ui.perspective.Perspective;
  */
 public class EditorTrimControl extends Composite {
 
+	private static final String COMMAND_PERP_SWITCH = "org.remus.infomngmnt.ui.switch2infoPerspective";
 	private final ImageHyperlink hyperLink;
 	private Command currentCommand;
 	private Image contributedImage;
@@ -119,7 +120,11 @@ public class EditorTrimControl extends Composite {
 
 	public void buildHyperLink(final String typeId) {
 		String commandId = UIExtensionManager.getInstance().getEditorTrimCommandIdByTypeId(typeId);
-
+		if (commandId == null
+				&& !Perspective.PERSPECTIVE_ID.equals(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage().getPerspective().getId())) {
+			commandId = COMMAND_PERP_SWITCH;
+		}
 		if (commandId != null) {
 			ICommandService commandService = (ICommandService) PlatformUI.getWorkbench()
 					.getService(ICommandService.class);
@@ -141,6 +146,7 @@ public class EditorTrimControl extends Composite {
 					// do nothing
 				}
 				setHyperLink(this.contributedImage, name);
+				this.backMode = false;
 				return;
 			}
 		}

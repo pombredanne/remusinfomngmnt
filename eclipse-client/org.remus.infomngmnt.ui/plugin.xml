@@ -246,6 +246,11 @@
             id="org.remus.infomngmnt.ui.projectmanagement"
             name="Project-Management">
       </command>
+      <command
+            defaultHandler="org.remus.infomngmnt.ui.handler.SwitchToInfoPerspective"
+            id="org.remus.infomngmnt.ui.switch2infoPerspective"
+            name="Back to Information Management">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -688,6 +693,13 @@
          <run
                class="org.remus.infomngmnt.ui.calendar.CalendarBuilder">
          </run></builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.ui.switch2infoPerspective"
+            icon="IMG_TOOL_BACK">
+      </image>
    </extension>
 
 </plugin>

@@ -44,4 +44,4 @@ Export-Package: org.remus.infomngmnt.ui,
  org.remus.infomngmnt.ui.views,
  org.remus.infomngmnt.welcome
 Service-Component: OSGI-INF/repositoryuiextension.xml, OSGI-INF/collapsiblebuttonextension.xml,
- OSGI-INF/calendarstoreservice.xml, OSGI-INF/calendarservice.xml
+ OSGI-INF/calendarstoreservice.xml, OSGI-INF/calendarservice.xml, OSGI-INF/indexcleanservice.xml

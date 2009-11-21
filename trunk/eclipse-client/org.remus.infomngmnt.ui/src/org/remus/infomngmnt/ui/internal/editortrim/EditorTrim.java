@@ -110,7 +110,6 @@ public class EditorTrim extends WorkbenchWindowControlContribution {
 			}
 
 			public void pageActivated(final IWorkbenchPage page) {
-				System.out.println("Activating listener");
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 						.addPartListener(EditorTrim.this.listener);
 				handleActivate(page.getActivePart());

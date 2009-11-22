@@ -31,7 +31,7 @@ import org.remus.oda.Row;
  */
 public class ResultSet implements IResultSet {
 	private int m_maxRows;
-	private int m_currentRowId;
+	private int m_currentRowId = -1;
 	private final Dataset dataset;
 	private final org.remus.oda.ResultSet internalResult;
 

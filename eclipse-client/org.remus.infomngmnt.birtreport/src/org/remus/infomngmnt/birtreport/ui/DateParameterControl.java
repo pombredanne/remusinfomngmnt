@@ -21,7 +21,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
 import org.remus.infomngmnt.common.ui.swt.DateCombo;
@@ -54,7 +56,9 @@ public class DateParameterControl extends AbstractParameterControl {
 	 */
 	@Override
 	public void createPartControl(final Composite parent) {
-		DateCombo dateCombo = new DateCombo(parent, SWT.FLAT);
+		DateCombo dateCombo = new DateCombo(parent, SWT.FLAT | SWT.BORDER, false);
+		dateCombo.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		dateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		if (this.options.get(DEFAULT_VALUE) != null) {
 			try {
 				if (this.options.get(INPUT_DATE_PATTERN) != null) {

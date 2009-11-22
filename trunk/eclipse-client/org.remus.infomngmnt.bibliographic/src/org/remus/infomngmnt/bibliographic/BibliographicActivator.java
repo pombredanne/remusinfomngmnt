@@ -29,6 +29,18 @@ public class BibliographicActivator extends AbstractUIPlugin {
 	
 	public static final String ARTICLE_TYPE_ID = "ARTICLE"; //$NON-NLS-1$
 	
+	public static final String NODE_NAME_BIBTEXKEY = "bibtexkey"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_URL = "url"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_FILE = "file"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_FILES = "files";
+	
+	public static final String NODE_NAME_FILES_LABEL = "fileLabel";
+	
+	public static final String NODE_NAME_ABSTRACT = "abstract";
+	
 	public static final String NODE_NAME_AUTHOR = "author"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_PUBLISHER = "publisher"; //$NON-NLS-1$
@@ -36,6 +48,25 @@ public class BibliographicActivator extends AbstractUIPlugin {
 	public static final String NODE_NAME_YEAR = "year"; //$NON-NLS-1$
 	
 	public static final String NODE_NAME_JOURNAL = "journal"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_VOLUME = "volume"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_SERIES = "series"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_ADDRESS = "address"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_EDITION = "edition"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_MONTH = "month"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_NOTE = "note"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_KEY = "key"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_PAGES = "pages"; //$NON-NLS-1$
+	
+	public static final String NODE_NAME_NUMBER = "number";
+		
 
 	// The shared instance
 	private static BibliographicActivator plugin;

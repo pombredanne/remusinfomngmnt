@@ -11,22 +11,15 @@
  *******************************************************************************/
 package org.remus.infomngmnt.bibliographic.ui;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
-import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
 import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 /**
  * Edit page for information unit "Book"
@@ -34,16 +27,27 @@ import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
  * @author Andreas Deinlein <dev@deasw.com>
  *
  */
-public class BookEditPage extends AbstractInformationFormPage {
-
+public class BookEditPage extends BibliographicAbstractInformationFormPage {
+	// required fields
 	private Text title;
 	private Text author;
 	private Text publisher;
 	private Text year;
+	private Text bibtexkey;
+	// optional fields
+	private Text volume;
+	private Text series;
+	private Text address;
+	private Text edition;
+	private Text month;
+	private Text pages;
+	private Text note;
+	
 	
 	public BookEditPage() {
-		
+		baseTypeId = BibliographicActivator.BOOK_TYPE_ID;
 	}
+	
 	
 	@Override
 	protected void renderPage(IManagedForm managedForm) {
@@ -52,67 +56,57 @@ public class BookEditPage extends AbstractInformationFormPage {
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
-
-		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.EXPANDED | ExpandableComposite.TWISTIE);
-		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
-		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
-
-		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
-		client.setLayout(new GridLayout(2, false));
-		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-
-		client.setLayoutData(gridData);
-
-		generalSection.setClient(client);
-
-		Label titleLabel = toolkit.createLabel(client, "Title");
-		titleLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.title = toolkit.createText(client, "", SWT.BORDER);
-		this.title.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.title);
 		
-		Label authorLabel = toolkit.createLabel(client, "Author");
-		authorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.author = toolkit.createText(client, "", SWT.BORDER);
-		this.author.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.author);
+		// Required fields section
+		Composite requiredSection = createBibliographicSection(managedForm, "Required Fields", true);
+		title = createBibliographicEditField(managedForm, requiredSection, "Title:"); 
+		author = createBibliographicEditField(managedForm, requiredSection, "Author:");
+		publisher = createBibliographicEditField(managedForm, requiredSection, "Publisher: ");
+		year = createBibliographicEditField(managedForm, requiredSection, "Year:");
+		bibtexkey = createBibliographicEditField(managedForm, requiredSection, "Bibtexkey:");
 		
-		Label publisherLabel = toolkit.createLabel(client, "Publisher");
-		publisherLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.publisher = toolkit.createText(client, "", SWT.BORDER);
-		this.publisher.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.publisher);
+		// Optional fields section
+		Composite optionalSection = createBibliographicSection(managedForm, "Optional Fields", false);
+		volume = createBibliographicEditField(managedForm, optionalSection, "Volume:    ");
+		volume.setToolTipText("The volume of a journal or multi-volume book");
+		series = createBibliographicEditField(managedForm, optionalSection, "Series:");
+		address = createBibliographicEditField(managedForm, optionalSection, "Address:");
+		edition = createBibliographicEditField(managedForm, optionalSection, "Edition:");
+		month = createBibliographicEditField(managedForm, optionalSection, "Month:");				
+		pages = createBibliographicEditField(managedForm, optionalSection, "Pages:");
+		note = createBibliographicEditField(managedForm, optionalSection, "Note:");
+				
+		// Abstract Section
+		doCreateAbstractSection(body, toolkit, false);
 		
-		Label yearLabel = toolkit.createLabel(client, "Year");
-		yearLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.year = toolkit.createText(client, "", SWT.BORDER);
-		this.year.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.year);
+		// ExternalLinks Section
+		doCreateExtLinksSection(body, toolkit, false);
 		
-		
+		// Semantic Section
 		doCreateSemanticSection(body, toolkit);
 		
 		form.reflow(true);
 	}
 	
+	
 	@Override
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
-		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
 		BindingUtil.createTextAndBind(this.title, getModelObject(),
 				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, this);
-		BindingUtil.createTextAndBind(this.author, 
-				read.getChildByNodeId(BibliographicActivator.NODE_NAME_AUTHOR), 
-				read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_AUTHOR), this);
-		BindingUtil.createTextAndBind(this.publisher, 
-				read.getChildByNodeId(BibliographicActivator.NODE_NAME_PUBLISHER), 
-				read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_PUBLISHER), this);
-		BindingUtil.createTextAndBind(this.year, 
-				read.getChildByNodeId(BibliographicActivator.NODE_NAME_YEAR), 
-				read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_YEAR), this);
+		
+		bindBibliographicField(this.author, BibliographicActivator.NODE_NAME_AUTHOR);
+		bindBibliographicField(this.publisher, BibliographicActivator.NODE_NAME_PUBLISHER);
+		bindBibliographicField(this.year, BibliographicActivator.NODE_NAME_YEAR);
+		bindBibliographicField(this.bibtexkey, BibliographicActivator.NODE_NAME_BIBTEXKEY);
+		
+		bindBibliographicField(this.volume, BibliographicActivator.NODE_NAME_VOLUME);
+		bindBibliographicField(this.series, BibliographicActivator.NODE_NAME_SERIES);
+		bindBibliographicField(this.address, BibliographicActivator.NODE_NAME_ADDRESS);
+		bindBibliographicField(this.edition, BibliographicActivator.NODE_NAME_EDITION);
+		bindBibliographicField(this.month, BibliographicActivator.NODE_NAME_MONTH);		
+		bindBibliographicField(this.pages, BibliographicActivator.NODE_NAME_PAGES);
+		bindBibliographicField(this.note, BibliographicActivator.NODE_NAME_NOTE);
 	}
-	
 
 }

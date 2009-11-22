@@ -9,8 +9,8 @@
   <structureItems type="STRING" label="Boolean if the task has a reminder" id="notify" createAlways="true"/>
   <structureItems type="LONG" label="How many minutes before due date the reminder is triggered" id="minutesbeforedue" createAlways="true"/>
   <structureItems type="STRING" label="Boolean if the task is completed" id="completed" createAlways="true"/>
-  <structureItems label="Collection of worked units" id="workunits" createAlways="true">
-    <structureItems xsi:type="infomngmnt:DynamicStructure" label="One single Unit of work" id="workunit" upperBound="-1">
+  <structureItems xsi:type="infomngmnt:DynamicStructure" label="Collection of worked units" id="workunits" createAlways="true" upperBound="-1">
+    <structureItems label="One single Unit of work" id="workunit">
       <structureItems type="DATE" label="Start date of the work unit" id="workunitstart" createAlways="true"/>
       <structureItems type="DATE" label="End date of the work unit" id="workunitend" createAlways="true"/>
       <structureItems type="STRING" label="The description of a work unit" id="description" createAlways="true"/>

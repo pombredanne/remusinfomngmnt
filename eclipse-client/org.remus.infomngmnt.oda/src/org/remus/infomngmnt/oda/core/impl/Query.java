@@ -167,6 +167,7 @@ public class Query implements IQuery {
 					String name = column.getName();
 					row.getValue().add(structureRead.getValueByNodeId(name));
 				}
+				result.getRows().add(row);
 			}
 		}
 		return result;

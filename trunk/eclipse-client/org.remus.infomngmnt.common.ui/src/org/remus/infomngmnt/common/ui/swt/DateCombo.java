@@ -56,7 +56,11 @@ public class DateCombo extends Composite implements ISelectionProvider {
 	private final Button pickButton;
 	private final List<ISelectionChangedListener> listeners;
 
-	public DateCombo(Composite parent, int style) {
+	public DateCombo(final Composite parent, final int style) {
+		this(parent, style, false);
+	}
+
+	public DateCombo(final Composite parent, final int style, final boolean applyStyleToPicker) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 0;
@@ -74,13 +78,18 @@ public class DateCombo extends Composite implements ISelectionProvider {
 
 		this.dateText.setLayoutData(dateTextGridData);
 
-		this.pickButton = new Button(this, style | SWT.ARROW | SWT.DOWN);
+		if (applyStyleToPicker) {
+			this.pickButton = new Button(this, style | SWT.ARROW | SWT.DOWN);
+		} else {
+			this.pickButton = new Button(this, SWT.ARROW | SWT.DOWN);
+
+		}
 		GridData pickButtonGridData = new GridData(SWT.RIGHT, SWT.FILL, false, true);
 		pickButtonGridData.verticalIndent = 0;
 		this.pickButton.setLayoutData(pickButtonGridData);
 		this.pickButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void widgetSelected(final SelectionEvent arg0) {
 
 				MenuManager menuManager = new MenuManager();
 				Menu menu = menuManager.createContextMenu(DateCombo.this.pickButton);
@@ -94,7 +103,7 @@ public class DateCombo extends Composite implements ISelectionProvider {
 		pack();
 	}
 
-	protected void createMenu(MenuManager menuManager) {
+	protected void createMenu(final MenuManager menuManager) {
 		for (int i = 0, n = 7; i < n; i++) {
 			menuManager.add(new DateSetAction(i));
 		}
@@ -130,7 +139,7 @@ public class DateCombo extends Composite implements ISelectionProvider {
 
 	}
 
-	private String getDayString(int offset) {
+	private String getDayString(final int offset) {
 		Calendar instance = Calendar.getInstance();
 		if (offset > 0) {
 			instance.add(Calendar.DAY_OF_YEAR, offset);
@@ -142,7 +151,7 @@ public class DateCombo extends Composite implements ISelectionProvider {
 		return format;
 	}
 
-	private Date getDate(int offset) {
+	private Date getDate(final int offset) {
 		Calendar instance = Calendar.getInstance();
 		if (offset > 0) {
 			instance.add(Calendar.DAY_OF_YEAR, offset);
@@ -172,7 +181,7 @@ public class DateCombo extends Composite implements ISelectionProvider {
 
 	}
 
-	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+	public void addSelectionChangedListener(final ISelectionChangedListener listener) {
 		if (listener != null) {
 			this.listeners.add(listener);
 		}
@@ -186,14 +195,14 @@ public class DateCombo extends Composite implements ISelectionProvider {
 		return new StructuredSelection(this.date);
 	}
 
-	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+	public void removeSelectionChangedListener(final ISelectionChangedListener listener) {
 		if (listener != null) {
 			this.listeners.remove(listener);
 		}
 
 	}
 
-	public void setSelection(ISelection selection) {
+	public void setSelection(final ISelection selection) {
 		if (selection == null || selection.isEmpty()) {
 			this.date = null;
 			updateDateText();
@@ -211,7 +220,7 @@ public class DateCombo extends Composite implements ISelectionProvider {
 	}
 
 	@Override
-	public void setBackground(Color backgroundColor) {
+	public void setBackground(final Color backgroundColor) {
 		this.dateText.setBackground(backgroundColor);
 		this.pickButton.setBackground(backgroundColor);
 		super.setBackground(backgroundColor);
@@ -220,7 +229,7 @@ public class DateCombo extends Composite implements ISelectionProvider {
 	private class DateSetAction extends Action {
 		private final int offset;
 
-		public DateSetAction(int offset) {
+		public DateSetAction(final int offset) {
 			this.offset = offset;
 
 		}

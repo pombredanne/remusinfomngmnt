@@ -11,22 +11,15 @@
  *******************************************************************************/
 package org.remus.infomngmnt.bibliographic.ui;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
-import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
 import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
 
 /**
  * Edit page for information unit "Article"
@@ -34,15 +27,22 @@ import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
  * @author Andreas Deinlein <dev@deasw.com>
  *
  */
-public class ArticleEditPage extends AbstractInformationFormPage {
-
+public class ArticleEditPage extends BibliographicAbstractInformationFormPage {
+	// Required fields
 	private Text title;
 	private Text author;
 	private Text journal;
 	private Text year;
+	private Text bibtexkey;
+	// Optional fields
+	private Text volume;
+	private Text number;
+	private Text pages;
+	private Text month;
+	private Text note;	
 	
 	public ArticleEditPage() {
-		
+		baseTypeId = BibliographicActivator.ARTICLE_TYPE_ID;	
 	}
 	
 	@Override
@@ -53,45 +53,30 @@ public class ArticleEditPage extends AbstractInformationFormPage {
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.EXPANDED | ExpandableComposite.TWISTIE);
-		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
-		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
-
-		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
-		client.setLayout(new GridLayout(2, false));
-		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-
-		client.setLayoutData(gridData);
-
-		generalSection.setClient(client);
-
-		Label titleLabel = toolkit.createLabel(client, "Title");
-		titleLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.title = toolkit.createText(client, "", SWT.BORDER);
-		this.title.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.title);
+		// Required fields section
+		Composite requiredSection = createBibliographicSection(managedForm, "Required Fields", true);
+		title = createBibliographicEditField(managedForm, requiredSection, "Title:"); 
+		author = createBibliographicEditField(managedForm, requiredSection, "Author:");
+		journal = createBibliographicEditField(managedForm, requiredSection, "Journal: ");
+		year = createBibliographicEditField(managedForm, requiredSection, "Year:");
+		bibtexkey = createBibliographicEditField(managedForm, requiredSection, "Bibtexkey:");
 		
-		Label authorLabel = toolkit.createLabel(client, "Author");
-		authorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.author = toolkit.createText(client, "", SWT.BORDER);
-		this.author.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.author);
+		// Optional fields section
+		Composite optionalSection = createBibliographicSection(managedForm, "Optional Fields", false);
+		volume = createBibliographicEditField(managedForm, optionalSection, "Volume:    ");
+		volume.setToolTipText("The volume of a journal or multi-volume book");
+		number = createBibliographicEditField(managedForm, optionalSection, "Number:");
+		pages = createBibliographicEditField(managedForm, optionalSection, "Pages:");
+		month = createBibliographicEditField(managedForm, optionalSection, "Month:");
+		note = createBibliographicEditField(managedForm, optionalSection, "Note:");				
+				
+		// Abstract Section
+		doCreateAbstractSection(body, toolkit, false);
 		
-		Label publisherLabel = toolkit.createLabel(client, "Journal");
-		publisherLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.journal = toolkit.createText(client, "", SWT.BORDER);
-		this.journal.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.journal);
+		// ExternalLinks Section
+		doCreateExtLinksSection(body, toolkit, false);
 		
-		Label yearLabel = toolkit.createLabel(client, "Year");
-		yearLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.year = toolkit.createText(client, "", SWT.BORDER);
-		this.year.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		addControl(this.year);
-		
-		
+		// Semantic Section
 		doCreateSemanticSection(body, toolkit);
 		
 		form.reflow(true);
@@ -100,18 +85,19 @@ public class ArticleEditPage extends AbstractInformationFormPage {
 	@Override
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
-		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
 		BindingUtil.createTextAndBind(this.title, getModelObject(),
 				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, this);
-		BindingUtil.createTextAndBind(this.author, 
-				read.getChildByNodeId(BibliographicActivator.NODE_NAME_AUTHOR), 
-				read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_AUTHOR), this);
-		BindingUtil.createTextAndBind(this.journal, 
-				read.getChildByNodeId(BibliographicActivator.NODE_NAME_JOURNAL), 
-				read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_JOURNAL), this);
-		BindingUtil.createTextAndBind(this.year, 
-				read.getChildByNodeId(BibliographicActivator.NODE_NAME_YEAR), 
-				read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_YEAR), this);
+		
+		bindBibliographicField(this.author, BibliographicActivator.NODE_NAME_AUTHOR);
+		bindBibliographicField(this.journal, BibliographicActivator.NODE_NAME_JOURNAL);
+		bindBibliographicField(this.year, BibliographicActivator.NODE_NAME_YEAR);
+		bindBibliographicField(this.bibtexkey, BibliographicActivator.NODE_NAME_BIBTEXKEY);
+		
+		bindBibliographicField(this.volume, BibliographicActivator.NODE_NAME_VOLUME);
+		bindBibliographicField(this.number, BibliographicActivator.NODE_NAME_NUMBER);
+		bindBibliographicField(this.pages, BibliographicActivator.NODE_NAME_PAGES);
+		bindBibliographicField(this.month, BibliographicActivator.NODE_NAME_MONTH);
+		bindBibliographicField(this.note, BibliographicActivator.NODE_NAME_NOTE);		
 	}
 	
 

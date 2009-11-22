@@ -38,24 +38,12 @@
 }
  </style>
 <body>
-	<div style="margin:5px;">
-		<table>			
+	<div style="margin:5px;">		 		
+		<table>
 			<tr>			
 				<td class="bold">Title:</td>
 				<td class="bold" colspan="2">${data.__label?html}</td>
-			</tr>
-			<tr>
-			<#if data.__keywords?has_content >
-				<td class="bold">Keywords:</td>
-				<td>${data.__keywords?html}</td>
-			</tr>
-			</#if>
-			<#if data.__description?has_content >
-			<tr>
-				<td class="bold">Description:</td>
-				<td>${data.__description?html}</td>
-			</tr>
-			</#if>
+			</tr>			
 			<#if data.author?has_content >
 			<tr>
 				<td class="bold">Author:</td>
@@ -72,6 +60,95 @@
 			<tr>
 				<td class="bold">Year:</td>
 				<td>${data.year?html}</td>
+			</tr>
+			</#if>
+			<#if data.bibtexkey?has_content >
+			<tr>
+				<td class="bold">Bibtexkey:</td>
+				<td>${data.bibtexkey?html}</td>
+			</tr>
+			</#if>
+			
+			<tr></tr>
+			<#if data.volume?has_content >
+			<tr>
+				<td class="bold">Volume:</td>
+				<td>${data.volume?html}</td>
+			</tr>
+			</#if>
+			<#if data.series?has_content >
+			<tr>
+				<td class="bold">Series:</td>
+				<td>${data.series?html}</td>
+			</tr>
+			</#if>
+			<#if data.address?has_content >
+			<tr>
+				<td class="bold">Address:</td>
+				<td>${data.address?html}</td>
+			</tr>
+			</#if>
+			<#if data.edition?has_content >
+			<tr>
+				<td class="bold">Edition:</td>
+				<td>${data.edition?html}</td>
+			</tr>
+			</#if>
+			<#if data.month?has_content >
+			<tr>
+				<td class="bold">Month:</td>
+				<td>${data.month?html}</td>
+			</tr>
+			</#if>
+			<#if data.pages?has_content >
+			<tr>
+				<td class="bold">Pages:</td>
+				<td>${data.pages?html}</td>
+			</tr>
+			</#if>
+			<#if data.note?has_content >
+			<tr>
+				<td class="bold">Note:</td>
+				<td>${data.note?html}</td>
+			</tr>
+			</#if>
+			
+
+			<tr></tr>
+			<#if data.abstract?has_content >
+			<tr>
+				<td class="bold">Abstract:</td>
+				<td>${data.abstract?html}</td>
+			</tr>
+			</#if>
+						
+			<tr></tr>
+			<tr>
+			<#if data.__keywords?has_content >
+				<td class="bold">Keywords:</td>
+				<td>${data.__keywords?html}</td>
+			</tr>
+			</#if>
+			<#if data.__description?has_content >
+			<tr>
+				<td class="bold">Description:</td>
+				<td>${data.__description?html}</td>
+			</tr>
+			</#if>
+			
+			<tr></tr>
+			<tr>
+			<#if data.url?has_content >
+				<td class="bold">URL:</td>
+				<td><a href="${data.url?html}">${data.url?html}</a></td>
+			</tr>
+			</#if>
+			<#if (dynamic.files?size > 0) >			
+			<tr>
+				<td class="bold">Linked Files:</td>
+				<td>
+					${dynamic.files?size} file(s) attached. Switch to edit tab.
+				</td>
 			</tr>
 			</#if>
 		</table>

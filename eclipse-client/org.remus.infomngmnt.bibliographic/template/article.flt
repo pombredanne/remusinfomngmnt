@@ -38,12 +38,78 @@
 }
  </style>
 <body>
-	<div style="margin:5px;">
-		<table>			
+	<div style="margin:5px;">		 		
+		<table>
 			<tr>			
 				<td class="bold">Title:</td>
 				<td class="bold" colspan="2">${data.__label?html}</td>
+			</tr>			
+			<#if data.author?has_content >
+			<tr>
+				<td class="bold">Author:</td>
+				<td>${data.author?html}</td>
 			</tr>
+			</#if>
+			<#if data.journal?has_content >
+			<tr>
+				<td class="bold">Journal:</td>
+				<td>${data.journal?html}</td>
+			</tr>
+			</#if>
+			<#if data.year?has_content >
+			<tr>
+				<td class="bold">Year:</td>
+				<td>${data.year?html}</td>
+			</tr>
+			</#if>
+			<#if data.bibtexkey?has_content >
+			<tr>
+				<td class="bold">Bibtexkey:</td>
+				<td>${data.bibtexkey?html}</td>
+			</tr>
+			</#if>
+			
+			<tr></tr>
+			<#if data.volume?has_content >
+			<tr>
+				<td class="bold">Volume:</td>
+				<td>${data.volume?html}</td>
+			</tr>
+			</#if>
+			<#if data.number?has_content >
+			<tr>
+				<td class="bold">Number:</td>
+				<td>${data.number?html}</td>
+			</tr>
+			</#if>
+			<#if data.pages?has_content >
+			<tr>
+				<td class="bold">Pages:</td>
+				<td>${data.pages?html}</td>
+			</tr>
+			</#if>
+			<#if data.month?has_content >
+			<tr>
+				<td class="bold">Month:</td>
+				<td>${data.month?html}</td>
+			</tr>
+			</#if>
+			<#if data.note?has_content >
+			<tr>
+				<td class="bold">Note:</td>
+				<td>${data.note?html}</td>
+			</tr>
+			</#if>			
+
+			<tr></tr>
+			<#if data.abstract?has_content >
+			<tr>
+				<td class="bold">Abstract:</td>
+				<td>${data.abstract?html}</td>
+			</tr>
+			</#if>
+						
+			<tr></tr>
 			<tr>
 			<#if data.__keywords?has_content >
 				<td class="bold">Keywords:</td>
@@ -56,22 +122,20 @@
 				<td>${data.__description?html}</td>
 			</tr>
 			</#if>
-			<#if data.author?has_content >
+			
+			<tr></tr>
 			<tr>
-				<td class="bold">Author:</td>
-				<td>${data.author?html}</td>
+			<#if data.url?has_content >
+				<td class="bold">URL:</td>
+				<td><a href="${data.url?html}">${data.url?html}</a></td>
 			</tr>
 			</#if>
-			<#if data.publisher?has_content >
+			<#if (dynamic.files?size > 0) >			
 			<tr>
-				<td class="bold">Journal:</td>
-				<td>${data.journal?html}</td>
-			</tr>
-			</#if>
-			<#if data.year?has_content >
-			<tr>
-				<td class="bold">Year:</td>
-				<td>${data.year?html}</td>
+				<td class="bold">Linked Files:</td>
+				<td>
+					${dynamic.files?size} files(s) attached. Switch to edit tab.
+				</td>
 			</tr>
 			</#if>
 		</table>

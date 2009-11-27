@@ -78,5 +78,21 @@
             type="ARTICLE">
       </editPage>
    </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <category
+            id="org.remus.infomngmnt.bibliographic.exportCategory"
+            name="Bibliographic">
+      </category>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.exportCategory"
+            class="org.remus.infomngmnt.bibliographic.ui.XmlExportWizard"
+            id="org.remus.infomngmnt.bibliographic.xmlExportWizard"
+            name="BibTeXML file">
+         <description>
+            This wizard exports the bibliographic entries to a XML file.
+         </description>
+      </wizard>
+   </extension>
 
 </plugin>

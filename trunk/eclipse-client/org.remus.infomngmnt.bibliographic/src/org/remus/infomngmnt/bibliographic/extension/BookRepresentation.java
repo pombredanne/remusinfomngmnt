@@ -13,6 +13,7 @@ package org.remus.infomngmnt.bibliographic.extension;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
@@ -32,36 +33,60 @@ public class BookRepresentation extends BibliographicRepresentation {
 	}
 	
 	public static String getXMLExportString(InformationUnit iu) {
-		String retString = "";
-		retString = "<bibtex:book>\n";
+		String tstr, retString = "";
 		InformationStructureRead read = InformationStructureRead.newSession(iu);
-		//retString = retString.concat("<bibtex:title>" + read.getValueByNodeId("label") + "</bibtex:title>\n");
-		
-		String tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_AUTHOR);
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_BIBTEXKEY);
+		if (tstr != null) 
+			retString = retString.concat("<bibtex:entry id=\"" + tstr + "\">\n");
+		else
+			retString = retString.concat("<bibtex:entry id=\"\">\n");
+		retString = retString.concat("<bibtex:book>\n");
+		tstr = (String) iu.getLabel();
+		if (tstr != null) retString = retString.concat("<bibtex:title>" + tstr + "</bibtex:title>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_AUTHOR);
 		if (tstr != null) retString = retString.concat("<bibtex:author>" + tstr + "</bibtex:author>\n");
-//		retString = retString.concat("<bibtex:publisher>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_PUBLISHER).toString() + "</bibtex:publisher>\n");
-//		retString = retString.concat("<bibtex:year>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_YEAR).toString() + "</bibtex:year>\n");
-//		retString = retString.concat("<bibtex:volume>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_VOLUME).toString() + "</bibtex:volume>\n");
-//		retString = retString.concat("<bibtex:series>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_SERIES).toString() + "</bibtex:series>\n");
-//		retString = retString.concat("<bibtex:address>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_ADDRESS).toString() + "</bibtex:address>\n");
-//		retString = retString.concat("<bibtex:edition>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_EDITION).toString() + "</bibtex:edition>\n");
-//		retString = retString.concat("<bibtex:month>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_MONTH).toString() + "</bibtex:month>\n");
-//		retString = retString.concat("<bibtex:note>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_NOTE).toString() + "</bibtex:note>\n");
-//		retString = retString.concat("<bibtex:key>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_KEY).toString() + "</bibtex:key>\n");
-//		retString = retString.concat("<bibtex:pages>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_PAGES).toString() + "</bibtex:pages>\n");
-//		retString = retString.concat("<bibtex:abstract>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT).toString() + "</bibtex:abstract>\n");
-//		retString = retString.concat("<bibtex:keywords>" + read.getValueByNodeId("keywords").toString() + "</bibtex:keywords>\n");
-//		retString = retString.concat("<bibtex:description>" + read.getValueByNodeId("description").toString() + "</bibtex:description>\n");
-//		retString = retString.concat("<bibtex:url>" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_URL).toString() + "</bibtex:url>\n");
-//		
-//		List<BinaryReference> binaryReferences = read.getBinaryReferences(iu.getType(), false);
-//		if (binaryReferences.size() > 0 && binaryReferences.get(0) != null) {
-//			String projectRelativePath = binaryReferences.get(0).getProjectRelativePath();
-//			retString = retString.concat("<bibtex:nstandard name=\"file\" description=\"" + read.getValueByNodeId(BibliographicActivator.NODE_NAME_FILES_LABEL).toString() + "\">"
-//                    						+ projectRelativePath + "</bibtex:nstandard>\n");
-//		}
-				
-		retString = retString.concat("</bibtex:book>");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_PUBLISHER);
+		if (tstr != null) retString = retString.concat("<bibtex:publisher>" + tstr + "</bibtex:publisher>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_YEAR);
+		if (tstr != null) retString = retString.concat("<bibtex:year>" + tstr + "</bibtex:year>\n");
+		
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_VOLUME);
+		if (tstr != null) retString = retString.concat("<bibtex:volume>" + tstr + "</bibtex:volume>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_SERIES);
+		if (tstr != null) retString = retString.concat("<bibtex:series>" + tstr + "</bibtex:series>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_ADDRESS);
+		if (tstr != null) retString = retString.concat("<bibtex:address>" + tstr + "</bibtex:address>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_EDITION);
+		if (tstr != null) retString = retString.concat("<bibtex:edition>" + tstr + "</bibtex:edition>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_MONTH);
+		if (tstr != null) retString = retString.concat("<bibtex:month>" + tstr + "</bibtex:month>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_NOTE);
+		if (tstr != null) retString = retString.concat("<bibtex:note>" + tstr + "</bibtex:note>\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_PAGES);
+		if (tstr != null) retString = retString.concat("<bibtex:pages>" + tstr + "</bibtex:pages>\n");
+		
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT);
+		if (tstr != null) retString = retString.concat("<bibtex:abstract>" + tstr + "</bibtex:abstract>\n");
+		
+		tstr = (String) iu.getKeywords();
+		if (tstr != null) retString = retString.concat("<bibtex:keywords>" + tstr + "</bibtex:keywords>\n");
+		tstr = (String) iu.getDescription();
+		if (tstr != null) retString = retString.concat("<bibtex:description>" + tstr + "</bibtex:description>\n");
+		
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_URL);
+		if (tstr != null) retString = retString.concat("<bibtex:url>" + tstr + "</bibtex:url>\n");	
+		List<BinaryReference> binaryReferences = read.getBinaryReferences(iu.getType(), true);
+		EList<InformationUnit> fileLabels = read.getDynamicList(BibliographicActivator.NODE_NAME_FILES); 
+		for (int i = 0; i < binaryReferences.size(); i++) {
+			String projectRelativePath = binaryReferences.get(i).getProjectRelativePath();
+			tstr = (String) fileLabels.get(i).getChildValues().get(0).getStringValue();
+			String ext = tstr.substring(tstr.lastIndexOf(".") + 1);
+			if ((tstr != null) && (ext != null)) retString = retString.concat("<bibtex:nstandard name=\"file\" type=\"" + ext + "\" description=\"" + tstr + "\">"
+                    						+ projectRelativePath + "</bibtex:nstandard>\n");
+		}
+
+		retString = retString.concat("</bibtex:book>\n");
+		retString = retString.concat("</bibtex:entry>");
 		return retString;	
 	}
 

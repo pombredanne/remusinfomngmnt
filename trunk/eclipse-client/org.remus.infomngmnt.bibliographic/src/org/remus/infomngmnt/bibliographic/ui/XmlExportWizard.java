@@ -11,66 +11,61 @@
  *******************************************************************************/
 package org.remus.infomngmnt.bibliographic.ui;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.IProgressService;
 import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
-import org.remus.infomngmnt.bibliographic.extension.BookRepresentation;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.bibliographic.extension.XmlExportOperation;
 
 public class XmlExportWizard extends Wizard implements IExportWizard {
 
 	private XmlExportWizardPage exportPage = null;
-	private String sel = null;
+	private Category selCategory = null;
+	
+	private final static String SETTINGS_SECTION = "org.remus.infomngmnt.bibliographic.ui.xmlExportWizard"; //$NON-NLS-1$
 	
 	public XmlExportWizard() {
+		IDialogSettings masterSettings = BibliographicActivator.getDefault().getDialogSettings();
+		setDialogSettings(getSettingsSection(masterSettings));
 		setNeedsProgressMonitor(true);
-		setWindowTitle("Export Wizard");
+		setWindowTitle("BibTeXML export wizard");
+	}
+	
+	/**
+	 * Finds or creates a dialog settings section that is used to make the dialog control settings persistent
+	 */
+	private IDialogSettings getSettingsSection(IDialogSettings master) {
+		IDialogSettings settings = master.getSection(SETTINGS_SECTION);
+		if (settings == null) {
+			settings = master.addNewSection(SETTINGS_SECTION);
+		}
+		return settings;
 	}
 	
 	@Override
 	public void addPages() {
 		exportPage = new XmlExportWizardPage();
-		exportPage.setExportElement(sel);
+		exportPage.setExportElement(selCategory);
 		addPage(exportPage);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		System.out.println("xmlExportWizard.init()");
 
 		List list = ((IStructuredSelection) selection).toList();
 		for (Object object : list) {
-			if (object instanceof InformationUnitListItem) {
-
-			} else if (object instanceof Category) {
-				sel = ((Category) object).getLabel();
-				
-				InformationUnitListItem[] allInfoUnitItems = CategoryUtil.getAllInfoUnitItems((Category) object);
-
-				for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
-					//TODO Log4j verwenden
-					System.out.println(informationUnitListItem.getLabel());	
-					IFile infUnitFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(informationUnitListItem.getWorkspacePath()));
-					InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromUri(
-							infUnitFile.getFullPath(), InfomngmntPackage.eINSTANCE.getInformationUnit(), 
-							false, null, false);
-
-					if (objectFromFile.getType().toString().equals("BOOK")) {
-						System.out.println(BookRepresentation.getXMLExportString(objectFromFile));
-					}
-				}
+			if (object instanceof Category) {				
+				selCategory = (Category) object;
 			}
 		}	
 	}
@@ -78,7 +73,23 @@ public class XmlExportWizard extends Wizard implements IExportWizard {
 	
 	@Override
 	public boolean performFinish() {
+		String destFile = exportPage.getDestinationFile();
+		selCategory = exportPage.getExportElement();
+		XmlExportOperation job = new XmlExportOperation(selCategory, destFile);
 
+		try {
+			if (getContainer() != null) {
+				getContainer().run(true, true, job);
+			} else {
+				IProgressService service = PlatformUI.getWorkbench().getProgressService();
+				service.run(true, true, job);
+			}
+		} catch (InvocationTargetException e) {
+			Status status = new Status(IStatus.ERROR, BibliographicActivator.PLUGIN_ID, e.getMessage(), e);
+			BibliographicActivator.getDefault().getLog().log(status);
+		} catch (InterruptedException e) {
+			// user canceled
+		}
 		
 		exportPage.saveSettings();		
 		return true;

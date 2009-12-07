@@ -145,7 +145,7 @@
       <job
             class="org.remus.infomngmnt.core.sync.SynchronizeItemsJob"
             id="org.remus.infomngmnt.core.syncJob"
-            interval="1"
+            interval="10"
             name="Synchronization of Remote Repositories">
       </job>
    </extension>

@@ -66,7 +66,8 @@ public class SynchronizationManager implements ISynchronizationManager {
 							}
 						});
 						updateJob.schedule();
-
+					} else {
+						SynchronizationManager.this.scheduledElements.remove(category);
 					}
 				}
 			});
@@ -98,6 +99,8 @@ public class SynchronizationManager implements ISynchronizationManager {
 						});
 						updateJob.schedule();
 
+					} else {
+						SynchronizationManager.this.scheduledElements.remove(singleItem);
 					}
 				}
 			});

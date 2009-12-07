@@ -287,8 +287,13 @@ public class EditingUtil {
 		}
 		resource.getContents().add(object);
 		try {
+			// FileOutputStream fos = new FileOutputStream(file);
 			resource.save(SAVE_OPTIONS);
+			// fos.flush();
+			// fos.close();
+			// fos = null;
 		} catch (final IOException e) {
+			e.printStackTrace();
 			// FIXME What to do here?
 		}
 	}
@@ -370,8 +375,7 @@ public class EditingUtil {
 				target.create(inputStream, true, new NullProgressMonitor());
 			}
 			inputStream.close();
-			// target.refreshLocal(IResource.DEPTH_INFINITE, new
-			// NullProgressMonitor());
+			target.refreshLocal(1, new NullProgressMonitor());
 		} catch (final IOException e) {
 			// FIXME Error-Handling
 			e.printStackTrace();

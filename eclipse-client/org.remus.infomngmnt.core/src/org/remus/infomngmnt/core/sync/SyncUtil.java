@@ -12,30 +12,19 @@
 
 package org.remus.infomngmnt.core.sync;
 
-import java.util.Date;
 import java.util.Set;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.Notification;
-import org.remus.infomngmnt.NotificationImportance;
-import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
 
@@ -93,68 +82,6 @@ public class SyncUtil {
 		InformationUnitListItem adapter = (InformationUnitListItem) item
 				.getAdapter(InformationUnitListItem.class);
 		return adapter.getSynchronizationMetaData().getRepositoryId();
-
-	}
-
-	public static Notification synchronizeCategory(final Category eObject,
-			final IProgressMonitor monitor) throws CoreException {
-		ChangeSetManager manager = new ChangeSetManager();
-		Notification returnValue = InfomngmntFactory.eINSTANCE.createNotification();
-		ChangeSet createChangeSet = manager.createChangeSet(eObject, monitor);
-		if (createChangeSet != null && createChangeSet.getChangeSetItems().size() > 0) {
-			ChangeSetItem changeSetItem = createChangeSet.getChangeSetItems().get(0);
-			DiffModel createDiffModel = manager.createDiffModel(changeSetItem, eObject);
-			manager.prepareSyncActions(createDiffModel.getOwnedElements(), changeSetItem, eObject);
-			manager.updateFromRemote(changeSetItem);
-			ChangeSetExecutor executor = new ChangeSetExecutor();
-			executor.synchronize(createDiffModel.getOwnedElements(), changeSetItem, monitor,
-					eObject);
-			Set<SynchronizableObject> keySet = changeSetItem.getSyncObjectActionMap().keySet();
-			for (SynchronizableObject synchronizableObject : keySet) {
-				Notification notification = InfomngmntFactory.eINSTANCE.createNotification();
-				InformationUnitListItem item = (InformationUnitListItem) synchronizableObject;
-				IInfoType infoType = InformationExtensionManager.getInstance().getInfoTypeByType(
-						item.getType());
-				if (infoType != null) {
-					notification.setImage(infoType.getImage());
-				}
-				notification.setTimeStamp(new Date());
-				SynchronizationAction synchronizationAction = changeSetItem
-						.getSyncObjectActionMap().get(synchronizableObject);
-				switch (synchronizationAction) {
-				case ADD_LOCAL:
-					notification.setMessage(NLS.bind("NEW: \"{0}\"", item.getLabel()));
-					notification.getAffectedInfoUnitIds().add(item.getId());
-					break;
-				case REPLACE_LOCAL:
-					notification.setMessage(NLS.bind("UPDATED: \"{0}\"", item.getLabel()));
-					notification.getAffectedInfoUnitIds().add(item.getId());
-					break;
-				case DELETE_LOCAL:
-					notification.setMessage(NLS.bind("DELETED: \"{0}\"", item.getLabel()));
-					break;
-				case REPLACE_REMOTE:
-					notification.setMessage(NLS.bind("REMOTE UPDATED: \"{0}\"", item.getLabel()));
-					notification.getAffectedInfoUnitIds().add(item.getId());
-					break;
-				case ADD_REMOTE:
-					notification.setMessage(NLS.bind("REMOTE NEW: \"{0}\"", item.getLabel()));
-					notification.getAffectedInfoUnitIds().add(item.getId());
-					break;
-				case DELETE_REMOTE:
-					notification.setMessage(NLS.bind("REMOTE DELETED: \"{0}\"", item.getLabel()));
-					break;
-				default:
-					break;
-				}
-				notification.setImportance(NotificationImportance.MEDIUM);
-				// notification.setSource(synchronizableObject.getSynchronizationMetaData()
-				// .getRepositoryId());
-				notification.setSeverity(Severity.OK);
-				returnValue.getChildren().add(notification);
-			}
-		}
-		return returnValue;
 
 	}
 

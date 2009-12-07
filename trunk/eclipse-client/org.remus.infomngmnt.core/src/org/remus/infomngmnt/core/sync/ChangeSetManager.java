@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.emf.compare.diff.metamodel.DiffGroup;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
@@ -36,6 +37,8 @@ import org.eclipse.emf.compare.diff.service.DiffService;
 import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectTypeRelationCondition;
@@ -70,7 +73,6 @@ import org.remus.infomngmnt.core.remote.RemoteUtil;
 import org.remus.infomngmnt.core.services.IRepositoryService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -437,15 +439,15 @@ public class ChangeSetManager {
 			}
 		}
 
-		EditingUtil.getInstance().saveObjectToResource(
-				remoteCopy,
-				InfomngmntEditPlugin.getPlugin().getStateLocation().append(COMPARE_FOLDER).append(
-						IdFactory.createNewId(null)).addFileExtension("xml").toOSString());
+		Resource res1 = new ResourceImpl(URI.createFileURI(InfomngmntEditPlugin.getPlugin()
+				.getStateLocation().append(COMPARE_FOLDER).append(IdFactory.createNewId(null))
+				.addFileExtension("xml").toOSString()));
+		res1.getContents().add(remoteCopy);
 
-		EditingUtil.getInstance().saveObjectToResource(
-				copy,
-				InfomngmntEditPlugin.getPlugin().getStateLocation().append(COMPARE_FOLDER).append(
-						IdFactory.createNewId(null)).addFileExtension("xml").toOSString());
+		Resource res2 = new ResourceImpl(URI.createFileURI(InfomngmntEditPlugin.getPlugin()
+				.getStateLocation().append(COMPARE_FOLDER).append(IdFactory.createNewId(null))
+				.addFileExtension("xml").toOSString()));
+		res2.getContents().add(copy);
 
 		MatchModel match;
 		try {
@@ -455,6 +457,7 @@ public class ChangeSetManager {
 		} catch (Exception e) {
 			throw new ChangeSetException(StatusCreator.newStatus("Error computing difference", e));
 		}
+
 		return returnValue;
 		// Computing differences
 	}

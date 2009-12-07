@@ -65,6 +65,7 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 	@Override
 	protected IProject[] build(final int kind, final Map args, final IProgressMonitor monitor)
 			throws CoreException {
+		System.out.println(kind);
 		switch (kind) {
 		case FULL_BUILD:
 			EList<Category> rootCategories = ApplicationModelPool.getInstance().getModel()

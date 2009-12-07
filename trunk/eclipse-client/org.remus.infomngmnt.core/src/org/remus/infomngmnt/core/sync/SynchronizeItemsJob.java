@@ -12,19 +12,15 @@
 
 package org.remus.infomngmnt.core.sync;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
 import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
-import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -33,9 +29,8 @@ import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.services.INotificationManagerManager;
+import org.remus.infomngmnt.core.services.ISynchronizationManager;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.util.CategoryUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -84,32 +79,8 @@ public class SynchronizeItemsJob extends AbstractJob {
 				.AND(isSyncRootFolderCondition)));
 		Set<? extends EObject> eObjects = select.execute().getEObjects();
 		for (final EObject eObject : eObjects) {
-			// sometimes the category is not complete.
-			final Category category = CategoryUtil.findCategory(CategoryUtil
-					.categoryToString((Category) eObject), false);
-			AbstractSynchronizationJob job = new AbstractSynchronizationJob(NLS.bind(
-					"Refreshing Sync-Item \'\'{0}\'\'", category.getLabel())) {
-				@Override
-				protected List<? extends SynchronizableObject> getAffectedObjects() {
-					return Collections.singletonList(category);
-				}
-
-				@Override
-				protected IStatus run(final IProgressMonitor monitor) {
-					try {
-						Notification synchronizeCategory = SyncUtil.synchronizeCategory(category,
-								monitor);
-						InfomngmntEditPlugin.getPlugin().getService(
-								INotificationManagerManager.class).addNotification(
-								synchronizeCategory.getChildren());
-					} catch (Exception e) {
-						// we do nothing
-					}
-					return Status.OK_STATUS;
-				}
-			};
-			job.doPrepare();
-			job.schedule();
+			InfomngmntEditPlugin.getPlugin().getService(ISynchronizationManager.class)
+					.scheduleSynchronization((Category) eObject);
 		}
 		return returnValue.getChildren();
 	}

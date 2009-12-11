@@ -32,6 +32,63 @@ public class BookRepresentation extends BibliographicRepresentation {
 		transformationFile = "template/book.flt";
 	}
 	
+	public static String getBibtexExportString(InformationUnit iu) {
+		String tstr, retString = "";
+		InformationStructureRead read = InformationStructureRead.newSession(iu);
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_BIBTEXKEY);
+		if (tstr != null) 
+			retString = retString.concat("@BOOK{" + tstr + ",\n");
+		else
+			retString = retString.concat("@BOOK{,\n");
+
+		tstr = (String) iu.getLabel();
+		if (tstr != null) retString = retString.concat("  title = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_AUTHOR);
+		if (tstr != null) retString = retString.concat("  author = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_PUBLISHER);
+		if (tstr != null) retString = retString.concat("  publisher = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_YEAR);
+		if (tstr != null) retString = retString.concat("  year = {" + tstr + "},\n");
+		
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_VOLUME);
+		if (tstr != null) retString = retString.concat("  volume = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_SERIES);
+		if (tstr != null) retString = retString.concat("  series = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_ADDRESS);
+		if (tstr != null) retString = retString.concat("  address = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_EDITION);
+		if (tstr != null) retString = retString.concat("  edition = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_MONTH);
+		if (tstr != null) retString = retString.concat("  month = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_NOTE);
+		if (tstr != null) retString = retString.concat("  note = {" + tstr + "},\n");
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_PAGES);
+		if (tstr != null) retString = retString.concat("  pages = {" + tstr + "},\n");
+		
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT);
+		if (tstr != null) retString = retString.concat("  abstract = {" + tstr + "},\n");
+		
+		tstr = (String) iu.getKeywords();
+		if (tstr != null) retString = retString.concat("  keywords = {" + tstr + "},\n");
+		tstr = (String) iu.getDescription();
+		if (tstr != null) retString = retString.concat("  description = {" + tstr + "},\n");
+		
+		tstr = (String) read.getValueByNodeId(BibliographicActivator.NODE_NAME_URL);
+		if (tstr != null) retString = retString.concat("  url = {" + tstr + "},\n");	
+		List<BinaryReference> binaryReferences = read.getBinaryReferences(iu.getType(), true);
+		EList<InformationUnit> fileLabels = read.getDynamicList(BibliographicActivator.NODE_NAME_FILES); 
+		for (int i = 0; i < binaryReferences.size(); i++) {
+			String projectRelativePath = binaryReferences.get(i).getProjectRelativePath();
+			tstr = (String) fileLabels.get(i).getChildValues().get(0).getStringValue();
+			String ext = tstr.substring(tstr.lastIndexOf(".") + 1);
+			if ((tstr != null) && (ext != null)) retString = retString.concat("  file = {" + tstr + ":"
+                    						+ projectRelativePath + ":" + ext + "}\n");
+		}
+
+		retString = retString.concat("}\n\n");
+		return retString;	
+	}
+	
 	public static String getXMLExportString(InformationUnit iu) {
 		String tstr, retString = "";
 		InformationStructureRead read = InformationStructureRead.newSession(iu);

@@ -93,6 +93,15 @@
             This wizard exports the bibliographic entries to a XML file.
          </description>
       </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.exportCategory"
+            class="org.remus.infomngmnt.bibliographic.ui.BibtexExportWizard"
+            id="org.remus.infomngmnt.bibliographic.bibtexExportWizard"
+            name="BibTex file">
+         <description>
+            This wizard exports the bibliographic entries to a bibtex file.
+         </description>
+      </wizard>
    </extension>
 
 </plugin>

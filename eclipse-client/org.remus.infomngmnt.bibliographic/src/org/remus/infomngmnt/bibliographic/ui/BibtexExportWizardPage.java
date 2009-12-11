@@ -40,9 +40,9 @@ import org.remus.infomngmnt.util.CategoryUtil;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
-public class XmlExportWizardPage extends WizardPage {
-	
-	private static final String PAGE_ID = "org.remus.infomngmnt.bibliographic.ui.xmlexportPage"; //$NON-NLS-1$
+public class BibtexExportWizardPage extends WizardPage {
+
+	private static final String PAGE_ID = "org.remus.infomngmnt.bibliographic.ui.bibtexExportPage"; //$NON-NLS-1$
 
 	Category selectedCategory = null;
 	
@@ -56,10 +56,10 @@ public class XmlExportWizardPage extends WizardPage {
 	private final static String SETTINGS_SAVED = "Settings saved"; //$NON-NLS-1$
 	private final static String DEST_FILE_SETTING = "Destination file setting"; //$NON-NLS-1$
 	
-	public XmlExportWizardPage() {
+	public BibtexExportWizardPage() {
 		super(PAGE_ID);
 		setPageComplete(false);
-		setTitle("BibTeXML export wizard");
+		setTitle("BibTex export wizard");
 	}
 	
 	public void createControl(Composite parent) {
@@ -149,14 +149,14 @@ public class XmlExportWizardPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
 				dialog.setText("Select file for export");
-				String[] extensions = {"*.xml"};
+				String[] extensions = {"*.bib"};
 				dialog.setFilterExtensions(extensions);
 				final String open = dialog.open();
 				if (open == null || open.equals("")) {
 					return;
 				}
-				if (!open.contains(".xml"))
-					destDirText.setText(open + ".xml");
+				if (!open.contains(".bib"))
+					destDirText.setText(open + ".bib");
 				else
 					destDirText.setText(open);
 				controlChanged();

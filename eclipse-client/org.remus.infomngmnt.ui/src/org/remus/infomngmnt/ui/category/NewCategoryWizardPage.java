@@ -32,7 +32,9 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.util.CategoryUtil;
 import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
@@ -62,8 +64,8 @@ public class NewCategoryWizardPage extends WizardPage {
 	public NewCategoryWizardPage(final Category selection) {
 		super("wizardPage");
 		this.selection = selection;
-		setTitle("Wizard Page title");
-		setDescription("Wizard Page description");
+		setTitle("Create a new category");
+		setDescription("This wizard enables you to create a new category");
 	}
 
 	/**
@@ -76,6 +78,8 @@ public class NewCategoryWizardPage extends WizardPage {
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
 		container.setLayout(gridLayout);
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
+				"icons/iconexperience/wizards/new_category_wizard.png"));
 		//
 
 		final Label parentCategoryLabel = new Label(container, SWT.NONE);

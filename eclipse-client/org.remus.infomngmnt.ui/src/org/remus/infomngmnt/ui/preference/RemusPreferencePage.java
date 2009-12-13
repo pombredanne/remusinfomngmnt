@@ -23,10 +23,9 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class InformationTypesPreferencePage extends PreferencePage implements
-		IWorkbenchPreferencePage {
+public class RemusPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
-	public InformationTypesPreferencePage() {
+	public RemusPreferencePage() {
 		noDefaultAndApplyButton();
 	}
 
@@ -38,7 +37,7 @@ public class InformationTypesPreferencePage extends PreferencePage implements
 		layout.marginWidth = 0;
 		comp.setLayout(layout);
 		Label descLabel = new Label(comp, 0);
-		descLabel.setText("Expand the tree for editing Information type preferences.");
+		descLabel.setText("Expand the tree for editing Remus preferences.");
 		return comp;
 	}
 

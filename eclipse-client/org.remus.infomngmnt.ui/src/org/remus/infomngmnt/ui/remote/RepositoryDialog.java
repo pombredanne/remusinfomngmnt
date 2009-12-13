@@ -10,16 +10,12 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
@@ -51,27 +47,14 @@ public class RepositoryDialog extends TitleAreaDialog {
 	protected Control createDialogArea(final Composite parent) {
 		Composite area = (Composite) super.createDialogArea(parent);
 
-		final SashForm sashForm = new SashForm(area, SWT.VERTICAL);
-		final GridData gd_sashForm = new GridData(SWT.FILL, SWT.FILL, true, true);
-
-		sashForm.setLayoutData(gd_sashForm);
-
-		final Group availableRepositoryconnectorsGroup = new Group(sashForm, SWT.NONE);
-		availableRepositoryconnectorsGroup.setText("Available Repository-connectors");
-		availableRepositoryconnectorsGroup.setLayout(new GridLayout());
-
-		final TableViewer tableViewer = new TableViewer(availableRepositoryconnectorsGroup,
-				SWT.BORDER);
+		Composite composite = new Composite(area, SWT.NONE);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		composite.setLayout(new GridLayout());
+		final TableViewer tableViewer = new TableViewer(composite, SWT.BORDER);
 		this.table = tableViewer.getTable();
-		this.table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		this.table.setLayoutData(layoutData);
 
-		final Group descriptionGroup = new Group(sashForm, SWT.NONE);
-		descriptionGroup.setText("Description");
-		descriptionGroup.setLayout(new FillLayout());
-
-		final Label label = new Label(descriptionGroup, SWT.NONE);
-		label.setText("Label");
-		sashForm.setWeights(new int[] { 3, 1 });
 		setTitle("Repository connectors");
 		setMessage("Choose a connector to connect with");
 
@@ -100,6 +83,7 @@ public class RepositoryDialog extends TitleAreaDialog {
 				if (!event.getSelection().isEmpty()) {
 					RepositoryDialog.this.selectedObject = (IRepositoryUI) ((IStructuredSelection) event
 							.getSelection()).getFirstElement();
+
 				}
 
 			}

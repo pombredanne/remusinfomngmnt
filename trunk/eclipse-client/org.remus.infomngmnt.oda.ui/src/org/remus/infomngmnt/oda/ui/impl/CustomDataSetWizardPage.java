@@ -75,7 +75,7 @@ import org.remus.oda.OdaFactory;
  */
 public class CustomDataSetWizardPage extends DataSetWizardPage {
 
-	private static String DEFAULT_MESSAGE = "Define the query text for the data set123";
+	private static String DEFAULT_MESSAGE = "Select the nodes from the information structure.";
 
 	private Table table;
 

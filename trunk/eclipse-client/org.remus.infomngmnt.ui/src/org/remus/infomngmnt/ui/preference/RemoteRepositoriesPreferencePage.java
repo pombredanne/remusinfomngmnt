@@ -13,9 +13,10 @@
 package org.remus.infomngmnt.ui.preference;
 
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -25,45 +26,23 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class RemoteRepositoriesPreferencePage extends PreferencePage implements
 		IWorkbenchPreferencePage {
 
-	/**
-	 * 
-	 */
 	public RemoteRepositoriesPreferencePage() {
-		// TODO Auto-generated constructor stub
+		noDefaultAndApplyButton();
 	}
 
-	/**
-	 * @param title
-	 */
-	public RemoteRepositoriesPreferencePage(String title) {
-		super(title);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param title
-	 * @param image
-	 */
-	public RemoteRepositoriesPreferencePage(String title, ImageDescriptor image) {
-		super(title, image);
-		// TODO Auto-generated constructor stub
-	}
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
-	protected Control createContents(Composite parent) {
-		// TODO Auto-generated method stub
-		return null;
+	protected Control createContents(final Composite parent) {
+		Composite comp = new Composite(parent, 0);
+		GridLayout layout = new GridLayout();
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		comp.setLayout(layout);
+		Label descLabel = new Label(comp, 0);
+		descLabel.setText("Expand the tree for editing Repository preferences.");
+		return comp;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-	 */
-	public void init(IWorkbench workbench) {
-		// TODO Auto-generated method stub
-
+	public void init(final IWorkbench iworkbench) {
 	}
 
 }

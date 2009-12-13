@@ -150,21 +150,25 @@
             name="Rules">
       </page>
       <page
+            category="org.remus.infomngmnt.ui.main"
             class="org.remus.infomngmnt.ui.tray.DesktopPanelPreferencePage"
             id="org.remus.infomngmnt.ui.desktop"
             name="Desktop Integration">
       </page>
       <page
+            category="org.remus.infomngmnt.ui.main"
             class="org.remus.infomngmnt.ui.preference.RemoteRepositoriesPreferencePage"
             id="org.remus.infomngmnt.ui.repositories"
             name="Remote Repositories">
       </page>
       <page
+            category="org.remus.infomngmnt.ui.main"
             class="org.remus.infomngmnt.ui.preference.InformationTypesPreferencePage"
             id="org.remus.infomngmnt.ui.infotypes"
             name="Information Types">
       </page>
       <page
+            category="org.remus.infomngmnt.ui.main"
             class="org.remus.infomngmnt.ui.preference.UIPreferencePage"
             id="org.remus.infomngmnt.ui.userinterface"
             name="User Interface">
@@ -174,6 +178,11 @@
             class="org.remus.infomngmnt.ui.preference.DesktopPanelAppearancePreferencePage"
             id="org.remus.infomngmnt.ui.desktoppanel"
             name="Desktop-Panel">
+      </page>
+      <page
+            class="org.remus.infomngmnt.ui.preference.RemusPreferencePage"
+            id="org.remus.infomngmnt.ui.main"
+            name="Remus">
       </page>
    </extension>
    <extension

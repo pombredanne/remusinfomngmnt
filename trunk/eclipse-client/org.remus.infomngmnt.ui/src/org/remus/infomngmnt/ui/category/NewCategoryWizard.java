@@ -41,7 +41,7 @@ public class NewCategoryWizard extends Wizard implements INewWizard {
 	 * 
 	 */
 	public NewCategoryWizard() {
-		// TODO Auto-generated constructor stub
+		setWindowTitle("New category");
 	}
 
 	@Override

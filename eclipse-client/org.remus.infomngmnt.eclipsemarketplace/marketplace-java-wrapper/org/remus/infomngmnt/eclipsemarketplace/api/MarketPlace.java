@@ -40,6 +40,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -290,9 +291,8 @@ public class MarketPlace {
 				bufferedReader.close();
 			}
 			post.releaseConnection();
-			String cleanUp = marketPlaceHack(result);
-			Document document = this.documentBuilder.parse(new InputSource(
-					new StringReader(cleanUp)));
+			Document document = this.documentBuilder.parse(new InputSource(new StringReader(result
+					.toString())));
 			checkResult(document);
 
 			NodeList childNodes = document.getChildNodes();
@@ -304,7 +304,12 @@ public class MarketPlace {
 						Node marketNode = marketNodes.item(j);
 						String firstChild = null;
 						if (marketNode.getFirstChild() != null) {
-							firstChild = marketNode.getFirstChild().getTextContent();
+							if (marketNode.getFirstChild() instanceof CDATASection) {
+								firstChild = marketNode.getFirstChild().getFirstChild()
+										.getTextContent();
+							} else {
+								firstChild = marketNode.getFirstChild().getTextContent();
+							}
 						}
 						if (firstChild != null) {
 							if (Constants.ID_ATTRIBUTE.equals(marketNode.getNodeName())) {
@@ -398,6 +403,12 @@ public class MarketPlace {
 		return returnValue;
 	}
 
+	/**
+	 * Was necessary due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=297838
+	 * 
+	 * @param result
+	 * @return
+	 */
 	private String marketPlaceHack(final StringWriter result) {
 		String returnValue = result.toString();
 		returnValue = escapeTag("eclipseversion", returnValue);

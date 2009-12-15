@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipsemarketplace
+Bundle-SymbolicName: org.remus.infomngmnt.eclipsemarketplace;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.eclipsemarketplace.MarketPlaceActivator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.apache.commons.httpclient,
+ org.apache.commons.codec,
+ org.remus.infomngmnt.core,
+ org.apache.commons.lang,
+ org.remus.infomngmnt.jslib;bundle-version="1.0.0",
+ org.remus.infomngmnt.ui,
+ org.eclipse.ui.forms;bundle-version="3.4.1",
+ org.remus.infomngmnt.common.ui;bundle-version="1.0.0",
+ org.eclipse.ecf;bundle-version="3.0.0",
+ org.eclipse.ecf.filetransfer;bundle-version="3.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Import-Package: org.apache.commons.logging

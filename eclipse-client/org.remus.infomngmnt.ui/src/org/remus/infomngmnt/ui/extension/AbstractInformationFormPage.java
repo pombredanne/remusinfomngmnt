@@ -126,7 +126,7 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 			semanticsSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
 					TableWrapData.TOP));
 		} else {
-			final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
+			final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			semanticsSection.setLayoutData(gd_semanticsSection);
 		}
 		semanticsSection.setText("Semantics");

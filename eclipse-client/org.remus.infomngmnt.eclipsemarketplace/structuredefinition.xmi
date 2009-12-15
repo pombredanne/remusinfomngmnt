@@ -15,4 +15,6 @@
   <structureItems type="STRING" id="updateurl" createAlways="true"/>
   <structureItems type="STRING" id="license" createAlways="true"/>
   <structureItems type="STRING" label="Description of the entry" id="description" createAlways="true"/>
+  <structureItems type="STRING" id="imageUrl" createAlways="true"/>
+  <structureItems type="LONG" label="" id="internalId" createAlways="true"/>
 </infomngmnt:InformationStructureDefinition>

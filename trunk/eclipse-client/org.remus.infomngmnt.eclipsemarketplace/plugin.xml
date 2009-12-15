@@ -77,6 +77,12 @@
             <changeObjectIdValue
                   path="description">
             </changeObjectIdValue>
+            <changeObjectIdValue
+                  path="internalId">
+            </changeObjectIdValue>
+            <changeObjectIdValue
+                  path="imageUrl">
+            </changeObjectIdValue>
          </changeDefinition>
       </repository-connector>
    </extension>

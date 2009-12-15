@@ -28,6 +28,8 @@ public class MarketPlaceActivator extends AbstractUIPlugin {
 	public static final String SUPPORTURL_NODE_ID = "supporturl"; //$NON-NLS-1$
 	public static final String UPDATEUR_NODE_ID = "updateurl"; //$NON-NLS-1$
 	public static final String DESCRIPTION_NODE_ID = "description"; //$NON-NLS-1$
+	public static final String IMAGEURL_NODE_ID = "imageUrl"; //$NON-NLS-1$
+	public static final String INTERNAL_ID_NODE_ID = "internalId"; //$NON-NLS-1$
 
 	// The shared instance
 	private static MarketPlaceActivator plugin;

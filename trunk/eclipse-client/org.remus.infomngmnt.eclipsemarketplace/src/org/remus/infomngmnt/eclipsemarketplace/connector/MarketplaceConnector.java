@@ -37,6 +37,7 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.ILoginCallBack;
 import org.remus.infomngmnt.core.remote.IRepository;
@@ -239,6 +240,10 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 							.getUrl());
 			edit.setValue(returnValue, MarketPlaceActivator.LICENSE_NODE_ID, wrappedObject
 					.getLicense());
+			edit.setValue(returnValue, MarketPlaceActivator.IMAGEURL_NODE_ID, wrappedObject
+					.getImage());
+			edit.setValue(returnValue, MarketPlaceActivator.INTERNAL_ID_NODE_ID, wrappedObject
+					.getId());
 			return returnValue;
 
 		}
@@ -250,32 +255,31 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
 			throws RemoteException {
 		if (MarketPlaceActivator.TYPE_ID.equals(localInfoFragment.getType())) {
-			RemoteObject remote = getRemoteObjectBySynchronizableObject(syncObject, monitor);
-			if (remote != null && remote.getWrappedObject() instanceof MarketPlaceElement) {
-				String imageUrl = ((MarketPlaceElement) remote.getWrappedObject()).getImage();
-				IFile tmpFile;
-				if (imageUrl != null) {
-					String fileExtension = new Path(imageUrl).getFileExtension();
-					if (fileExtension == null || fileExtension.indexOf('?') != -1) {
-						fileExtension = "";
-						tmpFile = ResourceUtil.createTempFile();
-					} else {
-						tmpFile = ResourceUtil.createTempFile(fileExtension);
-					}
-
-					try {
-						DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(imageUrl),
-								tmpFile, getFileReceiveAdapter());
-						IStatus run = downloadFileJob.run(monitor);
-						if (run.isOK()) {
-							return tmpFile;
-						}
-					} catch (MalformedURLException e) {
-						// do nothing.
-					}
-
+			InformationStructureRead read = InformationStructureRead.newSession(localInfoFragment);
+			String imageUrl = (String) read.getValueByNodeId(MarketPlaceActivator.IMAGEURL_NODE_ID);
+			IFile tmpFile;
+			if (imageUrl != null) {
+				String fileExtension = new Path(imageUrl).getFileExtension();
+				if (fileExtension == null || fileExtension.indexOf('?') != -1) {
+					fileExtension = "";
+					tmpFile = ResourceUtil.createTempFile();
+				} else {
+					tmpFile = ResourceUtil.createTempFile(fileExtension);
 				}
+
+				try {
+					DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(imageUrl),
+							tmpFile, getFileReceiveAdapter());
+					IStatus run = downloadFileJob.run(monitor);
+					if (run.isOK()) {
+						return tmpFile;
+					}
+				} catch (MalformedURLException e) {
+					// do nothing.
+				}
+
 			}
+
 		}
 		return super.getBinaryReferences(syncObject, localInfoFragment, monitor);
 	}

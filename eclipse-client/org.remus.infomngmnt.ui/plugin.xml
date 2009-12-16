@@ -55,10 +55,11 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
+            category="org.remus.infomngmnt.ui.viewcategory"
             class="org.remus.infomngmnt.ui.views.MainViewPart"
             icon="icons/iconexperience/16/document.png"
             id="org.remus.infomngmnt.ui.main"
-            name="Main"
+            name="Navigation"
             restorable="true">
       </view>
       <view
@@ -67,6 +68,10 @@
             name="Notifications"
             restorable="true">
       </view>
+      <category
+            id="org.remus.infomngmnt.ui.viewcategory"
+            name="Remus">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

@@ -30,6 +30,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
+            category="org.remus.infomngmnt.ui.viewcategory"
             class="org.remus.infomngmnt.search.ui.view.SearchView"
             icon="icons/iconexperience/flashlight.png"
             id="org.remus.infomngmnt.search.ui.view.SearchView"
@@ -37,6 +38,7 @@
             restorable="true">
       </view>
       <view
+            category="org.remus.infomngmnt.ui.viewcategory"
             class="org.remus.infomngmnt.search.ui.view.SearchHistoryView"
             icon="icons/iconexperience/history.png"
             id="org.remus.infomngmnt.search.ui.view.SearchHistoryView"

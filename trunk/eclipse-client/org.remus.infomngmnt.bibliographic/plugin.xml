@@ -7,8 +7,8 @@
             excludeFromIndex="false"
             icon="icons/iconexperience/book_blue.png"
             name="Book"
-            presentation="org.remus.infomngmnt.bibliographic.extension.BookRepresentation"
-            structuredefinition="structuredefinition/book.xmi"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="BOOK">
          <validTransfers
                transferId="org.remus.infomngmnt.core.filetransfer">
@@ -24,9 +24,213 @@
             excludeFromIndex="false"
             icon="icons/iconexperience/newspaper.png"
             name="Article"
-            presentation="org.remus.infomngmnt.bibliographic.extension.ArticleRepresentation"
-            structuredefinition="structuredefinition/article.xmi"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="ARTICLE">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/booklet_blue.png"
+            name="Booklet"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="BOOKLET">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/conference.png"
+            name="Conference"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="CONFERENCE">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/inbook.png"
+            name="Inbook"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="INBOOK">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/inbook.png"
+            name="Incollection"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="INCOLLECTION">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/conference.png"
+            name="Inproceedings"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="INPROCEEDINGS">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/manual.png"
+            name="Manual"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="MANUAL">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/thesis.png"
+            name="Mastersthesis"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="MASTERSTHESIS">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/misc.png"
+            name="Misc"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="MISC">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/thesis.png"
+            name="Phdthesis"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="PHDTHESIS">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/conference.png"
+            name="Proceedings"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="PROCEEDINGS">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/techreport.png"
+            name="Techreport"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="TECHREPORT">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.htmltransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.texttransfer">
+         </validTransfers>
+      </information>
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/unpublished.png"
+            name="Unpublished"
+            presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
+            structuredefinition="structuredefinition/bibliographicUnit.xmi"
+            type="UNPUBLISHED">
          <validTransfers
                transferId="org.remus.infomngmnt.core.filetransfer">
          </validTransfers>
@@ -60,22 +264,202 @@
             id="org.remus.infomngmnt.bibliographic.newArticleWizard"
             name="Article">
       </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewBookletWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/booklet_blue_new.png"
+            id="org.remus.infomngmnt.bibliographic.newBookletWizard"
+            name="Booklet">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewConferenceWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/conference_new.png"
+            id="org.remus.infomngmnt.bibliographic.newConferenceWizard"
+            name="Conference">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewInbookWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/inbook_new.png"
+            id="org.remus.infomngmnt.bibliographic.newInbookWizard"
+            name="Inbook">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewIncollectionWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/inbook_new.png"
+            id="org.remus.infomngmnt.bibliographic.newIncollectionWizard"
+            name="Incollection">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewInproceedingsWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/conference_new.png"
+            id="org.remus.infomngmnt.bibliographic.newInproceedingsWizard"
+            name="Inproceedings">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewManualWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/manual_new.png"
+            id="org.remus.infomngmnt.bibliographic.newManualWizard"
+            name="Manual">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewMastersthesisWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/thesis_new.png"
+            id="org.remus.infomngmnt.bibliographic.newMastersthesisWizard"
+            name="Mastersthesis">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewMiscWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/misc_new.png"
+            id="org.remus.infomngmnt.bibliographic.newMiscWizard"
+            name="Misc">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewPhdthesisWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/thesis_new.png"
+            id="org.remus.infomngmnt.bibliographic.newPhdthesisWizard"
+            name="Phdthesis">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewProceedingsWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/conference_new.png"
+            id="org.remus.infomngmnt.bibliographic.newProceedingsWizard"
+            name="Proceedings">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewTechreportWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/techreport_new.png"
+            id="org.remus.infomngmnt.bibliographic.newTechreportWizard"
+            name="Techreport">
+      </wizard>
+      <wizard
+            category="org.remus.infomngmnt.bibliographic.category"
+            class="org.remus.infomngmnt.bibliographic.ui.NewUnpublishedWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/unpublished_new.png"
+            id="org.remus.infomngmnt.bibliographic.newUnpublishedWizard"
+            name="Unpublished">
+      </wizard>
    </extension>
    <extension
          point="org.remus.infomngmnt.ui.informationUi">
       <editPage
-            editpage="org.remus.infomngmnt.bibliographic.ui.BookEditPage"
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditBookPage"
             icon="icons/iconexperience/book_blue_edit.png"
             id="org.remus.infomngmnt.bibliographic.ui.editBookPage"
             label="Edit Book"
             type="BOOK">
       </editPage>
       <editPage
-            editpage="org.remus.infomngmnt.bibliographic.ui.ArticleEditPage"
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditArticlePage"
             icon="icons/iconexperience/newspaper_edit.png"
             id="org.remus.infomngmnt.bibliographic.ui.editArticlePage"
             label="Edit Article"
             type="ARTICLE">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditBookletPage"
+            icon="icons/iconexperience/booklet_blue_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editBookletPage"
+            label="Edit Booklet"
+            type="BOOKLET">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditConferencePage"
+            icon="icons/iconexperience/conference_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editConferencePage"
+            label="Edit Conference"
+            type="CONFERENCE">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditInbookPage"
+            icon="icons/iconexperience/inbook_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editInbookPage"
+            label="Edit Inbook"
+            type="INBOOK">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditIncollectionPage"
+            icon="icons/iconexperience/inbook_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editIncollectionPage"
+            label="Edit Incollection"
+            type="INCOLLECTION">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditInproceedingsPage"
+            icon="icons/iconexperience/conference_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editInproceedingsPage"
+            label="Edit Inproceedings"
+            type="INPROCEEDINGS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditManualPage"
+            icon="icons/iconexperience/manual_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editManualPage"
+            label="Edit Manual"
+            type="MANUAL">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditMastersthesisPage"
+            icon="icons/iconexperience/thesis_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editMastersthesisPage"
+            label="Edit Mastersthesis"
+            type="MASTERSTHESIS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditMiscPage"
+            icon="icons/iconexperience/misc_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editMiscPage"
+            label="Edit Misc"
+            type="MISC">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditPhdthesisPage"
+            icon="icons/iconexperience/thesis_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editPhdthesisPage"
+            label="Edit Phdthesis"
+            type="PHDTHESIS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditProceedingsPage"
+            icon="icons/iconexperience/conference_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editProceedingsPage"
+            label="Edit Proceedings"
+            type="PROCEEDINGS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditTechreportPage"
+            icon="icons/iconexperience/techreport_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editTechreportPage"
+            label="Edit Techreport"
+            type="TECHREPORT">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditUnpublishedPage"
+            icon="icons/iconexperience/unpublished_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editUnpublishedPage"
+            label="Edit Unpublished"
+            type="UNPUBLISHED">
       </editPage>
    </extension>
    <extension

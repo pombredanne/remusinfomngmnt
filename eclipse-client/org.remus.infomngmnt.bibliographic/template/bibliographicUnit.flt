@@ -43,11 +43,35 @@
 			<tr>			
 				<td class="bold">Title:</td>
 				<td class="bold" colspan="2">${data.__label?html}</td>
-			</tr>			
+			</tr>
+			<#if data.bibtexkey?has_content >
+			<tr>
+				<td class="bold">Bibtexkey:</td>
+				<td>${data.bibtexkey?html}</td>
+			</tr>
+			</#if>			
 			<#if data.author?has_content >
 			<tr>
 				<td class="bold">Author:</td>
 				<td>${data.author?html}</td>
+			</tr>
+			</#if>
+			<#if data.journal?has_content >
+			<tr>
+				<td class="bold">Journal:</td>
+				<td>${data.journal?html}</td>
+			</tr>
+			</#if>
+			<#if data.booktitle?has_content >
+			<tr>
+				<td class="bold">Booktitle:</td>
+				<td>${data.booktitle?html}</td>
+			</tr>
+			</#if>
+			<#if data.chapter?has_content >
+			<tr>
+				<td class="bold">Chapter:</td>
+				<td>${data.chapter?html}</td>
 			</tr>
 			</#if>
 			<#if data.publisher?has_content >
@@ -62,14 +86,23 @@
 				<td>${data.year?html}</td>
 			</tr>
 			</#if>
-			<#if data.bibtexkey?has_content >
+			<#if data.school?has_content >
 			<tr>
-				<td class="bold">Bibtexkey:</td>
-				<td>${data.bibtexkey?html}</td>
+				<td class="bold">School:</td>
+				<td>${data.school?html}</td>
+			</tr>
+			</#if>
+			<#if data.institution?has_content >
+			<tr>
+				<td class="bold">Institution:</td>
+				<td>${data.institution?html}</td>
 			</tr>
 			</#if>
 			
+			
 			<tr></tr>
+			
+			
 			<#if data.volume?has_content >
 			<tr>
 				<td class="bold">Volume:</td>
@@ -94,6 +127,12 @@
 				<td>${data.edition?html}</td>
 			</tr>
 			</#if>
+			<#if data.editor?has_content >
+			<tr>
+				<td class="bold">Editor:</td>
+				<td>${data.editor?html}</td>
+			</tr>
+			</#if>
 			<#if data.month?has_content >
 			<tr>
 				<td class="bold">Month:</td>
@@ -106,19 +145,91 @@
 				<td>${data.pages?html}</td>
 			</tr>
 			</#if>
+			<#if data.number?has_content >
+			<tr>
+				<td class="bold">Number:</td>
+				<td>${data.number?html}</td>
+			</tr>
+			</#if>
 			<#if data.note?has_content >
 			<tr>
 				<td class="bold">Note:</td>
 				<td>${data.note?html}</td>
 			</tr>
 			</#if>
-			
+			<#if data.organization?has_content >
+			<tr>
+				<td class="bold">Organization:</td>
+				<td>${data.organization?html}</td>
+			</tr>
+			</#if>
+			<#if data.howpublished?has_content >
+			<tr>
+				<td class="bold">Howpublished:</td>
+				<td>${data.howpublished?html}</td>
+			</tr>
+			</#if>
+			<#if data.eprint?has_content >
+			<tr>
+				<td class="bold">Eprint:</td>
+				<td>${data.eprint?html}</td>
+			</tr>
+			</#if>
+			<#if data.annote?has_content >
+			<tr>
+				<td class="bold">Annotation:</td>
+				<td>${data.annote?html}</td>
+			</tr>
+			</#if>
+			<#if data.type?has_content >
+			<tr>
+				<td class="bold">Type:</td>
+				<td>${data.type?html}</td>
+			</tr>
+			</#if>
+			<#if data.annote?has_content >
+			<tr>
+				<td class="bold">Annotation:</td>
+				<td>${data.annote?html}</td>
+			</tr>
+			</#if>
+			<#if data.isbn?has_content >
+			<tr>
+				<td class="bold">ISBN:</td>
+				<td>${data.isbn?html}</td>
+			</tr>
+			</#if>
+			<#if data.issn?has_content >
+			<tr>
+				<td class="bold">ISSN:</td>
+				<td>${data.issn?html}</td>
+			</tr>
+			</#if>
+			<#if data.doi?has_content >
+			<tr>
+				<td class="bold">DOI:</td>
+				<td>${doi.annote?html}</td>
+			</tr>
+			</#if>
+
 
 			<tr></tr>
 			<#if data.abstract?has_content >
 			<tr>
 				<td class="bold">Abstract:</td>
 				<td>${data.abstract?html}</td>
+			</tr>
+			</#if>
+			<#if data.contents?has_content >
+			<tr>
+				<td class="bold">Contents:</td>
+				<td>${data.contents?html}</td>
+			</tr>
+			</#if>
+			<#if data.summary?has_content >
+			<tr>
+				<td class="bold">Summary:</td>
+				<td>${data.summary?html}</td>
 			</tr>
 			</#if>
 						

@@ -12,8 +12,11 @@
 package org.remus.infomngmnt.bibliographic.ui;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -56,8 +59,10 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.remus.infomngmnt.BinaryReference;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
+import org.remus.infomngmnt.bibliographic.Messages;
 import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
@@ -69,12 +74,18 @@ import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
-public abstract class BibliographicAbstractInformationFormPage extends
-		AbstractInformationFormPage {
+public abstract class BibliographicAbstractInformationFormPage extends AbstractInformationFormPage {
 	
 	protected InformationStructureRead read;
 	
 	protected String baseTypeId;	// Information Id of Subtype: book, article, ... - set in constructor of subtypte
+	
+	private Text title;
+	private Text bibtexkey;
+	protected ArrayList<String>	requiredFields = null;
+	protected Map<String, Text> requiredEditFields = null;
+	protected ArrayList<String>	optionalFields = null;
+	protected Map<String, Text> optionalEditFields = null;
 	
 	private Text abstractText;
 	private Text url;
@@ -101,7 +112,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 				String projectRelativePath = binaryReferences.get(0).getProjectRelativePath();
 				String fileExtension = new Path(projectRelativePath).getFileExtension();
 				if (fileExtension == null) {
-					fileExtension = "";
+					fileExtension = ""; //$NON-NLS-1$
 				}
 				Program findProgram = Program.findProgram(fileExtension);
 				if (findProgram != null) {
@@ -112,6 +123,53 @@ public abstract class BibliographicAbstractInformationFormPage extends
 			return super.getImage(element);
 		}
 	};
+	
+	
+	@Override
+	protected void renderPage(IManagedForm managedForm) {
+		FormToolkit toolkit = managedForm.getToolkit();
+		ScrolledForm form = managedForm.getForm();
+		Composite body = form.getBody();
+		body.setLayout(new GridLayout());
+		toolkit.paintBordersFor(body);
+		
+		// Required fields section
+		Composite requiredSection = createBibliographicSection(managedForm, Messages.getString("requiredFieldsSection"), true);
+		title = createBibliographicEditField(managedForm, requiredSection, Messages.getString("titleLabel"));
+		if (requiredFields != null) {
+			requiredEditFields = new HashMap<String, Text>();			
+			for (String fieldId : requiredFields) {
+				Text t = createBibliographicEditField(managedForm, requiredSection, Messages.getString(fieldId + "Label") + ":");	//$NON-NLS-1$
+				t.setToolTipText(Messages.getString(fieldId + "Tip"));	//$NON-NLS-1$
+				requiredEditFields.put(fieldId, t);  //$NON-NLS-1$
+			}			
+		}
+		bibtexkey = createBibliographicEditField(managedForm, requiredSection, Messages.getString("bibtexkeyLabel"));
+		
+		// Optional fields section
+		Composite optionalSection = createBibliographicSection(managedForm, Messages.getString("optionalFieldsSection"), false);
+		if (optionalFields != null) {
+			optionalEditFields = new HashMap<String, Text>();
+			for (String fieldId : optionalFields) {
+				Text t = createBibliographicEditField(managedForm, optionalSection, Messages.getString(fieldId + "Label") + ":"); 	//$NON-NLS-1$
+				t.setToolTipText(Messages.getString(fieldId + "Tip"));	//$NON-NLS-1$
+				optionalEditFields.put(fieldId, t);  //$NON-NLS-1$
+			}
+		}
+				
+		// Abstract Section
+		doCreateAbstractSection(body, toolkit, false);
+		
+		// ExternalLinks Section
+		doCreateExtLinksSection(body, toolkit, false);
+		
+		// Semantic Section
+		doCreateSemanticSection(body, toolkit);
+		
+		form.reflow(true);
+
+	}
+	
 	
 	/**
 	 * create section for external links, like URLs or locally stored files
@@ -128,7 +186,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 			final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
 			extLinksSection.setLayoutData(gd_semanticsSection);
 		}
-		extLinksSection.setText("External Links");
+		extLinksSection.setText(Messages.getString("externalLinksSection"));
 		final Composite client = toolkit.createComposite(extLinksSection, SWT.NONE);
 		final GridLayout clientGridLayout = new GridLayout();
 		clientGridLayout.numColumns = 3;
@@ -136,14 +194,14 @@ public abstract class BibliographicAbstractInformationFormPage extends
 		toolkit.paintBordersFor(client);
 		extLinksSection.setClient(client);
 
-		toolkit.createLabel(client, "Url:        ", SWT.NONE);
+		toolkit.createLabel(client, Messages.getString("urlLabel") + ":", SWT.NONE);
 		this.url = toolkit.createText(client, null, SWT.NONE);
 		final GridData gd_urlText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		this.url.setLayoutData(gd_urlText);
 		addControl(this.url);		
-		toolkit.createLabel(client, "", SWT.NONE);
+		toolkit.createLabel(client, "", SWT.NONE); //$NON-NLS-1$
 		
-		toolkit.createLabel(client, "Files:          ", SWT.NONE);
+		toolkit.createLabel(client, Messages.getString("filesLabel") + ":", SWT.NONE);
 		Table createTable = toolkit.createTable(client, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 30).grab(true, false).span(1, 3).applyTo(createTable);
 		this.filesTableViewer = new TableViewer(createTable);	
@@ -151,7 +209,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 		final GridLayout innerGridLayout = new GridLayout();
 		innerGridLayout.numColumns = 1;
 		innerButtonClient.setLayout(innerGridLayout);
-		Button addbutton = toolkit.createButton(innerButtonClient, "Add", SWT.FLAT);
+		Button addbutton = toolkit.createButton(innerButtonClient, Messages.getString("addButtonName"), SWT.FLAT);
 		addbutton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				FileDialog fileDialog = new FileDialog(getSite().getShell(), SWT.OPEN);
@@ -167,7 +225,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 								try {
 									loadFile.run(monitor);
 								} catch (InvocationTargetException e) {
-									return StatusCreator.newStatus("Error uploading file", e);
+									return StatusCreator.newStatus(Messages.getString("fileLoadError"), e);
 								} catch (InterruptedException e) {
 									return Status.CANCEL_STATUS;
 								}
@@ -196,7 +254,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 			}
 		});
 
-		final Button deleteButton = toolkit.createButton(innerButtonClient, "Delete", SWT.FLAT);
+		final Button deleteButton = toolkit.createButton(innerButtonClient, Messages.getString("deleteButton"), SWT.FLAT);
 		deleteButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				CompoundCommand cc = new CompoundCommand();
@@ -216,7 +274,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 						((IStructuredSelection) BibliographicAbstractInformationFormPage.this.filesTableViewer
 								.getSelection()).toList());
 				cc.append(deleteCmd);
-				cc.setLabel("Delete files");
+				cc.setLabel(Messages.getString("deleteCommandLabel"));
 				getEditingDomain().getCommandStack().execute(cc);
 			}
 		});
@@ -268,7 +326,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 			final GridData gd_abstractSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
 			abstractSection.setLayoutData(gd_abstractSection);
 		}
-		abstractSection.setText("Abstract");
+		abstractSection.setText(Messages.getString("abstractSection"));
 		final Composite composite_2 = toolkit.createComposite(abstractSection, SWT.NONE);
 		final GridLayout gridLayout_1 = new GridLayout();
 		gridLayout_1.numColumns = 2;
@@ -276,7 +334,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 		toolkit.paintBordersFor(composite_2);
 		abstractSection.setClient(composite_2);
 
-		toolkit.createLabel(composite_2, "Abstract:   ", SWT.NONE);
+		toolkit.createLabel(composite_2, Messages.getString("abstractLabel") + ":", SWT.NONE);
 		this.abstractText = toolkit.createText(composite_2, null, SWT.WRAP | SWT.V_SCROLL| SWT.MULTI);
 		final GridData gd_abstractText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_abstractText.heightHint = 70;
@@ -291,6 +349,25 @@ public abstract class BibliographicAbstractInformationFormPage extends
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
 		read = InformationStructureRead.newSession(getModelObject());
+		
+		BindingUtil.createTextAndBind(this.title, getModelObject(),
+				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, this);
+		
+		bindBibliographicField(this.bibtexkey, BibliographicActivator.NODE_NAME_BIBTEXKEY);
+		
+		// Required fields
+		if (requiredFields != null) {
+			for (String fieldId : requiredFields) {
+				bindBibliographicField(requiredEditFields.get(fieldId), fieldId); 
+			}
+		}
+		
+		// Optional fields
+		if (optionalFields != null) {
+			for (String fieldId : optionalFields) {
+				bindBibliographicField(optionalEditFields.get(fieldId), fieldId); 
+			}
+		}		
 		
 		if (this.abstractText != null) {
 			BindingUtil.createTextAndBind(this.abstractText, read.getChildByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT),
@@ -362,7 +439,7 @@ public abstract class BibliographicAbstractInformationFormPage extends
 		FormToolkit toolkit = managedForm.getToolkit();
 		Label tmpLabel = toolkit.createLabel(client, label);
 		tmpLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		field = toolkit.createText(client, "", SWT.BORDER);
+		field = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		field.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		addControl(field);
 		return field;

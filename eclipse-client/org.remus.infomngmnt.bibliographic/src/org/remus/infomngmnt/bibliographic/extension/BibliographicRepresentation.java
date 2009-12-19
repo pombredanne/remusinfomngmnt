@@ -36,7 +36,7 @@ import org.remus.infomngmnt.util.StatusCreator;
  */
 public class BibliographicRepresentation extends AbstractInformationRepresentation {
 
-	protected String transformationFile = "";
+	final private String transformationFile = "template/bibliographicUnit.flt";
 	
 	@Override
 	public String getBodyForIndexing(IProgressMonitor monitor) throws CoreException {

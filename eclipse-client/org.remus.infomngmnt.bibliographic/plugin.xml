@@ -461,6 +461,104 @@
             label="Edit Unpublished"
             type="UNPUBLISHED">
       </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/book_blue_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralBookPage"
+            label="Edit General Fields"
+            type="BOOK">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/newspaper_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralArticlePage"
+            label="Edit General Fields"
+            type="ARTICLE">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/booklet_blue_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralBookletPage"
+            label="Edit General Fields"
+            type="BOOKLET">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/conference_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralConferencePage"
+            label="Edit General Fields"
+            type="CONFERENCE">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/inbook_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralInbookPage"
+            label="Edit General Fields"
+            type="INBOOK">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/inbook_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralIncollectionPage"
+            label="Edit General Fields"
+            type="INCOLLECTION">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/conference_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralInproceedingsPage"
+            label="Edit General Fields"
+            type="INPROCEEDINGS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/manual_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralManualPage"
+            label="Edit General Fields"
+            type="MANUAL">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/thesis_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralMastersthesisPage"
+            label="Edit General Fields"
+            type="MASTERSTHESIS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/misc_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralMiscPage"
+            label="Edit General Fields"
+            type="MISC">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/thesis_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralPhdthesisPage"
+            label="Edit General Fields"
+            type="PHDTHESIS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/conference_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralProceedingsPage"
+            label="Edit General Fields"
+            type="PROCEEDINGS">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/techreport_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralTechreportPage"
+            label="Edit General Fields"
+            type="TECHREPORT">
+      </editPage>
+      <editPage
+            editpage="org.remus.infomngmnt.bibliographic.ui.EditGeneralPage"
+            icon="icons/iconexperience/unpublished_edit.png"
+            id="org.remus.infomngmnt.bibliographic.ui.editGeneralUnpublishedPage"
+            label="Edit General Fields"
+            type="UNPUBLISHED">
+      </editPage>
    </extension>
    <extension
          point="org.eclipse.ui.exportWizards">

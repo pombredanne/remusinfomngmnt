@@ -348,6 +348,7 @@ public class InformationStructureRead {
 			addValues(informationStructureItem, returnValue, this);
 		}
 		returnValue.put("__label", this.unit.getLabel());
+		returnValue.put("__id", this.unit.getId());
 		returnValue.put("__description", this.unit.getDescription());
 		returnValue.put("__keywords", this.unit.getKeywords());
 		returnValue.put("__datecreated", this.unit.getCreationDate());

@@ -44,6 +44,7 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.services.IBinaryReferenceStore;
+import org.remus.infomngmnt.core.services.IHtmlGenerationErrorGenerator;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -215,8 +216,15 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 							.handleHtmlGeneration(this.monitor);
 					writeContent = writeContent(resource, handleHtmlGeneration, this.monitor);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					if (infoTypeByType.isBuildHtml()) {
+						IHtmlGenerationErrorGenerator service = InfomngmntEditPlugin.getPlugin()
+								.getService(IHtmlGenerationErrorGenerator.class);
+						if (service != null) {
+							InputStream buildErrorRepresentation = service
+									.buildErrorRepresentation(objectFromFile, e);
+							writeContent(resource, buildErrorRepresentation, this.monitor);
+						}
+					}
 				}
 
 				informationRepresentation.handlePostBuild(writeContent, this.monitor);
@@ -234,9 +242,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				createMarker.setAttribute(IMarker.MESSAGE, join);
 				InfomngmntEditPlugin.getPlugin().getLog().log(StatusCreator.newStatus(join, e));
 
-			} catch (CoreException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (Exception e1) {
+				// we skip this
 			}
 		}
 		Object adapter = objectFromFile.getAdapter(InformationUnitListItem.class);

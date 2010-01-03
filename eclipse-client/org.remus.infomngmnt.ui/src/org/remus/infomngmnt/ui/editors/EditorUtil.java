@@ -39,7 +39,10 @@ public class EditorUtil {
 	}
 
 	public static IFile getBinFile(final IFileEditorInput input) {
-		IFile file = input.getFile();
+		return getBinFile(input.getFile());
+	}
+
+	public static IFile getBinFile(final IFile file) {
 		return file.getProject().getFile(
 				new Path(ResourceUtil.BIN_FOLDER).append(Pattern.compile(
 						ResourceUtil.FILE_EXTENSION + "$").matcher(file.getName()).replaceFirst(

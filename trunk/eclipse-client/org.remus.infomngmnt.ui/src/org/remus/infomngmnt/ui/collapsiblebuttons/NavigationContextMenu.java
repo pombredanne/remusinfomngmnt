@@ -34,6 +34,7 @@ import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.views.NewWizardMenu;
 import org.remus.infomngmnt.ui.views.action.DeleteNavigationAction;
+import org.remus.infomngmnt.ui.views.action.MarkAsReadAction;
 import org.remus.infomngmnt.ui.views.action.RefreshTreeAction;
 import org.remus.infomngmnt.ui.views.action.RenameAction;
 import org.remus.infomngmnt.util.EditingUtil;
@@ -96,6 +97,8 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 	protected PasteAction pasteAction;
 
 	protected RefreshTreeAction refreshAction;
+
+	protected MarkAsReadAction markAsReadAction;
 
 	/**
 	 * This style bit indicates that the "additions" separator should come after
@@ -170,6 +173,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		actionBars.setGlobalActionHandler(ActionFactory.REFRESH.getId(), this.refreshAction);
 
 		this.renameAction = new RenameAction();
+		this.markAsReadAction = new MarkAsReadAction();
 		setGlobalActionHandler();
 
 	}
@@ -229,6 +233,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		this.pasteAction.setEditingDomain(null);
 		this.undoAction.setEditingDomain(null);
 		this.redoAction.setEditingDomain(null);
+		this.markAsReadAction.setEditingDomain(null);
 
 		final ISelectionProvider selectionProvider = this.activeEditor instanceof ISelectionProvider ? (ISelectionProvider) this.activeEditor
 				: null;
@@ -238,6 +243,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 			selectionProvider.removeSelectionChangedListener(this.cutAction);
 			selectionProvider.removeSelectionChangedListener(this.copyAction);
 			selectionProvider.removeSelectionChangedListener(this.pasteAction);
+			selectionProvider.removeSelectionChangedListener(this.markAsReadAction);
 
 		}
 	}
@@ -250,6 +256,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		this.undoAction.setEditingDomain(this.activeEditor.getEditingDomain());
 		this.redoAction.setEditingDomain(this.activeEditor.getEditingDomain());
 		this.renameAction.setEditingDomain(this.activeEditor.getEditingDomain());
+		this.markAsReadAction.setEditingDomain(this.activeEditor.getEditingDomain());
 
 		final ISelectionProvider selectionProvider = this.activeEditor instanceof ISelectionProvider ? (ISelectionProvider) this.activeEditor
 				: null;
@@ -260,6 +267,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 			selectionProvider.addSelectionChangedListener(this.copyAction);
 			selectionProvider.addSelectionChangedListener(this.pasteAction);
 			selectionProvider.addSelectionChangedListener(this.renameAction);
+			selectionProvider.addSelectionChangedListener(this.markAsReadAction);
 		}
 
 		update();
@@ -279,6 +287,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 			this.copyAction.updateSelection(structuredSelection);
 			this.pasteAction.updateSelection(structuredSelection);
 			this.renameAction.updateSelection(structuredSelection);
+			this.markAsReadAction.updateSelection(structuredSelection);
 		}
 		final Viewer viewerProvider = this.activeEditor instanceof IViewerProvider ? ((IViewerProvider) this.activeEditor)
 				.getViewer()
@@ -324,6 +333,7 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		menuManager.add(new Separator());
 		menuManager.add(this.renameAction);
 		menuManager.add(this.refreshAction);
+		menuManager.add(this.markAsReadAction);
 		menuManager.add(new Separator());
 		menuManager.add(this.cutAction);
 		menuManager.add(this.copyAction);

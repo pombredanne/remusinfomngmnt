@@ -581,11 +581,16 @@ public class ChangeSetExecutor {
 
 		InformationUnit newInformationUnit = (InformationUnit) localListItem
 				.getAdapter(InformationUnit.class);
+		CompoundCommand cc = new CompoundCommand();
 		Command setSycnMetadata = SetCommand.create(editingDomain, localListItem,
 				InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA,
 				synchronizableObject.getSynchronizationMetaData());
 		synchronizableObject.setId(newInformationUnit.getId());
-		editingDomain.getCommandStack().execute(setSycnMetadata);
+		Command setUnreadCommand = SetCommand.create(editingDomain, localListItem,
+				InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__UNREAD, true);
+		cc.append(setSycnMetadata);
+		cc.append(setUnreadCommand);
+		editingDomain.getCommandStack().execute(cc);
 		if (newInformationUnit != null) {
 			if (itemByRepository.proceedLocalInformationUnitAfterSync(newInformationUnit, monitor)) {
 				EditingUtil.getInstance().saveObjectToResource(newInformationUnit);
@@ -733,6 +738,7 @@ public class ChangeSetExecutor {
 
 		itemById = ApplicationModelPool.getInstance().getItemById(synchronizableObject.getId(),
 				monitor);
+		itemById.setUnread(true);
 
 		InformationUnit newInformationUnit = (InformationUnit) itemById
 				.getAdapter(InformationUnit.class);

@@ -555,13 +555,22 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Unread</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT_LIST_ITEM__UNREAD = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Information Unit List Item</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 2;
+	int INFORMATION_UNIT_LIST_ITEM_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 3;
 
 
 	/**
@@ -2881,6 +2890,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getInformationUnitListItem_WorkspacePath();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.InformationUnitListItem#isUnread <em>Unread</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Unread</em>'.
+	 * @see org.remus.infomngmnt.InformationUnitListItem#isUnread()
+	 * @see #getInformationUnitListItem()
+	 * @generated
+	 */
+	EAttribute getInformationUnitListItem_Unread();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.ApplicationRoot <em>Application Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4593,6 +4613,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH = eINSTANCE.getInformationUnitListItem_WorkspacePath();
+
+		/**
+		 * The meta object literal for the '<em><b>Unread</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INFORMATION_UNIT_LIST_ITEM__UNREAD = eINSTANCE.getInformationUnitListItem_Unread();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ApplicationRootImpl <em>Application Root</em>}' class.

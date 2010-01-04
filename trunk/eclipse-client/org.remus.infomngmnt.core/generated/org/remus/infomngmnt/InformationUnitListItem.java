@@ -24,6 +24,7 @@ package org.remus.infomngmnt;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.remus.infomngmnt.InformationUnitListItem#getWorkspacePath <em>Workspace Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnitListItem#isUnread <em>Unread</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,5 +58,31 @@ public interface InformationUnitListItem extends AbstractInformationUnit, Synchr
 	 * @generated
 	 */
 	void setWorkspacePath(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Unread</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Unread</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Unread</em>' attribute.
+	 * @see #setUnread(boolean)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnitListItem_Unread()
+	 * @model
+	 * @generated
+	 */
+	boolean isUnread();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationUnitListItem#isUnread <em>Unread</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Unread</em>' attribute.
+	 * @see #isUnread()
+	 * @generated
+	 */
+	void setUnread(boolean value);
 
 } // InformationUnitListItem

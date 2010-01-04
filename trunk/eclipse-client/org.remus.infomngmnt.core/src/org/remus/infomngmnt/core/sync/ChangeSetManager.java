@@ -412,6 +412,7 @@ public class ChangeSetManager {
 				 */
 				eObject
 						.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
+				eObject.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__UNREAD);
 
 			}
 			if (eObject instanceof SynchronizationMetadata) {

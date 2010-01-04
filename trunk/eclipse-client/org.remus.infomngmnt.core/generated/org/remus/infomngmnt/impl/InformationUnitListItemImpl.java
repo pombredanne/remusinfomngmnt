@@ -39,6 +39,7 @@ import org.remus.infomngmnt.SynchronizationMetadata;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getSynchronizationMetaData <em>Synchronization Meta Data</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#getWorkspacePath <em>Workspace Path</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitListItemImpl#isUnread <em>Unread</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,6 +75,26 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 	 * @ordered
 	 */
 	protected String workspacePath = WORKSPACE_PATH_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isUnread() <em>Unread</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUnread()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean UNREAD_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isUnread() <em>Unread</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUnread()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean unread = UNREAD_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -113,6 +134,27 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 		workspacePath = newWorkspacePath;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH, oldWorkspacePath, workspacePath));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isUnread() {
+		return unread;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUnread(boolean newUnread) {
+		boolean oldUnread = unread;
+		unread = newUnread;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__UNREAD, oldUnread, unread));
 	}
 
 	/**
@@ -184,6 +226,8 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 				return getSynchronizationMetaData();
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				return getWorkspacePath();
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__UNREAD:
+				return isUnread();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -203,6 +247,9 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				setWorkspacePath((String)newValue);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__UNREAD:
+				setUnread((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -221,6 +268,9 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				setWorkspacePath(WORKSPACE_PATH_EDEFAULT);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__UNREAD:
+				setUnread(UNREAD_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -237,6 +287,8 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 				return synchronizationMetaData != null;
 			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH:
 				return WORKSPACE_PATH_EDEFAULT == null ? workspacePath != null : !WORKSPACE_PATH_EDEFAULT.equals(workspacePath);
+			case InfomngmntPackage.INFORMATION_UNIT_LIST_ITEM__UNREAD:
+				return unread != UNREAD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -285,6 +337,8 @@ public class InformationUnitListItemImpl extends AbstractInformationUnitImpl imp
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (workspacePath: ");
 		result.append(workspacePath);
+		result.append(", unread: ");
+		result.append(unread);
 		result.append(')');
 		return result.toString();
 	}

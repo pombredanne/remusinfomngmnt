@@ -70,6 +70,7 @@ public class InformationUnitListItemItemProvider extends AbstractInformationUnit
 			super.getPropertyDescriptors(object);
 
 			addWorkspacePathPropertyDescriptor(object);
+			addUnreadPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -92,6 +93,28 @@ public class InformationUnitListItemItemProvider extends AbstractInformationUnit
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Unread feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUnreadPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationUnitListItem_unread_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationUnitListItem_unread_feature", "_UI_InformationUnitListItem_type"),
+				 InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__UNREAD,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}

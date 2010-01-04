@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -66,11 +67,13 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.TransferWrapper;
+import org.remus.infomngmnt.core.model.AllProjectContentAdapter;
 import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.services.IRuleExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -139,9 +142,37 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	private final ArrayList<Object> selectedElements;
 
+	private final AllProjectContentAdapter unreadAdapter = new AllProjectContentAdapter() {
+
+		@Override
+		protected void notifyProjectChange(final Notification notification) {
+			if (notification.getFeature() == InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__UNREAD) {
+				refreshElementAndParents(notification.getNotifier());
+			}
+
+		}
+	};
+
 	public NavigationSection() {
 		this.expandedElements = new ArrayList<Object>();
 		this.selectedElements = new ArrayList<Object>();
+	}
+
+	protected void refreshElementAndParents(final Object notifier) {
+		getViewSite().getShell().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				NavigationSection.this.viewer.refresh(notifier);
+				EObject object = (EObject) notifier;
+				if (object instanceof EObject) {
+					while ((object).eContainer() != null) {
+						NavigationSection.this.viewer.refresh(object.eContainer());
+						object = object.eContainer();
+					}
+				}
+
+			}
+		});
+
 	}
 
 	/**
@@ -278,6 +309,7 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 		this.viewer.setExpandedElements(this.expandedElements.toArray(new Object[0]));
 		this.viewer.setSelection(new StructuredSelection(this.selectedElements), true);
+		this.unreadAdapter.initialize();
 
 	}
 
@@ -502,6 +534,12 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 		// add local transfer
 		returnValue.add(LocalTransfer.getInstance());
 		return returnValue.toArray(new Transfer[returnValue.size()]);
+	}
+
+	@Override
+	public void dispose() {
+		this.unreadAdapter.dispose();
+		super.dispose();
 	}
 
 }

@@ -98,6 +98,7 @@
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItem/workspacePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItem/unread"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//ApplicationRoot">
       <genFeatures children="true" createChild="true" propertyCategory="" propertySortChoices="true"

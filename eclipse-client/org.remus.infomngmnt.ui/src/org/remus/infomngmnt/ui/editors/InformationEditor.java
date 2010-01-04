@@ -25,6 +25,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -74,6 +76,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.swt.ModelDataTransfer;
@@ -448,7 +451,30 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 				}
 			};
 			getSite().getShell().getDisplay().timerExec(2000, this.refreshRunnable);
+
 		}
+		setRead();
+	}
+
+	private void setRead() {
+		getSite().getShell().getDisplay().timerExec(1000, new Runnable() {
+			public void run() {
+				InformationUnitListItem adapter = (InformationUnitListItem) getPrimaryModel()
+						.getAdapter(InformationUnitListItem.class);
+				if (adapter != null && adapter.isUnread()) {
+					AdapterFactoryEditingDomain navigationEditingDomain = EditingUtil.getInstance()
+							.getNavigationEditingDomain();
+					Command create = SetCommand.create(navigationEditingDomain, adapter,
+							InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__UNREAD, false);
+					CompoundCommand cc = new CompoundCommand();
+					cc.append(create);
+					cc.setLabel("Mark as read");
+					navigationEditingDomain.getCommandStack().execute(cc);
+				}
+
+			}
+		});
+
 	}
 
 	/**

@@ -14,8 +14,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.SynchronizableObject;
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.util.CategoryUtil;
 
 /**
  * Decorating label provider with styled label support for the navigator.
@@ -127,12 +129,17 @@ public class NavigatorDecoratingLabelProvider extends DecoratingStyledCellLabelP
 
 	@Override
 	public Font getFont(final Object element) {
-		if (element instanceof SynchronizableObject
-				&& ((SynchronizableObject) element).getSynchronizationMetaData() != null
-				&& ((SynchronizableObject) element).getSynchronizationMetaData()
-						.isCurrentlySyncing()) {
-
-			return ResourceManager.getItalicFont(Display.getCurrent().getSystemFont());
+		if (element instanceof InformationUnitListItem
+				&& ((InformationUnitListItem) element).isUnread()) {
+			return ResourceManager.getBoldFont(Display.getCurrent().getSystemFont());
+		} else if (element instanceof Category) {
+			InformationUnitListItem[] allInfoUnitItems = CategoryUtil
+					.getAllInfoUnitItems((Category) element);
+			for (InformationUnitListItem informationUnitListItem : allInfoUnitItems) {
+				if (informationUnitListItem.isUnread()) {
+					return ResourceManager.getBoldFont(Display.getCurrent().getSystemFont());
+				}
+			}
 		}
 		return super.getFont(element);
 	}

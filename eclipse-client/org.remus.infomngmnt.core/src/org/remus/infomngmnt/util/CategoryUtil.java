@@ -119,7 +119,7 @@ public class CategoryUtil {
 				EList<Category> rootCategories = ApplicationModelPool.getInstance().getModel()
 						.getRootCategories();
 				for (Category category : rootCategories) {
-					if (category.getLabel().equals(split[i])) {
+					if (category.getLabel() != null && category.getLabel().equals(split[i])) {
 						parentCategory = category;
 					}
 				}

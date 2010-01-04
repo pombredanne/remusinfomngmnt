@@ -703,6 +703,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInformationUnitListItem_Unread() {
+		return (EAttribute)informationUnitListItemEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1808,6 +1817,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		informationUnitListItemEClass = createEClass(INFORMATION_UNIT_LIST_ITEM);
 		createEAttribute(informationUnitListItemEClass, INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH);
+		createEAttribute(informationUnitListItemEClass, INFORMATION_UNIT_LIST_ITEM__UNREAD);
 
 		applicationRootEClass = createEClass(APPLICATION_ROOT);
 		createEReference(applicationRootEClass, APPLICATION_ROOT__ROOT_CATEGORIES);
@@ -2063,6 +2073,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 
 		initEClass(informationUnitListItemEClass, InformationUnitListItem.class, "InformationUnitListItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInformationUnitListItem_WorkspacePath(), ecorePackage.getEString(), "workspacePath", null, 0, 1, InformationUnitListItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInformationUnitListItem_Unread(), ecorePackage.getEBoolean(), "unread", null, 0, 1, InformationUnitListItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(applicationRootEClass, ApplicationRoot.class, "ApplicationRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getApplicationRoot_RootCategories(), this.getCategory(), null, "rootCategories", null, 0, -1, ApplicationRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

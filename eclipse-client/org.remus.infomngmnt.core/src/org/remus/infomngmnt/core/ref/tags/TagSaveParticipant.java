@@ -22,6 +22,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
+
 import org.remus.infomngmnt.AvailableTags;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
@@ -82,7 +83,7 @@ public class TagSaveParticipant implements ISaveParticipant {
 		EList<Tag> availableTags = ApplicationModelPool.getInstance().getModel().getAvailableTags()
 				.getTags();
 		for (Tag tag : availableTags) {
-			if (tag.getInfoUnits().contains(adapter)) {
+			if (tag.getInfoUnits().contains(adapter.getId())) {
 				returnValue.add(tag);
 			}
 		}

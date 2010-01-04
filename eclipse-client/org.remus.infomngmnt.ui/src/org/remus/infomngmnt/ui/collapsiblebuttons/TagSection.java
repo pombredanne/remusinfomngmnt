@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -32,7 +34,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.AvailableTags;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.Tag;
@@ -51,6 +53,16 @@ public class TagSection extends CollapsibleButtonBar {
 	private TreeViewer viewer;
 	private AdapterFactoryContentProvider contentProvider;
 	private NavigatorDecoratingLabelProvider labelProvider;
+	private final AdapterImpl refreshAdapter = new AdapterImpl() {
+		@Override
+		public void notifyChanged(final Notification msg) {
+			getViewSite().getShell().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					TagSection.this.viewer.refresh();
+				}
+			});
+		}
+	};
 
 	@Override
 	public void createControl(final Composite parent) {
@@ -111,7 +123,11 @@ public class TagSection extends CollapsibleButtonBar {
 	}
 
 	private void initInput() {
-		this.viewer.setInput(ApplicationModelPool.getInstance().getModel().getAvailableTags());
+		AvailableTags availableTags = ApplicationModelPool.getInstance().getModel()
+				.getAvailableTags();
+
+		availableTags.eAdapters().add(this.refreshAdapter);
+		this.viewer.setInput(availableTags);
 
 	}
 
@@ -132,18 +148,25 @@ public class TagSection extends CollapsibleButtonBar {
 							e.printStackTrace();
 						}
 					} else if (object instanceof Tag) {
-						
-							if (TagSection.this.viewer.getExpandedState(object)) {
-								TagSection.this.viewer.collapseToLevel(object, 1);
-							} else {
-								TagSection.this.viewer.expandToLevel(object, 1);
-							}
+
+						if (TagSection.this.viewer.getExpandedState(object)) {
+							TagSection.this.viewer.collapseToLevel(object, 1);
+						} else {
+							TagSection.this.viewer.expandToLevel(object, 1);
+						}
 					}
 				}
 			}
 
 		});
 
+	}
+
+	@Override
+	public void dispose() {
+		ApplicationModelPool.getInstance().getModel().getAvailableTags().eAdapters().remove(
+				this.refreshAdapter);
+		super.dispose();
 	}
 
 }

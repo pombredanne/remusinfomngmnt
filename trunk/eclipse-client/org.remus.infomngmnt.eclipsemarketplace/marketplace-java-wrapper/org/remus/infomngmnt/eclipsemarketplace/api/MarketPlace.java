@@ -220,8 +220,10 @@ public class MarketPlace {
 				bufferedReader.close();
 			}
 			post.releaseConnection();
-			Document document = this.documentBuilder.parse(new InputSource(new StringReader(result
-					.toString())));
+
+			String marketPlaceHack = marketPlaceHack(result);
+			Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+					marketPlaceHack)));
 			checkResult(document);
 			NodeList childNodes = document.getChildNodes();
 			for (int i = 0, n = childNodes.getLength(); i < n; i++) {
@@ -291,8 +293,9 @@ public class MarketPlace {
 				bufferedReader.close();
 			}
 			post.releaseConnection();
-			Document document = this.documentBuilder.parse(new InputSource(new StringReader(result
-					.toString())));
+			String marketPlaceHack = marketPlaceHack(result);
+			Document document = this.documentBuilder.parse(new InputSource(new StringReader(
+					marketPlaceHack)));
 			checkResult(document);
 
 			NodeList childNodes = document.getChildNodes();
@@ -342,7 +345,7 @@ public class MarketPlace {
 							if (Constants.CREATED_NODE.equals(marketNode.getNodeName())) {
 								try {
 									Long timestamp = Long.valueOf(firstChild);
-									returnValue.setCreated(new Date(timestamp));
+									returnValue.setCreated(new Date(timestamp * 1000));
 								} catch (NumberFormatException e) {
 									throw new MarketPlaceException("Creation date no valid long");
 								}
@@ -350,7 +353,7 @@ public class MarketPlace {
 							if (Constants.CHANGED_NODE.equals(marketNode.getNodeName())) {
 								try {
 									Long timestamp = Long.valueOf(firstChild);
-									returnValue.setChanged(new Date(timestamp));
+									returnValue.setChanged(new Date(timestamp * 1000));
 								} catch (NumberFormatException e) {
 									throw new MarketPlaceException("Change date no valid long");
 								}
@@ -411,11 +414,7 @@ public class MarketPlace {
 	 */
 	private String marketPlaceHack(final StringWriter result) {
 		String returnValue = result.toString();
-		returnValue = escapeTag("eclipseversion", returnValue);
-		returnValue = escapeTag("url", returnValue);
-		returnValue = escapeTag("supporturl", returnValue);
-		returnValue = escapeTag("updateurl", returnValue);
-		returnValue = escapeTag("companyname", returnValue);
+		returnValue = escapeTag("title", returnValue);
 		return returnValue;
 
 	}

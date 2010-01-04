@@ -211,27 +211,6 @@
 				<td>${doi.annote?html}</td>
 			</tr>
 			</#if>
-
-
-			<tr></tr>
-			<#if data.abstract?has_content >
-			<tr>
-				<td class="bold">Abstract:</td>
-				<td>${data.abstract?html}</td>
-			</tr>
-			</#if>
-			<#if data.contents?has_content >
-			<tr>
-				<td class="bold">Contents:</td>
-				<td>${data.contents?html}</td>
-			</tr>
-			</#if>
-			<#if data.summary?has_content >
-			<tr>
-				<td class="bold">Summary:</td>
-				<td>${data.summary?html}</td>
-			</tr>
-			</#if>
 						
 			<tr></tr>
 			<tr>
@@ -263,6 +242,30 @@
 			</tr>
 			</#if>
 		</table>
+	</div>
+	<div style="margin:8px;">
+		<#if data.abstract?has_content >
+			<p>
+				<div class="bold">Abstract:</div>				
+				${data.abstract?html?replace("\n","<br>")}
+			</p>
+		</#if>
+	</div>
+	<div style="margin:8px;">
+		<#if data.contents?has_content >
+			<p>
+				<div class="bold">Contents:</div>				
+				${data.contents?html?replace("\n","<br>")}
+			</p>
+		</#if>
+	</div>
+	<div style="margin:8px;">
+		<#if data.summary?has_content >
+			<p>
+				<div class="bold">Summary:</div>				
+				${data.summary?html?replace("\n","<br>")}
+			</p>
+		</#if>
 	</div>
 
 </body>

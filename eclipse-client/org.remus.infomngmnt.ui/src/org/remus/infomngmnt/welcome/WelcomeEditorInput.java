@@ -50,7 +50,7 @@ public class WelcomeEditorInput implements IEditorInput {
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
 	public String getName() {
-		return "Welcome to RIM!";
+		return "Welcome to Remus!";
 	}
 
 	/*

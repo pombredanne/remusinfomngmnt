@@ -67,7 +67,7 @@ public class WelcomeEditor2 extends EditorPart {
 		final Section section = toolkit.createSection(createComposite, Section.DESCRIPTION);
 		section.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		section
-				.setDescription("Welcome to the Remus Information Management. This application allows you to store all your incoming information in an easy and comfortable way. If you are new to RIM check out the 5-minutes video to see what RIM can do for you. Have fun!");
+				.setDescription("Welcome to Remus Information Management. This application allows you to store all your incoming information in an easy and comfortable way. If you are new to Remus check out the 5-minutes video to see what Remus can do for you. Have fun!");
 
 		final Composite composite_1 = toolkit.createComposite(section, SWT.NONE);
 		composite_1.setLayout(new TableWrapLayout());
@@ -77,7 +77,7 @@ public class WelcomeEditor2 extends EditorPart {
 		final ImageHyperlink learnRimInImageHyperlink = toolkit.createImageHyperlink(
 				createComposite, SWT.NONE);
 		learnRimInImageHyperlink.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
-		learnRimInImageHyperlink.setText("Learn RIM in 5 Minutes (Video)");
+		learnRimInImageHyperlink.setText("Learn Remus in 5 Minutes (Video)");
 		learnRimInImageHyperlink.setImage(ResourceManager.getPluginImage(UIPlugin.getDefault(),
 				"icons/iconexperience/16/film.png"));
 		learnRimInImageHyperlink.setHref(UIPlugin.getDefault().getPreferenceStore().getString(

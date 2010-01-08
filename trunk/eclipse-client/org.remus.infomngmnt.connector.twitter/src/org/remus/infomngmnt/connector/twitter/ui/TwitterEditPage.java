@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -26,6 +25,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
+
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
@@ -46,26 +46,38 @@ public class TwitterEditPage extends AbstractInformationFormPage {
 	private final List<MessageComposite> compositeCollection = new ArrayList<MessageComposite>();
 	private Composite body;
 	private FormToolkit toolkit;
-	private boolean showAll;
+	private int page = 0;
 	private ScrolledForm form;
+	private Action previousAction;
+	private Action nextAction;
 
 	@Override
 	protected void renderPage(final IManagedForm managedForm) {
 		this.toolkit = managedForm.getToolkit();
-		form = managedForm.getForm();
-		this.body = form.getBody();
+		this.form = managedForm.getForm();
+		this.body = this.form.getBody();
 		this.body.setLayout(new TableWrapLayout());
 		this.toolkit.paintBordersFor(this.body);
 
 		IToolBarManager toolBarManager = ((InformationEditor) getEditor()).getHeaderForm()
 				.getForm().getToolBarManager();
-		toolBarManager.add(new Action("Show all", IAction.AS_CHECK_BOX) {
+		this.previousAction = new Action("Newer") {
 			@Override
 			public void run() {
-				showAll = isChecked();
+				TwitterEditPage.this.page--;
 				bindValuesToUi();
 			}
-		});
+		};
+		toolBarManager.add(this.previousAction);
+		this.nextAction = new Action("Older") {
+			@Override
+			public void run() {
+				TwitterEditPage.this.page++;
+				bindValuesToUi();
+			}
+		};
+		toolBarManager.add(this.nextAction);
+
 		toolBarManager.update(true);
 
 	}
@@ -83,10 +95,9 @@ public class TwitterEditPage extends AbstractInformationFormPage {
 		InformationUnit childByType = InformationUtil.getChildByType(getModelObject(),
 				TwitterActivator.MESSAGES_ID);
 		EList<InformationUnit> childValues = childByType.getChildValues();
-		int n = showAll ? childValues.size() : Math.min(childValues.size(), TwitterActivator
-				.getDefault().getPreferenceStore().getInt(
-						TwitterPreferenceInitializer.SHOWN_MESSAGE));
-		for (int i = 0; i < n; i++) {
+		int n = Math.min(childValues.size(), TwitterActivator.getDefault().getPreferenceStore()
+				.getInt(TwitterPreferenceInitializer.SHOWN_MESSAGE));
+		for (int i = this.page * n; i < (this.page + 1) * n && i < childValues.size(); i++) {
 			InformationUnit informationUnit = childValues.get(i);
 			MessageComposite messageComposite = new MessageComposite(this.body, SWT.NONE,
 					this.toolkit);
@@ -128,6 +139,8 @@ public class TwitterEditPage extends AbstractInformationFormPage {
 			messageComposite.setLayoutData(twd_metaFormText);
 			this.compositeCollection.add(messageComposite);
 		}
-		form.reflow(true);
+		this.previousAction.setEnabled(this.page > 0);
+		this.nextAction.setEnabled((this.page + 1) * n < childValues.size());
+		this.form.reflow(true);
 	}
 }

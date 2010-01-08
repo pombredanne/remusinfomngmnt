@@ -24,6 +24,7 @@ import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.jobs.FollowUserJob;
 import org.remus.infomngmnt.connector.twitter.jobs.UnFollowUserJob;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
+import org.remus.infomngmnt.connector.twitter.ui.actions.OpenConversationAction;
 import org.remus.infomngmnt.connector.twitter.ui.actions.SendDirectMessageAction;
 import org.remus.infomngmnt.core.sync.SyncUtil;
 
@@ -40,7 +41,8 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 	@Override
 	public void linkActivated(final org.eclipse.ui.forms.events.HyperlinkEvent e) {
 		String href = e.getHref().toString();
-		if (href.startsWith(TwitterUtil.HREF_USER_PREFIX)) {
+		if (href.startsWith(TwitterUtil.HREF_USER_PREFIX)
+				|| href.startsWith(TwitterUtil.REPLY_USER_PREFIX)) {
 			this.userPopup.setVisible(true);
 		} else if (href.startsWith(TwitterUtil.HREF_KEYWORD_PREFIX)) {
 			this.keyPopup.setVisible(true);
@@ -55,12 +57,17 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 		String href = e.getHref().toString();
 		if (href.startsWith(TwitterUtil.HREF_USER_PREFIX)) {
 			String userName = e.getHref().toString().split("\\.")[1];
-			buildUserPopup(e, userName);
+			buildUserPopup(e, userName, null);
 			((Control) e.widget).setMenu(this.userPopup);
 		} else if (href.startsWith(TwitterUtil.HREF_KEYWORD_PREFIX)) {
 			String keyWord = e.getHref().toString().split("\\.")[1];
 			buildKeywordPopup(e, keyWord);
 			((Control) e.widget).setMenu(this.keyPopup);
+		} else if (href.startsWith(TwitterUtil.REPLY_USER_PREFIX)) {
+			String userName = e.getHref().toString().split("\\.")[2];
+			String replyId = e.getHref().toString().split("\\.")[1];
+			buildUserPopup(e, userName, replyId);
+			((Control) e.widget).setMenu(this.userPopup);
 		}
 	};
 
@@ -98,12 +105,27 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 
 	}
 
-	private void buildUserPopup(final HyperlinkEvent e, final String userName) {
+	private void buildUserPopup(final HyperlinkEvent e, final String userName, final String replyId) {
 		// if (((Control) e.widget).getMenu() != null) {
 		// ((Control) e.widget).getMenu().setVisible(true);
 		// return;
 		// }
 		this.userPopup = new Menu((Control) e.widget);
+
+		if (replyId != null) {
+			MenuItem item4 = new MenuItem(this.userPopup, SWT.PUSH);
+			item4.setText("View conversation");
+			item4.setEnabled(TwitterUtil.onlineActionsAvailable(this.modelObject));
+			item4.addListener(SWT.Selection, new Listener() {
+				public void handleEvent(final Event event) {
+					OpenConversationAction action = new OpenConversationAction(userName, replyId,
+							MessageHyperLinkAdapter.this.modelObject);
+					action.run();
+				}
+			});
+			MenuItem item5 = new MenuItem(this.userPopup, SWT.SEPARATOR);
+		}
+
 		MenuItem item = new MenuItem(this.userPopup, SWT.PUSH);
 		item.setText(NLS.bind("Follow {0}", userName));
 		item.setEnabled(TwitterUtil.onlineActionsAvailable(this.modelObject));
@@ -132,6 +154,7 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 				action.run();
 			}
 		});
+
 		buildCopy(this.userPopup, (Control) e.widget);
 	};
 

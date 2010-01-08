@@ -17,7 +17,10 @@ public class TwitterActivator extends AbstractUIPlugin {
 	private static TwitterActivator plugin;
 
 	public static final String REPOSITORY_OPTIONS_SEARCH_KEY = "REPOSITORY_OPTIONS_SEARCH_KEY"; //$NON-NLS-1$
+	public static final String REPOSITORY_OPTIONS_DETAILED_KEY = "REPOSITORY_OPTIONS_SEARCH_KEY"; //$NON-NLS-1$
+	public static final String REPOSITORY_OPTIONS_WATCH_OWN_PROFILE = "REPOSITORY_OPTIONS_WATCH_OWN_PROFILE";
 
+	// Twitter Feed constancts
 	public static final String INFOTYPE_ID = "TWITTER"; //$NON-NLS-1$
 
 	public static final String MESSAGES_ID = "messages"; //$NON-NLS-1$
@@ -36,7 +39,47 @@ public class TwitterActivator extends AbstractUIPlugin {
 
 	public static final String REPLY_ID = "reply"; //$NON-NLS-1$
 
+	public static final String REPLY_STATUS_ID = "replystatusid"; //$NON-NLS-1$
+
 	public static final String MESSAGE_USER_ID_TYPE = "userid";
+
+	// Twitter user constants
+	public static final String INFOTYPE_USERS = "TWITTER-USER"; //$NON-NLS-1$
+
+	public static final String USERS_NODE = "users"; //$NON-NLS-1$
+
+	public static final String USER_NODE = "user"; //$NON-NLS-1$
+
+	public static final String USERNAME_NODE = "username"; //$NON-NLS-1$
+
+	public static final String NAME_NODE = "name"; //$NON-NLS-1$
+
+	public static final String URL_NODE = "url"; //$NON-NLS-1$
+
+	public static final String CREATIONDATE_NODE = "creationDate"; //$NON-NLS-1$
+
+	public static final String FOLLOWERS_NODE = "followerscount"; //$NON-NLS-1$
+
+	public static final String FRIENDS_NODE = "friendscount"; //$NON-NLS-1$
+
+	public static final String LOCATION_NODE = "location"; //$NON-NLS-1$
+
+	public static final String STATUSCOUNT_NODE = "statuscount"; //$NON-NLS-1$
+
+	public static final String EX_NODE = "ex"; //$NON-NLS-1$
+
+	public static final String DATE_FOLLOW_UNFOLLOW_NODE = "datefolloworunfollow"; //$NON-NLS-1$
+
+	// Twitter user detail constants
+
+	public static final String INFO_TYPE_DETAIL = "TWITTER-DETAIL"; //$NON-NLS-1$
+
+	public static final String DETAIL_USERNAME_NODE = "detailusername"; //$NON-NLS-1$
+	public static final String DETAIL_MEMBERSINCE_NODE = "detailmembersince"; //$NON-NLS-1$
+	public static final String DETAIL_WEBSITE_NODE = "detailwebsite"; //$NON-NLS-1$
+	public static final String DETAIL_DESCRIPTION_NODE = "detaildescription"; //$NON-NLS-1$
+	public static final String DETAIL_LOCATION_NODE = "detaillocation"; //$NON-NLS-1$
+	public static final String DETAIL_USER_ID = "detailuserid"; //$NON-NLS-1$
 
 	private TwitterImageCache imageCache;
 

@@ -22,6 +22,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.util.InformationUtil;
 
 public class MessageComposite extends Composite {
@@ -80,6 +81,10 @@ public class MessageComposite extends Composite {
 			this.photoLabel = this.toolkit.createLabel(this, "n.a.", SWT.NONE);
 			final TableWrapData twd_photo = new TableWrapData(TableWrapData.LEFT, TableWrapData.TOP);
 			twd_photo.rowspan = 2;
+			twd_photo.maxWidth = 48;
+			twd_photo.maxHeight = 48;
+			twd_photo.heightHint = 48;
+
 			this.photoLabel.setLayoutData(twd_photo);
 		}
 
@@ -135,14 +140,13 @@ public class MessageComposite extends Composite {
 	}
 
 	public void setValues(final InformationUnit message) {
-		Date dateValue = InformationUtil
-				.getChildByType(message, TwitterActivator.MESSAGE_DATE_TYPE).getDateValue();
+		InformationStructureRead read = InformationStructureRead.newSession(message,
+				TwitterActivator.INFOTYPE_ID);
+		Date dateValue = (Date) read.getValueByNodeId(TwitterActivator.MESSAGE_DATE_TYPE);
 		// user-id
-		String userId = InformationUtil.getChildByType(message,
-				TwitterActivator.MESSAGE_USER_ID_TYPE).getStringValue();
+		String userId = (String) read.getValueByNodeId(TwitterActivator.MESSAGE_USER_ID_TYPE);
 		// user-name
-		String userName = InformationUtil.getChildByType(message,
-				TwitterActivator.MESSAGE_USER_TYPE).getStringValue();
+		String userName = (String) read.getValueByNodeId(TwitterActivator.MESSAGE_USER_TYPE);
 		// direct messages have no source type
 		InformationUnit childByType = InformationUtil.getChildByType(message,
 				TwitterActivator.MESSAGE_SRC_TYPE);
@@ -157,14 +161,13 @@ public class MessageComposite extends Composite {
 		} else {
 			replyId = reply.getStringValue();
 		}
+		Long replyStatusId = (Long) read.getValueByNodeId(TwitterActivator.REPLY_STATUS_ID);
 
 		// twitter-client
 		// internal twitter-id
 		Long internalId = InformationUtil.getChildByType(message,
 				TwitterActivator.MESSAGE_INTERNAL_ID).getLongValue();
-		buildMeta(dateValue, userId, userName, sourceLink, internalId, replyId);
-		InformationUnitListItem listItem = (InformationUnitListItem) message
-				.getAdapter(InformationUnitListItem.class);
+		buildMeta(dateValue, userId, userName, sourceLink, internalId, replyId, replyStatusId);
 
 		String content = InformationUtil.getChildByType(message,
 				TwitterActivator.MESSAGE_CONTENT_TYPE).getStringValue();
@@ -175,6 +178,8 @@ public class MessageComposite extends Composite {
 			this.messageText.setText(content, false, false);
 		}
 		if (this.renderPhoto) {
+			InformationUnitListItem listItem = (InformationUnitListItem) message
+					.getAdapter(InformationUnitListItem.class);
 			setImage(userId, listItem.getSynchronizationMetaData().getRepositoryId());
 		}
 
@@ -197,7 +202,8 @@ public class MessageComposite extends Composite {
 	}
 
 	private void buildMeta(final Date dateValue, final String userId, final String userName,
-			final String sourceLink, final Long internalId, final String replyId) {
+			final String sourceLink, final Long internalId, final String replyId,
+			final Long replyStatusId) {
 		StringWriter sw = new StringWriter();
 		sw.append("<form><p vspace=\"false\">");
 		sw.append("<a href=\"user." + userId + "\">").append(userName).append("</a>, ");
@@ -207,7 +213,8 @@ public class MessageComposite extends Composite {
 			sw.append(sourceLink);
 		}
 		if (replyId != null) {
-			sw.append(" in reply to ").append("<a href=\"user." + replyId + "\">").append(replyId)
+			sw.append(" in reply to ").append(
+					"<a href=\"reply." + replyStatusId + "." + replyId + "\">").append(replyId)
 					.append("</a>");
 		}
 		sw.append("</p></form>");

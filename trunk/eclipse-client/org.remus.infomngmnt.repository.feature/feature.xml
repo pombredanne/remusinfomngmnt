@@ -221,6 +221,7 @@ litigation.
    <requires>
       <import feature="org.remus.infomngmnt.core.feature" version="1.0.0.qualifier"/>
       <import feature="org.remus.infomngmnt.infotypes.feature" version="1.0.0.qualifier"/>
+      <import feature="org.remus.infomngmnt.reportruntime.feature" version="1.0.0.qualifier"/>
    </requires>
 
    <plugin

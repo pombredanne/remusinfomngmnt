@@ -3,6 +3,7 @@ package org.remus.infomngmnt.connector.twitter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.connector.twitter.ui.TwitterImageCache;
 
 /**
@@ -99,6 +100,8 @@ public class TwitterActivator extends AbstractUIPlugin {
 	 */
 	@Override
 	public void start(final BundleContext context) throws Exception {
+		// We have to start the birt-report bundle
+		ReportActivator.getDefault();
 		super.start(context);
 		plugin = this;
 	}

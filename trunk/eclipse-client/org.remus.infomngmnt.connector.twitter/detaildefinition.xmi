@@ -18,4 +18,5 @@
   <structureItems type="STRING" id="detaildescription" createAlways="true"/>
   <structureItems type="STRING" id="detaillocation" createAlways="true"/>
   <structureItems type="STRING" id="detailuserid" createAlways="true"/>
+  <structureItems type="LONG" id="detailstatuscount" createAlways="true"/>
 </infomngmnt:InformationStructureDefinition>

@@ -80,6 +80,7 @@ public class TwitterActivator extends AbstractUIPlugin {
 	public static final String DETAIL_DESCRIPTION_NODE = "detaildescription"; //$NON-NLS-1$
 	public static final String DETAIL_LOCATION_NODE = "detaillocation"; //$NON-NLS-1$
 	public static final String DETAIL_USER_ID = "detailuserid"; //$NON-NLS-1$
+	public static final String DETAIL_STATUS_COUNT = "detailstatuscount"; //$NON-NLS-1$
 
 	private TwitterImageCache imageCache;
 

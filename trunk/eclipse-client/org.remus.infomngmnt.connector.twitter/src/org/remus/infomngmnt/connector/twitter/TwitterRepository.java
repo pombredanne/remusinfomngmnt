@@ -53,7 +53,6 @@ import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import twitter4j.DirectMessage;
-import twitter4j.IDs;
 import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.Tweet;
@@ -217,9 +216,9 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 
 	private RemoteObject buildFollowers() throws RemoteException {
 		try {
-			IDs followersIDs = getApi().getFollowersIDs();
+			List<User> followersIDs = getApi().getFollowersStatuses();
 			RemoteObject returnValue = InfomngmntFactory.eINSTANCE.createRemoteObject();
-			returnValue.setHash(String.valueOf(followersIDs.getIDs().length));
+			returnValue.setHash(String.valueOf(followersIDs.size()));
 			returnValue.setId(ID_FOLLOWERS);
 			returnValue.setUrl(StringUtils.join(getRepositoryUrl(), getCredentialProvider()
 					.getUserName(), "/", ID_FOLLOWERS));
@@ -233,9 +232,9 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 
 	private RemoteObject buildFriends() throws RemoteException {
 		try {
-			IDs followersIDs = getApi().getFriendsIDs();
+			List<User> followersIDs = getApi().getFriendsStatuses();
 			RemoteObject returnValue = InfomngmntFactory.eINSTANCE.createRemoteObject();
-			returnValue.setHash(String.valueOf(followersIDs.getIDs().length));
+			returnValue.setHash(String.valueOf(followersIDs.size()));
 			returnValue.setId(ID_FOLLOWING);
 			returnValue.setUrl(StringUtils.join(getRepositoryUrl(), getCredentialProvider()
 					.getUserName(), "/", ID_FOLLOWING));
@@ -450,6 +449,8 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 			edit.setValue(returnValue, TwitterActivator.DETAIL_LOCATION_NODE, showUser
 					.getLocation());
 			edit.setValue(returnValue, TwitterActivator.DETAIL_USER_ID, showUser.getScreenName());
+			edit.setValue(returnValue, TwitterActivator.DETAIL_STATUS_COUNT, showUser
+					.getStatusesCount());
 			return returnValue;
 
 		}
@@ -458,27 +459,28 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 
 	private InformationUnit createUpdateUserInfoUnit(final InformationUnit adapter,
 			final boolean followers) throws RemoteException {
-		IDs followersIDs;
+		List<User> followersIDs;
 		try {
 			if (followers) {
-				followersIDs = getApi().getFollowersIDs();
+				followersIDs = getApi().getFollowersStatuses();
 			} else {
-				followersIDs = getApi().getFriendsIDs();
+				followersIDs = getApi().getFriendsStatuses();
 			}
 		} catch (TwitterException e1) {
 			throw new RemoteException(StatusCreator.newStatus(
 					"Error loading ids of friends or followers", e1));
 		}
-		int[] iDs = followersIDs.getIDs();
+
 		InformationStructureRead read = InformationStructureRead.newSession(adapter);
 		EList<InformationUnit> dynamicList = read.getDynamicList(TwitterActivator.USERS_NODE);
 		List<String> onlineFollowerIds = new ArrayList<String>();
-		for (int i : iDs) {
+		for (User i : followersIDs) {
 			boolean found = false;
 			for (InformationUnit informationUnit : dynamicList) {
 				InformationStructureRead subRead = InformationStructureRead.newSession(
 						informationUnit, TwitterActivator.INFOTYPE_USERS);
-				if (Integer.parseInt((String) subRead.getValueByNodeId(TwitterActivator.USER_NODE)) == i) {
+				if (Integer.parseInt((String) subRead.getValueByNodeId(TwitterActivator.USER_NODE)) == i
+						.getId()) {
 					if ((Boolean) subRead.getValueByNodeId(TwitterActivator.EX_NODE)) {
 						InformationStructureEdit edit = InformationStructureEdit
 								.newSession(TwitterActivator.INFOTYPE_USERS);
@@ -491,36 +493,24 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 			if (!found) {
 				InformationStructureEdit edit = InformationStructureEdit
 						.newSession(TwitterActivator.INFOTYPE_USERS);
-				User showUser;
-				try {
-					showUser = getApi().showUser(String.valueOf(i));
-				} catch (TwitterException e) {
-					throw new RemoteException(StatusCreator.newStatus(NLS.bind(
-							"Error getting userdetails of user {0}", i)));
-				}
+
 				InformationUnit userNode = edit.createSubType(TwitterActivator.USER_NODE, String
-						.valueOf(showUser.getId()));
-				edit.setValue(userNode, TwitterActivator.FOLLOWERS_NODE, showUser
-						.getFollowersCount());
-				edit.setValue(userNode, TwitterActivator.FRIENDS_NODE, showUser.getFriendsCount());
-				edit.setValue(userNode, TwitterActivator.STATUSCOUNT_NODE, showUser
-						.getStatusesCount());
-				edit.setValue(userNode, TwitterActivator.USERNAME_NODE, showUser.getName());
-				edit.setValue(userNode, TwitterActivator.NAME_NODE, showUser.getScreenName());
-				edit.setValue(userNode, TwitterActivator.LOCATION_NODE, showUser.getLocation());
+						.valueOf(i.getId()));
+				edit.setValue(userNode, TwitterActivator.FOLLOWERS_NODE, i.getFollowersCount());
+				edit.setValue(userNode, TwitterActivator.FRIENDS_NODE, i.getFriendsCount());
+				edit.setValue(userNode, TwitterActivator.STATUSCOUNT_NODE, i.getStatusesCount());
+				edit.setValue(userNode, TwitterActivator.USERNAME_NODE, i.getName());
+				edit.setValue(userNode, TwitterActivator.NAME_NODE, i.getScreenName());
+				edit.setValue(userNode, TwitterActivator.LOCATION_NODE, i.getLocation());
 				edit.setValue(userNode, TwitterActivator.DATE_FOLLOW_UNFOLLOW_NODE, new Date());
-				if (showUser.getURL() != null) {
-					edit
-							.setValue(userNode, TwitterActivator.URL_NODE, showUser.getURL()
-									.toString());
+				if (i.getURL() != null) {
+					edit.setValue(userNode, TwitterActivator.URL_NODE, i.getURL().toString());
 				}
 				edit.setValue(userNode, TwitterActivator.EX_NODE, false);
-				edit
-						.setValue(userNode, TwitterActivator.CREATIONDATE_NODE, showUser
-								.getCreatedAt());
+				edit.setValue(userNode, TwitterActivator.CREATIONDATE_NODE, i.getCreatedAt());
 				edit.addDynamicNode(adapter, userNode, null);
-				TwitterActivator.getDefault().getImageCache().checkCache(showUser.getScreenName(),
-						showUser.getProfileImageURL(), null);
+				TwitterActivator.getDefault().getImageCache().checkCache(i.getScreenName(),
+						i.getProfileImageURL(), null);
 			}
 			onlineFollowerIds.add(String.valueOf(i));
 		}
@@ -545,41 +535,33 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 			final InformationUnitListItem informationUnitListItem, final boolean followers)
 			throws RemoteException {
 		try {
-			IDs followersIDs;
+			List<User> followersIDs;
 			if (followers) {
-				followersIDs = getApi().getFollowersIDs();
+				followersIDs = getApi().getFollowersStatuses();
 			} else {
-				followersIDs = getApi().getFriendsIDs();
+				followersIDs = getApi().getFriendsStatuses();
 			}
-			int[] iDs = followersIDs.getIDs();
 			InformationStructureEdit edit = InformationStructureEdit
 					.newSession(TwitterActivator.INFOTYPE_USERS);
 			InformationUnit newInformationUnit = edit.newInformationUnit();
-			for (int i : iDs) {
-				User showUser = getApi().showUser(String.valueOf(i));
+			for (User user : followersIDs) {
 				InformationUnit userNode = edit.createSubType(TwitterActivator.USER_NODE, String
-						.valueOf(showUser.getId()));
-				edit.setValue(userNode, TwitterActivator.FOLLOWERS_NODE, showUser
-						.getFollowersCount());
-				edit.setValue(userNode, TwitterActivator.FRIENDS_NODE, showUser.getFriendsCount());
-				edit.setValue(userNode, TwitterActivator.STATUSCOUNT_NODE, showUser
-						.getStatusesCount());
-				edit.setValue(userNode, TwitterActivator.USERNAME_NODE, showUser.getName());
-				edit.setValue(userNode, TwitterActivator.NAME_NODE, showUser.getScreenName());
-				edit.setValue(userNode, TwitterActivator.LOCATION_NODE, showUser.getLocation());
+						.valueOf(user.getId()));
+				edit.setValue(userNode, TwitterActivator.FOLLOWERS_NODE, user.getFollowersCount());
+				edit.setValue(userNode, TwitterActivator.FRIENDS_NODE, user.getFriendsCount());
+				edit.setValue(userNode, TwitterActivator.STATUSCOUNT_NODE, user.getStatusesCount());
+				edit.setValue(userNode, TwitterActivator.USERNAME_NODE, user.getName());
+				edit.setValue(userNode, TwitterActivator.NAME_NODE, user.getScreenName());
+				edit.setValue(userNode, TwitterActivator.LOCATION_NODE, user.getLocation());
 				edit.setValue(userNode, TwitterActivator.DATE_FOLLOW_UNFOLLOW_NODE, new Date());
-				if (showUser.getURL() != null) {
-					edit
-							.setValue(userNode, TwitterActivator.URL_NODE, showUser.getURL()
-									.toString());
+				if (user.getURL() != null) {
+					edit.setValue(userNode, TwitterActivator.URL_NODE, user.getURL().toString());
 				}
 				edit.setValue(userNode, TwitterActivator.EX_NODE, false);
-				edit
-						.setValue(userNode, TwitterActivator.CREATIONDATE_NODE, showUser
-								.getCreatedAt());
+				edit.setValue(userNode, TwitterActivator.CREATIONDATE_NODE, user.getCreatedAt());
 				edit.addDynamicNode(newInformationUnit, userNode, null);
-				TwitterActivator.getDefault().getImageCache().checkCache(showUser.getScreenName(),
-						showUser.getProfileImageURL(), null);
+				TwitterActivator.getDefault().getImageCache().checkCache(user.getScreenName(),
+						user.getProfileImageURL(), null);
 			}
 			return newInformationUnit;
 		} catch (TwitterException e) {

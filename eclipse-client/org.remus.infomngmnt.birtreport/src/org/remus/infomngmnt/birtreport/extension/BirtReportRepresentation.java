@@ -73,10 +73,11 @@ public class BirtReportRepresentation extends AbstractInformationRepresentation 
 	@Override
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 
-		String createURL = createURL("run", WebViewer.HTML, getValue());
+		String createURL = createURL("output", WebViewer.HTML, getValue());
 		StringReader stringReader = new StringReader(
-				"<html><head><meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=" + createURL
-						+ "\"></head><body></body></html>");
+				"<html><head><meta HTTP-EQUIV=\"REFRESH\" content=\"0; url="
+						+ createURL
+						+ "\"></head><body><div style=\"width:100%; height:100%; align:center; font-family:Tahoma,Arial; font-size:10px; font-weight:bold;\" id=\"progressMessage\" >Loading Report. This may take a while...</div></body></html>");
 		return new ReaderInputStream(stringReader);
 	}
 
@@ -133,10 +134,11 @@ public class BirtReportRepresentation extends AbstractInformationRepresentation 
 		}
 
 		// So far, only report name is encoded as utf-8 format
-		return getBaseURL() + servletName
+		return getBaseURL()
+				+ servletName
 				+ "?" //$NON-NLS-1$
 				+ "__report=" + encodedReportName //$NON-NLS-1$
-				+ ("run".equalsIgnoreCase(servletName) ? "" : "&__document=" + encodedDocumentName) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ("output".equalsIgnoreCase(servletName) ? "" : "&__document=" + encodedDocumentName) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ "&__format=" + format //$NON-NLS-1$
 				+ "&__svg=" + String.valueOf(bSVGFlag) //$NON-NLS-1$
 				+ (WebViewer.LocaleTable.containsKey(locale) ? "&__locale=" + WebViewer.LocaleTable.get(locale) : "") //$NON-NLS-1$ //$NON-NLS-2$

@@ -109,7 +109,12 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 	private final Adapter changeAdapter = new AdapterImpl() {
 		@Override
 		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
-			NotificationView.this.masterDetail.viewer.refresh();
+			getSite().getShell().getDisplay().asyncExec(new Runnable() {
+
+				public void run() {
+					NotificationView.this.masterDetail.viewer.refresh();
+				}
+			});
 		};
 	};
 

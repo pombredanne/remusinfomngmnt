@@ -118,7 +118,7 @@ public class TwitterImageCache {
 					&& repositoryImplementation instanceof TwitterRepository) {
 				Twitter api = ((TwitterRepository) repositoryImplementation).getApi();
 				try {
-					URL profileImageUrl = api.getUserDetail(getDefault).getProfileImageURL();
+					URL profileImageUrl = api.showUser(getDefault).getProfileImageURL();
 					checkCache(getDefault, profileImageUrl, new ImageCacheCallBack() {
 						public void callBack(final String path2File) {
 							if (callback != null) {

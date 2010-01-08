@@ -37,6 +37,22 @@
             structuredefinition="structuredefinition.xmi"
             type="TWITTER">
       </information>
+      <information
+            excludeFromIndex="true"
+            icon="icons/iconexperience/users.png"
+            name="Twitter User Log"
+            presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterUserInfoRepresentation"
+            structuredefinition="userlogdefinition.xmi"
+            type="TWITTER-USER">
+      </information>
+      <information
+            excludeFromIndex="true"
+            icon="icons/iconexperience/document_chart.png"
+            name="Twitter User-Details"
+            presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterDetailledInfoRepresentation"
+            structuredefinition="detaildefinition.xmi"
+            type="TWITTER-DETAIL">
+      </information>
    </extension>
    <extension
          point="org.remus.infomngmnt.ui.informationUi">

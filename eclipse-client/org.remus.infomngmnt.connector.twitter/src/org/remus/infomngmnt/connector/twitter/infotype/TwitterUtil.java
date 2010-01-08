@@ -51,6 +51,7 @@ public class TwitterUtil {
 	public static final String URL_REGEXP = "((mailto\\:|(news|(ht|f)tp(s?))\\://){1}\\S+[^\\(\\)])"; //$NON-NLS-1$
 
 	public static final String HREF_USER_PREFIX = "user"; //$NON-NLS-1$
+	public static final String REPLY_USER_PREFIX = "reply"; //$NON-NLS-1$
 	public static final String HREF_KEYWORD_PREFIX = "keyword"; //$NON-NLS-1$
 
 	public static InformationUnit buildMessage(final Status status) {
@@ -65,6 +66,7 @@ public class TwitterUtil {
 		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID, status.getId());
 		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE, status.getSource());
 		edit.setValue(message, TwitterActivator.REPLY_ID, status.getInReplyToScreenName());
+		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID, status.getInReplyToStatusId());
 		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, status.getUser().getName());
 		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, status.getUser()
 				.getScreenName());

@@ -39,8 +39,8 @@
    <features>
       <feature id="org.remus.infomngmnt.core.feature" version="1.0.0.qualifier"/>
       <feature id="org.remus.infomngmnt.infotypes.feature" version="1.0.0.qualifier"/>
-      <feature id="org.remus.infomngmnt.repository.feature" version="1.0.0.qualifier"/>
       <feature id="org.remus.infomngmnt.reportruntime.feature" version="1.0.0.qualifier"/>
+      <feature id="org.remus.infomngmnt.repository.feature" version="1.0.0.qualifier"/>
       <feature id="org.remus.infomngmnt.reporttemplates.feature" version="1.0.0.qualifier"/>
    </features>
 

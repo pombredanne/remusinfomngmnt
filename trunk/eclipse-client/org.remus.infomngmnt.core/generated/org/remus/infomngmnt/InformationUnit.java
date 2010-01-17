@@ -41,6 +41,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getKeywords <em>Keywords</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getCalendarEntry <em>Calendar Entry</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getBinaryReferences <em>Binary References</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationUnit#getComments <em>Comments</em>}</li>
  * </ul>
  * </p>
  *
@@ -398,5 +399,21 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @generated
 	 */
 	void setBinaryReferences(BinaryReference value);
+
+	/**
+	 * Returns the value of the '<em><b>Comments</b></em>' containment reference list.
+	 * The list contents are of type {@link org.remus.infomngmnt.Comment}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Comments</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Comments</em>' containment reference list.
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_Comments()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Comment> getComments();
 
 } // InformationUnit

@@ -29,6 +29,8 @@
         eType="#//CalendarEntry" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="binaryReferences" eType="#//BinaryReference"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
+        eType="#//Comment" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BinaryReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -316,5 +318,17 @@
     <eLiterals name="BOOLEAN" value="3"/>
     <eLiterals name="BINARY" value="4"/>
     <eLiterals name="DOUBLE" value="5"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Comment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rating" eType="#//Rating"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Rating">
+    <eLiterals name="USELESS"/>
+    <eLiterals name="POOR" value="1"/>
+    <eLiterals name="AVERAGE" value="2"/>
+    <eLiterals name="HELPFUL" value="3"/>
+    <eLiterals name="FANTASTIC" value="4"/>
   </eClassifiers>
 </ecore:EPackage>

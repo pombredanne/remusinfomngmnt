@@ -131,6 +131,7 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 			case InfomngmntPackage.INFORMATION_STRUCTURE_DEFINITION: return createInformationStructureDefinition();
 			case InfomngmntPackage.INFORMATION_STRUCTURE_ITEM: return createInformationStructureItem();
 			case InfomngmntPackage.DYNAMIC_STRUCTURE: return createDynamicStructure();
+			case InfomngmntPackage.COMMENT: return createComment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -155,6 +156,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return createSeverityFromString(eDataType, initialValue);
 			case InfomngmntPackage.INFORMATION_STRUCTURE_TYPE:
 				return createInformationStructureTypeFromString(eDataType, initialValue);
+			case InfomngmntPackage.RATING:
+				return createRatingFromString(eDataType, initialValue);
 			case InfomngmntPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			default:
@@ -181,6 +184,8 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 				return convertSeverityToString(eDataType, instanceValue);
 			case InfomngmntPackage.INFORMATION_STRUCTURE_TYPE:
 				return convertInformationStructureTypeToString(eDataType, instanceValue);
+			case InfomngmntPackage.RATING:
+				return convertRatingToString(eDataType, instanceValue);
 			case InfomngmntPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			default:
@@ -503,6 +508,16 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Comment createComment() {
+		CommentImpl comment = new CommentImpl();
+		return comment;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -613,6 +628,26 @@ public class InfomngmntFactoryImpl extends EFactoryImpl implements InfomngmntFac
 	 * @generated
 	 */
 	public String convertInformationStructureTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Rating createRatingFromString(EDataType eDataType, String initialValue) {
+		Rating result = Rating.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertRatingToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

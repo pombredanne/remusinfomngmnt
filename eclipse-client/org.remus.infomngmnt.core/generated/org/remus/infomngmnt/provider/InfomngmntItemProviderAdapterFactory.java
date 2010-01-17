@@ -867,6 +867,29 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.remus.infomngmnt.Comment} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CommentItemProvider commentItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.remus.infomngmnt.Comment}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCommentAdapter() {
+		if (commentItemProvider == null) {
+			commentItemProvider = new CommentItemProvider(this);
+		}
+
+		return commentItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -999,6 +1022,7 @@ public class InfomngmntItemProviderAdapterFactory extends InfomngmntAdapterFacto
 		if (informationStructureDefinitionItemProvider != null) informationStructureDefinitionItemProvider.dispose();
 		if (informationStructureItemItemProvider != null) informationStructureItemItemProvider.dispose();
 		if (dynamicStructureItemProvider != null) dynamicStructureItemProvider.dispose();
+		if (commentItemProvider != null) commentItemProvider.dispose();
 	}
 
 }

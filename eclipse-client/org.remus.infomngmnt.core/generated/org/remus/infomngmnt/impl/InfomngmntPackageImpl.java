@@ -38,6 +38,7 @@ import org.remus.infomngmnt.CalendarEntryType;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
+import org.remus.infomngmnt.Comment;
 import org.remus.infomngmnt.DynamicStructure;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
@@ -52,6 +53,7 @@ import org.remus.infomngmnt.NewElementRules;
 import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationCollection;
 import org.remus.infomngmnt.NotificationImportance;
+import org.remus.infomngmnt.Rating;
 import org.remus.infomngmnt.RecentlyUsedKeywords;
 import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteObject;
@@ -306,6 +308,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	private EClass dynamicStructureEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass commentEClass = null;
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -340,6 +349,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	private EEnum informationStructureTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum ratingEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -548,6 +564,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EReference getInformationUnit_BinaryReferences() {
 		return (EReference)informationUnitEClass.getEStructuralFeatures().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInformationUnit_Comments() {
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -1680,6 +1705,42 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getComment() {
+		return commentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComment_Author() {
+		return (EAttribute)commentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComment_Comment() {
+		return (EAttribute)commentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComment_Rating() {
+		return (EAttribute)commentEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1725,6 +1786,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 */
 	public EEnum getInformationStructureType() {
 		return informationStructureTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getRating() {
+		return ratingEEnum;
 	}
 
 	/**
@@ -1793,6 +1863,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__KEYWORDS);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__CALENDAR_ENTRY);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__BINARY_REFERENCES);
+		createEReference(informationUnitEClass, INFORMATION_UNIT__COMMENTS);
 
 		binaryReferenceEClass = createEClass(BINARY_REFERENCE);
 		createEAttribute(binaryReferenceEClass, BINARY_REFERENCE__ID);
@@ -1972,6 +2043,11 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(dynamicStructureEClass, DYNAMIC_STRUCTURE__LOWER_BOUND);
 		createEAttribute(dynamicStructureEClass, DYNAMIC_STRUCTURE__UPPER_BOUND);
 
+		commentEClass = createEClass(COMMENT);
+		createEAttribute(commentEClass, COMMENT__AUTHOR);
+		createEAttribute(commentEClass, COMMENT__COMMENT);
+		createEAttribute(commentEClass, COMMENT__RATING);
+
 		// Create enums
 		synchronizationStateEEnum = createEEnum(SYNCHRONIZATION_STATE);
 		synchronizationActionEEnum = createEEnum(SYNCHRONIZATION_ACTION);
@@ -1979,6 +2055,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		notificationImportanceEEnum = createEEnum(NOTIFICATION_IMPORTANCE);
 		severityEEnum = createEEnum(SEVERITY);
 		informationStructureTypeEEnum = createEEnum(INFORMATION_STRUCTURE_TYPE);
+		ratingEEnum = createEEnum(RATING);
 
 		// Create data types
 		objectEDataType = createEDataType(OBJECT);
@@ -2049,6 +2126,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getInformationUnit_Keywords(), ecorePackage.getEString(), "keywords", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_CalendarEntry(), this.getCalendarEntry(), null, "calendarEntry", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_BinaryReferences(), this.getBinaryReference(), null, "binaryReferences", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInformationUnit_Comments(), this.getComment(), null, "comments", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(binaryReferenceEClass, BinaryReference.class, "BinaryReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getBinaryReference_Id(), ecorePackage.getEString(), "id", null, 1, 1, BinaryReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2230,6 +2308,11 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getDynamicStructure_LowerBound(), ecorePackage.getEInt(), "lowerBound", null, 1, 1, DynamicStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDynamicStructure_UpperBound(), ecorePackage.getEInt(), "upperBound", null, 1, 1, DynamicStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getComment_Author(), ecorePackage.getEString(), "author", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComment_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComment_Rating(), this.getRating(), "rating", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(synchronizationStateEEnum, SynchronizationState.class, "SynchronizationState");
 		addEEnumLiteral(synchronizationStateEEnum, SynchronizationState.LOCAL_DELETED);
@@ -2276,6 +2359,13 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		addEEnumLiteral(informationStructureTypeEEnum, InformationStructureType.BOOLEAN);
 		addEEnumLiteral(informationStructureTypeEEnum, InformationStructureType.BINARY);
 		addEEnumLiteral(informationStructureTypeEEnum, InformationStructureType.DOUBLE);
+
+		initEEnum(ratingEEnum, Rating.class, "Rating");
+		addEEnumLiteral(ratingEEnum, Rating.USELESS);
+		addEEnumLiteral(ratingEEnum, Rating.POOR);
+		addEEnumLiteral(ratingEEnum, Rating.AVERAGE);
+		addEEnumLiteral(ratingEEnum, Rating.HELPFUL);
+		addEEnumLiteral(ratingEEnum, Rating.FANTASTIC);
 
 		// Initialize data types
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

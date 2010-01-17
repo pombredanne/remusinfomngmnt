@@ -307,13 +307,22 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__BINARY_REFERENCES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 14;
 
 	/**
+	 * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_UNIT__COMMENTS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 15;
+
+	/**
 	 * The number of structural features of the '<em>Information Unit</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 15;
+	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 16;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.BinaryReferenceImpl <em>Binary Reference</em>}' class.
@@ -922,6 +931,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int RULE_VALUE__BINARY_REFERENCES = INFORMATION_UNIT__BINARY_REFERENCES;
+
+	/**
+	 * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_VALUE__COMMENTS = INFORMATION_UNIT__COMMENTS;
 
 	/**
 	 * The number of structural features of the '<em>Rule Value</em>' class.
@@ -2418,6 +2436,52 @@ public interface InfomngmntPackage extends EPackage {
 	int DYNAMIC_STRUCTURE_FEATURE_COUNT = INFORMATION_STRUCTURE_ITEM_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CommentImpl <em>Comment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.impl.CommentImpl
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getComment()
+	 * @generated
+	 */
+	int COMMENT = 38;
+
+	/**
+	 * The feature id for the '<em><b>Author</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMENT__AUTHOR = 0;
+
+	/**
+	 * The feature id for the '<em><b>Comment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMENT__COMMENT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Rating</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMENT__RATING = 2;
+
+	/**
+	 * The number of structural features of the '<em>Comment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMENT_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2425,7 +2489,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationState()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_STATE = 38;
+	int SYNCHRONIZATION_STATE = 39;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.SynchronizationAction <em>Synchronization Action</em>}' enum.
@@ -2435,7 +2499,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSynchronizationAction()
 	 * @generated
 	 */
-	int SYNCHRONIZATION_ACTION = 39;
+	int SYNCHRONIZATION_ACTION = 40;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.CalendarEntryType <em>Calendar Entry Type</em>}' enum.
@@ -2445,7 +2509,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getCalendarEntryType()
 	 * @generated
 	 */
-	int CALENDAR_ENTRY_TYPE = 40;
+	int CALENDAR_ENTRY_TYPE = 41;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.NotificationImportance <em>Notification Importance</em>}' enum.
@@ -2455,7 +2519,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getNotificationImportance()
 	 * @generated
 	 */
-	int NOTIFICATION_IMPORTANCE = 41;
+	int NOTIFICATION_IMPORTANCE = 42;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.Severity <em>Severity</em>}' enum.
@@ -2465,7 +2529,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getSeverity()
 	 * @generated
 	 */
-	int SEVERITY = 42;
+	int SEVERITY = 43;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.InformationStructureType <em>Information Structure Type</em>}' enum.
@@ -2475,7 +2539,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getInformationStructureType()
 	 * @generated
 	 */
-	int INFORMATION_STRUCTURE_TYPE = 43;
+	int INFORMATION_STRUCTURE_TYPE = 44;
+
+	/**
+	 * The meta object id for the '{@link org.remus.infomngmnt.Rating <em>Rating</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.remus.infomngmnt.Rating
+	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRating()
+	 * @generated
+	 */
+	int RATING = 45;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -2485,7 +2559,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 44;
+	int OBJECT = 46;
 
 
 	/**
@@ -2496,7 +2570,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getIRepository()
 	 * @generated
 	 */
-	int IREPOSITORY = 45;
+	int IREPOSITORY = 47;
 
 
 	/**
@@ -2507,7 +2581,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getTransferWrapper()
 	 * @generated
 	 */
-	int TRANSFER_WRAPPER = 46;
+	int TRANSFER_WRAPPER = 48;
 
 
 	/**
@@ -2684,6 +2758,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getInformationUnit_BinaryReferences();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.InformationUnit#getComments <em>Comments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Comments</em>'.
+	 * @see org.remus.infomngmnt.InformationUnit#getComments()
+	 * @see #getInformationUnit()
+	 * @generated
+	 */
+	EReference getInformationUnit_Comments();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.BinaryReference <em>Binary Reference</em>}'.
@@ -4208,6 +4293,49 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getDynamicStructure_UpperBound();
 
 	/**
+	 * Returns the meta object for class '{@link org.remus.infomngmnt.Comment <em>Comment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Comment</em>'.
+	 * @see org.remus.infomngmnt.Comment
+	 * @generated
+	 */
+	EClass getComment();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Comment#getAuthor <em>Author</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Author</em>'.
+	 * @see org.remus.infomngmnt.Comment#getAuthor()
+	 * @see #getComment()
+	 * @generated
+	 */
+	EAttribute getComment_Author();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Comment#getComment <em>Comment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Comment</em>'.
+	 * @see org.remus.infomngmnt.Comment#getComment()
+	 * @see #getComment()
+	 * @generated
+	 */
+	EAttribute getComment_Comment();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Comment#getRating <em>Rating</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rating</em>'.
+	 * @see org.remus.infomngmnt.Comment#getRating()
+	 * @see #getComment()
+	 * @generated
+	 */
+	EAttribute getComment_Rating();
+
+	/**
 	 * Returns the meta object for enum '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4266,6 +4394,16 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getInformationStructureType();
+
+	/**
+	 * Returns the meta object for enum '{@link org.remus.infomngmnt.Rating <em>Rating</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Rating</em>'.
+	 * @see org.remus.infomngmnt.Rating
+	 * @generated
+	 */
+	EEnum getRating();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Object <em>Object</em>}'.
@@ -4451,6 +4589,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INFORMATION_UNIT__BINARY_REFERENCES = eINSTANCE.getInformationUnit_BinaryReferences();
+
+		/**
+		 * The meta object literal for the '<em><b>Comments</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INFORMATION_UNIT__COMMENTS = eINSTANCE.getInformationUnit_Comments();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.BinaryReferenceImpl <em>Binary Reference</em>}' class.
@@ -5655,6 +5801,40 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute DYNAMIC_STRUCTURE__UPPER_BOUND = eINSTANCE.getDynamicStructure_UpperBound();
 
 		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.CommentImpl <em>Comment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.impl.CommentImpl
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getComment()
+		 * @generated
+		 */
+		EClass COMMENT = eINSTANCE.getComment();
+
+		/**
+		 * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMENT__AUTHOR = eINSTANCE.getComment_Author();
+
+		/**
+		 * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMENT__COMMENT = eINSTANCE.getComment_Comment();
+
+		/**
+		 * The meta object literal for the '<em><b>Rating</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMMENT__RATING = eINSTANCE.getComment_Rating();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.SynchronizationState <em>Synchronization State</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5713,6 +5893,16 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum INFORMATION_STRUCTURE_TYPE = eINSTANCE.getInformationStructureType();
+
+		/**
+		 * The meta object literal for the '{@link org.remus.infomngmnt.Rating <em>Rating</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.remus.infomngmnt.Rating
+		 * @see org.remus.infomngmnt.impl.InfomngmntPackageImpl#getRating()
+		 * @generated
+		 */
+		EEnum RATING = eINSTANCE.getRating();
 
 		/**
 		 * The meta object literal for the '<em>Object</em>' data type.

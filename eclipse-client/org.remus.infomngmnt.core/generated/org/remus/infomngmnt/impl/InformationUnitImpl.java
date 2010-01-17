@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.CalendarEntry;
+import org.remus.infomngmnt.Comment;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.Link;
@@ -56,6 +57,7 @@ import org.remus.infomngmnt.Usage;
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getKeywords <em>Keywords</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getCalendarEntry <em>Calendar Entry</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getBinaryReferences <em>Binary References</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getComments <em>Comments</em>}</li>
  * </ul>
  * </p>
  *
@@ -301,6 +303,16 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @ordered
 	 */
 	protected BinaryReference binaryReferences;
+
+	/**
+	 * The cached value of the '{@link #getComments() <em>Comments</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComments()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Comment> comments;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -644,6 +656,18 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Comment> getComments() {
+		if (comments == null) {
+			comments = new EObjectContainmentEList<Comment>(Comment.class, this, InfomngmntPackage.INFORMATION_UNIT__COMMENTS);
+		}
+		return comments;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -655,6 +679,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return ((InternalEList<?>)getCalendarEntry()).basicRemove(otherEnd, msgs);
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
 				return basicSetBinaryReferences(null, msgs);
+			case InfomngmntPackage.INFORMATION_UNIT__COMMENTS:
+				return ((InternalEList<?>)getComments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -698,6 +724,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return getCalendarEntry();
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
 				return getBinaryReferences();
+			case InfomngmntPackage.INFORMATION_UNIT__COMMENTS:
+				return getComments();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -760,6 +788,10 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
 				setBinaryReferences((BinaryReference)newValue);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__COMMENTS:
+				getComments().clear();
+				getComments().addAll((Collection<? extends Comment>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -817,6 +849,9 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
 				setBinaryReferences((BinaryReference)null);
 				return;
+			case InfomngmntPackage.INFORMATION_UNIT__COMMENTS:
+				getComments().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -859,6 +894,8 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return calendarEntry != null && !calendarEntry.isEmpty();
 			case InfomngmntPackage.INFORMATION_UNIT__BINARY_REFERENCES:
 				return binaryReferences != null;
+			case InfomngmntPackage.INFORMATION_UNIT__COMMENTS:
+				return comments != null && !comments.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

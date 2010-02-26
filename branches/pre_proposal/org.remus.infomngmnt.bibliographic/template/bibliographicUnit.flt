@@ -1,0 +1,272 @@
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#setting url_escaping_charset="UTF-8">  
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_curvycorner}"></script>
+  <script type="text/JavaScript">
+	  window.onload = function()
+	  {
+	          settings = {
+	          tl: { radius: 5 },
+	          tr: { radius: 5 },
+	          bl: { radius: 0 },
+	          br: { radius: 0 },
+	          antiAlias: true,
+	          autoPad: true
+	      }
+	
+	      var myBoxObject = new curvyCorners(settings,"headerSection");
+	      myBoxObject.applyCornersToAll();
+	  }
+</script>
+  <title>${data.__label}</title>
+  <style type="text/css">
+  	.systemfont,body,td {
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
+	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	
+}
+ </style>
+<body>
+	<div style="margin:5px;">		 		
+		<table>
+			<tr>			
+				<td class="bold">Title:</td>
+				<td class="bold" colspan="2">${data.__label?html}</td>
+			</tr>
+			<#if data.bibtexkey?has_content >
+			<tr>
+				<td class="bold">Bibtexkey:</td>
+				<td>${data.bibtexkey?html}</td>
+			</tr>
+			</#if>			
+			<#if data.author?has_content >
+			<tr>
+				<td class="bold">Author:</td>
+				<td>${data.author?html}</td>
+			</tr>
+			</#if>
+			<#if data.journal?has_content >
+			<tr>
+				<td class="bold">Journal:</td>
+				<td>${data.journal?html}</td>
+			</tr>
+			</#if>
+			<#if data.booktitle?has_content >
+			<tr>
+				<td class="bold">Booktitle:</td>
+				<td>${data.booktitle?html}</td>
+			</tr>
+			</#if>
+			<#if data.chapter?has_content >
+			<tr>
+				<td class="bold">Chapter:</td>
+				<td>${data.chapter?html}</td>
+			</tr>
+			</#if>
+			<#if data.publisher?has_content >
+			<tr>
+				<td class="bold">Publisher:</td>
+				<td>${data.publisher?html}</td>
+			</tr>
+			</#if>
+			<#if data.year?has_content >
+			<tr>
+				<td class="bold">Year:</td>
+				<td>${data.year?html}</td>
+			</tr>
+			</#if>
+			<#if data.school?has_content >
+			<tr>
+				<td class="bold">School:</td>
+				<td>${data.school?html}</td>
+			</tr>
+			</#if>
+			<#if data.institution?has_content >
+			<tr>
+				<td class="bold">Institution:</td>
+				<td>${data.institution?html}</td>
+			</tr>
+			</#if>
+			
+			
+			<tr></tr>
+			
+			
+			<#if data.volume?has_content >
+			<tr>
+				<td class="bold">Volume:</td>
+				<td>${data.volume?html}</td>
+			</tr>
+			</#if>
+			<#if data.series?has_content >
+			<tr>
+				<td class="bold">Series:</td>
+				<td>${data.series?html}</td>
+			</tr>
+			</#if>
+			<#if data.address?has_content >
+			<tr>
+				<td class="bold">Address:</td>
+				<td>${data.address?html}</td>
+			</tr>
+			</#if>
+			<#if data.edition?has_content >
+			<tr>
+				<td class="bold">Edition:</td>
+				<td>${data.edition?html}</td>
+			</tr>
+			</#if>
+			<#if data.editor?has_content >
+			<tr>
+				<td class="bold">Editor:</td>
+				<td>${data.editor?html}</td>
+			</tr>
+			</#if>
+			<#if data.month?has_content >
+			<tr>
+				<td class="bold">Month:</td>
+				<td>${data.month?html}</td>
+			</tr>
+			</#if>
+			<#if data.pages?has_content >
+			<tr>
+				<td class="bold">Pages:</td>
+				<td>${data.pages?html}</td>
+			</tr>
+			</#if>
+			<#if data.number?has_content >
+			<tr>
+				<td class="bold">Number:</td>
+				<td>${data.number?html}</td>
+			</tr>
+			</#if>
+			<#if data.note?has_content >
+			<tr>
+				<td class="bold">Note:</td>
+				<td>${data.note?html}</td>
+			</tr>
+			</#if>
+			<#if data.organization?has_content >
+			<tr>
+				<td class="bold">Organization:</td>
+				<td>${data.organization?html}</td>
+			</tr>
+			</#if>
+			<#if data.howpublished?has_content >
+			<tr>
+				<td class="bold">Howpublished:</td>
+				<td>${data.howpublished?html}</td>
+			</tr>
+			</#if>
+			<#if data.eprint?has_content >
+			<tr>
+				<td class="bold">Eprint:</td>
+				<td>${data.eprint?html}</td>
+			</tr>
+			</#if>
+			<#if data.annote?has_content >
+			<tr>
+				<td class="bold">Annotation:</td>
+				<td>${data.annote?html}</td>
+			</tr>
+			</#if>
+			<#if data.type?has_content >
+			<tr>
+				<td class="bold">Type:</td>
+				<td>${data.type?html}</td>
+			</tr>
+			</#if>
+			<#if data.annote?has_content >
+			<tr>
+				<td class="bold">Annotation:</td>
+				<td>${data.annote?html}</td>
+			</tr>
+			</#if>
+			<#if data.isbn?has_content >
+			<tr>
+				<td class="bold">ISBN:</td>
+				<td>${data.isbn?html}</td>
+			</tr>
+			</#if>
+			<#if data.issn?has_content >
+			<tr>
+				<td class="bold">ISSN:</td>
+				<td>${data.issn?html}</td>
+			</tr>
+			</#if>
+			<#if data.doi?has_content >
+			<tr>
+				<td class="bold">DOI:</td>
+				<td>${doi.annote?html}</td>
+			</tr>
+			</#if>
+						
+			<tr></tr>
+			<tr>
+			<#if data.__keywords?has_content >
+				<td class="bold">Keywords:</td>
+				<td>${data.__keywords?html}</td>
+			</tr>
+			</#if>
+			<#if data.__description?has_content >
+			<tr>
+				<td class="bold">Description:</td>
+				<td>${data.__description?html}</td>
+			</tr>
+			</#if>
+			
+			<tr></tr>
+			<tr>
+			<#if data.url?has_content >
+				<td class="bold">URL:</td>
+				<td><a href="${data.url?html}">${data.url?html}</a></td>
+			</tr>
+			</#if>
+			<#if (dynamic.files?size > 0) >			
+			<tr>
+				<td class="bold">Linked Files:</td>
+				<td>
+					${dynamic.files?size} file(s) attached. Switch to edit tab.
+				</td>
+			</tr>
+			</#if>
+		</table>
+	</div>
+	<div style="margin:8px;">
+		<#if data.abstract?has_content >
+			<p>
+				<div class="bold">Abstract:</div>				
+				${data.abstract?html?replace("\n","<br>")}
+			</p>
+		</#if>
+	</div>
+	<div style="margin:8px;">
+		<#if data.contents?has_content >
+			<p>
+				<div class="bold">Contents:</div>				
+				${data.contents?html?replace("\n","<br>")}
+			</p>
+		</#if>
+	</div>
+	<div style="margin:8px;">
+		<#if data.summary?has_content >
+			<p>
+				<div class="bold">Summary:</div>				
+				${data.summary?html?replace("\n","<br>")}
+			</p>
+		</#if>
+	</div>
+
+</body>
+</html>

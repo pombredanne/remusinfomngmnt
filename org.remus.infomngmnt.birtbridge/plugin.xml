@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editortrimcontribution
+            commandId="org.remus.infomngmnt.birtbridge.openReport"
+            typeId="REPORT">
+      </editortrimcontribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.remus.infomngmnt.birtbridge.handler.OpenReportInEditModeHandler"
+            id="org.remus.infomngmnt.birtbridge.openReport"
+            name="Edit Report">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.birtbridge.openReport"
+            icon="icons/report_perspective.gif">
+      </image>
+   </extension>
+
+</plugin>

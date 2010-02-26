@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="rules">
-   <implementation class="org.remus.infomngmnt.core.model.RuleUtil"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.core.services.IRuleService"/>
-   </service>
-</component>

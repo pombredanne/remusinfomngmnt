@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="notificationmanager">
-   <implementation class="org.remus.infomngmnt.core.internal.jobs.RemusNotificationManager"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.core.services.INotificationManagerManager"/>
-   </service>
-</component>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="calendarservice">
-   <implementation class="org.remus.infomngmnt.ui.calendar.CalendarServiceImpl"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.ccalendar.service.ICalendarService"/>
-   </service>
-</component>

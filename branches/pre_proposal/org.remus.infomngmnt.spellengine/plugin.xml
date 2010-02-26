@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.spellengine.SpellEngingPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.workbench.texteditor.spellingEngine">
+      <engine
+            class="org.remus.infomngmnt.spellengine.DefaultSpellingEngine"
+            default="true"
+            id="org.remus.infomngmnt.spellengine.engine2">
+      </engine>
+   </extension>
+
+</plugin>

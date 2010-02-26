@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Spellengine
+Bundle-SymbolicName: org.remus.infomngmnt.spellengine;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.spellengine.SpellActivator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.jface.text,
+ org.eclipse.core.variables,
+ org.eclipse.ui.editors
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy

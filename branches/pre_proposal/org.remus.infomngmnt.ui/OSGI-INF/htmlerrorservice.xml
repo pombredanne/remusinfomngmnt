@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="htmlerrorservice">
+   <implementation class="org.remus.infomngmnt.ui.internal.serviceimpl.HtmlErrorGenerator"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.core.services.IHtmlGenerationErrorGenerator"/>
+   </service>
+</component>

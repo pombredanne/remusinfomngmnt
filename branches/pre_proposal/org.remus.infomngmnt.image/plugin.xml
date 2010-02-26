@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            icon="icons/iconexperience/photo_landscape.png"
+            name="Photo/Graphics"
+            presentation="org.remus.infomngmnt.image.core.ImageInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
+            type="IMAGE">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.imagetransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.urlTransfer">
+         </validTransfers>
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.remus.infomngmnt.ui.simple"
+            class="org.remus.infomngmnt.image.ui.NewImageWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/photo_landscape_new.png"
+            id="org.remus.infomngmnt.image.newImageWizard"
+            name="Photo/Graphics">
+         <description>
+            This information type enables the handling of an image or a graphic.
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.image.ui.ImageEditPage"
+            icon="icons/iconexperience/photo_landscape_edit.png"
+            id="org.remus.infomngmnt.image.imageEditPage"
+            label="Edit Photo/Graphics"
+            type="IMAGE">
+      </editPage>
+      <transferpreferences
+            implementation="org.remus.infomngmnt.image.preferences.ImageCreationPreferencePage"
+            transferId="org.remus.infomngmnt.core.imagetransfer"
+            typeId="IMAGE">
+      </transferpreferences>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.image.ui.NewImageWizard"
+            typeId="IMAGE">
+      </creationUiTrigger>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.image.newImageWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.image.showCommentImage"
+            resource="icons/iconexperience/messages.png">
+      </referenceResource>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.common.ui.trayAction">
+      <trayAction
+            class="org.remus.infomngmnt.image.tray.CreateScreenShotAction"
+            icon="icons/iconexperience/screenshot_new.png"
+            id="org.remus.infomngmnt.image.screenShot"
+            name="Create Screenshot">
+      </trayAction>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            class="org.remus.infomngmnt.image.importt.ImportImageFromDiskWizard"
+            icon="icons/iconexperience/photo_landscape.png"
+            id="org.remus.infomngmnt.image.imageFromDirectory"
+            name="Images from Filesystem">
+      </wizard>
+   </extension>
+
+</plugin>

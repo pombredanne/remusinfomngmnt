@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/loudspeaker.png"
+            name="Audio"
+            presentation="org.remus.infomngmnt.audio.internal.AudioRepresentation"
+            structuredefinition="structuredefinition.xmi"
+            type="AUDIO">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="true"
+            category="org.remus.infomngmnt.ui.simple"
+            class="org.remus.infomngmnt.audio.wizard.NewAudioWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            hasPages="true"
+            icon="icons/iconexperience/loudspeaker_new.png"
+            id="org.remus.infomngmnt.audio.newWizard"
+            name="Audio">
+      </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.audio.internal.AudioEditPage"
+            id="org.remus.infomngmnt.audio.editPage1"
+            label="Edit Audio"
+            type="AUDIO">
+      </editPage>
+   </extension>
+
+</plugin>

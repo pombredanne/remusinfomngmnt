@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.core/model/infomngmnt.ecore" type="STRING">
-  <structureItems type="STRING" label="" id="url" createAlways="true"/>
-  <structureItems type="STRING" label="" id="username" createAlways="true"/>
-</infomngmnt:InformationStructureDefinition>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.remus.infomngmnt.oda/generated"
+    modelPluginID="org.remus.infomngmnt.oda.core" modelName="Oda" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>oda.ecore</foreignModel>
+  <genPackages prefix="Oda" basePackage="org.remus" disposableProviderFactory="true"
+      ecorePackage="oda.ecore#/">
+    <genClasses ecoreClass="oda.ecore#//Dataset">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference oda.ecore#//Dataset/columns"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference oda.ecore#//Dataset/selection"/>
+    </genClasses>
+    <genClasses ecoreClass="oda.ecore#//Column">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oda.ecore#//Column/name"/>
+    </genClasses>
+    <genClasses ecoreClass="oda.ecore#//Sorter"/>
+    <genClasses ecoreClass="oda.ecore#//Selection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oda.ecore#//Selection/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oda.ecore#//Selection/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oda.ecore#//Selection/elementSelector"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oda.ecore#//Selection/infoTypeId"/>
+    </genClasses>
+    <genClasses ecoreClass="oda.ecore#//ResultSet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference oda.ecore#//ResultSet/rows"/>
+    </genClasses>
+    <genClasses ecoreClass="oda.ecore#//Row">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oda.ecore#//Row/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

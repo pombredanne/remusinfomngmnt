@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Birtreport
+Bundle-SymbolicName: org.remus.infomngmnt.birtreport;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.birtreport.ReportActivator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.remus.infomngmnt.core,
+ org.remus.infomngmnt.ui,
+ org.eclipse.ui.forms;bundle-version="3.4.0",
+ org.remus.infomngmnt.common.ui;bundle-version="1.0.0",
+ org.eclipse.birt.report.viewer;bundle-version="2.5.1"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.remus.infomngmnt.birtreport

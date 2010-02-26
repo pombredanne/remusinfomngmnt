@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.link.delicious.DelicicousRepository"
+            credentialprovider="org.remus.infomngmnt.link.delicious.security.DeliciousCredentialProvider"
+            icon="icons/delicious.gif"
+            id="org.remus.infomngmnt.link.delicious"
+            name="Delicious">
+         <changeDefinition
+               id="org.remus.infomngmnt.link.delicious.linkChange"
+               informationType="LINK">
+            <changeObjectIdValue
+                  path="@label"></changeObjectIdValue>
+            <changeObjectIdValue
+                  path="@keywords">
+            </changeObjectIdValue>
+            <changeObjectIdValue
+                  path="@description">
+            </changeObjectIdValue>
+            <changeObjectIdValue
+                  path="LINK">
+            </changeObjectIdValue>
+         </changeDefinition>
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.link.delicious.ui"
+            newWizard="org.remus.infomngmnt.link.delicious.ui.NewDeliciousRepositoryWizard"
+            repository-id="org.remus.infomngmnt.link.delicious">
+      </respository>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.ui.repositories"
+            class="org.remus.infomngmnt.link.delicious.DeliciousPreferencePage"
+            id="org.remus.infomngmnt.link.delicious.preferencePage"
+            name="Del.icio.us">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.link.delicious.pref.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>

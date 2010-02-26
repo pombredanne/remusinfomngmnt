@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Integration Plug-in
+Bundle-SymbolicName: org.remus.infomngmnt.ide.integration;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.ide.integration.Activator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.navigator,
+ org.eclipse.core.resources,
+ org.eclipse.jdt.ui;resolution:=optional
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Import-Package: org.remus.infomngmnt.common.service,
+ org.remus.infomngmnt.common.ui,
+ org.remus.infomngmnt.resources.util,
+ org.remus.infomngmnt.ui.desktop

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/presentation.png"
+            name="Online Media"
+            presentation="org.remus.infomngmnt.onlineresource.extension.OnlineMediaInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
+            type="ONLINERESOURCE">
+      </information>
+   </extension>
+
+</plugin>

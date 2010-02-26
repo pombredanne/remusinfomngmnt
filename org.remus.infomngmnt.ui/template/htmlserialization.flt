@@ -1,0 +1,52 @@
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#setting url_escaping_charset="UTF-8">  
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</script>
+  <title>${data.__label}</title>
+  <style type="text/css">
+  	.systemfont,td {
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
+	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	</style>
+</head>
+<body>
+	<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+	<div style="margin:5px;">
+		<table>
+			<tr>
+				<td class="bold">Information Unit:</td>
+				<td>${data.__label?html}</td>
+			</tr>
+			<tr>
+				<td colspan="2">There was an error while rendering this site. The following actions are available:</td>
+			</tr>
+			<tr>
+				<td colspan="2"><ul>
+					<li><a href="javascript:executeCmd('org.remus.infomngmnt.ui.buildInfoFile','infoId','${data.__id?j_string}');">Refresh</a></li>
+					<li><a href="javascript:openFile('mailto:errorreporter@remus-software.org?subject=Error-Report&body=Please%20paste%20the%20stacktrace%20into%20the%20mails%20body.');">Send this error to remus-software.org</a></li>
+				</ul></td>
+			</tr>
+		</table>
+	</div>
+  	<div>
+  		<div class="bold">Stacktrace</div>
+  		<div id="stack" style="overflow-x: scroll; height: 300px;">
+  			${additionals.stacktrace?html?replace("\n","<br>")}
+  		 </div>
+  	</div>
+  	<div style="text-align:right;" class="systemfont">
+  		<a href="javascript:executeCmd('org.remus.infomngmnt.ui.CopyTextToClipboard','text',document.getElementById('stack').innerHTML);">Copy stacktrace to clipboard</a>
+  	</div>
+</body>
+</html>

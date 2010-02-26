@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model"
+    nsURI="http:///org/aspencloud/calypso/core/model.ecore" nsPrefix="org.aspencloud.calypso.core.model">
+  <eClassifiers xsi:type="ecore:EClass" name="CEvent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateAbsolute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenceEvent" eType="#//CEvent"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alarm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predecessors" upperBound="-1"
+        eType="#//CEvent" eOpposite="#//CEvent/successors"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="successors" upperBound="-1"
+        eType="#//CEvent" eOpposite="#//CEvent/predecessors"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alarmDue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Task">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="details" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="#//Tasklist"
+        eOpposite="#//Tasklist/tasks"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="start" eType="#//StartEvent"
+        containment="true" resolveProxies="false" eOpposite="#//StartEvent/task"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="end" eType="#//EndEvent"
+        containment="true" resolveProxies="false" eOpposite="#//EndEvent/task"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="due" eType="#//DueEvent"
+        containment="true" resolveProxies="false" eOpposite="#//DueEvent/task"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cleared" eType="#//ClearedEvent"
+        containment="true" resolveProxies="false" eOpposite="#//ClearedEvent/task"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="progress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TaskType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notification" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="readonly" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClearedEvent" eSuperTypes="#//CEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task" transient="true"
+        eOpposite="#//Task/cleared"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Tasklist">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tasks" upperBound="-1"
+        eType="#//Task" containment="true" eOpposite="#//Task/owner"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DueEvent" eSuperTypes="#//CEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task" transient="true"
+        eOpposite="#//Task/due"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EndEvent" eSuperTypes="#//CEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task" transient="true"
+        eOpposite="#//Task/end"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StartEvent" eSuperTypes="#//CEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task" transient="true"
+        eOpposite="#//Task/start"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TaskType">
+    <eLiterals name="ONE_TIME"/>
+    <eLiterals name="WEEKLY" value="1"/>
+    <eLiterals name="TWO_WEEK" value="2"/>
+    <eLiterals name="MONTHLY" value="3"/>
+    <eLiterals name="ANNUAL" value="4"/>
+  </eClassifiers>
+</ecore:EPackage>

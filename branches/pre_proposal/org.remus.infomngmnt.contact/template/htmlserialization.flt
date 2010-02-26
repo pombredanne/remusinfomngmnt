@@ -1,0 +1,262 @@
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#setting url_escaping_charset="UTF-8">  
+<#assign infoUnit = doc.InformationUnit>
+
+<#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
+<#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >
+
+<#assign email= infoUnit["childValues[@type='emaildef']/@stringValue"]>
+<#assign role = infoUnit["childValues[@type='role']/@stringValue"]>
+<#assign organization = infoUnit["childValues[@type='organization']/@stringValue"]>
+
+<#assign pnHome = infoUnit["childValues[@type='pnHome']/@stringValue"]>
+<#assign pnMobile = infoUnit["childValues[@type='pnMobile']/@stringValue"]>
+<#assign pnCar = infoUnit["childValues[@type='pnCar']/@stringValue"]>
+<#assign pnMailbox = infoUnit["childValues[@type='pnMailbox']/@stringValue"]>
+<#assign pnFAX = infoUnit["childValues[@type='pnFAX']/@stringValue"]>
+<#assign pnIsdn = infoUnit["childValues[@type='pnIsdn']/@stringValue"]>
+<#assign pnModem = infoUnit["childValues[@type='pnModem']/@stringValue"]>
+<#assign pnOthers = infoUnit["childValues[@type='pnOthers']/@stringValue"]>
+<#assign pnVoice = infoUnit["childValues[@type='pnVoice']/@stringValue"]>
+<#assign pnWork = infoUnit["childValues[@type='pnWork']/@stringValue"]>
+
+<#assign worklatitude = infoUnit["childValues[@type='workAdress']/childValues[@type='latitude']/@stringValue"]>
+<#assign worklongtitude = infoUnit["childValues[@type='workAdress']/childValues[@type='longitude']/@stringValue"]>
+<#assign homelatitude = infoUnit["childValues[@type='homeAdress']/childValues[@type='latitude']/@stringValue"]>
+<#assign homelongitude = infoUnit["childValues[@type='homeAdress']/childValues[@type='longitude']/@stringValue"]>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_images}"></script>
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_curvycorner}"></script>
+  <script type="text/JavaScript">
+	  window.onload = function()
+	  {
+	          settings = {
+	          tl: { radius: 5 },
+	          tr: { radius: 5 },
+	          bl: { radius: 0 },
+	          br: { radius: 0 },
+	          antiAlias: true,
+	          autoPad: true
+	      }
+	
+	      var myBoxObject = new curvyCorners(settings,"headerSection");
+	      myBoxObject.applyCornersToAll();
+	     
+	  }
+</script>
+  <title>${infoUnit.@label}</title>
+  <style type="text/css">
+  	.systemfont,body,td {
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
+	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	
+}
+ </style>
+<body>
+	<div style="width:100%;">
+		<table cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<#if additionals.photo?has_content>
+				<td rowspan="4"><img src="${additionals.photo}" border="0"></td>
+				<td rowspan="4">&nbsp;&nbsp;</td>
+				</#if>
+				<td class="bold">Name:</td>
+				<td>${infoUnit.@label}</td>
+			</tr>
+			<tr>
+				<td class="bold">Email:</td>
+				<td>
+				<#if email?has_content>
+					<a href="mailto:${infoUnit.@label}&lt;${email?html}&gt;">${email?html}</a>
+				<#else>
+					n.a.
+				</#if>
+				</td>
+			</tr>
+			<tr>
+				<td class="bold">Role:</td>
+				<td>
+				<#if role?has_content>
+					${role?html}
+				<#else>
+					n.a.
+				</#if>
+				</td>
+			</tr>
+			<tr>
+				<td class="bold">Organization:</td>
+				<td>
+				<#if organization?has_content>
+					${organization?html}
+				<#else>
+					n.a.
+				</#if>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>&nbsp;</div>
+	<#if pnHome?has_content || pnMobile?has_content || pnCar?has_content || pnMailbox?has_content || pnFAX?has_content || pnIsdn?has_content || pnModem?has_content || pnOthers?has_content || pnVoice?has_content || pnWork?has_content>  
+	<div class="headerSection" style="margin:0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  		<span class="systemfont" style="font-weight:bold;">Phone</span>
+  	</div>
+  	<div style="margin-left:5px;margin-top:10px;">
+  	<table cellpadding="0" cellspacing="0" border="0">
+  		<#if pnHome?has_content>
+  		<tr>
+  			<td class="bold">Home</td>
+  			<td>&nbsp;</td>
+  			<td>${pnHome?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnHome)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnMobile?has_content>
+  		<tr>
+  			<td class="bold">Mobile</td>
+  			<td>&nbsp;</td>
+  			<td>${pnMobile?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnMobile)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnCar?has_content>
+  		<tr>
+  			<td class="bold">Car</td>
+  			<td>&nbsp;</td>
+  			<td>${pnCar?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnCar)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnMailbox?has_content>
+  		<tr>
+  			<td class="bold">Mailbox</td>
+  			<td>&nbsp;</td>
+  			<td>${pnMailbox?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnMailbox)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnFAX?has_content>
+  		<tr>
+  			<td class="bold">FAX</td>
+  			<td>&nbsp;</td>
+  			<td>${pnFAX?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnFAX)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnIsdn?has_content>
+  		<tr>
+  			<td class="bold">ISDN</td>
+  			<td>&nbsp;</td>
+  			<td>${pnIsdn?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnIsdn)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnModem?has_content>
+  		<tr>
+  			<td class="bold">Modem</td>
+  			<td>&nbsp;</td>
+  			<td>${pnModem?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnModem)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnVoice?has_content>
+  		<tr>
+  			<td class="bold">Voice</td>
+  			<td>&nbsp;</td>
+  			<td>${pnVoice?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnVoice)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnWork?has_content>
+  		<tr>
+  			<td class="bold">Work</td>
+  			<td>&nbsp;</td>
+  			<td>${pnWork?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnWork)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  		<#if pnOthers?has_content>
+  		<tr>
+  			<td class="bold">Other</td>
+  			<td>&nbsp;</td>
+  			<td>${pnOthers?html}</td>
+  			<#if additionals.renderPhoneLinks>
+  				<td><a href="${additionals.phonePattern?replace("{0}",pnOthers)?replace(" ","")}"><img src="${.globals.sharedResources.org_remus_infomngmnt_contact_phone}" width="16" height="16" border="0"></a></td>
+  			</#if>
+  		</tr>
+  		</#if>
+  	</table>
+  	</div>
+  	<div>&nbsp;</div>
+  	</#if>
+  	<#if additionals.formattedWorkAdress?has_content || additionals.formattedHomeAdress?has_content>
+  		<div class="headerSection" style="margin:0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  		<span class="systemfont" style="font-weight:bold;">Adress</span>
+  	</div>
+  	<div style="margin-left:5px;margin-top:10px;">
+  	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+  		<#if additionals.formattedWorkAdress?has_content && (additionals.formattedWorkAdress?trim?length > 0)>
+  			<tr>
+  				<td class="bold" valign="top">Work</td>
+  				<td>&nbsp;</td>
+  				<td valign="top">${additionals.formattedWorkAdress?replace("\n","<br>")}</td>
+  				<#if additionals.createMapsImage && additionals.mapskey?has_content && worklatitude?has_content && worklongtitude?has_content>
+  				<td>&nbsp;</td>
+  				<td align="right"><img src="https://maps-api-ssl.google.com/staticmap?key=${additionals.mapskey?url}&size=${additionals.mapsWidth?url}x${additionals.mapsHeight?url}&zoom=${additionals.mapsZoom?url}&markers=${worklatitude},${worklongtitude}"</td>
+  				<#else>
+  				<td colspan="2">&nbsp;</td>
+  				</#if>
+  			</tr>
+	  	</#if>
+	  	<#if additionals.formattedWorkAdress?has_content && additionals.formattedHomeAdress?has_content && (additionals.formattedHomeAdress?trim?length > 0) && (additionals.formattedWorkAdress?trim?length > 0)>
+	  		<tr><td colspan="5" style="border-bottom:1px solid black;">&nbsp;</td></tr>
+	  		<tr><td colspan="5">&nbsp;</td></tr>
+	  	</#if>
+  		<#if additionals.formattedHomeAdress?has_content && (additionals.formattedHomeAdress?trim?length > 0) >
+  			<tr>
+  				<td class="bold" valign="top">Home</td>
+  				<td>&nbsp;</td>
+  				<td valign="top">${additionals.formattedHomeAdress?replace("\n","<br>")}</td>
+  				<#if additionals.createMapsImage && additionals.mapskey?has_content && homelatitude?has_content && homelongitude?has_content>
+  				<td>&nbsp;</td>
+  				<td align="right"><img src="https://maps-api-ssl.google.com/staticmap?key=${additionals.mapskey?url}&size=${additionals.mapsWidth?url}x${additionals.mapsHeight?url}&zoom=${additionals.mapsZoom?url}&markers=${homelatitude},${homelongitude}"</td>
+  				</#if>
+  			</tr>
+	  	</#if>
+  	</table>
+  	</div>
+  	</#if>
+	
+</body>
+</html>

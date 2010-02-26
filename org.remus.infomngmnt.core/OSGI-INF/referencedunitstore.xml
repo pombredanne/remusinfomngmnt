@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="referencedunitstore">
+   <implementation class="org.remus.infomngmnt.core.ref.infounit.ReferencedUnitStore"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.core.services.IReferencedUnitStore"/>
+   </service>
+</component>

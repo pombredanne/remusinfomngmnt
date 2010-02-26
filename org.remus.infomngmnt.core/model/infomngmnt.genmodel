@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2008 Tom Seidel, Remus Software&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;     Tom Seidel - initial API and implementation&#xD;&#xA;"
+    modelDirectory="/org.remus.infomngmnt.core/generated" editDirectory="/org.remus.infomngmnt.core/generated"
+    modelPluginID="org.remus.infomngmnt.core" modelName="Infomngmnt" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" colorProviders="true">
+  <foreignModel>infomngmnt.ecore</foreignModel>
+  <genPackages prefix="Infomngmnt" basePackage="org.remus" disposableProviderFactory="true"
+      ecorePackage="infomngmnt.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//SynchronizationState">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/LOCAL_DELETED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/TARGET_DELETED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/NOT_ADDED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/LOCAL_EDITED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/TARGET_EDITED"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/IN_SYNC"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationState/IGNORED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//SynchronizationAction">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/REPLACE_LOCAL"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/REPLACE_REMOTE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/DELETE_LOCAL"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/DELETE_REMOTE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/ADD_LOCAL"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/ADD_REMOTE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//SynchronizationAction/RESOLVE_CONFLICT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//CalendarEntryType">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/ONE_TIME"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/WEEKLY"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/TWO_WEEK"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/MONTHLY"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//CalendarEntryType/ANNUAL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//NotificationImportance">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//NotificationImportance/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//NotificationImportance/LOW"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//NotificationImportance/MEDIUM"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//NotificationImportance/HIGH"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//Severity">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Severity/OK"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Severity/INFO"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Severity/WARNING"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Severity/ERROR"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//InformationStructureType">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//InformationStructureType/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//InformationStructureType/STRING"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//InformationStructureType/DATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//InformationStructureType/LONG"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//InformationStructureType/BOOLEAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//InformationStructureType/BINARY"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//InformationStructureType/DOUBLE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infomngmnt.ecore#//Rating">
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Rating/USELESS"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Rating/POOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Rating/AVERAGE"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Rating/HELPFUL"/>
+      <genEnumLiterals ecoreEnumLiteral="infomngmnt.ecore#//Rating/FANTASTIC"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="infomngmnt.ecore#//Object"/>
+    <genDataTypes ecoreDataType="infomngmnt.ecore#//IRepository"/>
+    <genDataTypes ecoreDataType="infomngmnt.ecore#//TransferWrapper"/>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationUnit" labelFeature="#//infomngmnt/AbstractInformationUnit/label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/stringValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/longValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/boolValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/binaryValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/dateValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/doubleValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/childValues"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/references"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/links"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/creationDate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/usageData"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnit/keywords"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/calendarEntry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/binaryReferences"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnit/comments"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//BinaryReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//BinaryReference/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//BinaryReference/projectRelativePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//BinaryReference/dirty"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Usage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Usage/lastAccess"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Usage/accessCount"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Category" labelFeature="#//infomngmnt/Category/label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/children"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Category/informationUnit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Category/description"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//AbstractInformationUnit"
+        labelFeature="#//infomngmnt/AbstractInformationUnit/label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//AbstractInformationUnit/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//AbstractInformationUnit/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//AbstractInformationUnit/type"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItem/workspacePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationUnitListItem/unread"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//ApplicationRoot">
+      <genFeatures children="true" createChild="true" propertyCategory="" propertySortChoices="true"
+          ecoreFeature="ecore:EReference infomngmnt.ecore#//ApplicationRoot/rootCategories"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ApplicationRoot/availableTags"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Annotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Annotation/description"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Link">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Link/target"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//Adapter"/>
+    <genClasses ecoreClass="infomngmnt.ecore#//RecentlyUsedKeywords">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RecentlyUsedKeywords/maxlength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RecentlyUsedKeywords/keywords"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//NewElementRules">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//NewElementRules/transferTypes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//NewElementRules/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//NewElementRules/deletable"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RuleValue"/>
+    <genClasses ecoreClass="infomngmnt.ecore#//AvailableRuleDefinitions">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//AvailableRuleDefinitions/newElementRules"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RemusTransferType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemusTransferType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemusTransferType/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemusTransferType/actions"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RuleAction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/infoTypeId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RuleAction/ruleValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/groovyMatcher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleAction/postProcessingInstructions"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RuleResult">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RuleResult/actions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RuleResult/transferType"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RemoteRepository">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteRepository/options"/>
+      <genOperations ecoreOperation="infomngmnt.ecore#//RemoteRepository/getRepositoryImplementation"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//RemoteObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/possibleInfoTypeId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/repositoryTypeId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/repositoryTypeObjectId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/wrappedObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//RemoteObject/hash"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RemoteContainer">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteContainer/children"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RemoteContainer/exclusionChildren"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//RepositoryCollection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//RepositoryCollection/repositories"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//SynchronizationMetadata">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/repositoryId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/readonly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/lastSynchronisation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/hash"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/syncState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/currentlySyncing"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//ChangeSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/targetCategory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/changeSetItems"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/repository"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//ChangeSetItem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteConvertedContainer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteOriginalObject"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/localContainer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/syncCategoryActionMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/syncObjectActionMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSetItem/remoteFullObjectMap"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//CategoryToSynchronizationActionMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//CategoryToSynchronizationActionMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CategoryToSynchronizationActionMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationUnitListItemToInformationUnitMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//SynchronizableObjectToSynchronizationActionMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObjectToSynchronizationActionMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizableObjectToSynchronizationActionMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Tag">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Tag/name"/>
+      <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Tag/infoUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//AvailableTags">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//AvailableTags/tags"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="infomngmnt.ecore#//SynchronizableObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/synchronizationMetaData"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//CalendarEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/start"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/end"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/entryType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/reminder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//CalendarEntry/title"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Notification" labelFeature="#//infomngmnt/Notification/message">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/timeStamp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/importance"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/severity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/noticed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/message"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/details"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//Notification/children"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/affectedInfoUnitIds"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/source"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Notification/image"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//NotificationCollection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//NotificationCollection/notifcations"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//StringToStringMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//StringToStringMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//StringToStringMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationStructureDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationStructureDefinition/structurePool"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationStructureItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructureItem/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructureItem/createAlways"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationStructure">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructure/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationStructure/structureItems"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationStructure/referencedStructureItems"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructure/canHaveBinaryReferences"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructure/label"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//DynamicStructure">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//DynamicStructure/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//DynamicStructure/upperBound"/>
+    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//Comment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Comment/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Comment/comment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//Comment/rating"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

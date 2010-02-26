@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="repositories">
+   <implementation class="org.remus.infomngmnt.core.internal.sync.RepositoryService"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.core.services.IRepositoryService"/>
+   </service>
+</component>

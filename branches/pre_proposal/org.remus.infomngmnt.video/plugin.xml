@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            buildHtml="true"
+            icon="icons/iconexperience/film.png"
+            name="Video"
+            presentation="org.remus.infomngmnt.video.internal.VideoRepresentation"
+            structuredefinition="structuredefinition.xmi"
+            type="VIDEO">
+         <validTransfers
+               transferId="org.remus.infomngmnt.core.filetransfer">
+         </validTransfers>
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.video.editor.VideoEditPage"
+            icon="icons/iconexperience/film_edit.png"
+            id="org.remus.infomngmnt.video.editPage"
+            label="Edit Video"
+            type="VIDEO">
+      </editPage>
+      <creationUiTrigger
+            class="org.remus.infomngmnt.video.newwizard.NewVideoWizard"
+            typeId="VIDEO">
+      </creationUiTrigger>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="true"
+            category="org.remus.infomngmnt.ui.simple"
+            class="org.remus.infomngmnt.video.newwizard.NewVideoWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            hasPages="true"
+            icon="icons/iconexperience/film_new.png"
+            id="org.remus.infomngmnt.video.newWizard"
+            name="Video">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.video.newWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

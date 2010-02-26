@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.youtube.readonly.YoutubeConnector"
+            credentialprovider="org.remus.infomngmnt.connector.youtube.readonly.YoutubeRedonlyCredentials"
+            icon="icons/youtube.png"
+            id="org.remus.infomngmnt.connector.youtube"
+            name="Youtube">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.youtube.respository1"
+            newWizard="org.remus.infomngmnt.connector.youtube.readonly.NewReadonlyYoutubeRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.youtube">
+      </respository>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.ui.repositories"
+            class="org.remus.infomngmnt.connector.youtube.preferences.YoutubePreferencePage"
+            id="org.remus.infomngmnt.connector.youtube.prefs"
+            name="Youtube">
+      </page>
+   </extension>
+
+</plugin>

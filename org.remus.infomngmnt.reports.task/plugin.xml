@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.birtreport.reporttemplate">
+      <templatecategory
+            id="org.remus.infomngmnt.reports.worklog"
+            label="Work-Log">
+      </templatecategory>
+      <template
+            category="org.remus.infomngmnt.reports.worklog"
+            id="org.remus.infomngmnt.reports.task.worklogtask"
+            label="Worklog for a single Task"
+            rptfile="templates/task_worklog.rptdesign">
+         <parameter
+               label="Task"
+               name="source"
+               parametertype="org.remus.infomngmnt.birtreport.infotypeselector">
+            <parameterclassparameter
+                  name="infotype"
+                  value="TASK">
+            </parameterclassparameter>
+            <parameterclassparameter
+                  name="dialogtitle"
+                  value="Please select a single task">
+            </parameterclassparameter>
+            <parameterclassparameter
+                  name="dialogmessage"
+                  value="Select a task from the list">
+            </parameterclassparameter>
+         </parameter>
+      </template>
+      <template
+            category="org.remus.infomngmnt.reports.worklog"
+            id="org.remus.infomngmnt.reports.task.reportdate"
+            label="Worklog within two dates"
+            rptfile="templates/task_worklog_dates.rptdesign">
+         <parameter
+               label="Category"
+               name="source"
+               parametertype="org.remus.infomngmnt.birtreport.categoryselector">
+         </parameter>
+         <parameter
+               label="Start Date"
+               name="start"
+               parametertype="org.remus.infomngmnt.birtreport.dateselector">
+            <parameterclassparameter
+                  name="pattern"
+                  value="yyyy/MM/dd">
+            </parameterclassparameter>
+         </parameter>
+         <parameter
+               label="End Date"
+               name="end"
+               parametertype="org.remus.infomngmnt.birtreport.dateselector">
+            <parameterclassparameter
+                  name="pattern"
+                  value="yyyy/MM/dd">
+            </parameterclassparameter>
+         </parameter>
+      </template>
+   </extension>
+
+</plugin>

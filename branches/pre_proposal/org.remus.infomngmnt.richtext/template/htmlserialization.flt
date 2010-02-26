@@ -1,0 +1,77 @@
+<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#setting url_escaping_charset="UTF-8">  
+<#assign infoUnit = doc.InformationUnit>
+<#assign hasText= infoUnit["count(@stringValue)"] != 0>
+<#assign text = infoUnit["@stringValue"] >
+<#assign hasKeywords = infoUnit.@keywords?is_string && infoUnit.@keywords?length != 0>
+<#assign hasDescription = infoUnit.@description?is_string && infoUnit.@description?length != 0 >
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_images}"></script>
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_curvycorner}"></script>
+  <script type="text/JavaScript">
+	  window.onload = function()
+	  {
+	          settings = {
+	          tl: { radius: 5 },
+	          tr: { radius: 5 },
+	          bl: { radius: 0 },
+	          br: { radius: 0 },
+	          antiAlias: true,
+	          autoPad: true
+	      }
+	
+	      var myBoxObject = new curvyCorners(settings,"srccode");
+	      myBoxObject.applyCornersToAll();
+	  }
+</script>
+  <title>${infoUnit.@label}</title>
+  <style type="text/css">
+  	.systemfont,body,td {
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
+	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	
+}
+ </style>
+<body>
+	
+	<div style="margin:5px;">
+		<table>
+			<tr>
+				<td class="bold">Text Name:</td>
+				<td>${infoUnit.@label?html}</td>
+			</tr>
+			<#if hasKeywords >
+			<tr>
+				<td class="bold">Keywords:</td>
+				<td>${infoUnit.@keywords?html}</td>
+			</tr>
+			</#if>
+			<#if hasDescription >
+			<tr>
+				<td class="bold">Description:</td>
+				<td>${infoUnit.@description?html}</td>
+			</tr>
+			</#if>
+		</table>
+	</div>
+  	<div>
+  		<div class="srccode" style="margin: 0 auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x;">
+  			<span class="systemfont" style="font-weight:bold;">Text</span>
+  		</div>
+  	<#if hasText >
+  	${text}
+  	</#if>
+  	</div>
+</body>
+</html>

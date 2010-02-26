@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.rss.RssConnector"
+            credentialprovider="org.remus.infomngmnt.connector.rss.RssCredentialProvider"
+            icon="icons/Feed-icon.png"
+            id="org.remus.infomngmnt.connector.rss"
+            name="RSS/Atom Feed">
+      </repository-connector>
+      <repository-connector
+            class="org.remus.infomngmnt.connector.podcast.PodcastConnector"
+            credentialprovider="org.remus.infomngmnt.connector.podcast.PodCastCredentialProvider"
+            icon="icons/Feed-icon.png"
+            id="org.remus.infomngmnt.connector.rss.podcast"
+            name="Podcast">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.rss.respository1"
+            newWizard="org.remus.infomngmnt.connector.rss.ui.RssRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.rss">
+      </respository>
+      <respository
+            id="org.remus.infomngmnt.connector.rss.respository2"
+            newWizard="org.remus.infomngmnt.connector.rss.ui.RssRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.rss.podcast">
+      </respository>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.job">
+      <job
+            class="org.remus.infomngmnt.connector.rss.jobs.RefreshRssJob"
+            id="org.remus.infomngmnt.connector.rss.refreshJob"
+            name="Refreh RSS Job">
+      </job>
+      <job
+            class="org.remus.infomngmnt.connector.rss.jobs.DeleteOldEntriesJob"
+            id="org.remus.infomngmnt.connector.rss.deleteOld"
+            interval="1"
+            name="Delete Old RSS Entries">
+      </job>
+   </extension>
+
+</plugin>

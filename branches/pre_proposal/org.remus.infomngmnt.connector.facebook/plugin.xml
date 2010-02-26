@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.facebook.FacebookConnector"
+            credentialprovider="org.remus.infomngmnt.connector.facebook.FacebookCredentialProvider"
+            icon="icons/facebook.png"
+            id="org.remus.infomngmnt.connector.facebook"
+            name="Facebook">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.repositoryUI">
+      <respository
+            id="org.remus.infomngmnt.connector.facebook.repUi"
+            newWizard="org.remus.infomngmnt.connector.facebook.ui.FacebookConnectionWizard"
+            repository-id="org.remus.infomngmnt.connector.facebook">
+      </respository>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            buildHtml="false"
+            excludeFromIndex="false"
+            icon="icons/facebook.png"
+            name="Facebook-Stream"
+            presentation="org.remus.infomngmnt.connector.facebook.extension.StreamRepresentation"
+            structuredefinition="facebookstream.xmi"
+            type="FBSTREAM">
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.connector.facebook.ui.StreamPage"
+            id="org.remus.infomngmnt.connector.facebook.stream"
+            type="FBSTREAM">
+      </editPage>
+   </extension>
+
+</plugin>

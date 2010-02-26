@@ -1,0 +1,11 @@
+Git has been growing in popularity, and I am particularly interested in its potential to reduce barriers to participating and contributing to Eclipse projects. There has been a vigorous conversation about using Git for Eclipse projects going on for some time over in bug 257706, including my own reservations about the idea. But it is clearly time to start making some progress on this topic. 
+
+In talking with Wayne, Denis and the committer reps on the Board of Directors, it seems that the most obvious place to start would be to have Git installed on our servers and providing a read-only cache of the work of all projects. The projects themselves will continue to use CVS and SVN. (see bug 280583) 
+
+I am personally willing to consider a future where Git becomes the standard SCM at eclipse.org, but time will tell if we can get there.
+
+How can you help?
+
+Give us feedback on this idea, either in the comments here or in the bugs mentioned above. 
+If you are involved in an Eclipse project and you would consider switching to Git, please start the conversation with your peers. Would someone be willing to start and maintain a list of willing projects somewhere? 
+Get involved in the eGit project. The faster we have a first class team provider for Git, the faster we can use more Git at Eclipse. The CVS plug-in for Eclipse does truly rock, and there are lots of people at Eclipse who will not even consider switching if Git is not supported with equivalent function and stability 

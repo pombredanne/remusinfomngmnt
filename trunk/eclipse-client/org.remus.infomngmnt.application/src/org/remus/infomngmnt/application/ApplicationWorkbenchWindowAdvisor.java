@@ -83,7 +83,7 @@ import org.remus.infomngmnt.common.service.ITrayService;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.desktop.DesktopWindow;
+import org.remus.infomngmnt.ui.desktop.panel.DesktopWindow;
 import org.remus.infomngmnt.ui.perspective.Perspective;
 import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
 import org.remus.infomngmnt.welcome.WelcomeEditor;
@@ -132,6 +132,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	private final IPreferenceStore preferenceStore;
 
 	private DesktopWindow window;
+
+	// private DesktopWindow window;
 
 	/**
 	 * Crates a new IDE workbench window advisor.

@@ -195,6 +195,7 @@ http://www.remus-software.org/integrated-thirdparty-packages
       <feature id="org.remus.infomngmnt.repository.feature" version="1.0.0.qualifier"/>
       <feature id="org.remus.infomngmnt.mindmap.feature" version="1.0.0.qualifier"/>
       <feature id="org.remus.infomngmnt.reportruntime.feature" version="1.0.0.qualifier"/>
+      <feature id="org.remus.infomngmnt.birtdesigner.feature" version="1.0.0.qualifier"/>
    </features>
 
 

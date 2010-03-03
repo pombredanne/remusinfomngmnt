@@ -31,7 +31,7 @@
          </property>
          <property
                name="startupProgressRect"
-               value="125,280,150,10">
+               value="5,275,445,15">
          </property>
          <!--
          <property
@@ -39,23 +39,227 @@
                value="13,278">
          </property>
          -->
-         <property
-               name="aboutImage"
-               value="about.png">
-         </property>
-         <property
-               name="aboutText"
-               value="Remus Information Management&#x0A;&#x0A;Version: {0}&#x0A;BuildId: {1}&#x0A;Date: {2}&#x0A;&#x0A;(c) Copyright RIM contributors and other 2009. All rights reserverd.&#x0A;Visit http://www.remus-software.org&#x0A;&#x0A;This product uses software developed by the Eclipse Foundation and &#x0A;its members (http://www.eclipse.org), Apache (http://www.apache.org)&#x0A;and others. For a full list see &#x0A;http://www.remus-software.org/integrated-thirdparty-packages">
-         </property>
-         <property
-               name="startupMessageRect"
-               value="1000,1000,270,15">
-         </property>
-         <property
-               name="startupForegroundColor"
-               value="FFFFFF">
-         </property>
       </product>
    </extension>
-
+	 <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.remus.infomngmnt.ui.perspective.Perspective"
+            icon="icons/rim_icon.png"
+            id="org.remus.infomngmnt.ui.infoperspective"
+            name="Information Management">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.ui.newInfoProjectWizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="org.remus.infomngmnt.ui.newCategoryWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+         <editor
+            class="org.remus.infomngmnt.welcome.WelcomeEditor2"
+            default="false"
+            icon="icons/iconexperience/16/earth.png"
+            id="org.remus.infomngmnt.welcome.WelcomeEditor"
+            name="Welcome to Remus!">
+      </editor>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.desktop.trayAction">
+      <trayAction
+            class="org.remus.infomngmnt.ui.trayaction.OpenElementToolItem"
+            icon="icons/iconexperience/16/folder_document.png"
+            id="org.remus.infomngmnt.ui.openElement"
+            name="Open Infotype">
+      </trayAction>
+      <trayAction
+            class="org.remus.infomngmnt.ui.trayaction.RestoreFromTrayToolItem"
+            icon="icons/iconexperience/16/fit_to_size.png"
+            id="org.remus.infomngmnt.ui.restoreFromTray"
+            name="Restore from Tray">
+      </trayAction>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+          <command
+            defaultHandler="org.remus.infomngmnt.application.handler.OpenWelcomeHandler"
+            id="org.remus.infomngmnt.ui.openWelcome"
+            name="Welcome">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+          <view
+            allowMultiple="false"
+            category="org.remus.infomngmnt.ui.viewcategory"
+            class="org.remus.infomngmnt.ui.view.MainViewPart"
+            icon="icons/iconexperience/16/document.png"
+            id="org.remus.infomngmnt.ui.main"
+            name="Navigation"
+            restorable="true">
+      </view>
+   </extension>
+    <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="org.remus.infomngmnt.ui.navigationContext"
+            name="Main View - Navigation Context"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
+   </extension>
+    <extension
+         point="org.remus.infomngmnt.ui.collapsiblebutton.collapsibleButtonBar">
+      <collapsibleButton
+            bigImage="icons/iconexperience/24/workplace.png"
+            class="org.remus.infomngmnt.ui.collapsiblebuttons.NavigationSection"
+            contextId="org.remus.infomngmnt.ui.navigationContext"
+            icon="icons/iconexperience/16/workplace.png"
+            id="org.remus.infomngmnt.ui.navigation"
+            name="Navigation"
+            order="10"
+            tooltip="Navigation">
+      </collapsibleButton>
+      <collapsibleButton
+            bigImage="icons/iconexperience/24/bookmark_silver.png"
+            class="org.remus.infomngmnt.ui.collapsiblebuttons.TagSection"
+            icon="icons/iconexperience/16/bookmark_silver.png"
+            id="org.remus.infomngmnt.ui.tags"
+            name="Tags"
+            order="20"
+            tooltip="Tags">
+      </collapsibleButton>
+      <collapsibleButton
+            bigImage="icons/iconexperience/24/server_network.png"
+            class="org.remus.infomngmnt.ui.collapsiblebuttons.RemoteRepositoryButtonBar"
+            contextId="org.remus.infomngmnt.ui.navigationContext"
+            icon="icons/iconexperience/16/server_network.png"
+            id="org.remus.infomngmnt.application.remoteRepo"
+            name="Remote Repositories"
+            order="30"
+            tooltip="Remote Repositories">
+      </collapsibleButton>
+   </extension>
+   
+    <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=sync">
+         <menu
+               label="Remote Synchronization"
+               mnemonic="e">
+            <command
+                  commandId="org.remus.infomngmnt.ui.remote.syncCategory"
+                  icon="icons/iconexperience/16/server_client_exchange.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.ui.remote.shareCategory"
+                  icon="icons/iconexperience/16/server_from_client.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+            <separator
+                  name="org.remus.infomngmnt.ui.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.remus.infomngmnt.ui.remote.commitCommand"
+                  icon="icons/iconexperience/16/arrow2_right_green.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.ui.remote.addToRepository"
+                  icon="icons/iconexperience/16/server_from_client.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.ui.remote.replaceCommand"
+                  icon="icons/iconexperience/16/arrow2_left_red.png"
+                  style="push">
+            </command>
+            <separator
+                  name="org.remus.infomngmnt.ui.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.remus.infomngmnt.ui.remote.ignoreForSynchronization"
+                  icon="icons/iconexperience/16/funnel.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.ui.remote.disconnect"
+                  icon="icons/iconexperience/16/server_delete.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:help?after=help-primary-additions-start">
+         <command
+               commandId="org.remus.infomngmnt.ui.openWelcome"
+               icon="icons/iconexperience/earth.png"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:window?after=additions">
+         <command
+               commandId="org.remus.infomngmnt.ui.viewer.projectmanagement"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.trim.status">
+        
+         <toolbar
+               id="org.remus.infomngmnt.ui.trimtoolbar2">
+            <control
+                  class="org.remus.infomngmnt.ui.editors.editortrim.EditorTrim"
+                  id="org.remus.infomngmnt.ui.editors.editortrim.EditorTrim">
+            </control>
+         </toolbar>
+        
+         <toolbar
+               id="org.remus.infomngmnt.ui.trimtoolbar">
+            <control
+                  class="org.remus.infomngmnt.ui.notification.NotificationTrimArea"
+                  id="org.remus.infomngmnt.ui.notification.NotificationTrimArea">
+            </control>
+         </toolbar>
+         
+         <!--
+         <toolbar
+               id="org.remus.infomngmnt.ui.todayToolbar">
+            <control
+                  class="org.remus.infomngmnt.ui.calendar.TodayTrimArea">
+            </control>
+         </toolbar>
+         -->
+      </menuContribution>
+   </extension>
 </plugin>

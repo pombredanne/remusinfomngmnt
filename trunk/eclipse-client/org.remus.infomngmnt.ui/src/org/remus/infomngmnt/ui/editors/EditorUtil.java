@@ -18,19 +18,18 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.ui.editor.EditorActivator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class EditorUtil {
 
-	public static String computeBinFileLocation(final IFileEditorInput input) {
+	public static String computeBinFileLocation(final InformationEditorInput input) {
 		IFile file = input.getFile();
 		IPath binPath = file.getProject().getLocation().append(
 				new Path(ResourceUtil.BIN_FOLDER + File.separator + file.getProjectRelativePath()));
@@ -38,7 +37,7 @@ public class EditorUtil {
 				.replaceFirst(ResourceUtil.HTML_EXTENSION);
 	}
 
-	public static IFile getBinFile(final IFileEditorInput input) {
+	public static IFile getBinFile(final InformationEditorInput input) {
 		return getBinFile(input.getFile());
 	}
 
@@ -52,8 +51,8 @@ public class EditorUtil {
 	public static void openInfoUnit(final String id) {
 		try {
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-					new InformationEditorInput(ApplicationModelPool.getInstance().getItemById(id,
-							null)), InformationEditor.ID);
+					new InformationEditorInput(EditorActivator.getDefault().getApplicationService()
+							.getItemById(id, null)), InformationEditor.ID);
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,6 +11,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.actions.NewWizardMenu;
@@ -25,9 +26,6 @@ import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.osgi.framework.BundleContext;
-
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmt.common.ui.uimodel.provider.UimodelEditPlugin;
 
 /**
  * An action bar advisor is responsible for creating, adding, and disposing of
@@ -112,13 +110,13 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		register(this.preferenceAction);
 
 		this.undoAction = ActionFactory.UNDO.create(window);
-		this.undoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
-				UimodelEditPlugin.getPlugin(), "icons/iconexperience/undo.png"));
+		this.undoAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
 		register(this.undoAction);
 
 		this.redoAction = ActionFactory.REDO.create(window);
-		this.redoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
-				UimodelEditPlugin.getPlugin(), "icons/iconexperience/redo.png"));
+		this.redoAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
 		register(this.redoAction);
 
 		this.importResourcesAction = ActionFactory.IMPORT.create(window);

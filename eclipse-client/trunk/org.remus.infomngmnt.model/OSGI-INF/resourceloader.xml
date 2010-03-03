@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="resourceloader">
+   <implementation class="org.remus.infomngmnt.model.xmi.EMFResourceLoader"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.model.service.IResourceLoader"/>
+   </service>
+</scr:component>

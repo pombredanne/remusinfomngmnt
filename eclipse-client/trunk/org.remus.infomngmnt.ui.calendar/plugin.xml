@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension
+         point="org.eclipse.ui.editors">
+     
+      <editor
+            class="org.remus.infomngmnt.ui.calendar.CalendarEditor"
+            default="false"
+            extensions="calendar"
+            icon="icons/iconexperience/16/calendar.png"
+            id="org.remus.infomngmnt.ui.calendar.CalendarEditor"
+            name="Calendar">
+      </editor>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.core.postProjectHandle">
+      <projectHandle
+            handle="org.remus.infomngmnt.ui.calendar.CalendarIndexingHandle">
+      </projectHandle>
+   </extension>
+   <extension
+         id="calendarEntryBuilder"
+         point="org.eclipse.core.resources.builders">
+      <builder>
+         <run
+               class="org.remus.infomngmnt.ui.calendar.CalendarBuilder">
+         </run></builder>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.editor.informationUi">
+      <outlineSection
+            class="org.remus.infomngmnt.ui.calendar.outline.CalendarOutlineSection"
+            id="org.remus.infomngmnt.ui.calendar.outlineSection">
+      </outlineSection>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.collapsiblebutton.collapsibleButtonBar">
+      <collapsibleButton
+            bigImage="icons/iconexperience/16/calendar.png"
+            class="org.remus.infomngmnt.ui.calendar.collapsiblebuttons.CalendarSection"
+            icon="icons/iconexperience/16/calendar.png"
+            id="org.remus.infomngmnt.ui.calendar.collapsibleButton"
+            name="Calendar"
+            order="3"
+            tooltip="Calendar">
+      </collapsibleButton>
+   </extension>
+</plugin>

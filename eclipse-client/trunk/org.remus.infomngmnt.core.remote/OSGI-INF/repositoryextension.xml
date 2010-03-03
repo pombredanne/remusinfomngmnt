@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="repositoryextension">
+   <implementation class="org.remus.infomngmnt.core.remote.internal.RepositoryConnectorExtensionService"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService"/>
+   </service>
+   <reference bind="setRepositoryService" cardinality="1..1" interface="org.remus.infomngmnt.core.remote.services.IRepositoryService" name="IRepositoryService" policy="static"/>
+</component>

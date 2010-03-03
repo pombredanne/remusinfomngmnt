@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension-point id="remoteRepository" name="remoteRepository" schema="schema/remoteRepository.exsd"/>
+   <extension
+         point="org.remus.infomngmnt.core.saveParticipant">
+      <participant
+            class="org.remus.infomngmnt.core.remote.SyncStateParticipant">
+      </participant>
+   </extension>
+   
+   <extension
+         point="org.remus.infomngmnt.core.job">
+      <job
+            class="org.remus.infomngmnt.core.remote.sync.SynchronizeItemsJob"
+            id="org.remus.infomngmnt.core.syncJob"
+            interval="10"
+            name="Synchronization of Remote Repositories">
+      </job>
+   </extension>
+
+</plugin>

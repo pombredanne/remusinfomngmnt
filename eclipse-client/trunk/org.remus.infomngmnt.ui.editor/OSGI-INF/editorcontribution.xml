@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="editorcontribution">
+   <implementation class="org.remus.infomngmnt.ui.editors.internal.services.UIExtensionManager"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.ui.editors.services.IEditorExtensionService"/>
+   </service>
+</scr:component>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="changehandler">
+   <implementation class="org.remus.infomngmnt.core.remote.internal.ChangeSetManager"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.model.remote.IChangeHandler"/>
+   </service>
+   <reference bind="setRepositoryExtensionService" cardinality="1..1" interface="org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService" name="IRepositoryExtensionService" policy="static"/>
+   <reference bind="setRepositoryService" cardinality="1..1" interface="org.remus.infomngmnt.core.remote.services.IRepositoryService" name="IRepositoryService" policy="static"/>
+   <reference bind="setApplicationService" cardinality="1..1" interface="org.remus.infomngmnt.core.services.IApplicationModel" name="IApplicationModel" policy="static"/>
+</component>

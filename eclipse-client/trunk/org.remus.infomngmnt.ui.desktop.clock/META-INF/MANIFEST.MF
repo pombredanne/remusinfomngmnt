@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Clock Tray
+Bundle-SymbolicName: org.remus.infomngmnt.ui.desktop.clock;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.ui.desktop.clock.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: org.eclipse.nebula.widgets.cdatetime,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.forms.widgets,
+ org.remus.infomngmnt.ui.desktop.extension

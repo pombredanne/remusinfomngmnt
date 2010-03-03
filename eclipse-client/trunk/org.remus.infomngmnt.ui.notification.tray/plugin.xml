@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.ui.desktop.traySection">
+      <sectionBox
+            id="org.remus.infomngmnt.ui.notification.tray.sectionBox"
+            multiple="false"
+            name="Notification"
+            sectionControl="org.remus.infomngmnt.ui.notification.tray.NotificationTraySection">
+      </sectionBox>
+   </extension>
+
+</plugin>

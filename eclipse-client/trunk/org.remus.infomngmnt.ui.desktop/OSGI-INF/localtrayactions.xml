@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="localtrayactions">
+   <implementation class="org.remus.infomngmnt.ui.desktop.internal.services.LocalTrayActionService"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.ui.desktop.services.ILocalTrayActionService"/>
+   </service>
+</scr:component>

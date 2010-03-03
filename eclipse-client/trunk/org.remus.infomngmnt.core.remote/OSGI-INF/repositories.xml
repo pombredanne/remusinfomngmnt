@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="repositories">
+   <implementation class="org.remus.infomngmnt.core.remote.internal.RepositoryService"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.core.remote.services.IRepositoryService"/>
+   </service>
+   <reference bind="setEditService" cardinality="1..1" interface="org.remus.infomngmnt.core.services.IEditingHandler" name="IEditingHandler" policy="static"/>
+</component>

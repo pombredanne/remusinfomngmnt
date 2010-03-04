@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Application Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.application; singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: org.remus.infomngmnt.application.ApplicationPlugin
 Bundle-Vendor: Tom Seidel - Remus Software
 Require-Bundle: org.eclipse.ui,
@@ -10,27 +10,27 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources;bundle-version="3.4.0",
  org.eclipse.core.net;bundle-version="1.1.0",
  org.eclipse.update.configurator;bundle-version="3.2.200",
- org.remus.infomngmnt.ui;bundle-version="1.0.0",
- org.remus.infomngmnt.common.ui;bundle-version="1.0.0",
+ org.remus.infomngmnt.ui;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.common.ui;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.emf.edit;bundle-version="2.4.0",
- org.remus.infomngmnt.ui.collapsiblebutton;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.desktop;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.editor;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.infotypes;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.notification;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.notification.tray;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.popup;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.remote;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.rules;bundle-version="1.0.0",
+ org.remus.infomngmnt.ui.collapsiblebutton;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.desktop;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.editor;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.infotypes;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.notification;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.notification.tray;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.popup;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.remote;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.rules;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.ui.forms;bundle-version="3.4.1",
  org.eclipse.emf.edit.ui;bundle-version="2.5.0",
- org.remus.infomngmnt.model;bundle-version="1.0.0",
- org.remus.infomngmnt.core;bundle-version="1.0.0",
- org.remus.infomngmnt.ui.viewer;bundle-version="1.0.0",
+ org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui.viewer;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.ecf;bundle-version="3.0.0",
  org.eclipse.ecf.filetransfer;bundle-version="3.0.0",
- org.remus.infomngmnt.jslib;bundle-version="1.0.0",
- org.remus.infomngmnt.common.io;bundle-version="1.0.0",
+ org.remus.infomngmnt.jslib;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.common.io;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.ui.ide;bundle-version="3.5.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

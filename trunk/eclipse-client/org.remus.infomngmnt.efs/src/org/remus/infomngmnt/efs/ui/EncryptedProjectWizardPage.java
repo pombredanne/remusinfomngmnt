@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -27,14 +28,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
-import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.efs.EFSActivator;
 import org.remus.infomngmnt.efs.extension.AbstractSecurityProvider;
 import org.remus.infomngmnt.efs.extension.ISecurityProviderExtension;
+import org.remus.infomngmnt.efs.internal.ResourceManager;
 
 @SuppressWarnings("restriction")
 public class EncryptedProjectWizardPage extends WizardPage {
@@ -107,7 +105,7 @@ public class EncryptedProjectWizardPage extends WizardPage {
 		this.table = this.tableViewer.getTable();
 		this.table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		this.tableViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
+		this.tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.tableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
@@ -182,12 +180,12 @@ public class EncryptedProjectWizardPage extends WizardPage {
 	}
 
 	private boolean validatePage() {
-		IWorkspace workspace = IDEWorkbenchPlugin.getPluginWorkspace();
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
 		String projectFieldContents = this.text.getText().trim();
 		if (projectFieldContents.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
-			setMessage(IDEWorkbenchMessages.WizardNewProjectCreationPage_projectNameEmpty);
+			setMessage("Project name cannot be empty");
 			return false;
 		}
 
@@ -199,7 +197,7 @@ public class EncryptedProjectWizardPage extends WizardPage {
 
 		IProject handle = getProjectHandle();
 		if (handle.exists()) {
-			setErrorMessage(IDEWorkbenchMessages.WizardNewProjectCreationPage_projectExistsMessage);
+			setErrorMessage("Project already exists");
 			return false;
 		}
 

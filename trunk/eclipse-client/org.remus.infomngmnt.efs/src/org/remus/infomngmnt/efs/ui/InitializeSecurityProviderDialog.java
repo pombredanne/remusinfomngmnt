@@ -23,8 +23,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.efs.EFSActivator;
+import org.remus.infomngmnt.efs.internal.ResourceManager;
 import org.remus.infomngmnt.efs.internal.model.SecurityAffectedProject;
 import org.remus.infomngmnt.efs.internal.model.SecurityWrapper;
 

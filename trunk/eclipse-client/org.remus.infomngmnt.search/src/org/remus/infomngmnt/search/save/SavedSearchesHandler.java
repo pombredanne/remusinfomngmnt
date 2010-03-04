@@ -28,9 +28,9 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.Search;
+import org.remus.infomngmnt.search.SearchActivator;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchPackage;
-import org.remus.infomngmnt.search.provider.SearchPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -41,58 +41,64 @@ public class SavedSearchesHandler {
 	public static final String LATEST_SEARCHSTRINGS_FILENAME = "latestSearchStrings.xml"; //$NON-NLS-1$
 
 	public Search getLatestSearch() {
-		Search search = getObjectFromUri(
-				SearchPlugin.getPlugin().getStateLocation().append(LATEST_SEARCH_FILENAME), SearchPackage.Literals.SEARCH);
+		Search search = getObjectFromUri(SearchActivator.getDefault().getStateLocation().append(
+				LATEST_SEARCH_FILENAME), SearchPackage.Literals.SEARCH);
 		return search;
 	}
 
-	public void saveLatestSearch(Search search) {
-		saveObjectToResource(
-				SearchPlugin.getPlugin().getStateLocation().append(LATEST_SEARCH_FILENAME), search);
+	public void saveLatestSearch(final Search search) {
+		saveObjectToResource(SearchActivator.getDefault().getStateLocation().append(
+				LATEST_SEARCH_FILENAME), search);
 	}
 
 	public LatestSearchStrings getLatestSearchStrings() {
-		return getObjectFromUri(
-				SearchPlugin.getPlugin().getStateLocation().append(LATEST_SEARCHSTRINGS_FILENAME), SearchPackage.Literals.LATEST_SEARCH_STRINGS);
+		return getObjectFromUri(SearchActivator.getDefault().getStateLocation().append(
+				LATEST_SEARCHSTRINGS_FILENAME), SearchPackage.Literals.LATEST_SEARCH_STRINGS);
 	}
 
-	public void saveSearchStrings(LatestSearchStrings strings) {
-		saveObjectToResource(
-				SearchPlugin.getPlugin().getStateLocation().append(LATEST_SEARCHSTRINGS_FILENAME), strings);
+	public void saveSearchStrings(final LatestSearchStrings strings) {
+		saveObjectToResource(SearchActivator.getDefault().getStateLocation().append(
+				LATEST_SEARCHSTRINGS_FILENAME), strings);
 	}
 
 	/**
 	 * Returns a {@link Resource} object from the given uri
-	 * @param uri the uri
+	 * 
+	 * @param uri
+	 *            the uri
 	 * @param cache
 	 * @return the contents of the file
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends EObject> T getObjectFromUri(final IPath uri, final EClass objectClas) {
-		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createFileURI(uri.toString());
+		final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI
+				.createFileURI(uri.toString());
 		return getObjectFromUri(createURI, objectClas);
 	}
 
 	public void saveObjectToResource(final IPath target, final EObject object) {
-		try {
-			final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI.createFileURI(target.toString());
-			ResourceSet resourceSet = new ResourceSetImpl();
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-			(Resource.Factory.Registry.DEFAULT_EXTENSION,
-					new XMLResourceFactoryImpl());
-			resourceSet.getPackageRegistry().put
-			(SearchPackage.eNS_URI,
-					SearchPackage.eINSTANCE);
-			File file = new File(createURI.toFileString());
-			if (file.exists()) {
-				file.delete();
+		synchronized (this) {
+			try {
+
+				final org.eclipse.emf.common.util.URI createURI = org.eclipse.emf.common.util.URI
+						.createFileURI(target.toString());
+				ResourceSet resourceSet = new ResourceSetImpl();
+				resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+						Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
+				resourceSet.getPackageRegistry()
+						.put(SearchPackage.eNS_URI, SearchPackage.eINSTANCE);
+				File file = new File(createURI.toFileString());
+				if (file.exists()) {
+					file.delete();
+				}
+				Resource resource = resourceSet.createResource(createURI);
+				resource.getContents().add(object);
+				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
+			} catch (final IOException e) {
+				// FIXME Error-Handling
+				e.printStackTrace();
 			}
-			Resource resource = resourceSet.createResource(createURI);
-			resource.getContents().add(object);
-			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8"));
-		} catch (final IOException e) {
-			// FIXME Error-Handling
-			e.printStackTrace();
+
 		}
 	}
 
@@ -102,12 +108,10 @@ public class SavedSearchesHandler {
 		T returnValue;
 		File file = new File(uri.toFileString());
 		resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+				org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
 				new XMLResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put
-		(SearchPackage.eNS_URI,
-				SearchPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(SearchPackage.eNS_URI, SearchPackage.eINSTANCE);
 
 		if (file.exists()) {
 			try {

@@ -31,7 +31,8 @@ public interface ILuceneCustomizer {
 
 	public static final String ID_SEPARATOR = ";"; //$NON-NLS-1$
 
-	Document getLuceneDocument(InformationUnit document, IProject project, IProgressMonitor monitor);
+	Document[] getLuceneDocument(InformationUnit document, IProject project,
+			IProgressMonitor monitor);
 
 	Directory getIndexDirectory(IProject project);
 

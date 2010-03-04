@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Search Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.search;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.remus.infomngmnt.core;bundle-version="1.0.0",
+ org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
  org.apache.commons.lang;bundle-version="2.3.0",
  org.remus.infomngmnt.services,
  org.remus.infomngmnt.model,

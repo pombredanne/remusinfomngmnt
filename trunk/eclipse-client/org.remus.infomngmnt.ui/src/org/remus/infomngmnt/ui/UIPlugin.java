@@ -6,7 +6,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
-import org.remus.infomngmnt.ui.notification.NotificationPopupManager;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -21,7 +23,13 @@ public class UIPlugin extends AbstractUIPlugin {
 	// The shared instance
 	private static UIPlugin plugin;
 
-	private NotificationPopupManager popupManager;
+	// private NotificationPopupManager popupManager;
+
+	private RemusServiceTracker serviceTracker;
+
+	private IEditingHandler editService;
+
+	private IApplicationModel applicationService;
 
 	/**
 	 * The constructor
@@ -51,9 +59,13 @@ public class UIPlugin extends AbstractUIPlugin {
 				CommonImageRegistry.getInstance();
 			}
 		});
+		this.serviceTracker = new RemusServiceTracker(getBundle());
+		this.editService = this.serviceTracker.getService(IEditingHandler.class);
+		this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
 		plugin = this;
-		this.popupManager = new NotificationPopupManager();
-		this.popupManager.startNotification(NOTIFICATION_DELAY);
+		// FIXME
+		// this.popupManager = new NotificationPopupManager();
+		// this.popupManager.startNotification(NOTIFICATION_DELAY);
 	}
 
 	/*
@@ -66,6 +78,8 @@ public class UIPlugin extends AbstractUIPlugin {
 	@Override
 	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
+		this.serviceTracker.ungetService(this.editService);
+		this.serviceTracker.ungetService(this.applicationService);
 		super.stop(context);
 	}
 
@@ -86,6 +100,27 @@ public class UIPlugin extends AbstractUIPlugin {
 			return (T) service;
 		}
 		return null;
+	}
+
+	/**
+	 * @return the serviceTracker
+	 */
+	public final RemusServiceTracker getServiceTracker() {
+		return this.serviceTracker;
+	}
+
+	/**
+	 * @return the editService
+	 */
+	public final IEditingHandler getEditService() {
+		return this.editService;
+	}
+
+	/**
+	 * @return the applicationService
+	 */
+	public final IApplicationModel getApplicationService() {
+		return this.applicationService;
 	}
 
 }

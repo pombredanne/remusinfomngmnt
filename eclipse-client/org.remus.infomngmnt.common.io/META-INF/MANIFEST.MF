@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Io commons
+Bundle-SymbolicName: org.remus.infomngmnt.common.io
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Remus Software
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.ecf,
+ org.eclipse.ecf.filetransfer,
+ org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.core.net
+Export-Package: org.remus.infomngmnt.commons.io.transfer

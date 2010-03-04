@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Remote Core Bundle
+Bundle-SymbolicName: org.remus.infomngmnt.core.remote;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.core.remote.RemoteActivator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.core.runtime,
+ org.remus.infomngmnt.core,
+ org.remus.infomngmnt.model,
+ org.eclipse.equinox.security,
+ org.eclipse.emf.compare;bundle-version="1.0.1",
+ org.eclipse.emf.compare.diff;bundle-version="1.0.1",
+ org.eclipse.emf.compare.match;bundle-version="1.0.1",
+ org.remus.infomngmnt.services,
+ org.eclipse.emf.query
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: org.remus.infomngmnt.core.remote,
+ org.remus.infomngmnt.core.remote.security,
+ org.remus.infomngmnt.core.remote.services,
+ org.remus.infomngmnt.core.remote.sync,
+ org.remus.infomngmnt.model.remote
+Service-Component: OSGI-INF/repositories.xml,
+ OSGI-INF/repositoryextension.xml,
+ OSGI-INF/changehandler.xml,
+ OSGI-INF/synchronization.xml

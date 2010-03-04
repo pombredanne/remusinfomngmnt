@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.ui.editor.informationUi">
+      <outlineSection
+            class="org.remus.infomngmnt.ui.link.LinkOutline"
+            id="org.remus.infomngmnt.ui.link.outlineSection">
+      </outlineSection>
+   </extension>
+
+</plugin>

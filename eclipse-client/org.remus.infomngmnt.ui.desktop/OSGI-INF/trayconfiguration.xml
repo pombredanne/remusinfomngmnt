@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="trayconfiguration">
+   <implementation class="org.remus.infomngmnt.ui.desktop.internal.services.TrayConfigurationManager"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.ui.desktop.services.ITrayConfigurationService"/>
+   </service>
+</scr:component>

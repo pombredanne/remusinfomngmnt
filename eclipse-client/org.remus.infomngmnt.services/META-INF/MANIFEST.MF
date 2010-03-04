@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Services Bundle
+Bundle-SymbolicName: org.remus.infomngmnt.services
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.remus.infomngmnt.services.Activator
+Bundle-Vendor: Remus Software
+Require-Bundle: org.eclipse.core.runtime,
+ org.remus.infomngmnt.model,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: org.remus.infomngmnt.services

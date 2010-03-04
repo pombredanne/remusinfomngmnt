@@ -22,7 +22,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -31,8 +30,10 @@ public class InformationHandlerUtil {
 
 	public static InformationUnit getInformationUnitFromExecutionEvent(final ExecutionEvent event) {
 		InformationUnit unit = null;
-		if (HandlerUtil.getActivePart(event) instanceof InformationEditor) {
-			unit = ((InformationEditor) HandlerUtil.getActivePart(event)).getPrimaryModel();
+		InformationUnit adapter = (InformationUnit) HandlerUtil.getActivePart(event).getAdapter(
+				InformationUnit.class);
+		if (adapter != null) {
+			unit = adapter;
 		} else {
 			ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 			if (currentSelection instanceof IStructuredSelection
@@ -47,8 +48,10 @@ public class InformationHandlerUtil {
 	public static List<InformationUnit> getInformationUnitsFromExecutionEvent(
 			final ExecutionEvent event) {
 		List<InformationUnit> units = new ArrayList<InformationUnit>();
-		if (HandlerUtil.getActivePart(event) instanceof InformationEditor) {
-			units.add(((InformationEditor) HandlerUtil.getActivePart(event)).getPrimaryModel());
+		InformationUnit adapter = (InformationUnit) HandlerUtil.getActivePart(event).getAdapter(
+				InformationUnit.class);
+		if (adapter != null) {
+			units.add(adapter);
 		} else {
 			ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 			if (currentSelection instanceof IStructuredSelection) {

@@ -1,6 +1,7 @@
 package org.remus.infomngmnt.ui.newwizards;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
@@ -31,10 +32,10 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IInfoObjectSetter;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -51,6 +52,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter, IValid
 	private String categoryString;
 	protected InformationUnit unit;
 	protected final EMFDataBindingContext ctx;
+	protected IFile[] files;
 
 	public GeneralPage(final InformationUnitListItem selection) {
 		this((Category) selection.eContainer());
@@ -145,9 +147,9 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter, IValid
 		this.browserButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						UIPlugin.getDefault().getEditService().getAdapterFactory());
 				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						UIPlugin.getDefault().getEditService().getAdapterFactory());
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
 						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
@@ -169,7 +171,7 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter, IValid
 						return StatusCreator.newStatus(IStatus.OK, "", null);
 					}
 				});
-				dialog.setInput(ApplicationModelPool.getInstance().getModel());
+				dialog.setInput(UIPlugin.getDefault().getApplicationService().getModel());
 				dialog.setInitialSelection(GeneralPage.this.category);
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();
@@ -257,6 +259,21 @@ public class GeneralPage extends WizardPage implements IInfoObjectSetter, IValid
 
 	public void setCategoryString(final String categoryString) {
 		this.categoryString = categoryString;
+	}
+
+	/**
+	 * @return the files
+	 */
+	public final IFile[] getFiles() {
+		return this.files;
+	}
+
+	/**
+	 * @param files
+	 *            the files to set
+	 */
+	public final void setFiles(final IFile[] files) {
+		this.files = files;
 	}
 
 }

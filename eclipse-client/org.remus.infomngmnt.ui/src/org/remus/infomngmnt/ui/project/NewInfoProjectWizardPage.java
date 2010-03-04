@@ -21,16 +21,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkingSet;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WorkingSetGroup;
-import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
-import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
-import org.eclipse.ui.internal.ide.IIDEHelpContextIds;
-import org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea;
-import org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea.IErrorMessageReporter;
 
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.project.ProjectContentsLocationArea.IErrorMessageReporter;
 
 /**
  * Standard main page for a wizard that is creates a project resource.
@@ -102,9 +97,6 @@ public class NewInfoProjectWizardPage extends WizardPage {
 				"icons/iconexperience/wizards/new_project_wizard.png"));
 
 		initializeDialogUnits(parent);
-
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(composite,
-				IIDEHelpContextIds.NEW_PROJECT_WIZARD_PAGE);
 
 		composite.setLayout(new GridLayout());
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -213,7 +205,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 
 		// new project label
 		Label projectLabel = new Label(projectGroup, SWT.NONE);
-		projectLabel.setText(IDEWorkbenchMessages.WizardNewProjectCreationPage_nameLabel);
+		projectLabel.setText("Name");
 		projectLabel.setFont(parent.getFont());
 
 		// new project name entry field
@@ -336,12 +328,12 @@ public class NewInfoProjectWizardPage extends WizardPage {
 	 *         <code>false</code> if at least one is invalid
 	 */
 	protected boolean validatePage() {
-		IWorkspace workspace = IDEWorkbenchPlugin.getPluginWorkspace();
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
 		String projectFieldContents = getProjectNameFieldValue();
 		if (projectFieldContents.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
-			setMessage(IDEWorkbenchMessages.WizardNewProjectCreationPage_projectNameEmpty);
+			setMessage("Project name is empty");
 			return false;
 		}
 
@@ -353,7 +345,7 @@ public class NewInfoProjectWizardPage extends WizardPage {
 
 		IProject handle = getProjectHandle();
 		if (handle.exists()) {
-			setErrorMessage(IDEWorkbenchMessages.WizardNewProjectCreationPage_projectExistsMessage);
+			setErrorMessage("Project already exists");
 			return false;
 		}
 

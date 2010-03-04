@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.remus.infomngmnt.search.localsearch">
+   <implementation class="org.remus.infomngmnt.search.local.DefaultLuceneCustomizer"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.search.service.ILuceneCustomizer"/>
+   </service>
+</scr:component>

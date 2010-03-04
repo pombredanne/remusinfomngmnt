@@ -2,19 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ui Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.ui;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.ui.UIPlugin
 Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.4.0",
- org.remus.infomngmnt.core;bundle-version="1.0.0",
- org.remus.infomngmnt.common.ui;bundle-version="1.0.0",
- org.remus.infomngmnt.common.core;bundle-version="1.0.0",
+ org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.common.ui;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.common.core;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.core.expressions;bundle-version="3.4.0",
  org.apache.commons.lang;bundle-version="2.3.0",
- org.remus.infomngmnt.model;bundle-version="1.0.0",
- org.remus.infomngmnt.services;bundle-version="1.0.0",
+ org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.services;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.ui.forms;bundle-version="3.4.1",
  org.eclipse.emf.edit.ui;bundle-version="2.5.0",
  org.eclipse.core.databinding;bundle-version="1.2.0",

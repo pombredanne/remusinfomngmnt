@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="syncrhonization">
-   <implementation class="org.remus.infomngmnt.core.internal.remote.SynchronizationManager"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.core.services.ISynchronizationManager"/>
-   </service>
-   <reference bind="setNotificationManager" cardinality="1..1" interface="org.remus.infomngmnt.core.services.INotificationManagerManager" name="INotificationManagerManager" policy="static"/>
-</component>

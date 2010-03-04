@@ -30,12 +30,12 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.common.ui.swt.DetailedViewerControl;
 import org.remus.infomngmnt.efs.EFSActivator;
 import org.remus.infomngmnt.efs.extension.AbstractSecurityProvider;
+import org.remus.infomngmnt.efs.internal.ResourceManager;
 import org.remus.infomngmnt.efs.internal.model.SecurityAffectedProject;
 import org.remus.infomngmnt.efs.internal.model.SecurityWrapper;
+import org.remus.infomngmnt.ui.widgets.DetailedViewerControl;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

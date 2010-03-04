@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 
-import org.remus.infomngmnt.core.extension.PluginRegistryDynamic;
+import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.efs.EFSActivator;
 import org.remus.infomngmnt.efs.extension.AbstractSecurityProvider;
 import org.remus.infomngmnt.efs.extension.ISecurityProviderExtension;

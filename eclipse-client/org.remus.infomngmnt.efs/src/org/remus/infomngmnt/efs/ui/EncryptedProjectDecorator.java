@@ -19,8 +19,8 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 
 import org.remus.infomngmnt.Adapter;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.efs.EFSActivator;
+import org.remus.infomngmnt.efs.internal.ResourceManager;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

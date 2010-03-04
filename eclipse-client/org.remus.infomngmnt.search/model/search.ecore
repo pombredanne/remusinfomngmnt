@@ -32,6 +32,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keywords" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="highlightAttributes" upperBound="-1"
         eType="#//EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secondaryResults" upperBound="-1"
+        eType="#//SearchResult" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SavedSearches">
     <eStructuralFeatures xsi:type="ecore:EReference" name="searches" upperBound="-1"
@@ -41,24 +44,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="strings" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Websearches">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="websearch" upperBound="-1"
-        eType="#//Websearch"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Websearch">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        iD="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contributor" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="image" eType="#//Image"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Image" instanceClassName="org.eclipse.swt.graphics.Image"/>
   <eClassifiers xsi:type="ecore:EClass" name="SearchHistory">
     <eStructuralFeatures xsi:type="ecore:EReference" name="search" upperBound="-1"
         eType="#//Search"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="EAttribute" instanceClassName="org.eclipse.emf.ecore.EAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SecondaryGroupContainer" eSuperTypes="#//SearchResult"/>
 </ecore:EPackage>

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.remus.infomngmnt.core;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Remus Software
 Bundle-Localization: plugin
@@ -25,10 +25,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.edit;visibility:=reexport,
  org.eclipse.core.resources;bundle-version="3.4.0";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="2.4.0",
- org.remus.infomngmnt.libs;bundle-version="1.0.0";visibility:=reexport,
+ org.remus.infomngmnt.libs;bundle-version="[0.1.0,1.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.edit;bundle-version="2.4.0",
  org.eclipse.emf.query;bundle-version="1.2.0",
- org.remus.infomngmnt.common.core;bundle-version="1.0.0";visibility:=reexport,
+ org.remus.infomngmnt.common.core;bundle-version="[0.1.0,1.0.0)";visibility:=reexport,
  org.apache.commons.lang,
  org.remus.infomngmnt.model,
  org.remus.infomngmnt.services

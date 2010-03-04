@@ -28,9 +28,8 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -68,9 +67,9 @@ public class CategoryBrowser extends Composite {
 		this.browseButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						UIPlugin.getDefault().getEditService().getAdapterFactory());
 				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						UIPlugin.getDefault().getEditService().getAdapterFactory());
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
 						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
@@ -83,7 +82,7 @@ public class CategoryBrowser extends Composite {
 						return StatusCreator.newStatus(IStatus.OK, "", null);
 					}
 				});
-				dialog.setInput(ApplicationModelPool.getInstance().getModel());
+				dialog.setInput(UIPlugin.getDefault().getApplicationService().getModel());
 				dialog.setInitialSelection(CategoryBrowser.this.category);
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();

@@ -31,10 +31,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.osgi.util.NLS;
@@ -51,21 +49,16 @@ import org.eclipse.ui.activities.IActivityManager;
 import org.eclipse.ui.activities.IIdentifier;
 import org.eclipse.ui.activities.IWorkbenchActivitySupport;
 import org.eclipse.ui.activities.WorkbenchActivityHelper;
-import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.ide.undo.CreateProjectOperation;
-import org.eclipse.ui.ide.undo.WorkspaceUndoUtil;
 import org.eclipse.ui.internal.IPreferenceConstants;
 import org.eclipse.ui.internal.WorkbenchPlugin;
-import org.eclipse.ui.internal.ide.IDEInternalPreferences;
-import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
-import org.eclipse.ui.internal.ide.StatusUtil;
+import org.eclipse.ui.internal.misc.StatusUtil;
 import org.eclipse.ui.internal.registry.PerspectiveDescriptor;
-import org.eclipse.ui.internal.util.PrefUtil;
-import org.eclipse.ui.internal.wizards.newresource.ResourceMessages;
+import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -211,12 +204,12 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
 			public void run(final IProgressMonitor monitor) throws InvocationTargetException {
-				CreateProjectOperation op = new CreateProjectOperation(description,
-						ResourceMessages.NewProject_windowTitle);
+				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
+						description.getName());
 				try {
-					PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(
-							op, monitor, WorkspaceUndoUtil.getUIInfoAdapter(getShell()));
-				} catch (ExecutionException e) {
+					project.create(description, monitor);
+					project.open(monitor);
+				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				}
 			}
@@ -232,23 +225,24 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 				CoreException cause = (CoreException) t.getCause();
 				StatusAdapter status;
 				if (cause.getStatus().getCode() == IResourceStatus.CASE_VARIANT_EXISTS) {
-					status = new StatusAdapter(StatusUtil.newStatus(IStatus.WARNING, NLS.bind(
-							ResourceMessages.NewProject_caseVariantExistsError, newProjectHandle
-									.getName()), cause));
+					status = new StatusAdapter(org.eclipse.ui.internal.misc.StatusUtil.newStatus(
+							IStatus.WARNING, NLS
+									.bind("Project exisits", newProjectHandle.getName()), cause));
 				} else {
 					status = new StatusAdapter(StatusUtil.newStatus(
-							cause.getStatus().getSeverity(),
-							ResourceMessages.NewProject_errorMessage, cause));
+							cause.getStatus().getSeverity(), "Error creating project", cause));
 				}
-				status.setProperty(StatusAdapter.TITLE_PROPERTY,
-						ResourceMessages.NewProject_errorMessage);
+				status
+						.setProperty(IStatusAdapterConstants.TITLE_PROPERTY,
+								"Error creating project");
 				StatusManager.getManager().handle(status, StatusManager.BLOCK);
 			} else {
 				StatusAdapter status = new StatusAdapter(new Status(IStatus.WARNING,
-						IDEWorkbenchPlugin.IDE_WORKBENCH, 0, NLS.bind(
-								ResourceMessages.NewProject_internalError, t.getMessage()), t));
-				status.setProperty(StatusAdapter.TITLE_PROPERTY,
-						ResourceMessages.NewProject_errorMessage);
+						UIPlugin.PLUGIN_ID, 0, NLS.bind("Error creating project", t.getMessage()),
+						t));
+				status
+						.setProperty(IStatusAdapterConstants.TITLE_PROPERTY,
+								"Error creating project");
 				StatusManager.getManager().handle(status, StatusManager.LOG | StatusManager.BLOCK);
 			}
 			return null;
@@ -291,11 +285,9 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		}
 
 		// Retrieve the new project open perspective preference setting
-		String perspSetting = PrefUtil.getAPIPreferenceStore().getString(
-				IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE);
+		String perspSetting = "";
 
-		String promptSetting = IDEWorkbenchPlugin.getDefault().getPreferenceStore().getString(
-				IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+		String promptSetting = "";
 
 		// Return if do not switch perspective setting and are not prompting
 		if (!(promptSetting.equals(MessageDialogWithToggle.PROMPT))
@@ -334,8 +326,9 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 				}
 			}
 		} else {
-			IDEWorkbenchPlugin.log("Unable to find persective " //$NON-NLS-1$
-					+ finalPerspId + " in BasicNewProjectResourceWizard.updatePerspective"); //$NON-NLS-1$
+			//			
+			//			UIPlugin.getDefault().getLog().log("Unable to find persective " //$NON-NLS-1$
+			//					+ finalPerspId + " in BasicNewProjectResourceWizard.updatePerspective"); //$NON-NLS-1$
 			return;
 		}
 
@@ -411,52 +404,60 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	 */
 	private static boolean confirmPerspectiveSwitch(final IWorkbenchWindow window,
 			final IPerspectiveDescriptor finalPersp) {
-		IPreferenceStore store = IDEWorkbenchPlugin.getDefault().getPreferenceStore();
-		String pspm = store.getString(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
-		if (!IDEInternalPreferences.PSPM_PROMPT.equals(pspm)) {
-			// Return whether or not we should always switch
-			return IDEInternalPreferences.PSPM_ALWAYS.equals(pspm);
-		}
-		String desc = finalPersp.getDescription();
-		String message;
-		if (desc == null || desc.length() == 0) {
-			message = NLS.bind(ResourceMessages.NewProject_perspSwitchMessage, finalPersp
-					.getLabel());
-		} else {
-			message = NLS.bind(ResourceMessages.NewProject_perspSwitchMessageWithDesc,
-					new String[] { finalPersp.getLabel(), desc });
-		}
-
-		MessageDialogWithToggle dialog = MessageDialogWithToggle.openYesNoQuestion(window
-				.getShell(), ResourceMessages.NewProject_perspSwitchTitle, message, null /*
-																						 * use
-																						 * the
-																						 * default
-																						 * message
-																						 * for
-																						 * the
-																						 * toggle
-																						 */,
-				false /* toggle is initially unchecked */, store,
-				IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
-		int result = dialog.getReturnCode();
-
-		// If we are not going to prompt anymore propogate the choice.
-		if (dialog.getToggleState()) {
-			String preferenceValue;
-			if (result == IDialogConstants.YES_ID) {
-				// Doesn't matter if it is replace or new window
-				// as we are going to use the open perspective setting
-				preferenceValue = IWorkbenchPreferenceConstants.OPEN_PERSPECTIVE_REPLACE;
-			} else {
-				preferenceValue = IWorkbenchPreferenceConstants.NO_NEW_PERSPECTIVE;
-			}
-
-			// update PROJECT_OPEN_NEW_PERSPECTIVE to correspond
-			PrefUtil.getAPIPreferenceStore().setValue(IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE,
-					preferenceValue);
-		}
-		return result == IDialogConstants.YES_ID;
+		// FIXME
+		// IPreferenceStore store =
+		// IDEWorkbenchPlugin.getDefault().getPreferenceStore();
+		// String pspm =
+		// store.getString(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+		// if (!IDEInternalPreferences.PSPM_PROMPT.equals(pspm)) {
+		// // Return whether or not we should always switch
+		// return IDEInternalPreferences.PSPM_ALWAYS.equals(pspm);
+		// }
+		// String desc = finalPersp.getDescription();
+		// String message;
+		// if (desc == null || desc.length() == 0) {
+		// message = NLS.bind(ResourceMessages.NewProject_perspSwitchMessage,
+		// finalPersp
+		// .getLabel());
+		// } else {
+		// message =
+		// NLS.bind(ResourceMessages.NewProject_perspSwitchMessageWithDesc,
+		// new String[] { finalPersp.getLabel(), desc });
+		// }
+		//
+		// MessageDialogWithToggle dialog =
+		// MessageDialogWithToggle.openYesNoQuestion(window
+		// .getShell(), ResourceMessages.NewProject_perspSwitchTitle, message,
+		// null /*
+		// * use
+		// * the
+		// * default
+		// * message
+		// * for
+		// * the
+		// * toggle
+		// */,
+		// false /* toggle is initially unchecked */, store,
+		// IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+		// int result = dialog.getReturnCode();
+		//
+		// // If we are not going to prompt anymore propogate the choice.
+		// if (dialog.getToggleState()) {
+		// String preferenceValue;
+		// if (result == IDialogConstants.YES_ID) {
+		// // Doesn't matter if it is replace or new window
+		// // as we are going to use the open perspective setting
+		// preferenceValue =
+		// IWorkbenchPreferenceConstants.OPEN_PERSPECTIVE_REPLACE;
+		// } else {
+		// preferenceValue = IWorkbenchPreferenceConstants.NO_NEW_PERSPECTIVE;
+		// }
+		//
+		// // update PROJECT_OPEN_NEW_PERSPECTIVE to correspond
+		// PrefUtil.getAPIPreferenceStore().setValue(IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE,
+		// preferenceValue);
+		// }
+		return true;
 	}
 
 	/**

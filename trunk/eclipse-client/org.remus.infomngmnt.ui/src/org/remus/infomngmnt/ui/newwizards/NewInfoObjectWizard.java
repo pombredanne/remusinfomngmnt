@@ -15,18 +15,14 @@ package org.remus.infomngmnt.ui.newwizards;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -35,17 +31,13 @@ import org.eclipse.ui.PlatformUI;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.editors.InformationEditorInput;
-import org.remus.infomngmnt.ui.rules.ICreationTrigger;
+import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.util.IInfoObjectSetter;
 
 /**
  * <p>
@@ -60,19 +52,15 @@ import org.remus.infomngmnt.util.EditingUtil;
  * 
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, ICreationTrigger {
+public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 
 	protected GeneralPage page1;
-
-	private Object value;
-
-	private RuleValue ruleValue;
 
 	protected InformationUnit newElement;
 
 	private String categoryString;
 
-	private TransferWrapper transferType;
+	private IFile[] files;
 
 	/**
 	 * 
@@ -104,7 +92,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 	 */
 	protected Category findCategory() {
 		String parentCategoryValue = this.page1.getCategoryString();
-		return CategoryUtil.findCategory(parentCategoryValue, true);
+		return CategoryUtil.findCategory(parentCategoryValue, false);
 	}
 
 	/*
@@ -115,10 +103,22 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 	@Override
 	public boolean performFinish() {
 		final CompoundCommand[] createInfotype = new CompoundCommand[1];
+
 		try {
 			getContainer().run(true, true, new CancelableRunnable() {
 				@Override
 				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
+					if (findCategory() == null) {
+						Command createCATEGORY = CommandFactory
+								.CREATE_CATEGORY(
+										NewInfoObjectWizard.this.page1.getCategoryString(),
+										UIPlugin.getDefault().getEditService()
+												.getNavigationEditingDomain());
+						if (createCATEGORY != null) {
+							UIPlugin.getDefault().getEditService().getNavigationEditingDomain()
+									.getCommandStack().execute(createCATEGORY);
+						}
+					}
 					createInfotype[0] = CommandFactory.CREATE_INFOTYPE(
 							NewInfoObjectWizard.this.newElement, findCategory(), monitor);
 					Command additionalCommands = getAdditionalCommands();
@@ -135,15 +135,9 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack().execute(
-				createInfotype[0]);
-		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-					new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)),
-					InformationEditor.ID);
-		} catch (Exception e) {
-			// will come soon.
-		}
+		UIPlugin.getDefault().getEditService().getNavigationEditingDomain().getCommandStack()
+				.execute(createInfotype[0]);
+		performActionAfterCreation();
 		// we also reveal the created list-item, that can be found in the
 		// navigation
 		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class),
@@ -152,6 +146,8 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 				.getActiveWorkbenchWindow());
 		return true;
 	}
+
+	protected abstract void performActionAfterCreation();
 
 	@Override
 	public IWizardPage getStartingPage() {
@@ -197,6 +193,9 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 		if (this.categoryString != null) {
 			this.page1.setCategoryString(this.categoryString);
 		}
+		if (this.files != null) {
+			this.page1.setFiles(this.files);
+		}
 
 	}
 
@@ -214,37 +213,13 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 		// do nothing
 	}
 
-	public void handleCreationRequest() {
-		init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(new Object[0]));
-		try {
-			setDefaults(this.value, this.ruleValue, this.transferType);
-			WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), this);
-			wizard.open();
-		} catch (CoreException e) {
-			ErrorDialog.openError(getShell(), "Error creating new information unit",
-					"Error occured while executing your request.", e.getStatus());
-		}
-	}
-
-	protected void setDefaults(final Object value, final RuleValue ruleValue,
-			final TransferWrapper transferType) throws CoreException {
-		// does nothing by default
-
-	}
-
 	public void setNewInformationUnit(final InformationUnit newInformationUnit) {
 		this.newElement = newInformationUnit;
 
 	}
 
-	public void setRuleValue(final RuleValue ruleValue) {
-		this.ruleValue = ruleValue;
-
-	}
-
-	public void setValue(final Object value) {
-		this.value = value;
-
+	public void setFiles(final IFile[] files) {
+		this.files = files;
 	}
 
 	/**
@@ -255,11 +230,4 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard, 
 		this.categoryString = categoryString;
 	}
 
-	/**
-	 * @param transferType
-	 *            the transferType to set
-	 */
-	public void setTransferType(final TransferWrapper transferType) {
-		this.transferType = transferType;
-	}
 }

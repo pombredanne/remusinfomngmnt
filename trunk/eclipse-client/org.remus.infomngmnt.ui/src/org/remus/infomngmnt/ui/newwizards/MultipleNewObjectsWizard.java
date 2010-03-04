@@ -21,12 +21,13 @@ import org.eclipse.jface.wizard.IWizardPage;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.util.IMultipleInfoObjectSetter;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
+public abstract class MultipleNewObjectsWizard extends NewInfoObjectWizard {
 
 	protected EList<InformationUnit> newObjects;
 
@@ -65,8 +66,8 @@ public class MultipleNewObjectsWizard extends NewInfoObjectWizard {
 				monitor.beginTask("Creating new items", MultipleNewObjectsWizard.this.newObjects
 						.size());
 				for (InformationUnit newElement : MultipleNewObjectsWizard.this.newObjects) {
-					EditingUtil.getInstance().getNavigationEditingDomain().getCommandStack()
-							.execute(
+					UIPlugin.getDefault().getEditService().getNavigationEditingDomain()
+							.getCommandStack().execute(
 									CommandFactory.CREATE_INFOTYPE(newElement, findCategory(),
 											monitor));
 					// we also reveal the created list-item, that can be found

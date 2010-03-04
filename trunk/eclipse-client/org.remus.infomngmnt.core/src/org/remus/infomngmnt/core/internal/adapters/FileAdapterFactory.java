@@ -26,26 +26,36 @@ import org.eclipse.emf.query.statements.WHERE;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class FileAdapterFactory implements IAdapterFactory {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object,
+	 * java.lang.Class)
 	 */
 	public Object getAdapter(final Object adaptableObject, final Class adapterType) {
 		if (adaptableObject instanceof IFile) {
 			EObjectAttributeValueCondition condition = new EObjectAttributeValueCondition(
-					InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,new Condition() {
+					InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM__WORKSPACE_PATH,
+					new Condition() {
 						@Override
 						public boolean isSatisfied(final Object object) {
-							return ((IFile) adaptableObject).getFullPath().toOSString().equals(object);
+							return ((IFile) adaptableObject).getFullPath().toOSString().equals(
+									object);
 						}
 					});
-			SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel().getRootCategories()), new WHERE(condition));
+			IApplicationModel service = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+					.getService(IApplicationModel.class);
+			SELECT select = new SELECT(new FROM(service.getModel().getRootCategories()), new WHERE(
+					condition));
 			IQueryResult execute = select.execute();
 			if (execute.getEObjects().size() == 1) {
 				Set<? extends EObject> objects = execute.getEObjects();
@@ -57,11 +67,13 @@ public class FileAdapterFactory implements IAdapterFactory {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
 	 */
 	public Class[] getAdapterList() {
-		return new Class[] {InformationUnitListItem.class};
+		return new Class[] { InformationUnitListItem.class };
 	}
 
 }

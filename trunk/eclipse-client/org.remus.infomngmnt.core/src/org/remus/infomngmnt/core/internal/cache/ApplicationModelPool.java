@@ -10,12 +10,14 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.core.model;
+package org.remus.infomngmnt.core.internal.cache;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,17 +56,17 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
-import org.remus.infomngmnt.core.internal.cache.AvailableInformationCache;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class ApplicationModelPool {
+public class ApplicationModelPool implements IApplicationModel {
 
 	private final AvailableInformationCache cache;
 
@@ -122,7 +124,7 @@ public class ApplicationModelPool {
 					}
 				}
 			}
-			EditingUtil.getInstance().saveObjectToResource(this.category);
+			ApplicationModelPool.this.editService.saveObjectToResource(this.category);
 			super.notifyChanged(msg);
 		}
 
@@ -150,8 +152,7 @@ public class ApplicationModelPool {
 				return;
 			}
 			try {
-				ApplicationModelPool.getInstance().getModel().getAvailableTags().eResource().save(
-						Collections.EMPTY_MAP);
+				getModel().getAvailableTags().eResource().save(Collections.EMPTY_MAP);
 			} catch (IOException e) {
 				// do nothing
 			}
@@ -159,18 +160,14 @@ public class ApplicationModelPool {
 		}
 	}
 
-	private static ApplicationModelPool INSTANCE;
-
-	public static synchronized ApplicationModelPool getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new ApplicationModelPool();
-		}
-		return INSTANCE;
-	}
+	private static IApplicationModel INSTANCE;
 
 	private final ApplicationRoot model;
 
-	private ApplicationModelPool() {
+	private final IEditingHandler editService;
+
+	public ApplicationModelPool() {
+		this.editService = InfomngmntEditPlugin.getPlugin().getEditService();
 		this.log.debug("Initializing datamodel");
 		this.model = InfomngmntFactory.eINSTANCE.createApplicationRoot();
 		IProject[] relevantProjects = ResourceUtil.getRelevantProjects();
@@ -178,18 +175,32 @@ public class ApplicationModelPool {
 		for (IProject project : relevantProjects) {
 			addToModel(project);
 		}
-		this.cache = new AvailableInformationCache();
-		AvailableTags objectFromUri = EditingUtil.getInstance().getObjectFromFileUri(
-				URI.createFileURI(InfomngmntEditPlugin.getPlugin().getStateLocation().append(
+		this.cache = new AvailableInformationCache(this);
+		AvailableTags objectFromUri = this.editService.getObjectFromFileUri(URI
+				.createFileURI(InfomngmntEditPlugin.getPlugin().getStateLocation().append(
 						"tags.xml").toOSString()), InfomngmntPackage.Literals.AVAILABLE_TAGS,
-				EditingUtil.getInstance().getNavigationEditingDomain());
-		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(
+				this.editService.getNavigationEditingDomain());
+		this.editService.getNavigationEditingDomain().getResourceSet().getResources().add(
 				objectFromUri.eResource());
+		EList<Category> rootCategories = this.model.getRootCategories();
+		List<Category> cat2Delete = new ArrayList<Category>();
+		for (Category category : rootCategories) {
+			if (category.getLabel() == null) {
+				cat2Delete.add(category);
+			}
+		}
+		this.model.getRootCategories().removeAll(cat2Delete);
 		this.model.setAvailableTags(objectFromUri);
 		this.model.getAvailableTags().eAdapters().add(new AdapterTagImplExtension());
-
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.model.IApplicationModel#removeFromModel(org
+	 * .eclipse.core.resources.IProject)
+	 */
 	public void removeFromModel(final IProject project) throws CoreException {
 		Category itemByValue = (Category) ModelUtil.getItemByValue(getModel().getRootCategories(),
 				InfomngmntPackage.Literals.CATEGORY__LABEL, project.getName());
@@ -201,7 +212,7 @@ public class ApplicationModelPool {
 			}
 			ItemProvider provider = new ItemProvider(getModel().getRootCategories());
 			provider.getChildren().remove(itemByValue);
-			AdapterFactoryEditingDomain editingDomain = EditingUtil.getInstance()
+			AdapterFactoryEditingDomain editingDomain = this.editService
 					.getNavigationEditingDomain();
 			Command command = SetCommand.create(editingDomain, getModel(),
 					InfomngmntPackage.Literals.APPLICATION_ROOT__ROOT_CATEGORIES, provider
@@ -214,14 +225,21 @@ public class ApplicationModelPool {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.model.IApplicationModel#addToModel(org.eclipse
+	 * .core.resources.IProject)
+	 */
 	public void addToModel(final IProject project) {
 		if (project.isOpen()) {
 			this.log.debug(NLS.bind("Adding project {0} to pool", project.getName()));
 			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
 					+ ResourceUtil.PRIMARY_CONTENT_FILE));
-			AdapterFactoryEditingDomain navigationEditingDomain = EditingUtil.getInstance()
+			AdapterFactoryEditingDomain navigationEditingDomain = this.editService
 					.getNavigationEditingDomain();
-			final Category category = EditingUtil.getInstance().getObjectFromFile(file,
+			final Category category = this.editService.getObjectFromFile(file,
 					InfomngmntPackage.eINSTANCE.getCategory(), navigationEditingDomain);
 			if (category.getId() != null) {
 				category.eResource().eAdapters().add(new AdapterImplExtension(category));
@@ -237,24 +255,57 @@ public class ApplicationModelPool {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.remus.infomngmnt.core.model.IApplicationModel#getModel()
+	 */
 	public ApplicationRoot getModel() {
 		return this.model;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.model.IApplicationModel#addListenerToCategory
+	 * (org.remus.infomngmnt.Category)
+	 */
 	public void addListenerToCategory(final Category category) {
-		EditingUtil.getInstance().getNavigationEditingDomain().getResourceSet().getResources().add(
+		this.editService.getNavigationEditingDomain().getResourceSet().getResources().add(
 				category.eResource());
 		category.eAdapters().add(new AdapterImplExtension(category));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.model.IApplicationModel#getAllItems(org.eclipse
+	 * .core.runtime.IProgressMonitor)
+	 */
 	public Map<String, InformationUnitListItem> getAllItems(final IProgressMonitor monitor) {
 		return this.cache.getAllItems(monitor);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.core.model.IApplicationModel#getItemById(java.lang
+	 * .String, org.eclipse.core.runtime.IProgressMonitor)
+	 */
 	public InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor) {
 		return this.cache.getItemById(id, monitor);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.remus.infomngmnt.core.model.IApplicationModel#
+	 * getItemByIdLocalDeletedIncluded(java.lang.String,
+	 * org.eclipse.core.runtime.IProgressMonitor)
+	 */
 	public InformationUnitListItem getItemByIdLocalDeletedIncluded(final String id,
 			final IProgressMonitor monitor) {
 		InformationUnitListItem itemById = this.cache.getItemById(id, monitor);
@@ -276,8 +327,8 @@ public class ApplicationModelPool {
 				}
 
 			};
-			SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
-					.getRootCategories()), new WHERE(condition2.AND(condition)));
+			SELECT select = new SELECT(new FROM(getModel().getRootCategories()), new WHERE(
+					condition2.AND(condition)));
 			Set<? extends EObject> eObjects = select.execute().getEObjects();
 			if (eObjects.size() == 1) {
 				itemById = (InformationUnitListItem) eObjects.iterator().next();
@@ -286,8 +337,18 @@ public class ApplicationModelPool {
 		return itemById;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.remus.infomngmnt.core.model.IApplicationModel#clearCache()
+	 */
 	public void clearCache() {
 		this.cache.clear();
+	}
+
+	public void setEditService(final IEditingHandler service) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -33,9 +33,10 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Tag;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.ref.LuceneStore;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.ITagService;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -81,12 +82,16 @@ public class TagService extends LuceneStore implements ITagService {
 	public static final String TAGNAME = "TAGNAME"; //$NON-NLS-1$
 	public static final String INFOUNITID = "TAGNAME"; //$NON-NLS-1$
 
+	private final IApplicationModel appService;
+
 	public TagService() {
 		super(INDEX_LOCATION);
+		this.appService = InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
+				IApplicationModel.class);
 	}
 
 	public void startListening() {
-		ApplicationModelPool.getInstance().getModel().getAvailableTags().eAdapters().add(
+		this.appService.getModel().getAvailableTags().eAdapters().add(
 				new EContentAdapterExtension());
 	}
 
@@ -233,7 +238,7 @@ public class TagService extends LuceneStore implements ITagService {
 				try {
 					Document doc = getIndexSearcher().doc(scoreDoc.doc);
 					String infoUnit = doc.get(INFOUNITID);
-					returnValue.add(ApplicationModelPool.getInstance().getItemById(infoUnit, null));
+					returnValue.add(this.appService.getItemById(infoUnit, null));
 				} catch (CorruptIndexException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

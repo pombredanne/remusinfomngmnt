@@ -32,8 +32,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.ref.IndexSearchOperation;
 import org.remus.infomngmnt.core.ref.IIndexWriteOperation;
+import org.remus.infomngmnt.core.ref.IndexSearchOperation;
 import org.remus.infomngmnt.core.ref.LuceneStore;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 

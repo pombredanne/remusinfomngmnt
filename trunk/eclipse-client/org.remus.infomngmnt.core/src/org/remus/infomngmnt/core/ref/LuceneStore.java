@@ -121,8 +121,16 @@ public abstract class LuceneStore {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					getIndexWriter();
+					this.indexSearcher = new IndexSearcher(getIndexDirectory());
+				} catch (CorruptIndexException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 		return this.indexSearcher;

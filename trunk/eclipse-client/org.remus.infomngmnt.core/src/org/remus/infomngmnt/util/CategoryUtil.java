@@ -48,7 +48,8 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
@@ -112,12 +113,13 @@ public class CategoryUtil {
 	}
 
 	public static Category findCategory(final String str, final boolean createMissingFragments) {
+		IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IApplicationModel.class);
 		String[] split = str.split("/");
 		Category parentCategory = null;
 		for (int i = 0, n = split.length; i < n; i++) {
 			if (i == 0) {
-				EList<Category> rootCategories = ApplicationModelPool.getInstance().getModel()
-						.getRootCategories();
+				EList<Category> rootCategories = appService.getModel().getRootCategories();
 				for (Category category : rootCategories) {
 					if (category.getLabel() != null && category.getLabel().equals(split[i])) {
 						parentCategory = category;
@@ -194,7 +196,9 @@ public class CategoryUtil {
 
 	public static Category[] findCatetegories(final String startString,
 			final boolean caseSensitive, final CollectionFilter<Category> filter) {
-		ApplicationRoot model = ApplicationModelPool.getInstance().getModel();
+		IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IApplicationModel.class);
+		ApplicationRoot model = appService.getModel();
 		EObjectCondition condition = new EObjectTypeRelationCondition(
 				InfomngmntPackage.Literals.CATEGORY);
 		EObjectCondition valueCondition = new EObjectCondition() {
@@ -287,6 +291,8 @@ public class CategoryUtil {
 	}
 
 	public static Category getCategoryById(final String id) {
+		IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IApplicationModel.class);
 		EObjectCondition typeRelationCondition = new EObjectCondition() {
 			@Override
 			public boolean isSatisfied(final EObject eObject) {
@@ -300,8 +306,8 @@ public class CategoryUtil {
 						return id.equals(object);
 					}
 				});
-		SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
-				.getRootCategories()), new WHERE(typeRelationCondition.AND(valueCondition)));
+		SELECT select = new SELECT(new FROM(appService.getModel().getRootCategories()), new WHERE(
+				typeRelationCondition.AND(valueCondition)));
 		IQueryResult execute = select.execute();
 		Set<? extends EObject> eObjects = execute.getEObjects();
 		if (eObjects.size() > 0) {

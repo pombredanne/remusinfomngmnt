@@ -10,23 +10,19 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.core.remote;
+package org.remus.infomngmnt.util;
 
-import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.EList;
+
+import org.remus.infomngmnt.InformationUnit;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class OperationNotSupportedException extends RemoteException {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6308589825808224367L;
-
-	public OperationNotSupportedException(final IStatus status) {
-		super(status);
-		// TODO Auto-generated constructor stub
-	}
+public interface IMultipleInfoObjectSetter {
+	
+	EList<InformationUnit> getInformationUnits();
+	
+	void setInformationUnits(EList<InformationUnit> infoUnits);
 
 }

@@ -31,8 +31,8 @@ import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -134,7 +134,8 @@ public class CopyInformationUnitCommand implements Command {
 				this.sourceBinaryReferences.get(i).copy(
 						this.targetBinaryReferences.get(i).getFullPath(), true, monitor);
 			}
-			EditingUtil.getInstance().saveObjectToResource(this.targetFile, copy);
+			InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(this.targetFile,
+					copy);
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

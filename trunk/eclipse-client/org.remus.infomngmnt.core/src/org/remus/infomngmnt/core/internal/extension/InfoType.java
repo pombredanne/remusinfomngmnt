@@ -11,30 +11,23 @@
  *******************************************************************************/
 package org.remus.infomngmnt.core.internal.extension;
 
-import java.io.InputStream;
-import java.util.List;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.ServiceReference;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationStructureDefinition;
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.create.PostCreationHandler;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.model.service.IResourceLoader;
 
 /**
  * A object represenation of a registered information type. This class is
@@ -48,19 +41,15 @@ public class InfoType implements IInfoType {
 	/** The configuration element which comes from the plugin-registry **/
 	private final IConfigurationElement configurationElement;
 	/** The info-types image **/
-	private ImageDescriptor img;
-	private Image image;
 	private final String type;
 	private PostCreationHandler createFactory;
 	private final String contributor;
 	private final String createFactoryClass;
-	private final String imageFilePath;
-	private List<String> validTransferTypeIds;
 	private final String name;
 	private final boolean buildHtml;
 	private final boolean excludeFromIndex;
 	private final String strucuturePath;
-	private InformationStructureDefinition structureDefinition;
+	private volatile InformationStructureDefinition structureDefinition;
 
 	/**
 	 * Creates
@@ -80,7 +69,6 @@ public class InfoType implements IInfoType {
 		this.name = name;
 		this.type = type;
 		this.createFactoryClass = createFactoryClass;
-		this.imageFilePath = imageFilePath;
 		this.buildHtml = buildHtml;
 		this.excludeFromIndex = excludeFromIndex;
 		this.strucuturePath = strucuturePath;
@@ -122,30 +110,6 @@ public class InfoType implements IInfoType {
 		return this.type;
 	}
 
-	public ImageDescriptor getImageDescriptor() {
-		if (this.img == null) {
-			this.img = AbstractUIPlugin.imageDescriptorFromPlugin(this.contributor,
-					this.imageFilePath);
-		}
-		return this.img;
-
-	}
-
-	public Image getImage() {
-		if (this.image == null) {
-			this.image = getImageDescriptor().createImage();
-		}
-		return this.image;
-	}
-
-	public void setValidTransferTypeIds(final List<String> validTransferTypeIds) {
-		this.validTransferTypeIds = validTransferTypeIds;
-	}
-
-	public List<String> getValidTransferTypeIds() {
-		return this.validTransferTypeIds;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -163,22 +127,40 @@ public class InfoType implements IInfoType {
 
 	public final InformationStructureDefinition getStructureDefinition() {
 		if (this.structureDefinition == null) {
+			ServiceReference resourceLoader = null;
 			try {
-				InputStream openStream = FileLocator.openStream(Platform
-						.getBundle(this.contributor), new Path(this.strucuturePath), false);
-				IFile file = ResourceUtil.createTempFile("xmi");
-				file.setContents(openStream, true, false, new NullProgressMonitor());
-				StreamCloser.closeStreams(openStream);
-				this.structureDefinition = EditingUtil.getInstance().getObjectFromFile(file,
-						InfomngmntPackage.Literals.INFORMATION_STRUCTURE_DEFINITION);
-				file.delete(true, new NullProgressMonitor());
+				IPath append = new Path(this.contributor).append(this.strucuturePath);
+				// URL openStream =
+				// FileLocator.find(Platform.getBundle(this.contributor), new
+				// Path(
+				// this.strucuturePath), null);
+				resourceLoader = getResourceLoader();
+				IResourceLoader loader = (IResourceLoader) Platform.getBundle(CorePlugin.PLUGIN_ID)
+						.getBundleContext().getService(resourceLoader);
+				this.structureDefinition = loader.getObjectFromPlatformUri(append.toString(),
+						InfomngmntPackage.Literals.INFORMATION_STRUCTURE_DEFINITION, null);
 			} catch (Exception e) {
 				throw new IllegalStateException(NLS.bind(
 						"Strucuture definition not accessible for Information-Type \'\'{0}\'\'",
 						this.type));
+			} finally {
+				if (resourceLoader != null) {
+					Platform.getBundle(CorePlugin.PLUGIN_ID).getBundleContext().ungetService(
+							resourceLoader);
+				}
 			}
 		}
 		return this.structureDefinition;
+	}
+
+	private ServiceReference getResourceLoader() {
+		Bundle bundle = Platform.getBundle(CorePlugin.PLUGIN_ID);
+		ServiceReference serviceReference = bundle.getBundleContext().getServiceReference(
+				IResourceLoader.class.getName());
+		if (serviceReference != null) {
+			return serviceReference;
+		}
+		return null;
 	}
 
 }

@@ -15,7 +15,8 @@ package org.remus.infomngmnt.util;
 import org.eclipse.core.internal.utils.UniversalUniqueIdentifier;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -34,7 +35,9 @@ public class IdFactory {
 	 */
 	public static String createNewId(final IProgressMonitor monitor) {
 		String string = new UniversalUniqueIdentifier().toString();
-		if (ApplicationModelPool.getInstance().getAllItems(monitor).containsKey(string)) {
+		IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IApplicationModel.class);
+		if (appService.getAllItems(monitor).containsKey(string)) {
 			return createNewId(monitor);
 		}
 		return string;

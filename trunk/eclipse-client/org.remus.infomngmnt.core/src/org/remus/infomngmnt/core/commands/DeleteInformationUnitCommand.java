@@ -44,12 +44,11 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -67,6 +66,8 @@ public class DeleteInformationUnitCommand implements Command {
 	private DisposableEditingDomain referenceDomain;
 
 	private Map<EObject, Collection<EStructuralFeature.Setting>> usages;
+
+	private final IApplicationModel applicationService;
 
 	private static class InfoUnit2PathMapper {
 		public InfoUnit2PathMapper(final IPath fullPath, final InformationUnit unit) {
@@ -97,6 +98,8 @@ public class DeleteInformationUnitCommand implements Command {
 		this.domain = domain;
 		this.map = new HashMap<InformationUnitListItem, InfoUnit2PathMapper>();
 		this.delegateCommand = new CompoundCommand();
+		this.applicationService = InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
+				IApplicationModel.class);
 		if (checkForSyncState) {
 			for (InformationUnitListItem informationUnitListItem : items) {
 				if (informationUnitListItem.getSynchronizationMetaData() != null
@@ -217,7 +220,8 @@ public class DeleteInformationUnitCommand implements Command {
 		if (this.referenceDomain != null) {
 			this.referenceDomain.dispose();
 		}
-		this.referenceDomain = EditingUtil.getInstance().createNewEditingDomain();
+		this.referenceDomain = InfomngmntEditPlugin.getPlugin().getEditService()
+				.createNewEditingDomain();
 		List<InformationUnit> relevantObjects = new ArrayList<InformationUnit>();
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
 			IReferencedUnitStore service = InfomngmntEditPlugin.getPlugin().getService(
@@ -226,8 +230,8 @@ public class DeleteInformationUnitCommand implements Command {
 				String[] referencedInfoUnitIds = service
 						.getReferencedInfoUnitIds(infoUnit2PathMapper.getUnit().getId());
 				for (String string : referencedInfoUnitIds) {
-					InformationUnitListItem itemById = ApplicationModelPool.getInstance()
-							.getItemById(string, new NullProgressMonitor());
+					InformationUnitListItem itemById = this.applicationService.getItemById(string,
+							new NullProgressMonitor());
 					InformationUnit adapter = (InformationUnit) itemById
 							.getAdapter(InformationUnit.class);
 					this.referenceDomain.getResourceSet().getResources().add(adapter.eResource());
@@ -268,7 +272,8 @@ public class DeleteInformationUnitCommand implements Command {
 										InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS,
 										itemProvider.getChildren());
 								this.referenceDomain.getCommandStack().execute(command);
-								EditingUtil.getInstance().saveObjectToResource(eContainer);
+								InfomngmntEditPlugin.getPlugin().getEditService()
+										.saveObjectToResource(eContainer);
 
 							} else {
 								this.referenceDomain.getCommandStack().execute(
@@ -281,7 +286,8 @@ public class DeleteInformationUnitCommand implements Command {
 					}
 				}
 				if (referencingEObject.eResource() != null) {
-					EditingUtil.getInstance().saveObjectToResource(referencingEObject);
+					InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(
+							referencingEObject);
 				}
 			}
 		}
@@ -295,7 +301,8 @@ public class DeleteInformationUnitCommand implements Command {
 			this.referenceDomain.getCommandStack().undo();
 			for (Object object : affectedObjects) {
 				if (object instanceof EObject) {
-					EditingUtil.getInstance().saveObjectToResource((EObject) object);
+					InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(
+							(EObject) object);
 				}
 			}
 		}
@@ -427,7 +434,8 @@ public class DeleteInformationUnitCommand implements Command {
 		for (InfoUnit2PathMapper infoUnit2PathMapper : values) {
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 					infoUnit2PathMapper.getFullPath());
-			EditingUtil.getInstance().saveObjectToResource(file, infoUnit2PathMapper.getUnit());
+			InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(file,
+					infoUnit2PathMapper.getUnit());
 		}
 		postUndo();
 	}

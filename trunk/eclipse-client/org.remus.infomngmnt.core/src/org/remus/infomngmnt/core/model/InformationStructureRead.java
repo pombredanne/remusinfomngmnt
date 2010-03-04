@@ -169,12 +169,14 @@ public class InformationStructureRead {
 				return InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE;
 			case BOOLEAN:
 				return InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
-			case DATE:
+			case DATETIME:
 				return InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
 			case DOUBLE:
 				return InfomngmntPackage.Literals.INFORMATION_UNIT__DOUBLE_VALUE;
 			case LONG:
 				return InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE;
+			default:
+				throw new IllegalArgumentException("Type was found, but datatype was not set");
 			}
 		}
 		throw new IllegalArgumentException();
@@ -196,7 +198,7 @@ public class InformationStructureRead {
 		case BOOLEAN:
 			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
 			break;
-		case DATE:
+		case DATETIME:
 			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
 
 			break;
@@ -239,7 +241,7 @@ public class InformationStructureRead {
 		case BOOLEAN:
 			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
 			break;
-		case DATE:
+		case DATETIME:
 			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
 
 			break;

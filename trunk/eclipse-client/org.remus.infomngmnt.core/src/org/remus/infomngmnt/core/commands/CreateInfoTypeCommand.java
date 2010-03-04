@@ -32,9 +32,9 @@ import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
 
 /**
@@ -93,12 +93,12 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 			this.createInformationUnitListItem.setType(newInformationUnit.getType());
 
 			if (index >= 0) {
-				append(new CreateChildCommand(EditingUtil.getInstance()
+				append(new CreateChildCommand(InfomngmntEditPlugin.getPlugin().getEditService()
 						.getNavigationEditingDomain(), parentCategory,
 						InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
 						this.createInformationUnitListItem, index, Collections.EMPTY_LIST));
 			} else {
-				append(new CreateChildCommand(EditingUtil.getInstance()
+				append(new CreateChildCommand(InfomngmntEditPlugin.getPlugin().getEditService()
 						.getNavigationEditingDomain(), parentCategory,
 						InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
 						this.createInformationUnitListItem, Collections.EMPTY_LIST));
@@ -173,14 +173,15 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 	}
 
 	private void postExcecute() {
-		EditingUtil.getInstance().saveObjectToResource(this.newFile, this.newInformationUnit);
+		InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(this.newFile,
+				this.newInformationUnit);
 	}
 
 	private void postUndo() {
 		try {
 			// Save the current state.
-			this.newInformationUnit = EditingUtil.getInstance().getObjectFromFile(this.newFile,
-					InfomngmntPackage.Literals.INFORMATION_UNIT);
+			this.newInformationUnit = InfomngmntEditPlugin.getPlugin().getEditService()
+					.getObjectFromFile(this.newFile, InfomngmntPackage.Literals.INFORMATION_UNIT);
 			this.newFile.delete(true, new NullProgressMonitor());
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block

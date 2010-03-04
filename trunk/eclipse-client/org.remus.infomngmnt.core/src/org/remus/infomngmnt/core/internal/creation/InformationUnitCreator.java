@@ -49,7 +49,7 @@ import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * Class for building information units and fragments based on the
@@ -143,7 +143,7 @@ public class InformationUnitCreator {
 				case BOOLEAN:
 					attToSet = InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
 					break;
-				case DATE:
+				case DATETIME:
 					attToSet = InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
 					break;
 				case LONG:
@@ -172,7 +172,7 @@ public class InformationUnitCreator {
 			final EditingDomain editingDomain) {
 		EditingDomain domain;
 		if (editingDomain == null) {
-			domain = EditingUtil.getInstance().createNewEditingDomain();
+			domain = InfomngmntEditPlugin.getPlugin().getEditService().createNewEditingDomain();
 		} else {
 			domain = editingDomain;
 		}
@@ -276,7 +276,7 @@ public class InformationUnitCreator {
 			next2 = execute2.iterator().next();
 			EditingDomain domain;
 			if (editingDomain == null) {
-				domain = EditingUtil.getInstance().createNewEditingDomain();
+				domain = InfomngmntEditPlugin.getPlugin().getEditService().createNewEditingDomain();
 			} else {
 				domain = editingDomain;
 			}
@@ -340,7 +340,7 @@ public class InformationUnitCreator {
 				attToSet = InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
 				value = Boolean.valueOf(value.toString());
 				break;
-			case DATE:
+			case DATETIME:
 				attToSet = InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
 
 				break;
@@ -381,7 +381,8 @@ public class InformationUnitCreator {
 				EObject next2 = execute2.iterator().next();
 				EditingDomain domain;
 				if (editingDomain == null) {
-					domain = EditingUtil.getInstance().createNewEditingDomain();
+					domain = InfomngmntEditPlugin.getPlugin().getEditService()
+							.createNewEditingDomain();
 				} else {
 					domain = editingDomain;
 				}
@@ -436,7 +437,7 @@ public class InformationUnitCreator {
 					attToSet = InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
 					value = Boolean.valueOf(value.toString());
 					break;
-				case DATE:
+				case DATETIME:
 					attToSet = InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
 
 					break;
@@ -485,7 +486,8 @@ public class InformationUnitCreator {
 					EObject next2 = execute2.iterator().next();
 					EditingDomain domain;
 					if (editingDomain == null) {
-						domain = EditingUtil.getInstance().createNewEditingDomain();
+						domain = InfomngmntEditPlugin.getPlugin().getEditService()
+								.createNewEditingDomain();
 					} else {
 						domain = editingDomain;
 					}
@@ -537,7 +539,7 @@ public class InformationUnitCreator {
 		EditingDomain domain;
 		CompoundCommand cc = new CompoundCommand();
 		if (editingDomain == null) {
-			domain = EditingUtil.getInstance().createNewEditingDomain();
+			domain = InfomngmntEditPlugin.getPlugin().getEditService().createNewEditingDomain();
 		} else {
 			domain = editingDomain;
 		}

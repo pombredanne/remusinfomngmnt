@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -34,7 +35,10 @@ import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.util.CategoryUtil;
+import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * <p>
@@ -87,6 +91,53 @@ public class CommandFactory {
 		return createChildCommand;
 	}
 
+	public static Command CREATE_CATEGORY(final String path, final EditingDomain domain) {
+		Command cc = null;
+		if (CategoryUtil.findCategory(path, false) != null) {
+			return null;
+		}
+		IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IApplicationModel.class);
+		String[] split = path.split("/");
+		Category parentCategory = null;
+		for (int i = 0, n = split.length; i < n; i++) {
+			if (i == 0) {
+				EList<Category> rootCategories = appService.getModel().getRootCategories();
+				for (Category category : rootCategories) {
+					if (category.getLabel() != null && category.getLabel().equals(split[i])) {
+						parentCategory = category;
+					}
+				}
+			} else {
+				boolean found = false;
+				if (parentCategory != null) {
+					EList<Category> children = parentCategory.getChildren();
+					for (Category category : children) {
+						if (category.getLabel().equals(split[i])) {
+							parentCategory = category;
+							found = true;
+							break;
+						}
+					}
+				}
+
+				if (!found) {
+					Category createCategory = InfomngmntFactory.eINSTANCE.createCategory();
+					createCategory.setId(IdFactory.createNewId(null));
+					createCategory.setLabel(split[i]);
+					if (cc != null) {
+						parentCategory.getChildren().add(createCategory);
+					} else {
+						cc = CREATE_CATEGORY(parentCategory, createCategory, domain);
+					}
+					parentCategory = createCategory;
+				}
+
+			}
+		}
+		return cc;
+	}
+
 	public static Command CREATE_CATEGORY(final Category parentCategory,
 			final Category newCategory, final EditingDomain editingDomain) {
 		CreateChildCommand createChildCommand = new CreateChildCommand(editingDomain,
@@ -107,7 +158,8 @@ public class CommandFactory {
 	public static Command CREATE_ROOTCATEGORY(final Category newCategory,
 			final EditingDomain editingDomain) {
 		CreateChildCommand createChildCommand = new CreateChildCommand(editingDomain,
-				ApplicationModelPool.getInstance().getModel(),
+				InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
+						IApplicationModel.class).getModel(),
 				InfomngmntPackage.Literals.APPLICATION_ROOT__ROOT_CATEGORIES, newCategory,
 				Collections.EMPTY_LIST);
 		CompoundCommand compoundCommand = new CompoundCommand(new ArrayList<Command>(Collections

@@ -39,10 +39,11 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.StringUtils;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IBinaryReferenceStore;
 import org.remus.infomngmnt.core.services.IHtmlGenerationErrorGenerator;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
@@ -50,8 +51,6 @@ import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -67,6 +66,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	private final IBinaryReferenceStore binaryReferenceService;
 
+	private final IApplicationModel applicationService;
+
 	public InformationDeltaVisitor() {
 		this.referenceService = InfomngmntEditPlugin.getPlugin().getService(
 				IReferencedUnitStore.class);
@@ -74,6 +75,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				ISaveParticipantExtensionService.class);
 		this.binaryReferenceService = InfomngmntEditPlugin.getPlugin().getService(
 				IBinaryReferenceStore.class);
+		this.applicationService = InfomngmntEditPlugin.getPlugin().getService(
+				IApplicationModel.class);
 	}
 
 	public boolean visit(final IResourceDelta delta) throws CoreException {
@@ -101,8 +104,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 							resourceDelta.getResource().getProject().getName(), resourceDelta
 									.getResource().getName());
 					if (infoUnit != null) {
-						InformationUnitListItem itemById = ApplicationModelPool.getInstance()
-								.getItemById(infoUnit, this.monitor);
+						InformationUnitListItem itemById = this.applicationService.getItemById(
+								infoUnit, this.monitor);
 						if (itemById != null) {
 							IInfoType refInfoType = InformationExtensionManager.getInstance()
 									.getInfoTypeByType(itemById.getType());
@@ -121,9 +124,9 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 					&& resourceDelta.getResource().getFileExtension().equals(
 							ResourceUtil.FILE_EXTENSION)) {
 				if (resourceDelta.getResource().exists()) {
-					objectFromFile = EditingUtil.getInstance().getObjectFromFile(
-							(IFile) resourceDelta.getResource(),
-							InfomngmntPackage.eINSTANCE.getInformationUnit(), null, false);
+					objectFromFile = InfomngmntEditPlugin.getPlugin().getEditService()
+							.getObjectFromFile((IFile) resourceDelta.getResource(),
+									InfomngmntPackage.eINSTANCE.getInformationUnit(), null, false);
 					infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
 							objectFromFile.getType());
 
@@ -148,11 +151,12 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 								.getResource());
 						File previousVersion = null;
 						try {
-							previousVersion = ResourceUtil.getPreviousVersion((IFile) resourceDelta
-									.getResource(), this.monitor);
+							previousVersion = org.remus.infomngmnt.common.core.util.ResourceUtil
+									.getPreviousVersion((IFile) resourceDelta.getResource(),
+											this.monitor);
 							if (previousVersion != null) {
-								InformationUnit objectFromUri = EditingUtil.getInstance()
-										.getObjectFromFileUri(
+								InformationUnit objectFromUri = InfomngmntEditPlugin.getPlugin()
+										.getEditService().getObjectFromFileUri(
 												URI
 														.createFileURI(previousVersion
 																.getAbsolutePath()),
@@ -195,7 +199,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			AbstractInformationRepresentation informationRepresentation = infoTypeByType
 					.getInformationRepresentation();
 			informationRepresentation.setValue(objectFromFile);
-			File previousVersionFile = ResourceUtil.getPreviousVersion(resource, this.monitor);
+			File previousVersionFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+					.getPreviousVersion(resource, this.monitor);
 			informationRepresentation.setPreviousVersion(previousVersionFile);
 			if (informationRepresentation.createFolderOnBuild()) {
 				String folderName = resource.getProjectRelativePath().removeFileExtension()
@@ -261,7 +266,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			String label = objectFromFile.getLabel();
 			String label2 = ((AbstractInformationUnit) adapter).getLabel();
 			if (label != null && !label.equals(label2)) {
-				DisposableEditingDomain domain = EditingUtil.getInstance().createNewEditingDomain();
+				DisposableEditingDomain domain = InfomngmntEditPlugin.getPlugin().getEditService()
+						.createNewEditingDomain();
 				Command create = SetCommand.create(domain, adapter,
 						InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL, label);
 				domain.getCommandStack().execute(create);

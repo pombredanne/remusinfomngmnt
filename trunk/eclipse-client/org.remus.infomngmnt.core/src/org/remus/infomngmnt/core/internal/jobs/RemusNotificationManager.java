@@ -33,11 +33,9 @@ import org.eclipse.osgi.util.NLS;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NotificationCollection;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
-import org.remus.infomngmnt.core.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.core.services.IJobExtensionService;
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -47,6 +45,10 @@ public class RemusNotificationManager implements INotificationManagerManager {
 	public static final String NOTIFCIATION_PATH = "notification/noticications.xml"; //$NON-NLS-1$
 
 	private NotificationCollection allNotifications;
+
+	public RemusNotificationManager() {
+		init();
+	}
 
 	private final Job job = new Job("Checking for jobs to run") {
 		@Override
@@ -91,12 +93,14 @@ public class RemusNotificationManager implements INotificationManagerManager {
 
 	public void addNotification(final List<org.remus.infomngmnt.Notification> run) {
 		for (org.remus.infomngmnt.Notification notification : run) {
-			if ((this.allNotifications.getNotifcations().size() - 1) == InfomngmntEditPlugin
-					.getPlugin().getPreferenceStore().getInt(
-							PreferenceInitializer.MAX_SAVED_NOTIFICATIONS)) {
-				this.allNotifications.getNotifcations().remove(
-						this.allNotifications.getNotifcations().size() - 1);
-			}
+			// FIXME
+			// if ((this.allNotifications.getNotifcations().size() - 1) ==
+			// InfomngmntEditPlugin
+			// .getPlugin().getPreferenceStore().getInt(
+			// PreferenceInitializer.MAX_SAVED_NOTIFICATIONS)) {
+			// this.allNotifications.getNotifcations().remove(
+			// this.allNotifications.getNotifcations().size() - 1);
+			// }
 			this.allNotifications.getNotifcations().add(0,
 					(org.remus.infomngmnt.Notification) EcoreUtil.copy(notification));
 		}
@@ -112,9 +116,9 @@ public class RemusNotificationManager implements INotificationManagerManager {
 			File file = append.toFile();
 			file.getParentFile().mkdirs();
 		}
-		this.allNotifications = EditingUtil.getInstance().getObjectFromFileUri(
-				URI.createFileURI(append.toOSString()),
-				InfomngmntPackage.Literals.NOTIFICATION_COLLECTION, null);
+		this.allNotifications = InfomngmntEditPlugin.getPlugin().getEditService()
+				.getObjectFromFileUri(URI.createFileURI(append.toOSString()),
+						InfomngmntPackage.Literals.NOTIFICATION_COLLECTION, null);
 		this.allNotifications.eAdapters().add(new EContentAdapter() {
 			@Override
 			public void notifyChanged(final Notification msg) {
@@ -122,7 +126,7 @@ public class RemusNotificationManager implements INotificationManagerManager {
 				if (msg.getNotifier() instanceof ResourceImpl) {
 					return;
 				}
-				EditingUtil.getInstance().saveObjectToResource(
+				InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(
 						RemusNotificationManager.this.allNotifications);
 			}
 		});

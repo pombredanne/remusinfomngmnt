@@ -12,11 +12,6 @@
 
 package org.remus.infomngmnt.core.extension;
 
-import java.util.List;
-
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
-
 import org.remus.infomngmnt.InformationStructureDefinition;
 import org.remus.infomngmnt.core.create.PostCreationHandler;
 
@@ -30,12 +25,6 @@ public interface IInfoType {
 	AbstractInformationRepresentation getInformationRepresentation();
 
 	String getType();
-
-	ImageDescriptor getImageDescriptor();
-
-	Image getImage();
-
-	List<String> getValidTransferTypeIds();
 
 	String getName();
 

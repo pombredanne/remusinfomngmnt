@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.services;
 
 import java.util.List;
 
+import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationCollection;
 
 /**
@@ -25,7 +26,7 @@ public interface INotificationManagerManager {
 
 	NotificationCollection getAllNotifications();
 
-	void addNotification(final List<org.remus.infomngmnt.Notification> notification);
+	void addNotification(final List<Notification> notification);
 
 	void shutdown();
 }

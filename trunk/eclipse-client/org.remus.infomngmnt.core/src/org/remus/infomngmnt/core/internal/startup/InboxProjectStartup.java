@@ -16,25 +16,26 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.ui.IStartup;
 
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class InboxProjectStartup implements IStartup {
+public class InboxProjectStartup {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.IStartup#earlyStartup()
 	 */
 	public void earlyStartup() {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("Inbox");
 		if (!project.exists()) {
 			try {
-				 IProjectDescription newProjectDescription = ResourcesPlugin.getWorkspace()
-					.newProjectDescription(project.getName());
-				 ResourceUtil.postProjectCreation(newProjectDescription);
+				IProjectDescription newProjectDescription = ResourcesPlugin.getWorkspace()
+						.newProjectDescription(project.getName());
+				ResourceUtil.postProjectCreation(newProjectDescription);
 				project.create(null);
 				project.open(null);
 				project.setDescription(newProjectDescription, null);

@@ -29,7 +29,7 @@ import org.eclipse.emf.query.statements.WHERE;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -37,6 +37,12 @@ import org.remus.infomngmnt.core.model.ApplicationModelPool;
 public class AvailableInformationCache {
 
 	private Map<String, InformationUnitListItem> cachedItems;
+	private final IApplicationModel modelService;
+
+	public AvailableInformationCache(final IApplicationModel model) {
+		this.modelService = model;
+
+	}
 
 	/**
 	 * <p>
@@ -49,7 +55,7 @@ public class AvailableInformationCache {
 	 */
 	public Map<String, InformationUnitListItem> getAllItems(final IProgressMonitor monitor) {
 		if (this.cachedItems == null) {
-			ApplicationRoot model = ApplicationModelPool.getInstance().getModel();
+			ApplicationRoot model = this.modelService.getModel();
 			EObjectCondition condition = new EObjectTypeRelationCondition(
 					InfomngmntPackage.eINSTANCE.getInformationUnitListItem());
 			SELECT select = new SELECT(new FROM(model.getRootCategories()), new WHERE(condition));

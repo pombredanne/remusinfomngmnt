@@ -8,10 +8,14 @@ Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;bundle-version="2.4.0",
  org.apache.commons.codec;bundle-version="1.2.0",
- org.apache.commons.lang
+ org.apache.commons.lang,
+ org.eclipse.core.resources,
+ org.eclipse.core.filesystem
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.common.core.beans,
+ org.remus.infomngmnt.common.core.extension,
  org.remus.infomngmnt.common.core.indexing,
+ org.remus.infomngmnt.common.core.operation,
  org.remus.infomngmnt.common.core.streams,
  org.remus.infomngmnt.common.core.util

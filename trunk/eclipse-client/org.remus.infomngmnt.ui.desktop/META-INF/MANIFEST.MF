@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.remus.infomngmnt.ui.desktop;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.remus.uimodel.provider.UimodelEditPlugin$Implementation
 Bundle-Vendor: %providerName
@@ -18,16 +18,16 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.edit;visibility:=reexport,
  org.eclipse.ui,
- org.remus.infomngmnt.services,
- org.remus.infomngmnt.common.core,
- org.remus.infomngmnt.model,
- org.remus.infomngmnt.core,
+ org.remus.infomngmnt.services;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.common.core;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.ui.forms,
- org.remus.infomngmnt.ui.popup,
+ org.remus.infomngmnt.ui.popup;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.emf.edit.ui;bundle-version="2.5.0",
- org.remus.infomngmnt.ui.rules;bundle-version="1.0.0",
- org.remus.infomngmnt.common.ui,
- org.remus.infomngmnt.ui;bundle-version="1.0.0",
+ org.remus.infomngmnt.ui.rules;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.common.ui;bundle-version="[0.1.0,1.0.0)",
+ org.remus.infomngmnt.ui;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.emf.ecore.xmi;bundle-version="2.5.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.remus.infomngmnt.common.ui

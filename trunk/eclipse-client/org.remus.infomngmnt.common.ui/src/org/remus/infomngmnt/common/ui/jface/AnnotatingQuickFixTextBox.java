@@ -42,15 +42,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ActiveShellExpression;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.editors.text.EditorsUI;
-import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
-import org.eclipse.ui.texteditor.AnnotationPreference;
-import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.IWorkbenchActionDefinitionIds;
-import org.eclipse.ui.texteditor.MarkerAnnotationPreferences;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 
 public class AnnotatingQuickFixTextBox implements ModifyListener, TraverseListener, FocusListener,
@@ -74,7 +69,9 @@ public class AnnotatingQuickFixTextBox implements ModifyListener, TraverseListen
 		this.fText = initialText;
 
 		AnnotationModel annotationModel = new AnnotationModel();
-		IAnnotationAccess annotationAccess = new DefaultMarkerAnnotationAccess();
+		// FIXME
+		IAnnotationAccess annotationAccess = null;// new
+													// DefaultMarkerAnnotationAccess();
 
 		this.cc = new Composite(composite, SWT.BORDER);
 		this.cc.setLayout(new FillLayout());
@@ -86,14 +83,16 @@ public class AnnotatingQuickFixTextBox implements ModifyListener, TraverseListen
 		this.fTextField.setIndent(2);
 
 		final SourceViewerDecorationSupport support = new SourceViewerDecorationSupport(
-				sourceViewer, null, annotationAccess, EditorsUI.getSharedTextColors());
+				sourceViewer, null, annotationAccess, null);
 
-		Iterator e = new MarkerAnnotationPreferences().getAnnotationPreferences().iterator();
-		while (e.hasNext()) {
-			support.setAnnotationPreference((AnnotationPreference) e.next());
-		}
-
-		support.install(EditorsUI.getPreferenceStore());
+		// FIXME
+		// Iterator e = new
+		// MarkerAnnotationPreferences().getAnnotationPreferences().iterator();
+		// while (e.hasNext()) {
+		// support.setAnnotationPreference((AnnotationPreference) e.next());
+		// }
+		//
+		// support.install(EditorsUI.getPreferenceStore());
 
 		final IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
 				.getService(IHandlerService.class);
@@ -264,7 +263,9 @@ public class AnnotatingQuickFixTextBox implements ModifyListener, TraverseListen
 		// order for
 		// Hyperlink coloring to work. (Presenter needs document object up
 		// front)
-		sourceViewer.configure(new TextSourceViewerConfiguration(EditorsUI.getPreferenceStore()));
+		// FIXME
+		// sourceViewer.configure(new
+		// TextSourceViewerConfiguration(EditorsUI.getPreferenceStore()));
 		sourceViewer.setDocument(document, annotationModel);
 
 		this.fTextField.addTraverseListener(this);

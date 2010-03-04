@@ -33,11 +33,10 @@ import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -48,12 +47,15 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 
 	public static final String BUILDER_ID = CorePlugin.PLUGIN_ID + ".infobuilder"; //$NON-NLS-1$
 	private final InformationDeltaVisitor visitor;
+	private final IApplicationModel service;
 
 	/**
 	 * 
 	 */
 	public InformationBuilder() {
 		this.visitor = new InformationDeltaVisitor();
+		this.service = InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
+				IApplicationModel.class);
 	}
 
 	/*
@@ -68,8 +70,7 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 		System.out.println(kind);
 		switch (kind) {
 		case FULL_BUILD:
-			EList<Category> rootCategories = ApplicationModelPool.getInstance().getModel()
-					.getRootCategories();
+			EList<Category> rootCategories = this.service.getModel().getRootCategories();
 			boolean addedToModelPool = false;
 			for (Category category : rootCategories) {
 				if (getProject().getName().equals(category.getLabel())) {
@@ -78,7 +79,7 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 				}
 			}
 			if (!addedToModelPool) {
-				ApplicationModelPool.getInstance().addToModel(getProject());
+				this.service.addToModel(getProject());
 			}
 
 			IFolder folder = getProject().getFolder(ResourceUtil.BIN_FOLDER);
@@ -91,9 +92,9 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 			for (IResource resource : members) {
 				if (resource.getType() == IResource.FILE
 						&& resource.getFileExtension().equals(ResourceUtil.FILE_EXTENSION)) {
-					InformationUnit objectFromFile = EditingUtil.getInstance().getObjectFromFile(
-							(IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit(),
-							false);
+					InformationUnit objectFromFile = InfomngmntEditPlugin.getPlugin()
+							.getEditService().getObjectFromFile((IFile) resource,
+									InfomngmntPackage.eINSTANCE.getInformationUnit(), false);
 					if (objectFromFile != null) {
 						monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile
 								.getLabel()));

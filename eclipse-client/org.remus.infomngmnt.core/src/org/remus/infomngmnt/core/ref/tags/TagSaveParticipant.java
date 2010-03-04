@@ -29,18 +29,22 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Tag;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class TagSaveParticipant implements ISaveParticipant {
 
+	private final IApplicationModel appService;
+
 	/**
 	 * 
 	 */
 	public TagSaveParticipant() {
-		// TODO Auto-generated constructor stub
+		this.appService = InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
+				IApplicationModel.class);
 	}
 
 	private void handleOldTags(final List<Tag> tagsByInfoUnitCopy, final InformationUnit unit) {
@@ -57,8 +61,7 @@ public class TagSaveParticipant implements ISaveParticipant {
 			if (tagByName == null) {
 				tagByName = InfomngmntFactory.eINSTANCE.createTag();
 				tagByName.setName(newTag);
-				ApplicationModelPool.getInstance().getModel().getAvailableTags().getTags().add(
-						tagByName);
+				this.appService.getModel().getAvailableTags().getTags().add(tagByName);
 			}
 			tagByName.getInfoUnits().add(
 					((InformationUnitListItem) unit.getAdapter(InformationUnitListItem.class))
@@ -80,8 +83,7 @@ public class TagSaveParticipant implements ISaveParticipant {
 		List<Tag> returnValue = new ArrayList<Tag>();
 		InformationUnitListItem adapter = (InformationUnitListItem) unit
 				.getAdapter(InformationUnitListItem.class);
-		EList<Tag> availableTags = ApplicationModelPool.getInstance().getModel().getAvailableTags()
-				.getTags();
+		EList<Tag> availableTags = this.appService.getModel().getAvailableTags().getTags();
 		for (Tag tag : availableTags) {
 			if (tag.getInfoUnits().contains(adapter.getId())) {
 				returnValue.add(tag);
@@ -91,8 +93,7 @@ public class TagSaveParticipant implements ISaveParticipant {
 	}
 
 	private Tag getTagByName(final String name) {
-		EList<Tag> tags = ApplicationModelPool.getInstance().getModel().getAvailableTags()
-				.getTags();
+		EList<Tag> tags = this.appService.getModel().getAvailableTags().getTags();
 		for (Tag tag : tags) {
 			if (tag.getName().equals(name)) {
 				return tag;
@@ -133,8 +134,7 @@ public class TagSaveParticipant implements ISaveParticipant {
 	}
 
 	public void handleDeleted(final String informationUnitId) {
-		List<Tag> tags = new ArrayList<Tag>(ApplicationModelPool.getInstance().getModel()
-				.getAvailableTags().getTags());
+		List<Tag> tags = new ArrayList<Tag>(this.appService.getModel().getAvailableTags().getTags());
 		for (Tag tag : tags) {
 			List<String> infoUnits = new ArrayList<String>(tag.getInfoUnits());
 			for (String string2 : infoUnits) {
@@ -147,13 +147,11 @@ public class TagSaveParticipant implements ISaveParticipant {
 	}
 
 	public void handleClean(final IProject project) {
-		List<Tag> tags = new ArrayList<Tag>(ApplicationModelPool.getInstance().getModel()
-				.getAvailableTags().getTags());
+		List<Tag> tags = new ArrayList<Tag>(this.appService.getModel().getAvailableTags().getTags());
 		for (Tag tag : tags) {
 			List<String> arrayList = new ArrayList<String>(tag.getInfoUnits());
 			for (String string : arrayList) {
-				InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
-						string, null);
+				InformationUnitListItem itemById = this.appService.getItemById(string, null);
 				if (itemById == null
 						|| itemById.eResource() == null
 						|| project.equals(ResourcesPlugin.getWorkspace().getRoot().getFile(

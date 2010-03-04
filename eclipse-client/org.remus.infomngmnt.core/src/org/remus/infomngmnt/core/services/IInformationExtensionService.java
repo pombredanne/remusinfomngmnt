@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.core.services;
 
+import org.remus.infomngmnt.services.IExtensionService;
+
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

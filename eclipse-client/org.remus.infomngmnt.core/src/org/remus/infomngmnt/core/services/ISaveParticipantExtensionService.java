@@ -16,6 +16,7 @@ import java.util.Collection;
 
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
+import org.remus.infomngmnt.services.IExtensionService;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

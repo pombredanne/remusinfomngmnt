@@ -13,7 +13,6 @@ package org.remus.infomngmnt.core.extension;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -21,15 +20,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.compare.diff.metamodel.AttributeChange;
-import org.eclipse.emf.compare.diff.metamodel.DiffElement;
-import org.eclipse.emf.ecore.EAttribute;
 
 import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.util.EditingUtil;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * <p>
@@ -61,9 +54,6 @@ public abstract class AbstractInformationRepresentation {
 
 	/** The previous version of the file, if present **/
 	private File previousVersion;
-
-	/** The calculated differences **/
-	private List<DiffElement> differences;
 
 	private IFolder folder;
 
@@ -153,7 +143,6 @@ public abstract class AbstractInformationRepresentation {
 
 	public final void setValue(final InformationUnit value) {
 		this.value = value;
-		unsetDifferences();
 	}
 
 	public File getPreviousVersion() {
@@ -162,33 +151,11 @@ public abstract class AbstractInformationRepresentation {
 
 	public final void setPreviousVersion(final File previousVersion) {
 		this.previousVersion = previousVersion;
-		unsetDifferences();
-	}
-
-	private void unsetDifferences() {
-		this.differences = null;
-
 	}
 
 	protected IFile getFile() {
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(
 				new Path(getValue().eResource().getURI().toPlatformString(true)));
-	}
-
-	protected List<DiffElement> getDifferences() {
-		if (getPreviousVersion() != null && this.differences == null) {
-			InformationUnit previousModel = EditingUtil.getInstance().getObjectFromUri(
-					new Path(this.previousVersion.getAbsolutePath()),
-					InfomngmntPackage.Literals.INFORMATION_UNIT);
-			this.differences = InformationUtil.computeDiffs(previousModel, getValue());
-		}
-		return this.differences;
-	}
-
-	protected boolean isChanged(final EAttribute attribute) {
-		AttributeChange attributeChange = InformationUtil.getAttributeChange(this.differences,
-				attribute);
-		return attributeChange != null;
 	}
 
 	public boolean createFolderOnBuild() {

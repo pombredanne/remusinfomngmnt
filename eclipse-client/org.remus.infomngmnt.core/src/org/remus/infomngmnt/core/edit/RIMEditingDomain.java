@@ -10,7 +10,7 @@
  *     Tom Seidel - initial API and implementation
  *******************************************************************************/
 
-package org.remus.infomngmnt.util;
+package org.remus.infomngmnt.core.edit;
 
 import java.util.Map;
 

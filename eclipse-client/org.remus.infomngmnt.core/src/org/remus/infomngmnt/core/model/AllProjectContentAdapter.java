@@ -19,28 +19,35 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class AllProjectContentAdapter extends AdapterImpl {
+	private final IApplicationModel service;
+
+	public AllProjectContentAdapter() {
+		this.service = InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
+				IApplicationModel.class);
+	}
 
 	public void initialize() {
-		ApplicationModelPool.getInstance().getModel().eAdapters().add(this);
-		EList<Category> rootCategories = ApplicationModelPool.getInstance().getModel()
-				.getRootCategories();
+		this.service.getModel().eAdapters().add(this);
+		EList<Category> rootCategories = this.service.getModel().getRootCategories();
 		for (Category category : rootCategories) {
 			category.eAdapters().add(this.categoryAdapter);
 		}
 	}
 
 	public void dispose() {
-		ApplicationModelPool.getInstance().getModel().eAdapters().remove(this);
-		EList<Category> rootCategories = ApplicationModelPool.getInstance().getModel()
-				.getRootCategories();
+		this.service.getModel().eAdapters().remove(this);
+		EList<Category> rootCategories = this.service.getModel().getRootCategories();
 		for (Category category : rootCategories) {
 			category.eAdapters().remove(this.categoryAdapter);
 		}
+		InfomngmntEditPlugin.getPlugin().getServiceTracker().ungetService(this.service);
 	}
 
 	private final EContentAdapter categoryAdapter = new EContentAdapter() {

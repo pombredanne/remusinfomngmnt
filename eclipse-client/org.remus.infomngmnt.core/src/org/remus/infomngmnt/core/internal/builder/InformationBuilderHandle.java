@@ -14,19 +14,22 @@ package org.remus.infomngmnt.core.internal.builder;
 
 import org.eclipse.core.resources.IProjectDescription;
 
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.resources.util.IPostProjectHandle;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class InformationBuilderHandle implements IPostProjectHandle {
 
-
-	/* (non-Javadoc)
-	 * @see org.remus.infomngmnt.resources.util.IPostProjectHandle#postProjectCreation(org.eclipse.core.resources.IProjectDescription)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.remus.infomngmnt.resources.util.IPostProjectHandle#postProjectCreation
+	 * (org.eclipse.core.resources.IProjectDescription)
 	 */
-	public void postProjectCreation(IProjectDescription project) {
+	public void postProjectCreation(final IProjectDescription project) {
 		ResourceUtil.addBuilder(project, InformationBuilder.BUILDER_ID);
 	}
 

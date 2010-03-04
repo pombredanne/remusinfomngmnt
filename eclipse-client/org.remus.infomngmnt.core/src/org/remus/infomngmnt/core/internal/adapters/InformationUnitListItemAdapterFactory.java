@@ -21,9 +21,9 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -47,15 +47,16 @@ public class InformationUnitListItemAdapterFactory implements IAdapterFactory {
 				file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 						new Path(item.eResource().getURI().toPlatformString(true)));
 			} catch (Exception e) {
-				InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
-						item.getId(), null);
+				IApplicationModel service = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+						.getService(IApplicationModel.class);
+				InformationUnitListItem itemById = service.getItemById(item.getId(), null);
 				if (itemById != null) {
 					file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 							new Path(itemById.eResource().getURI().toPlatformString(true)));
 				}
 			}
 			if (file != null) {
-				return EditingUtil.getInstance().getObjectFromUri(
+				return InfomngmntEditPlugin.getPlugin().getEditService().getObjectFromUri(
 						file.getProject().getFile(
 								new Path(id).addFileExtension(ResourceUtil.FILE_EXTENSION))
 								.getFullPath(), InfomngmntPackage.eINSTANCE.getInformationUnit(),

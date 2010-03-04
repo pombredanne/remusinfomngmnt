@@ -2,16 +2,13 @@ package org.remus.infomngmnt.resources.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -35,13 +32,13 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.core.streams.FileUtil;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.util.IdFactory;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.edit.EditingUtil;
 import org.remus.infomngmnt.core.internal.builder.InformationBuilder;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.util.EditingUtil;
-import org.remus.infomngmnt.util.IdFactory;
 import org.remus.infomngmnt.util.StatusCreator;
 
 public class ResourceUtil {
@@ -63,8 +60,6 @@ public class ResourceUtil {
 	public static final String HTML_EXTENSION = "html";
 
 	public static final String SHEMAPREFIX_ENCRYPTED_PROJECTS = "encrypted"; //$NON-NLS-1$
-
-	public static final String PROJECT_NAME_TMP = "__tmp"; //$NON-NLS-1$
 
 	public static final String PROJECT_NAME_INTERN = "__intern"; //$NON-NLS-1$
 
@@ -109,85 +104,6 @@ public class ResourceUtil {
 			}
 		}
 		return returnValue.toArray(new IProject[returnValue.size()]);
-	}
-
-	/**
-	 * Adds a builder to the project
-	 * 
-	 * @param builder
-	 *            the builder id
-	 * @throws CoreException
-	 *             if the project-descriptiion is invalid
-	 */
-	public static void addBuilder(final IProject project, final String builder)
-			throws CoreException {
-		// Get project description and then the associated build commands
-		final IProjectDescription desc = project.getDescription();
-		addBuilder(desc, builder);
-
-	}
-
-	public static void addBuilder(final IProjectDescription desc, final String builder) {
-		final ICommand[] commands = desc.getBuildSpec();
-
-		// Determine if builder already associated
-		boolean found = hasBuilder(desc, builder);
-
-		// Add builder if not already in project
-		if (!found) {
-			final ICommand command = desc.newCommand();
-			command.setBuilderName(builder);
-			// Create map with arguments specific to builder in project here
-			// command.setArguments(Map args);
-			final ICommand[] newCommands = new ICommand[commands.length + 1];
-
-			// Add it before other builders.
-			System.arraycopy(commands, 0, newCommands, 1, commands.length);
-			newCommands[0] = command;
-			desc.setBuildSpec(newCommands);
-		}
-
-	}
-
-	public static boolean hasBuilder(final IProjectDescription desc, final String builder) {
-		// Determine if builder already associated
-		final ICommand[] commands = desc.getBuildSpec();
-		boolean found = false;
-		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(builder)) {
-				found = true;
-				break;
-			}
-		}
-		return found;
-	}
-
-	public static void removeBuilder(final IProject project, final String builder)
-			throws CoreException {
-
-		final IProjectDescription desp = project.getDescription();
-		final ICommand[] commands = desp.getBuildSpec();
-		boolean found = false;
-
-		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(builder)) {
-				found = true;
-				break;
-			}
-		}
-
-		if (found) { // Remove builder from project
-
-			final ICommand[] newCommands = new ICommand[commands.length - 1];
-
-			// Add it before other builders.
-
-			System.arraycopy(commands, 1, newCommands, 0, commands.length - 1);
-
-			desp.setBuildSpec(newCommands);
-			project.setDescription(desp, null);
-			// Confirm Builder Remove
-		}
 	}
 
 	public static IProject getProject(final String text) {
@@ -294,8 +210,8 @@ public class ResourceUtil {
 	 * @throws CoreException
 	 *             if folder or file creation fails.
 	 */
-	public static void createNewProject(final IProject newProject, final IProgressMonitor monitor,
-			final String description) throws CoreException {
+	public static Category createNewProject(final IProject newProject,
+			final IProgressMonitor monitor, final String description) throws CoreException {
 		// At first we have to create the folder for the primary-content file
 		IFolder folder = newProject.getFolder(ResourceUtil.SETTINGS_FOLDER);
 		if (!folder.exists()) {
@@ -313,52 +229,42 @@ public class ResourceUtil {
 			cmdFolder.create(true, true, monitor);
 		}
 		IFile file = folder.getFile(ResourceUtil.PRIMARY_CONTENT_FILE);
-		Category rootCategory = EditingUtil.getInstance().getObjectFromFile(file,
-				InfomngmntPackage.eINSTANCE.getCategory(), true);
+		Category rootCategory = InfomngmntEditPlugin.getPlugin().getEditService()
+				.getObjectFromFile(file, InfomngmntPackage.eINSTANCE.getCategory(), true);
 		rootCategory.setLabel(newProject.getName());
 		rootCategory.setId(IdFactory.createNewId(null));
 		rootCategory.setDescription(description);
-		EditingUtil.getInstance().saveObjectToResource(rootCategory);
+		InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(rootCategory);
 
-		EditingDomain editingDomain = EditingUtil.getInstance().getNavigationEditingDomain();
+		EditingDomain editingDomain = InfomngmntEditPlugin.getPlugin().getEditService()
+				.getNavigationEditingDomain();
 		Command createCommand = CommandFactory.CREATE_ROOTCATEGORY(rootCategory, editingDomain);
 		editingDomain.getCommandStack().execute(createCommand);
-		ApplicationModelPool.getInstance().addListenerToCategory(rootCategory);
-
+		IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IApplicationModel.class);
+		appService.addListenerToCategory(rootCategory);
+		return rootCategory;
 	}
 
-	public static IFile createTempFile(final String extension) {
-		NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT_NAME_TMP);
-		IFile file = null;
+	public static Category createNewProject(final String name, final IProgressMonitor monitor)
+			throws CoreException {
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
 		if (!project.exists()) {
 			try {
-				project.create(nullProgressMonitor);
-				project.open(nullProgressMonitor);
+				IProjectDescription newProjectDescription = ResourcesPlugin.getWorkspace()
+						.newProjectDescription(project.getName());
+				ResourceUtil.postProjectCreation(newProjectDescription);
+				project.create(null);
+				project.open(null);
+				project.setDescription(newProjectDescription, null);
+				return ResourceUtil.createNewProject(project, null, name);
 			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if (extension != null) {
-			file = project.getFile(new Path(IdFactory.createId()).addFileExtension(extension));
-		} else {
-			file = project.getFile(IdFactory.createId());
-		}
-		if (!file.exists()) {
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(new byte[0]);
-			try {
-				file.create(inputStream, true, nullProgressMonitor);
-			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				StreamCloser.closeStreams(inputStream);
+				throw e;
 			}
 		} else {
-			throw new IllegalArgumentException("tmp file already exisits.");
+			throw new CoreException(StatusCreator.newStatus(NLS.bind("Project {0} already exists",
+					name)));
 		}
-		return file;
 	}
 
 	public static IFile getInternalFile(final String name, final boolean createIfnotexist) {
@@ -393,55 +299,12 @@ public class ResourceUtil {
 		return file;
 	}
 
-	public static IFile createTempFile() {
-		return createTempFile(null);
-	}
-
-	public static File getPreviousVersion(final IFile file, final IProgressMonitor monitor)
-			throws CoreException {
-		IFileState[] history = file.getHistory(monitor);
-		File createTempFile;
-		if (history.length > 0) {
-			InputStream contents;
-			FileOutputStream fos = null;
-			contents = history[0].getContents();
-			try {
-				createTempFile = File.createTempFile("history", ResourceUtil.DOT_FILE_EXTENSION);
-				fos = new FileOutputStream(createTempFile);
-				byte buf[] = new byte[1024];
-				int len;
-				while ((len = contents.read(buf)) > 0) {
-					fos.write(buf, 0, len);
-				}
-
-			} catch (Exception e) {
-				return null;
-			} finally {
-				if (fos != null) {
-					try {
-						fos.close();
-					} catch (IOException e) {
-						// do nothing. we've done our best.
-					}
-				}
-				if (contents != null) {
-					try {
-						contents.close();
-					} catch (IOException e) {
-						// do nothing. we've done our best.
-					}
-				}
-			}
-			return createTempFile;
-		} else {
-			return null;
-		}
-	}
-
 	public static void closeProject(final IProject object) throws CoreException {
 
 		if (isRelevantProject(object) && object.isOpen()) {
-			ApplicationModelPool.getInstance().removeFromModel(object);
+			IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+					.getService(IApplicationModel.class);
+			appService.removeFromModel(object);
 		}
 
 	}
@@ -464,7 +327,9 @@ public class ResourceUtil {
 	public static void deleteProject(final IProject object, final IProgressMonitor monitor)
 			throws CoreException {
 		// TODO implement search for references and delete the linkings.
-		ApplicationModelPool.getInstance().removeFromModel(object);
+		IApplicationModel appService = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IApplicationModel.class);
+		appService.removeFromModel(object);
 		object.delete(true, true, monitor);
 
 	}
@@ -472,8 +337,9 @@ public class ResourceUtil {
 	public static void cleanUp(final IProgressMonitor monitor) throws CoreException {
 		monitor.beginTask("Clean up", IProgressMonitor.UNKNOWN);
 		monitor.setTaskName("Deleting temporary files");
-		ResourcesPlugin.getWorkspace().getRoot().getProject(ResourceUtil.PROJECT_NAME_TMP).delete(
-				true, new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+		ResourcesPlugin.getWorkspace().getRoot().getProject(
+				org.remus.infomngmnt.common.core.util.ResourceUtil.PROJECT_NAME_TMP).delete(true,
+				new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
 		IProject[] relevantProjects = getRelevantProjects();
 		for (IProject iProject : relevantProjects) {
 			IFolder folder = iProject.getFolder(CMDSTACK_FOLDER);
@@ -487,7 +353,7 @@ public class ResourceUtil {
 				}
 			}
 		}
-		File file = InfomngmntEditPlugin.getPlugin().getStateLocation().append("compare").toFile();
+		File file = CorePlugin.getDefault().getStateLocation().append("compare").toFile();
 		try {
 			monitor.setTaskName("Deleting compare folder");
 			FileUtil.delete(file);

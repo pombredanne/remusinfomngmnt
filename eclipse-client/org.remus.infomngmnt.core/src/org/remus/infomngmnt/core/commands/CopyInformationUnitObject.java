@@ -33,9 +33,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.IdFactory;
 
 /**
@@ -48,6 +48,7 @@ public class CopyInformationUnitObject implements Command {
 	private final EditingDomain domain;
 	private final EObject owner;
 	private final List<IPath> createResources;
+	private final IApplicationModel service;
 
 	public CopyInformationUnitObject(final String oldId, final InformationUnitListItem newItem,
 			final EditingDomain domain, final EObject newOwner) {
@@ -56,6 +57,8 @@ public class CopyInformationUnitObject implements Command {
 		this.domain = domain;
 		this.owner = newOwner;
 		this.createResources = new ArrayList<IPath>();
+		this.service = InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
+				IApplicationModel.class);
 	}
 
 	/*
@@ -64,8 +67,7 @@ public class CopyInformationUnitObject implements Command {
 	 * @see org.eclipse.emf.common.command.Command#canExecute()
 	 */
 	public boolean canExecute() {
-		InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
-				this.oldId, null);
+		InformationUnitListItem itemById = this.service.getItemById(this.oldId, null);
 		return itemById != null;
 	}
 
@@ -107,8 +109,7 @@ public class CopyInformationUnitObject implements Command {
 	 */
 	public void execute() {
 		this.createResources.clear();
-		InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(
-				this.oldId, null);
+		InformationUnitListItem itemById = this.service.getItemById(this.oldId, null);
 		InformationUnit adapter = (InformationUnit) itemById.getAdapter(InformationUnit.class);
 		InformationUnit copy = (InformationUnit) EcoreUtil.copy(adapter);
 
@@ -145,7 +146,7 @@ public class CopyInformationUnitObject implements Command {
 			}
 		}
 		copy.setId(this.newItem.getId());
-		EditingUtil.getInstance().saveObjectToResource(
+		InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(
 				ResourcesPlugin.getWorkspace().getRoot().getFile(
 						new Path(this.newItem.getWorkspacePath())), copy);
 		this.createResources.add(new Path(this.newItem.getWorkspacePath()));

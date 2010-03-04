@@ -39,11 +39,11 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSet;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.core.remote.sync.AbstractSynchronizationJob;
 import org.remus.infomngmnt.core.remote.sync.ChangeSetExecutor;
 import org.remus.infomngmnt.model.remote.IChangeHandler;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.ui.remote.SynchronizationWizard;
 import org.remus.infomngmnt.util.StatusCreator;
 

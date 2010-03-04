@@ -30,9 +30,9 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.newwizards.MultipleNewObjectsWizard;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

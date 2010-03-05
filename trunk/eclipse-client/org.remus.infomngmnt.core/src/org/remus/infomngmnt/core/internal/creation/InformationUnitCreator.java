@@ -73,11 +73,6 @@ public class InformationUnitCreator {
 		for (InformationStructureItem InformationStructureItem : structureItems) {
 			fillStructureItem(newUnit, InformationStructureItem, false);
 		}
-		EList<InformationStructureItem> referencedStructureItems = structureDefinition
-				.getReferencedStructureItems();
-		for (InformationStructureItem InformationStructureItem : referencedStructureItems) {
-			fillStructureItem(newUnit, InformationStructureItem, false);
-		}
 		return newUnit;
 
 	}
@@ -91,11 +86,6 @@ public class InformationUnitCreator {
 			EList<InformationStructureItem> structureItems = InformationStructureItem
 					.getStructureItems();
 			for (InformationStructureItem subInformationStructureItem : structureItems) {
-				fillStructureItem(newSubNode, subInformationStructureItem, ignoreCreateAlways);
-			}
-			EList<InformationStructureItem> referencedStructureItems = InformationStructureItem
-					.getReferencedStructureItems();
-			for (InformationStructureItem subInformationStructureItem : referencedStructureItems) {
 				fillStructureItem(newSubNode, subInformationStructureItem, ignoreCreateAlways);
 			}
 			newUnit.getChildValues().add(newSubNode);
@@ -123,11 +113,6 @@ public class InformationUnitCreator {
 			newInformationUnit.setType(id);
 			EList<InformationStructureItem> structureItems = next.getStructureItems();
 			for (InformationStructureItem InformationStructureItem : structureItems) {
-				fillStructureItem(newInformationUnit, InformationStructureItem, false);
-			}
-			EList<InformationStructureItem> referencedStructureItems = next
-					.getReferencedStructureItems();
-			for (InformationStructureItem InformationStructureItem : referencedStructureItems) {
 				fillStructureItem(newInformationUnit, InformationStructureItem, false);
 			}
 			if (value != null) {
@@ -409,8 +394,7 @@ public class InformationUnitCreator {
 		EObjectCondition pathCondition = new EObjectCondition() {
 			@Override
 			public boolean isSatisfied(final EObject arg0) {
-				return pathSatisfied(structureDefinition.getReferencedStructureItems(), path, 0)
-						|| pathSatisfied(structureDefinition.getStructureItems(), path, 0);
+				return pathSatisfied(structureDefinition.getStructureItems(), path, 0);
 			}
 		};
 
@@ -526,8 +510,7 @@ public class InformationUnitCreator {
 				if (i == path.length - 1) {
 					return true;
 				} else {
-					return pathSatisfied(item.getReferencedStructureItems(), path, j)
-							|| pathSatisfied(item.getStructureItems(), path, j);
+					return pathSatisfied(item.getStructureItems(), path, j);
 				}
 			}
 		}

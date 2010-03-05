@@ -79,9 +79,9 @@ public class InformationStructureItemProvider
 			super.getPropertyDescriptors(object);
 
 			addTypePropertyDescriptor(object);
-			addReferencedStructureItemsPropertyDescriptor(object);
 			addCanHaveBinaryReferencesPropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -104,28 +104,6 @@ public class InformationStructureItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Referenced Structure Items feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addReferencedStructureItemsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_InformationStructure_referencedStructureItems_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InformationStructure_referencedStructureItems_feature", "_UI_InformationStructure_type"),
-				 InfomngmntPackage.Literals.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS,
-				 true,
-				 false,
-				 true,
-				 null,
 				 null,
 				 null));
 	}
@@ -166,6 +144,28 @@ public class InformationStructureItemProvider
 				 getString("_UI_InformationStructure_label_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_InformationStructure_label_feature", "_UI_InformationStructure_type"),
 				 InfomngmntPackage.Literals.INFORMATION_STRUCTURE__LABEL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Description feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDescriptionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_InformationStructure_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_InformationStructure_description_feature", "_UI_InformationStructure_type"),
+				 InfomngmntPackage.Literals.INFORMATION_STRUCTURE__DESCRIPTION,
 				 true,
 				 false,
 				 false,
@@ -245,6 +245,7 @@ public class InformationStructureItemProvider
 			case InfomngmntPackage.INFORMATION_STRUCTURE__TYPE:
 			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
 			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
+			case InfomngmntPackage.INFORMATION_STRUCTURE__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:

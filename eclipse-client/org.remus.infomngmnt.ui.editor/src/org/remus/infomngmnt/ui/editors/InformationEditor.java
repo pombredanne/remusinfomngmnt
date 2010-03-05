@@ -84,7 +84,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.operation.DelayedRunnable;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.ui.editor.EditorActivator;
 import org.remus.infomngmnt.ui.editors.editpage.AbstractDelegationEditorPart;
 import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
@@ -335,8 +335,10 @@ public class InformationEditor extends SharedHeaderFormEditor implements IEditin
 	@Override
 	protected void addPages() {
 		try {
-			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-					getPrimaryModel().getType());
+			IInformationTypeHandler service = EditorActivator.getDefault().getServiceTracker()
+					.getService(IInformationTypeHandler.class);
+			IInfoType infoTypeByType = service.getInfoTypeByType(getPrimaryModel().getType());
+			EditorActivator.getDefault().getServiceTracker().ungetService(service);
 			int offset = 0;
 			if (infoTypeByType.isBuildHtml()) {
 				addPage(this.page1 = new ViewPage(this, getPrimaryModel()));

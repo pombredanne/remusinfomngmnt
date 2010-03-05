@@ -43,10 +43,6 @@ public interface IRepositoryExtensionService extends IExtensionService {
 
 	public static final String INFORMATION_TYPE_ATT = "informationType"; //$NON-NLS-1$
 
-	public static final String CHANGE_OBJECT_PATH_NODE_NAME = "changeObjectPath"; //$NON-NLS-1$
-
-	public static final String CHANGE_OBJECT_PATH_VALUE_NODE_NAME = "changeObjectPathValue"; //$NON-NLS-1$
-
 	public static final String CHANGE_OBJECT_ID_NODE_NAME = "changeObjectId"; //$NON-NLS-1$
 
 	public static final String CHANGE_OBJECT_ID_VALUE_NODE_NAME = "changeObjectIdValue"; //$NON-NLS-1$

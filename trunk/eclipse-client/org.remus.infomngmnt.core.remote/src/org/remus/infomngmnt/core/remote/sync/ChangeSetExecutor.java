@@ -669,16 +669,6 @@ public class ChangeSetExecutor {
 			for (String string : relevantObjectIds) {
 				editLocal.setObject(adapter, string, readRemote.getChildByNodeId(string));
 			}
-			List<String> relevantObjectPathValues = changeSetDefinitionForType
-					.getRelevantObjectPathValues();
-			for (String string : relevantObjectPathValues) {
-				editLocal.setValueByPath(adapter, readRemote.getValueByPath(string.split("/")),
-						string.split("/"));
-			}
-			List<String> relevantObjectPaths = changeSetDefinitionForType.getRelevantObjectPaths();
-			for (String string : relevantObjectPaths) {
-				// TODO needs to be implemented!!!
-			}
 
 			/*
 			 * Binary references are replaced ALWAYS if repository supports

@@ -75,8 +75,8 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.view.AbstractScrolledTitledView;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.LatestSearchStrings;
 import org.remus.infomngmnt.search.Search;
@@ -128,6 +128,7 @@ public class SearchView extends AbstractScrolledTitledView {
 	};
 	private ISearchService searchService;
 	private IApplicationModel applicationModel;
+	private IInformationTypeHandler infoTypeHandler;
 
 	/**
 	 * Create contents of the view part
@@ -141,6 +142,8 @@ public class SearchView extends AbstractScrolledTitledView {
 				ISearchService.class);
 		this.applicationModel = SearchUIActivator.getDefault().getServiceTracker().getService(
 				IApplicationModel.class);
+		this.infoTypeHandler = SearchUIActivator.getDefault().getServiceTracker().getService(
+				IInformationTypeHandler.class);
 
 		this.toolkit.createLabel(parent, "Search string", SWT.NONE);
 
@@ -194,7 +197,7 @@ public class SearchView extends AbstractScrolledTitledView {
 
 		this.viewer = new CheckboxTableViewer(this.table);
 		this.viewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
-		this.viewer.setInput(InformationExtensionManager.getInstance().getTypes());
+		this.viewer.setInput(this.infoTypeHandler.getTypes());
 		this.viewer.setSorter(new ViewerSorter());
 		this.viewer.addFilter(new ViewerFilter() {
 			@Override
@@ -230,7 +233,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		button_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		button_1.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				SearchView.this.viewer.setCheckedElements(InformationExtensionManager.getInstance()
+				SearchView.this.viewer.setCheckedElements(SearchView.this.infoTypeHandler
 						.getTypes().toArray());
 			}
 		});
@@ -416,7 +419,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		for (String string : infoType) {
 			// at first we have to create a list for the binding to the emf
 			// list.
-			list.add(InformationExtensionManager.getInstance().getInfoTypeByType(string));
+			list.add(this.infoTypeHandler.getInfoTypeByType(string));
 		}
 		// we have to set the initial selection manually because we are syncing
 		// just
@@ -437,8 +440,7 @@ public class SearchView extends AbstractScrolledTitledView {
 		this.ctx.bindList(observeList2, list, new UpdateListStrategy() {
 			@Override
 			public Object convert(final Object element) {
-				return InformationExtensionManager.getInstance()
-						.getInfoTypeByType((String) element);
+				return SearchView.this.infoTypeHandler.getInfoTypeByType((String) element);
 			}
 		}, new UpdateListStrategy() {
 			@Override

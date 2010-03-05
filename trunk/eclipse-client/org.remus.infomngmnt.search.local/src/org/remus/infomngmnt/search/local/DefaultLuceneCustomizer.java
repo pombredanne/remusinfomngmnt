@@ -50,7 +50,6 @@ import org.remus.infomngmnt.InformationStructureDefinition;
 import org.remus.infomngmnt.InformationStructureItem;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.Search;
@@ -359,7 +358,7 @@ public class DefaultLuceneCustomizer implements ILuceneCustomizer {
 			flagList.add(Occur.MUST);
 		}
 
-		int size = InformationExtensionManager.getInstance().getTypes().size();
+		int size = getInfoTypeHandler().getTypes().size();
 		if (search.getInfoType() != null && search.getInfoType().size() > 0
 				&& search.getInfoType().size() != size) {
 			StringBuilder termStringBuilder = new StringBuilder();

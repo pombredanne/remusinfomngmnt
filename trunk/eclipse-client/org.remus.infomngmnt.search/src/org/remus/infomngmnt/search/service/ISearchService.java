@@ -9,6 +9,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchResult;
 
@@ -30,5 +31,7 @@ public interface ISearchService {
 	void clean(final IProject project, final IProgressMonitor monitor);
 
 	void setEditHandler(IEditingHandler service);
+
+	void setInformationTypeHandler(IInformationTypeHandler service);
 
 }

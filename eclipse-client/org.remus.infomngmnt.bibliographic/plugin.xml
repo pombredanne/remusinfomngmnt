@@ -5,37 +5,17 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/book_blue.png"
             name="Book"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="BOOK">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/newspaper.png"
             name="Article"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="ARTICLE">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -44,15 +24,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="BOOKLET">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -61,15 +32,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="CONFERENCE">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -78,15 +40,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="INBOOK">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -95,15 +48,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="INCOLLECTION">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -112,15 +56,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="INPROCEEDINGS">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -129,15 +64,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="MANUAL">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -146,15 +72,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="MASTERSTHESIS">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -163,15 +80,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="MISC">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -180,15 +88,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="PHDTHESIS">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -197,15 +96,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="PROCEEDINGS">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -214,15 +104,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="TECHREPORT">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
       <information
             excludeFromIndex="false"
@@ -231,15 +112,6 @@
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
             type="UNPUBLISHED">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -362,7 +234,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.bibliographic.ui.EditBookPage"
             icon="icons/iconexperience/book_blue_edit.png"
@@ -584,6 +456,212 @@
             This wizard exports the bibliographic entries to a bibtex file.
          </description>
       </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/book_blue.png"
+            infotype="BOOK">
+      </image>
+      <image
+            image="icons/iconexperience/newspaper.png"
+            infotype="ARTICLE">
+      </image>
+      <image
+            image="icons/iconexperience/booklet_blue.png"
+            infotype="BOOKLET">
+      </image>
+      <image
+            image="icons/iconexperience/conference.png"
+            infotype="CONFERENCE">
+      </image>
+      <image
+            image="icons/iconexperience/inbook.png"
+            infotype="INBOOK">
+      </image>
+      <image
+            image="icons/iconexperience/conference.png"
+            infotype="INPROCEEDINGS">
+      </image>
+      <image
+            image="icons/iconexperience/inbook.png"
+            infotype="INCOLLECTION">
+      </image>
+      <image
+            image="icons/iconexperience/manual.png"
+            infotype="MANUAL">
+      </image>
+      <image
+            image="icons/iconexperience/thesis.png"
+            infotype="MASTERSTHESIS">
+      </image>
+      <image
+            image="icons/iconexperience/misc.png"
+            infotype="MISC">
+      </image>
+      <image
+            image="icons/iconexperience/thesis.png"
+            infotype="PHDTHESIS">
+      </image>
+      <image
+            image="icons/iconexperience/conference.png"
+            infotype="PROCEEDINGS">
+      </image>
+      <image
+            image="icons/iconexperience/techreport.png"
+            infotype="TECHREPORT">
+      </image>
+      <image
+            image="icons/iconexperience/unpublished.png"
+            infotype="UNPUBLISHED">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="BOOKLET">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="BOOKLET">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="BOOKLET">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="CONFERENCE">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="CONFERENCE">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="CONFERENCE">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="INBOOK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="INBOOK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="INBOOK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="INCOLLECTION">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="INCOLLECTION">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="INCOLLECTION">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="INPROCEEDINGS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="INPROCEEDINGS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="INPROCEEDINGS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="MANUAL">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="MANUAL">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="MANUAL">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="MASTERSTHESIS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="MASTERSTHESIS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="MASTERSTHESIS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="MISC">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="MISC">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="MISC">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="PHDTHESIS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="PHDTHESIS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="PHDTHESIS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="PROCEEDINGS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="PROCEEDINGS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="PROCEEDINGS">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="TECHREPORT">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="TECHREPORT">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="TECHREPORT">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="UNPUBLISHED">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="UNPUBLISHED">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="UNPUBLISHED">
+      </validTransfers>
    </extension>
 
 </plugin>

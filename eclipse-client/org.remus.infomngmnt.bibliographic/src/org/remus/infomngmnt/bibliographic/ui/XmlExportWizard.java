@@ -23,6 +23,7 @@ import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
+
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
 import org.remus.infomngmnt.bibliographic.extension.XmlExportOperation;

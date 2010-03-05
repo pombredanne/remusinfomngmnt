@@ -45,23 +45,13 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 	private static class ChangeSetDefinitionImpl implements IChangeSetDefinition {
 
 		public ChangeSetDefinitionImpl() {
-			this.objectPaths = new ArrayList<String>();
-			this.objectPathValues = new ArrayList<String>();
 			this.objectIds = new ArrayList<String>();
 			this.objectIdValues = new ArrayList<String>();
 		}
 
-		List<String> objectPaths;
-
 		List<String> objectIds;
 
-		List<String> objectPathValues;
-
 		List<String> objectIdValues;
-
-		public List<String> getRelevantObjectPaths() {
-			return this.objectPaths;
-		}
 
 		public List<String> getRelevantObjectIds() {
 			return this.objectIds;
@@ -69,10 +59,6 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 
 		public List<String> getRelevantObjectIdValues() {
 			return this.objectIdValues;
-		}
-
-		public List<String> getRelevantObjectPathValues() {
-			return this.objectPathValues;
 		}
 	}
 
@@ -165,12 +151,6 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 					if (type.equals(iConfigurationElement
 							.getAttribute(IRepositoryExtensionService.INFORMATION_TYPE_ATT))) {
 						ChangeSetDefinitionImpl changeSetDefinition = new ChangeSetDefinitionImpl();
-						IConfigurationElement[] children2 = iConfigurationElement
-								.getChildren(IRepositoryExtensionService.CHANGE_OBJECT_PATH_NODE_NAME);
-						for (IConfigurationElement iConfigurationElement2 : children2) {
-							changeSetDefinition.objectPaths.add(iConfigurationElement2
-									.getAttribute(IRepositoryExtensionService.PATH_ATT));
-						}
 						IConfigurationElement[] children3 = iConfigurationElement
 								.getChildren(IRepositoryExtensionService.CHANGE_OBJECT_ID_NODE_NAME);
 						for (IConfigurationElement iConfigurationElement3 : children3) {
@@ -181,12 +161,6 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 								.getChildren(IRepositoryExtensionService.CHANGE_OBJECT_ID_VALUE_NODE_NAME);
 						for (IConfigurationElement iConfigurationElement3 : children4) {
 							changeSetDefinition.objectIdValues.add(iConfigurationElement3
-									.getAttribute(IRepositoryExtensionService.PATH_ATT));
-						}
-						IConfigurationElement[] children5 = iConfigurationElement
-								.getChildren(IRepositoryExtensionService.CHANGE_OBJECT_PATH_VALUE_NODE_NAME);
-						for (IConfigurationElement iConfigurationElement3 : children5) {
-							changeSetDefinition.objectPathValues.add(iConfigurationElement3
 									.getAttribute(IRepositoryExtensionService.PATH_ATT));
 						}
 						this.changeSetDefinition.put(type, changeSetDefinition);

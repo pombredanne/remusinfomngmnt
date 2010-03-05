@@ -106,9 +106,7 @@
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
             <choice>
-               <element ref="changeObjectPath"/>
                <element ref="changeObjectId"/>
-               <element ref="changeObjectPathValue"/>
                <element ref="changeObjectIdValue"/>
             </choice>
          </sequence>
@@ -127,40 +125,6 @@
                <appinfo>
                   <meta.attribute kind="identifier" basedOn="org.remus.infomngmnt.core.informationType/information/@type"/>
                </appinfo>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="changeObjectPath">
-      <annotation>
-         <documentation>
-            A path to a object within a structure definition. Use path only if you reference to a object-structure item which is referenced by another object-structure item, else use changeObjectId, examples homeadress/street
-         </documentation>
-      </annotation>
-      <complexType>
-         <attribute name="path" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="changeObjectPathValue">
-      <annotation>
-         <documentation>
-            A path to a object within a structure definition. Use path only if you reference to a object-structure item which is referenced by another object-structure item, else use changeObjectId, examples homeadress/street
-         </documentation>
-      </annotation>
-      <complexType>
-         <attribute name="path" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
             </annotation>
          </attribute>
       </complexType>

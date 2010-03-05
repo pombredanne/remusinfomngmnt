@@ -64,41 +64,6 @@ public class SyncStateParticipant implements ISaveParticipant {
 				IChangeSetDefinition changeSetDefinitionForType = itemByRepository
 						.getChangeSetDefinitionForType(newValue.getType());
 				if (changeSetDefinitionForType != null) {
-					List<String> relevantObjectPaths = changeSetDefinitionForType
-							.getRelevantObjectPaths();
-					for (String string2 : relevantObjectPaths) {
-						try {
-							EObject newFragmentValue = readOld.getChildByPath(string2.split("/"));
-							EObject oldFragmentValue = readNew.getChildByPath(string2.split("/"));
-							boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
-							if (!equals) {
-								createSetCommandAndExecute(synchronizationMetadata);
-								break;
-							}
-						} catch (RuntimeException e) {
-							createSetCommandAndExecute(synchronizationMetadata);
-							break;
-						}
-
-					}
-					List<String> relevantObjectPathValues = changeSetDefinitionForType
-							.getRelevantObjectPathValues();
-					for (String string2 : relevantObjectPathValues) {
-						try {
-							Object newFragmentValue = readOld.getValueByPath(string2.split("/"));
-							Object oldFragmentValue = readNew.getValueByPath(string2.split("/"));
-							boolean equals = checkEqual(oldFragmentValue, newFragmentValue);
-							if (!equals) {
-								createSetCommandAndExecute(synchronizationMetadata);
-								break;
-							}
-						} catch (RuntimeException e) {
-							createSetCommandAndExecute(synchronizationMetadata);
-							break;
-						}
-
-					}
-
 					List<String> relevantObjectIdValues = changeSetDefinitionForType
 							.getRelevantObjectIdValues();
 					for (String string2 : relevantObjectIdValues) {

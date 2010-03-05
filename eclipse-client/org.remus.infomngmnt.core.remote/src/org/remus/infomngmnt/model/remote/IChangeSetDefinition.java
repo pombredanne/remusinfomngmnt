@@ -36,9 +36,6 @@ public interface IChangeSetDefinition {
 	 * 
 	 * @return
 	 */
-	List<String> getRelevantObjectPaths();
-
-	List<String> getRelevantObjectPathValues();
 
 	List<String> getRelevantObjectIds();
 

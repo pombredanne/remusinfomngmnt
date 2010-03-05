@@ -40,6 +40,7 @@ import org.remus.infomngmnt.SynchronizationState;
  *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#getHash <em>Hash</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#getSyncState <em>Sync State</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#isCurrentlySyncing <em>Currently Syncing</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.SynchronizationMetadataImpl#getSyncHash <em>Sync Hash</em>}</li>
  * </ul>
  * </p>
  *
@@ -185,6 +186,26 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 	 * @ordered
 	 */
 	protected boolean currentlySyncing = CURRENTLY_SYNCING_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getSyncHash() <em>Sync Hash</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSyncHash()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SYNC_HASH_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSyncHash() <em>Sync Hash</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSyncHash()
+	 * @generated
+	 * @ordered
+	 */
+	protected String syncHash = SYNC_HASH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -357,6 +378,27 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getSyncHash() {
+		return syncHash;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSyncHash(String newSyncHash) {
+		String oldSyncHash = syncHash;
+		syncHash = newSyncHash;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_HASH, oldSyncHash, syncHash));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -374,6 +416,8 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				return getSyncState();
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
 				return isCurrentlySyncing();
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_HASH:
+				return getSyncHash();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -406,6 +450,9 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				return;
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
 				setCurrentlySyncing((Boolean)newValue);
+				return;
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_HASH:
+				setSyncHash((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -440,6 +487,9 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
 				setCurrentlySyncing(CURRENTLY_SYNCING_EDEFAULT);
 				return;
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_HASH:
+				setSyncHash(SYNC_HASH_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -466,6 +516,8 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 				return syncState != SYNC_STATE_EDEFAULT;
 			case InfomngmntPackage.SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING:
 				return currentlySyncing != CURRENTLY_SYNCING_EDEFAULT;
+			case InfomngmntPackage.SYNCHRONIZATION_METADATA__SYNC_HASH:
+				return SYNC_HASH_EDEFAULT == null ? syncHash != null : !SYNC_HASH_EDEFAULT.equals(syncHash);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -494,6 +546,8 @@ public class SynchronizationMetadataImpl extends AdapterImpl implements Synchron
 		result.append(syncState);
 		result.append(", currentlySyncing: ");
 		result.append(currentlySyncing);
+		result.append(", syncHash: ");
+		result.append(syncHash);
 		result.append(')');
 		return result.toString();
 	}

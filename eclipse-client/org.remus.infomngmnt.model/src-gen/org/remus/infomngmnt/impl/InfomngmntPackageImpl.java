@@ -1097,6 +1097,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSynchronizationMetadata_SyncHash() {
+		return (EAttribute)synchronizationMetadataEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1292,14 +1301,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getInformationStructureDefinition_StructurePool() {
-		return (EReference)informationStructureDefinitionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getInformationStructureItem() {
 		return informationStructureItemEClass;
 	}
@@ -1348,16 +1349,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getInformationStructure_ReferencedStructureItems() {
-		return (EReference)informationStructureEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getInformationStructure_CanHaveBinaryReferences() {
-		return (EAttribute)informationStructureEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)informationStructureEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1365,6 +1358,15 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EAttribute getInformationStructure_Label() {
+		return (EAttribute)informationStructureEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInformationStructure_Description() {
 		return (EAttribute)informationStructureEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -1725,6 +1727,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__HASH);
 		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__SYNC_STATE);
 		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING);
+		createEAttribute(synchronizationMetadataEClass, SYNCHRONIZATION_METADATA__SYNC_HASH);
 
 		changeSetEClass = createEClass(CHANGE_SET);
 		createEReference(changeSetEClass, CHANGE_SET__TARGET_CATEGORY);
@@ -1757,7 +1760,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		v__________InformationStructureDefinition__________VEClass = createEClass(VINFORMATION_STRUCTURE_DEFINITION_V);
 
 		informationStructureDefinitionEClass = createEClass(INFORMATION_STRUCTURE_DEFINITION);
-		createEReference(informationStructureDefinitionEClass, INFORMATION_STRUCTURE_DEFINITION__STRUCTURE_POOL);
 
 		informationStructureItemEClass = createEClass(INFORMATION_STRUCTURE_ITEM);
 		createEAttribute(informationStructureItemEClass, INFORMATION_STRUCTURE_ITEM__ID);
@@ -1766,9 +1768,9 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		informationStructureEClass = createEClass(INFORMATION_STRUCTURE);
 		createEAttribute(informationStructureEClass, INFORMATION_STRUCTURE__TYPE);
 		createEReference(informationStructureEClass, INFORMATION_STRUCTURE__STRUCTURE_ITEMS);
-		createEReference(informationStructureEClass, INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS);
 		createEAttribute(informationStructureEClass, INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES);
 		createEAttribute(informationStructureEClass, INFORMATION_STRUCTURE__LABEL);
+		createEAttribute(informationStructureEClass, INFORMATION_STRUCTURE__DESCRIPTION);
 
 		dynamicStructureEClass = createEClass(DYNAMIC_STRUCTURE);
 		createEAttribute(dynamicStructureEClass, DYNAMIC_STRUCTURE__LOWER_BOUND);
@@ -1959,6 +1961,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getSynchronizationMetadata_Hash(), ecorePackage.getEString(), "hash", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSynchronizationMetadata_SyncState(), this.getSynchronizationState(), "syncState", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSynchronizationMetadata_CurrentlySyncing(), ecorePackage.getEBoolean(), "currentlySyncing", "false", 0, 1, SynchronizationMetadata.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSynchronizationMetadata_SyncHash(), ecorePackage.getEString(), "syncHash", null, 0, 1, SynchronizationMetadata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getChangeSet_TargetCategory(), this.getCategory(), null, "targetCategory", null, 1, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1991,7 +1994,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(v__________InformationStructureDefinition__________VEClass, V__________InformationStructureDefinition__________V.class, "V__________InformationStructureDefinition__________V", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(informationStructureDefinitionEClass, InformationStructureDefinition.class, "InformationStructureDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getInformationStructureDefinition_StructurePool(), this.getInformationStructureItem(), null, "structurePool", null, 0, -1, InformationStructureDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(informationStructureItemEClass, InformationStructureItem.class, "InformationStructureItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInformationStructureItem_Id(), ecorePackage.getEString(), "id", null, 1, 1, InformationStructureItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2000,9 +2002,9 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEClass(informationStructureEClass, InformationStructure.class, "InformationStructure", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInformationStructure_Type(), this.getInformationStructureType(), "type", null, 0, 1, InformationStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationStructure_StructureItems(), this.getInformationStructureItem(), null, "structureItems", null, 0, -1, InformationStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInformationStructure_ReferencedStructureItems(), this.getInformationStructureItem(), null, "referencedStructureItems", null, 0, -1, InformationStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationStructure_CanHaveBinaryReferences(), ecorePackage.getEBoolean(), "canHaveBinaryReferences", null, 0, 1, InformationStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationStructure_Label(), ecorePackage.getEString(), "label", null, 0, 1, InformationStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInformationStructure_Description(), ecorePackage.getEString(), "description", null, 0, 1, InformationStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dynamicStructureEClass, DynamicStructure.class, "DynamicStructure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDynamicStructure_LowerBound(), ecorePackage.getEInt(), "lowerBound", null, 1, 1, DynamicStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

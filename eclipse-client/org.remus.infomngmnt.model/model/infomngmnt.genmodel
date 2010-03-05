@@ -169,6 +169,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/hash"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/syncState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/currentlySyncing"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//SynchronizationMetadata/syncHash"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//ChangeSet">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//ChangeSet/targetCategory"/>
@@ -199,9 +200,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//SynchronizableObject/synchronizationMetaData"/>
     </genClasses>
     <genClasses image="false" ecoreClass="infomngmnt.ecore#//V__________InformationStructureDefinition__________V"/>
-    <genClasses ecoreClass="infomngmnt.ecore#//InformationStructureDefinition">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationStructureDefinition/structurePool"/>
-    </genClasses>
+    <genClasses ecoreClass="infomngmnt.ecore#//InformationStructureDefinition"/>
     <genClasses ecoreClass="infomngmnt.ecore#//InformationStructureItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructureItem/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructureItem/createAlways"/>
@@ -209,9 +208,9 @@
     <genClasses ecoreClass="infomngmnt.ecore#//InformationStructure">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructure/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationStructure/structureItems"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference infomngmnt.ecore#//InformationStructure/referencedStructureItems"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructure/canHaveBinaryReferences"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructure/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//InformationStructure/description"/>
     </genClasses>
     <genClasses ecoreClass="infomngmnt.ecore#//DynamicStructure">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infomngmnt.ecore#//DynamicStructure/lowerBound"/>

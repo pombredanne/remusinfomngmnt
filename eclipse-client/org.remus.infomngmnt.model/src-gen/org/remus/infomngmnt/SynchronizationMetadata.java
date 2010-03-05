@@ -31,6 +31,7 @@ import java.util.Date;
  *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#getHash <em>Hash</em>}</li>
  *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#getSyncState <em>Sync State</em>}</li>
  *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#isCurrentlySyncing <em>Currently Syncing</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.SynchronizationMetadata#getSyncHash <em>Sync Hash</em>}</li>
  * </ul>
  * </p>
  *
@@ -224,5 +225,31 @@ public interface SynchronizationMetadata extends Adapter {
 	 * @generated
 	 */
 	void setCurrentlySyncing(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Sync Hash</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sync Hash</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Sync Hash</em>' attribute.
+	 * @see #setSyncHash(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getSynchronizationMetadata_SyncHash()
+	 * @model
+	 * @generated
+	 */
+	String getSyncHash();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.SynchronizationMetadata#getSyncHash <em>Sync Hash</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Sync Hash</em>' attribute.
+	 * @see #getSyncHash()
+	 * @generated
+	 */
+	void setSyncHash(String value);
 
 } // SynchronizationMetadata

@@ -32,8 +32,8 @@ import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.remote.sync.SyncUtil;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
@@ -81,8 +81,11 @@ public class DiffLabelProvider extends LabelProvider {
 								.getSubchanges());
 					}
 				} else if (parent instanceof InformationUnitListItem) {
-					IInfoType infoTypeByType = InformationExtensionManager.getInstance()
+					IInformationTypeHandler service = RemoteUiActivator.getDefault()
+							.getServiceTracker().getService(IInformationTypeHandler.class);
+					IInfoType infoTypeByType = service
 							.getInfoTypeByType(((AbstractInformationUnit) parent).getType());
+					RemoteUiActivator.getDefault().getServiceTracker().ungetService(service);
 					if (infoTypeByType != null) {
 						SynchronizationAction action = SyncUtil.getAction(this.changeSet, parent);
 						if (returnImage) {

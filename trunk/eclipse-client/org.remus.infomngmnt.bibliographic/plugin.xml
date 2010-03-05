@@ -19,7 +19,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/booklet_blue.png"
             name="Booklet"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -27,7 +26,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/conference.png"
             name="Conference"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -35,7 +33,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/inbook.png"
             name="Inbook"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -43,7 +40,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/inbook.png"
             name="Incollection"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -51,7 +47,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/conference.png"
             name="Inproceedings"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -59,7 +54,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/manual.png"
             name="Manual"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -67,7 +61,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/thesis.png"
             name="Mastersthesis"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -75,7 +68,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/misc.png"
             name="Misc"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -83,7 +75,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/thesis.png"
             name="Phdthesis"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -91,7 +82,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/conference.png"
             name="Proceedings"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -99,7 +89,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/techreport.png"
             name="Techreport"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"
@@ -107,7 +96,6 @@
       </information>
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/unpublished.png"
             name="Unpublished"
             presentation="org.remus.infomngmnt.bibliographic.extension.BibliographicRepresentation"
             structuredefinition="structuredefinition/bibliographicUnit.xmi"

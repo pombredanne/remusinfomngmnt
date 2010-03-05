@@ -41,7 +41,6 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.internal.creation.InformationUnitCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -99,57 +98,6 @@ public class InformationStructureRead {
 		return (InformationUnit) next2;
 	}
 
-	public InformationUnit getChildByPath(final String... path) {
-		final InformationStructureDefinition structureDefinition = getStructureDefinition(this.type);
-		EObjectAttributeValueCondition itemIdCondition = new EObjectAttributeValueCondition(
-				InfomngmntPackage.Literals.INFORMATION_STRUCTURE_ITEM__ID, new Condition() {
-					@Override
-					public boolean isSatisfied(final Object arg0) {
-						return arg0 != null && arg0.toString().equals(path[path.length - 1]);
-					}
-				});
-		EObjectCondition pathCondition = new EObjectCondition() {
-			@Override
-			public boolean isSatisfied(final EObject arg0) {
-				return InformationUnitCreator.pathSatisfied(structureDefinition
-						.getReferencedStructureItems(), path, 0)
-						|| InformationUnitCreator.pathSatisfied(structureDefinition
-								.getStructureItems(), path, 0);
-			}
-		};
-
-		SELECT select = new SELECT(new FROM(structureDefinition), new WHERE(itemIdCondition
-				.AND(pathCondition)));
-		IQueryResult execute = select.execute();
-		if (execute.size() != 1) {
-			throw new IllegalArgumentException("Subtype not found");
-		} else {
-			SELECT innerSelect = new SELECT(new FROM(this.unit), new WHERE(
-					new EObjectAttributeValueCondition(
-							InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__TYPE,
-							new Condition() {
-								@Override
-								public boolean isSatisfied(final Object arg0) {
-									return arg0 != null
-											&& arg0.toString().equals(path[path.length - 1]);
-								}
-							}).AND(new EObjectCondition() {
-
-						@Override
-						public boolean isSatisfied(final EObject arg0) {
-							return InformationUnitCreator.pathSatisfied2(arg0, path);
-						}
-					})));
-			IQueryResult execute2 = innerSelect.execute();
-			if (execute2.size() == 0) {
-				// Node is defined, but not present. Ok, we return null.
-				return null;
-			}
-			EObject next2 = execute2.iterator().next();
-			return (InformationUnit) next2;
-		}
-	}
-
 	public EStructuralFeature getFeatureByNodeId(final String nodeId) {
 		if (nodeId.startsWith(ATTRIBUTE_ACCESSOR)) {
 			EList<EAttribute> eAttributes = this.unit.eClass().getEAllAttributes();
@@ -180,42 +128,6 @@ public class InformationStructureRead {
 			}
 		}
 		throw new IllegalArgumentException();
-	}
-
-	public Object getValueByPath(final String... path) {
-
-		InformationUnit childByNodeId = getChildByPath(path);
-		InformationStructure structureItem = getItemByPathAndTypeId(this.type, path);
-		InformationStructureType structureType = structureItem.getType();
-		EAttribute attToGet = null;
-		switch (structureType) {
-		case STRING:
-			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE;
-			break;
-		case BINARY:
-			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE;
-			break;
-		case BOOLEAN:
-			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__BOOL_VALUE;
-			break;
-		case DATETIME:
-			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE;
-
-			break;
-		case LONG:
-			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE;
-
-			break;
-		case DOUBLE:
-			attToGet = InfomngmntPackage.Literals.INFORMATION_UNIT__DOUBLE_VALUE;
-			break;
-		default:
-			break;
-		}
-		if (attToGet != null) {
-			return childByNodeId.eGet(attToGet);
-		}
-		return null;
 	}
 
 	public Object getValueByNodeId(final String node) {
@@ -305,35 +217,6 @@ public class InformationStructureRead {
 								return arg0 != null && arg0.toString().equals(nodeId);
 							}
 						})));
-		IQueryResult execute = select.execute();
-		if (execute.size() != 1) {
-			return null;
-		}
-		return (InformationStructureItem) execute.getEObjects().iterator().next();
-	}
-
-	public static InformationStructure getItemByPathAndTypeId(final String typeId,
-			final String... path) {
-		final InformationStructureDefinition structureDefinition = getStructureDefinition(typeId);
-		EObjectAttributeValueCondition itemIdCondition = new EObjectAttributeValueCondition(
-				InfomngmntPackage.Literals.INFORMATION_STRUCTURE_ITEM__ID, new Condition() {
-					@Override
-					public boolean isSatisfied(final Object arg0) {
-						return arg0 != null && arg0.toString().equals(path[path.length - 1]);
-					}
-				});
-		EObjectCondition pathCondition = new EObjectCondition() {
-			@Override
-			public boolean isSatisfied(final EObject arg0) {
-				return InformationUnitCreator.pathSatisfied(structureDefinition
-						.getReferencedStructureItems(), path, 0)
-						|| InformationUnitCreator.pathSatisfied(structureDefinition
-								.getStructureItems(), path, 0);
-			}
-		};
-
-		SELECT select = new SELECT(new FROM(structureDefinition), new WHERE(itemIdCondition
-				.AND(pathCondition)));
 		IQueryResult execute = select.execute();
 		if (execute.size() != 1) {
 			return null;

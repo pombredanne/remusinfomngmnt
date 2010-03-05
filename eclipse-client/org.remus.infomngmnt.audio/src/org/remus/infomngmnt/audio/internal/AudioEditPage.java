@@ -41,7 +41,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.audio.AudioActivator;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -85,6 +85,7 @@ public class AudioEditPage extends AbstractInformationFormPage {
 		openImageWithExternalApp.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4,
 				1));
 		openImageWithExternalApp.addHyperlinkListener(new HyperlinkAdapter() {
+
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				IFile adapter = (IFile) getModelObject().getAdapter(IFile.class);
@@ -107,6 +108,7 @@ public class AudioEditPage extends AbstractInformationFormPage {
 				"Change audio file", SWT.NONE);
 		changeImageHyperlink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		changeImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
+
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				FileDialog fd = new FileDialog(getSite().getShell());

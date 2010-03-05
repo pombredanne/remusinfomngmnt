@@ -5,14 +5,10 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/loudspeaker.png"
             name="Audio"
             presentation="org.remus.infomngmnt.audio.internal.AudioRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="AUDIO">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -29,13 +25,31 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.audio.internal.AudioEditPage"
             id="org.remus.infomngmnt.audio.editPage1"
             label="Edit Audio"
             type="AUDIO">
       </editPage>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="AUDIO">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.audio.wizard.AudioCreationTrigger"
+            typeId="AUDIO">
+      </creationtrigger>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/loudspeaker.png"
+            infotype="AUDIO">
+      </image>
    </extension>
 
 </plugin>

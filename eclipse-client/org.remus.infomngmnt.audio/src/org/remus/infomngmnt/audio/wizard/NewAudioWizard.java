@@ -11,30 +11,27 @@
  *******************************************************************************/
 package org.remus.infomngmnt.audio.wizard;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.audio.AudioActivator;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.core.transfertypes.FileTransferWrapper;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class NewAudioWizard extends NewInfoObjectWizard {
+
+	private final RemusServiceTracker serviceTracker;
+	private final IEditingHandler editService;
 
 	/**
 	 * 
@@ -42,7 +39,15 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 	public NewAudioWizard() {
 		setNeedsProgressMonitor(true);
 		setWindowTitle("New audio");
+		this.serviceTracker = new RemusServiceTracker(Platform.getBundle(AudioActivator.PLUGIN_ID));
+		this.editService = this.serviceTracker.getService(IEditingHandler.class);
 
+	}
+
+	@Override
+	public void dispose() {
+		this.serviceTracker.ungetService(this.editService);
+		super.dispose();
 	}
 
 	/*
@@ -68,8 +73,8 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 	protected Command getAdditionalCommands() {
 		IFile tmpFile = ((GeneralAudioPage) this.page1).getTmpFile();
 		if (tmpFile != null) {
-			return CommandFactory.addFileToInfoUnit(tmpFile, this.newElement, EditingUtil
-					.getInstance().getNavigationEditingDomain());
+			return CommandFactory.addFileToInfoUnit(tmpFile, this.newElement, this.editService
+					.getNavigationEditingDomain());
 		}
 		return super.getAdditionalCommands();
 	}
@@ -86,31 +91,9 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 	}
 
 	@Override
-	protected void setDefaults(final Object value, final RuleValue ruleValue,
-			final TransferWrapper transferType) throws CoreException {
-		if (transferType instanceof FileTransferWrapper) {
-			String[] paths = (String[]) value;
-			/*
-			 * We're just taking the first element. For dropping multiple
-			 * elements into the application we have to provide an import
-			 * wizard.
-			 */
-			String string = paths[0];
-			LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
-			runnable.setFilePath(string);
-			try {
-				new ProgressMonitorDialog(getShell()).run(true, false, runnable);
-				((GeneralAudioPage) this.page1).setTmpFile(runnable.getTmpFile());
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	protected void performActionAfterCreation() {
+		// TODO Auto-generated method stub
 
-		}
-		super.setDefaults(value, ruleValue, transferType);
 	}
 
 }

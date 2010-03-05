@@ -34,8 +34,7 @@ import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -81,11 +80,15 @@ public class AudioRepresentation extends AbstractInformationRepresentation {
 		 */
 		String playerType = (String) read.getValueByNodeId(AudioActivator.NODE_NAME_MEDIATYPE);
 
-		IMediaPlayerExtensionService service = InfomngmntEditPlugin.getPlugin().getService(
-				IMediaPlayerExtensionService.class);
-		IMediaPlayer mediaPlayer = service.getPlayerByType(playerType);
+		RemusServiceTracker remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(AudioActivator.PLUGIN_ID));
 
-		this.audioHref = getFile().getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
+		IMediaPlayerExtensionService service = remusServiceTracker
+				.getService(IMediaPlayerExtensionService.class);
+		IMediaPlayer mediaPlayer = service.getPlayerByType(playerType);
+		remusServiceTracker.ungetService(service);
+		this.audioHref = getFile().getProject().getFolder(
+				org.remus.infomngmnt.resources.util.ResourceUtil.BINARY_FOLDER).getFile(
 				getValue().getBinaryReferences().getProjectRelativePath()).getLocation();
 		/*
 		 * Next: build the html snippet for displaying the media and put them

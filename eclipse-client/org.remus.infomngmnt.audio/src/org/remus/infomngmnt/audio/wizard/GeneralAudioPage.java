@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -21,17 +22,18 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.audio.AudioActivator;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -43,18 +45,17 @@ public class GeneralAudioPage extends GeneralPage {
 	protected String tmpText;
 	private IFile tmpFile;
 
-	private final DisposableEditingDomain editingDomain;
+	private DisposableEditingDomain editingDomain;
 	private Text mediaTypeText;
+	private RemusServiceTracker remusServiceTracker;
+	private IEditingHandler editService;
 
 	public GeneralAudioPage(final Category category) {
 		super(category);
-		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
-
 	}
 
 	public GeneralAudioPage(final InformationUnitListItem selection) {
 		super(selection);
-		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
 	}
 
 	@Override
@@ -135,7 +136,7 @@ public class GeneralAudioPage extends GeneralPage {
 		super.initDatabinding();
 		final InformationStructureRead read = InformationStructureRead.newSession(this.unit);
 		TextBindingWidget mediaBinding = BindingWidgetFactory.createTextBinding(this.mediaTypeText,
-				this.ctx, this.editingDomain);
+				this.ctx, getEditingDomain());
 		mediaBinding.bindModel(read.getChildByNodeId(AudioActivator.NODE_NAME_MEDIATYPE), read
 				.getFeatureByNodeId(AudioActivator.NODE_NAME_MEDIATYPE));
 		this.fileNameText.addListener(SWT.Modify, new Listener() {
@@ -160,9 +161,22 @@ public class GeneralAudioPage extends GeneralPage {
 
 	}
 
+	private DisposableEditingDomain getEditingDomain() {
+		if (this.editingDomain == null) {
+			this.remusServiceTracker = new RemusServiceTracker(Platform
+					.getBundle(AudioActivator.PLUGIN_ID));
+			this.editService = this.remusServiceTracker.getService(IEditingHandler.class);
+			this.editingDomain = this.editService.createNewEditingDomain();
+		}
+		return this.editingDomain;
+	}
+
 	@Override
 	public void dispose() {
-		this.editingDomain.dispose();
+		getEditingDomain().dispose();
+		if (this.remusServiceTracker != null && this.editService != null) {
+			this.remusServiceTracker.ungetService(this.editService);
+		}
 		super.dispose();
 	}
 

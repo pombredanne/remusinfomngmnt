@@ -26,12 +26,13 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
 import org.remus.infomngmnt.bibliographic.Messages;
-import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.databinding.BindingUtil;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 public abstract class BibliographicAbstractInformationFormPage extends AbstractInformationFormPage {
 	

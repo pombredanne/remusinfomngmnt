@@ -54,18 +54,19 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
+
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
 import org.remus.infomngmnt.bibliographic.Messages;
-import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.ui.databinding.BindingUtil;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -74,15 +75,13 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	private Text abstractText;
 	private Text summaryText;
 	private Text contentsText;
-	
+
 	private Text url;
 	private TableViewer filesTableViewer;
 
-
 	/**
-	 * LabelProvider for files location table
-	 *  - shows file name stored in 'fileLabel'
-	 *  - retrieve image data from associated Program
+	 * LabelProvider for files location table - shows file name stored in
+	 * 'fileLabel' - retrieve image data from associated Program
 	 */
 	private final LabelProvider filesLabelProvider = new LabelProvider() {
 		@Override
@@ -94,7 +93,8 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		@Override
 		public Image getImage(final Object element) {
 			InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
-			List<BinaryReference> binaryReferences = read.getBinaryReferences(getModelObject().getType(), false);
+			List<BinaryReference> binaryReferences = read.getBinaryReferences(getModelObject()
+					.getType(), false);
 			if (binaryReferences.size() > 0 && binaryReferences.get(0) != null) {
 				String projectRelativePath = binaryReferences.get(0).getProjectRelativePath();
 				String fileExtension = new Path(projectRelativePath).getFileExtension();
@@ -110,33 +110,30 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 			return super.getImage(element);
 		}
 	};
-	
 
-	
 	@Override
-	protected void renderPage(IManagedForm managedForm) {
+	protected void renderPage(final IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
-		
+
 		// Abstract Section
 		doCreateAbstractSection(body, toolkit, false);
 
 		// Contents Section
 		doCreateContentsSection(body, toolkit, false);
-		
+
 		// Summary Section
 		doCreateSummarySection(body, toolkit, false);
-				
+
 		// ExternalLinks Section
 		doCreateExtLinksSection(body, toolkit, false);
-		
-		
+
 		form.reflow(true);
 	}
-	
+
 	/**
 	 * Create separate section for an Abstract
 	 * 
@@ -146,11 +143,10 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	 */
 	protected void doCreateAbstractSection(final Composite parent, final FormToolkit toolkit,
 			final boolean tableWrapLayout) {
-		final Section theSection = toolkit.createSection(parent,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final Section theSection = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		if (tableWrapLayout) {
-			theSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
-					TableWrapData.TOP));
+			theSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
 		} else {
 			final GridData gd_abstractSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			theSection.setLayoutData(gd_abstractSection);
@@ -164,7 +160,8 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		theSection.setClient(innerComposite);
 
 		toolkit.createLabel(innerComposite, Messages.getString("abstractLabel") + ":", SWT.NONE);
-		this.abstractText = toolkit.createText(innerComposite, null, SWT.WRAP | SWT.V_SCROLL| SWT.MULTI);
+		this.abstractText = toolkit.createText(innerComposite, null, SWT.WRAP | SWT.V_SCROLL
+				| SWT.MULTI);
 		final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd.heightHint = 70;
 		gd.horizontalAlignment = SWT.FILL;
@@ -182,11 +179,10 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	 */
 	protected void doCreateSummarySection(final Composite parent, final FormToolkit toolkit,
 			final boolean tableWrapLayout) {
-		final Section theSection = toolkit.createSection(parent,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final Section theSection = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		if (tableWrapLayout) {
-			theSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
-					TableWrapData.TOP));
+			theSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
 		} else {
 			final GridData gd_abstractSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			theSection.setLayoutData(gd_abstractSection);
@@ -200,7 +196,8 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		theSection.setClient(innerComposite);
 
 		toolkit.createLabel(innerComposite, Messages.getString("summaryLabel") + ":", SWT.NONE);
-		this.summaryText = toolkit.createText(innerComposite, null, SWT.WRAP | SWT.V_SCROLL| SWT.MULTI);
+		this.summaryText = toolkit.createText(innerComposite, null, SWT.WRAP | SWT.V_SCROLL
+				| SWT.MULTI);
 		final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd.heightHint = 100;
 		gd.horizontalAlignment = SWT.FILL;
@@ -208,7 +205,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		this.summaryText.setToolTipText(Messages.getString("summaryTip"));
 		addControl(this.summaryText);
 	}
-	
+
 	/**
 	 * Create separate section for contents
 	 * 
@@ -218,11 +215,10 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	 */
 	protected void doCreateContentsSection(final Composite parent, final FormToolkit toolkit,
 			final boolean tableWrapLayout) {
-		final Section theSection = toolkit.createSection(parent,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final Section theSection = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		if (tableWrapLayout) {
-			theSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
-					TableWrapData.TOP));
+			theSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
 		} else {
 			final GridData gd_abstractSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			theSection.setLayoutData(gd_abstractSection);
@@ -236,7 +232,8 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		theSection.setClient(innerComposite);
 
 		toolkit.createLabel(innerComposite, Messages.getString("contentsLabel") + ":", SWT.NONE);
-		this.contentsText = toolkit.createText(innerComposite, null, SWT.WRAP | SWT.V_SCROLL| SWT.MULTI);
+		this.contentsText = toolkit.createText(innerComposite, null, SWT.WRAP | SWT.V_SCROLL
+				| SWT.MULTI);
 		final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd.heightHint = 100;
 		gd.horizontalAlignment = SWT.FILL;
@@ -244,7 +241,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		this.contentsText.setToolTipText(Messages.getString("contentsTip"));
 		addControl(this.contentsText);
 	}
-	
+
 	/**
 	 * create section for external links, like URLs or locally stored files
 	 * 
@@ -252,10 +249,13 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	 * @param toolkit
 	 * @param tableWrapLayout
 	 */
-	protected void doCreateExtLinksSection(final Composite parent, final FormToolkit toolkit, final boolean tableWrapLayout) {
-		final Section extLinksSection = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+	protected void doCreateExtLinksSection(final Composite parent, final FormToolkit toolkit,
+			final boolean tableWrapLayout) {
+		final Section extLinksSection = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR
+				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		if (tableWrapLayout) {
-			extLinksSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
+			extLinksSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
+					TableWrapData.TOP));
 		} else {
 			final GridData gd_semanticsSection = new GridData(SWT.FILL, SWT.CENTER, false, false);
 			extLinksSection.setLayoutData(gd_semanticsSection);
@@ -272,18 +272,20 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		this.url = toolkit.createText(client, null, SWT.NONE);
 		final GridData gd_urlText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		this.url.setLayoutData(gd_urlText);
-		addControl(this.url);		
+		addControl(this.url);
 		toolkit.createLabel(client, "", SWT.NONE); //$NON-NLS-1$
-		
+
 		toolkit.createLabel(client, Messages.getString("filesLabel") + ":", SWT.NONE);
 		Table createTable = toolkit.createTable(client, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
-		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 30).grab(true, false).span(1, 3).applyTo(createTable);
-		this.filesTableViewer = new TableViewer(createTable);	
+		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 30).grab(true, false).span(1, 3).applyTo(
+				createTable);
+		this.filesTableViewer = new TableViewer(createTable);
 		final Composite innerButtonClient = toolkit.createComposite(client, SWT.NONE);
 		final GridLayout innerGridLayout = new GridLayout();
 		innerGridLayout.numColumns = 1;
 		innerButtonClient.setLayout(innerGridLayout);
-		Button addbutton = toolkit.createButton(innerButtonClient, Messages.getString("addButtonName"), SWT.FLAT);
+		Button addbutton = toolkit.createButton(innerButtonClient, Messages
+				.getString("addButtonName"), SWT.FLAT);
 		addbutton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				FileDialog fileDialog = new FileDialog(getSite().getShell(), SWT.OPEN);
@@ -299,12 +301,14 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 								try {
 									loadFile.run(monitor);
 								} catch (InvocationTargetException e) {
-									return StatusCreator.newStatus(Messages.getString("fileLoadError"), e);
+									return StatusCreator.newStatus(Messages
+											.getString("fileLoadError"), e);
 								} catch (InterruptedException e) {
 									return Status.CANCEL_STATUS;
 								}
 								IFile tmpFile = loadFile.getTmpFile();
-								InformationStructureEdit edit = InformationStructureEdit.newSession(getModelObject().getType(), getEditingDomain());
+								InformationStructureEdit edit = InformationStructureEdit
+										.newSession(getModelObject().getType(), getEditingDomain());
 								InformationUnit createSubType = edit.createSubType(
 										BibliographicActivator.NODE_NAME_FILE, null);
 								edit.setValue(createSubType,
@@ -312,8 +316,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 										new Path(open).lastSegment());
 								edit.addDynamicNode(getModelObject(), createSubType,
 										getEditingDomain(), Collections.singletonMap(
-												BibliographicActivator.NODE_NAME_FILE,
-												tmpFile));
+												BibliographicActivator.NODE_NAME_FILE, tmpFile));
 								return Status.OK_STATUS;
 							}
 						});
@@ -326,14 +329,16 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 			}
 		});
 
-		final Button deleteButton = toolkit.createButton(innerButtonClient, Messages.getString("deleteButton"), SWT.FLAT);
+		final Button deleteButton = toolkit.createButton(innerButtonClient, Messages
+				.getString("deleteButton"), SWT.FLAT);
 		deleteButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				CompoundCommand cc = new CompoundCommand();
 				List list = ((IStructuredSelection) EditGeneralPage.this.filesTableViewer
 						.getSelection()).toList();
 				for (Object object : list) {
-					InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
+					InformationStructureRead read = InformationStructureRead
+							.newSession(getModelObject());
 					List<BinaryReference> binaryReferences = read.getBinaryReferences(
 							((InformationUnit) object).getType(), false);
 					for (BinaryReference binaryReference : binaryReferences) {
@@ -349,68 +354,74 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 				getEditingDomain().getCommandStack().execute(cc);
 			}
 		});
-		
+
 		this.filesTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent event) {
 				deleteButton.setEnabled(!event.getSelection().isEmpty());
 			}
 		});
-		
+
 		this.filesTableViewer.addOpenListener(new IOpenListener() {
 			public void open(final OpenEvent event) {
-					List list = ((IStructuredSelection) event.getSelection()).toList();
-					for (Object object : list) {
-						InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
-						InformationUnit childByNodeId = read
-								.getChildByNodeId(BibliographicActivator.NODE_NAME_FILE);
-						IFile firstBinaryReferenceFile = InformationUtil
-								.getBinaryReferenceFile(childByNodeId);
-						Program.launch(firstBinaryReferenceFile.getLocation().toOSString());
+				List list = ((IStructuredSelection) event.getSelection()).toList();
+				for (Object object : list) {
+					InformationStructureRead read = InformationStructureRead
+							.newSession(getModelObject());
+					InformationUnit childByNodeId = read
+							.getChildByNodeId(BibliographicActivator.NODE_NAME_FILE);
+					IFile firstBinaryReferenceFile = InformationUtil
+							.getBinaryReferenceFile(childByNodeId);
+					Program.launch(firstBinaryReferenceFile.getLocation().toOSString());
 				}
 			}
 		});
-		
-		this.filesTableViewer.setContentProvider(new AdapterFactoryContentProvider(
-				EditingUtil.getInstance().getAdapterFactory()));
+
+		IEditingHandler editService = BibliographicActivator.getDefault().getServiceTracker()
+				.getService(IEditingHandler.class);
+		this.filesTableViewer.setContentProvider(new AdapterFactoryContentProvider(editService
+				.getAdapterFactory()));
 		this.filesTableViewer.setLabelProvider(this.filesLabelProvider);
 		this.filesTableViewer.setSelection(StructuredSelection.EMPTY);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).hint(50, SWT.DEFAULT).applyTo(addbutton);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(deleteButton);	
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).hint(50, SWT.DEFAULT).applyTo(
+				addbutton);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(deleteButton);
 	}
 
-	
-	
 	/**
 	 * bind values
 	 */
+	@Override
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
-				
+
 		if (this.abstractText != null) {
-			BindingUtil.createTextAndBind(this.abstractText, read.getChildByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT),
-					read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT), this);
+			BindingUtil.createTextAndBind(this.abstractText, read
+					.getChildByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT), read
+					.getFeatureByNodeId(BibliographicActivator.NODE_NAME_ABSTRACT), this);
 		}
-		
+
 		if (this.summaryText != null) {
-			BindingUtil.createTextAndBind(this.summaryText, read.getChildByNodeId(BibliographicActivator.NODE_NAME_SUMMARY),
-					read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_SUMMARY), this);
+			BindingUtil.createTextAndBind(this.summaryText, read
+					.getChildByNodeId(BibliographicActivator.NODE_NAME_SUMMARY), read
+					.getFeatureByNodeId(BibliographicActivator.NODE_NAME_SUMMARY), this);
 		}
-		
+
 		if (this.contentsText != null) {
-			BindingUtil.createTextAndBind(this.contentsText, read.getChildByNodeId(BibliographicActivator.NODE_NAME_CONTENTS),
-					read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_CONTENTS), this);
+			BindingUtil.createTextAndBind(this.contentsText, read
+					.getChildByNodeId(BibliographicActivator.NODE_NAME_CONTENTS), read
+					.getFeatureByNodeId(BibliographicActivator.NODE_NAME_CONTENTS), this);
 		}
-		
+
 		if (this.url != null) {
-			BindingUtil.createTextAndBind(this.url, read.getChildByNodeId(BibliographicActivator.NODE_NAME_URL),
-					read.getFeatureByNodeId(BibliographicActivator.NODE_NAME_URL), this);
+			BindingUtil.createTextAndBind(this.url, read
+					.getChildByNodeId(BibliographicActivator.NODE_NAME_URL), read
+					.getFeatureByNodeId(BibliographicActivator.NODE_NAME_URL), this);
 		}
-		
+
 		InformationUnit files = read.getChildByNodeId(BibliographicActivator.NODE_NAME_FILES);
 		this.filesTableViewer.setInput(files);
 
 	}
-
 
 }

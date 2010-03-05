@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;

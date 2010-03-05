@@ -30,8 +30,8 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
@@ -43,6 +43,7 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 	public static final String BUILDER_ID = "org.remus.infomngmnt.ui.calendar.calendarEntryBuilder"; //$NON-NLS-1$
 	private final CalendarDeltaVisitor visitor;
 	private final IEditingHandler editService;
+	private final IInformationTypeHandler informationTypeHandler;
 
 	/**
 	 * 
@@ -50,6 +51,9 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 	public CalendarBuilder() {
 		this.visitor = new CalendarDeltaVisitor();
 		this.editService = CalendarActivator.getDefault().getEditService();
+		this.informationTypeHandler = CalendarActivator.getDefault().getServiceTracker()
+				.getService(IInformationTypeHandler.class);
+
 	}
 
 	/*
@@ -79,7 +83,7 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 					if (objectFromFile != null) {
 						monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile
 								.getLabel()));
-						IInfoType infoTypeByType = InformationExtensionManager.getInstance()
+						IInfoType infoTypeByType = this.informationTypeHandler
 								.getInfoTypeByType(objectFromFile.getType());
 						this.visitor.setMonitor(monitor);
 						this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType,
@@ -143,7 +147,7 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 						objectFromFile = CalendarBuilder.this.editService.getObjectFromFile(
 								(IFile) resourceDelta.getResource(), InfomngmntPackage.eINSTANCE
 										.getInformationUnit(), null, false);
-						infoTypeByType = InformationExtensionManager.getInstance()
+						infoTypeByType = CalendarBuilder.this.informationTypeHandler
 								.getInfoTypeByType(objectFromFile.getType());
 
 					}

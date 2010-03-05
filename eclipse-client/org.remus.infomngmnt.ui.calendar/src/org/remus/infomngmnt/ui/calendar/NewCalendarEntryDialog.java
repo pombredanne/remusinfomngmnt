@@ -48,8 +48,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
 import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
@@ -77,6 +77,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 	private ImageHyperlink hyperlink;
 	private final InformationUnit parentElement;
 	private final IEditingHandler editService;
+	private final IInformationTypeHandler informationTypeHandler;
 
 	/**
 	 * Create the dialog
@@ -91,6 +92,8 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		this.editingDomain = editingDomain;
 		this.parentElement = parentElement;
 		this.editService = CalendarActivator.getDefault().getEditService();
+		this.informationTypeHandler = CalendarActivator.getDefault().getServiceTracker()
+				.getService(IInformationTypeHandler.class);
 		this.ctx = new EMFDataBindingContext();
 	}
 
@@ -199,8 +202,8 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		if (this.parentElement == null) {
 			this.text_5.setText(text);
 		} else {
-			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-					this.selectedObject.getType());
+			IInfoType infoTypeByType = this.informationTypeHandler
+					.getInfoTypeByType(this.selectedObject.getType());
 			if (infoTypeByType != null) {
 				// FIXME
 				// this.hyperlink.setImage(infoTypeByType.getImage());

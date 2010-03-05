@@ -31,7 +31,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.CategoryUtil;
@@ -64,6 +64,8 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 			final InformationUnitListItem alreadyCreatedElement, final int index) {
 		this.newInformationUnit = newInformationUnit;
 		this.parentCategory = parentCategory;
+		IInformationTypeHandler informationTypeHandler = InfomngmntEditPlugin.getPlugin()
+				.getServiceTracker().getService(IInformationTypeHandler.class);
 		if (monitor == null) {
 			this.monitor = new NullProgressMonitor();
 		} else {
@@ -113,8 +115,7 @@ public class CreateInfoTypeCommand extends CompoundCommand {
 				newInformationUnit.getId() + ResourceUtil.DOT_FILE_EXTENSION);
 		this.createInformationUnitListItem
 				.setWorkspacePath(this.newFile.getFullPath().toOSString());
-		IInfoType type = InformationExtensionManager.getInstance().getInfoTypeByType(
-				newInformationUnit.getType());
+		IInfoType type = informationTypeHandler.getInfoTypeByType(newInformationUnit.getType());
 		if (type != null && type.getPostCreationHandler() != null) {
 			Command handlePreSavingCommand = type.getPostCreationHandler().handlePreSaving(
 					newInformationUnit, this.monitor);

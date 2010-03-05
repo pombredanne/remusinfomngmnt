@@ -32,8 +32,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
@@ -48,6 +48,7 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 	public static final String BUILDER_ID = CorePlugin.PLUGIN_ID + ".infobuilder"; //$NON-NLS-1$
 	private final InformationDeltaVisitor visitor;
 	private final IApplicationModel service;
+	private final IInformationTypeHandler informationTypeHandler;
 
 	/**
 	 * 
@@ -56,6 +57,9 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 		this.visitor = new InformationDeltaVisitor();
 		this.service = InfomngmntEditPlugin.getPlugin().getServiceTracker().getService(
 				IApplicationModel.class);
+		this.informationTypeHandler = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(IInformationTypeHandler.class);
+
 	}
 
 	/*
@@ -98,7 +102,7 @@ public class InformationBuilder extends IncrementalProjectBuilder {
 					if (objectFromFile != null) {
 						monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile
 								.getLabel()));
-						IInfoType infoTypeByType = InformationExtensionManager.getInstance()
+						IInfoType infoTypeByType = this.informationTypeHandler
 								.getInfoTypeByType(objectFromFile.getType());
 						this.visitor.setMonitor(monitor);
 						this.visitor.buildSingleInfoUnit(objectFromFile, infoTypeByType,

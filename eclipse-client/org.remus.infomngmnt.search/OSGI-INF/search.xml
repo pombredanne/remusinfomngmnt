@@ -5,4 +5,5 @@
    <service>
       <provide interface="org.remus.infomngmnt.search.service.ISearchService"/>
    </service>
+   <reference bind="setInformationTypeHandler" cardinality="1..1" interface="org.remus.infomngmnt.core.services.IInformationTypeHandler" name="IInformationTypeHandler" policy="static"/>
 </scr:component>

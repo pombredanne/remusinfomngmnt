@@ -60,8 +60,8 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.operation.CancelableJob;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchActivator;
@@ -89,6 +89,8 @@ public class LuceneSearchService implements ISearchService {
 	private final Map<IProject, IndexSearcher> projectToSearcherMap = new HashMap<IProject, IndexSearcher>();
 
 	private IEditingHandler editService;
+
+	private IInformationTypeHandler informationTypeHandler;
 
 	public LuceneSearchService() {
 		this.writeQueueJob = new WriteQueueJob();
@@ -222,9 +224,8 @@ public class LuceneSearchService implements ISearchService {
 											if (infoUnit != null) {
 												monitor.setTaskName(NLS.bind("Adding {0} to queue",
 														infoUnit.getLabel()));
-												IInfoType infoTypeByType = InformationExtensionManager
-														.getInstance().getInfoTypeByType(
-																infoUnit.getType());
+												IInfoType infoTypeByType = LuceneSearchService.this.informationTypeHandler
+														.getInfoTypeByType(infoUnit.getType());
 												if (!infoTypeByType.isExcludeFromIndex()) {
 													Document[] luceneDocument = getSearchService()
 															.getLuceneDocument(infoUnit, project,
@@ -635,6 +636,11 @@ public class LuceneSearchService implements ISearchService {
 
 	public void setEditHandler(final IEditingHandler service) {
 		this.editService = service;
+
+	}
+
+	public void setInformationTypeHandler(final IInformationTypeHandler service) {
+		this.informationTypeHandler = service;
 
 	}
 }

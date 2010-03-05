@@ -28,9 +28,9 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.InformationStructure#getType <em>Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationStructure#getStructureItems <em>Structure Items</em>}</li>
- *   <li>{@link org.remus.infomngmnt.InformationStructure#getReferencedStructureItems <em>Referenced Structure Items</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationStructure#isCanHaveBinaryReferences <em>Can Have Binary References</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationStructure#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.InformationStructure#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -85,22 +85,6 @@ public interface InformationStructure extends EObject {
 	EList<InformationStructureItem> getStructureItems();
 
 	/**
-	 * Returns the value of the '<em><b>Referenced Structure Items</b></em>' reference list.
-	 * The list contents are of type {@link org.remus.infomngmnt.InformationStructureItem}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Referenced Structure Items</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Referenced Structure Items</em>' reference list.
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationStructure_ReferencedStructureItems()
-	 * @model
-	 * @generated
-	 */
-	EList<InformationStructureItem> getReferencedStructureItems();
-
-	/**
 	 * Returns the value of the '<em><b>Can Have Binary References</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -151,5 +135,31 @@ public interface InformationStructure extends EObject {
 	 * @generated
 	 */
 	void setLabel(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Description</em>' attribute.
+	 * @see #setDescription(String)
+	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationStructure_Description()
+	 * @model
+	 * @generated
+	 */
+	String getDescription();
+
+	/**
+	 * Sets the value of the '{@link org.remus.infomngmnt.InformationStructure#getDescription <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Description</em>' attribute.
+	 * @see #getDescription()
+	 * @generated
+	 */
+	void setDescription(String value);
 
 } // InformationStructure

@@ -45,9 +45,9 @@ import org.remus.infomngmnt.InformationStructureType;
  * <ul>
  *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getStructureItems <em>Structure Items</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getReferencedStructureItems <em>Referenced Structure Items</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#isCanHaveBinaryReferences <em>Can Have Binary References</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.InformationStructureImpl#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,16 +83,6 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	 * @ordered
 	 */
 	protected EList<InformationStructureItem> structureItems;
-
-	/**
-	 * The cached value of the '{@link #getReferencedStructureItems() <em>Referenced Structure Items</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReferencedStructureItems()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<InformationStructureItem> referencedStructureItems;
 
 	/**
 	 * The default value of the '{@link #isCanHaveBinaryReferences() <em>Can Have Binary References</em>}' attribute.
@@ -133,6 +123,26 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	 * @ordered
 	 */
 	protected String label = LABEL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -191,18 +201,6 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<InformationStructureItem> getReferencedStructureItems() {
-		if (referencedStructureItems == null) {
-			referencedStructureItems = new EObjectResolvingEList<InformationStructureItem>(InformationStructureItem.class, this, InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS);
-		}
-		return referencedStructureItems;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isCanHaveBinaryReferences() {
 		return canHaveBinaryReferences;
 	}
@@ -245,6 +243,27 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.INFORMATION_STRUCTURE__DESCRIPTION, oldDescription, description));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -266,12 +285,12 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 				return getType();
 			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
 				return getStructureItems();
-			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-				return getReferencedStructureItems();
 			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
 				return isCanHaveBinaryReferences();
 			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
 				return getLabel();
+			case InfomngmntPackage.INFORMATION_STRUCTURE__DESCRIPTION:
+				return getDescription();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -292,15 +311,14 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 				getStructureItems().clear();
 				getStructureItems().addAll((Collection<? extends InformationStructureItem>)newValue);
 				return;
-			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-				getReferencedStructureItems().clear();
-				getReferencedStructureItems().addAll((Collection<? extends InformationStructureItem>)newValue);
-				return;
 			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
 				setCanHaveBinaryReferences((Boolean)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
 				setLabel((String)newValue);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__DESCRIPTION:
+				setDescription((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -320,14 +338,14 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
 				getStructureItems().clear();
 				return;
-			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-				getReferencedStructureItems().clear();
-				return;
 			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
 				setCanHaveBinaryReferences(CAN_HAVE_BINARY_REFERENCES_EDEFAULT);
 				return;
 			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
 				setLabel(LABEL_EDEFAULT);
+				return;
+			case InfomngmntPackage.INFORMATION_STRUCTURE__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -345,12 +363,12 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 				return type != TYPE_EDEFAULT;
 			case InfomngmntPackage.INFORMATION_STRUCTURE__STRUCTURE_ITEMS:
 				return structureItems != null && !structureItems.isEmpty();
-			case InfomngmntPackage.INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS:
-				return referencedStructureItems != null && !referencedStructureItems.isEmpty();
 			case InfomngmntPackage.INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES:
 				return canHaveBinaryReferences != CAN_HAVE_BINARY_REFERENCES_EDEFAULT;
 			case InfomngmntPackage.INFORMATION_STRUCTURE__LABEL:
 				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+			case InfomngmntPackage.INFORMATION_STRUCTURE__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -371,6 +389,8 @@ public abstract class InformationStructureImpl extends EObjectImpl implements In
 		result.append(canHaveBinaryReferences);
 		result.append(", label: ");
 		result.append(label);
+		result.append(", description: ");
+		result.append(description);
 		result.append(')');
 		return result.toString();
 	}

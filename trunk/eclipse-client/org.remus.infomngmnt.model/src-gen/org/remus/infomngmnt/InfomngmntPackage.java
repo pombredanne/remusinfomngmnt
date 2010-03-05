@@ -1317,13 +1317,22 @@ public interface InfomngmntPackage extends EPackage {
 	int SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING = ADAPTER_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Sync Hash</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNCHRONIZATION_METADATA__SYNC_HASH = ADAPTER_FEATURE_COUNT + 7;
+
+	/**
 	 * The number of structural features of the '<em>Synchronization Metadata</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SYNCHRONIZATION_METADATA_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 7;
+	int SYNCHRONIZATION_METADATA_FEATURE_COUNT = ADAPTER_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.ChangeSetImpl <em>Change Set</em>}' class.
@@ -1603,22 +1612,13 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_STRUCTURE__STRUCTURE_ITEMS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Referenced Structure Items</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS = 2;
-
-	/**
 	 * The feature id for the '<em><b>Can Have Binary References</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES = 3;
+	int INFORMATION_STRUCTURE__CAN_HAVE_BINARY_REFERENCES = 2;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1627,7 +1627,16 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_STRUCTURE__LABEL = 4;
+	int INFORMATION_STRUCTURE__LABEL = 3;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_STRUCTURE__DESCRIPTION = 4;
 
 	/**
 	 * The number of structural features of the '<em>Information Structure</em>' class.
@@ -1667,15 +1676,6 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_STRUCTURE_DEFINITION__STRUCTURE_ITEMS = INFORMATION_STRUCTURE__STRUCTURE_ITEMS;
 
 	/**
-	 * The feature id for the '<em><b>Referenced Structure Items</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INFORMATION_STRUCTURE_DEFINITION__REFERENCED_STRUCTURE_ITEMS = INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS;
-
-	/**
 	 * The feature id for the '<em><b>Can Have Binary References</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1694,13 +1694,13 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_STRUCTURE_DEFINITION__LABEL = INFORMATION_STRUCTURE__LABEL;
 
 	/**
-	 * The feature id for the '<em><b>Structure Pool</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_STRUCTURE_DEFINITION__STRUCTURE_POOL = INFORMATION_STRUCTURE_FEATURE_COUNT + 0;
+	int INFORMATION_STRUCTURE_DEFINITION__DESCRIPTION = INFORMATION_STRUCTURE__DESCRIPTION;
 
 	/**
 	 * The number of structural features of the '<em>Information Structure Definition</em>' class.
@@ -1709,7 +1709,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_STRUCTURE_DEFINITION_FEATURE_COUNT = INFORMATION_STRUCTURE_FEATURE_COUNT + 1;
+	int INFORMATION_STRUCTURE_DEFINITION_FEATURE_COUNT = INFORMATION_STRUCTURE_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.InformationStructureItemImpl <em>Information Structure Item</em>}' class.
@@ -1740,15 +1740,6 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_STRUCTURE_ITEM__STRUCTURE_ITEMS = INFORMATION_STRUCTURE__STRUCTURE_ITEMS;
 
 	/**
-	 * The feature id for the '<em><b>Referenced Structure Items</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INFORMATION_STRUCTURE_ITEM__REFERENCED_STRUCTURE_ITEMS = INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS;
-
-	/**
 	 * The feature id for the '<em><b>Can Have Binary References</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1765,6 +1756,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int INFORMATION_STRUCTURE_ITEM__LABEL = INFORMATION_STRUCTURE__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFORMATION_STRUCTURE_ITEM__DESCRIPTION = INFORMATION_STRUCTURE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1822,15 +1822,6 @@ public interface InfomngmntPackage extends EPackage {
 	int DYNAMIC_STRUCTURE__STRUCTURE_ITEMS = INFORMATION_STRUCTURE_ITEM__STRUCTURE_ITEMS;
 
 	/**
-	 * The feature id for the '<em><b>Referenced Structure Items</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DYNAMIC_STRUCTURE__REFERENCED_STRUCTURE_ITEMS = INFORMATION_STRUCTURE_ITEM__REFERENCED_STRUCTURE_ITEMS;
-
-	/**
 	 * The feature id for the '<em><b>Can Have Binary References</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1847,6 +1838,15 @@ public interface InfomngmntPackage extends EPackage {
 	 * @ordered
 	 */
 	int DYNAMIC_STRUCTURE__LABEL = INFORMATION_STRUCTURE_ITEM__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_STRUCTURE__DESCRIPTION = INFORMATION_STRUCTURE_ITEM__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -3100,6 +3100,17 @@ public interface InfomngmntPackage extends EPackage {
 	EAttribute getSynchronizationMetadata_CurrentlySyncing();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.SynchronizationMetadata#getSyncHash <em>Sync Hash</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sync Hash</em>'.
+	 * @see org.remus.infomngmnt.SynchronizationMetadata#getSyncHash()
+	 * @see #getSynchronizationMetadata()
+	 * @generated
+	 */
+	EAttribute getSynchronizationMetadata_SyncHash();
+
+	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.ChangeSet <em>Change Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3362,17 +3373,6 @@ public interface InfomngmntPackage extends EPackage {
 	EClass getInformationStructureDefinition();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.InformationStructureDefinition#getStructurePool <em>Structure Pool</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Structure Pool</em>'.
-	 * @see org.remus.infomngmnt.InformationStructureDefinition#getStructurePool()
-	 * @see #getInformationStructureDefinition()
-	 * @generated
-	 */
-	EReference getInformationStructureDefinition_StructurePool();
-
-	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.InformationStructureItem <em>Information Structure Item</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3437,17 +3437,6 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getInformationStructure_StructureItems();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.InformationStructure#getReferencedStructureItems <em>Referenced Structure Items</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Referenced Structure Items</em>'.
-	 * @see org.remus.infomngmnt.InformationStructure#getReferencedStructureItems()
-	 * @see #getInformationStructure()
-	 * @generated
-	 */
-	EReference getInformationStructure_ReferencedStructureItems();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.InformationStructure#isCanHaveBinaryReferences <em>Can Have Binary References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3468,6 +3457,17 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInformationStructure_Label();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.InformationStructure#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.remus.infomngmnt.InformationStructure#getDescription()
+	 * @see #getInformationStructure()
+	 * @generated
+	 */
+	EAttribute getInformationStructure_Description();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.DynamicStructure <em>Dynamic Structure</em>}'.
@@ -4521,6 +4521,14 @@ public interface InfomngmntPackage extends EPackage {
 		EAttribute SYNCHRONIZATION_METADATA__CURRENTLY_SYNCING = eINSTANCE.getSynchronizationMetadata_CurrentlySyncing();
 
 		/**
+		 * The meta object literal for the '<em><b>Sync Hash</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNCHRONIZATION_METADATA__SYNC_HASH = eINSTANCE.getSynchronizationMetadata_SyncHash();
+
+		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.ChangeSetImpl <em>Change Set</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4729,14 +4737,6 @@ public interface InfomngmntPackage extends EPackage {
 		EClass INFORMATION_STRUCTURE_DEFINITION = eINSTANCE.getInformationStructureDefinition();
 
 		/**
-		 * The meta object literal for the '<em><b>Structure Pool</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference INFORMATION_STRUCTURE_DEFINITION__STRUCTURE_POOL = eINSTANCE.getInformationStructureDefinition_StructurePool();
-
-		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.InformationStructureItemImpl <em>Information Structure Item</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4789,14 +4789,6 @@ public interface InfomngmntPackage extends EPackage {
 		EReference INFORMATION_STRUCTURE__STRUCTURE_ITEMS = eINSTANCE.getInformationStructure_StructureItems();
 
 		/**
-		 * The meta object literal for the '<em><b>Referenced Structure Items</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference INFORMATION_STRUCTURE__REFERENCED_STRUCTURE_ITEMS = eINSTANCE.getInformationStructure_ReferencedStructureItems();
-
-		/**
 		 * The meta object literal for the '<em><b>Can Have Binary References</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4811,6 +4803,14 @@ public interface InfomngmntPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INFORMATION_STRUCTURE__LABEL = eINSTANCE.getInformationStructure_Label();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INFORMATION_STRUCTURE__DESCRIPTION = eINSTANCE.getInformationStructure_Description();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.DynamicStructureImpl <em>Dynamic Structure</em>}' class.

@@ -40,7 +40,8 @@ import org.remus.infomngmnt.InformationStructureType;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -286,10 +287,12 @@ public class InformationStructureRead {
 	}
 
 	private static InformationStructureDefinition getStructureDefinition(final String type) {
-		IInfoType infoTypeByType = InformationExtensionManager.getInstance()
-				.getInfoTypeByType(type);
+		IInformationTypeHandler service = InfomngmntEditPlugin.getPlugin().getService(
+				IInformationTypeHandler.class);
+		IInfoType infoTypeByType = service.getInfoTypeByType(type);
 		InformationStructureDefinition structureDefinition = infoTypeByType
 				.getStructureDefinition();
+		InfomngmntEditPlugin.getPlugin().getServiceTracker().ungetService(service);
 		return structureDefinition;
 	}
 

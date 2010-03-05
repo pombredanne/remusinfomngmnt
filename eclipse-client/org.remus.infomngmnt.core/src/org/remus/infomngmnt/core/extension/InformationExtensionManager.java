@@ -51,22 +51,9 @@ public class InformationExtensionManager extends PluginRegistryDynamic implement
 
 	public static final String STRUCTURE_DEFINITION = "structuredefinition"; //$NON-NLS-1$
 
-	private static IInformationTypeHandler INSTANCE;
-
 	private Map<String, IInfoType> items;
 
 	private Logger log;
-
-	public static IInformationTypeHandler getInstance() {
-		if (INSTANCE == null) {
-			synchronized (InformationExtensionManager.class) {
-				if (INSTANCE == null) {
-					INSTANCE = new InformationExtensionManager();
-				}
-			}
-		}
-		return INSTANCE;
-	}
 
 	public InformationExtensionManager() {
 		super(EXTENSION_POINT);

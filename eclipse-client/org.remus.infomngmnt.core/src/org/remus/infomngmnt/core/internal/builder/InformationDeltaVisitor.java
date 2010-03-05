@@ -42,10 +42,10 @@ import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IBinaryReferenceStore;
 import org.remus.infomngmnt.core.services.IHtmlGenerationErrorGenerator;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -68,6 +68,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	private final IApplicationModel applicationService;
 
+	private final IInformationTypeHandler informationTypeHandler;
+
 	public InformationDeltaVisitor() {
 		this.referenceService = InfomngmntEditPlugin.getPlugin().getService(
 				IReferencedUnitStore.class);
@@ -77,6 +79,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				IBinaryReferenceStore.class);
 		this.applicationService = InfomngmntEditPlugin.getPlugin().getService(
 				IApplicationModel.class);
+		this.informationTypeHandler = InfomngmntEditPlugin.getPlugin().getService(
+				IInformationTypeHandler.class);
 	}
 
 	public boolean visit(final IResourceDelta delta) throws CoreException {
@@ -107,7 +111,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 						InformationUnitListItem itemById = this.applicationService.getItemById(
 								infoUnit, this.monitor);
 						if (itemById != null) {
-							IInfoType refInfoType = InformationExtensionManager.getInstance()
+							IInfoType refInfoType = this.informationTypeHandler
 									.getInfoTypeByType(itemById.getType());
 							InformationUnit adapter = (InformationUnit) itemById
 									.getAdapter(InformationUnit.class);
@@ -127,8 +131,8 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 					objectFromFile = InfomngmntEditPlugin.getPlugin().getEditService()
 							.getObjectFromFile((IFile) resourceDelta.getResource(),
 									InfomngmntPackage.eINSTANCE.getInformationUnit(), null, false);
-					infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-							objectFromFile.getType());
+					infoTypeByType = this.informationTypeHandler.getInfoTypeByType(objectFromFile
+							.getType());
 
 				}
 				switch (resourceDelta.getKind()) {

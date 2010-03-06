@@ -41,8 +41,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -157,10 +157,7 @@ public class ReportParameterPage extends AbstractInformationFormPage {
 				deleteButton.setEnabled(!event.getSelection().isEmpty());
 			}
 		});
-		this.parameterTableViewer.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
-				.getInstance().getAdapterFactory()));
-		this.parameterTableViewer.setLabelProvider(new ReportTableLabelProvider());
-		this.parameterTableViewer.setSelection(StructuredSelection.EMPTY);
+
 		GridDataFactory.fillDefaults().hint(80, SWT.DEFAULT).align(SWT.FILL, SWT.TOP).applyTo(
 				editButton);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(addbutton);
@@ -170,9 +167,16 @@ public class ReportParameterPage extends AbstractInformationFormPage {
 
 	@Override
 	public void bindValuesToUi() {
+		IEditingHandler service = ReportActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
 
 		InformationUnit parameters = read.getChildByNodeId(ReportActivator.NODE_NAME_PARAMS);
+		this.parameterTableViewer.setContentProvider(new AdapterFactoryContentProvider(service
+				.getAdapterFactory()));
+		ReportActivator.getDefault().getServiceTracker().ungetService(service);
+		this.parameterTableViewer.setLabelProvider(new ReportTableLabelProvider());
+		this.parameterTableViewer.setSelection(StructuredSelection.EMPTY);
 		this.parameterTableViewer.setInput(parameters);
 
 		super.bindValuesToUi();

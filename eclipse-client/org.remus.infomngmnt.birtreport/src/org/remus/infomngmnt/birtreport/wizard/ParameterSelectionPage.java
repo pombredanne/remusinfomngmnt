@@ -87,6 +87,11 @@ public class ParameterSelectionPage extends WizardPage {
 
 	}
 
+	@Override
+	public void dispose() {
+		super.dispose();
+	}
+
 	public Map<String, String> getParameterValues() {
 		Map<String, String> returnValue = new HashMap<String, String>();
 		Map<String, AbstractParameterControl> map = this.controlMap.get(this.template.getId());

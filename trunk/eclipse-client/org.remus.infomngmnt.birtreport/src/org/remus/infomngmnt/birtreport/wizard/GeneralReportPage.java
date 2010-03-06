@@ -35,8 +35,8 @@ import org.remus.infomngmnt.birtreport.extension.ReportTemplateManager;
 import org.remus.infomngmnt.birtreport.internal.extension.ReportContentProvider;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

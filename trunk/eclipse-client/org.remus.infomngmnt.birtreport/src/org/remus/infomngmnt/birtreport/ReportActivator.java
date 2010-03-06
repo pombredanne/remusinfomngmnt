@@ -6,6 +6,8 @@ import org.eclipse.birt.report.viewer.utilities.WebViewer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import org.remus.infomngmnt.services.RemusServiceTracker;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -24,6 +26,8 @@ public class ReportActivator extends AbstractUIPlugin {
 	public static final String NODE_NAME_PARAM_VALUE = "paramvalue"; //$NON-NLS-1$
 
 	public static final String INFOTYPE_ID = "REPORT"; //$NON-NLS-1$
+
+	private RemusServiceTracker serviceTracker;
 
 	/**
 	 * The constructor
@@ -59,6 +63,7 @@ public class ReportActivator extends AbstractUIPlugin {
 				WebViewer.startup(ViewerPlugin.WEBAPP_CONTEXT);
 			};
 		}.start();
+		this.serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
 	}
 
@@ -73,6 +78,10 @@ public class ReportActivator extends AbstractUIPlugin {
 	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+	}
+
+	public RemusServiceTracker getServiceTracker() {
+		return this.serviceTracker;
 	}
 
 	/**

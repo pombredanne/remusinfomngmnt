@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
-import org.remus.infomngmnt.common.ui.swt.DateCombo;
+import org.remus.infomngmnt.ui.widgets.DateCombo;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

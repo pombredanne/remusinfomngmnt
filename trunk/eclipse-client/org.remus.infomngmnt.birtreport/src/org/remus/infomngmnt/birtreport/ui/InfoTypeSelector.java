@@ -15,7 +15,6 @@ package org.remus.infomngmnt.birtreport.ui;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -28,11 +27,13 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
+import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
+import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -64,8 +65,10 @@ public class InfoTypeSelector extends AbstractParameterControl {
 	@Override
 	public void createPartControl(final Composite parent) {
 		parent.setLayout(new GridLayout(2, false));
-		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-				this.options.get(INFO_TYPE));
+		IInformationTypeHandler informationTypeHandler = ReportActivator.getDefault()
+				.getServiceTracker().getService(IInformationTypeHandler.class);
+		IInfoType infoTypeByType = informationTypeHandler.getInfoTypeByType(this.options
+				.get(INFO_TYPE));
 		if (infoTypeByType == null) {
 			throw new IllegalArgumentException("Infotype not installed");
 		}
@@ -80,9 +83,10 @@ public class InfoTypeSelector extends AbstractParameterControl {
 			public void handleEvent(final Event event) {
 				Set<? extends EObject> allItemsByType = InformationUtil
 						.getAllItemsByType(InfoTypeSelector.this.options.get(INFO_TYPE));
+				IEditingHandler editService = ReportActivator.getDefault().getServiceTracker()
+						.getService(IEditingHandler.class);
 				NavigatorDecoratingLabelProvider labelProvider = new NavigatorDecoratingLabelProvider(
-						new AdapterFactoryLabelProvider(EditingUtil.getInstance()
-								.getAdapterFactory())) {
+						new InformationUnitLabelProvider(editService.getAdapterFactory())) {
 					@Override
 					public String getText(final Object element) {
 						if (element instanceof InformationUnitListItem) {
@@ -115,8 +119,10 @@ public class InfoTypeSelector extends AbstractParameterControl {
 					InfoTypeSelector.this.pathText.setText(InformationUtil
 							.getFullReadablePath(InfoTypeSelector.this.selectedInfoType));
 				}
+				ReportActivator.getDefault().getServiceTracker().ungetService(editService);
 			}
 		});
+		ReportActivator.getDefault().getServiceTracker().ungetService(informationTypeHandler);
 
 	}
 

@@ -7,18 +7,14 @@
       <information
             buildHtml="true"
             excludeFromIndex="true"
-            icon="icons/report.gif"
             name="Report"
             presentation="org.remus.infomngmnt.birtreport.extension.BirtReportRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="REPORT">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.birtreport.ui.ReportParameterPage"
             icon="icons/parameter.gif"
@@ -101,5 +97,16 @@
             commandId="org.remus.infomngmnt.birtreport.pdf"
             icon="icons/nuvola/pdf.png">
       </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="REPORT">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.birtreport.wizard.BirtCreationTrigger"
+            typeId="REPORT">
+      </creationtrigger>
    </extension>
 </plugin>

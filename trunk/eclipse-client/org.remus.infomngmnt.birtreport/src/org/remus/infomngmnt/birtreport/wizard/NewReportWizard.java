@@ -14,7 +14,6 @@ package org.remus.infomngmnt.birtreport.wizard;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,7 +21,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.ui.IWorkbench;
@@ -30,18 +28,14 @@ import org.eclipse.ui.IWorkbench;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.extension.IReportTemplate;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.core.transfertypes.FileTransferWrapper;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -51,6 +45,7 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	private ParameterSelectionPage page2;
 	private boolean templateSelected;
 	private IReportTemplate selectedTemplage;
+	private IEditingHandler service;
 
 	/**
 	 * 
@@ -67,6 +62,8 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	 */
 	@Override
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
+		this.service = ReportActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
 			this.page1 = new GeneralReportPage((Category) firstElement);
@@ -113,34 +110,6 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	}
 
 	@Override
-	protected void setDefaults(final Object value, final RuleValue ruleValue,
-			final TransferWrapper transferType) throws CoreException {
-		if (transferType instanceof FileTransferWrapper) {
-			String[] paths = (String[]) value;
-			/*
-			 * We're just taking the first element. For dropping multiple
-			 * elements into the application we have to provide an import
-			 * wizard.
-			 */
-			String string = paths[0];
-			LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
-			runnable.setFilePath(string);
-			try {
-				new ProgressMonitorDialog(getShell()).run(true, false, runnable);
-				((GeneralReportPage) this.page1).setTmpFile(runnable.getTmpFile());
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		super.setDefaults(value, ruleValue, transferType);
-	}
-
-	@Override
 	public boolean performFinish() {
 		this.templateSelected = ((GeneralReportPage) this.page1).isTemplateSelected();
 		if (this.templateSelected) {
@@ -176,11 +145,17 @@ public class NewReportWizard extends NewInfoObjectWizard {
 						.get(string));
 				edit.addDynamicNode(this.newElement, params, null);
 			}
-			return CommandFactory.addFileToInfoUnit(createTempFile, this.newElement, EditingUtil
-					.getInstance().getNavigationEditingDomain());
+			return CommandFactory.addFileToInfoUnit(createTempFile, this.newElement, this.service
+					.getNavigationEditingDomain());
 
 		}
 		return super.getAdditionalCommands();
+	}
+
+	@Override
+	public void dispose() {
+		ReportActivator.getDefault().getServiceTracker().ungetService(this.service);
+		super.dispose();
 	}
 
 }

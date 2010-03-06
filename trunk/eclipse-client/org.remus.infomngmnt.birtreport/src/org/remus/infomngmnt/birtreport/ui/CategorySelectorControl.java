@@ -2,7 +2,6 @@ package org.remus.infomngmnt.birtreport.ui;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -17,11 +16,13 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
+import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /*******************************************************************************
@@ -73,12 +74,16 @@ public class CategorySelectorControl extends AbstractParameterControl {
 		this.browserButton.setText("B&rowse...");
 		this.browserButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
+				IEditingHandler editHandler = ReportActivator.getDefault().getServiceTracker()
+						.getService(IEditingHandler.class);
+				IApplicationModel appService = ReportActivator.getDefault().getServiceTracker()
+						.getService(IApplicationModel.class);
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
-						EditingUtil.getInstance().getAdapterFactory());
-				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						editHandler.getAdapterFactory());
+				InformationUnitLabelProvider labelProvider = new InformationUnitLabelProvider(
+						editHandler.getAdapterFactory());
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(parent
-						.getShell(), adapterFactoryLabelProvider, adapterFactoryContentProvider);
+						.getShell(), labelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
 				dialog.setTitle("Select a category");
 				dialog.setMessage("Select a cateogry");
@@ -98,7 +103,7 @@ public class CategorySelectorControl extends AbstractParameterControl {
 						return StatusCreator.newStatus(IStatus.OK, "", null);
 					}
 				});
-				dialog.setInput(ApplicationModelPool.getInstance().getModel());
+				dialog.setInput(appService.getModel());
 				dialog.setInitialSelection(CategorySelectorControl.this.category);
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					Object[] result = dialog.getResult();
@@ -106,6 +111,8 @@ public class CategorySelectorControl extends AbstractParameterControl {
 					CategorySelectorControl.this.parentCategoryText.setText(CategoryUtil
 							.categoryToString(CategorySelectorControl.this.category));
 				}
+				ReportActivator.getDefault().getServiceTracker().ungetService(editHandler);
+				ReportActivator.getDefault().getServiceTracker().ungetService(appService);
 			}
 		});
 

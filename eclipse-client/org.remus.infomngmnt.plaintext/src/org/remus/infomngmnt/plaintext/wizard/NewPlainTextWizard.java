@@ -12,11 +12,7 @@
 
 package org.remus.infomngmnt.plaintext.wizard;
 
-import org.eclipse.core.runtime.CoreException;
-
-import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.extension.TransferWrapper;
 import org.remus.infomngmnt.plaintext.Activator;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
@@ -44,10 +40,15 @@ public class NewPlainTextWizard extends NewInfoObjectWizard {
 				.getDefault(), "icons/iconexperience/new_wizard.png"));
 	}
 
+	// protected void setDefaults(final Object value, final RuleValue ruleValue,
+	// final TransferWrapper transferType) throws CoreException {
+	// this.newElement.setStringValue(String.valueOf(value));
+	// }
+
 	@Override
-	protected void setDefaults(final Object value, final RuleValue ruleValue,
-			final TransferWrapper transferType) throws CoreException {
-		this.newElement.setStringValue(String.valueOf(value));
+	protected void performActionAfterCreation() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -21,6 +21,7 @@ import org.eclipse.swt.dnd.Transfer;
 
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
 
 /**
@@ -38,8 +39,10 @@ public class CopyTextToClipboardHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		InformationUnit unit = InformationHandlerUtil.getInformationUnitFromExecutionEvent(event);
 		if (unit != null) {
-			new Clipboard(UIUtil.getDisplay()).setContents(new Object[] { unit.getStringValue() },
-					new Transfer[] { TextTransfer.getInstance() });
+			InformationStructureRead read = InformationStructureRead.newSession(unit);
+
+			new Clipboard(UIUtil.getDisplay()).setContents(new Object[] { read
+					.getValueByNodeId("contents") }, new Transfer[] { TextTransfer.getInstance() });
 		}
 		return null;
 	}

@@ -10,11 +10,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 public class FormPage extends AbstractInformationFormPage {
 
@@ -52,11 +52,11 @@ public class FormPage extends AbstractInformationFormPage {
 
 	@Override
 	public void bindValuesToUi() {
+		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
 		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
 				this.richtext.getFTextField(), this);
-		textBindingWidget.bindModel(getModelObject(),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		textBindingWidget.bindModel(read.getChildByNodeId("contents"), read
+				.getFeatureByNodeId("contents"));
 		super.bindValuesToUi();
 	}
-
 }

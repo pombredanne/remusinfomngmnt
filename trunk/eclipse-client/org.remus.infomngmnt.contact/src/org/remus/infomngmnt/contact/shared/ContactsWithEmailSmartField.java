@@ -28,8 +28,8 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.common.fieldassist.SmartField;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -80,8 +80,11 @@ public class ContactsWithEmailSmartField extends SmartField {
 		return new LabelProvider() {
 			@Override
 			public Image getImage(final Object element) {
-				return InformationExtensionManager.getInstance().getInfoTypeByType(
-						ContactActivator.TYPE_ID).getImage();
+				IInformationTypeImage service = ContactActivator.getDefault().getServiceTracker()
+						.getService(IInformationTypeImage.class);
+				Image imageByInfoType = service.getImageByInfoType(ContactActivator.TYPE_ID);
+				ContactActivator.getDefault().getServiceTracker().ungetService(service);
+				return imageByInfoType;
 			}
 
 			@Override

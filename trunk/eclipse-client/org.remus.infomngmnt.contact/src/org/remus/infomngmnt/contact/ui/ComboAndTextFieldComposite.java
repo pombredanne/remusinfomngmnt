@@ -29,9 +29,9 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.util.KeyValueObject;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.IEMFEditBindingProvider;
-import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.IEMFEditBindingProvider;
+import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**

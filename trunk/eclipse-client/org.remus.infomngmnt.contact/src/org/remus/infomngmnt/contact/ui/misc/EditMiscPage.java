@@ -27,14 +27,15 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.DatePickerBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.common.ui.swt.DateCombo;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.widgets.DateCombo;
+import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.remus.infomngmnt.ui.widgets.databinding.DatePickerBindingWidget;
 import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditMiscPage extends AbstractInformationFormPage {
@@ -350,14 +351,14 @@ public class EditMiscPage extends AbstractInformationFormPage {
 				ContactActivator.NODE_DETAILS_TITLE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
-		DatePickerBindingWidget dateComboBinding = BindingWidgetFactory.createDateComboBinding(
-				this.birthDay, this);
+		DatePickerBindingWidget dateComboBinding = AdditionalBindingWidgetFactory
+				.createDateComboBinding(this.birthDay, this);
 		dateComboBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_BIRTHDAY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
 
-		DatePickerBindingWidget dateComboBinding2 = BindingWidgetFactory.createDateComboBinding(
-				this.jubileeDate, this);
+		DatePickerBindingWidget dateComboBinding2 = AdditionalBindingWidgetFactory
+				.createDateComboBinding(this.jubileeDate, this);
 		dateComboBinding2.bindModel(InformationUtil.getChildByType(getModelObject(),
 				ContactActivator.NODE_DETAILS_JUBILEE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);

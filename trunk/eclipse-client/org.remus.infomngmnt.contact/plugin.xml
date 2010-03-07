@@ -5,27 +5,15 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="true"
-            icon="icons/iconexperience/contact.png"
             name="Contact"
+            postCreationHandler="org.remus.infomngmnt.contact.core.ContactPostCreation"
             presentation="org.remus.infomngmnt.contact.ContactInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="CONTACT">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.urlTransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.rftTransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.contact.ui.general.EditGeneralPage"
             icon="icons/iconexperience/contact.png"
@@ -39,10 +27,6 @@
             label="Details"
             type="CONTACT">
       </editPage>
-      <creationUiTrigger
-            class="org.remus.infomngmnt.contact.wizard.NewContactWizard"
-            typeId="CONTACT">
-      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -94,6 +78,186 @@
             interval="30"
             name="Birthday-Reminder">
       </job>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="CONTACT">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="CONTACT">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="CONTACT">
+      </validTransfers>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="title"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="firstname"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="additionals"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="lastname"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="titleafter"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="role"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="organization"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="email"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessAim"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessGadu"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessGW"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessIcq"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessIrc"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessJabber"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessMsn"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessMW"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessSms"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessSkype"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="instMessYahoo"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="blogFeed"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="frontpage"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detDep"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detBur"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detNaMan"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detNaAss"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detJob"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detTitle"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detNaNick"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detNaPart"
+            typeId="CONTACT">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="detNotes"
+            typeId="CONTACT">
+      </index>
+      <secondaryIndex
+            class="org.remus.infomngmnt.contact.index.AdressAnalyzer"
+            node="adress"
+            typeId="CONTACT">
+      </secondaryIndex>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/contact.png"
+            infotype="CONTACT">
+      </image>
    </extension>
 
 </plugin>

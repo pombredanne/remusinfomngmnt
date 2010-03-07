@@ -40,7 +40,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import org.remus.infomngmnt.common.core.streams.HTMLStripReader;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
@@ -54,40 +53,6 @@ import org.remus.infomngmnt.util.StatusCreator;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class MarketPlaceInformationRepresentation extends AbstractInformationRepresentation {
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		StringWriter sw = new StringWriter();
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		String valueByNodeId = (String) read.getValueByNodeId(MarketPlaceActivator.OWNER_NODE_ID);
-		appendIfNotNull(sw, valueByNodeId);
-		valueByNodeId = (String) read.getValueByNodeId(MarketPlaceActivator.COMPANY_NODE_ID);
-		appendIfNotNull(sw, valueByNodeId);
-		valueByNodeId = (String) read.getValueByNodeId(MarketPlaceActivator.DESCRIPTION_NODE_ID);
-		if (valueByNodeId != null) {
-			try {
-				valueByNodeId = HTMLStripReader.strip(valueByNodeId);
-				appendIfNotNull(sw, valueByNodeId);
-			} catch (IOException e) {
-				// do nothing
-			}
-
-		}
-		return sw.toString();
-	}
-
-	private void appendIfNotNull(final StringWriter sw, final String valueByNodeId) {
-		if (valueByNodeId != null) {
-			sw.append(valueByNodeId).append(' ');
-		}
-	}
 
 	/*
 	 * (non-Javadoc)

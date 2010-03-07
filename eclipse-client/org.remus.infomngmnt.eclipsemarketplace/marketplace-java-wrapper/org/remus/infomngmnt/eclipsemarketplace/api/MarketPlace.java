@@ -42,9 +42,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -177,11 +177,8 @@ public class MarketPlace {
 													"Categoriy Count no valid integer");
 										}
 									}
-									if (categoryNode.getFirstChild() != null
-											&& categoryNode.getFirstChild() instanceof Text) {
-										Text firstChild = (Text) categoryNode.getFirstChild();
-										category.setName(firstChild.getTextContent());
-									}
+									category.setName(((Element) categoryNode)
+											.getAttribute(Constants.NAME_ATTRIBUTE));
 									categories.add(category);
 								}
 							}
@@ -221,9 +218,9 @@ public class MarketPlace {
 			}
 			post.releaseConnection();
 
-			String marketPlaceHack = marketPlaceHack(result);
-			Document document = this.documentBuilder.parse(new InputSource(new StringReader(
-					marketPlaceHack)));
+			// String marketPlaceHack = marketPlaceHack(result);
+			Document document = this.documentBuilder.parse(new InputSource(new StringReader(result
+					.toString())));
 			checkResult(document);
 			NodeList childNodes = document.getChildNodes();
 			for (int i = 0, n = childNodes.getLength(); i < n; i++) {
@@ -232,36 +229,41 @@ public class MarketPlace {
 					NodeList entries = baseNode.getChildNodes();
 					for (int j = 0, m = entries.getLength(); j < m; j++) {
 						Node entryNode = entries.item(j);
-						if (Constants.NODE_NODE.equals(entryNode.getNodeName())) {
-							CategoryEntry categoryEntry = new CategoryEntry();
+						if (Constants.CATEGORY_NODE.equals(entryNode.getNodeName())) {
 							NodeList entryDetailNodes = entryNode.getChildNodes();
 							for (int k = 0, o = entryDetailNodes.getLength(); k < o; k++) {
 								Node entryDetailNode = entryDetailNodes.item(k);
-								if (Constants.TITLE_NODE.equals(entryDetailNode.getNodeName())) {
-									categoryEntry.setName(entryDetailNode.getFirstChild()
-											.getTextContent());
-								}
-								if (Constants.NID_NODE.equals(entryDetailNode.getNodeName())) {
-									String id = entryDetailNode.getFirstChild().getTextContent();
-									try {
-										categoryEntry.setId(Integer.valueOf(id));
-									} catch (NumberFormatException e) {
-										throw new MarketPlaceException(
-												"Entry Id is not a valid integer");
+								if (Constants.NODE_NODE.equals(entryDetailNode.getNodeName())) {
+									CategoryEntry categoryEntry = new CategoryEntry();
+									categoryEntry.setName(((Element) entryDetailNode)
+											.getAttribute(Constants.NAME_ATTRIBUTE));
+									categoryEntry.setId(Integer.valueOf(((Element) entryDetailNode)
+											.getAttribute(Constants.ID_ATTRIBUTE)));
+
+									if (Constants.NID_NODE.equals(entryDetailNode.getNodeName())) {
+										String id = entryDetailNode.getFirstChild()
+												.getTextContent();
+										try {
+											categoryEntry.setId(Integer.valueOf(id));
+										} catch (NumberFormatException e) {
+											throw new MarketPlaceException(
+													"Entry Id is not a valid integer");
+										}
 									}
-								}
-								if (Constants.FAVORITED_NODE.equals(entryDetailNode.getNodeName())) {
-									String favorited = entryDetailNode.getFirstChild()
-											.getTextContent();
-									try {
-										categoryEntry.setFavorited(Integer.valueOf(favorited));
-									} catch (NumberFormatException e) {
-										throw new MarketPlaceException(
-												"Favorite count is not a valid integer");
+									if (Constants.FAVORITED_NODE.equals(entryDetailNode
+											.getNodeName())) {
+										String favorited = entryDetailNode.getFirstChild()
+												.getTextContent();
+										try {
+											categoryEntry.setFavorited(Integer.valueOf(favorited));
+										} catch (NumberFormatException e) {
+											throw new MarketPlaceException(
+													"Favorite count is not a valid integer");
+										}
 									}
+									returnValue.add(categoryEntry);
 								}
 							}
-							returnValue.add(categoryEntry);
 						}
 					}
 				}
@@ -304,95 +306,109 @@ public class MarketPlace {
 				if (Constants.MARKETPLACE_NODE.equals(baseNode.getNodeName())) {
 					NodeList marketNodes = baseNode.getChildNodes();
 					for (int j = 0, m = marketNodes.getLength(); j < m; j++) {
-						Node marketNode = marketNodes.item(j);
-						String firstChild = null;
-						if (marketNode.getFirstChild() != null) {
-							if (marketNode.getFirstChild() instanceof CDATASection) {
-								firstChild = marketNode.getFirstChild().getFirstChild()
-										.getTextContent();
-							} else {
-								firstChild = marketNode.getFirstChild().getTextContent();
-							}
-						}
-						if (firstChild != null) {
-							if (Constants.ID_ATTRIBUTE.equals(marketNode.getNodeName())) {
-								try {
-									returnValue.setId(Integer.valueOf(firstChild));
-								} catch (NumberFormatException e) {
-									throw new MarketPlaceException("Market Id no valid integer");
+						Node childNode = marketNodes.item(j);
+						if (Constants.NODE_NODE.equals(childNode.getNodeName())) {
+							returnValue.setId(Integer.parseInt(((Element) childNode)
+									.getAttribute(Constants.ID_ATTRIBUTE)));
+							returnValue.setTitle(((Element) childNode)
+									.getAttribute(Constants.NAME_ATTRIBUTE));
+							returnValue.setUrl(((Element) childNode)
+									.getAttribute(Constants.URL_NODE));
+							for (int k = 0, o = childNode.getChildNodes().getLength(); k < o; k++) {
+								Node marketNode = childNode.getChildNodes().item(k);
+								String firstChild = null;
+								if (marketNode.getFirstChild() != null) {
+									if (marketNode.getFirstChild() instanceof CDATASection) {
+										firstChild = marketNode.getFirstChild().getFirstChild()
+												.getTextContent();
+									} else {
+										firstChild = marketNode.getFirstChild().getTextContent();
+									}
 								}
-							}
-							if (Constants.TITLE_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setTitle(firstChild);
-							}
-							if (Constants.TYPE_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setType(Type.fromString(firstChild));
-							}
-							if (Constants.OWNER_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setOwner(firstChild);
-							}
-							if (Constants.FAVORITED_NODE.equals(marketNode.getNodeName())) {
-								try {
-									returnValue.setFavorited(Integer.valueOf(firstChild));
-								} catch (NumberFormatException e) {
-									throw new MarketPlaceException("Favorited no valid integer");
-								}
-							}
-							if (Constants.BODY_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setBody(firstChild);
-							}
+								if (firstChild != null) {
+									if (Constants.ID_ATTRIBUTE.equals(marketNode.getNodeName())) {
+										try {
+											returnValue.setId(Integer.valueOf(firstChild));
+										} catch (NumberFormatException e) {
+											throw new MarketPlaceException(
+													"Market Id no valid integer");
+										}
+									}
+									if (Constants.TITLE_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setTitle(firstChild);
+									}
+									if (Constants.TYPE_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setType(Type.fromString(firstChild));
+									}
+									if (Constants.OWNER_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setOwner(firstChild);
+									}
+									if (Constants.FAVORITED_NODE.equals(marketNode.getNodeName())) {
+										try {
+											returnValue.setFavorited(Integer.valueOf(firstChild));
+										} catch (NumberFormatException e) {
+											throw new MarketPlaceException(
+													"Favorited no valid integer");
+										}
+									}
+									if (Constants.BODY_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setBody(firstChild);
+									}
 
-							if (Constants.CREATED_NODE.equals(marketNode.getNodeName())) {
-								try {
-									Long timestamp = Long.valueOf(firstChild);
-									returnValue.setCreated(new Date(timestamp * 1000));
-								} catch (NumberFormatException e) {
-									throw new MarketPlaceException("Creation date no valid long");
+									if (Constants.CREATED_NODE.equals(marketNode.getNodeName())) {
+										try {
+											Long timestamp = Long.valueOf(firstChild);
+											returnValue.setCreated(new Date(timestamp * 1000));
+										} catch (NumberFormatException e) {
+											throw new MarketPlaceException(
+													"Creation date no valid long");
+										}
+									}
+									if (Constants.CHANGED_NODE.equals(marketNode.getNodeName())) {
+										try {
+											Long timestamp = Long.valueOf(firstChild);
+											returnValue.setChanged(new Date(timestamp * 1000));
+										} catch (NumberFormatException e) {
+											throw new MarketPlaceException(
+													"Change date no valid long");
+										}
+									}
+									if (Constants.FOUNDATION_NODE.equals(marketNode.getNodeName())) {
+										try {
+											Integer value = Integer.valueOf(firstChild);
+											returnValue.setFoundationMember(value != 0);
+										} catch (NumberFormatException e) {
+											throw new MarketPlaceException(
+													"No valid foundation member flag");
+										}
+									}
+
+									if (Constants.IMAGE_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setImage(firstChild);
+									}
+									if (Constants.VERSION_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setVersion(firstChild);
+									}
+									if (Constants.LICENSE_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setLicense(firstChild);
+									}
+									if (Constants.COMPANYNAME_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setCompany(firstChild);
+									}
+									if (Constants.STATUS_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setStatus(firstChild);
+									}
+									if (Constants.ECLIPSEVERSION_NODE.equals(marketNode
+											.getNodeName())) {
+										returnValue.setEclipseversion(firstChild);
+									}
+									if (Constants.SUPPORTURL_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setSupportUrl(firstChild);
+									}
+									if (Constants.UPDATEURL_NODE.equals(marketNode.getNodeName())) {
+										returnValue.setUpdateUrl(firstChild);
+									}
 								}
-							}
-							if (Constants.CHANGED_NODE.equals(marketNode.getNodeName())) {
-								try {
-									Long timestamp = Long.valueOf(firstChild);
-									returnValue.setChanged(new Date(timestamp * 1000));
-								} catch (NumberFormatException e) {
-									throw new MarketPlaceException("Change date no valid long");
-								}
-							}
-							if (Constants.FOUNDATION_NODE.equals(marketNode.getNodeName())) {
-								try {
-									Integer value = Integer.valueOf(firstChild);
-									returnValue.setFoundationMember(value != 0);
-								} catch (NumberFormatException e) {
-									throw new MarketPlaceException(
-											"No valid foundation member flag");
-								}
-							}
-							if (Constants.URL_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setUrl(firstChild);
-							}
-							if (Constants.IMAGE_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setImage(firstChild);
-							}
-							if (Constants.VERSION_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setVersion(firstChild);
-							}
-							if (Constants.LICENSE_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setLicense(firstChild);
-							}
-							if (Constants.COMPANYNAME_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setCompany(firstChild);
-							}
-							if (Constants.STATUS_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setStatus(firstChild);
-							}
-							if (Constants.ECLIPSEVERSION_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setEclipseversion(firstChild);
-							}
-							if (Constants.SUPPORTURL_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setSupportUrl(firstChild);
-							}
-							if (Constants.UPDATEURL_NODE.equals(marketNode.getNodeName())) {
-								returnValue.setUpdateUrl(firstChild);
 							}
 						}
 					}

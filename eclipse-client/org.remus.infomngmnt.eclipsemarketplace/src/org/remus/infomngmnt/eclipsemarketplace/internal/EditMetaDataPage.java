@@ -18,7 +18,7 @@ import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -41,7 +41,7 @@ public class MarketPlaceTest extends TestCase {
 
 	public void testGetCategoryEntry() throws Exception, IOException {
 		MarketPlace marketPlace = new MarketPlace();
-		CategoryEntry[] entriesForCategory = marketPlace.getEntriesForCategory(363463);
+		CategoryEntry[] entriesForCategory = marketPlace.getEntriesForCategory(153);
 		for (CategoryEntry categoryEntry : entriesForCategory) {
 			System.out.println(categoryEntry);
 		}

@@ -5,7 +5,6 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/plugin.gif"
             name="Marketplace Entry"
             presentation="org.remus.infomngmnt.eclipsemarketplace.internal.MarketPlaceInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
@@ -13,7 +12,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.eclipsemarketplace.internal.EditMetaDataPage"
             icon="icons/edit_metadata.png"
@@ -23,10 +22,9 @@
       </editPage>
    </extension>
    <extension
-         point="org.remus.infomngmnt.core.remoteRepository">
+         point="org.remus.infomngmnt.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.eclipsemarketplace.connector.MarketplaceConnector"
-            icon="icons/eclipse.gif"
             id="org.remus.infomngmnt.eclipsemarketplace.repository"
             name="Eclipse Marketplace">
          <changeDefinition
@@ -87,12 +85,38 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.repositoryUI">
+         point="org.remus.infomngmnt.ui.remote.repositoryUi">
       <respository
+            icon="icons/eclipse.gif"
             id="org.remus.infomngmnt.eclipsemarketplace.respository"
             newWizard="org.remus.infomngmnt.eclipsemarketplace.ui.NewEclipseMarketPlaceWizard"
             repository-id="org.remus.infomngmnt.eclipsemarketplace.repository">
       </respository>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="owner"
+            typeId="MARKETPLACE">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="company"
+            typeId="MARKETPLACE">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="description"
+            typeId="MARKETPLACE">
+      </index>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/plugin.gif"
+            infotype="MARKETPLACE">
+      </image>
    </extension>
 
 </plugin>

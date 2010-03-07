@@ -32,8 +32,9 @@ import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.sync.ChangeSetExecutor;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.model.remote.IChangeHandler;
 import org.remus.infomngmnt.util.CategoryUtil;
 
@@ -45,6 +46,7 @@ public class PerformUpdateJob extends Job {
 	private final IChangeHandler changeSetManager;
 	private final ChangeSet changeSet;
 	private final Notification notification;
+	private final IInformationTypeHandler informationTypeHandler;
 
 	public PerformUpdateJob(final IChangeHandler manager, final ChangeSet changeSet) {
 		super(NLS.bind("Performing update on element \'\'{0}\'\'", changeSet.getTargetCategory()
@@ -52,6 +54,8 @@ public class PerformUpdateJob extends Job {
 		this.changeSetManager = manager;
 		this.changeSet = changeSet;
 		this.notification = InfomngmntFactory.eINSTANCE.createNotification();
+		this.informationTypeHandler = RemoteActivator.getDefault().getServiceTracker().getService(
+				IInformationTypeHandler.class);
 		setRule(CategoryUtil.getProjectByCategory(changeSet.getTargetCategory()));
 	}
 
@@ -78,8 +82,8 @@ public class PerformUpdateJob extends Job {
 				for (SynchronizableObject synchronizableObject : keySet) {
 					Notification notification = InfomngmntFactory.eINSTANCE.createNotification();
 					InformationUnitListItem item = (InformationUnitListItem) synchronizableObject;
-					IInfoType infoType = InformationExtensionManager.getInstance()
-							.getInfoTypeByType(item.getType());
+					IInfoType infoType = this.informationTypeHandler.getInfoTypeByType(item
+							.getType());
 					if (infoType != null) {
 						// FIXME
 						// notification.setImage(infoType.getImage());

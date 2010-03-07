@@ -30,28 +30,25 @@ import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
- * Generic HTML generation implementation for all bibliographic information items
+ * Generic HTML generation implementation for all bibliographic information
+ * items
  * 
  * @author Andreas Deinlein <dev@deasw.com>
- *
+ * 
  */
 public class BibliographicRepresentation extends AbstractInformationRepresentation {
 
 	final private String transformationFile = "template/bibliographicUnit.flt";
-	
-	@Override
-	public String getBodyForIndexing(IProgressMonitor monitor) throws CoreException {
-		return null;
-	}
 
 	@Override
-	public InputStream handleHtmlGeneration(IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		InformationStructureRead read = InformationStructureRead.newSession(getValue());
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		try {
 			templateIs = FileLocator.openStream(Platform
-					.getBundle(BibliographicActivator.PLUGIN_ID), new Path(transformationFile), false);
+					.getBundle(BibliographicActivator.PLUGIN_ID),
+					new Path(this.transformationFile), false);
 			FreemarkerRenderer.getInstance().process(BibliographicActivator.PLUGIN_ID, templateIs,
 					returnValue, null, read.getContentsAsStrucuturedMap(),
 					read.getDynamicContentAsStructuredMap());

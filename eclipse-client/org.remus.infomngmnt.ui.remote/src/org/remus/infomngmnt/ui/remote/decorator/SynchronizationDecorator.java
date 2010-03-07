@@ -22,6 +22,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.ImageData;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.RemoteRepository;
@@ -31,6 +32,9 @@ import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.remote.services.IRepositoryService;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
+import org.remus.infomngmnt.ui.remote.service.IRepositoryExtensionService;
+import org.remus.infomngmnt.ui.remote.service.IRepositoryUI;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -38,9 +42,12 @@ import org.remus.infomngmnt.ui.UIPlugin;
 public class SynchronizationDecorator extends LabelProvider implements ILightweightLabelDecorator {
 
 	private final Map<String, ImageDescriptor> scaledImageMap;
+	private final IRepositoryExtensionService service;
 
 	public SynchronizationDecorator() {
 		this.scaledImageMap = new HashMap<String, ImageDescriptor>();
+		this.service = RemoteUiActivator.getDefault().getServiceTracker().getService(
+				IRepositoryExtensionService.class);
 	}
 
 	public void decorate(final Object element, final IDecoration decoration) {
@@ -98,22 +105,25 @@ public class SynchronizationDecorator extends LabelProvider implements ILightwei
 	}
 
 	private ImageDescriptor getScaledImage(final String repositoryId) {
-		// if (this.scaledImageMap.get(repositoryId) == null) {
-		// ImageDescriptor itemById = UIPlugin.getDefault().getService(
-		// IRepositoryExtensionService.class).getImageByRepositoryId(repositoryId);
-		// if (itemById != null) {
-		// ImageData image = itemById.getImageData();
-		// ImageData scaledTo = image.scaledTo(9, 9);
-		// this.scaledImageMap
-		// .put(repositoryId, ImageDescriptor.createFromImageData(scaledTo));
-		// ;
-		// } else {
-		// return null;
-		// }
-		// }
-		// return this.scaledImageMap.get(repositoryId);
+		if (this.scaledImageMap.get(repositoryId) == null) {
+			IRepositoryUI itemByRepositoryId = this.service.getItemByRepositoryId(repositoryId);
+			if (itemByRepositoryId != null) {
+				ImageDescriptor itemById = itemByRepositoryId.getImageDescriptor();
+				if (itemById != null) {
+					ImageData image = itemById.getImageData();
+					ImageData scaledTo = image.scaledTo(9, 9);
+					this.scaledImageMap.put(repositoryId, ImageDescriptor
+							.createFromImageData(scaledTo));
+					;
+				} else {
+					return null;
+				}
+
+			}
+		}
+		return this.scaledImageMap.get(repositoryId);
 		// FIXME
-		return null;
+		// return null;
 	}
 
 }

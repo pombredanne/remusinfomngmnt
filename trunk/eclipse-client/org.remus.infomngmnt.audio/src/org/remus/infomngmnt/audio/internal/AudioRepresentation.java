@@ -56,18 +56,6 @@ public class AudioRepresentation extends AbstractInformationRepresentation {
 	 * 
 	 * @see
 	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		return "";
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override

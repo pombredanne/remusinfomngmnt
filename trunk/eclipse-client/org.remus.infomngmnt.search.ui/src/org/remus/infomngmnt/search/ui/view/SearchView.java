@@ -90,6 +90,7 @@ import org.remus.infomngmnt.search.ui.editor.SearchResultEditor;
 import org.remus.infomngmnt.search.ui.preferences.SearchPreferenceInitializer;
 import org.remus.infomngmnt.ui.databinding.List2SetConverter;
 import org.remus.infomngmnt.ui.databinding.RadioButtonGroupEnumBinding;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.ui.widgets.DateCombo;
 import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
 import org.remus.infomngmnt.ui.widgets.databinding.DatePickerBindingWidget;
@@ -129,6 +130,7 @@ public class SearchView extends AbstractScrolledTitledView {
 	private ISearchService searchService;
 	private IApplicationModel applicationModel;
 	private IInformationTypeHandler infoTypeHandler;
+	private IInformationTypeImage infoTypeImageHandler;
 
 	/**
 	 * Create contents of the view part
@@ -144,6 +146,8 @@ public class SearchView extends AbstractScrolledTitledView {
 				IApplicationModel.class);
 		this.infoTypeHandler = SearchUIActivator.getDefault().getServiceTracker().getService(
 				IInformationTypeHandler.class);
+		this.infoTypeImageHandler = SearchUIActivator.getDefault().getServiceTracker().getService(
+				IInformationTypeImage.class);
 
 		this.toolkit.createLabel(parent, "Search string", SWT.NONE);
 
@@ -216,9 +220,8 @@ public class SearchView extends AbstractScrolledTitledView {
 
 			@Override
 			public Image getImage(final Object element) {
-				// FIXME
-				return null;
-				// return ((IInfoType) element).getImage();
+				return SearchView.this.infoTypeImageHandler
+						.getImageByInfoType(((IInfoType) element).getType());
 			}
 		});
 

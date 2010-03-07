@@ -96,45 +96,8 @@ public abstract class AbstractInformationRepresentation {
 	 */
 	public abstract InputStream handleHtmlGeneration(IProgressMonitor monitor) throws CoreException;
 
-	/**
-	 * Returns the string that is used for as title in the search-result. Mostly
-	 * it is the same the {@link InformationUnit#getLabel()} would return. It is
-	 * the highest ranked field in the search.
-	 * 
-	 * @param monitor
-	 *            the progressmonitor.
-	 * @return the String which is inexed
-	 * @throws CoreException
-	 *             if an exception occurs.
-	 */
-	public String getTitleForIndexing(final IProgressMonitor monitor) throws CoreException {
-		return getValue().getLabel();
-	}
-
 	public CalendarEntry[] getCalendarContributions() {
 		return new CalendarEntry[0];
-	}
-
-	/**
-	 * Returns an "indexable representation" of the information object.
-	 * 
-	 * @param monitor
-	 *            the progressmonitor
-	 * @return the String which is indexed.
-	 * @throws CoreException
-	 *             if an exception occurs.
-	 */
-	public abstract String getBodyForIndexing(IProgressMonitor monitor) throws CoreException;
-
-	/**
-	 * Returns an additional String for indexing. Useful for instance if you
-	 * 
-	 * @param monitor
-	 * @return
-	 * @throws CoreException
-	 */
-	public String getAdditionalsForIndexing(final IProgressMonitor monitor) throws CoreException {
-		return "";
 	}
 
 	public InformationUnit getValue() {

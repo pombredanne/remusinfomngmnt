@@ -134,7 +134,9 @@ public class IndexExtensionService extends PluginRegistryDynamic implements IInd
 		Map<String, List<ISecondaryAnalyzer>> map = this.secondaryIndexer.get(typeId);
 		if (map != null) {
 			List<ISecondaryAnalyzer> string = map.get(nodeId);
-			return string.toArray(new ISecondaryAnalyzer[string.size()]);
+			if (string != null) {
+				return string.toArray(new ISecondaryAnalyzer[string.size()]);
+			}
 		}
 		return new ISecondaryAnalyzer[0];
 	}

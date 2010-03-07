@@ -18,6 +18,8 @@ package org.remus.infomngmnt.contact;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import org.remus.infomngmnt.services.RemusServiceTracker;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -56,6 +58,9 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_NAME_PN_OTHERS = "pnOthers"; //$NON-NLS-1$
 
 	// group address
+	public static final String NODE_NAME_ADRESSES = "adresses"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS = "adress"; //$NON-NLS-1$
+
 	public static final String NODE_NAME_WORK_ADRESS = "workAdress"; //$NON-NLS-1$
 	public static final String NODE_NAME_HOME_ADRESS = "homeAdress"; //$NON-NLS-1$
 	public static final String NODE_NAME_INTERNAT_ADRESS = "internatAdress"; //$NON-NLS-1$
@@ -63,6 +68,7 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_NAME_PARCEL_ADRESS = "parcelAdress"; //$NON-NLS-1$
 	public static final String NODE_NAME_DOMESTIC_ADRESS = "domesticAdress"; //$NON-NLS-1$
 	public static final String NODE_NAME_OTHER_ADRESS = "otherAdress"; //$NON-NLS-1$
+	public static final String NODE_NAME_ADRESS_TYPE = "otherAdress"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_ADRESS_STREET = "street"; //$NON-NLS-1$
 	public static final String NODE_NAME_ADRESS_POST_OFFICE_BOX = "postofficebox"; //$NON-NLS-1$
@@ -117,6 +123,8 @@ public class ContactActivator extends AbstractUIPlugin {
 	// The shared instance
 	private static ContactActivator plugin;
 
+	private RemusServiceTracker serviceTracker;
+
 	/**
 	 * The constructor
 	 */
@@ -133,7 +141,12 @@ public class ContactActivator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
+		this.serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
+	}
+
+	public RemusServiceTracker getServiceTracker() {
+		return this.serviceTracker;
 	}
 
 	/*

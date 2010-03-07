@@ -29,7 +29,6 @@ import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationImportance;
 import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.util.InformationUtil;
@@ -81,8 +80,8 @@ public class CheckBirthdayJob extends AbstractJob {
 							Notification createNotification = InfomngmntFactory.eINSTANCE
 									.createNotification();
 							createNotification.setImportance(NotificationImportance.MEDIUM);
-							createNotification.setImage(InformationExtensionManager.getInstance()
-									.getInfoTypeByType(ContactActivator.TYPE_ID).getImage());
+							// createNotification.setImage(InformationExtensionManager.getInstance()
+							// .getInfoTypeByType(ContactActivator.TYPE_ID).getImage());
 							createNotification.setSeverity(Severity.INFO);
 							createNotification.setMessage(NLS.bind(
 									"Contact \"{0}\" needs your attention", adapter.getLabel()));

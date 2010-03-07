@@ -47,7 +47,7 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditContactEmailDialog extends StatusDialog {
@@ -61,6 +61,7 @@ public class EditContactEmailDialog extends StatusDialog {
 	private Button bt_Delete;
 	private Button bt_SetStandard;
 	private InformationUnit selectedEmail;
+	private final IEditingHandler service;
 
 	public EditContactEmailDialog(final Shell parentShell, final InformationUnit informationUnit,
 			final EditingDomain editingDomain) {
@@ -68,6 +69,8 @@ public class EditContactEmailDialog extends StatusDialog {
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 		this.informationUnit = informationUnit;
 		this.editingDomain = editingDomain;
+		this.service = ContactActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 	}
 
 	@Override
@@ -91,8 +94,8 @@ public class EditContactEmailDialog extends StatusDialog {
 				return ((InformationUnit) element).getStringValue();
 			}
 		});
-		this.tv_Email.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
-				.getInstance().getAdapterFactory()));
+		this.tv_Email.setContentProvider(new AdapterFactoryContentProvider(this.service
+				.getAdapterFactory()));
 		this.bt_AddNew = new Button(this.area, SWT.PUSH);
 		this.bt_AddNew.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		this.bt_AddNew.setText("Add New E-Mail");
@@ -204,6 +207,12 @@ public class EditContactEmailDialog extends StatusDialog {
 			this.bt_Delete.setEnabled(true);
 		}
 
+	}
+
+	@Override
+	public boolean close() {
+		ContactActivator.getDefault().getServiceTracker().ungetService(this.service);
+		return super.close();
 	}
 
 	@Override

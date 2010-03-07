@@ -24,6 +24,7 @@ import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -61,14 +62,15 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.util.KeyValueObject;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactUtil;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
 import org.remus.infomngmnt.contact.ui.ComboAndTextFieldComposite;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditGeneralPage extends AbstractInformationFormPage {
@@ -324,8 +326,19 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 			removeAdressListeners();
 		}
 		if (firstElement != null) {
-			this.currentSelectedAdress = InformationUtil.getChildByType(getModelObject(),
-					firstElement.getId());
+			InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
+			EList<InformationUnit> dynamicList = read
+					.getDynamicList(ContactActivator.NODE_NAME_ADRESSES);
+			for (InformationUnit informationUnit : dynamicList) {
+				InformationStructureRead adressTypeRead = InformationStructureRead.newSession(
+						informationUnit, ContactActivator.TYPE_ID);
+				Object valueByNodeId = adressTypeRead
+						.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS);
+				if (valueByNodeId != null && valueByNodeId.equals(firstElement.getId())) {
+					this.currentSelectedAdress = informationUnit;
+					break;
+				}
+			}
 		} else {
 			this.currentSelectedAdress = null;
 		}

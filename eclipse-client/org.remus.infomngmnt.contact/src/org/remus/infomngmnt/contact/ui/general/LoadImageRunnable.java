@@ -28,8 +28,8 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.streams.FileUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -47,12 +47,14 @@ public class LoadImageRunnable extends CancelableRunnable {
 	protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 		monitor.beginTask("Checking filename...", IProgressMonitor.UNKNOWN);
 		this.file = new File(this.imagePath);
+		IEditingHandler service = ContactActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 		if (this.file.exists() && this.file.isFile()) {
 			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file
 					.length());
 			try {
 				if (this.domain == null) {
-					this.domain = EditingUtil.getInstance().createNewEditingDomain();
+					this.domain = service.createNewEditingDomain();
 				}
 
 				final CompoundCommand cc = new CompoundCommand();
@@ -107,6 +109,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 				return StatusCreator.newStatus("File not exisits or is not accessible");
 			}
 		}
+		ContactActivator.getDefault().getServiceTracker().ungetService(service);
 		return StatusCreator.newStatus("File not exisits or is not accessible");
 	}
 

@@ -24,6 +24,10 @@
             class="org.remus.infomngmnt.search.internal.analyzer.SimpleAnalyzer"
             id="org.remus.infomngmnt.search.SimpleAnalyzer">
       </analyzer>
+      <analyzer
+            class="org.remus.infomngmnt.search.internal.analyzer.HtmlAnalyzer"
+            id="org.remus.infomngmnt.search.HtmlAnalyzer">
+      </analyzer>
    </extension>
    
 

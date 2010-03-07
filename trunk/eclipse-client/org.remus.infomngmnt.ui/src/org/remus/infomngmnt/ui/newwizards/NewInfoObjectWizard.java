@@ -147,7 +147,9 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 		return true;
 	}
 
-	protected abstract void performActionAfterCreation();
+	protected void performActionAfterCreation() {
+		// does nothing by default;
+	}
 
 	@Override
 	public IWizardPage getStartingPage() {

@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.common.flags.Activator;
 import org.remus.infomngmnt.common.flags.FlagUtil;
 import org.remus.infomngmnt.ui.internal.widgets.databinding.ResourceManager;
 import org.remus.infomngmnt.ui.widgets.CountryCombo;
@@ -119,8 +120,8 @@ public class CountryComboObservable extends AbstractObservableValue {
 
 	public void setImage(final String iso) {
 		if (iso != null) {
-			Image pluginImage = ResourceManager.getPluginImage(Platform
-					.getBundle(ResourceManager.PLUGIN_ID), FlagUtil.getPathByIsoCode(iso));
+			Image pluginImage = ResourceManager.getPluginImage(Platform.getBundle(
+					Activator.PLUGIN_ID).getBundleContext(), FlagUtil.getPathByIsoCode(iso));
 			this.combo.updateImage(pluginImage);
 		}
 	}

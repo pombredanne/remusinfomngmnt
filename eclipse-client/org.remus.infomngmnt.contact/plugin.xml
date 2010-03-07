@@ -93,6 +93,10 @@
             transferId="org.remus.infomngmnt.core.urlTransfer"
             typeId="CONTACT">
       </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.contact.wizard.NewContactCreationTrigger"
+            typeId="CONTACT">
+      </creationtrigger>
    </extension>
    <extension
          point="org.remus.infomngmnt.search.indexer">

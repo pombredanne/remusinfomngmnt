@@ -12,6 +12,9 @@
 
 package org.remus.infomngmnt.ui.remote.service;
 
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
+
 import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 
@@ -19,13 +22,17 @@ import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public interface IRepositoryUI {
-	
+
 	String getId();
-	
+
 	String getRepositoryId();
-	
+
 	NewRepositoryWizard getWizardClass();
-	
+
 	IRepositoryActionContributor getActionContributor();
+
+	Image getImage();
+
+	ImageDescriptor getImageDescriptor();
 
 }

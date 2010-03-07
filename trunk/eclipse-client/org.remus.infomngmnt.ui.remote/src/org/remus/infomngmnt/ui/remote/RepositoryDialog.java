@@ -67,19 +67,12 @@ public class RepositoryDialog extends TitleAreaDialog {
 						.getServiceTracker()
 						.getService(
 								org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService.class);
-				return service
-						.getNameByRepositoryId(((IRepositoryUI) element).getRepositoryId());
+				return service.getNameByRepositoryId(((IRepositoryUI) element).getRepositoryId());
 			}
 
 			@Override
 			public Image getImage(final Object element) {
-				// FIXME
-				// return UIPlugin.getDefault().getService(
-				// org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService.class)
-				// .getImageByRepositoryId(((IRepositoryUI)
-				// element).getRepositoryId())
-				// .createImage();
-				return null;
+				return ((IRepositoryUI) element).getImage();
 
 			}
 		});

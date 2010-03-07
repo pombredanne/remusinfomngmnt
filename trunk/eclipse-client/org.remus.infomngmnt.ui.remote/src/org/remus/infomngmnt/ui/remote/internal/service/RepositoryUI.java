@@ -14,7 +14,11 @@ package org.remus.infomngmnt.ui.remote.internal.service;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.model.remote.IRepository;
 import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
@@ -49,6 +53,10 @@ public class RepositoryUI implements IRepositoryUI {
 
 	private IRepositoryActionContributor actionContributor;
 
+	private Image image;
+
+	private ImageDescriptor imageDescriptor;
+
 	public String getId() {
 		return this.id;
 	}
@@ -81,6 +89,27 @@ public class RepositoryUI implements IRepositoryUI {
 		}
 
 		return this.actionContributor;
+	}
+
+	@Override
+	public Image getImage() {
+		if (this.image == null) {
+			this.image = ResourceManager.getPluginImage(Platform.getBundle(
+					this.configurationElement.getContributor().getName()).getBundleContext(),
+					this.configurationElement.getAttribute("icon"));
+		}
+		return this.image;
+
+	}
+
+	@Override
+	public ImageDescriptor getImageDescriptor() {
+		if (this.imageDescriptor == null) {
+			this.imageDescriptor = ResourceManager.getPluginImageDescriptor(Platform.getBundle(
+					this.configurationElement.getContributor().getName()).getBundleContext(),
+					this.configurationElement.getAttribute("icon"));
+		}
+		return this.imageDescriptor;
 	}
 
 }

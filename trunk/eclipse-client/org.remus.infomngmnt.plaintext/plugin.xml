@@ -4,20 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            icon="icons/iconexperience/text.png"
             name="Unformatted Text"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="PLAINTEXT">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.urlTransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -30,24 +20,6 @@
             id="org.remus.infomngmnt.plaintext.wizard"
             name="Plain Text">
       </wizard>
-   </extension>
-   <extension
-         point="org.remus.infomngmnt.ui.informationUi">
-      <editPage
-            editpage="org.remus.infomngmnt.plaintext.ui.FormPage"
-            icon="icons/iconexperience/text_edit.png"
-            id="editPage1"
-            label="Edit"
-            type="PLAINTEXT">
-      </editPage>
-      <editorAction
-            commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
-            typeId="PLAINTEXT">
-      </editorAction>
-      <creationUiTrigger
-            class="org.remus.infomngmnt.plaintext.wizard.NewPlainTextWizard"
-            typeId="PLAINTEXT">
-      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -115,6 +87,50 @@
             commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
             icon="icons/iconexperience/paste.png">
       </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.editor.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.plaintext.ui.FormPage"
+            icon="icons/iconexperience/text_edit.png"
+            id="org.remus.infomngmnt.plaintext.editPage1"
+            label="Edit Text"
+            type="PLAINTEXT">
+      </editPage>
+      <editorAction
+            commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
+            typeId="PLAINTEXT">
+      </editorAction>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/text.png"
+            infotype="PLAINTEXT">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="PLAINTEXT">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="PLAINTEXT">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.plaintext.rules.PlainTextCreationTrigger"
+            typeId="PLAINTEXT">
+      </creationtrigger>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="contents"
+            typeId="PLAINTEXT">
+      </index>
    </extension>
 
 </plugin>

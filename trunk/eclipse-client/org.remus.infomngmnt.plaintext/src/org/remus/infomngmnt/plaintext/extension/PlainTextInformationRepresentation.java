@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
+import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.plaintext.Activator;
 import org.remus.infomngmnt.util.StatusCreator;
@@ -34,58 +34,33 @@ import org.remus.infomngmnt.util.StatusCreator;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class PlainTextInformationRepresentation extends
-AbstractInformationRepresentation {
-
-
+		org.remus.infomngmnt.core.extension.AbstractInformationRepresentation {
 
 	@Override
 	public void handlePostBuild(final IFile derivedFile, final IProgressMonitor monitor)
-	throws CoreException {
+			throws CoreException {
 		// do nothing
 
 	}
 
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
-	throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
+		InformationStructureRead read = InformationStructureRead.newSession(getValue());
 		try {
-			templateIs = FileLocator.openStream(
-					Platform.getBundle(Activator.PLUGIN_ID), 
-					new Path("template/htmlserialization.flt"), false);
-			FreemarkerRenderer.getInstance().process(
-					Activator.PLUGIN_ID,
-					templateIs,
-					contentsIs,
-					returnValue, null);
+			templateIs = FileLocator.openStream(Platform.getBundle(Activator.PLUGIN_ID), new Path(
+					"template/htmlserialization.flt"), false);
+			FreemarkerRenderer.getInstance().process(Activator.PLUGIN_ID, templateIs, returnValue,
+					null, read.getContentsAsStrucuturedMap(),
+					read.getDynamicContentAsStructuredMap());
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus(
-					"Error reading locations",e));
+			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}
 		return new ByteArrayInputStream(returnValue.toByteArray());
-	}
-
-	@Override
-	public String getAdditionalsForIndexing(final IProgressMonitor monitor)
-	throws CoreException {
-		return null;
-	}
-
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor)
-	throws CoreException {
-
-		return getValue().getStringValue();
-	}
-
-	@Override
-	public String getTitleForIndexing(final IProgressMonitor monitor)
-	throws CoreException {
-		return getValue().getLabel();
 	}
 
 }

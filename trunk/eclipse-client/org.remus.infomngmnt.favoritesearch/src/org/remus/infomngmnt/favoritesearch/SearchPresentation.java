@@ -24,25 +24,6 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
  */
 public class SearchPresentation extends AbstractInformationRepresentation {
 
-	/**
-	 * 
-	 */
-	public SearchPresentation() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		return null;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -5,6 +5,7 @@ import org.osgi.framework.BundleContext;
 
 import org.remus.infomngmnt.favoritesearch.service.FavSearchHandler;
 import org.remus.infomngmnt.search.service.IFavoriteSearchHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -25,6 +26,8 @@ public class FavoriteSearchActivator extends AbstractUIPlugin {
 
 	public static final String RESULT_NODE = "result";
 
+	private RemusServiceTracker serviceTracker;
+
 	/**
 	 * The constructor
 	 */
@@ -43,6 +46,7 @@ public class FavoriteSearchActivator extends AbstractUIPlugin {
 		super.start(context);
 		context.registerService(IFavoriteSearchHandler.class.getName(), new FavSearchHandler(),
 				null);
+		this.serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
 	}
 
@@ -57,6 +61,10 @@ public class FavoriteSearchActivator extends AbstractUIPlugin {
 	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+	}
+
+	public RemusServiceTracker getServiceTracker() {
+		return this.serviceTracker;
 	}
 
 	/**

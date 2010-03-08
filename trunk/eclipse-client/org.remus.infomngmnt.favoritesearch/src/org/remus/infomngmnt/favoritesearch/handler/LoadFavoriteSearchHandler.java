@@ -18,7 +18,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
@@ -29,12 +28,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.ui.view.SearchView;
-import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
+import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -50,19 +50,22 @@ public class LoadFavoriteSearchHandler extends AbstractHandler {
 	 * ExecutionEvent)
 	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
+		IEditingHandler service = FavoriteSearchActivator.getDefault().getServiceTracker()
+				.getService(IEditingHandler.class);
 		Shell activeShell = HandlerUtil.getActiveShell(event);
 		Set<? extends EObject> allItemsByType = InformationUtil
 				.getAllItemsByType(FavoriteSearchActivator.TYPE_ID);
 		NavigatorDecoratingLabelProvider labelProvider = new NavigatorDecoratingLabelProvider(
-				new AdapterFactoryLabelProvider(EditingUtil.getInstance().getAdapterFactory())) {
-			@Override
-			public String getText(final Object element) {
-				if (element instanceof InformationUnitListItem) {
-					return InformationUtil.getFullReadablePath((InformationUnitListItem) element);
-				}
-				return super.getText(element);
-			}
-		};
+				new InformationUnitLabelProvider(service.getAdapterFactory()) {
+					@Override
+					public String getText(final Object element) {
+						if (element instanceof InformationUnitListItem) {
+							return InformationUtil
+									.getFullReadablePath((InformationUnitListItem) element);
+						}
+						return super.getText(element);
+					}
+				});
 		ElementListSelectionDialog dialog = new ElementListSelectionDialog(activeShell,
 				labelProvider);
 		dialog.setAllowDuplicates(false);
@@ -89,6 +92,7 @@ public class LoadFavoriteSearchHandler extends AbstractHandler {
 			}
 
 		}
+		FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
 		return null;
 	}
 }

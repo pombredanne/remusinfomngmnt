@@ -27,7 +27,7 @@ import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchResult;
 import org.remus.infomngmnt.search.service.ISearchCallBack;
-import org.remus.infomngmnt.search.service.LuceneSearchService;
+import org.remus.infomngmnt.search.service.ISearchService;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -64,36 +64,38 @@ public class SearchDiff {
 	public static void applyDiffToFavorite(final InformationUnit unit, final EditorPart formEditor) {
 		final Search deserialize = SearchSerializer.deserialize(InformationUtil.getChildByType(
 				unit, FavoriteSearchActivator.RESULT_NODE).getBinaryValue());
-		LuceneSearchService.getInstance().search((Search) EcoreUtil.copy(deserialize), false,
-				false, new ISearchCallBack() {
-					public void afterSearch(final IProgressMonitor monitor, final Search search) {
-						SearchDiff diff = SearchDiff.computeDiff(deserialize.getResult(), search
-								.getResult());
-						InformationUnit childByType = InformationUtil.getChildByType(unit,
-								FavoriteSearchActivator.NEW_ELEMENTS_TYPE);
-						InformationUnit currentResults = InformationUtil.getChildByType(unit,
-								FavoriteSearchActivator.RESULT_NODE);
-						Search createSearch = SearchFactory.eINSTANCE.createSearch();
-						SearchResult[] newEntries2 = diff.getNewEntries();
-						for (SearchResult searchResult : newEntries2) {
-							createSearch.getResult().add(searchResult);
+		ISearchService service = FavoriteSearchActivator.getDefault().getServiceTracker()
+				.getService(ISearchService.class);
+		service.search((Search) EcoreUtil.copy(deserialize), false, new ISearchCallBack() {
+			public void afterSearch(final IProgressMonitor monitor, final Search search) {
+				SearchDiff diff = SearchDiff.computeDiff(deserialize.getResult(), search
+						.getResult());
+				InformationUnit childByType = InformationUtil.getChildByType(unit,
+						FavoriteSearchActivator.NEW_ELEMENTS_TYPE);
+				InformationUnit currentResults = InformationUtil.getChildByType(unit,
+						FavoriteSearchActivator.RESULT_NODE);
+				Search createSearch = SearchFactory.eINSTANCE.createSearch();
+				SearchResult[] newEntries2 = diff.getNewEntries();
+				for (SearchResult searchResult : newEntries2) {
+					createSearch.getResult().add(searchResult);
+				}
+				childByType.setBinaryValue(SearchSerializer.serialize(createSearch));
+				currentResults.setBinaryValue(SearchSerializer.serialize(search));
+				if (formEditor != null) {
+					UIUtil.getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+									.saveEditor(formEditor, false);
 						}
-						childByType.setBinaryValue(SearchSerializer.serialize(createSearch));
-						currentResults.setBinaryValue(SearchSerializer.serialize(search));
-						if (formEditor != null) {
-							UIUtil.getDisplay().asyncExec(new Runnable() {
-								public void run() {
-									PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-											.getActivePage().saveEditor(formEditor, false);
-								}
-							});
-						}
-					}
+					});
+				}
+			}
 
-					public void beforeSearch(final IProgressMonitor monitor, final Search search) {
-						// TODO Auto-generated method stub
-					}
-				});
+			public void beforeSearch(final IProgressMonitor monitor, final Search search) {
+				// TODO Auto-generated method stub
+			}
+		});
+		FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
 	}
 
 	private SearchDiff() {

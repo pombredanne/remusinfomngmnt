@@ -25,7 +25,7 @@ import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.service.ISearchCallBack;
-import org.remus.infomngmnt.search.service.LuceneSearchService;
+import org.remus.infomngmnt.search.service.ISearchService;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 import org.remus.infomngmnt.util.InformationUtil;
 
@@ -38,6 +38,7 @@ public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 
 	public NewFavoriteSearchWizard() {
 		setWindowTitle("Create new Favorite search");
+
 	}
 
 	@Override
@@ -46,8 +47,10 @@ public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 			getContainer().run(true, false, new IRunnableWithProgress() {
 				public void run(final IProgressMonitor monitor) throws InvocationTargetException,
 						InterruptedException {
-					LuceneSearchService.getInstance().search(NewFavoriteSearchWizard.this.search,
-							false, false, new ISearchCallBack() {
+					ISearchService service = FavoriteSearchActivator.getDefault()
+							.getServiceTracker().getService(ISearchService.class);
+					service.search(NewFavoriteSearchWizard.this.search, false,
+							new ISearchCallBack() {
 								public void afterSearch(final IProgressMonitor monitor,
 										final Search search) {
 									InformationUnit childByType = InformationUtil.getChildByType(
@@ -66,6 +69,7 @@ public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 									// do nothing.
 								}
 							});
+					FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
 				}
 			});
 		} catch (InvocationTargetException e) {

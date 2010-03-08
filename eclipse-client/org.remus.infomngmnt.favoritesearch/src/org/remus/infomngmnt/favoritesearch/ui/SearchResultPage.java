@@ -39,14 +39,14 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.common.ui.editor.EditorUtil;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 import org.remus.infomngmnt.favoritesearch.util.SearchDiff;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchResult;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.EditorUtil;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -103,7 +103,7 @@ public class SearchResultPage extends AbstractInformationFormPage {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				String[] split = ((String) e.getHref()).split("\\|"); //$NON-NLS-1$
-				EditorUtil.openEditor(new Path(split[1]));
+				EditorUtil.openInfoUnit(new Path(split[1]).removeFileExtension().lastSegment());
 			}
 		};
 
@@ -170,6 +170,8 @@ public class SearchResultPage extends AbstractInformationFormPage {
 	}
 
 	private void setList(final String node, final FormText text) {
+		IInformationTypeImage service = FavoriteSearchActivator.getDefault().getServiceTracker()
+				.getService(IInformationTypeImage.class);
 		Search deserialize = SearchSerializer.deserialize(InformationUtil.getChildByType(
 				getModelObject(), node).getBinaryValue());
 		EList<SearchResult> result2 = deserialize.getResult();
@@ -180,13 +182,14 @@ public class SearchResultPage extends AbstractInformationFormPage {
 		} else {
 			for (int i = 0, n = result2.size(); i < n; i++) {
 				sb.append(buildSearchResultSting(result2.get(i), i, n));
-				text.setImage(result2.get(i).getInfoType(), InformationExtensionManager
-						.getInstance().getInfoTypeByType(result2.get(i).getInfoType()).getImage());
+				text.setImage(result2.get(i).getInfoType(), service.getImageByInfoType(result2.get(
+						i).getInfoType()));
 			}
 		}
 		sb.append("</form>");
 		text.setText(sb.toString(), true, false);
 		this.form.reflow(true);
+		FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
 
 	}
 

@@ -6,7 +6,6 @@
       <information
             buildHtml="false"
             excludeFromIndex="true"
-            icon="icons/iconexperience/fav_search.png"
             name="Favorite Search"
             presentation="org.remus.infomngmnt.favoritesearch.SearchPresentation"
             structuredefinition="structuredefinition.xmi"
@@ -14,7 +13,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.favoritesearch.ui.SearchResultPage"
             icon="icons/iconexperience/text_find.png"
@@ -41,6 +40,13 @@
             id="org.remus.infomngmnt.favoritesearch.loadFavSearch"
             name="Load Favorite Search">
       </command>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/fav_search.png"
+            infotype="FAVSEARCH">
+      </image>
    </extension>
 
 </plugin>

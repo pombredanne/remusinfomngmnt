@@ -22,11 +22,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
+import org.remus.infomngmnt.model.service.ResourceConstants;
 import org.remus.infomngmnt.search.Search;
 import org.remus.infomngmnt.search.SearchFactory;
 import org.remus.infomngmnt.search.SearchPackage;
 import org.remus.infomngmnt.search.SearchResult;
-import org.remus.infomngmnt.util.EditingUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -34,13 +36,17 @@ import org.remus.infomngmnt.util.EditingUtil;
 public class SearchSerializer {
 
 	public static byte[] serialize(final Search search) {
+		IEditingHandler service = FavoriteSearchActivator.getDefault().getServiceTracker()
+				.getService(IEditingHandler.class);
 		EList<SearchResult> result = search.getResult();
 		for (SearchResult searchResult : result) {
 			searchResult.eUnset(SearchPackage.Literals.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES);
 			searchResult.eUnset(SearchPackage.Literals.SEARCH_RESULT__KEYWORDS);
 			searchResult.eUnset(SearchPackage.Literals.SEARCH_RESULT__TEXT);
 		}
-		return EditingUtil.getInstance().saveObjectToByte(search);
+		byte[] saveObjectToByte = service.saveObjectToByte(search);
+		FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
+		return saveObjectToByte;
 	}
 
 	public static Search deserialize(final byte[] bytes) {
@@ -53,7 +59,7 @@ public class SearchSerializer {
 		Resource createResource = resourceSet.createResource(URI.createURI("deserialized"));
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
 		try {
-			createResource.load(inputStream, EditingUtil.SAVE_OPTIONS);
+			createResource.load(inputStream, ResourceConstants.SAVE_OPTIONS);
 			return (Search) createResource.getContents().get(0);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

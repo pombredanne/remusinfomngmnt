@@ -5,15 +5,11 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/brain.png"
             name="MindMap"
             postCreationHandler="org.remus.infomngmnt.mindmap.extension.MindmapPostCreationHandler"
             presentation="org.remus.infomngmnt.mindmap.extension.MindMapInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="MINDMAP">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -28,7 +24,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.mindmap.ui.MindMapEditPage"
             icon="icons/iconexperience/mindmap_edit.png"
@@ -112,6 +108,27 @@
             class="org.remus.infomngmnt.mindmap.handler.OpenMindMapEditorHandler"
             commandId="org.remus.infomngmnt.mindmap.openMindMapEditor">
       </handler>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.analyzer">
+      <analyzer
+            class="org.remus.infomngmnt.mindmap.search.WorkbookAnalyzer"
+            id="org.remus.infomngmnt.mindmap.analyzer">
+      </analyzer>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="MINDMAP">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.mindmap.ui.MindmapCreationTrigger"
+            typeId="MINDMAP">
+      </creationtrigger>
    </extension>
 
 </plugin>

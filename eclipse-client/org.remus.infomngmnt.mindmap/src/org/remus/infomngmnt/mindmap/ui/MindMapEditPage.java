@@ -20,17 +20,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mindmap.handler.OpenMindMapEditorHandler;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -79,11 +77,11 @@ public class MindMapEditPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(composite);
 		generalSection.setClient(composite);
 
-		Hyperlink createHyperlink = toolkit.createHyperlink(composite, "Open Mindmap Editor",
-				SWT.NONE);
+		org.eclipse.ui.forms.widgets.Hyperlink createHyperlink = toolkit.createHyperlink(composite,
+				"Open Mindmap Editor", SWT.NONE);
 		createHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
-			public void linkActivated(final HyperlinkEvent e) {
+			public void linkActivated(final org.eclipse.ui.forms.events.HyperlinkEvent e) {
 				InformationStructureRead read = InformationStructureRead
 						.newSession(getModelObject());
 				List<BinaryReference> binaryReferences = read.getBinaryReferences();

@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -32,8 +31,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Display;
-import org.xmind.core.ISheet;
-import org.xmind.core.ITopic;
 import org.xmind.core.IWorkbook;
 import org.xmind.core.io.IStorage;
 import org.xmind.ui.internal.editor.WorkbookRef;
@@ -97,66 +94,6 @@ public class MindMapInformationRepresentation extends AbstractInformationReprese
 	 */
 	public MindMapInformationRepresentation() {
 		// TODO Auto-generated constructor stub
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@SuppressWarnings("restriction")
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-
-		WorkbookRef localworkbookRef = null;
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		List<BinaryReference> binaryReferences = read.getBinaryReferences();
-		try {
-			if (binaryReferences.size() > 0) {
-				IFile binaryReferenceToFile = InformationUtil.binaryReferenceToFile(
-						binaryReferences.get(0), getValue());
-				WorkbookRefManager localmanager = WorkbookRefManager.getInstance();
-				localworkbookRef = localmanager.addReferrer(binaryReferenceToFile, null);
-				IStorage localstorage = localworkbookRef.createStorage();
-				localworkbookRef.loadWorkbook(localstorage, null, monitor);
-			}
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (org.xmind.core.CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		StringBuffer sb = new StringBuffer();
-		if (localworkbookRef != null) {
-			IWorkbook workbook = localworkbookRef.getWorkbook();
-			List<ISheet> sheets = workbook.getSheets();
-			for (ISheet iSheet : sheets) {
-				ITopic rootTopic = iSheet.getRootTopic();
-				sb.append(appendTopic(rootTopic));
-			}
-			localworkbookRef.dispose(true);
-		}
-		return sb.toString();
-	}
-
-	private StringBuffer appendTopic(final ITopic rootTopic) {
-		StringBuffer returnValue = new StringBuffer();
-		returnValue.append(rootTopic.getTitleText()).append(" ");
-		Set<String> labels = rootTopic.getLabels();
-		for (String string : labels) {
-			returnValue.append(string).append(" ");
-		}
-		List<ITopic> allChildren = rootTopic.getAllChildren();
-		for (ITopic iTopic : allChildren) {
-			returnValue.append(appendTopic(iTopic));
-		}
-		return returnValue;
 	}
 
 	/*

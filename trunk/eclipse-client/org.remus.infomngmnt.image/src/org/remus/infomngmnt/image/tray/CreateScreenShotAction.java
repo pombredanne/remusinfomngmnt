@@ -19,8 +19,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import org.remus.infomngmnt.common.ui.extension.IToolbarItemProvider;
 import org.remus.infomngmnt.image.screenshot.ScreenshotCreationWizard;
+import org.remus.infomngmnt.ui.desktop.extension.IToolbarItemProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

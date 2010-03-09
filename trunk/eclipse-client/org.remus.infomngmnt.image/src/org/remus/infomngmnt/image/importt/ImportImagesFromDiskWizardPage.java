@@ -30,11 +30,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.databinding.BeansBindingUtil;
 import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.ui.category.CategoryBrowser;
+import org.remus.infomngmnt.ui.databinding.BeansBindingUtil;
 
 public class ImportImagesFromDiskWizardPage extends WizardPage implements IValidatingWizard {
 

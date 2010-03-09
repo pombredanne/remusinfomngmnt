@@ -14,14 +14,12 @@ package org.remus.infomngmnt.image.screenshot;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.ImageData;
 
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.image.ui.NewImageWizard;
+import org.remus.infomngmnt.image.ui.ImageCreationTrigger;
+import org.remus.rules.RulesFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -38,14 +36,10 @@ public class ScreenshotCreationWizard extends Wizard {
 
 			public void run() {
 				try {
-					NewImageWizard newImageWizard = new NewImageWizard();
-					newImageWizard.init(UIUtil.getPrimaryWindow().getWorkbench(),
-							new StructuredSelection(new Object[0]));
-					newImageWizard.setDefaults(imageData, InfomngmntFactory.eINSTANCE
+					ImageCreationTrigger imageCreationTrigger = new ImageCreationTrigger();
+					imageCreationTrigger.setDefaults(imageData, RulesFactory.eINSTANCE
 							.createRuleValue(), null);
-					WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(),
-							newImageWizard);
-					wizard.open();
+					imageCreationTrigger.handleCreationRequest();
 				} catch (CoreException e) {
 					ErrorDialog.openError(UIUtil.getDisplay().getActiveShell(),
 							"Error creating new information unit",

@@ -23,9 +23,9 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.gef.ImageLinkEditPartFactory;
+import org.remus.infomngmnt.image.internal.ResourceManager;
 import org.remus.infomngmnt.util.InformationUtil;
 
 public class CommentImageDialog extends TitleAreaDialog {

@@ -54,12 +54,12 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.core.commands.ChangeBinaryReference;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.internal.ResourceManager;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**

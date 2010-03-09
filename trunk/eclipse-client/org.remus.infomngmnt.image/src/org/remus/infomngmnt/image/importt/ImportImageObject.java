@@ -14,6 +14,7 @@ package org.remus.infomngmnt.image.importt;
 
 import org.remus.infomngmnt.common.core.beans.PropertyChangeObject;
 
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */

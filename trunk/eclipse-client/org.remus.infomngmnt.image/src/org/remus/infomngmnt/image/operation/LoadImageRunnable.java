@@ -39,9 +39,9 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import com.drew.imaging.jpeg.JpegMetadataReader;
@@ -92,7 +92,10 @@ public class LoadImageRunnable extends CancelableRunnable {
 					.length());
 			try {
 				if (this.domain == null) {
-					this.domain = EditingUtil.getInstance().createNewEditingDomain();
+					IEditingHandler service = ImagePlugin.getDefault().getServiceTracker()
+							.getService(IEditingHandler.class);
+					this.domain = service.createNewEditingDomain();
+					ImagePlugin.getDefault().getServiceTracker().ungetService(service);
 				}
 
 				final CompoundCommand cc = new CompoundCommand();

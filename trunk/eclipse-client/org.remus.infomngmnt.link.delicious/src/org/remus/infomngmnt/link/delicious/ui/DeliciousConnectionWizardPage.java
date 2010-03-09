@@ -18,10 +18,14 @@ import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -38,9 +42,11 @@ import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.ValidateConnectionJob;
-import org.remus.infomngmnt.core.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.model.remote.IRepository;
+import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
 
 public class DeliciousConnectionWizardPage extends WizardPage {
 
@@ -64,13 +70,13 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 
 	/**
 	 * Create contents of the wizard
+	 * 
 	 * @param parent
 	 */
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
 		//
-
 
 		final Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -126,10 +132,20 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				try {
-					getContainer().run(
-							true, 
-							true, 
-							new ValidateConnectionJob(DeliciousConnectionWizardPage.this.repositoryDefinition));
+					getContainer().run(true, true, new IRunnableWithProgress() {
+
+						public void run(final IProgressMonitor monitor)
+								throws InvocationTargetException, InterruptedException {
+							IStatus runCancelableRunnable = new ValidateConnectionJob(
+									DeliciousConnectionWizardPage.this.repositoryDefinition)
+									.runCancelableRunnable(monitor);
+							if (!runCancelableRunnable.isOK()) {
+								throw new InvocationTargetException(null,
+										"Error validating repository");
+							}
+						}
+
+					});
 					setErrorMessage(null);
 				} catch (InvocationTargetException e) {
 					setErrorMessage("Error validating your settings");
@@ -139,18 +155,27 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 
 			}
 		});
-		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
+				false);
 		validateCredentialsButton.setLayoutData(gd_validateCredentialsButton);
 		validateCredentialsButton.setText("Validate credentials");
 		bindValuesToUi();
 		setControl(container);
-		
-		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition.getCredentialProvider().getUserName(), "delicious"));
+
+		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition
+				.getCredentialProvider().getUserName(), "delicious"));
 	}
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = repository.getRepositoryImplementation();
+		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		try {
+			this.repositoryDefinition = extensionService.getItemByRepository(repository);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void bindValuesToUi() {
@@ -158,24 +183,27 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 		DataBindingContext ctx = new DataBindingContext();
 		EMFDataBindingContext ectx = new EMFDataBindingContext();
 		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
-		IObservableValue beanUserName = BeansObservables.observeValue(this.repositoryDefinition.getCredentialProvider(), CredentialProvider.USER_NAME);
+		IObservableValue beanUserName = BeansObservables.observeValue(this.repositoryDefinition
+				.getCredentialProvider(), CredentialProvider.USER_NAME);
 		ISWTObservableValue swtUserName = SWTObservables.observeText(this.userNameText, SWT.Modify);
 		ctx.bindValue(swtUserName, beanUserName, null, null);
 		ISWTObservableValue swtPassword = SWTObservables.observeText(this.passwordText, SWT.Modify);
-		IObservableValue beanPassword = BeansObservables.observeValue(this.repositoryDefinition.getCredentialProvider(), CredentialProvider.PASSWORD);
+		IObservableValue beanPassword = BeansObservables.observeValue(this.repositoryDefinition
+				.getCredentialProvider(), CredentialProvider.PASSWORD);
 		ctx.bindValue(swtPassword, beanPassword, null, null);
 
-		
 		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
-		IObservableValue emfName = EMFObservables.observeValue(this.repository, InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
+		IObservableValue emfName = EMFObservables.observeValue(this.repository,
+				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
 		ectx.bindValue(swtName, emfName, null, null);
-		
+
 		swtUserName.addValueChangeListener(new IValueChangeListener() {
 			public void handleValueChange(final ValueChangeEvent event) {
 				if (!DeliciousConnectionWizardPage.this.manualName) {
 					String userName = (String) event.getObservableValue().getValue();
-					DeliciousConnectionWizardPage.this.nameText.setText(String.format("%s@%s", userName, "delicious"));
-				}	
+					DeliciousConnectionWizardPage.this.nameText.setText(String.format("%s@%s",
+							userName, "delicious"));
+				}
 			}
 		});
 	}

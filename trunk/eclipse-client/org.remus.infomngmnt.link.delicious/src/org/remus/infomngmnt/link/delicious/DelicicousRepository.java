@@ -33,13 +33,13 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationMetadata;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.commons.io.proxy.Proxy;
+import org.remus.infomngmnt.commons.io.proxy.ProxyUtil;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
 import org.remus.infomngmnt.link.LinkActivator;
-import org.remus.infomngmnt.util.Proxy;
-import org.remus.infomngmnt.util.ProxyUtil;
+import org.remus.infomngmnt.model.remote.ILoginCallBack;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import del.icio.us.Delicious;

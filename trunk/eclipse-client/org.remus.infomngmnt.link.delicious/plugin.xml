@@ -2,11 +2,10 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remoteRepository">
+         point="org.remus.infomngmnt.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.link.delicious.DelicicousRepository"
             credentialprovider="org.remus.infomngmnt.link.delicious.security.DeliciousCredentialProvider"
-            icon="icons/delicious.gif"
             id="org.remus.infomngmnt.link.delicious"
             name="Delicious">
          <changeDefinition
@@ -27,8 +26,9 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.repositoryUI">
+         point="org.remus.infomngmnt.ui.remote.repositoryUi">
       <respository
+            icon="icons/delicious.gif"
             id="org.remus.infomngmnt.link.delicious.ui"
             newWizard="org.remus.infomngmnt.link.delicious.ui.NewDeliciousRepositoryWizard"
             repository-id="org.remus.infomngmnt.link.delicious">

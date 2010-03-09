@@ -21,12 +21,6 @@ import org.remus.infomngmnt.util.StatusCreator;
 public class MeetingMinutesRepresentation extends AbstractInformationRepresentation {
 
 	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		InformationStructureRead read = InformationStructureRead.newSession(getValue());
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();

@@ -24,13 +24,13 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.RichTextBindingWidget;
-import org.remus.infomngmnt.common.ui.richtext.ActionConfiguration;
-import org.remus.infomngmnt.common.ui.richtext.RichTextWidget;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.remus.infomngmnt.ui.widgets.databinding.RichTextBindingWidget;
+import org.remus.infomngmnt.ui.widgets.databinding.RichTextWidget;
+import org.remus.infomngmnt.ui.widgets.richtext.ActionConfiguration;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -152,11 +152,11 @@ public class AdditionalLogsPage extends AbstractInformationFormPage {
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
-		this.createRichText2 = BindingWidgetFactory.createRichText(this.richtext, this);
+		this.createRichText2 = AdditionalBindingWidgetFactory.createRichText(this.richtext, this);
 		this.createRichText2.bindModel(read
 				.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_DECISIONS), read
 				.getFeatureByNodeId(MeetingMinutesActivator.NODE_NAME_DECISIONS));
-		this.createRichText = BindingWidgetFactory.createRichText(this.richtext, this);
+		this.createRichText = AdditionalBindingWidgetFactory.createRichText(this.richtext, this);
 		this.createRichText.bindModel(read
 				.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_TODOS), read
 				.getFeatureByNodeId(MeetingMinutesActivator.NODE_NAME_TODOS));

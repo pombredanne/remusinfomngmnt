@@ -24,7 +24,7 @@ import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mindmap.MindmapActivator;
-import org.remus.infomngmnt.ui.extension.AbstractDelegationEditorPart;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractDelegationEditorPart;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**

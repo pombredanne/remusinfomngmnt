@@ -28,17 +28,17 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.RichTextBindingWidget;
-import org.remus.infomngmnt.common.ui.richtext.ActionConfiguration;
-import org.remus.infomngmnt.common.ui.richtext.RichTextWidget;
-import org.remus.infomngmnt.common.ui.swt.TimeCombo;
 import org.remus.infomngmnt.contact.shared.ContactsWithEmailSmartField;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.databinding.BindingUtil;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.widgets.TimeCombo;
+import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.remus.infomngmnt.ui.widgets.databinding.CDateTimeBindingWidget;
+import org.remus.infomngmnt.ui.widgets.databinding.RichTextBindingWidget;
+import org.remus.infomngmnt.ui.widgets.databinding.RichTextWidget;
+import org.remus.infomngmnt.ui.widgets.richtext.ActionConfiguration;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -195,13 +195,13 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		BindingUtil.createTextAndBind(this.moderator, read
 				.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_MODERATOR), read
 				.getFeatureByNodeId(MeetingMinutesActivator.NODE_NAME_MODERATOR), this);
-		CDateTimeBindingWidget createCDateTime = BindingWidgetFactory.createCDateTime(this.date
-				.getDate(), getDatabindingContext(), getEditingDomain());
+		CDateTimeBindingWidget createCDateTime = AdditionalBindingWidgetFactory.createCDateTime(
+				this.date.getDate(), getDatabindingContext(), getEditingDomain());
 		createCDateTime.bindModel(
 				read.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_DATETIME), read
 						.getFeatureByNodeId(MeetingMinutesActivator.NODE_NAME_DATETIME));
 
-		this.createRichText = BindingWidgetFactory.createRichText(this.richtext, this);
+		this.createRichText = AdditionalBindingWidgetFactory.createRichText(this.richtext, this);
 		this.createRichText.bindModel(read.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_LOG),
 				read.getFeatureByNodeId(MeetingMinutesActivator.NODE_NAME_LOG));
 

@@ -5,20 +5,10 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/document_cup.png"
             name="Meeting Minutes"
             presentation="org.remus.infomngmnt.meetingminutes.extension.MeetingMinutesRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="MEETING">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -33,7 +23,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <creationUiTrigger
             class="org.remus.infomngmnt.meetingminutes.ui.NewMeetingWizard"
             typeId="MEETING">

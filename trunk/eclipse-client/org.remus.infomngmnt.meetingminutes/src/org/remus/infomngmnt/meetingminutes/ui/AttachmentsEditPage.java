@@ -62,11 +62,11 @@ import org.remus.infomngmnt.contact.shared.MailPersonDialog;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -109,6 +109,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 			return super.getImage(element);
 		}
 	};
+	private IEditingHandler editingHandler;
 
 	/**
 	 * 
@@ -131,7 +132,8 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
-
+		this.editingHandler = MeetingMinutesActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 		doCreateAttendeesSection(body, toolkit);
 		doCreateAttachementsSection(body, toolkit);
 
@@ -202,8 +204,8 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				deleteButton.setEnabled(!event.getSelection().isEmpty());
 			}
 		});
-		this.attendeesTableViewer.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
-				.getInstance().getAdapterFactory()));
+		this.attendeesTableViewer.setContentProvider(new AdapterFactoryContentProvider(
+				this.editingHandler.getAdapterFactory()));
 		this.attendeesTableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
@@ -334,7 +336,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 			}
 		});
 		this.attachmentsTableViewer.setContentProvider(new AdapterFactoryContentProvider(
-				EditingUtil.getInstance().getAdapterFactory()));
+				this.editingHandler.getAdapterFactory()));
 		this.attachmentsTableViewer.setLabelProvider(this.attachmentLabelProvider);
 		this.attachmentsTableViewer.setSelection(StructuredSelection.EMPTY);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).hint(80, SWT.DEFAULT).applyTo(
@@ -355,6 +357,12 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 		this.attachmentsTableViewer.setInput(attachments);
 
 		super.bindValuesToUi();
+	}
+
+	@Override
+	public void dispose() {
+		MeetingMinutesActivator.getDefault().getServiceTracker().ungetService(this.editingHandler);
+		super.dispose();
 	}
 
 }

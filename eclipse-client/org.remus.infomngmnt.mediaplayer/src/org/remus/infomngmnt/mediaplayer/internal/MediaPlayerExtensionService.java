@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.util.NLS;
 
-import org.remus.infomngmnt.core.extension.PluginRegistryDynamic;
+import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.mediaplayer.MediaPlayerActivator;
 import org.remus.infomngmnt.mediaplayer.extension.AbstractMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;

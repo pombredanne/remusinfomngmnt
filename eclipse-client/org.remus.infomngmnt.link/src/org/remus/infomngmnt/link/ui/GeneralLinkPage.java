@@ -37,8 +37,8 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.link.internal.ResourceManager;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
 

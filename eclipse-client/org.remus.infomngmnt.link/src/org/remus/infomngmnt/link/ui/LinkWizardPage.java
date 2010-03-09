@@ -14,8 +14,8 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.link.internal.ResourceManager;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 

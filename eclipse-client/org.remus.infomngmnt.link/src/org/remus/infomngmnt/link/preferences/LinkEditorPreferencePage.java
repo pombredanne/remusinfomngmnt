@@ -29,13 +29,13 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 
 public class LinkEditorPreferencePage extends FieldEditorPreferencePage implements
@@ -93,9 +93,9 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage implemen
 
 					@Override
 					protected IStatus run(final IProgressMonitor monitor) {
-
-						DisposableEditingDomain editingDomain = EditingUtil.getInstance()
-								.createNewEditingDomain();
+						IEditingHandler service = LinkActivator.getDefault().getServiceTracker()
+								.getService(IEditingHandler.class);
+						DisposableEditingDomain editingDomain = service.createNewEditingDomain();
 						Set<? extends EObject> allItemsByType = InformationUtil
 								.getAllItemsByType(LinkActivator.LINK_INFO_ID);
 						monitor.beginTask("Refreshing webshots", allItemsByType.size());
@@ -118,13 +118,14 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage implemen
 									cc.append(CommandFactory.addFileToInfoUnit(tmpFile, adapter,
 											editingDomain));
 									editingDomain.getCommandStack().execute(cc);
-									EditingUtil.getInstance().saveObjectToResource(adapter);
+									service.saveObjectToResource(adapter);
 								}
 								monitor.worked(1);
 							}
 						}
 						editingDomain.getCommandStack().flush();
 						editingDomain.dispose();
+						LinkActivator.getDefault().getServiceTracker().ungetService(service);
 						return Status.OK_STATUS;
 					}
 

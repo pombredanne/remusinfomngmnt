@@ -4,22 +4,15 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            icon="icons/iconexperience/link.png"
             name="Link"
             postCreationHandler="org.remus.infomngmnt.link.LinkCreationFactory"
             presentation="org.remus.infomngmnt.link.LinkRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="LINK">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.urlTransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.link.ui.EditLinkPage"
             icon="icons/iconexperience/link_edit.png"
@@ -27,20 +20,6 @@
             label="Edit Link"
             type="LINK">
       </editPage>
-      <transferpreferences
-            implementation="org.remus.infomngmnt.link.LinkTextTransferPreferencePage"
-            transferId="org.remus.infomngmnt.core.texttransfer"
-            typeId="LINK">
-      </transferpreferences>
-      <transferpreferences
-            implementation="org.remus.infomngmnt.link.LinkTextTransferPreferencePage"
-            transferId="org.remus.infomngmnt.core.urlTransfer"
-            typeId="LINK">
-      </transferpreferences>
-      <creationUiTrigger
-            class="org.remus.infomngmnt.link.ui.NewLinkWizard"
-            typeId="LINK">
-      </creationUiTrigger>
       <editorAction
             commandId="org.remus.infomngmnt.link.openBrowser"
             typeId="LINK">
@@ -148,6 +127,36 @@
             commandId="org.remus.infomngmnt.link.openBrowser"
             icon="icons/iconexperience/window_earth.png">
       </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/link.png"
+            infotype="LINK">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="index"
+            typeId="LINK">
+      </index>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="LINK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="LINK">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.link.LinkCreationTrigger"
+            typeId="LINK">
+      </creationtrigger>
    </extension>
 
 </plugin>

@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.common.core.streams.HTMLStripReader;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

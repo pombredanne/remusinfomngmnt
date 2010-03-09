@@ -3,6 +3,8 @@ package org.remus.infomngmnt.link;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import org.remus.infomngmnt.services.RemusServiceTracker;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -16,6 +18,8 @@ public class LinkActivator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static LinkActivator plugin;
+
+	private RemusServiceTracker serviceTracker;
 
 	/**
 	 * The constructor
@@ -33,7 +37,12 @@ public class LinkActivator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
+		this.serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
+	}
+
+	public RemusServiceTracker getServiceTracker() {
+		return this.serviceTracker;
 	}
 
 	/*

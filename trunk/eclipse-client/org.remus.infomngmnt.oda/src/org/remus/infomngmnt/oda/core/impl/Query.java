@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
 import org.eclipse.datatools.connectivity.oda.IQuery;
 import org.eclipse.datatools.connectivity.oda.IResultSet;
@@ -32,9 +33,11 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.CollectionFilter;
 import org.remus.infomngmnt.common.core.util.CollectionUtils;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
+import org.remus.infomngmnt.oda.core.OdaCoreActivator;
 import org.remus.infomngmnt.oda.core.QuerySerializer;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.util.CategoryUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.oda.Column;
@@ -110,8 +113,12 @@ public class Query implements IQuery {
 
 	private org.remus.oda.ResultSet buildResult() throws OdaException {
 		org.remus.oda.ResultSet result = OdaFactory.eINSTANCE.createResultSet();
-		final IInfoType infoTypeByType = InformationExtensionManager.getInstance()
-				.getInfoTypeByType(this.dataset.getSelection().getInfoTypeId());
+		RemusServiceTracker serviceTracker = new RemusServiceTracker(Platform
+				.getBundle(OdaCoreActivator.PLUGIN_ID));
+		IInformationTypeHandler informationTypeHandler = serviceTracker
+				.getService(IInformationTypeHandler.class);
+		final IInfoType infoTypeByType = informationTypeHandler.getInfoTypeByType(this.dataset
+				.getSelection().getInfoTypeId());
 		if (infoTypeByType == null) {
 			throw new OdaException(NLS.bind("Infotype\'\'{0}\'\' not installed", this.dataset
 					.getSelection().getInfoTypeId()));
@@ -170,6 +177,7 @@ public class Query implements IQuery {
 				result.getRows().add(row);
 			}
 		}
+		serviceTracker.ungetService(informationTypeHandler);
 		return result;
 
 	}

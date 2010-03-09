@@ -7,6 +7,7 @@
 
 package org.remus.infomngmnt.oda.core.impl;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.emf.ecore.EObject;
@@ -16,8 +17,10 @@ import org.remus.infomngmnt.InformationStructureDefinition;
 import org.remus.infomngmnt.InformationStructureItem;
 import org.remus.infomngmnt.InformationStructureType;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
+import org.remus.infomngmnt.oda.core.OdaCoreActivator;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.oda.Dataset;
 
 /**
@@ -30,9 +33,14 @@ import org.remus.oda.Dataset;
 public class ResultSetMetaData implements IResultSetMetaData {
 
 	private final Dataset dataset;
+	private final RemusServiceTracker serviceTracker;
+	private final IInformationTypeHandler informationTypeHandler;
 
 	public ResultSetMetaData(final Dataset dataset) {
 		this.dataset = dataset;
+		this.serviceTracker = new RemusServiceTracker(Platform
+				.getBundle(OdaCoreActivator.PLUGIN_ID));
+		this.informationTypeHandler = this.serviceTracker.getService(IInformationTypeHandler.class);
 
 	}
 
@@ -70,8 +78,7 @@ public class ResultSetMetaData implements IResultSetMetaData {
 	 */
 	public int getColumnType(final int index) throws OdaException {
 		String infoTypeId = this.dataset.getSelection().getInfoTypeId();
-		IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-				infoTypeId);
+		IInfoType infoTypeByType = this.informationTypeHandler.getInfoTypeByType(infoTypeId);
 		if (infoTypeByType == null) {
 			throw new OdaException(NLS.bind("Info-Type {0} not installed", infoTypeId));
 		}

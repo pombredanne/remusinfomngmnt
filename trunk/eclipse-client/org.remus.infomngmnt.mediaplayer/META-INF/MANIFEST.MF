@@ -2,14 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mediaplayer Plug-in
 Bundle-SymbolicName: org.remus.infomngmnt.mediaplayer;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.mediaplayer.MediaPlayerActivator
 Bundle-Vendor: Remus Software
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.remus.infomngmnt.core;bundle-version="1.0.0",
- org.remus.infomngmnt.jslib;bundle-version="1.0.0",
- org.apache.commons.lang;bundle-version="2.3.0"
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ org.remus.infomngmnt.jslib;bundle-version="[0.1.0,1.0.0)",
+ org.apache.commons.lang;bundle-version="[2.3.0,3.0.0)",
+ org.remus.infomngmnt.common.core;bundle-version="[0.1.0,1.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/mediaplayerextension.xml

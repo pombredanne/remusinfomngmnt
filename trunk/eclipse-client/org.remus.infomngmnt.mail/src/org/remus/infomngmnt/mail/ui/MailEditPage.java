@@ -33,17 +33,18 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.contact.shared.ContactsWithEmailSmartField;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.databinding.BindingUtil;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
+import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.remus.infomngmnt.ui.widgets.databinding.CDateTimeBindingWidget;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -160,7 +161,7 @@ public class MailEditPage extends AbstractInformationFormPage {
 				.getChildByNodeId(MailActivator.NODE_NAME_SENDER), read
 				.getFeatureByNodeId(MailActivator.NODE_NAME_SENDER), this);
 
-		CDateTimeBindingWidget receivedBinding = BindingWidgetFactory.createCDateTime(
+		CDateTimeBindingWidget receivedBinding = AdditionalBindingWidgetFactory.createCDateTime(
 				this.receivedDate, getDatabindingContext(), getEditingDomain());
 		receivedBinding.bindModel(read.getChildByNodeId(MailActivator.NODE_NAME_RECEIVED), read
 				.getFeatureByNodeId(MailActivator.NODE_NAME_RECEIVED));

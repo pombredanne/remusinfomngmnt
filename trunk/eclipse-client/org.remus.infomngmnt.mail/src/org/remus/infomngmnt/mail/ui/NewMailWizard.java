@@ -12,8 +12,8 @@
 
 package org.remus.infomngmnt.mail.ui;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.mail.internal.ResourceManager;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**

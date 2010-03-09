@@ -41,9 +41,9 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.shared.MailPersonDialog;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mail.MailActivator;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -52,6 +52,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 
 	private TableViewer recipientsTableViewer;
 	private TableViewer ccTableViewer;
+	private IEditingHandler editingHandler;
 
 	/*
 	 * (non-Javadoc)
@@ -67,7 +68,8 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
-
+		this.editingHandler = MailActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 		doCreateNamesSection(body, toolkit);
 		doCreateCCSection(body, toolkit);
 
@@ -137,8 +139,8 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				deleteButton.setEnabled(!event.getSelection().isEmpty());
 			}
 		});
-		this.recipientsTableViewer.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
-				.getInstance().getAdapterFactory()));
+		this.recipientsTableViewer.setContentProvider(new AdapterFactoryContentProvider(
+				this.editingHandler.getAdapterFactory()));
 		this.recipientsTableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
@@ -220,8 +222,8 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				deleteButton.setEnabled(!event.getSelection().isEmpty());
 			}
 		});
-		this.ccTableViewer.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
-				.getInstance().getAdapterFactory()));
+		this.ccTableViewer.setContentProvider(new AdapterFactoryContentProvider(this.editingHandler
+				.getAdapterFactory()));
 		this.ccTableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
@@ -236,6 +238,12 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(addbutton);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(deleteButton);
 
+	}
+
+	@Override
+	public void dispose() {
+		MailActivator.getDefault().getServiceTracker().ungetService(this.editingHandler);
+		super.dispose();
 	}
 
 	@Override

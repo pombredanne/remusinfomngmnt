@@ -5,26 +5,10 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/mail.png"
             name="Mail/News"
             presentation="org.remus.infomngmnt.mail.extension.MailInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="MAIL">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.imagetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.rftTransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -39,7 +23,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.mail.ui.MailEditPage"
             icon="icons/iconexperience/mail_edit.png"
@@ -135,6 +119,49 @@
       <initializer
             class="org.remus.infomngmnt.mail.preferences.MailPreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/mail.png"
+            infotype="MAIL">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="content"
+            typeId="MAIL">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="moreInfo"
+            typeId="MAIL">
+      </index>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="MAIL">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="MAIL">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="MAIL">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="MAIL">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.mail.rules.MailCreationTrigger"
+            typeId="MAIL">
+      </creationtrigger>
    </extension>
 
 </plugin>

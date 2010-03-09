@@ -20,13 +20,14 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.commands.CreateBinaryReferenceCommand;
 import org.remus.infomngmnt.core.create.PostCreationHandler;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.operation.IndexWebPageRunnable;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -61,11 +62,16 @@ public class LinkCreationFactory extends PostCreationHandler {
 			}
 		}
 		if (makeWebShot) {
+			IEditingHandler service = LinkActivator.getDefault().getServiceTracker().getService(
+					IEditingHandler.class);
 			monitor.beginTask("Webshotting the link", IProgressMonitor.UNKNOWN);
 			IFile tmpFile = ResourceUtil.createTempFile("png");
 			WebshotUtil.performWebShot(unit.getStringValue(), tmpFile.getLocation().toOSString());
-			return CommandFactory.addFileToInfoUnit(tmpFile, unit, EditingUtil.getInstance()
-					.getNavigationEditingDomain());
+			CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory.addFileToInfoUnit(
+					tmpFile, unit, service.getNavigationEditingDomain());
+			LinkActivator.getDefault().getServiceTracker().ungetService(service);
+			return addFileToInfoUnit;
+
 		}
 		return null;
 	}

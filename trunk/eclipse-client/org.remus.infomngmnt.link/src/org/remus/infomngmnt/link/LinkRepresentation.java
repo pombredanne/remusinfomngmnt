@@ -26,13 +26,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -60,35 +57,6 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 					.append(ResourceUtil.BINARY_FOLDER).append(
 							getValue().getBinaryReferences().getProjectRelativePath()).toOSString();
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getAdditionalsForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getAdditionalsForIndexing(final IProgressMonitor monitor) throws CoreException {
-		InformationUnit childByType = InformationUtil.getChildByType(getValue(),
-				LinkActivator.NODE_INDEX);
-		if (childByType.eIsSet(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE)) {
-			return childByType.getStringValue();
-		}
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		return getValue().getStringValue();
 	}
 
 	/*

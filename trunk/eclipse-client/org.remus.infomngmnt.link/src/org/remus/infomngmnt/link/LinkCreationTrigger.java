@@ -12,32 +12,17 @@
 
 package org.remus.infomngmnt.link;
 
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.wizard.WizardDialog;
-
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.link.ui.NewLinkWizard;
-import org.remus.infomngmnt.ui.extension.AbstractCreationTrigger;
+import org.remus.infomngmnt.ui.rules.wizard.NewObjectWizardDelegate;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class LinkCreationTrigger extends AbstractCreationTrigger {
+public class LinkCreationTrigger extends NewObjectWizardDelegate {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.remus.infomngmnt.ui.extension.AbstractCreationTrigger#
-	 * handleCreationRequest()
-	 */
-	@Override
-	public void handleCreationRequest() {
-		NewLinkWizard newLinkWizard = new NewLinkWizard();
-		newLinkWizard.init(UIUtil.getPrimaryWindow().getWorkbench(), new StructuredSelection(
-				new Object[0]));
-		newLinkWizard.setDefaults(getValue(), getRuleValue(), getTransferType());
-		WizardDialog wizard = new WizardDialog(UIUtil.getPrimaryWindow().getShell(), newLinkWizard);
-		wizard.open();
+	public LinkCreationTrigger() {
+		super(new NewLinkWizard());
+
 	}
 
 }

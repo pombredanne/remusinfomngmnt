@@ -50,5 +50,65 @@
             type="MEETING">
       </editPage>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="MEETING">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="MEETING">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.rftTransfer"
+            typeId="MAIL">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="MEETING">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="MEETING">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.meetingminutes.ui.MeetingMinutesCreationTrigger"
+            typeId="MEETING">
+      </creationtrigger>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="attendees"
+            typeId="MEETING">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="moderator"
+            typeId="MEETING">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="place"
+            typeId="MEETING">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="log"
+            typeId="MEETING">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="decisions"
+            typeId="MEETING">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="todos"
+            typeId="MEETING">
+      </index>
+   </extension>
 
 </plugin>

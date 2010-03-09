@@ -60,11 +60,11 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.core.commands.DeleteBinaryReferenceCommand;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mail.MailActivator;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -141,6 +141,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 			return super.getImage(element);
 		}
 	};
+	private IEditingHandler editingHandler;
 
 	/*
 	 * (non-Javadoc)
@@ -156,7 +157,8 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
-
+		this.editingHandler = MailActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 		doCreateNamesSection(body, toolkit);
 		doCreateCCSection(body, toolkit);
 
@@ -273,7 +275,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 			}
 		});
 		this.attachmentsTableViewer.setContentProvider(new AdapterFactoryContentProvider(
-				EditingUtil.getInstance().getAdapterFactory()));
+				this.editingHandler.getAdapterFactory()));
 		this.attachmentsTableViewer.setLabelProvider(this.attachmentLabelProvider);
 		this.attachmentsTableViewer.setSelection(StructuredSelection.EMPTY);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(addbutton);
@@ -371,14 +373,20 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				deleteButton.setEnabled(!event.getSelection().isEmpty());
 			}
 		});
-		this.embeddedTableViewer.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
-				.getInstance().getAdapterFactory()));
+		this.embeddedTableViewer.setContentProvider(new AdapterFactoryContentProvider(
+				this.editingHandler.getAdapterFactory()));
 
 		this.embeddedTableViewer.setLabelProvider(this.embeddedLabelProvider);
 		this.embeddedTableViewer.setSelection(StructuredSelection.EMPTY);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(addbutton);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).applyTo(deleteButton);
 
+	}
+
+	@Override
+	public void dispose() {
+		MailActivator.getDefault().getServiceTracker().ungetService(this.editingHandler);
+		super.dispose();
 	}
 
 	@Override

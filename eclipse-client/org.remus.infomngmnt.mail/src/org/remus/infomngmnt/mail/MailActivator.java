@@ -3,6 +3,8 @@ package org.remus.infomngmnt.mail;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import org.remus.infomngmnt.services.RemusServiceTracker;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -44,6 +46,8 @@ public class MailActivator extends AbstractUIPlugin {
 	// The shared instance
 	private static MailActivator plugin;
 
+	private RemusServiceTracker serviceTracker;
+
 	/**
 	 * The constructor
 	 */
@@ -60,7 +64,7 @@ public class MailActivator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-
+		this.serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
 	}
 
@@ -75,6 +79,10 @@ public class MailActivator extends AbstractUIPlugin {
 	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+	}
+
+	public RemusServiceTracker getServiceTracker() {
+		return this.serviceTracker;
 	}
 
 	/**

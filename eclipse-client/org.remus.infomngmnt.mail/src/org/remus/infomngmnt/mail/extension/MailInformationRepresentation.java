@@ -43,7 +43,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import org.remus.infomngmnt.BinaryReference;
-import org.remus.infomngmnt.common.core.streams.HTMLStripReader;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
@@ -60,23 +59,6 @@ import org.remus.infomngmnt.util.StatusCreator;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class MailInformationRepresentation extends AbstractInformationRepresentation {
-
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
-		try {
-			if (content != null) {
-				content = HTMLStripReader.strip(content);
-			} else {
-				content = "";
-			}
-		} catch (IOException e) {
-			content = "";
-		}
-
-		return StringUtils.join(getValue().getStringValue(), "\n", content);
-	}
 
 	@Override
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {

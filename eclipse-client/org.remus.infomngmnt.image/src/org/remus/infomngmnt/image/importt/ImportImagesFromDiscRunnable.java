@@ -29,16 +29,16 @@ import org.eclipse.osgi.util.NLS;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.util.IdFactory;
 import org.remus.infomngmnt.core.commands.CommandFactory;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
-import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -140,7 +140,10 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 
 	@Override
 	protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		IEditingHandler service = ImagePlugin.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
+		this.editingDomain = service.createNewEditingDomain();
+		ImagePlugin.getDefault().getServiceTracker().ungetService(service);
 		this.rootDirectory = new File(this.obj.getDirectory());
 		this.rootCateogry = CategoryUtil.findCategory(this.obj.getCategory(), true);
 		try {

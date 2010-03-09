@@ -4,20 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            icon="icons/iconexperience/photo_landscape.png"
             name="Photo/Graphics"
             presentation="org.remus.infomngmnt.image.core.ImageInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="IMAGE">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.imagetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.urlTransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -35,7 +25,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.image.ui.ImageEditPage"
             icon="icons/iconexperience/photo_landscape_edit.png"
@@ -43,15 +33,6 @@
             label="Edit Photo/Graphics"
             type="IMAGE">
       </editPage>
-      <transferpreferences
-            implementation="org.remus.infomngmnt.image.preferences.ImageCreationPreferencePage"
-            transferId="org.remus.infomngmnt.core.imagetransfer"
-            typeId="IMAGE">
-      </transferpreferences>
-      <creationUiTrigger
-            class="org.remus.infomngmnt.image.ui.NewImageWizard"
-            typeId="IMAGE">
-      </creationUiTrigger>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -70,15 +51,6 @@
       </referenceResource>
    </extension>
    <extension
-         point="org.remus.infomngmnt.common.ui.trayAction">
-      <trayAction
-            class="org.remus.infomngmnt.image.tray.CreateScreenShotAction"
-            icon="icons/iconexperience/screenshot_new.png"
-            id="org.remus.infomngmnt.image.screenShot"
-            name="Create Screenshot">
-      </trayAction>
-   </extension>
-   <extension
          point="org.eclipse.ui.importWizards">
       <wizard
             class="org.remus.infomngmnt.image.importt.ImportImageFromDiskWizard"
@@ -86,6 +58,49 @@
             id="org.remus.infomngmnt.image.imageFromDirectory"
             name="Images from Filesystem">
       </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.desktop.trayAction">
+      <trayAction
+            class="org.remus.infomngmnt.image.tray.CreateScreenShotAction"
+            icon="icons/iconexperience/screenshot_new.png"
+            id="org.remus.infomngmnt.image.trayAction"
+            name="Create Screenshot">
+      </trayAction>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="IMAGE">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.imagetransfer"
+            typeId="IMAGE">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="IMAGE">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.image.ui.ImageCreationTrigger"
+            typeId="IMAGE">
+      </creationtrigger>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/photo_landscape.png"
+            infotype="IMAGE">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <secondaryIndex
+            class="org.remus.infomngmnt.image.internal.index.CommentIndexer"
+            node="links"
+            typeId="IMAGE">
+      </secondaryIndex>
    </extension>
 
 </plugin>

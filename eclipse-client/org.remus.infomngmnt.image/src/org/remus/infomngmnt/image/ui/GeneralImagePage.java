@@ -38,10 +38,10 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.internal.ResourceManager;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -53,16 +53,21 @@ public class GeneralImagePage extends GeneralPage {
 	private Button browseButton;
 	protected String tmpText;
 	protected LoadFileToTmpFromPathRunnable loadImageJob;
-	private IFile tmpFile;
 
 	public GeneralImagePage(final Category category) {
 		super(category);
 		this.loadImageJob = new LoadFileToTmpFromPathRunnable();
+		if (this.files == null || this.files.length == 0) {
+			this.files = new IFile[1];
+		}
 
 	}
 
 	public GeneralImagePage(final InformationUnitListItem selection) {
 		super(selection);
+		if (this.files == null || this.files.length == 0) {
+			this.files = new IFile[1];
+		}
 	}
 
 	@Override
@@ -85,7 +90,7 @@ public class GeneralImagePage extends GeneralPage {
 		gd_nameText.horizontalSpan = 2;
 		this.nameText.setLayoutData(gd_nameText);
 
-		if (this.tmpFile == null) {
+		if (this.files[0] == null) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
 			this.fileNameText = new Text(group, SWT.BORDER);
@@ -136,7 +141,7 @@ public class GeneralImagePage extends GeneralPage {
 						GeneralImagePage.this.nameText.setText(new Path(
 								GeneralImagePage.this.fileNameText.getText()).removeFileExtension()
 								.lastSegment());
-						GeneralImagePage.this.tmpFile = GeneralImagePage.this.loadImageJob
+						GeneralImagePage.this.files[0] = GeneralImagePage.this.loadImageJob
 								.getTmpFile();
 					} catch (InvocationTargetException e) {
 						setErrorMessage(e.getCause().getMessage());
@@ -153,18 +158,10 @@ public class GeneralImagePage extends GeneralPage {
 	}
 
 	/**
-	 * @param tmpFile
-	 *            the tmpFile to set
-	 */
-	public void setTmpFile(final IFile tmpFile) {
-		this.tmpFile = tmpFile;
-	}
-
-	/**
 	 * @return the tmpFile
 	 */
 	public IFile getTmpFile() {
-		return this.tmpFile;
+		return this.files[0];
 	}
 
 }

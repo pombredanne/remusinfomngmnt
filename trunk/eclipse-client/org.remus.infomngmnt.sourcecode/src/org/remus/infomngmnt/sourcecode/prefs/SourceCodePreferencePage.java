@@ -10,10 +10,10 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import com.swtdesigner.preference.ComboFieldEditor;
-
 import org.remus.infomngmnt.sourcecode.PreferenceInitializer;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
+
+import com.swtdesigner.preference.ComboFieldEditor;
 
 public class SourceCodePreferencePage extends FieldEditorPreferencePage
 implements IWorkbenchPreferencePage {

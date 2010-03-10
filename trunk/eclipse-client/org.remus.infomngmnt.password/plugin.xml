@@ -5,21 +5,14 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="false"
-            icon="icons/iconexperience/key.png"
             name="Password"
             presentation="org.remus.infomngmnt.password.AbstractInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="PASSWORD">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.urlTransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.password.EditPasswordPage"
             icon="icons/iconexperience/key.png"

@@ -4,17 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            icon="icons/iconexperience/text_rich_colored.png"
             name="Rich Text"
             presentation="org.remus.infomngmnt.richtext.presentation.RichTextPresentation"
             structuredefinition="structuredefinition.xmi"
             type="HTML">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -26,11 +19,6 @@
             label="Edit RichText"
             type="HTML">
       </editPage>
-      <transferpreferences
-            implementation="org.remus.infomngmnt.richtext.preferences.RichTextCreationPreferencePage"
-            transferId="org.remus.infomngmnt.core.htmltransfer"
-            typeId="HTML">
-      </transferpreferences>
       <creationUiTrigger
             class="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
             typeId="HTML">
@@ -72,6 +60,14 @@
             class="org.remus.infomngmnt.richtext.NewRichTextCreationWizard"
             typeId="HTML">
       </creationtrigger>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
+            node="HTML"
+            typeId="HTML">
+      </index>
    </extension>
 
 </plugin>

@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.remus.infomngmnt.ui.infotypes;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.ui.rules;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.ui.viewer;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.search
+ org.remus.infomngmnt.search;bundle-version="[0.1.0,1.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .

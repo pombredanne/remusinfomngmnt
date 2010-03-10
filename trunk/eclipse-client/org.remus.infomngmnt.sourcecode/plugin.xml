@@ -135,6 +135,10 @@
             transferId="org.remus.infomngmnt.core.texttransfer"
             typeId="SOURCE">
       </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.sourcecode.wizard.SourceCodeCreationTrigger"
+            typeId="SOURCE">
+      </creationtrigger>
    </extension>
 
 </plugin>

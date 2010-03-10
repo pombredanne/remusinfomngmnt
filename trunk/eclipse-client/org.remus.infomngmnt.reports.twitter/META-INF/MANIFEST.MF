@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Twitter Report-Templates
 Bundle-SymbolicName: org.remus.infomngmnt.reports.twitter;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Remus Software
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.remus.infomngmnt.birtreport;bundle-version="1.0.0"
+Require-Bundle: org.remus.infomngmnt.birtreport;bundle-version="[0.1.0,1.0.0)"

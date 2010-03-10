@@ -60,19 +60,6 @@ public class OnlineMediaInformationRepresentation extends AbstractInformationRep
 	 * 
 	 * @see
 	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override

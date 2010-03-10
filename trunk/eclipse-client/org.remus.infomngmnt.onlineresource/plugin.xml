@@ -5,12 +5,18 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            icon="icons/iconexperience/presentation.png"
             name="Online Media"
             presentation="org.remus.infomngmnt.onlineresource.extension.OnlineMediaInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="ONLINERESOURCE">
       </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/presentation.png"
+            infotype="ONLINERESOURCE">
+      </image>
    </extension>
 
 </plugin>

@@ -4,14 +4,10 @@
    <extension
          point="org.remus.infomngmnt.core.informationType">
       <information
-            icon="icons/iconexperience/code_colored.png"
             name="Source Code"
             presentation="org.remus.infomngmnt.sourcecode.core.SourceCodeInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="SOURCE">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
@@ -41,7 +37,7 @@
       </initializer>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.sourcecode.editor.EditSourcePage"
             icon="icons/iconexperience/code_colored_edit.png"
@@ -49,15 +45,6 @@
             label="Edit Source"
             type="SOURCE">
       </editPage>
-      <creationUiTrigger
-            class="org.remus.infomngmnt.sourcecode.wizard.NewSourceCodeWizard"
-            typeId="SOURCE">
-      </creationUiTrigger>
-      <transferpreferences
-            implementation="org.remus.infomngmnt.sourcecode.prefs.SourceCodeRulePreferencePage"
-            transferId="org.remus.infomngmnt.core.texttransfer"
-            typeId="SOURCE">
-      </transferpreferences>
       <editorAction
             commandId="org.remus.infomngmnt.sourcecode.copyToClipboard"
             typeId="SOURCE">
@@ -129,6 +116,25 @@
             commandId="org.remus.infomngmnt.sourcecode.copyToClipboard"
             icon="icons/iconexperience/code_colored.png">
       </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="SOURCE"
+            typeId="SOURCE">
+      </index>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="SOURCE">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="SOURCE">
+      </validTransfers>
    </extension>
 
 </plugin>

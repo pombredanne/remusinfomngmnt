@@ -28,13 +28,13 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.databinding.BindingUtil;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
+import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

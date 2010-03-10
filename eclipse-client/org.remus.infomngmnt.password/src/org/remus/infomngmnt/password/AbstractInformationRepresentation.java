@@ -38,12 +38,6 @@ public class AbstractInformationRepresentation extends
 	}
 
 	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;

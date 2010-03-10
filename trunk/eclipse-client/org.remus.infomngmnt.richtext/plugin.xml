@@ -18,7 +18,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.richtext.editor.RichTextEditPage"
             icon="icons/iconexperience/richtext_edit.png"
@@ -46,6 +46,32 @@
             id="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
             name="Rich Text">
       </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/text_rich_colored.png"
+            infotype="HTML">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="HTML">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="HTML">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="HTML">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.richtext.NewRichTextCreationWizard"
+            typeId="HTML">
+      </creationtrigger>
    </extension>
 
 </plugin>

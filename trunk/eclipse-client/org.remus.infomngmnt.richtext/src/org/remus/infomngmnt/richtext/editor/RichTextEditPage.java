@@ -47,16 +47,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.RichTextBindingWidget;
-import org.remus.infomngmnt.common.ui.richtext.ActionConfiguration;
-import org.remus.infomngmnt.common.ui.richtext.RichTextWidget;
-import org.remus.infomngmnt.common.ui.richtext.actions.HrAction;
-import org.remus.infomngmnt.common.ui.richtext.actions.InsertEditAnchorAction;
-import org.remus.infomngmnt.common.ui.richtext.actions.InsertEditImageAction;
-import org.remus.infomngmnt.common.ui.richtext.actions.InsertEditLinkAction;
-import org.remus.infomngmnt.common.ui.richtext.actions.UnlinkAction;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.remus.infomngmnt.ui.widgets.databinding.RichTextBindingWidget;
+import org.remus.infomngmnt.ui.widgets.databinding.RichTextWidget;
+import org.remus.infomngmnt.ui.widgets.richtext.ActionConfiguration;
+import org.remus.infomngmnt.ui.widgets.richtext.actions.HrAction;
+import org.remus.infomngmnt.ui.widgets.richtext.actions.InsertEditAnchorAction;
+import org.remus.infomngmnt.ui.widgets.richtext.actions.InsertEditImageAction;
+import org.remus.infomngmnt.ui.widgets.richtext.actions.InsertEditLinkAction;
+import org.remus.infomngmnt.ui.widgets.richtext.actions.UnlinkAction;
 
 import de.spiritlink.richhtml4eclipse.widgets.AllActionConstants;
 import de.spiritlink.richhtml4eclipse.widgets.EventConstants;
@@ -156,7 +156,8 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 				.getStringValue();
 		this.richtext.setHtml(html);
 
-		RichTextBindingWidget widget = BindingWidgetFactory.createRichText(this.richtext, this);
+		RichTextBindingWidget widget = AdditionalBindingWidgetFactory.createRichText(this.richtext,
+				this);
 		widget.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 

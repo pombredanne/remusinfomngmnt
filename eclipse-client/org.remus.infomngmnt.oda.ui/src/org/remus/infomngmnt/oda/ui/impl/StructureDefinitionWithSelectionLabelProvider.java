@@ -17,7 +17,7 @@ import org.eclipse.swt.graphics.Font;
 
 import org.remus.infomngmnt.InformationStructureItem;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.ui.structuredefinition.StructureDefinitionLabelProvider;
+import org.remus.infomngmnt.ui.viewer.provider.StructureDefinitionLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

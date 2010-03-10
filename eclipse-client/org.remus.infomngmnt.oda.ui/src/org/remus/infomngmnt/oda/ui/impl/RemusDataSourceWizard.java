@@ -20,6 +20,7 @@ import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.value.DecoratingObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSourceWizardPage;
 import org.eclipse.emf.common.util.URI;
@@ -58,13 +59,15 @@ import org.remus.infomngmnt.DynamicStructure;
 import org.remus.infomngmnt.InformationStructureDefinition;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.oda.core.Constants;
+import org.remus.infomngmnt.oda.ui.OdaUiActivator;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
-import org.remus.infomngmnt.ui.structuredefinition.StructureDefinitionLabelProvider;
+import org.remus.infomngmnt.ui.viewer.provider.StructureDefinitionLabelProvider;
 import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -80,7 +83,11 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 	private final WritableValue infoType = new WritableValue("", IInfoType.class);;
 	private final WritableValue baseSelection = new WritableValue("", String.class);
 	private Combo combo;
-	private ComboViewer comboViewer;;
+	private ComboViewer comboViewer;
+	private RemusServiceTracker serviceTracker;
+	private IEditingHandler editingHandler;
+	private IApplicationModel applicationModel;
+	private IInformationTypeHandler informationTypeHandler;;
 
 	/**
 	 * @param pageName
@@ -88,7 +95,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 	 */
 	public RemusDataSourceWizard(final String pageName) {
 		super(pageName);
-		// TODO Auto-generated constructor stub
+		initServices();
 	}
 
 	/**
@@ -99,7 +106,15 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 	public RemusDataSourceWizard(final String pageName, final String title,
 			final ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
-		// TODO Auto-generated constructor stub
+		initServices();
+	}
+
+	private void initServices() {
+		this.serviceTracker = new RemusServiceTracker(Platform.getBundle(OdaUiActivator.PLUGIN_ID));
+		this.editingHandler = this.serviceTracker.getService(IEditingHandler.class);
+		this.applicationModel = this.serviceTracker.getService(IApplicationModel.class);
+		this.informationTypeHandler = this.serviceTracker.getService(IInformationTypeHandler.class);
+
 	}
 
 	/*
@@ -144,9 +159,9 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 		btnBrowse.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						RemusDataSourceWizard.this.editingHandler.getAdapterFactory());
 				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						RemusDataSourceWizard.this.editingHandler.getAdapterFactory());
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
 						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
@@ -166,7 +181,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 						return element instanceof Category;
 					}
 				});
-				dialog.setInput(ApplicationModelPool.getInstance().getModel());
+				dialog.setInput(RemusDataSourceWizard.this.applicationModel.getModel());
 				dialog.setInitialSelection(CategoryUtil.findCategory(
 						RemusDataSourceWizard.this.text.getText(), false));
 				if (dialog.open() == IDialogConstants.OK_ID) {
@@ -183,9 +198,9 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 		btnBrowse2.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						RemusDataSourceWizard.this.editingHandler.getAdapterFactory());
 				AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						RemusDataSourceWizard.this.editingHandler.getAdapterFactory());
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
 						adapterFactoryLabelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
@@ -206,7 +221,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 								|| element instanceof InformationUnitListItem;
 					}
 				});
-				dialog.setInput(ApplicationModelPool.getInstance().getModel());
+				dialog.setInput(RemusDataSourceWizard.this.applicationModel.getModel());
 
 				dialog.setInitialSelection(InformationUtil
 						.findItemByPath(RemusDataSourceWizard.this.text.getText()));
@@ -235,7 +250,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 				return ((IInfoType) element).getName();
 			}
 		});
-		this.comboViewer.setInput(InformationExtensionManager.getInstance().getTypes());
+		this.comboViewer.setInput(this.informationTypeHandler.getTypes());
 
 		Label lblEntrypoint = new Label(group, SWT.NONE);
 		lblEntrypoint.setText("Entry-Point");
@@ -248,7 +263,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 		button.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				AdapterFactoryContentProvider adapterFactoryContentProvider = new AdapterFactoryContentProvider(
-						EditingUtil.getInstance().getAdapterFactory());
+						RemusDataSourceWizard.this.editingHandler.getAdapterFactory());
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
 						new StructureDefinitionLabelProvider(), adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
@@ -331,8 +346,7 @@ public class RemusDataSourceWizard extends DataSourceWizardPage {
 		String property = properties.getProperty(Constants.PROPERY_ROOT_ELEMENT);
 		this.rootElement.setValue(property);
 		property = properties.getProperty(Constants.PROPERTY_INFO_TYPE);
-		this.infoType.setValue(InformationExtensionManager.getInstance()
-				.getInfoTypeByType(property));
+		this.infoType.setValue(this.informationTypeHandler.getInfoTypeByType(property));
 		property = properties.getProperty(Constants.PROPERTY_BASE_SELECTION);
 		this.baseSelection.setValue(property);
 

@@ -9,6 +9,7 @@ package org.remus.infomngmnt.oda.ui.impl;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.datatools.connectivity.oda.IConnection;
 import org.eclipse.datatools.connectivity.oda.IDriver;
 import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
@@ -56,10 +57,12 @@ import org.remus.infomngmnt.InformationStructureDefinition;
 import org.remus.infomngmnt.InformationStructureItem;
 import org.remus.infomngmnt.InformationStructureType;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.oda.core.QuerySerializer;
 import org.remus.infomngmnt.oda.core.impl.Driver;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.oda.ui.OdaUiActivator;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.oda.Column;
 import org.remus.oda.Dataset;
 import org.remus.oda.OdaFactory;
@@ -93,6 +96,12 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 
 	private ToolItem removeButton;
 
+	private RemusServiceTracker serviceTracker;
+
+	private IEditingHandler editingHandler;
+
+	private IInformationTypeHandler informationTypeHandler;
+
 	/**
 	 * Constructor
 	 * 
@@ -103,6 +112,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 		super(pageName);
 		setTitle(pageName);
 		setMessage(DEFAULT_MESSAGE);
+		initServices();
 	}
 
 	/**
@@ -116,6 +126,14 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 			final ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 		setMessage(DEFAULT_MESSAGE);
+		initServices();
+	}
+
+	private void initServices() {
+		this.serviceTracker = new RemusServiceTracker(Platform.getBundle(OdaUiActivator.PLUGIN_ID));
+		this.editingHandler = this.serviceTracker.getService(IEditingHandler.class);
+		this.informationTypeHandler = this.serviceTracker.getService(IInformationTypeHandler.class);
+
 	}
 
 	/*
@@ -144,8 +162,8 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 
 		this.structureTree = new TreeViewer(group_1, SWT.BORDER);
 		Tree tree = this.structureTree.getTree();
-		this.structureTree.setContentProvider(new AdapterFactoryContentProvider(EditingUtil
-				.getInstance().getAdapterFactory()));
+		this.structureTree.setContentProvider(new AdapterFactoryContentProvider(this.editingHandler
+				.getAdapterFactory()));
 		this.labelProvider = new StructureDefinitionWithSelectionLabelProvider(tree.getFont());
 		this.structureTree.setLabelProvider(this.labelProvider);
 
@@ -248,8 +266,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 			this.dataSet = QuerySerializer.load(queryText, connProps);
 			String infoTypeId = this.dataSet.getSelection().getInfoTypeId();
 			this.labelProvider.setSelection(this.dataSet.getSelection().getElementSelector());
-			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-					infoTypeId);
+			IInfoType infoTypeByType = this.informationTypeHandler.getInfoTypeByType(infoTypeId);
 			InformationStructureDefinition structureDefinition = (InformationStructureDefinition) EcoreUtil
 					.copy(infoTypeByType.getStructureDefinition());
 			/*

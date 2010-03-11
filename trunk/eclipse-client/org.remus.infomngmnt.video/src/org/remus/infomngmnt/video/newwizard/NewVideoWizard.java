@@ -11,24 +11,17 @@
  *******************************************************************************/
 package org.remus.infomngmnt.video.newwizard;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RuleValue;
 import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.extension.TransferWrapper;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.core.transfertypes.FileTransferWrapper;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
-import org.remus.infomngmnt.util.EditingUtil;
 import org.remus.infomngmnt.video.VideoActivator;
 
 /**
@@ -36,12 +29,18 @@ import org.remus.infomngmnt.video.VideoActivator;
  */
 public class NewVideoWizard extends NewInfoObjectWizard {
 
+	private final RemusServiceTracker remusServiceTracker;
+	private final IEditingHandler editingHandler;
+
 	/**
 	 * 
 	 */
 	public NewVideoWizard() {
 		setNeedsProgressMonitor(true);
 		setWindowTitle("New video");
+		this.remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(VideoActivator.PLUGIN_ID));
+		this.editingHandler = this.remusServiceTracker.getService(IEditingHandler.class);
 
 	}
 
@@ -55,21 +54,22 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
-			this.page1 = new GeneralVideoPage((Category) firstElement);
+			this.page1 = new GeneralVideoPage((Category) firstElement, this.editingHandler);
 		} else if (firstElement instanceof InformationUnitListItem) {
-			this.page1 = new GeneralVideoPage((InformationUnitListItem) firstElement);
+			this.page1 = new GeneralVideoPage((InformationUnitListItem) firstElement,
+					this.editingHandler);
 		} else {
-			this.page1 = new GeneralVideoPage((Category) null);
+			this.page1 = new GeneralVideoPage((Category) null, this.editingHandler);
 		}
 
 	}
 
 	@Override
 	protected Command getAdditionalCommands() {
-		IFile tmpFile = ((GeneralVideoPage) this.page1).getTmpFile();
-		if (tmpFile != null) {
-			return CommandFactory.addFileToInfoUnit(tmpFile, this.newElement, EditingUtil
-					.getInstance().getNavigationEditingDomain());
+		this.files = ((GeneralVideoPage) this.page1).getFiles();
+		if (this.files != null && this.files.length > 0) {
+			return CommandFactory.addFileToInfoUnit(this.files[0], this.newElement,
+					this.editingHandler.getNavigationEditingDomain());
 		}
 		return super.getAdditionalCommands();
 	}
@@ -83,34 +83,6 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 	@Override
 	protected String getInfoTypeId() {
 		return VideoActivator.TYPE_ID;
-	}
-
-	@Override
-	protected void setDefaults(final Object value, final RuleValue ruleValue,
-			final TransferWrapper transferType) throws CoreException {
-		if (transferType instanceof FileTransferWrapper) {
-			String[] paths = (String[]) value;
-			/*
-			 * We're just taking the first element. For dropping multiple
-			 * elements into the application we have to provide an import
-			 * wizard.
-			 */
-			String string = paths[0];
-			LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
-			runnable.setFilePath(string);
-			try {
-				new ProgressMonitorDialog(getShell()).run(true, false, runnable);
-				((GeneralVideoPage) this.page1).setTmpFile(runnable.getTmpFile());
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		super.setDefaults(value, ruleValue, transferType);
 	}
 
 }

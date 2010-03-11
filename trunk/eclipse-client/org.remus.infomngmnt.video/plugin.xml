@@ -5,18 +5,14 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             buildHtml="true"
-            icon="icons/iconexperience/film.png"
             name="Video"
             presentation="org.remus.infomngmnt.video.internal.VideoRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="VIDEO">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.video.editor.VideoEditPage"
             icon="icons/iconexperience/film_edit.png"
@@ -50,6 +46,28 @@
                id="org.remus.infomngmnt.video.newWizard">
          </newWizardShortcut>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/film.png"
+            infotype="VIDEO">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <creationtrigger
+            class="org.remus.infomngmnt.video.newwizard.VideoCreationWizard"
+            typeId="VIDEO">
+      </creationtrigger>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="VIDEO">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="VIDEO">
+      </validTransfers>
    </extension>
 
 </plugin>

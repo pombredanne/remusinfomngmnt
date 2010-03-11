@@ -33,8 +33,8 @@ import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 import org.remus.infomngmnt.video.VideoActivator;
@@ -45,24 +45,14 @@ import org.remus.infomngmnt.video.VideoActivator;
 public class VideoRepresentation extends AbstractInformationRepresentation {
 
 	private IPath videoHref;
+	private final RemusServiceTracker remusServiceTracker;
 
 	/**
 	 * 
 	 */
 	public VideoRepresentation() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getBodyForIndexing(final IProgressMonitor monitor) throws CoreException {
-		return "";
+		this.remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(VideoActivator.PLUGIN_ID));
 	}
 
 	/*
@@ -80,8 +70,9 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 		 */
 		InformationUnit playerType = InformationUtil.getChildByType(getValue(),
 				VideoActivator.NODE_NAME_MEDIATYPE);
-		IMediaPlayerExtensionService service = InfomngmntEditPlugin.getPlugin().getService(
-				IMediaPlayerExtensionService.class);
+		IMediaPlayerExtensionService service = this.remusServiceTracker
+				.getService(IMediaPlayerExtensionService.class);
+
 		IMediaPlayer mediaPlayer = service.getPlayerByType(playerType.getStringValue());
 		/*
 		 * Next we have to get the width and height --> That are required
@@ -108,6 +99,7 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
+		this.remusServiceTracker.ungetService(service);
 		try {
 			templateIs = FileLocator.openStream(Platform.getBundle(VideoActivator.PLUGIN_ID),
 					new Path("template/htmlserialization.flt"), false);

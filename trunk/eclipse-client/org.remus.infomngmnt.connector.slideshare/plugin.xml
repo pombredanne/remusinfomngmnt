@@ -13,6 +13,7 @@
    <extension
          point="org.remus.infomngmnt.ui.remote.repositoryUi">
       <respository
+            icon="icons/slideshare.png"
             id="org.remus.infomngmnt.connector.slideshar"
             newWizard="org.remus.infomngmnt.connector.slideshare.ui.NewSlideshareRepositoryWizard"
             repository-id="org.remus.infomngmnt.connector.slideshare">

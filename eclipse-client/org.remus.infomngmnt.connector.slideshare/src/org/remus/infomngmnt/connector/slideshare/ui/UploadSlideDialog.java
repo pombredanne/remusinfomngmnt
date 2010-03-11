@@ -12,6 +12,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -35,16 +36,17 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.common.core.operation.CancelableJob;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.slideshare.SlideshareActivator;
 import org.remus.infomngmnt.connector.slideshare.SlideshareConnector;
-import org.remus.infomngmnt.core.progress.CancelableJob;
-import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.services.IRepositoryService;
-import org.remus.infomngmnt.onlineresource.OnlineResourceActivator;
-import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
+import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.core.remote.services.IRepositoryService;
 import org.remus.infomngmnt.util.StatusCreator;
 
 public class UploadSlideDialog extends TitleAreaDialog {
@@ -309,7 +311,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 
 	@Override
 	public boolean close() {
-		UIUtil.saveDialogSettings(OnlineResourceActivator.getDefault(), this);
+		UIUtil.saveDialogSettings(SlideshareActivator.getDefault(), this);
 		return super.close();
 	}
 
@@ -318,13 +320,13 @@ public class UploadSlideDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return UIUtil.getDialogSettingsInitialSize(OnlineResourceActivator.getDefault(), this,
+		return UIUtil.getDialogSettingsInitialSize(SlideshareActivator.getDefault(), this,
 				new Point(450, 450));
 	}
 
 	@Override
 	protected Point getInitialLocation(final Point initialSize) {
-		return UIUtil.getDialogSettingsInitialLocation(OnlineResourceActivator.getDefault(), this,
+		return UIUtil.getDialogSettingsInitialLocation(SlideshareActivator.getDefault(), this,
 				super.getInitialLocation(initialSize));
 	}
 
@@ -410,11 +412,21 @@ public class UploadSlideDialog extends TitleAreaDialog {
 			@Override
 			protected IStatus runCancelable(final IProgressMonitor monitor) {
 				monitor.beginTask("Uploading selected slide", IProgressMonitor.UNKNOWN);
-				IRepository repositoryImplementation = UIPlugin.getDefault().getService(
-						IRepositoryService.class).getRepositoryById(
-						UploadSlideDialog.this.repositoryId).getRepositoryImplementation();
-				if (repositoryImplementation != null
-						&& repositoryImplementation instanceof SlideshareConnector) {
+				RemoteRepository repositoryImplementation = RemoteActivator.getDefault()
+						.getServiceTracker().getService(IRepositoryService.class)
+						.getRepositoryById(UploadSlideDialog.this.repositoryId);
+				IRepositoryExtensionService extensionService = RemoteActivator.getDefault()
+						.getServiceTracker().getService(IRepositoryExtensionService.class);
+				AbstractExtensionRepository repositoryDefinition = null;
+				try {
+					repositoryDefinition = extensionService
+							.getItemByRepository(repositoryImplementation);
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (repositoryDefinition != null
+						&& repositoryDefinition instanceof SlideshareConnector) {
 					Slideshare api = ((SlideshareConnector) repositoryImplementation).getApi();
 					File file = new File(src);
 					if (file.exists() && file.isFile()) {

@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
@@ -34,11 +35,10 @@ import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.rss.RssActivator;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.services.IRepositoryService;
-import org.remus.infomngmnt.core.services.ISynchronizationManager;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.core.remote.services.IRepositoryService;
+import org.remus.infomngmnt.core.remote.services.ISynchronizationManager;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -46,12 +46,15 @@ import org.remus.infomngmnt.ui.UIPlugin;
 public class RefreshRssJob extends AbstractJob {
 
 	private final Map<String, Date> lastRefresh;
+	private final RemusServiceTracker remusServiceTracker;
 
 	/**
 	 * 
 	 */
 	public RefreshRssJob() {
 		this.lastRefresh = new HashMap<String, Date>();
+		this.remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(RssActivator.PLUGIN_ID));
 	}
 
 	/*
@@ -63,7 +66,7 @@ public class RefreshRssJob extends AbstractJob {
 	 */
 	@Override
 	public List<Notification> run(final IProgressMonitor monitor) {
-		EList<RemoteRepository> repositories = UIPlugin.getDefault().getService(
+		EList<RemoteRepository> repositories = this.remusServiceTracker.getService(
 				IRepositoryService.class).getRepositories().getRepositories();
 		Notification returnValue = InfomngmntFactory.eINSTANCE.createNotification();
 		for (final RemoteRepository remoteRepository : repositories) {
@@ -80,8 +83,12 @@ public class RefreshRssJob extends AbstractJob {
 					refresh = true;
 				}
 				if (refresh) {
-					SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance()
-							.getModel().getRootCategories()), new WHERE(new EObjectCondition() {
+					IApplicationModel applicationModel = this.remusServiceTracker
+							.getService(IApplicationModel.class);
+					ISynchronizationManager syncService = this.remusServiceTracker
+							.getService(ISynchronizationManager.class);
+					SELECT select = new SELECT(new FROM(applicationModel.getModel()
+							.getRootCategories()), new WHERE(new EObjectCondition() {
 						@Override
 						public boolean isSatisfied(final EObject arg0) {
 							return arg0.eClass() == InfomngmntPackage.Literals.CATEGORY
@@ -94,8 +101,7 @@ public class RefreshRssJob extends AbstractJob {
 					IQueryResult execute = select.execute();
 					Set<? extends EObject> eObjects = execute.getEObjects();
 					for (final EObject eObject : eObjects) {
-						InfomngmntEditPlugin.getPlugin().getService(ISynchronizationManager.class)
-								.scheduleSynchronization((Category) eObject);
+						syncService.scheduleSynchronization((Category) eObject);
 					}
 					this.lastRefresh.put(remoteRepository.getId(), new Date());
 				}

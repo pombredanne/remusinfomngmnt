@@ -26,11 +26,11 @@ import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.audio.AudioActivator;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
+import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
 import org.remus.infomngmnt.connector.rss.RssConnector;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.operation.DownloadFileJob;
 import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import com.sun.syndication.feed.synd.SyndCategory;

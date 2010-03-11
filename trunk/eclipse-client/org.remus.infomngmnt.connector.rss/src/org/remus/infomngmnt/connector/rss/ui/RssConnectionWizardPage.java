@@ -17,6 +17,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFObservables;
@@ -42,8 +43,10 @@ import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.rss.RssActivator;
 import org.remus.infomngmnt.connector.rss.RssConnector;
 import org.remus.infomngmnt.connector.rss.RssCredentialProvider;
-import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.model.remote.IRepository;
+import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
 
 public class RssConnectionWizardPage extends WizardPage {
 
@@ -194,7 +197,14 @@ public class RssConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = repository.getRepositoryImplementation();
+		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		try {
+			this.repositoryDefinition = extensionService.getItemByRepository(repository);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void bindValuesToUi() {

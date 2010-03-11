@@ -19,11 +19,13 @@
    <extension
          point="org.remus.infomngmnt.ui.remote.repositoryUi">
       <respository
+            icon="icons/Feed-icon.png"
             id="org.remus.infomngmnt.connector.rss.respository1"
             newWizard="org.remus.infomngmnt.connector.rss.ui.RssRepositoryWizard"
             repository-id="org.remus.infomngmnt.connector.rss">
       </respository>
       <respository
+            icon="icons/Feed-icon.png"
             id="org.remus.infomngmnt.connector.rss.respository2"
             newWizard="org.remus.infomngmnt.connector.rss.ui.RssRepositoryWizard"
             repository-id="org.remus.infomngmnt.connector.rss.podcast">

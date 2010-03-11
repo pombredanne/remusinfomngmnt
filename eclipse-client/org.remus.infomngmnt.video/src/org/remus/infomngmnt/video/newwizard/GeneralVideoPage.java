@@ -20,16 +20,16 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.operation.LoadFileToTmpFromPathRunnable;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.video.VideoActivator;
 
@@ -41,20 +41,20 @@ public class GeneralVideoPage extends GeneralPage {
 	private Text fileNameText;
 	private Button browseButton;
 	protected String tmpText;
-	private IFile tmpFile;
 
 	private final DisposableEditingDomain editingDomain;
 	private Text mediaTypeText;
 
-	public GeneralVideoPage(final Category category) {
+	public GeneralVideoPage(final Category category, final IEditingHandler editingHandler) {
 		super(category);
-		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		this.editingDomain = editingHandler.createNewEditingDomain();
 
 	}
 
-	public GeneralVideoPage(final InformationUnitListItem selection) {
+	public GeneralVideoPage(final InformationUnitListItem selection,
+			final IEditingHandler editingHandler) {
 		super(selection);
-		this.editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		this.editingDomain = editingHandler.createNewEditingDomain();
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class GeneralVideoPage extends GeneralPage {
 						runnable.setFilePath(open);
 						try {
 							getContainer().run(true, true, runnable);
-							GeneralVideoPage.this.tmpFile = runnable.getTmpFile();
+							GeneralVideoPage.this.files = new IFile[] { runnable.getTmpFile() };
 						} catch (InvocationTargetException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -167,18 +167,4 @@ public class GeneralVideoPage extends GeneralPage {
 		super.dispose();
 	}
 
-	/**
-	 * @return the tmpFile
-	 */
-	public IFile getTmpFile() {
-		return this.tmpFile;
-	}
-
-	/**
-	 * @param tmpFile
-	 *            the tmpFile to set
-	 */
-	public void setTmpFile(final IFile tmpFile) {
-		this.tmpFile = tmpFile;
-	}
 }

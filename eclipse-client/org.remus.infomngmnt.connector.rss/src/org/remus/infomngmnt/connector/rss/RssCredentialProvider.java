@@ -13,7 +13,7 @@ package org.remus.infomngmnt.connector.rss;
 
 import org.eclipse.equinox.security.storage.StorageException;
 
-import org.remus.infomngmnt.core.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

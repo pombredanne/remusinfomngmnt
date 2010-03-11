@@ -54,22 +54,22 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
+import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.commands.CreateBinaryReferenceCommand;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.operation.DownloadFileJob;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.core.remote.services.IRepositoryService;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.model.remote.ILoginCallBack;
+import org.remus.infomngmnt.model.remote.IRepository;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import com.sun.syndication.feed.synd.SyndCategory;
@@ -368,8 +368,10 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	}
 
 	private boolean parseContent(final InformationUnit unit, final IProgressMonitor monitor) {
+		IEditingHandler service = RemoteActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
 		InformationStructureRead read = InformationStructureRead.newSession(unit);
-		DisposableEditingDomain editingDomain = EditingUtil.getInstance().createNewEditingDomain();
+		DisposableEditingDomain editingDomain = service.createNewEditingDomain();
 		InformationStructureEdit edit = InformationStructureEdit.newSession(
 				MailActivator.INFO_TYPE_ID, editingDomain);
 		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
@@ -438,6 +440,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		} finally {
 			editingDomain.dispose();
 		}
+		RemoteActivator.getDefault().getServiceTracker().ungetService(service);
 		return changed;
 	}
 
@@ -454,17 +457,18 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 				throw new RuntimeException("Error initializing sync-container", e);
 			}
 		}
+		IRepositoryService service = RemoteActivator.getDefault().getServiceTracker().getService(
+				IRepositoryService.class);
 		this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
 				.getAdapter(IRetrieveFileTransferContainerAdapter.class);
-		RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
-				IRepositoryService.class).getRepositoryById(getLocalRepositoryId());
+		RemoteRepository repositoryById = service.getRepositoryById(getLocalRepositoryId());
 		if (Boolean.valueOf(repositoryById.getOptions().get(
 				RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION))) {
 			this.fileReceiveAdapter.setConnectContextForAuthentication(ConnectContextFactory
 					.createUsernamePasswordConnectContext(getCredentialProvider().getUserName(),
 							getCredentialProvider().getPassword()));
 		}
-
+		RemoteActivator.getDefault().getServiceTracker().ungetService(service);
 		return this.fileReceiveAdapter;
 	}
 }

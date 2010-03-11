@@ -54,18 +54,17 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.commons.io.proxy.Proxy;
+import org.remus.infomngmnt.commons.io.proxy.ProxyUtil;
+import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.operation.DownloadFileJob;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.core.services.IRepositoryService;
+import org.remus.infomngmnt.core.remote.services.IRepositoryService;
+import org.remus.infomngmnt.model.remote.ILoginCallBack;
+import org.remus.infomngmnt.model.remote.IRepository;
 import org.remus.infomngmnt.onlineresource.OnlineResourceActivator;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.Proxy;
-import org.remus.infomngmnt.util.ProxyUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**
@@ -280,8 +279,8 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 
 	private Collection<? extends RemoteObject> buildMySearchContainer() throws RemoteException {
 		List<RemoteObject> returnValue = new ArrayList<RemoteObject>();
-		RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
-				IRepositoryService.class).getRepositoryById(getLocalRepositoryId());
+		RemoteRepository repositoryById = RemoteActivator.getDefault().getServiceTracker()
+				.getService(IRepositoryService.class).getRepositoryById(getLocalRepositoryId());
 
 		String[] split = org.apache.commons.lang.StringUtils.split(repositoryById.getOptions().get(
 				SlideshareActivator.REPOSITORY_OPTIONS_SEARCH_KEY), "|");
@@ -464,7 +463,8 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 			RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(syncObject, monitor);
 			Slideshow wrappedObject = (Slideshow) remoteObject.getWrappedObject();
 			String thumbnailUrl = wrappedObject.getThumbnailUrl();
-			IFile createTempFile = ResourceUtil.createTempFile("jpg");
+			IFile createTempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+					.createTempFile("jpg");
 			try {
 				DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(StringEscapeUtils
 						.unescapeXml(thumbnailUrl)), createTempFile, getFileReceiveAdapter());
@@ -482,7 +482,7 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 			RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(syncObject, monitor);
 			Slideshow wrappedObject = (Slideshow) remoteObject.getWrappedObject();
 			String downloadUrl = wrappedObject.getDownloadUrl();
-			IFile createTempFile = ResourceUtil
+			IFile createTempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
 					.createTempFile(wrappedObject.getFormat().getValue());
 
 			try {

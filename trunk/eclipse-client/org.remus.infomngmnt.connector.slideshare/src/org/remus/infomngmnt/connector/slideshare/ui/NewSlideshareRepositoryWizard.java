@@ -53,7 +53,7 @@ public class NewSlideshareRepositoryWizard extends NewRepositoryWizard {
 	public boolean performFinish() {
 		getRepository().getOptions().put(SlideshareActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
 				StringUtils.join(this.page1.getSearchList(), "|"));
-		getRepository().setUrl(getRepository().getRepositoryImplementation().getRepositoryUrl());
+		getRepository().setUrl(this.page1.getRepositoryDefinition().getRepositoryUrl());
 		return super.performFinish();
 	}
 

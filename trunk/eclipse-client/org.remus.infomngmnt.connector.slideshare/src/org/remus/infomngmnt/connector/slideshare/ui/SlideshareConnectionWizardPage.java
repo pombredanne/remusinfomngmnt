@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
@@ -52,8 +53,10 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.slideshare.SlideshareActivator;
-import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.model.remote.IRepository;
+import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
 
 public class SlideshareConnectionWizardPage extends WizardPage {
 
@@ -206,7 +209,14 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = repository.getRepositoryImplementation();
+		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		try {
+			this.repositoryDefinition = extensionService.getItemByRepository(repository);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void bindValuesToUi() {
@@ -255,5 +265,12 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 
 	public List getSearchList() {
 		return this.searchList;
+	}
+
+	/**
+	 * @return the repositoryDefinition
+	 */
+	public final IRepository getRepositoryDefinition() {
+		return this.repositoryDefinition;
 	}
 }

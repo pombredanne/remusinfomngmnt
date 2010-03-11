@@ -35,21 +35,22 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.common.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.CheckBoxBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.DatePickerBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.SpinnerSliderBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.TextBindingWidget;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
-import org.remus.infomngmnt.common.ui.swt.DateCombo;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.task.TaskPriority;
 import org.remus.infomngmnt.task.TaskStatus;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.databinding.BindingUtil;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.CheckBoxBindingWidget;
+import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
+import org.remus.infomngmnt.ui.databinding.SpinnerSliderBindingWidget;
+import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
+import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.widgets.DateCombo;
+import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.remus.infomngmnt.ui.widgets.databinding.DatePickerBindingWidget;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -233,13 +234,13 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		textBindingWidget.bindModel(getModelObject(), read
 				.getFeatureByNodeId(TaskActivator.INFO_TYPE_ID));
 
-		DatePickerBindingWidget dateComboBinding = BindingWidgetFactory.createDateComboBinding(
-				this.dueDate, this);
+		DatePickerBindingWidget dateComboBinding = AdditionalBindingWidgetFactory
+				.createDateComboBinding(this.dueDate, this);
 		dateComboBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_DUE_DATE), read
 				.getFeatureByNodeId(TaskActivator.NODE_NAME_DUE_DATE));
 
-		DatePickerBindingWidget startComboBinding = BindingWidgetFactory.createDateComboBinding(
-				this.startsDate, this);
+		DatePickerBindingWidget startComboBinding = AdditionalBindingWidgetFactory
+				.createDateComboBinding(this.startsDate, this);
 		startComboBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_STARTED), read
 				.getFeatureByNodeId(TaskActivator.NODE_NAME_STARTED));
 

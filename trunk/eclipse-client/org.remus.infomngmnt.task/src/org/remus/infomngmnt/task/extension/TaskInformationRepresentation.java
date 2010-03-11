@@ -18,16 +18,12 @@ import java.util.Date;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.util.EList;
 
 import org.remus.infomngmnt.CalendarEntry;
 import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.task.TaskActivator;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -65,29 +61,6 @@ public class TaskInformationRepresentation extends AbstractInformationRepresenta
 			return new CalendarEntry[] { createCalendarEntry };
 		}
 		return super.getCalendarContributions();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.remus.infomngmnt.core.extension.AbstractInformationRepresentation
-	 * #getBodyForIndexing(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public String getBodyForIndexing(IProgressMonitor monitor) throws CoreException {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		String join = StringUtils.join(getValue().getStringValue(), "\n", (String) read
-				.getValueByNodeId(TaskActivator.NODE_NAME_ASIGNEE));
-		EList<InformationUnit> childValues = InformationUtil.getChildByType(getValue(),
-				TaskActivator.NODE_NAME_WORKED_UNITS).getChildValues();
-		for (InformationUnit informationUnit : childValues) {
-			InformationStructureRead workUnitRead = InformationStructureRead.newSession(
-					informationUnit, TaskActivator.INFO_TYPE_ID);
-			join = StringUtils.join((String) workUnitRead
-					.getValueByNodeId(TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION), "\n");
-		}
-		return join;
 	}
 
 	/*

@@ -28,7 +28,6 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationImportance;
 import org.remus.infomngmnt.Severity;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.util.InformationUtil;
@@ -82,9 +81,6 @@ public class CheckTaskDueJob extends AbstractJob {
 								Notification createNotification = InfomngmntFactory.eINSTANCE
 										.createNotification();
 								createNotification.setImportance(NotificationImportance.MEDIUM);
-								createNotification.setImage(InformationExtensionManager
-										.getInstance()
-										.getInfoTypeByType(TaskActivator.INFO_TYPE_ID).getImage());
 								createNotification.setSeverity(Severity.INFO);
 								createNotification.setMessage(NLS.bind(
 										"Task \"{0}\" needs your attention", adapter.getLabel()));

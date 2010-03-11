@@ -6,30 +6,14 @@
       <information
             buildHtml="false"
             excludeFromIndex="false"
-            icon="icons/iconexperience/task.png"
             name="Task"
             presentation="org.remus.infomngmnt.task.extension.TaskInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="TASK">
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.filetransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.htmltransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.texttransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.urlTransfer">
-         </validTransfers>
-         <validTransfers
-               transferId="org.remus.infomngmnt.core.rftTransfer">
-         </validTransfers>
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.task.ui.TaskEditPage"
             icon="icons/iconexperience/task_edit.png"
@@ -70,13 +54,69 @@
       </job>
    </extension>
    <extension
-         point="org.remus.infomngmnt.common.ui.traySection">
+         point="org.remus.infomngmnt.ui.desktop.traySection">
       <sectionBox
             id="org.remus.infomngmnt.task.workLog"
             multiple="false"
             name="Work Logger"
             sectionControl="org.remus.infomngmnt.task.tray.WorkLoggerTray">
       </sectionBox>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/task.png"
+            infotype="TASK">
+      </image>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="TASK"
+            typeId="TASK">
+      </index>
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="asignee"
+            typeId="TASK">
+      </index>
+      <secondaryIndex
+            class="org.remus.infomngmnt.task.index.WorkLogIndexer"
+            node="workunits"
+            typeId="TASK">
+      </secondaryIndex>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="TASK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.htmltransfer"
+            typeId="TASK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.imagetransfer"
+            typeId="TASK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.rftTransfer"
+            typeId="TASK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.texttransfer"
+            typeId="TASK">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.urlTransfer"
+            typeId="TASK">
+      </validTransfers>
+      <creationtrigger
+            class="org.remus.infomngmnt.task.ui.wizard.TaskCreationTrigger"
+            typeId="TASK">
+      </creationtrigger>
    </extension>
 
 </plugin>

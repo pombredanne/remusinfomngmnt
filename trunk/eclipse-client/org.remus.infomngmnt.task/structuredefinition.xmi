@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="ASCII"?>
-<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.core/model/infomngmnt.ecore" type="STRING" label="The tasks body">
+<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.model/model/infomngmnt.ecore" type="STRING" label="The tasks body">
   <structureItems type="STRING" label="The tasks status" id="status" createAlways="true"/>
   <structureItems type="LONG" label="The completion of the task in percentage" id="completedpercentage" createAlways="true"/>
   <structureItems type="STRING" label="The tasks assignee" id="asignee" createAlways="true"/>
   <structureItems type="STRING" label="The tasks priority" id="priority" createAlways="true"/>
-  <structureItems type="DATE" label="The dates duedate" id="duedata" createAlways="true"/>
-  <structureItems type="DATE" label="The tasks start date" id="started" createAlways="true"/>
+  <structureItems type="DATETIME" label="The dates duedate" id="duedata" createAlways="true"/>
+  <structureItems type="DATETIME" label="The tasks start date" id="started" createAlways="true"/>
   <structureItems type="STRING" label="Boolean if the task has a reminder" id="notify" createAlways="true"/>
   <structureItems type="LONG" label="How many minutes before due date the reminder is triggered" id="minutesbeforedue" createAlways="true"/>
   <structureItems type="STRING" label="Boolean if the task is completed" id="completed" createAlways="true"/>
   <structureItems xsi:type="infomngmnt:DynamicStructure" label="Collection of worked units" id="workunits" createAlways="true" upperBound="-1">
     <structureItems label="One single Unit of work" id="workunit">
-      <structureItems type="DATE" label="Start date of the work unit" id="workunitstart" createAlways="true"/>
-      <structureItems type="DATE" label="End date of the work unit" id="workunitend" createAlways="true"/>
+      <structureItems type="DATETIME" label="Start date of the work unit" id="workunitstart" createAlways="true"/>
+      <structureItems type="DATETIME" label="End date of the work unit" id="workunitend" createAlways="true"/>
       <structureItems type="STRING" label="The description of a work unit" id="description" createAlways="true"/>
     </structureItems>
   </structureItems>

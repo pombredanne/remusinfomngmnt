@@ -53,15 +53,16 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.common.ui.databinding.CDateTimeBindingWidget;
-import org.remus.infomngmnt.common.ui.databinding.StyledTextBindingWidget;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.impl.InformationUnitImpl;
 import org.remus.infomngmnt.task.TaskActivator;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
+import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.remus.infomngmnt.ui.widgets.databinding.CDateTimeBindingWidget;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -356,12 +357,12 @@ public class WorkLogPage extends AbstractInformationFormPage {
 			this.textBindingWidget.bindModel(InformationUtil.getChildByType(this.model,
 					TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION),
 					InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-			this.startBinding = BindingWidgetFactory.createCDateTime(this.startTime,
+			this.startBinding = AdditionalBindingWidgetFactory.createCDateTime(this.startTime,
 					getDatabindingContext(), getEditingDomain());
 			this.startBinding.bindModel(InformationUtil.getChildByType(this.model,
 					TaskActivator.NODE_NAME_WORKED_UNIT_STARTED),
 					InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
-			this.endBinding = BindingWidgetFactory.createCDateTime(this.endTime,
+			this.endBinding = AdditionalBindingWidgetFactory.createCDateTime(this.endTime,
 					getDatabindingContext(), getEditingDomain());
 			this.endBinding.bindModel(InformationUtil.getChildByType(this.model,
 					TaskActivator.NODE_NAME_WORKED_UNIT_END),

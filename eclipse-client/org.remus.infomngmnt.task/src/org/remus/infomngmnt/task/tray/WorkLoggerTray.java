@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.Action;
@@ -38,15 +39,16 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.task.TaskActivator;
-import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.ui.desktop.extension.AbstractTraySection;
+import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmt.common.ui.uimodel.TraySection;
+import org.remus.uimodel.TraySection;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -66,6 +68,9 @@ public class WorkLoggerTray extends AbstractTraySection {
 	private Action startAction;
 	private Action stopAction;
 	private Action resetAction;
+	private RemusServiceTracker serviceTracker;
+	private IEditingHandler editingHandler;
+	private IApplicationModel applicationModel;
 
 	@Override
 	public void createDetailsPart(Composite parent) {
@@ -73,6 +78,9 @@ public class WorkLoggerTray extends AbstractTraySection {
 
 		parent.setLayout(layout);
 		buildHyperLink(parent);
+		this.serviceTracker = new RemusServiceTracker(Platform.getBundle(TaskActivator.PLUGIN_ID));
+		this.editingHandler = this.serviceTracker.getService(IEditingHandler.class);
+		this.applicationModel = this.serviceTracker.getService(IApplicationModel.class);
 	}
 
 	private void buildHyperLink(final Composite parent) {
@@ -88,7 +96,7 @@ public class WorkLoggerTray extends AbstractTraySection {
 				Set<? extends EObject> allItemsByType = InformationUtil
 						.getAllItemsByType(TaskActivator.INFO_TYPE_ID);
 				NavigatorDecoratingLabelProvider labelProvider = new NavigatorDecoratingLabelProvider(
-						new AdapterFactoryLabelProvider(EditingUtil.getInstance()
+						new AdapterFactoryLabelProvider(WorkLoggerTray.this.editingHandler
 								.getAdapterFactory())) {
 					@Override
 					public String getText(final Object element) {
@@ -189,7 +197,7 @@ public class WorkLoggerTray extends AbstractTraySection {
 			stopTracking();
 		}
 		if (id != null) {
-			this.itemById = ApplicationModelPool.getInstance().getItemById(id, null);
+			this.itemById = this.applicationModel.getItemById(id, null);
 		}
 		refreshHyperLinkLabel();
 		updateButtonStatus();
@@ -240,7 +248,7 @@ public class WorkLoggerTray extends AbstractTraySection {
 					this.startTime);
 			edit.setValue(informationUnit, TaskActivator.NODE_NAME_WORKED_UNIT_END, new Date());
 
-			EditingUtil.getInstance().saveObjectToResource(adapter);
+			this.editingHandler.saveObjectToResource(adapter);
 			this.startTime = null;
 		}
 		this.tracking = false;
@@ -272,7 +280,7 @@ public class WorkLoggerTray extends AbstractTraySection {
 	public void init(FormToolkit pToolkit, TraySection section) {
 		String string = section.getPreferenceOptions().get(SELECTED_TASK_ID);
 		if (string != null) {
-			this.itemById = ApplicationModelPool.getInstance().getItemById(string, null);
+			this.itemById = this.applicationModel.getItemById(string, null);
 		}
 		this.description = section.getPreferenceOptions().get(LAST_COMMENT);
 		if (this.itemById != null) {

@@ -14,6 +14,7 @@ package org.remus.infomngmnt.task.ui;
 
 import java.util.Set;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
@@ -26,7 +27,9 @@ import org.eclipse.swt.widgets.Control;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.fieldassist.SmartField;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
+import org.remus.infomngmnt.services.RemusServiceTracker;
+import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -34,8 +37,19 @@ import org.remus.infomngmnt.util.InformationUtil;
  */
 public class ContactsSmartField extends SmartField {
 
+	private final RemusServiceTracker serviceTracker;
+	private final IInformationTypeImage informationTypeImage;
+
 	public ContactsSmartField(final Control control) {
 		super(control, new TextContentAdapter());
+		this.serviceTracker = new RemusServiceTracker(Platform.getBundle(TaskActivator.PLUGIN_ID));
+		this.informationTypeImage = this.serviceTracker.getService(IInformationTypeImage.class);
+	}
+
+	@Override
+	public void dispose() {
+		this.serviceTracker.ungetService(this.informationTypeImage);
+		super.dispose();
 	}
 
 	@Override
@@ -77,8 +91,8 @@ public class ContactsSmartField extends SmartField {
 		return new LabelProvider() {
 			@Override
 			public Image getImage(final Object element) {
-				return InformationExtensionManager.getInstance().getInfoTypeByType(
-						ContactActivator.TYPE_ID).getImage();
+				return ContactsSmartField.this.informationTypeImage
+						.getImageByInfoType(ContactActivator.TYPE_ID);
 			}
 
 			@Override

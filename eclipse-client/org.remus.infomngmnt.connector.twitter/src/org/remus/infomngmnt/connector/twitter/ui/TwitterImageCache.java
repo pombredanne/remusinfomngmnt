@@ -30,13 +30,12 @@ import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
+import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
-import org.remus.infomngmnt.core.operation.DownloadFileJob;
-import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.services.IRepositoryService;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
+import org.remus.infomngmnt.model.remote.IRepository;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -111,9 +110,8 @@ public class TwitterImageCache {
 				callback.callBack(file2.getAbsolutePath());
 			}
 		} else {
-			IRepository repositoryImplementation = InfomngmntEditPlugin.getPlugin().getService(
-					IRepositoryService.class).getRepositoryById(repositoryId)
-					.getRepositoryImplementation();
+			IRepository repositoryImplementation = SyncUtil
+					.getRepositoryImplemenationByRepositoryId(repositoryId);
 			if (repositoryImplementation != null
 					&& repositoryImplementation instanceof TwitterRepository) {
 				Twitter api = ((TwitterRepository) repositoryImplementation).getApi();

@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.query.conditions.Condition;
 import org.eclipse.emf.query.conditions.eobjects.structuralfeatures.EObjectAttributeValueCondition;
@@ -30,15 +31,32 @@ import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.sync.SyncStateParticipantNotfier;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.remote.sync.SyncStateParticipantNotfier;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class DeleteOldMessagesJob extends AbstractJob {
+
+	private final RemusServiceTracker remusServiceTracker;
+	protected IApplicationModel applicationModel;
+	private final IEditingHandler editService;
+
+	/**
+	 * 
+	 */
+	public DeleteOldMessagesJob() {
+		this.remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(TwitterActivator.PLUGIN_ID));
+
+		this.applicationModel = this.remusServiceTracker.getService(IApplicationModel.class);
+		this.editService = this.remusServiceTracker.getService(IEditingHandler.class);
+
+	}
 
 	@Override
 	public List<Notification> run(final IProgressMonitor monitor) {
@@ -50,8 +68,8 @@ public class DeleteOldMessagesJob extends AbstractJob {
 					}
 				});
 
-		SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
-				.getRootCategories()), new WHERE(typeCondition));
+		SELECT select = new SELECT(new FROM(this.applicationModel.getModel().getRootCategories()),
+				new WHERE(typeCondition));
 		Set<? extends EObject> eObjects = select.execute().getEObjects();
 		for (final EObject eObject : eObjects) {
 			InformationUnit adapter = (InformationUnit) ((IAdaptable) eObject)
@@ -66,7 +84,7 @@ public class DeleteOldMessagesJob extends AbstractJob {
 								.remove(getMaxMessages());
 					}
 					SyncStateParticipantNotfier.notifyClean(adapter.getId());
-					EditingUtil.getInstance().saveObjectToResource(adapter);
+					this.editService.saveObjectToResource(adapter);
 				}
 
 			}

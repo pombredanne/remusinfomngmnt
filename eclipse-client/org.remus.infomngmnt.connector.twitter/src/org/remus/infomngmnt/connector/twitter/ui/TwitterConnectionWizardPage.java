@@ -51,7 +51,8 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterCredentials;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
+import org.remus.infomngmnt.model.remote.IRepository;
 
 import twitter4j.TwitterException;
 
@@ -196,7 +197,8 @@ public class TwitterConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = repository.getRepositoryImplementation();
+		this.repositoryDefinition = SyncUtil
+				.getRepositoryImplemenationByRemoteRepository(repository);
 	}
 
 	public void bindValuesToUi() {

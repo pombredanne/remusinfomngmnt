@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 
 /**
@@ -53,7 +54,9 @@ public class NewTwitterRepositoryWizard extends NewRepositoryWizard {
 	public boolean performFinish() {
 		getRepository().getOptions().put(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
 				StringUtils.join(this.page1.getSearchList(), "|"));
-		getRepository().setUrl(getRepository().getRepositoryImplementation().getRepositoryUrl());
+		getRepository().setUrl(
+				SyncUtil.getRepositoryImplemenationByRemoteRepository(getRepository())
+						.getRepositoryUrl());
 		return super.performFinish();
 	}
 

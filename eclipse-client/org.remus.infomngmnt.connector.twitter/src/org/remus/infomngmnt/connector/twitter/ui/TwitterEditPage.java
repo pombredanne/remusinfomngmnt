@@ -33,9 +33,9 @@ import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceIniti
 import org.remus.infomngmnt.connector.twitter.ui.actions.Add2FavoriteActions;
 import org.remus.infomngmnt.connector.twitter.ui.actions.ReplyAction;
 import org.remus.infomngmnt.connector.twitter.ui.actions.RetweetAction;
-import org.remus.infomngmnt.core.sync.SyncUtil;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.extension.AbstractInformationFormPage;
+import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**

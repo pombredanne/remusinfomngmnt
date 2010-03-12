@@ -35,11 +35,11 @@ import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.NotificationImportance;
 import org.remus.infomngmnt.Severity;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.connector.twitter.ui.ShrinkURLUtils;
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.desktop.extension.AbstractTraySection;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**

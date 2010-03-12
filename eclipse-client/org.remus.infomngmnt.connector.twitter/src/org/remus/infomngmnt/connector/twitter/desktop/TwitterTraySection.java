@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -33,17 +34,18 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.extension.AbstractTraySection;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.ui.MessageComposite;
 import org.remus.infomngmnt.connector.twitter.ui.MessageHyperLinkAdapter;
 import org.remus.infomngmnt.connector.twitter.ui.actions.TweetAction;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.services.RemusServiceTracker;
+import org.remus.infomngmnt.ui.desktop.extension.AbstractTraySection;
 import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmt.common.ui.uimodel.TraySection;
+import org.remus.uimodel.TraySection;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -62,6 +64,10 @@ public class TwitterTraySection extends AbstractTraySection {
 	@Override
 	public void init(final FormToolkit pToolkit, final TraySection section) {
 		super.init(pToolkit, section);
+		RemusServiceTracker remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(TwitterActivator.PLUGIN_ID));
+		IApplicationModel service = remusServiceTracker.getService(IApplicationModel.class);
+
 		try {
 			this.messages = Integer.valueOf(section.getPreferenceOptions().get(
 					TwitterSectionPreferences.PREFERENCE_MESSAGE_COUNT));
@@ -76,7 +82,8 @@ public class TwitterTraySection extends AbstractTraySection {
 		}
 		String string = section.getPreferenceOptions().get(
 				TwitterSectionPreferences.PREFERENCE_INFOUNIT_ID);
-		this.itemById = ApplicationModelPool.getInstance().getItemById(string, null);
+		this.itemById = service.getItemById(string, null);
+		remusServiceTracker.ungetService(service);
 	}
 
 	@Override

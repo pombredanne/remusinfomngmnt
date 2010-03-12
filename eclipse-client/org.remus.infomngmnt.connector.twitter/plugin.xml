@@ -2,11 +2,10 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remoteRepository">
+         point="org.remus.infomngmnt.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.connector.twitter.TwitterRepository"
             credentialprovider="org.remus.infomngmnt.connector.twitter.TwitterCredentials"
-            icon="icons/twitter.png"
             id="org.remus.infomngmnt.connector.twitter.twitterConnector"
             name="Twitter">
          <changeDefinition
@@ -19,8 +18,9 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.repositoryUI">
+         point="org.remus.infomngmnt.ui.remote.repositoryUi">
       <respository
+            icon="icons/twitter.png"
             id="org.remus.infomngmnt.connector.twitter.ui"
             newWizard="org.remus.infomngmnt.connector.twitter.ui.NewTwitterRepositoryWizard"
             repository-id="org.remus.infomngmnt.connector.twitter.twitterConnector">
@@ -31,7 +31,6 @@
       <information
             buildHtml="false"
             excludeFromIndex="false"
-            icon="icons/iconexperience/messages.png"
             name="Twitter Feed"
             presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
@@ -39,7 +38,6 @@
       </information>
       <information
             excludeFromIndex="true"
-            icon="icons/iconexperience/users.png"
             name="Twitter User Log"
             presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterUserInfoRepresentation"
             structuredefinition="userlogdefinition.xmi"
@@ -47,7 +45,6 @@
       </information>
       <information
             excludeFromIndex="true"
-            icon="icons/iconexperience/document_chart.png"
             name="Twitter User-Details"
             presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterDetailledInfoRepresentation"
             structuredefinition="detaildefinition.xmi"
@@ -55,7 +52,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.informationUi">
+         point="org.remus.infomngmnt.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.connector.twitter.ui.TwitterEditPage"
             icon="icons/iconexperience/messages.png"
@@ -95,10 +92,10 @@
                            ifEmpty="false">
                         <and>
                            <test
-                                 property="org.remus.infomngmnt.ui.canCommitOrReplace">
+                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
                            </test>
                            <test
-                                 property="org.remus.infomngmnt.ui.repositoryIdEquals"
+                                 property="org.remus.infomngmnt.remote.repositoryIdEquals"
                                  value="org.remus.infomngmnt.connector.twitter.twitterConnector">
                            </test>
                         </and>
@@ -128,10 +125,10 @@
                   <iterate>
                      <and>
                         <test
-                              property="org.remus.infomngmnt.ui.canCommitOrReplace">
+                              property="org.remus.infomngmnt.remote.canCommitOrReplace">
                         </test>
                         <test
-                              property="org.remus.infomngmnt.ui.repositoryIdEquals"
+                              property="org.remus.infomngmnt.remote.repositoryIdEquals"
                               value="org.remus.infomngmnt.connector.twitter.twitterConnector">
                         </test>
                      </and>
@@ -152,7 +149,7 @@
       </propertyTester>
    </extension>
    <extension
-         point="org.remus.infomngmnt.common.ui.traySection">
+         point="org.remus.infomngmnt.ui.desktop.traySection">
       <sectionBox
             id="org.remus.infomngmnt.connector.twitter.sectionBox"
             multiple="true"
@@ -199,6 +196,21 @@
             id="org.remus.infomngmnt.connector.twitter"
             name="Twitter">
       </page>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/messages.png"
+            infotype="TWITTER">
+      </image>
+      <image
+            image="icons/iconexperience/document_chart.png"
+            infotype="TWITTER-DETAIL">
+      </image>
+      <image
+            image="icons/iconexperience/users.png"
+            infotype="TWITTER-USER">
+      </image>
    </extension>
 
 </plugin>

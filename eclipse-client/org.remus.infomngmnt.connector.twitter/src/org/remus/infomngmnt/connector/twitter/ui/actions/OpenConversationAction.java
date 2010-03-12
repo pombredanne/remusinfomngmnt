@@ -27,8 +27,8 @@ import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.ui.ConversationPopup;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.core.sync.SyncUtil;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import twitter4j.Status;

@@ -29,10 +29,11 @@ import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.services.IRepositoryService;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
+import org.remus.infomngmnt.core.remote.services.IRepositoryService;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.model.remote.IRepository;
 
 import twitter4j.DirectMessage;
 import twitter4j.Status;
@@ -168,9 +169,8 @@ public class TwitterUtil {
 	}
 
 	public static Twitter getTwitterApi(final String repositoryId) {
-		IRepository repositoryImplementation = InfomngmntEditPlugin.getPlugin().getService(
-				IRepositoryService.class).getRepositoryById(repositoryId)
-				.getRepositoryImplementation();
+		IRepository repositoryImplementation = SyncUtil
+				.getRepositoryImplemenationByRepositoryId(repositoryId);
 		if (repositoryImplementation != null
 				&& repositoryImplementation instanceof TwitterRepository) {
 			return ((TwitterRepository) repositoryImplementation).getApi();
@@ -192,7 +192,7 @@ public class TwitterUtil {
 		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE, StringEscapeUtils
 				.unescapeXml(status.getSource()));
 		edit.setValue(message, TwitterActivator.REPLY_ID, status.getToUser());
-		User userDetail = api.getUserDetail(status.getFromUser());
+		User userDetail = api.showUser(status.getFromUser());
 		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, userDetail.getName());
 		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, userDetail.getScreenName());
 		TwitterActivator.getDefault().getImageCache().checkCache(userDetail.getScreenName(),
@@ -215,8 +215,8 @@ public class TwitterUtil {
 	}
 
 	public static boolean canAdd2Repository(final String repositoryId, final String keyWord) {
-		RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
-				IRepositoryService.class).getRepositoryById(repositoryId);
+		RemoteRepository repositoryById = RemoteActivator.getDefault().getServiceTracker()
+				.getService(IRepositoryService.class).getRepositoryById(repositoryId);
 		String string = repositoryById.getOptions().get(
 				TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY);
 		List<String> asList = Arrays.asList(org.apache.commons.lang.StringUtils.split(string, "|"));
@@ -224,8 +224,8 @@ public class TwitterUtil {
 	}
 
 	public static void addKeyWordToRepository(final String repositoryId, final String keyWord) {
-		RemoteRepository repositoryById = InfomngmntEditPlugin.getPlugin().getService(
-				IRepositoryService.class).getRepositoryById(repositoryId);
+		RemoteRepository repositoryById = RemoteActivator.getDefault().getServiceTracker()
+				.getService(IRepositoryService.class).getRepositoryById(repositoryId);
 		String string = repositoryById.getOptions().get(
 				TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY);
 		List<String> asList = new ArrayList<String>(Arrays
@@ -233,7 +233,10 @@ public class TwitterUtil {
 		asList.add(keyWord);
 		repositoryById.getOptions().put(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
 				org.apache.commons.lang.StringUtils.join(asList, "|"));
-		EditingUtil.getInstance().saveObjectToResource(repositoryById);
+		IEditingHandler service = RemoteActivator.getDefault().getServiceTracker().getService(
+				IEditingHandler.class);
+		service.saveObjectToResource(repositoryById);
+		RemoteActivator.getDefault().getServiceTracker().ungetService(service);
 
 	}
 }

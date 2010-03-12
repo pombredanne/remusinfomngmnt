@@ -30,13 +30,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.jobs.UploadImageJob;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.core.security.CredentialProvider;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.StatusCreator;
 
 public class TweetDialog extends TitleAreaDialog {

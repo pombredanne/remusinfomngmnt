@@ -14,6 +14,7 @@ package org.remus.infomngmnt.connector.twitter.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
+
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 
 /**

@@ -26,7 +26,7 @@ import org.remus.infomngmnt.connector.twitter.jobs.UnFollowUserJob;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
 import org.remus.infomngmnt.connector.twitter.ui.actions.OpenConversationAction;
 import org.remus.infomngmnt.connector.twitter.ui.actions.SendDirectMessageAction;
-import org.remus.infomngmnt.core.sync.SyncUtil;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
 
 public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 	private Menu userPopup;

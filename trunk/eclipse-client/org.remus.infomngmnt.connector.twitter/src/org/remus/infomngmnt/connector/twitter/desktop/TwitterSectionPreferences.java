@@ -14,6 +14,7 @@ package org.remus.infomngmnt.connector.twitter.desktop;
 
 import java.util.Set;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -30,11 +31,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.extension.AbstractTrayPreferencePage;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.ui.provider.NavigatorDecoratingLabelProvider;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
+import org.remus.infomngmnt.ui.desktop.extension.AbstractTrayPreferencePage;
+import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.util.InformationUtil;
 
 /**
@@ -54,12 +56,18 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 	public static final int WIDTH_DEFAULT = 80;
 
 	private Spinner widthSpinner;
+	private final RemusServiceTracker remusServiceTracker;
+	private final IApplicationModel applicationModel;
+	private final IEditingHandler editingHandler;
 
 	/**
 	 * 
 	 */
 	public TwitterSectionPreferences() {
-		// TODO Auto-generated constructor stub
+		this.remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(TwitterActivator.PLUGIN_ID));
+		this.applicationModel = this.remusServiceTracker.getService(IApplicationModel.class);
+		this.editingHandler = this.remusServiceTracker.getService(IEditingHandler.class);
 	}
 
 	/*
@@ -100,8 +108,8 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 				Set<? extends EObject> allItemsByType = InformationUtil
 						.getAllItemsByType(TwitterActivator.INFOTYPE_ID);
 				NavigatorDecoratingLabelProvider labelProvider = new NavigatorDecoratingLabelProvider(
-						new AdapterFactoryLabelProvider(EditingUtil.getInstance()
-								.getAdapterFactory())) {
+						new AdapterFactoryLabelProvider(
+								TwitterSectionPreferences.this.editingHandler.getAdapterFactory())) {
 					@Override
 					public String getText(final Object element) {
 						if (element instanceof InformationUnitListItem) {
@@ -201,7 +209,7 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 
 	private void setSelectedInfoUnit(final String id) {
 		this.selectedInfoUnitId = id;
-		InformationUnitListItem itemById = ApplicationModelPool.getInstance().getItemById(id, null);
+		InformationUnitListItem itemById = this.applicationModel.getItemById(id, null);
 		if (itemById != null) {
 			this.feedText.setText(InformationUtil.getFullReadablePath(itemById));
 		}

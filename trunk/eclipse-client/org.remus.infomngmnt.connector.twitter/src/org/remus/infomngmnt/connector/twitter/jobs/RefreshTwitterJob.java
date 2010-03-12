@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.query.conditions.Condition;
 import org.eclipse.emf.query.conditions.eobjects.EObjectCondition;
@@ -29,20 +30,31 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
-import org.remus.infomngmnt.core.model.ApplicationModelPool;
-import org.remus.infomngmnt.core.services.ISynchronizationManager;
-import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
+import org.remus.infomngmnt.core.remote.services.ISynchronizationManager;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public abstract class RefreshTwitterJob extends AbstractJob {
 
+	private final RemusServiceTracker remusServiceTracker;
+	protected IEditingHandler service;
+	protected IApplicationModel applicationModel;
+	protected ISynchronizationManager synchronizationManager;
+
 	/**
 	 * 
 	 */
 	public RefreshTwitterJob() {
-		// TODO Auto-generated constructor stub
+		this.remusServiceTracker = new RemusServiceTracker(Platform
+				.getBundle(TwitterActivator.PLUGIN_ID));
+		this.service = this.remusServiceTracker.getService(IEditingHandler.class);
+		this.applicationModel = this.remusServiceTracker.getService(IApplicationModel.class);
+		this.synchronizationManager = this.remusServiceTracker
+				.getService(ISynchronizationManager.class);
 	}
 
 	/*
@@ -69,12 +81,11 @@ public abstract class RefreshTwitterJob extends AbstractJob {
 				return isTwitterElementSatisfied(eObject);
 			}
 		};
-		SELECT select = new SELECT(new FROM(ApplicationModelPool.getInstance().getModel()
-				.getRootCategories()), new WHERE(typeCondition.AND(isSynchronizableCondition)));
+		SELECT select = new SELECT(new FROM(this.applicationModel.getModel().getRootCategories()),
+				new WHERE(typeCondition.AND(isSynchronizableCondition)));
 		Set<? extends EObject> eObjects = select.execute().getEObjects();
 		for (final EObject eObject : eObjects) {
-			InfomngmntEditPlugin.getPlugin().getService(ISynchronizationManager.class)
-					.scheduleSynchronization((InformationUnitListItem) eObject);
+			this.synchronizationManager.scheduleSynchronization((InformationUnitListItem) eObject);
 		}
 		return null;
 	}

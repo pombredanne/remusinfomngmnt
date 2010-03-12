@@ -40,15 +40,15 @@ import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.remus.infomngmnt.model.remote.ILoginCallBack;
+import org.remus.infomngmnt.model.remote.IRepository;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -58,7 +58,9 @@ import twitter4j.Query;
 import twitter4j.Tweet;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 import twitter4j.User;
+import twitter4j.http.AccessToken;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -512,7 +514,7 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 				TwitterActivator.getDefault().getImageCache().checkCache(i.getScreenName(),
 						i.getProfileImageURL(), null);
 			}
-			onlineFollowerIds.add(String.valueOf(i));
+			onlineFollowerIds.add(String.valueOf(i.getId()));
 		}
 		// last one is to search for ex followers
 		for (InformationUnit informationUnit : dynamicList) {
@@ -872,10 +874,10 @@ public class TwitterRepository extends AbstractExtensionRepository implements IR
 	public Twitter getApi() {
 		if (this.api == null) {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
-			this.api = new Twitter();
+			this.api = new TwitterFactory().getInstance();
 			this.api.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
-			this.api.setOAuthAccessToken(getCredentialProvider().getUserName(),
-					getCredentialProvider().getPassword());
+			this.api.setOAuthAccessToken(new AccessToken(getCredentialProvider().getUserName(),
+					getCredentialProvider().getPassword()));
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 		}
 		return this.api;

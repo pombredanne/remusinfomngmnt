@@ -39,7 +39,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
 import org.remus.infomngmnt.util.StatusCreator;
 
 /**

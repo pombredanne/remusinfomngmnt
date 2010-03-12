@@ -12,6 +12,7 @@
 package org.remus.infomngmnt.connector.twitter.jobs;
 
 import org.eclipse.emf.ecore.EObject;
+
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;

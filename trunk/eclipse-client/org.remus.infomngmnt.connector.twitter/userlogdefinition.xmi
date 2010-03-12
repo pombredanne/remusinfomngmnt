@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="ASCII"?>
-<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.core/model/infomngmnt.ecore" canHaveBinaryReferences="true">
-  <structureItems xsi:type="infomngmnt:DynamicStructure" id="users" createAlways="true" upperBound="-1">
-    <structureItems type="STRING" label="A single user" id="user">
-      <structureItems type="STRING" id="username" createAlways="true"/>
-      <structureItems type="STRING" id="name" createAlways="true"/>
-      <structureItems type="STRING" label="" id="url" createAlways="true"/>
-      <structureItems type="DATE" id="creationDate" createAlways="true"/>
-      <structureItems type="LONG" id="friendscount" createAlways="true"/>
-      <structureItems type="LONG" id="followerscount" createAlways="true"/>
-      <structureItems type="STRING" id="location" createAlways="true"/>
-      <structureItems type="LONG" id="statuscount" createAlways="true"/>
-      <structureItems type="BOOLEAN" id="ex" createAlways="true"/>
-      <structureItems type="DATE" id="datefolloworunfollow" createAlways="true"/>
+<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.model/model/infomngmnt.ecore" canHaveBinaryReferences="true">
+  <structureItems xsi:type="infomngmnt:DynamicStructure" id="users" upperBound="-1">
+    <structureItems type="STRING" label="A single user" id="user" createAlways="false">
+      <structureItems type="STRING" id="username"/>
+      <structureItems type="STRING" id="name"/>
+      <structureItems type="STRING" label="" id="url"/>
+      <structureItems type="DATETIME" id="creationDate"/>
+      <structureItems type="LONG" id="friendscount"/>
+      <structureItems type="LONG" id="followerscount"/>
+      <structureItems type="STRING" id="location"/>
+      <structureItems type="LONG" id="statuscount"/>
+      <structureItems type="BOOLEAN" id="ex"/>
+      <structureItems type="DATETIME" id="datefolloworunfollow"/>
     </structureItems>
   </structureItems>
 </infomngmnt:InformationStructureDefinition>

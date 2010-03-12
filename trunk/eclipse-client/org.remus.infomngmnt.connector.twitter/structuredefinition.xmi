@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
-<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.core/model/infomngmnt.ecore">
-  <structureItems xsi:type="infomngmnt:DynamicStructure" label="The messages" id="messages" createAlways="true" upperBound="-1">
-    <structureItems label="A single message" id="message">
-      <structureItems type="DATE" label="The messages date" id="date" createAlways="true"/>
-      <structureItems type="STRING" label="The messages content" id="content" createAlways="true"/>
-      <structureItems type="LONG" label="The internal twitter id" id="twitterid" createAlways="true"/>
-      <structureItems type="STRING" label="The messages source" id="source" createAlways="true"/>
-      <structureItems type="STRING" label="The reply id" id="reply" createAlways="true"/>
-      <structureItems type="STRING" label="The user" id="user" createAlways="true"/>
-      <structureItems type="STRING" label="The messages user id" id="userid" createAlways="true"/>
-      <structureItems type="LONG" id="replystatusid" createAlways="true"/>
+<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.model/model/infomngmnt.ecore">
+  <structureItems xsi:type="infomngmnt:DynamicStructure" label="The messages" id="messages" upperBound="-1">
+    <structureItems label="A single message" id="message" createAlways="false">
+      <structureItems type="DATETIME" label="The messages date" id="date"/>
+      <structureItems type="STRING" label="The messages content" id="content"/>
+      <structureItems type="LONG" label="The internal twitter id" id="twitterid"/>
+      <structureItems type="STRING" label="The messages source" id="source"/>
+      <structureItems type="STRING" label="The reply id" id="reply"/>
+      <structureItems type="STRING" label="The user" id="user"/>
+      <structureItems type="STRING" label="The messages user id" id="userid"/>
+      <structureItems type="LONG" id="replystatusid"/>
     </structureItems>
   </structureItems>
 </infomngmnt:InformationStructureDefinition>

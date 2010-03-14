@@ -110,5 +110,12 @@
             typeId="MEETING">
       </index>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/document_cup.png"
+            infotype="MEETING">
+      </image>
+   </extension>
 
 </plugin>

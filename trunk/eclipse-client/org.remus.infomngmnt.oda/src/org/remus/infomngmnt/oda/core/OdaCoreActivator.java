@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class OdaCoreActivator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.oda.core";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.oda";
 
 	// The shared instance
 	private static OdaCoreActivator plugin;

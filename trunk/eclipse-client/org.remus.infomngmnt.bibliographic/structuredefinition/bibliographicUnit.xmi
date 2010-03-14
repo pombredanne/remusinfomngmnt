@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="ASCII"?>
 <infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../../org.remus.infomngmnt.model/model/infomngmnt.ecore">
-  <structureItems type="STRING" label="Bibtexkey" id="bibtexkey" createAlways="true"/>
-  <structureItems type="STRING" label="Address" id="address" createAlways="true"/>
-  <structureItems type="STRING" label="Annotation" id="annote" createAlways="true"/>
-  <structureItems type="STRING" label="Author" id="author" createAlways="true"/>
-  <structureItems type="STRING" label="Booktitle" id="booktitle" createAlways="true"/>
-  <structureItems type="STRING" label="Chapter" id="chapter" createAlways="true"/>
-  <structureItems type="STRING" label="Edition" id="edition" createAlways="true"/>
-  <structureItems type="STRING" label="Editor" id="editor" createAlways="true"/>
-  <structureItems type="STRING" label="Eprint" id="eprint" createAlways="true"/>
-  <structureItems type="STRING" label="Howpublished" id="howpublished" createAlways="true"/>
-  <structureItems type="STRING" label="Institution" id="institution" createAlways="true"/>
-  <structureItems type="STRING" label="Journal" id="journal" createAlways="true"/>
-  <structureItems type="STRING" label="Key" id="key" createAlways="true"/>
-  <structureItems type="STRING" label="Month" id="month" createAlways="true"/>
-  <structureItems type="STRING" label="Note" id="note" createAlways="true"/>
-  <structureItems type="STRING" label="Number" id="number" createAlways="true"/>
-  <structureItems type="STRING" label="Organization" id="organization" createAlways="true"/>
-  <structureItems type="STRING" label="Pages" id="pages" createAlways="true"/>
-  <structureItems type="STRING" label="Publisher" id="publisher" createAlways="true"/>
-  <structureItems type="STRING" label="School" id="school" createAlways="true"/>
-  <structureItems type="STRING" label="Series" id="series" createAlways="true"/>
-  <structureItems type="STRING" label="Type" id="type" createAlways="true"/>
-  <structureItems type="STRING" label="Url" id="url" createAlways="true"/>
-  <structureItems type="STRING" label="Volume" id="volume" createAlways="true"/>
-  <structureItems type="STRING" label="Year" id="year" createAlways="true"/>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" label="Files" id="files" createAlways="true" upperBound="-1">
-    <structureItems canHaveBinaryReferences="true" id="file">
-      <structureItems type="STRING" id="fileLabel" createAlways="true"/>
+  <structureItems type="STRING" label="Bibtexkey" id="bibtexkey"/>
+  <structureItems type="STRING" label="Address" id="address"/>
+  <structureItems type="STRING" label="Annotation" id="annote"/>
+  <structureItems type="STRING" label="Author" id="author"/>
+  <structureItems type="STRING" label="Booktitle" id="booktitle"/>
+  <structureItems type="STRING" label="Chapter" id="chapter"/>
+  <structureItems type="STRING" label="Edition" id="edition"/>
+  <structureItems type="STRING" label="Editor" id="editor"/>
+  <structureItems type="STRING" label="Eprint" id="eprint"/>
+  <structureItems type="STRING" label="Howpublished" id="howpublished"/>
+  <structureItems type="STRING" label="Institution" id="institution"/>
+  <structureItems type="STRING" label="Journal" id="journal"/>
+  <structureItems type="STRING" label="Key" id="key"/>
+  <structureItems type="STRING" label="Month" id="month"/>
+  <structureItems type="STRING" label="Note" id="note"/>
+  <structureItems type="STRING" label="Number" id="number"/>
+  <structureItems type="STRING" label="Organization" id="organization"/>
+  <structureItems type="STRING" label="Pages" id="pages"/>
+  <structureItems type="STRING" label="Publisher" id="publisher"/>
+  <structureItems type="STRING" label="School" id="school"/>
+  <structureItems type="STRING" label="Series" id="series"/>
+  <structureItems type="STRING" label="Type" id="type"/>
+  <structureItems type="STRING" label="Url" id="url"/>
+  <structureItems type="STRING" label="Volume" id="volume"/>
+  <structureItems type="STRING" label="Year" id="year"/>
+  <structureItems xsi:type="infomngmnt:DynamicStructure" label="Files" id="files" upperBound="-1">
+    <structureItems canHaveBinaryReferences="true" id="file" createAlways="false">
+      <structureItems type="STRING" id="fileLabel"/>
     </structureItems>
   </structureItems>
-  <structureItems type="STRING" label="Abstract" id="abstract" createAlways="true"/>
-  <structureItems type="STRING" label="Contents" id="contents" createAlways="true"/>
-  <structureItems type="STRING" label="Summary" id="summary" createAlways="true"/>
-  <structureItems type="STRING" label="ISBN" id="isbn" createAlways="true"/>
-  <structureItems type="STRING" label="ISSN" id="issn" createAlways="true"/>
-  <structureItems type="STRING" label="DOI" id="doi" createAlways="true"/>
-  <structureItems type="STRING" label="AdditionalField1" id="additionalField1" createAlways="true"/>
-  <structureItems type="STRING" label="AdditionalField2" id="additionalField2" createAlways="true"/>
-  <structureItems type="STRING" label="AdditionalField3" id="additionalField3" createAlways="true"/>
-  <structureItems type="STRING" label="AdditionalField4" id="additionalField4" createAlways="true"/>
-  <structureItems type="STRING" label="AdditionalField5" id="additionalField5" createAlways="true"/>
+  <structureItems type="STRING" label="Abstract" id="abstract"/>
+  <structureItems type="STRING" label="Contents" id="contents"/>
+  <structureItems type="STRING" label="Summary" id="summary"/>
+  <structureItems type="STRING" label="ISBN" id="isbn"/>
+  <structureItems type="STRING" label="ISSN" id="issn"/>
+  <structureItems type="STRING" label="DOI" id="doi"/>
+  <structureItems type="STRING" label="AdditionalField1" id="additionalField1"/>
+  <structureItems type="STRING" label="AdditionalField2" id="additionalField2"/>
+  <structureItems type="STRING" label="AdditionalField3" id="additionalField3"/>
+  <structureItems type="STRING" label="AdditionalField4" id="additionalField4"/>
+  <structureItems type="STRING" label="AdditionalField5" id="additionalField5"/>
 </infomngmnt:InformationStructureDefinition>

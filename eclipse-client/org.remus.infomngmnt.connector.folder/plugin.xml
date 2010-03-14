@@ -2,18 +2,18 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remoteRepository">
+         point="org.remus.infomngmnt.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.connector.folder.FolderConnector"
-            icon="icons/iconexperience/folder.png"
             id="org.remus.infomngmnt.connector.folder.folder"
             name="Local Folder">
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.repositoryUI">
+         point="org.remus.infomngmnt.ui.remote.repositoryUi">
       <respository
-            id="org.remus.infomngmnt.connector.folder.ui"
+            icon="icons/iconexperience/folder.png"
+            id="org.remus.infomngmnt.connector.folder.respository1"
             newWizard="org.remus.infomngmnt.connector.folder.ui.NewFolderRepositoryWizard"
             repository-id="org.remus.infomngmnt.connector.folder.folder">
       </respository>

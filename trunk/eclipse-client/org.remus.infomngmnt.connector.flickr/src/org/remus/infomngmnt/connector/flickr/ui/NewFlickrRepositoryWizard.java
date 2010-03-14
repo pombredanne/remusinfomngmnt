@@ -14,6 +14,7 @@ package org.remus.infomngmnt.connector.flickr.ui;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -21,19 +22,22 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 
+import org.remus.infomngmnt.RemoteRepository;
+import org.remus.infomngmnt.connector.flickr.FlickrCredentials;
+import org.remus.infomngmnt.connector.flickr.FlickrPlugin;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.ui.progress.CancelableRunnable;
+import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
+import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
+import org.remus.infomngmnt.util.StatusCreator;
+
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.REST;
 import com.aetrion.flickr.auth.Auth;
 import com.aetrion.flickr.auth.AuthInterface;
 import com.aetrion.flickr.auth.Permission;
 import com.aetrion.flickr.people.User;
-
-import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.connector.flickr.FlickrCredentials;
-import org.remus.infomngmnt.connector.flickr.FlickrPlugin;
-import org.remus.infomngmnt.core.progress.CancelableRunnable;
-import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -44,6 +48,7 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 	private Flickr flickr;
 	private AuthInterface authInterface;
 	private String frob;
+	private AbstractExtensionRepository repositoryDefinition;
 
 	/**
 	 * 
@@ -69,8 +74,8 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 						monitor.beginTask("Checking credentials", IProgressMonitor.UNKNOWN);
 						Auth auth = NewFlickrRepositoryWizard.this.authInterface
 								.getToken(NewFlickrRepositoryWizard.this.frob);
-						FlickrCredentials credentialProvider = (FlickrCredentials) getRepository()
-								.getRepositoryImplementation().getCredentialProvider();
+						FlickrCredentials credentialProvider = (FlickrCredentials) NewFlickrRepositoryWizard.this.repositoryDefinition
+								.getCredentialProvider();
 						User user = auth.getUser();
 						credentialProvider.setUserName(user.getUsername());
 						credentialProvider.setPassword(auth.getToken());
@@ -78,7 +83,8 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 						credentialProvider.setRealName(user.getRealName());
 						getRepository().setName(user.getUsername() + "@flickr");
 						getRepository().setUrl(
-								getRepository().getRepositoryImplementation().getRepositoryUrl());
+								NewFlickrRepositoryWizard.this.repositoryDefinition
+										.getRepositoryUrl());
 					} catch (Exception e) {
 						return StatusCreator
 								.newStatus("Error validating credentials", e.getCause());
@@ -106,6 +112,7 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 			URL buildAuthenticationUrl = this.authInterface.buildAuthenticationUrl(
 					Permission.DELETE, this.frob);
 			this.page1 = new FlickConnectionWizardPage(buildAuthenticationUrl);
+			getRepository();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -120,7 +127,14 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		// TODO Auto-generated method stub
+		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		try {
+			this.repositoryDefinition = extensionService.getItemByRepository(this.repository);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

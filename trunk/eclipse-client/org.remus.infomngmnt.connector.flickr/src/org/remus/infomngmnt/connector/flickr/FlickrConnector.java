@@ -56,19 +56,21 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.operation.DownloadFileJob;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.RemoteException;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
+import org.remus.infomngmnt.model.remote.ILoginCallBack;
+import org.remus.infomngmnt.model.remote.IRepository;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.DisposableEditingDomain;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -109,11 +111,19 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 
 	public static final String RIM_INTERNAL_SET = "__rim_internal_set"; //$NON-NLS-1$
 
+	private final RemusServiceTracker serviceTracker;
+
+	private final IEditingHandler editingHandler;
+
+	private final IInformationTypeHandler informationTypeHandler;
+
 	/**
 	 * 
 	 */
 	public FlickrConnector() {
-		// TODO Auto-generated constructor stub
+		this.serviceTracker = RemoteActivator.getDefault().getServiceTracker();
+		this.editingHandler = this.serviceTracker.getService(IEditingHandler.class);
+		this.informationTypeHandler = this.serviceTracker.getService(IInformationTypeHandler.class);
 	}
 
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
@@ -252,8 +262,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		EList<InformationUnit> comments = InformationUtil.getChildByType(unit,
 				ImagePlugin.NODE_NAME_LINKS).getChildValues();
 
-		DisposableEditingDomain tempEditingDomain = EditingUtil.getInstance()
-				.createNewEditingDomain();
+		DisposableEditingDomain tempEditingDomain = this.editingHandler.createNewEditingDomain();
 		for (InformationUnit informationUnit : comments) {
 			ShapableInfoDelegate delegate = new ShapableInfoDelegate(informationUnit,
 					new Dimension(width, height), tempEditingDomain);
@@ -554,8 +563,8 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		Object wrappedObject = remoteObjectBySynchronizableObject.getWrappedObject();
 		if (wrappedObject instanceof Photo) {
 			Photo currentPhoto = (Photo) wrappedObject;
-			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-					getTypeIdByObject(remoteObjectBySynchronizableObject));
+			IInfoType infoTypeByType = this.informationTypeHandler
+					.getInfoTypeByType(getTypeIdByObject(remoteObjectBySynchronizableObject));
 			if (infoTypeByType != null) {
 				InformationStructureEdit edit = InformationStructureEdit.newSession(infoTypeByType
 						.getType());
@@ -584,10 +593,6 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					Collection exifs = getApi().getPhotosInterface().getExif(currentPhoto.getId(),
 							currentPhoto.getSecret());
 					if (exifs.size() > 0) {
-						InformationUnit exifNode = edit.createSubType(ImagePlugin.NODE_NAME_EXIF,
-								null);
-						informationUnit.getChildValues().add(exifNode);
-
 						// FIXME old style
 
 						for (Object object : exifs) {
@@ -618,7 +623,8 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				} catch (FlickrException e) {
 					originalUrl = currentPhoto.getLargeUrl();
 				}
-				IFile tempFile = ResourceUtil.createTempFile(currentPhoto.getOriginalFormat());
+				IFile tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+						.createTempFile(currentPhoto.getOriginalFormat());
 				DownloadFileJob job;
 				try {
 					job = new DownloadFileJob(new URL(originalUrl), tempFile,
@@ -637,7 +643,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 						/*
 						 * now we can grab all the notes.
 						 */
-						DisposableEditingDomain tmpEditingdomain = EditingUtil.getInstance()
+						DisposableEditingDomain tmpEditingdomain = this.editingHandler
 								.createNewEditingDomain();
 						Collection notes = currentPhoto.getNotes();
 						if (notes.size() > 0) {
@@ -647,8 +653,8 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 							 * file to get its size to transform all notes to
 							 * the downloaded image size..sigh
 							 */
-							IFile mediumFile = ResourceUtil.createTempFile(currentPhoto
-									.getOriginalFormat());
+							IFile mediumFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+									.createTempFile(currentPhoto.getOriginalFormat());
 							job = new DownloadFileJob(new URL(currentPhoto.getMediumUrl()),
 									mediumFile, getFileReceiveAdapter());
 							IStatus runMedium = job.run(monitor);

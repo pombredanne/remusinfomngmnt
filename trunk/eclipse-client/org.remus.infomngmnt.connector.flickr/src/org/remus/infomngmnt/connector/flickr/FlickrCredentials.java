@@ -16,14 +16,14 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.equinox.security.storage.StorageException;
 
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
+
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.REST;
 import com.aetrion.flickr.RequestContext;
 import com.aetrion.flickr.auth.Auth;
 import com.aetrion.flickr.auth.Permission;
 import com.aetrion.flickr.people.User;
-
-import org.remus.infomngmnt.core.security.CredentialProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

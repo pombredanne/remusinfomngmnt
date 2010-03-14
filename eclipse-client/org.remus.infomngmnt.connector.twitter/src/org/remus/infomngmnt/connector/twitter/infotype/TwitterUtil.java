@@ -192,9 +192,14 @@ public class TwitterUtil {
 		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE, StringEscapeUtils
 				.unescapeXml(status.getSource()));
 		edit.setValue(message, TwitterActivator.REPLY_ID, status.getToUser());
-		User userDetail = api.showUser(status.getFromUser());
+		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID, status.getToUserId());
+
+		Status showStatus = api.showStatus(status.getId());
+		User userDetail = showStatus.getUser();
+		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID, showStatus.getInReplyToStatusId());
 		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, userDetail.getName());
 		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, userDetail.getScreenName());
+
 		TwitterActivator.getDefault().getImageCache().checkCache(userDetail.getScreenName(),
 				userDetail.getProfileImageURL(), null);
 		return message;

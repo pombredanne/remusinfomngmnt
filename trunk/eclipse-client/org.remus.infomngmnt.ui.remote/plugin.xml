@@ -52,7 +52,7 @@
          point="org.eclipse.ui.contexts">
          <context
             id="org.remus.infomngmnt.ui.remote.repositories"
-            name="Main View - Repository Context"
+            name="Repository Context"
             parentId="org.eclipse.ui.contexts.window">
       </context>
    </extension>

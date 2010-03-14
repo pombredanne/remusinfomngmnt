@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.SynchronizationAction;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.ui.UIPlugin;
 
 public class SynchronizeChangeSetWizardPage extends WizardPage implements IMenuListener {
 
@@ -39,7 +38,8 @@ public class SynchronizeChangeSetWizardPage extends WizardPage implements IMenuL
 		this.changeSet = item;
 		setTitle("Synchronization of selected elements");
 		setDescription("This page shows you a changeset of your local data and the repository data.");
-		setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(RemoteUiActivator.getDefault()
+				.getBundle().getBundleContext(),
 				"icons/iconexperience/wizards/synchronization_wizard.png"));
 	}
 

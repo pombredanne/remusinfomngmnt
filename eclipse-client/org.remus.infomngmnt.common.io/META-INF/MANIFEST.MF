@@ -10,4 +10,5 @@ Require-Bundle: org.eclipse.ecf,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
  org.eclipse.core.net
-Export-Package: org.remus.infomngmnt.commons.io.transfer
+Export-Package: org.remus.infomngmnt.commons.io.proxy,
+ org.remus.infomngmnt.commons.io.transfer

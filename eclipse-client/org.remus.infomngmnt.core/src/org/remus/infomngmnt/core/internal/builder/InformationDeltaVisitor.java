@@ -125,6 +125,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 			if (resourceDelta.getResource() != null
 					&& resourceDelta.getResource().getType() == IResource.FILE
+					&& resourceDelta.getResource().getFileExtension() != null
 					&& resourceDelta.getResource().getFileExtension().equals(
 							ResourceUtil.FILE_EXTENSION)) {
 				if (resourceDelta.getResource().exists()) {

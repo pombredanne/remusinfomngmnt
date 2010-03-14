@@ -421,7 +421,25 @@ public class EditingUtil implements IEditingHandler {
 	 * @see org.remus.infomngmnt.util.IEditingHandler#createNewEditingDomain()
 	 */
 	public DisposableEditingDomain createNewEditingDomain() {
-		return new DisposableEditingDomain(this.adapterFactory, new BasicCommandStack());
+		final BasicCommandStack commandStack = new BasicCommandStack() {
+			@Override
+			public void flush() {
+				super.flush();
+				// final Job job = new Job("Disposing Editing Domain") {
+				// @Override
+				// protected IStatus run(final IProgressMonitor monitor) {
+				// superFlush();
+				// return Status.OK_STATUS;
+				// }
+				// };
+				// job.schedule();
+			}
+
+			private void superFlush() {
+				super.flush();
+			}
+		};
+		return new DisposableEditingDomain(this.adapterFactory, commandStack);
 	}
 
 	/*

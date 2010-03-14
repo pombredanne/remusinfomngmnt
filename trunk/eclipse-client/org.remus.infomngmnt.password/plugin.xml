@@ -167,5 +167,12 @@
             icon="icons/iconexperience/window_earth.png">
       </image>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/key.png"
+            infotype="PASSWORD">
+      </image>
+   </extension>
 
 </plugin>

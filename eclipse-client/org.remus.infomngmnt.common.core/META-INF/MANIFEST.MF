@@ -18,4 +18,5 @@ Export-Package: org.remus.infomngmnt.common.core.beans,
  org.remus.infomngmnt.common.core.indexing,
  org.remus.infomngmnt.common.core.operation,
  org.remus.infomngmnt.common.core.streams,
- org.remus.infomngmnt.common.core.util
+ org.remus.infomngmnt.common.core.util,
+ org.remus.infomngmnt.common.core.zip

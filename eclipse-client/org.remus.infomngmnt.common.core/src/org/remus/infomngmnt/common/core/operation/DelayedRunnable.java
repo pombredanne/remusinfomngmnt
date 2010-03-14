@@ -39,6 +39,15 @@ public abstract class DelayedRunnable implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
+		long delay = getDelay();
+		if (delay > 0) {
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if (!this.cancel) {
 			try {
 				this.running = true;
@@ -47,6 +56,10 @@ public abstract class DelayedRunnable implements Runnable {
 				this.running = false;
 			}
 		}
+	}
+
+	protected long getDelay() {
+		return 0;
 	}
 
 	protected abstract void runDelayed();

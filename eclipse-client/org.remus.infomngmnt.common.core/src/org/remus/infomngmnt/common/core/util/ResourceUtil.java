@@ -24,8 +24,10 @@ import org.eclipse.core.filesystem.IFileInfo;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFileState;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -33,6 +35,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 
@@ -165,29 +169,43 @@ public class ResourceUtil {
 
 	public static IFile createTempFile(final String extension) {
 		NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT_NAME_TMP);
+		IContainer project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT_NAME_TMP);
+		ISchedulingRule rule = Job.getJobManager().currentJob() != null ? Job.getJobManager()
+				.currentJob().getRule() : null;
 		IFile file = null;
-		if (!project.exists()) {
-			try {
-				project.create(nullProgressMonitor);
-				project.open(nullProgressMonitor);
-			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (rule instanceof IProject) {
+			IFolder folder = ((IProject) rule).getFolder(PROJECT_NAME_TMP);
+			if (!folder.exists()) {
+				try {
+					folder.create(true, true, nullProgressMonitor);
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			project = folder;
+		} else {
+			if (!project.exists()) {
+				try {
+					((IProject) project).create(nullProgressMonitor);
+					((IProject) project).open(nullProgressMonitor);
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		if (extension != null) {
 			file = project.getFile(new Path(IdFactory.createId()).addFileExtension(extension));
 		} else {
-			file = project.getFile(IdFactory.createId());
+			file = project.getFile(new Path(IdFactory.createId()));
 		}
 		if (!file.exists()) {
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(new byte[0]);
 			try {
 				file.create(inputStream, true, nullProgressMonitor);
 			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			} finally {
 				StreamCloser.closeStreams(inputStream);
 			}

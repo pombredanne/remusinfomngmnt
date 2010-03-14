@@ -15,10 +15,7 @@ package org.remus.infomngmnt.ui.viewer.provider;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.ui.viewer.ViewerActivator;
@@ -38,10 +35,7 @@ public class InformationUnitLabelProvider extends AdapterFactoryLabelProvider {
 
 	@Override
 	public Image getImage(final Object object) {
-		if (object instanceof Category) {
-			return PlatformUI.getWorkbench().getSharedImages().getImage(
-					ISharedImages.IMG_OBJ_FOLDER);
-		} else if (object instanceof InformationUnitListItem) {
+		if (object instanceof InformationUnitListItem) {
 			return this.service.getImageByInfoType(((InformationUnitListItem) object).getType());
 		} else {
 			return super.getImage(object);

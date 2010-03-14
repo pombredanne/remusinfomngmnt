@@ -44,8 +44,9 @@ import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
 import org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer;
-import org.remus.infomngmnt.core.remote.IRepository;
-import org.remus.infomngmnt.core.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
+import org.remus.infomngmnt.model.remote.IRepository;
 
 public class YoutubeConnectionWizardPage extends WizardPage {
 
@@ -156,7 +157,8 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = repository.getRepositoryImplementation();
+		this.repositoryDefinition = SyncUtil
+				.getRepositoryImplemenationByRemoteRepository(repository);
 	}
 
 	public void bindValuesToUi() {

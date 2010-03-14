@@ -17,6 +17,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFObservables;
@@ -39,7 +40,9 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.folder.FolderConnector;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.model.remote.IRepository;
+import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
 
 public class FolderConnectionWizardPage extends WizardPage {
 
@@ -152,7 +155,14 @@ public class FolderConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = repository.getRepositoryImplementation();
+		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		try {
+			this.repositoryDefinition = extensionService.getItemByRepository(repository);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

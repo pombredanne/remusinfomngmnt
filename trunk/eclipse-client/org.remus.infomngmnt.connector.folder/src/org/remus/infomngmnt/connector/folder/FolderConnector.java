@@ -37,6 +37,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.Category;
@@ -50,15 +52,17 @@ import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.streams.FileUtil;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
+import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.extension.InformationExtensionManager;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.EditingUtil;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
+import org.remus.infomngmnt.model.remote.ILoginCallBack;
+import org.remus.infomngmnt.model.remote.IRepository;
+import org.remus.infomngmnt.model.service.ResourceConstants;
 import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -71,12 +75,18 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	public static final String FOLDER_PREFIX_INFO = "INFO_"; //$NON-NLS-1$
 	public static final String FOLDER_NAME_BINARIES = ".binaries"; //$NON-NLS-1$
 	public static final String FILENAME_CAT = "category.xml"; //$NON-NLS-1$
+	private IEditingHandler editingService;
 
 	/**
 	 * 
 	 */
 	public FolderConnector() {
-		// TODO Auto-generated constructor stub
+		BundleContext bundleContext = FolderActivator.getDefault().getBundle().getBundleContext();
+		ServiceReference serviceReference = bundleContext.getServiceReference(IEditingHandler.class
+				.getName());
+		if (serviceReference != null) {
+			this.editingService = (IEditingHandler) bundleContext.getService(serviceReference);
+		}
 	}
 
 	/*
@@ -104,7 +114,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 						newPath).append(File.separator).append(copy.getId()).append(".info")
 						.toString()));
 				res.getContents().add(copy);
-				EditingUtil.getInstance().saveObjectToResource(copy);
+				this.editingService.saveObjectToResource(copy);
 				res.unload();
 				InformationStructureRead read = InformationStructureRead.newSession(adapter);
 				List<BinaryReference> binaryReferences = read.getBinaryReferences();
@@ -155,7 +165,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 			Resource res = new XMLResourceImpl(URI.createFileURI(new StringWriter().append(newPath)
 					.append(File.separator).append(FILENAME_CAT).toString()));
 			res.getContents().add(copy);
-			EditingUtil.getInstance().saveObjectToResource(copy);
+			this.editingService.saveObjectToResource(copy);
 			return buildSingleCategory(new File(newPath));
 		}
 		return null;
@@ -184,7 +194,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 					FileOutputStream fileos = null;
 					try {
 						fileos = new FileOutputStream(infoFile);
-						res.save(fileos, EditingUtil.SAVE_OPTIONS);
+						res.save(fileos, ResourceConstants.SAVE_OPTIONS);
 					} finally {
 						if (fileos != null) {
 							fileos.flush();
@@ -250,7 +260,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 				FileOutputStream fileos = null;
 				try {
 					fileos = new FileOutputStream(infoFile);
-					res.save(fileos, EditingUtil.SAVE_OPTIONS);
+					res.save(fileos, ResourceConstants.SAVE_OPTIONS);
 					res.unload();
 				} catch (Exception e) {
 					throw new RemoteException(StatusCreator.newStatus("Error committing category",
@@ -355,8 +365,8 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 					IFile createTempFile = ResourceUtil.createTempFile();
 					createTempFile.setContents(bufferedInputStream, true, false,
 							new NullProgressMonitor());
-					InformationUnit unit = EditingUtil.getInstance().getObjectFromFile(
-							createTempFile, InfomngmntPackage.Literals.INFORMATION_UNIT, null);
+					InformationUnit unit = this.editingService.getObjectFromFile(createTempFile,
+							InfomngmntPackage.Literals.INFORMATION_UNIT, null);
 					if (unit != null) {
 						RemoteObject container = InfomngmntFactory.eINSTANCE.createRemoteObject();
 						container.setName(unit.getLabel());
@@ -411,7 +421,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 					IFile createTempFile = ResourceUtil.createTempFile();
 					createTempFile.setContents(bufferedInputStream, true, false,
 							new NullProgressMonitor());
-					Category unit = EditingUtil.getInstance().getObjectFromFile(createTempFile,
+					Category unit = this.editingService.getObjectFromFile(createTempFile,
 							InfomngmntPackage.Literals.CATEGORY, null);
 					if (unit != null) {
 						RemoteContainer container = InfomngmntFactory.eINSTANCE
@@ -519,8 +529,10 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 		Object wrappedObject = remoteObject.getWrappedObject();
 		if (wrappedObject instanceof InformationUnit) {
 			String type = ((InformationUnit) wrappedObject).getType();
-			IInfoType infoTypeByType = InformationExtensionManager.getInstance().getInfoTypeByType(
-					type);
+			IInformationTypeHandler service = RemoteActivator.getDefault().getServiceTracker()
+					.getService(IInformationTypeHandler.class);
+			IInfoType infoTypeByType = service.getInfoTypeByType(type);
+			RemoteActivator.getDefault().getServiceTracker().ungetService(service);
 			if (infoTypeByType != null) {
 				return type;
 			}

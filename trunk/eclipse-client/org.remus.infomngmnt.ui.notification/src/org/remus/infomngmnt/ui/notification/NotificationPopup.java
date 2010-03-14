@@ -25,7 +25,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.internal.UIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -67,12 +66,12 @@ public class NotificationPopup extends AbstractNotificationPopup {
 
 	@Override
 	protected String getPopupShellTitle() {
-		return "RIM Notifications";
+		return "Remus Notifications";
 	}
 
 	@Override
 	protected Image getPopupShellImage(final int maximumHeight) {
-		return ResourceManager.getPluginImage(UIPlugin.getDefault(),
+		return ResourceManager.getPluginImage(NotificationActivator.getDefault(),
 				"icons/iconexperience/16/signal_flag_red.png");
 	}
 

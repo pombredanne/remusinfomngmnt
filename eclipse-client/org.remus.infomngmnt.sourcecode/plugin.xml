@@ -140,5 +140,12 @@
             typeId="SOURCE">
       </creationtrigger>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/code_colored.png"
+            infotype="SOURCE">
+      </image>
+   </extension>
 
 </plugin>

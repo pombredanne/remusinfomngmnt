@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension-point id="repositoryUI" name="repositoryUI" schema="schema/repositoryUI.exsd"/>
    <extension
          point="org.eclipse.ui.newWizards">
       <primaryWizard
@@ -92,10 +91,6 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.remus.infomngmnt.ui.openInfoType"
-            name="Open Information-Type">
-      </command>
-      <command
             defaultHandler="org.remus.infomngmnt.ui.handler.SwitchToInfoPerspective"
             id="org.remus.infomngmnt.ui.switch2infoPerspective"
             name="Back to Information Management">
@@ -113,40 +108,9 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.remus.infomngmnt.ui.handler.OpenInfoTypeHandler"
-            commandId="org.remus.infomngmnt.ui.openInfoType">
-      </handler>
-      <handler
             class="org.remus.infomngmnt.ui.handler.CopyTextToClipboardHandler"
             commandId="org.remus.infomngmnt.ui.CopyTextToClipboard">
       </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="org.remus.infomngmnt.ui.openInfoType"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+T">
-      </key>
-      <key
-            commandId="org.remus.infomngmnt.ui.newRepository"
-            contextId="org.remus.infomngmnt.ui.repositories"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+Y">
-      </key>
-      <key
-            commandId="org.remus.infomngmnt.ui.shareCategory"
-            contextId="org.remus.infomngmnt.ui.navigationContext"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M2+M3+R">
-      </key>
-      <key
-            commandId="org.remus.infomngmnt.ui.syncCategory"
-            contextId="org.remus.infomngmnt.ui.navigationContext"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M2+M3+T">
-      </key>
    </extension>
   
   

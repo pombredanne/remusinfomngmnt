@@ -60,7 +60,7 @@ public abstract class NewInfoObjectWizard extends Wizard implements INewWizard {
 
 	private String categoryString;
 
-	private IFile[] files;
+	protected IFile[] files;
 
 	/**
 	 * 

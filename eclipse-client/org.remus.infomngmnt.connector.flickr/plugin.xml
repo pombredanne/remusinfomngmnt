@@ -2,12 +2,11 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remoteRepository">
+         point="org.remus.infomngmnt.core.remote.remoteRepository">
       <repository-connector
+      		id="org.remus.infomngmnt.connector.flickr."
             class="org.remus.infomngmnt.connector.flickr.FlickrConnector"
             credentialprovider="org.remus.infomngmnt.connector.flickr.FlickrCredentials"
-            icon="icons/flickr.png"
-            id="org.remus.infomngmnt.connector.flickr."
             name="Flickr">
          <changeDefinition
                id="org.remus.infomngmnt.connector.flickr.changeDefinition1"
@@ -31,8 +30,9 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.repositoryUI">
+         point="org.remus.infomngmnt.ui.remote.repositoryUi">
       <respository
+            icon="icons/flickr.png"
             id="org.remus.infomngmnt.connector.flickr.ui"
             newWizard="org.remus.infomngmnt.connector.flickr.ui.NewFlickrRepositoryWizard"
             repository-id="org.remus.infomngmnt.connector.flickr.">

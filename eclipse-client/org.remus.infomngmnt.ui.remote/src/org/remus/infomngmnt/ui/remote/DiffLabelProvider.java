@@ -58,7 +58,7 @@ public class DiffLabelProvider extends LabelProvider {
 						return StringUtils.join("Ready to apply the following changes (", String
 								.valueOf(group.getSubchanges()), ")");
 					} else {
-						return ResourceManager.getPluginImage(UIPlugin.getDefault(),
+						return ResourceManager.getPluginImage(RemoteUiActivator.getDefault(),
 								"icons/iconexperience/16/server_client_exchange.png");
 					}
 				} else if (parent instanceof Category && ((Category) parent).getId() != null
@@ -117,7 +117,7 @@ public class DiffLabelProvider extends LabelProvider {
 						")");
 			}
 			if (returnImage) {
-				return ResourceManager.getPluginImage(UIPlugin.getDefault(),
+				return ResourceManager.getPluginImage(RemoteUiActivator.getDefault(),
 						"icons/iconexperience/16/server_client_exchange.png");
 			} else {
 				return NLS

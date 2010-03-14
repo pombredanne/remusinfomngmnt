@@ -36,6 +36,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -52,8 +53,8 @@ import org.remus.infomngmnt.RemoteContainer;
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.RepositoryCollection;
 import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.services.IRepositoryService;
-import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
 import org.remus.infomngmnt.ui.remote.deferred.DeferredContentProvider;
@@ -159,9 +160,10 @@ public class RemoteRepositoryViewer implements ISelectionProvider, IEditingDomai
 			public void open(final OpenEvent event) {
 				Object object = ((IStructuredSelection) event.getSelection()).getFirstElement();
 				if (object instanceof RemoteRepository) {
-					IRepositoryUI itemByRepositoryId = UIPlugin.getDefault().getService(
-							IRepositoryExtensionService.class).getItemByRepositoryId(
-							((RemoteRepository) object).getId());
+					IRepositoryUI itemByRepositoryId = RemoteUiActivator.getDefault()
+							.getServiceTracker().getService(IRepositoryExtensionService.class)
+							.getItemByRepositoryId(
+									((RemoteRepository) object).getRepositoryTypeId());
 					if (itemByRepositoryId != null) {
 						NewRepositoryWizard wizardClass = itemByRepositoryId.getWizardClass();
 						WizardDialog wizDialog = new WizardDialog(
@@ -193,8 +195,24 @@ public class RemoteRepositoryViewer implements ISelectionProvider, IEditingDomai
 		IStructuredContentProvider contentProvider = new DeferredContentProvider(RemoteUiActivator
 				.getDefault().getEditService().getAdapterFactory(), this.parentContainer);
 		LabelProvider labelProvider = new DecoratingLabelProvider(new AdapterFactoryLabelProvider(
-				RemoteUiActivator.getDefault().getEditService().getAdapterFactory()), PlatformUI
-				.getWorkbench().getDecoratorManager().getLabelDecorator());
+				RemoteUiActivator.getDefault().getEditService().getAdapterFactory()) {
+			@Override
+			public Image getImage(final Object object) {
+				if (object instanceof RemoteRepository) {
+					RemoteRepository obj = (RemoteRepository) object;
+					IRepositoryExtensionService service = RemoteActivator.getDefault()
+							.getServiceTracker().getService(IRepositoryExtensionService.class);
+					IRepositoryUI itemByRepositoryId = service.getItemByRepositoryId(obj
+							.getRepositoryTypeId());
+					if (itemByRepositoryId != null) {
+						return itemByRepositoryId.getImage();
+					}
+				} else if (object instanceof RemoteContainer) {
+
+				}
+				return super.getImage(object);
+			}
+		}, PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
 		this.viewer.setContentProvider(contentProvider);
 		this.viewer.setLabelProvider(labelProvider);
 		this.parentContainer.setSelectionProvider(this.viewer);

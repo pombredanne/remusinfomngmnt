@@ -28,7 +28,7 @@ public class ValidateConnectionJob /* extends CancelableRunnable */{
 		this.implementation = implementation;
 	}
 
-	protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
+	public IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 		monitor.beginTask("Validating connection", IProgressMonitor.UNKNOWN);
 		return this.implementation.validate();
 	}

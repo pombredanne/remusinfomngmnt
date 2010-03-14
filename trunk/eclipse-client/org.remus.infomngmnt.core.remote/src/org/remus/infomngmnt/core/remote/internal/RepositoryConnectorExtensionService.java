@@ -73,9 +73,7 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 			IConfigurationElement configurationElement = this.items.get(id);
 			AbstractExtensionRepository repository = (AbstractExtensionRepository) configurationElement
 					.createExecutableExtension(CLASS_ATT);
-			repository.setContributor(configurationElement.getContributor().getName());
 			repository.setLabel(configurationElement.getAttribute(NAME_ATT));
-			repository.setImagePath(configurationElement.getAttribute(ICON_ATT));
 			repository.setId(configurationElement.getAttribute(ID_ATT));
 			repository.setElement(configurationElement);
 			return repository;
@@ -94,18 +92,6 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 
 		return this.browsingInstances.get(repository.getId());
 	}
-
-	// public ImageDescriptor getImageByRepositoryId(final String id) {
-	// if (this.items.get(id) != null) {
-	// FIXME
-	// IConfigurationElement iConfigurationElement = this.items.get(id);
-	// return
-	// AbstractUIPlugin.imageDescriptorFromPlugin(iConfigurationElement
-	// .getContributor().getName(),
-	// iConfigurationElement.getAttribute(ICON_ATT));
-	// }
-	// return null;
-	// }
 
 	public String getNameByRepositoryId(final String id) {
 		if (this.items.get(id) != null) {

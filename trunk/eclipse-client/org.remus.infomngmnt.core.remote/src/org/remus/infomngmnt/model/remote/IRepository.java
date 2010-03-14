@@ -38,15 +38,6 @@ import org.remus.infomngmnt.core.remote.RemoteException;
 public interface IRepository {
 
 	/**
-	 * Returns an image (typically 16x16) which represents a specific repository
-	 * through the whole application.
-	 * 
-	 * @return the repository specific image.
-	 * @since 1.0
-	 */
-	Object getImage();
-
-	/**
 	 * Returns the label of the repository.
 	 * 
 	 * @return

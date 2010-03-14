@@ -41,7 +41,8 @@ public class CreateChangeSetJob extends Job {
 
 	private CreateChangeSetJob(final IChangeHandler changeHandler, final Category category,
 			final InformationUnitListItem listItem, final boolean failOnError) {
-		super(NLS.bind("Creating changeset for element \'\'{0}\'\'", category.getLabel()));
+		super(NLS.bind("Creating changeset for element \'\'{0}\'\'", listItem == null ? category
+				.getLabel() : listItem.getLabel()));
 		this.changeSetManager = changeHandler;
 		this.category = category;
 		this.listItem = listItem;

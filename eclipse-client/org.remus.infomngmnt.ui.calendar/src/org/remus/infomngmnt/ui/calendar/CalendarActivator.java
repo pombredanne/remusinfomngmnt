@@ -44,9 +44,7 @@ public class CalendarActivator extends AbstractUIPlugin {
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
 		this.serviceTracker = new RemusServiceTracker(getBundle());
-		this.calendarStoreService = this.serviceTracker.getService(ICalendarStoreService.class);
-		this.editService = this.serviceTracker.getService(IEditingHandler.class);
-		this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
+
 		plugin = this;
 	}
 
@@ -86,6 +84,9 @@ public class CalendarActivator extends AbstractUIPlugin {
 	 * @return the calendarStoreService
 	 */
 	public final ICalendarStoreService getCalendarStoreService() {
+		if (this.calendarStoreService == null) {
+			this.calendarStoreService = this.serviceTracker.getService(ICalendarStoreService.class);
+		}
 		return this.calendarStoreService;
 	}
 
@@ -93,6 +94,9 @@ public class CalendarActivator extends AbstractUIPlugin {
 	 * @return the editService
 	 */
 	public final IEditingHandler getEditService() {
+		if (this.editService == null) {
+			this.editService = this.serviceTracker.getService(IEditingHandler.class);
+		}
 		return this.editService;
 	}
 
@@ -100,6 +104,9 @@ public class CalendarActivator extends AbstractUIPlugin {
 	 * @return the applicationService
 	 */
 	public final IApplicationModel getApplicationService() {
+		if (this.applicationService == null) {
+			this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
+		}
 		return this.applicationService;
 	}
 

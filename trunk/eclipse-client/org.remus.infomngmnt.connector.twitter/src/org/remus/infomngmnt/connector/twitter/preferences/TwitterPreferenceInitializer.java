@@ -56,7 +56,7 @@ public class TwitterPreferenceInitializer extends AbstractPreferenceInitializer 
 	@Override
 	public void initializeDefaultPreferences() {
 		this.store.setDefault(SHOWN_MESSAGE, 10);
-		this.store.setDefault(SAVED_MESSAGES, 200);
+		this.store.setDefault(SAVED_MESSAGES, 50);
 		this.store.setDefault(CACHED_IMAGES, 200);
 		this.store.setDefault(RELOAD_ALL_FRIENDS_FEED, 4);
 		this.store.setDefault(RELOAD_DIRECT_MESSAGES_FEED, 15);

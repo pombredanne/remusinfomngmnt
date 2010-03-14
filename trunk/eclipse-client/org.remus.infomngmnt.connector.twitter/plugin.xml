@@ -212,5 +212,13 @@
             infotype="TWITTER-USER">
       </image>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <secondaryIndex
+            class="org.remus.infomngmnt.connector.twitter.index.TwitterMessageIndexer"
+            node="messages"
+            typeId="TWITTER">
+      </secondaryIndex>
+   </extension>
 
 </plugin>

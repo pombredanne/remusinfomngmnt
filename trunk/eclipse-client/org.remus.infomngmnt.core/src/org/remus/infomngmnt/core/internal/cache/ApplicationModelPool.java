@@ -54,6 +54,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
+import org.remus.infomngmnt.common.core.operation.DelayedRunnable;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.services.IApplicationModel;
@@ -74,6 +75,7 @@ public class ApplicationModelPool implements IApplicationModel {
 
 	private final class AdapterImplExtension extends EContentAdapter {
 		private final Category category;
+		private DelayedRunnable saveRunnable;
 
 		AdapterImplExtension(final Category category) {
 			this.category = category;
@@ -124,7 +126,26 @@ public class ApplicationModelPool implements IApplicationModel {
 					}
 				}
 			}
-			ApplicationModelPool.this.editService.saveObjectToResource(this.category);
+			if (this.saveRunnable != null && !this.saveRunnable.isRunning()) {
+				this.saveRunnable.cancel();
+				this.saveRunnable = null;
+			}
+			this.saveRunnable = new DelayedRunnable() {
+
+				@Override
+				protected void runDelayed() {
+					ApplicationModelPool.this.editService
+							.saveObjectToResource(AdapterImplExtension.this.category);
+
+				}
+
+				@Override
+				protected long getDelay() {
+					return 500;
+				}
+			};
+			new Thread(this.saveRunnable, "Delayed save").start();
+
 			super.notifyChanged(msg);
 		}
 
@@ -323,7 +344,8 @@ public class ApplicationModelPool implements IApplicationModel {
 
 				@Override
 				public boolean isSatisfied(final EObject eObject) {
-					return eObject instanceof InformationUnitListItem;
+					return eObject instanceof InformationUnitListItem
+							&& ((InformationUnitListItem) eObject).getId().equals(id);
 				}
 
 			};

@@ -25,7 +25,7 @@
   <structureItems type="STRING" id="pnIsdn"/>
   <structureItems type="STRING" id="emaildef"/>
   <structureItems xsi:type="infomngmnt:DynamicStructure" label="All emails" id="emails" upperBound="-1">
-    <structureItems type="STRING" id="email"/>
+    <structureItems type="STRING" id="email" createAlways="false"/>
   </structureItems>
   <structureItems type="STRING" id="instMessAim"/>
   <structureItems type="STRING" id="instMessGadu"/>

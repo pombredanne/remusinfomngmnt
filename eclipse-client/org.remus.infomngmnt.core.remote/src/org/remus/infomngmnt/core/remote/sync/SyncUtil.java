@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -35,10 +36,16 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.ChangeSetItem;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
+import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.RemoteException;
+import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
+import org.remus.infomngmnt.core.remote.services.IRepositoryService;
 import org.remus.infomngmnt.model.remote.IRepository;
+import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -95,6 +102,34 @@ public class SyncUtil {
 				.getAdapter(InformationUnitListItem.class);
 		return adapter.getSynchronizationMetaData().getRepositoryId();
 
+	}
+
+	public static IRepository getRepositoryImplemenationByRepositoryId(final String reproId) {
+		RemusServiceTracker serviceTracker = RemoteActivator.getDefault().getServiceTracker();
+		IRepositoryService repositoryService = serviceTracker.getService(IRepositoryService.class);
+		RemoteRepository repositoryById = repositoryService.getRepositoryById(reproId);
+		return getRepositoryImplemenationByRemoteRepository(repositoryById);
+	}
+
+	public static IRepository getRepositoryImplemenationByRemoteRepository(
+			final RemoteRepository remoteRepository) {
+		RemusServiceTracker serviceTracker = RemoteActivator.getDefault().getServiceTracker();
+		if (remoteRepository != null) {
+			IRepositoryExtensionService repositoryExtensionService = serviceTracker
+					.getService(IRepositoryExtensionService.class);
+			try {
+				AbstractExtensionRepository itemByRepository = repositoryExtensionService
+						.getItemByRepository(remoteRepository);
+				return itemByRepository;
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				serviceTracker.ungetService(repositoryExtensionService);
+			}
+		}
+
+		return null;
 	}
 
 	public static void changeSynchronizationAction(final ChangeSetItem changeSetItem,

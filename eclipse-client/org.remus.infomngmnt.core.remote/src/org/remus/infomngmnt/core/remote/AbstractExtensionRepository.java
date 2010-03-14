@@ -36,10 +36,6 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 
 	private IConfigurationElement element;
 
-	private String contributor;
-
-	private String imagePath;
-
 	private volatile Map<String, IChangeSetDefinition> changeSetDefinition;
 
 	private static class ChangeSetDefinitionImpl implements IChangeSetDefinition {
@@ -61,20 +57,6 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 			return this.objectIdValues;
 		}
 	}
-
-	// FIXME
-	// @Override
-	// public Image getImage() {
-	// if (super.getImage() == null && this.imagePath != null) {
-	// ImageDescriptor imageDescriptor =
-	// AbstractUIPlugin.imageDescriptorFromPlugin(
-	// this.contributor, this.imagePath);
-	// if (imageDescriptor != null) {
-	// setImage(imageDescriptor.createImage());
-	// }
-	// }
-	// return super.getImage();
-	// }
 
 	public void setElement(final IConfigurationElement element) {
 		this.element = element;
@@ -121,20 +103,12 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 		return null;
 	}
 
-	public void setContributor(final String contributor) {
-		this.contributor = contributor;
-	}
-
 	public RemoteRepository getRepositoryById(final String id) {
 		IRepositoryService service = RemoteActivator.getDefault().getServiceTracker().getService(
 				IRepositoryService.class);
 		RemoteRepository repositoryById = service.getRepositoryById(id);
 		RemoteActivator.getDefault().getServiceTracker().ungetService(service);
 		return repositoryById;
-	}
-
-	public void setImagePath(final String imagePath) {
-		this.imagePath = imagePath;
 	}
 
 	public IChangeSetDefinition getChangeSetDefinitionForType(final String type) {
@@ -180,7 +154,4 @@ public abstract class AbstractExtensionRepository extends AbstractRepository {
 		return false;
 	}
 
-	public Object getImage() {
-		return null;
-	}
 }

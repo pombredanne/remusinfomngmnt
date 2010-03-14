@@ -153,6 +153,21 @@
             name="Adding a dynamic value to an IU"
             string="addDynamicValue(nodeId, value)">
       </method>
+      <category
+            id="org.remus.infomngmnt.ui.rules.files"
+            name="Manipulating files">
+      </category>
+      <method
+            category="org.remus.infomngmnt.ui.rules.files"
+            id="org.remus.infomngmnt.ui.rules.zip"
+            name="Zip a collection of files"
+            string="zip(String[] filenames, String targetZip);">
+      </method>
+      <groovyScript
+            bindingclass="org.remus.infomngmnt.ui.rules.internal.script.FileBinding"
+            id="org.remus.infomngmnt.ui.rules.fileOperations"
+            source="script/files.groovy">
+      </groovyScript>
    </extension>
 
 </plugin>

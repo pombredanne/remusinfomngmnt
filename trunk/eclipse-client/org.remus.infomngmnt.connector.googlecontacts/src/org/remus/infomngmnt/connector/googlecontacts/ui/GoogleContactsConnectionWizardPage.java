@@ -18,10 +18,13 @@ import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -38,9 +41,10 @@ import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.core.remote.IRepository;
 import org.remus.infomngmnt.core.remote.ValidateConnectionJob;
-import org.remus.infomngmnt.core.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.security.CredentialProvider;
+import org.remus.infomngmnt.core.remote.sync.SyncUtil;
+import org.remus.infomngmnt.model.remote.IRepository;
 
 public class GoogleContactsConnectionWizardPage extends WizardPage {
 
@@ -126,11 +130,19 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				try {
-					getContainer().run(
-							true,
-							true,
-							new ValidateConnectionJob(
-									GoogleContactsConnectionWizardPage.this.repositoryDefinition));
+					getContainer().run(true, true, new IRunnableWithProgress() {
+
+						public void run(final IProgressMonitor monitor)
+								throws InvocationTargetException, InterruptedException {
+							IStatus runCancelableRunnable = new ValidateConnectionJob(
+									GoogleContactsConnectionWizardPage.this.repositoryDefinition)
+									.runCancelableRunnable(monitor);
+							if (!runCancelableRunnable.isOK()) {
+								throw new InvocationTargetException(null);
+							}
+
+						}
+					});
 					setErrorMessage(null);
 					setPageComplete(true);
 				} catch (InvocationTargetException e) {
@@ -154,7 +166,8 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = repository.getRepositoryImplementation();
+		this.repositoryDefinition = SyncUtil
+				.getRepositoryImplemenationByRemoteRepository(repository);
 	}
 
 	public void bindValuesToUi() {

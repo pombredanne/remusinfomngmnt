@@ -72,6 +72,8 @@ public class ContactConverter {
 				ContactActivator.NODE_NAME_PN_PAGER);
 		staticPhoneTypeMapper.put("http://schemas.google.com/g/2005#home_other",
 				ContactActivator.NODE_NAME_PN_OTHERS);
+		staticPhoneTypeMapper.put("http://schemas.google.com/g/2005#mobile",
+				ContactActivator.NODE_NAME_PN_MOBILE);
 
 		staticImTypeMapper = new HashMap<String, String>();
 		staticImTypeMapper.put("http://schemas.google.com/g/2005#GOOGLE_TALK",
@@ -180,27 +182,30 @@ public class ContactConverter {
 			String rel = postalAddress.getRel();
 			String string = staticAdressTypeMapper.get(rel);
 			if (string != null) {
+				InformationUnit adressNode = edit.createSubType(ContactActivator.NODE_NAME_ADRESS,
+						string);
 				if (postalAddress.hasCity()) {
-					edit.setValueByPath(newContact, postalAddress.getCity().getValue(), string,
-							ContactActivator.NODE_NAME_ADRESS_LOCALITY);
+					edit.setValue(adressNode, ContactActivator.NODE_NAME_ADRESS_LOCALITY,
+							postalAddress.getCity().getValue());
 				}
 				if (postalAddress.hasPobox()) {
-					edit.setValueByPath(newContact, postalAddress.getPobox().getValue(), string,
-							ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX);
+					edit.setValue(adressNode, ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX,
+							postalAddress.getPobox().getValue());
 				}
 				if (postalAddress.hasStreet()) {
-					edit.setValueByPath(newContact, postalAddress.getStreet().getValue(), string,
-							ContactActivator.NODE_NAME_ADRESS_STREET);
+					edit.setValue(adressNode, ContactActivator.NODE_NAME_ADRESS_STREET,
+							postalAddress.getStreet().getValue());
 				}
 				if (postalAddress.hasPostcode()) {
-					edit.setValueByPath(newContact, postalAddress.getPostcode().getValue(), string,
-							ContactActivator.NODE_NAME_ADRESS_POSTAL);
+					edit.setValue(adressNode, ContactActivator.NODE_NAME_ADRESS_POSTAL,
+							postalAddress.getPostcode().getValue());
 				}
 				if (postalAddress.hasRegion()) {
-					edit.setValueByPath(newContact, postalAddress.getRegion().getValue(), string,
-							ContactActivator.NODE_NAME_ADRESS_REGION);
+					edit.setValue(adressNode, ContactActivator.NODE_NAME_ADRESS_REGION,
+							postalAddress.getRegion().getValue());
 				}
 
+				edit.addDynamicNode(newContact, adressNode, null);
 			}
 
 		}
@@ -290,39 +295,55 @@ public class ContactConverter {
 
 			contact.getStructuredPostalAddresses().clear();
 			values = staticAdressTypeMapper.values();
+
+			Map<String, InformationUnit> adresses = new HashMap<String, InformationUnit>();
+			EList<InformationUnit> dynamicList2 = read
+					.getDynamicList(ContactActivator.NODE_NAME_ADRESSES);
+			for (InformationUnit informationUnit : dynamicList2) {
+				InformationStructureRead adressRead = InformationStructureRead.newSession(
+						informationUnit, ContactActivator.TYPE_ID);
+				String valueByNodeId = (String) adressRead
+						.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS);
+				adresses.put(valueByNodeId, informationUnit);
+			}
 			for (String string : values) {
-				/*
-				 * Workadress
-				 */
-				String street = ((String) read.getValueByPath(string,
-						ContactActivator.NODE_NAME_ADRESS_STREET));
-				String pob = ((String) read.getValueByPath(string,
-						ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
-				String locality = ((String) read.getValueByPath(string,
-						ContactActivator.NODE_NAME_ADRESS_LOCALITY));
-				String region = ((String) read.getValueByPath(string,
-						ContactActivator.NODE_NAME_ADRESS_REGION));
-				String postal = ((String) read.getValueByPath(string,
-						ContactActivator.NODE_NAME_ADRESS_POSTAL));
-				String country = ((String) read.getValueByPath(string,
-						ContactActivator.NODE_NAME_ADRESS_COUNTRY));
-				if (street != null && street.trim().length() > 0 && locality != null
-						&& locality.trim().length() > 0) {
-					StructuredPostalAddress adress = new StructuredPostalAddress();
-					adress.setStreet(new Street(street == null ? "" : street));
-					if (pob != null) {
-						adress.setPobox(new PoBox(pob));
+				InformationUnit informationUnit = adresses.get(string);
+				if (informationUnit != null) {
+					InformationStructureRead adressRead = InformationStructureRead.newSession(
+							informationUnit, ContactActivator.TYPE_ID);
+					String street = (String) adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_STREET);
+					String pob = (String) adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX);
+					String locality = (String) adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_LOCALITY);
+					String region = (String) adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_REGION);
+					String postal = (String) adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_POSTAL);
+					String country = (String) adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_COUNTRY);
+					if (street != null && street.trim().length() > 0 && locality != null
+							&& locality.trim().length() > 0) {
+						StructuredPostalAddress adress = new StructuredPostalAddress();
+						adress.setStreet(new Street(street == null ? "" : street));
+						if (pob != null) {
+							adress.setPobox(new PoBox(pob));
+						}
+						// Region is required
+						if (region != null && region.trim().length() > 0) {
+							adress.setRegion(new Region(region));
+						} else {
+							adress.setRegion(new Region("n.a."));
+						}
+						adress.setCity(new City(locality == null ? "" : locality));
+						adress.setPostcode(new PostCode(postal == null ? "" : postal));
+						if (country != null) {
+							// adress.setCountry(new Country(code, value))
+						}
+						adress.setRel(getKeyByValue(staticAdressTypeMapper, string));
+						contact.getStructuredPostalAddresses().add(adress);
 					}
-					// Region is required
-					if (region != null && region.trim().length() > 0) {
-						adress.setRegion(new Region(region));
-					} else {
-						adress.setRegion(new Region("n.a."));
-					}
-					adress.setCity(new City(locality == null ? "" : locality));
-					adress.setPostcode(new PostCode(postal == null ? "" : postal));
-					adress.setRel(getKeyByValue(staticAdressTypeMapper, string));
-					contact.getStructuredPostalAddresses().add(adress);
 				}
 
 			}

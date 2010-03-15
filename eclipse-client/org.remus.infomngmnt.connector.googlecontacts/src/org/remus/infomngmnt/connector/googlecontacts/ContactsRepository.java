@@ -39,12 +39,12 @@ import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.extension.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.remote.ILoginCallBack;
-import org.remus.infomngmnt.core.remote.IRepository;
+import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.remote.RemoteException;
+import org.remus.infomngmnt.model.remote.ILoginCallBack;
+import org.remus.infomngmnt.model.remote.IRepository;
 import org.remus.infomngmnt.util.StatusCreator;
 
 import com.google.gdata.client.Query;

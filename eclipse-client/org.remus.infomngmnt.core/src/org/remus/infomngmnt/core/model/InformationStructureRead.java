@@ -75,6 +75,10 @@ public class InformationStructureRead {
 
 	public InformationUnit getChildByNodeId(final String node) {
 		InformationStructure itemByNodeAndTypeId = getItemByNodeAndTypeId(node, this.type);
+
+		if (node.split("/").length > 1) {
+			return (InformationUnit) getObjectByPath(node.split("/"), null, 0);
+		}
 		/*
 		 * Now we search through the given base object for the id
 		 */
@@ -140,6 +144,9 @@ public class InformationStructureRead {
 				}
 			}
 		}
+		if (node.split("/").length > 1) {
+			return getValueByPath(node.split("/"), null, 0);
+		}
 		InformationUnit childByNodeId = getChildByNodeId(node);
 		InformationStructure structureItem = getItemByNodeAndTypeId(node, this.type);
 		InformationStructureType structureType = structureItem.getType();
@@ -170,6 +177,68 @@ public class InformationStructureRead {
 		}
 		if (attToGet != null && childByNodeId != null) {
 			return childByNodeId.eGet(attToGet);
+		}
+		return null;
+	}
+
+	private Object getValueByPath(final String[] split, final InformationStructure parentElement,
+			final int i) {
+		InformationStructure itemByNodeAndTypeId = getItemByNodeAndTypeId(split[i], this.type);
+		if (i == 0 && itemByNodeAndTypeId != null) {
+			return getValueByPath(split, itemByNodeAndTypeId, i + 1);
+		} else if (i == 0 && itemByNodeAndTypeId == null) {
+			return null;
+		} else if (parentElement instanceof DynamicStructure && itemByNodeAndTypeId == null) {
+			EList<InformationUnit> dynamicList = getDynamicList(((DynamicStructure) parentElement)
+					.getId());
+			for (InformationUnit informationUnit : dynamicList) {
+				String type2 = informationUnit.getType();
+				EStructuralFeature featureByNodeId = getFeatureByNodeId(type2);
+				if (featureByNodeId != null) {
+					Object eGet = informationUnit.eGet(featureByNodeId);
+					if (eGet != null && eGet.toString().equals(split[i])) {
+						String[] newPath = new String[split.length - 1 - i];
+						System.arraycopy(split, i + 1, newPath, 0, split.length - 1 - i);
+						InformationStructureRead newRead = InformationStructureRead.newSession(
+								informationUnit, this.type);
+						return newRead.getValueByNodeId(org.apache.commons.lang.StringUtils.join(
+								newPath, "/"));
+					}
+				}
+			}
+		} else if (parentElement instanceof InformationStructure && itemByNodeAndTypeId != null) {
+			return getValueByPath(split, itemByNodeAndTypeId, i + 1);
+		}
+		return null;
+	}
+
+	private Object getObjectByPath(final String[] split, final InformationStructure parentElement,
+			final int i) {
+		InformationStructure itemByNodeAndTypeId = getItemByNodeAndTypeId(split[i], this.type);
+		if (i == 0 && itemByNodeAndTypeId != null) {
+			return getObjectByPath(split, itemByNodeAndTypeId, i + 1);
+		} else if (i == 0 && itemByNodeAndTypeId == null) {
+			return null;
+		} else if (parentElement instanceof DynamicStructure && itemByNodeAndTypeId == null) {
+			EList<InformationUnit> dynamicList = getDynamicList(((DynamicStructure) parentElement)
+					.getId());
+			for (InformationUnit informationUnit : dynamicList) {
+				String type2 = informationUnit.getType();
+				EStructuralFeature featureByNodeId = getFeatureByNodeId(type2);
+				if (featureByNodeId != null) {
+					Object eGet = informationUnit.eGet(featureByNodeId);
+					if (eGet != null && eGet.toString().equals(split[i])) {
+						String[] newPath = new String[split.length - 1 - i];
+						System.arraycopy(split, i + 1, newPath, 0, split.length - 1 - i);
+						InformationStructureRead newRead = InformationStructureRead.newSession(
+								informationUnit, this.type);
+						return newRead.getChildByNodeId(org.apache.commons.lang.StringUtils.join(
+								newPath, "/"));
+					}
+				}
+			}
+		} else if (parentElement instanceof InformationStructure && itemByNodeAndTypeId != null) {
+			return getObjectByPath(split, itemByNodeAndTypeId, i + 1);
 		}
 		return null;
 	}

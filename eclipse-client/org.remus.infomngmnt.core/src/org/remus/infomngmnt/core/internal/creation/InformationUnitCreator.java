@@ -230,45 +230,20 @@ public class InformationUnitCreator {
 
 	public void setObject(final InformationUnit anyParentUnit, final String nodeId,
 			final InformationUnit value, final String infoType, final EditingDomain editingDomain) {
-		if (!nodeId.equals(value.getType()) || nodeId.equals(infoType)) {
-			return;
-		}
-		InformationStructureDefinition structureDefinition = getStructureDefinition(infoType);
-		SELECT select = new SELECT(new FROM(structureDefinition), new WHERE(
-				new EObjectAttributeValueCondition(
-						InfomngmntPackage.Literals.INFORMATION_STRUCTURE_ITEM__ID, new Condition() {
-							@Override
-							public boolean isSatisfied(final Object arg0) {
-								return arg0 != null && arg0.toString().equals(nodeId);
-							}
-						})));
-		IQueryResult execute = select.execute();
-		if (execute.size() != 1) {
-			throw new IllegalArgumentException("Subtype not found");
-		}
-		SELECT innerSelect = new SELECT(new FROM(anyParentUnit), new WHERE(
-				new EObjectAttributeValueCondition(
-						InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__TYPE,
-						new Condition() {
-							@Override
-							public boolean isSatisfied(final Object arg0) {
-								return arg0 != null && arg0.toString().equals(nodeId);
-							}
-						})));
-		IQueryResult execute2 = innerSelect.execute();
-		EObject next2;
-		if (execute2.size() == 0) {
+		InformationStructureRead read = InformationStructureRead
+				.newSession(anyParentUnit, infoType);
+		InformationUnit childByNodeId = read.getChildByNodeId(nodeId);
+		if (childByNodeId == null) {
 			addDynamicNode(anyParentUnit, value, editingDomain);
 		} else {
-			next2 = execute2.iterator().next();
 			EditingDomain domain;
 			if (editingDomain == null) {
 				domain = InfomngmntEditPlugin.getPlugin().getEditService().createNewEditingDomain();
 			} else {
 				domain = editingDomain;
 			}
-			InformationUnit eContainer = (InformationUnit) next2.eContainer();
-			int indexOf = eContainer.getChildValues().indexOf(next2);
+			InformationUnit eContainer = (InformationUnit) childByNodeId.eContainer();
+			int indexOf = eContainer.getChildValues().indexOf(childByNodeId);
 			Command create = SetCommand.create(domain, eContainer,
 					InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, value, indexOf);
 			domain.getCommandStack().execute(create);
@@ -292,27 +267,14 @@ public class InformationUnitCreator {
 				}
 			}
 		}
-		if (nodeId.equals(infoTypeId)) {
-			structureItem = structureDefinition;
-		} else {
-			SELECT select = new SELECT(new FROM(structureDefinition), new WHERE(
-					new EObjectAttributeValueCondition(
-							InfomngmntPackage.Literals.INFORMATION_STRUCTURE_ITEM__ID,
-							new Condition() {
-								@Override
-								public boolean isSatisfied(final Object arg0) {
-									return arg0 != null && arg0.toString().equals(nodeId);
-								}
-							})));
-			IQueryResult execute = select.execute();
-			if (execute.size() != 1) {
-				throw new IllegalArgumentException("Subtype not found");
-			} else {
-				structureItem = (InformationStructureItem) execute.getEObjects().iterator().next();
-			}
-		}
+
+		InformationStructureRead read = InformationStructureRead.newSession(anyParentUnit,
+				infoTypeId);
+		InformationUnit childByNodeId = read.getChildByNodeId(nodeId);
 
 		if (value != null) {
+			structureItem = InformationStructureRead.getItemByNodeAndTypeId(
+					childByNodeId.getType(), infoTypeId);
 			InformationStructureType structureType = structureItem.getType();
 			EAttribute attToSet = null;
 			switch (structureType) {
@@ -351,21 +313,10 @@ public class InformationUnitCreator {
 				break;
 			}
 			if (attToSet != null) {
-				SELECT innerSelect = new SELECT(new FROM(anyParentUnit), new WHERE(
-						new EObjectAttributeValueCondition(
-								InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__TYPE,
-								new Condition() {
-									@Override
-									public boolean isSatisfied(final Object arg0) {
-										return arg0 != null && arg0.toString().equals(nodeId);
-									}
-								})));
-				IQueryResult execute2 = innerSelect.execute();
-				if (execute2.size() != 1) {
+				if (childByNodeId == null) {
 					throw new IllegalArgumentException(
 							"Searching for the dynamic node was not successful");
 				}
-				EObject next2 = execute2.iterator().next();
 				EditingDomain domain;
 				if (editingDomain == null) {
 					domain = InfomngmntEditPlugin.getPlugin().getEditService()
@@ -373,7 +324,7 @@ public class InformationUnitCreator {
 				} else {
 					domain = editingDomain;
 				}
-				Command create = SetCommand.create(domain, next2, attToSet, value);
+				Command create = SetCommand.create(domain, childByNodeId, attToSet, value);
 				domain.getCommandStack().execute(create);
 				if (domain instanceof IDisposable) {
 					((IDisposable) domain).dispose();

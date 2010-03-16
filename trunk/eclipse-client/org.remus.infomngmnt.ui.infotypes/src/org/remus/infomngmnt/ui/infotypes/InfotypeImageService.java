@@ -71,6 +71,7 @@ public class InfotypeImageService extends PluginRegistryDynamic implements IInfo
 	}
 
 	public Image getImageByInfoType(final String typeId) {
+		checkForInitialization();
 		ImageInformation imageInformation = this.wrapperItems.get(typeId.toLowerCase());
 		if (imageInformation != null) {
 			return ResourceManager.getPluginImage(Platform.getBundle(imageInformation.contributor)
@@ -80,6 +81,7 @@ public class InfotypeImageService extends PluginRegistryDynamic implements IInfo
 	}
 
 	public ImageDescriptor getImageDescriptorByInfoType(final String typeId) {
+		checkForInitialization();
 		ImageInformation imageInformation = this.wrapperItems.get(typeId.toLowerCase());
 		if (imageInformation != null) {
 			return ResourceManager.getPluginImageDescriptor(Platform.getBundle(

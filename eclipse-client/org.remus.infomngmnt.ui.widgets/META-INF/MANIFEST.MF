@@ -4,9 +4,9 @@ Bundle-Name: Widgets
 Bundle-SymbolicName: org.remus.infomngmnt.ui.widgets
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.ui.widgets.WidgetsActivator
-Require-Bundle: org.eclipse.core.runtime,
- de.spiritlink.richhtml4eclipse,
- org.eclipse.ui
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ de.spiritlink.richhtml4eclipse;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.ui;bundle-version="[3.5.0,4.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.nebula.widgets.calendarcombo,

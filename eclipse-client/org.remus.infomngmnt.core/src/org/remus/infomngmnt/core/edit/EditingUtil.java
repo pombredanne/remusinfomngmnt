@@ -51,13 +51,21 @@ import org.remus.infomngmnt.provider.InfomngmntItemProviderAdapterFactory;
  */
 public class EditingUtil implements IEditingHandler {
 
-	private static IEditingHandler INSTANCE;
+	private EditingDomain editingDomain;
+	private ComposedAdapterFactory adapterFactory;
+	private AdapterFactoryEditingDomain navigationEditingDomain;
 
-	private final EditingDomain editingDomain;
-	private final ComposedAdapterFactory adapterFactory;
-	private final AdapterFactoryEditingDomain navigationEditingDomain;
+	private transient boolean initialized = false;
 
-	public EditingUtil() {
+	protected synchronized void checkForInitialization() {
+		if (!this.initialized) {
+			System.out.println("Init component " + getClass().getCanonicalName());
+			init();
+			this.initialized = true;
+		}
+	}
+
+	private void init() {
 		this.adapterFactory = new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		this.adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
@@ -69,6 +77,7 @@ public class EditingUtil implements IEditingHandler {
 				new BasicCommandStack());
 		this.editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
 				.put(InfomngmntPackage.eNS_URI, InfomngmntPackage.eINSTANCE);
+
 	}
 
 	/*
@@ -185,6 +194,7 @@ public class EditingUtil implements IEditingHandler {
 	 * .core.resources.IFile, org.eclipse.emf.ecore.EClass)
 	 */
 	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas) {
+		checkForInitialization();
 		return getObjectFromUri(uri.getFullPath(), objectClas, true, this.editingDomain, false);
 	}
 
@@ -211,6 +221,7 @@ public class EditingUtil implements IEditingHandler {
 	 */
 	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas,
 			final EditingDomain domain, final boolean loadOnDemand) {
+		checkForInitialization();
 		return getObjectFromUri(uri.getFullPath(), objectClas, domain != null ? true : false,
 				this.editingDomain, loadOnDemand);
 	}
@@ -225,6 +236,7 @@ public class EditingUtil implements IEditingHandler {
 	 */
 	public <T extends EObject> T getObjectFromFile(final IFile uri, final EClass objectClas,
 			final EditingDomain domain) {
+		checkForInitialization();
 		return getObjectFromUri(uri.getFullPath(), objectClas, true, this.editingDomain, true);
 	}
 
@@ -412,6 +424,7 @@ public class EditingUtil implements IEditingHandler {
 	 * @see org.remus.infomngmnt.util.IEditingHandler#getEditingDomain()
 	 */
 	public EditingDomain getEditingDomain() {
+		checkForInitialization();
 		return this.editingDomain;
 	}
 
@@ -421,6 +434,7 @@ public class EditingUtil implements IEditingHandler {
 	 * @see org.remus.infomngmnt.util.IEditingHandler#createNewEditingDomain()
 	 */
 	public DisposableEditingDomain createNewEditingDomain() {
+		checkForInitialization();
 		final BasicCommandStack commandStack = new BasicCommandStack() {
 			@Override
 			public void flush() {
@@ -448,6 +462,7 @@ public class EditingUtil implements IEditingHandler {
 	 * @see org.remus.infomngmnt.util.IEditingHandler#getAdapterFactory()
 	 */
 	public ComposedAdapterFactory getAdapterFactory() {
+		checkForInitialization();
 		return this.adapterFactory;
 	}
 
@@ -458,6 +473,7 @@ public class EditingUtil implements IEditingHandler {
 	 * org.remus.infomngmnt.util.IEditingHandler#getNavigationEditingDomain()
 	 */
 	public AdapterFactoryEditingDomain getNavigationEditingDomain() {
+		checkForInitialization();
 		return this.navigationEditingDomain;
 	}
 

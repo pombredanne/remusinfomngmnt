@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
 
 /**
@@ -72,6 +73,7 @@ public class SaveParticipantExtensionService extends PluginRegistryDynamic imple
 	 * (int, org.remus.infomngmnt.InformationUnit)
 	 */
 	public void fireEvent(final int eventId, final Object oldValue, final Object newValue) {
+		checkForInitialization();
 		for (ISaveParticipant element : this.items) {
 			switch (eventId) {
 			case CREATED:
@@ -96,6 +98,7 @@ public class SaveParticipantExtensionService extends PluginRegistryDynamic imple
 	}
 
 	public Collection<ISaveParticipant> getAllItems() {
+		checkForInitialization();
 		return this.items;
 	}
 

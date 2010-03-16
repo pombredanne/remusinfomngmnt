@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 
+import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.core.services.IJobExtensionService;
 
@@ -68,10 +69,12 @@ public class JobExtensionSerivce extends PluginRegistryDynamic implements IJobEx
 	}
 
 	public Collection<AbstractJob> getAllJobs() {
+		checkForInitialization();
 		return this.jobs.values();
 	}
 
 	public AbstractJob getJobById(final String id) {
+		checkForInitialization();
 		return this.jobs.get(id);
 	}
 

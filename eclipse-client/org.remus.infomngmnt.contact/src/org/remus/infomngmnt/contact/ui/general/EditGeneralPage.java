@@ -490,6 +490,9 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		handleAdressComboChange((KeyValueObject) ((IStructuredSelection) this.adressComboViewer
 				.getSelection()).getFirstElement());
 		addNameListeners();
+		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
+		Object valueByNodeId = read.getValueByNodeId("adresses/workAdress/street");
+		System.out.println(valueByNodeId);
 
 	}
 

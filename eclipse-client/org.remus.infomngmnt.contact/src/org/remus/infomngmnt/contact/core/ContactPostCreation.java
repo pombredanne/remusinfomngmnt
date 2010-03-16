@@ -53,7 +53,7 @@ public class ContactPostCreation extends PostCreationHandler {
 		InformationStructureEdit edit = InformationStructureEdit
 				.newSession(ContactActivator.TYPE_ID);
 		for (String str : availableAdressTypes) {
-			if (!availableAdressTypes.contains(presentAdressTypes)) {
+			if (!presentAdressTypes.contains(str)) {
 				InformationUnit newAdressType = edit.createSubType(
 						ContactActivator.NODE_NAME_ADRESS, str);
 				edit.addDynamicNode(unit, newAdressType, this.editingDomain);

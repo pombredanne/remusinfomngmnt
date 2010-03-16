@@ -14,21 +14,21 @@ Export-Package: org.remus.infomngmnt.ui.desktop.extension,
  org.remus.uimodel.impl,
  org.remus.uimodel.provider,
  org.remus.uimodel.util
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.emf.edit;visibility:=reexport,
- org.eclipse.ui,
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
+ org.eclipse.emf.edit;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
+ org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.remus.infomngmnt.services;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.common.core;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.ui.forms,
+ org.eclipse.ui.forms;bundle-version="[3.4.0,4.0.0)",
  org.remus.infomngmnt.ui.popup;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.emf.edit.ui;bundle-version="2.5.0",
+ org.eclipse.emf.edit.ui;bundle-version="[2.5.0,3.0.0)",
  org.remus.infomngmnt.ui.rules;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.common.ui;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.ui;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.emf.ecore.xmi;bundle-version="2.5.0"
+ org.eclipse.emf.ecore.xmi;bundle-version="[2.5.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.remus.infomngmnt.common.ui
 Service-Component: OSGI-INF/trayconfiguration.xml, OSGI-INF/localtoolbar.xml, OSGI-INF/localtrayactions.xml

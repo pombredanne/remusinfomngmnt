@@ -69,7 +69,7 @@ import org.remus.infomngmnt.util.CategoryUtil;
  */
 public class ApplicationModelPool implements IApplicationModel {
 
-	private final AvailableInformationCache cache;
+	private AvailableInformationCache cache;
 
 	private final Logger log = Logger.getLogger(ApplicationModelPool.class);
 
@@ -181,13 +181,25 @@ public class ApplicationModelPool implements IApplicationModel {
 		}
 	}
 
-	private static IApplicationModel INSTANCE;
+	private ApplicationRoot model;
 
-	private final ApplicationRoot model;
+	private IEditingHandler editService;
 
-	private final IEditingHandler editService;
+	private transient boolean initialized = false;
 
 	public ApplicationModelPool() {
+
+	}
+
+	protected synchronized void checkForInitialization() {
+		if (!this.initialized) {
+			System.out.println("Init component " + getClass().getCanonicalName());
+			this.initialized = true;
+			init();
+		}
+	}
+
+	private void init() {
 		this.editService = InfomngmntEditPlugin.getPlugin().getEditService();
 		this.log.debug("Initializing datamodel");
 		this.model = InfomngmntFactory.eINSTANCE.createApplicationRoot();
@@ -223,6 +235,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 * .eclipse.core.resources.IProject)
 	 */
 	public void removeFromModel(final IProject project) throws CoreException {
+		checkForInitialization();
 		Category itemByValue = (Category) ModelUtil.getItemByValue(getModel().getRootCategories(),
 				InfomngmntPackage.Literals.CATEGORY__LABEL, project.getName());
 		if (itemByValue != null) {
@@ -254,6 +267,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 * .core.resources.IProject)
 	 */
 	public void addToModel(final IProject project) {
+		checkForInitialization();
 		if (project.isOpen()) {
 			this.log.debug(NLS.bind("Adding project {0} to pool", project.getName()));
 			IFile file = project.getFile(new Path(ResourceUtil.SETTINGS_FOLDER + File.separator
@@ -282,6 +296,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 * @see org.remus.infomngmnt.core.model.IApplicationModel#getModel()
 	 */
 	public ApplicationRoot getModel() {
+		checkForInitialization();
 		return this.model;
 	}
 
@@ -293,6 +308,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 * (org.remus.infomngmnt.Category)
 	 */
 	public void addListenerToCategory(final Category category) {
+		checkForInitialization();
 		this.editService.getNavigationEditingDomain().getResourceSet().getResources().add(
 				category.eResource());
 		category.eAdapters().add(new AdapterImplExtension(category));
@@ -306,6 +322,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 * .core.runtime.IProgressMonitor)
 	 */
 	public Map<String, InformationUnitListItem> getAllItems(final IProgressMonitor monitor) {
+		checkForInitialization();
 		return this.cache.getAllItems(monitor);
 	}
 
@@ -317,6 +334,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 * .String, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor) {
+		checkForInitialization();
 		return this.cache.getItemById(id, monitor);
 	}
 
@@ -329,6 +347,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 */
 	public InformationUnitListItem getItemByIdLocalDeletedIncluded(final String id,
 			final IProgressMonitor monitor) {
+		checkForInitialization();
 		InformationUnitListItem itemById = this.cache.getItemById(id, monitor);
 		if (itemById == null) {
 			EObjectReferenceValueCondition condition = new EObjectReferenceValueCondition(
@@ -365,6 +384,7 @@ public class ApplicationModelPool implements IApplicationModel {
 	 * @see org.remus.infomngmnt.core.model.IApplicationModel#clearCache()
 	 */
 	public void clearCache() {
+		checkForInitialization();
 		this.cache.clear();
 	}
 

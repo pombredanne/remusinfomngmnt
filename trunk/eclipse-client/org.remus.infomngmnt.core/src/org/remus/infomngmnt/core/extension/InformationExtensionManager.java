@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 
+import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.internal.extension.InfoType;
 import org.remus.infomngmnt.core.services.IInformationTypeHandler;
@@ -90,6 +91,7 @@ public class InformationExtensionManager extends PluginRegistryDynamic implement
 	 * (java.lang.String)
 	 */
 	public IInfoType getInfoTypeByType(final String type) {
+		checkForInitialization();
 		return this.items.get(type.toUpperCase());
 
 	}
@@ -101,6 +103,7 @@ public class InformationExtensionManager extends PluginRegistryDynamic implement
 	 * org.remus.infomngmnt.core.extension.IInformationTypeHandler#getTypes()
 	 */
 	public Collection<IInfoType> getTypes() {
+		checkForInitialization();
 		return this.items.values();
 	}
 

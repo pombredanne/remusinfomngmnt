@@ -14,8 +14,10 @@ package org.remus.infomngmnt.geodata.google;
 import java.awt.geom.Point2D;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +55,15 @@ public class GMapsApi implements IGeoData {
 				+ "+" + values.get(KEY_POST_CODE) + "+" + values.get(KEY_REGION) + "+"
 				+ values.get(KEY_STREET);
 		curSearchValue = curSearchValue.replace(" ", "+");
+		String encode = curSearchValue;
+		try {
+			encode = URLEncoder.encode(curSearchValue, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		String curUrl = "http://maps.google.com/maps/geo?q=" + curSearchValue + "&output=xml&key="
+		String curUrl = "http://maps.google.com/maps/geo?q=" + encode + "&output=xml&key="
 				+ getApiKey();
 		List<String> result = new ArrayList<String>();
 

@@ -70,6 +70,7 @@ public class AnalyzerExtensionService extends PluginRegistryDynamic implements
 	}
 
 	public IAnalyzer getAnalyerById(final String id) {
+		checkForInitialization();
 		return this.items.get(id);
 	}
 

@@ -2,7 +2,7 @@
 <feature
       id="org.remus.infomngmnt.birtdesigner.feature"
       label="Report Editing Capabilites (BIRT)"
-      version="1.0.0.qualifier">
+      version="0.1.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -17,8 +17,8 @@
    </license>
 
    <requires>
-      <import feature="org.remus.infomngmnt.core.feature" version="1.0.0.qualifier"/>
-      <import feature="org.remus.infomngmnt.reportruntime.feature" version="1.0.0.qualifier"/>
+      <import feature="org.remus.infomngmnt.core.feature" version="0.1.0"/>
+      <import feature="org.remus.infomngmnt.reportruntime.feature" version="0.1.0"/>
    </requires>
 
    <plugin

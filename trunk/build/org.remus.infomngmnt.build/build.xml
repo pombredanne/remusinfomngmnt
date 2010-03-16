@@ -92,7 +92,9 @@
 
 	<target name="depending">
 	
-		<copy todir="${build.dir.location}/features">
+		<mkdir dir="${build.dir.location}/features" />
+		<mkdir dir="${build.dir.location}/plugins/" />
+		<copy todir="${build.dir.location}/features" >
 			<fileset dir="${build.dir.location}/../../eclipse-client/">
    			 	<include name="*.feature/**"/>
 			</fileset>		

@@ -99,10 +99,12 @@ public class MediaPlayerExtensionService extends PluginRegistryDynamic implement
 	}
 
 	public IMediaPlayer getPlayerById(final String id) {
+		checkForInitialization();
 		return this.items.get(id);
 	}
 
 	public IMediaPlayer getPlayerByType(final String type) {
+		checkForInitialization();
 		Collection<IMediaPlayer> values = this.items.values();
 		for (IMediaPlayer player : values) {
 			if (player.getSupportedMediaTypes().contains(type)) {
@@ -113,6 +115,7 @@ public class MediaPlayerExtensionService extends PluginRegistryDynamic implement
 	}
 
 	public Collection<IMediaPlayer> getAllPlayers() {
+		checkForInitialization();
 		return this.items.values();
 	}
 

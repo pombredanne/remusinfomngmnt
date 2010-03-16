@@ -140,6 +140,7 @@ public class ReportTemplateManager extends PluginRegistryDynamic {
 	}
 
 	public List<ITemplateCategory> getCategories() {
+		checkForInitialization();
 		return this.categories;
 	}
 
@@ -147,6 +148,7 @@ public class ReportTemplateManager extends PluginRegistryDynamic {
 	 * @return the templates
 	 */
 	public final List<IReportTemplate> getTemplates() {
+		checkForInitialization();
 		return this.templates;
 	}
 

@@ -2,7 +2,7 @@
 <feature
       id="org.remus.infomngmnt.infotypes.feature"
       label="RIM Basic Infotyoes"
-      version="1.0.0.qualifier"
+      version="0.1.0.qualifier"
       provider-name="Remus Software">
 
    <description url="http://remus-software.org/">
@@ -223,7 +223,7 @@ litigation.
    </license>
 
    <requires>
-      <import feature="org.remus.infomngmnt.core.feature" version="1.0.0"/>
+      <import feature="org.remus.infomngmnt.core.feature" version="0.1.0"/>
    </requires>
 
    <plugin

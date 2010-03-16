@@ -113,6 +113,7 @@ public class IndexExtensionService extends PluginRegistryDynamic implements IInd
 	 * (java.lang.String, java.lang.String)
 	 */
 	public IAnalyzer getAnalyzerByTypeAndNodeId(final String typeId, final String nodeId) {
+		checkForInitialization();
 		Map<String, String> map = this.indexer.get(typeId);
 		if (map != null) {
 			String string = map.get(nodeId);
@@ -131,6 +132,7 @@ public class IndexExtensionService extends PluginRegistryDynamic implements IInd
 	 */
 	public ISecondaryAnalyzer[] getSecondaryAnalyerByTypeAndNodeId(final String typeId,
 			final String nodeId) {
+		checkForInitialization();
 		Map<String, List<ISecondaryAnalyzer>> map = this.secondaryIndexer.get(typeId);
 		if (map != null) {
 			List<ISecondaryAnalyzer> string = map.get(nodeId);

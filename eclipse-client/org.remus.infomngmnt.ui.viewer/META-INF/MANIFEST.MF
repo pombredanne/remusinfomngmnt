@@ -5,10 +5,10 @@ Bundle-SymbolicName: org.remus.infomngmnt.ui.viewer;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.ui.viewer.ViewerActivator
 Bundle-Vendor: Remus Software
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.emf;bundle-version="2.5.0",
- org.eclipse.emf.edit.ui;bundle-version="2.5.0";visibility:=reexport,
+Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.emf;bundle-version="[2.5.0,3.0.0)",
+ org.eclipse.emf.edit.ui;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.services;bundle-version="[0.1.0,1.0.0)",

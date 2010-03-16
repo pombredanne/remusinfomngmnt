@@ -110,14 +110,17 @@ public class RuleExtensionManager extends PluginRegistryDynamic implements IRule
 	}
 
 	public Map<String, TransferWrapper> getAllTransferTypes() {
+		checkForInitialization();
 		return this.wrapperItems;
 	}
 
 	public TransferWrapper getTransferTypeById(final String transferId) {
+		checkForInitialization();
 		return this.wrapperItems.get(transferId);
 	}
 
 	public ICreationTrigger getCreationTriggerByTypeId(final String typId) {
+		checkForInitialization();
 		ICreationTrigger createExecutableExtension = null;
 		try {
 			createExecutableExtension = (ICreationTrigger) this.creationTrigger.get(typId)
@@ -129,10 +132,12 @@ public class RuleExtensionManager extends PluginRegistryDynamic implements IRule
 	}
 
 	public List<String> getTransferIdsByTypeId(final String typeId) {
+		checkForInitialization();
 		return this.validTransfers.get(typeId);
 	}
 
 	public Map<String, List<String>> getTransfers() {
+		checkForInitialization();
 		return this.validTransfers;
 	}
 

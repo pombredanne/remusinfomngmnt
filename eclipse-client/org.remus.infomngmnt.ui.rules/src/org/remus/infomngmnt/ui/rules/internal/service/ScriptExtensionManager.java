@@ -80,8 +80,9 @@ public class ScriptExtensionManager extends PluginRegistryDynamic implements
 					this.categories.put(null, iMethodCategory);
 				}
 				MethodDefinition methodDefinition = new MethodDefinition(configurationElement
-						.getAttribute(ID_ATT), configurationElement.getAttribute(STRING_ATT), configurationElement.getAttribute(NAME_ATT),
-						configurationElement, iMethodCategory);
+						.getAttribute(ID_ATT), configurationElement.getAttribute(STRING_ATT),
+						configurationElement.getAttribute(NAME_ATT), configurationElement,
+						iMethodCategory);
 				iMethodCategory.getDefinitions().add(methodDefinition);
 			}
 		}
@@ -95,11 +96,13 @@ public class ScriptExtensionManager extends PluginRegistryDynamic implements
 	}
 
 	public IMethodCategory[] getAllScriptCategories() {
+		checkForInitialization();
 		Collection<IMethodCategory> values = this.categories.values();
 		return values.toArray(new IMethodCategory[values.size()]);
 	}
 
 	public IGroovyScript[] getAllScripts() {
+		checkForInitialization();
 		Collection<IGroovyScript> values = this.scripts.values();
 		return values.toArray(new IGroovyScript[values.size()]);
 	}

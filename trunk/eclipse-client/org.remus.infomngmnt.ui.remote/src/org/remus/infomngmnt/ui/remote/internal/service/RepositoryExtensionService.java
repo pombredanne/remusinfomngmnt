@@ -68,14 +68,17 @@ public class RepositoryExtensionService extends PluginRegistryDynamic implements
 	 * org.remus.infomngmnt.ui.service.IRepositoryExtensionService#getAllItems()
 	 */
 	public Collection<IRepositoryUI> getAllItems() {
+		checkForInitialization();
 		return this.items.values();
 	}
 
 	public IRepositoryUI getItemById(final String id) {
+		checkForInitialization();
 		return this.items.get(id);
 	}
 
 	public IRepositoryUI getItemByRepositoryId(final String repositoryId) {
+		checkForInitialization();
 		Collection<IRepositoryUI> allItems = getAllItems();
 		for (IRepositoryUI iRepositoryUi : allItems) {
 			if (iRepositoryUi.getRepositoryId().equals(repositoryId)) {

@@ -36,7 +36,12 @@ public class NotificationActivator extends AbstractUIPlugin {
 		super.start(context);
 		this.serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
-		new NotificationPopupManager().startNotification(0);
+		new Thread() {
+			@Override
+			public void run() {
+				new NotificationPopupManager().startNotification(0);
+			};
+		}.start();
 	}
 
 	/*

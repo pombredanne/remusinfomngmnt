@@ -60,8 +60,6 @@ public class UIPlugin extends AbstractUIPlugin {
 			}
 		});
 		this.serviceTracker = new RemusServiceTracker(getBundle());
-		this.editService = this.serviceTracker.getService(IEditingHandler.class);
-		this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
 		plugin = this;
 		// FIXME
 		// this.popupManager = new NotificationPopupManager();
@@ -113,6 +111,9 @@ public class UIPlugin extends AbstractUIPlugin {
 	 * @return the editService
 	 */
 	public final IEditingHandler getEditService() {
+		if (this.editService == null) {
+			this.editService = this.serviceTracker.getService(IEditingHandler.class);
+		}
 		return this.editService;
 	}
 
@@ -120,7 +121,9 @@ public class UIPlugin extends AbstractUIPlugin {
 	 * @return the applicationService
 	 */
 	public final IApplicationModel getApplicationService() {
+		if (this.applicationService == null) {
+			this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
+		}
 		return this.applicationService;
 	}
-
 }

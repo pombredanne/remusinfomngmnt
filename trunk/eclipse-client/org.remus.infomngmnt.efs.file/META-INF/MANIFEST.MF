@@ -5,12 +5,12 @@ Bundle-SymbolicName: org.remus.infomngmnt.efs.file;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.efs.file.EFSFileActivator
 Bundle-Vendor: Remus Software
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.core.filesystem,
- org.eclipse.ui.ide;resolution:=optional,
+Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.ui.ide;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.remus.infomngmnt.efs;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.ui.forms
+ org.eclipse.ui.forms;bundle-version="[3.4.0,4.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

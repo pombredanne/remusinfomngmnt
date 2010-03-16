@@ -78,10 +78,12 @@ public class SecurityProviderExtension extends PluginRegistryDynamic implements
 	}
 
 	public Collection<AbstractSecurityProvider> getItems() {
+		checkForInitialization();
 		return this.items.values();
 	}
 
 	public AbstractSecurityProvider getProviderByFileSystem(final String filesystemId) {
+		checkForInitialization();
 		Collection<AbstractSecurityProvider> values = this.items.values();
 		for (AbstractSecurityProvider abstractSecurityProvider : values) {
 			if (abstractSecurityProvider.getScheme().equals(filesystemId)) {

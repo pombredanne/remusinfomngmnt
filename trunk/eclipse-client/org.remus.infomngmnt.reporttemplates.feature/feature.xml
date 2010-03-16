@@ -2,7 +2,7 @@
 <feature
       id="org.remus.infomngmnt.reporttemplates.feature"
       label="Report Templates Feature"
-      version="1.0.0.qualifier"
+      version="0.1.0.qualifier"
       provider-name="Remus Software">
 
    <description url="http://www.example.com/description">
@@ -18,7 +18,7 @@
    </license>
 
    <requires>
-      <import feature="org.remus.infomngmnt.reportruntime.feature" version="1.0.0.qualifier"/>
+      <import feature="org.remus.infomngmnt.reportruntime.feature" version="0.1.0"/>
    </requires>
 
    <plugin

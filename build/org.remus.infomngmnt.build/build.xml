@@ -44,11 +44,13 @@
 			<arg value="-categoryDefinition" />
 			<arg value="file:${build.dir.location}/customization/rim_repository_category.xml" />
 		</java>
+		<!--
 		<delete dir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite">
 		</delete>
 		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/nightly/updateSite" failonerror="false">
 			<fileset dir="buildRepo"></fileset>
 		</copy>
+		-->
 		<touch file="${build.dir.location}/customization/p2profiledata/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" />
 		<touch file="${build.dir.location}/customization/p2profiledata/org.eclipse.equinox.p2.metadata.repository.prefs" />
 		<touch file="${build.dir.location}/customization/p2profiledata/org.eclipse.equinox.p2.artifact.repository.prefs" />

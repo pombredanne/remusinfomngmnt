@@ -79,7 +79,6 @@
       <information
             buildHtml="false"
             excludeFromIndex="true"
-            icon="icons/full/obj16/run.gif"
             name="Generic Rule"
             presentation="org.remus.infomngmnt.ui.rules.script.InformationRepresentation"
             structuredefinition="structuredefinition.xmi"

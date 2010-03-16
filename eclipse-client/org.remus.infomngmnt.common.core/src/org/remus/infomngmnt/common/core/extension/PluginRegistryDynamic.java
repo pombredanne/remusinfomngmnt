@@ -25,9 +25,11 @@ public abstract class PluginRegistryDynamic implements IRegistryEventListener {
 
 	private final String extensionId;
 
+	private transient boolean initialized;
+
 	public PluginRegistryDynamic(final String extensionId) {
 		this.extensionId = extensionId;
-		init();
+		this.initialized = false;
 		Platform.getExtensionRegistry().addListener(this);
 	}
 
@@ -37,10 +39,13 @@ public abstract class PluginRegistryDynamic implements IRegistryEventListener {
 	}
 
 	public void added(final IExtensionPoint[] extensionPoints) {
-		for (IExtensionPoint extensionPoint : extensionPoints) {
-			if (extensionPoint.getUniqueIdentifier().equals(this.extensionId)) {
-				init();
-				break;
+		if (this.initialized) {
+			for (IExtensionPoint extensionPoint : extensionPoints) {
+				if (extensionPoint.getUniqueIdentifier().equals(this.extensionId)) {
+
+					init();
+					break;
+				}
 			}
 		}
 	}
@@ -51,13 +56,22 @@ public abstract class PluginRegistryDynamic implements IRegistryEventListener {
 	}
 
 	public void removed(final IExtensionPoint[] extensionPoints) {
-		for (IExtensionPoint extensionPoint : extensionPoints) {
-			if (extensionPoint.getUniqueIdentifier().equals(this.extensionId)) {
-				init();
-				break;
+		if (this.initialized) {
+			for (IExtensionPoint extensionPoint : extensionPoints) {
+				if (extensionPoint.getUniqueIdentifier().equals(this.extensionId)) {
+					init();
+					break;
+				}
 			}
 		}
 
+	}
+
+	protected synchronized void checkForInitialization() {
+		if (!this.initialized) {
+			init();
+			this.initialized = true;
+		}
 	}
 
 	protected abstract void init();

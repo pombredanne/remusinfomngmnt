@@ -86,6 +86,7 @@ public class CollapsibleButtonExtensionService extends PluginRegistryDynamic imp
 	}
 
 	public List<CollapsibleButtonBar> getAllItems() {
+		checkForInitialization();
 		final List<CollapsibleButtonBar> itemsAsList = new LinkedList<CollapsibleButtonBar>(
 				this.items.values());
 		Collections.sort(itemsAsList, new Comparator<CollapsibleButtonBar>() {

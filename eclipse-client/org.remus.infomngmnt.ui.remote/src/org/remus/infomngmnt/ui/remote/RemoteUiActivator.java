@@ -41,8 +41,6 @@ public class RemoteUiActivator extends AbstractUIPlugin {
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
 		this.serviceTracker = new RemusServiceTracker(getBundle());
-		this.editService = this.serviceTracker.getService(IEditingHandler.class);
-		this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
 		plugin = this;
 	}
 
@@ -81,6 +79,9 @@ public class RemoteUiActivator extends AbstractUIPlugin {
 	 * @return the editService
 	 */
 	public final IEditingHandler getEditService() {
+		if (this.editService == null) {
+			this.editService = this.serviceTracker.getService(IEditingHandler.class);
+		}
 		return this.editService;
 	}
 
@@ -88,7 +89,9 @@ public class RemoteUiActivator extends AbstractUIPlugin {
 	 * @return the applicationService
 	 */
 	public final IApplicationModel getApplicationService() {
+		if (this.applicationService == null) {
+			this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
+		}
 		return this.applicationService;
 	}
-
 }

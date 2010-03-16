@@ -73,6 +73,7 @@ public class ParameterControlManager extends PluginRegistryDynamic {
 	}
 
 	public AbstractParameterControl getControlById(final String id) throws CoreException {
+		checkForInitialization();
 		IConfigurationElement iConfigurationElement = this.items.get(id);
 		if (iConfigurationElement != null) {
 			return (AbstractParameterControl) iConfigurationElement

@@ -5,15 +5,15 @@ Bundle-SymbolicName: org.remus.infomngmnt.core.remote;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.core.remote.RemoteActivator
 Bundle-Vendor: Remus Software
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.equinox.security,
- org.eclipse.emf.compare;bundle-version="1.0.1",
- org.eclipse.emf.compare.diff;bundle-version="1.0.1",
- org.eclipse.emf.compare.match;bundle-version="1.0.1",
+ org.eclipse.equinox.security;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.emf.compare;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.emf.compare.diff;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.emf.compare.match;bundle-version="[1.0.0,2.0.0)",
  org.remus.infomngmnt.services;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.emf.query
+ org.eclipse.emf.query;bundle-version="[1.2.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.core.remote,

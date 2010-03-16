@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.Platform;
 
 import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.core.extension.PluginRegistryDynamic;
+import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
 import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.remote.services.IRepositoryService;
@@ -83,7 +83,7 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 
 	public synchronized AbstractExtensionRepository getItemByRepository(
 			final RemoteRepository repository) throws CoreException {
-
+		checkForInitialization();
 		if (this.browsingInstances.get(repository.getId()) == null) {
 			AbstractExtensionRepository newInstance = createNew(repository.getRepositoryTypeId());
 			newInstance.setLocalRepositoryId(repository.getId());
@@ -94,6 +94,7 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 	}
 
 	public String getNameByRepositoryId(final String id) {
+		checkForInitialization();
 		if (this.items.get(id) != null) {
 			IConfigurationElement iConfigurationElement = this.items.get(id);
 			return iConfigurationElement.getAttribute(NAME_ATT);
@@ -103,6 +104,7 @@ public class RepositoryConnectorExtensionService extends PluginRegistryDynamic i
 
 	public synchronized AbstractExtensionRepository getItemByLocalObject(
 			final SynchronizableObject syncObject) {
+		checkForInitialization();
 		SynchronizableObject currentElement = syncObject;
 		while (currentElement.eContainer() != null
 				&& ((SynchronizableObject) currentElement.eContainer())

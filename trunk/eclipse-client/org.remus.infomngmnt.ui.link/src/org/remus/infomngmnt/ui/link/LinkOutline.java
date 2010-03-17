@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -56,6 +55,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.services.IApplicationModel;
@@ -63,6 +63,7 @@ import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.editors.outline.IOutlineSection;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.ui.viewer.ViewerActivator;
 import org.remus.infomngmnt.ui.viewer.dnd.CustomDropTargetListener;
 
@@ -125,15 +126,20 @@ public class LinkOutline implements IOutlineSection {
 			List<Link> returnValue = new ArrayList<Link>();
 			for (AbstractInformationUnit source : sources) {
 				Link newLink = InfomngmntFactory.eINSTANCE.createLink();
+				newLink.setLocalInformationUnit(source.getId());
 				if (source instanceof InformationUnit) {
-					newLink.setTarget((InformationUnit) source);
+					InformationUnitListItem adapter = (InformationUnitListItem) source
+							.getAdapter(InformationUnitListItem.class);
+					if (adapter != null && adapter.getSynchronizationMetaData() != null) {
+						newLink.setRemoteUrl(adapter.getSynchronizationMetaData().getUrl());
+					}
 					returnValue.add(newLink);
 				} else if (source instanceof InformationUnitListItem) {
-					Object adapter = source.getAdapter(InformationUnit.class);
-					if (adapter != null) {
-						newLink.setTarget((InformationUnit) adapter);
-						returnValue.add(newLink);
+					if (((InformationUnitListItem) source).getSynchronizationMetaData() != null) {
+						newLink.setRemoteUrl(((SynchronizableObject) source)
+								.getSynchronizationMetaData().getUrl());
 					}
+					returnValue.add(newLink);
 				}
 			}
 			return returnValue;
@@ -151,6 +157,7 @@ public class LinkOutline implements IOutlineSection {
 	private CustomDropTargetListenerExtension dropTargetListenerExtension;
 	private IApplicationModel applicationService;
 	private IEditingHandler editService;
+	private IInformationTypeImage typeHandler;
 
 	/**
 	 * 
@@ -164,6 +171,7 @@ public class LinkOutline implements IOutlineSection {
 		this.infoUnit = infoUnit;
 		this.applicationService = ViewerActivator.getDefault().getApplicationService();
 		this.editService = ViewerActivator.getDefault().getEditService();
+		this.typeHandler = ViewerActivator.getDefault().getImageService();
 		buildList();
 		this.infoUnit.eAdapters().add(this.linkListChangeAdapter);
 		this.dropTargetListenerExtension = new CustomDropTargetListenerExtension(this.infoUnit
@@ -209,7 +217,8 @@ public class LinkOutline implements IOutlineSection {
 				String string = e.getHref().toString();
 				if ("addLink".equals(string)) {
 					NewLinkWizardPage newLinkWizardPage = new NewLinkWizardPage(sform.getShell(),
-							LinkOutline.this.infoUnit, LinkOutline.this.domain);
+							LinkOutline.this.infoUnit, LinkOutline.this.domain,
+							LinkOutline.this.typeHandler);
 					int open = newLinkWizardPage.open();
 					if (open == IDialogConstants.OK_ID) {
 						performResult(newLinkWizardPage.getResult());
@@ -248,7 +257,8 @@ public class LinkOutline implements IOutlineSection {
 			@Override
 			public void run() {
 				NewLinkWizardPage page = new NewLinkWizardPage(LinkOutline.this.form.getShell(),
-						LinkOutline.this.infoUnit, LinkOutline.this.domain);
+						LinkOutline.this.infoUnit, LinkOutline.this.domain,
+						LinkOutline.this.typeHandler);
 				if (page.open() == IDialogConstants.OK_ID) {
 					performResult(page.getResult());
 				}
@@ -298,23 +308,26 @@ public class LinkOutline implements IOutlineSection {
 		StringBuilder sw = new StringBuilder();
 		sw.append("<form>");
 		for (Link link : links) {
-			sw.append("<p>");
-			// sw.append("<li>");
-			sw.append("<img href=\"").append(link.getTarget().getType()).append("\" /> ");
-			sw.append("<a href=\"").append(link.getTarget().getId()).append("\">");
-			sw.append(StringEscapeUtils.escapeXml(link.getTarget().getLabel()));
-			sw.append("</a>");
-			sw.append("<br />");
-			// sw.append("</li>");
-			if (!addedImages.contains(link.getTarget().getType())) {
-				Object image2 = ((IItemLabelProvider) this.editService.getAdapterFactory().adapt(
-						link.getTarget(), IItemLabelProvider.class)).getImage(link.getTarget());
-				if (image2 instanceof Image) {
-					this.linkFormText.setImage(link.getTarget().getType(), (Image) image2);
-					addedImages.add(link.getTarget().getType());
+			InformationUnitListItem itemById = this.applicationService.getItemByLink(link);
+			if (itemById != null) {
+				sw.append("<p>");
+				// sw.append("<li>");
+				sw.append("<img href=\"").append(itemById.getType()).append("\" /> ");
+				sw.append("<a href=\"").append(itemById.getId()).append("\">");
+				sw.append(StringEscapeUtils.escapeXml(itemById.getLabel()));
+				sw.append("</a>");
+				sw.append("<br />");
+				// sw.append("</li>");
+				if (!addedImages.contains(itemById.getType())) {
+					Object image2 = this.typeHandler.getImageByInfoType(itemById.getType());
+					if (image2 instanceof Image) {
+						this.linkFormText.setImage(itemById.getType(), (Image) image2);
+						addedImages.add(itemById.getType());
+					}
 				}
+				sw.append("</p>");
+
 			}
-			sw.append("</p>");
 		}
 		sw.append("</form>");
 		this.linkFormText.setText(sw.toString(), true, false);

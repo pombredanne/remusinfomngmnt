@@ -33,7 +33,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getDateValue <em>Date Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getDoubleValue <em>Double Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getChildValues <em>Child Values</em>}</li>
- *   <li>{@link org.remus.infomngmnt.InformationUnit#getReferences <em>References</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getCreationDate <em>Creation Date</em>}</li>
  *   <li>{@link org.remus.infomngmnt.InformationUnit#getDescription <em>Description</em>}</li>
@@ -220,22 +219,6 @@ public interface InformationUnit extends AbstractInformationUnit {
 	 * @generated
 	 */
 	EList<InformationUnit> getChildValues();
-
-	/**
-	 * Returns the value of the '<em><b>References</b></em>' reference list.
-	 * The list contents are of type {@link org.remus.infomngmnt.InformationUnit}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>References</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>References</em>' reference list.
-	 * @see org.remus.infomngmnt.InfomngmntPackage#getInformationUnit_References()
-	 * @model
-	 * @generated
-	 */
-	EList<InformationUnit> getReferences();
 
 	/**
 	 * Returns the value of the '<em><b>Links</b></em>' containment reference list.

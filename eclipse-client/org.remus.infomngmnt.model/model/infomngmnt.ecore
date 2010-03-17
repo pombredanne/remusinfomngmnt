@@ -27,8 +27,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="doubleValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="childValues" upperBound="-1"
         eType="#//InformationUnit" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="references" upperBound="-1"
-        eType="#//InformationUnit"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="links" upperBound="-1"
         eType="#//Link" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
@@ -49,8 +47,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dirty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Link">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
-        eType="#//InformationUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="localInformationUnit" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -193,12 +193,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SynchronizationAction">
     <eLiterals name="REPLACE_LOCAL"/>
-    <eLiterals name="REPLACE_REMOTE"/>
-    <eLiterals name="DELETE_LOCAL"/>
-    <eLiterals name="DELETE_REMOTE"/>
-    <eLiterals name="ADD_LOCAL"/>
-    <eLiterals name="ADD_REMOTE"/>
-    <eLiterals name="RESOLVE_CONFLICT"/>
+    <eLiterals name="REPLACE_REMOTE" value="1"/>
+    <eLiterals name="DELETE_LOCAL" value="2"/>
+    <eLiterals name="DELETE_REMOTE" value="3"/>
+    <eLiterals name="ADD_LOCAL" value="4"/>
+    <eLiterals name="ADD_REMOTE" value="5"/>
+    <eLiterals name="RESOLVE_CONFLICT" value="6"/>
+    <eLiterals name="SKIP_LOCAL" value="7" literal="SKIP_LOCAL"/>
+    <eLiterals name="SKIP_REMOTE" value="8"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CategoryToSynchronizationActionMap"
       instanceClassName="java.util.Map$Entry">

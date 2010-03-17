@@ -48,7 +48,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	REPLACE_REMOTE(0, "REPLACE_REMOTE", "REPLACE_REMOTE"),
+	REPLACE_REMOTE(1, "REPLACE_REMOTE", "REPLACE_REMOTE"),
 
 	/**
 	 * The '<em><b>DELETE LOCAL</b></em>' literal object.
@@ -58,7 +58,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DELETE_LOCAL(0, "DELETE_LOCAL", "DELETE_LOCAL"),
+	DELETE_LOCAL(2, "DELETE_LOCAL", "DELETE_LOCAL"),
 
 	/**
 	 * The '<em><b>DELETE REMOTE</b></em>' literal object.
@@ -68,7 +68,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DELETE_REMOTE(0, "DELETE_REMOTE", "DELETE_REMOTE"),
+	DELETE_REMOTE(3, "DELETE_REMOTE", "DELETE_REMOTE"),
 
 	/**
 	 * The '<em><b>ADD LOCAL</b></em>' literal object.
@@ -78,7 +78,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	ADD_LOCAL(0, "ADD_LOCAL", "ADD_LOCAL"),
+	ADD_LOCAL(4, "ADD_LOCAL", "ADD_LOCAL"),
 
 	/**
 	 * The '<em><b>ADD REMOTE</b></em>' literal object.
@@ -88,7 +88,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	ADD_REMOTE(0, "ADD_REMOTE", "ADD_REMOTE"),
+	ADD_REMOTE(5, "ADD_REMOTE", "ADD_REMOTE"),
 
 	/**
 	 * The '<em><b>RESOLVE CONFLICT</b></em>' literal object.
@@ -98,7 +98,23 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	RESOLVE_CONFLICT(0, "RESOLVE_CONFLICT", "RESOLVE_CONFLICT");
+	RESOLVE_CONFLICT(6, "RESOLVE_CONFLICT", "RESOLVE_CONFLICT"), /**
+	 * The '<em><b>SKIP LOCAL</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SKIP_LOCAL_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SKIP_LOCAL(7, "SKIP_LOCAL", "SKIP_LOCAL"), /**
+	 * The '<em><b>SKIP REMOTE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SKIP_REMOTE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SKIP_REMOTE(8, "SKIP_REMOTE", "SKIP_REMOTE");
 
 	/**
 	 * The '<em><b>REPLACE LOCAL</b></em>' literal value.
@@ -128,7 +144,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int REPLACE_REMOTE_VALUE = 0;
+	public static final int REPLACE_REMOTE_VALUE = 1;
 
 	/**
 	 * The '<em><b>DELETE LOCAL</b></em>' literal value.
@@ -143,7 +159,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DELETE_LOCAL_VALUE = 0;
+	public static final int DELETE_LOCAL_VALUE = 2;
 
 	/**
 	 * The '<em><b>DELETE REMOTE</b></em>' literal value.
@@ -158,7 +174,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DELETE_REMOTE_VALUE = 0;
+	public static final int DELETE_REMOTE_VALUE = 3;
 
 	/**
 	 * The '<em><b>ADD LOCAL</b></em>' literal value.
@@ -173,7 +189,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ADD_LOCAL_VALUE = 0;
+	public static final int ADD_LOCAL_VALUE = 4;
 
 	/**
 	 * The '<em><b>ADD REMOTE</b></em>' literal value.
@@ -188,7 +204,7 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ADD_REMOTE_VALUE = 0;
+	public static final int ADD_REMOTE_VALUE = 5;
 
 	/**
 	 * The '<em><b>RESOLVE CONFLICT</b></em>' literal value.
@@ -203,7 +219,37 @@ public enum SynchronizationAction implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int RESOLVE_CONFLICT_VALUE = 0;
+	public static final int RESOLVE_CONFLICT_VALUE = 6;
+
+	/**
+	 * The '<em><b>SKIP LOCAL</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>SKIP LOCAL</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #SKIP_LOCAL
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SKIP_LOCAL_VALUE = 7;
+
+	/**
+	 * The '<em><b>SKIP REMOTE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>SKIP REMOTE</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #SKIP_REMOTE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SKIP_REMOTE_VALUE = 8;
 
 	/**
 	 * An array of all the '<em><b>Synchronization Action</b></em>' enumerators.
@@ -220,6 +266,8 @@ public enum SynchronizationAction implements Enumerator {
 			ADD_LOCAL,
 			ADD_REMOTE,
 			RESOLVE_CONFLICT,
+			SKIP_LOCAL,
+			SKIP_REMOTE,
 		};
 
 	/**
@@ -271,6 +319,14 @@ public enum SynchronizationAction implements Enumerator {
 	public static SynchronizationAction get(int value) {
 		switch (value) {
 			case REPLACE_LOCAL_VALUE: return REPLACE_LOCAL;
+			case REPLACE_REMOTE_VALUE: return REPLACE_REMOTE;
+			case DELETE_LOCAL_VALUE: return DELETE_LOCAL;
+			case DELETE_REMOTE_VALUE: return DELETE_REMOTE;
+			case ADD_LOCAL_VALUE: return ADD_LOCAL;
+			case ADD_REMOTE_VALUE: return ADD_REMOTE;
+			case RESOLVE_CONFLICT_VALUE: return RESOLVE_CONFLICT;
+			case SKIP_LOCAL_VALUE: return SKIP_LOCAL;
+			case SKIP_REMOTE_VALUE: return SKIP_REMOTE;
 		}
 		return null;
 	}

@@ -40,7 +40,6 @@ import freemarker.template.TemplateModelException;
 public class FreemarkerRenderer {
 
 	private static FreemarkerRenderer INSTANCE;
-	private final Configuration cfg;
 
 	public static FreemarkerRenderer getInstance() {
 		if (FreemarkerRenderer.INSTANCE == null) {
@@ -54,27 +53,32 @@ public class FreemarkerRenderer {
 	}
 
 	private FreemarkerRenderer() {
-		this.cfg = new Configuration();
-		this.cfg.setObjectWrapper(new DefaultObjectWrapper());
-		this.cfg.setTemplateLoader(new StreamTemplateLoaders());
-		this.cfg.setLocalizedLookup(true);
-		this.cfg.setDefaultEncoding("UTF-8");
+
+	}
+
+	private Configuration buildConfig() {
+		Configuration cfg = new Configuration();
+		cfg.setObjectWrapper(new DefaultObjectWrapper());
+		cfg.setTemplateLoader(new StreamTemplateLoaders());
+		cfg.setLocalizedLookup(true);
+		cfg.setDefaultEncoding("UTF-8");
 		try {
-			this.cfg.setSharedVariable("jslibDir", TemplateLocation.getBasePath());
-			this.cfg.setSharedVariable("jslibstatelocation", TemplateLocation
+			cfg.setSharedVariable("jslibDir", TemplateLocation.getBasePath());
+			cfg.setSharedVariable("jslibstatelocation", TemplateLocation
 					.getGradientSectionImageLocation());
-			this.cfg.setSharedVariable("defaultFont", StyleProvider.getSystemFont());
-			this.cfg.setSharedVariable("defaultFontStyle", StyleProvider.getSystemFontStyle());
-			this.cfg.setSharedVariable("defaultFontSize", StyleProvider.getSystemFontSize());
-			this.cfg.setSharedVariable("sharedResources", CheckResourceReferenceJob.map);
-			this.cfg.setSharedVariable("sectionTitleColor", StyleProvider
+			cfg.setSharedVariable("defaultFont", StyleProvider.getSystemFont());
+			cfg.setSharedVariable("defaultFontStyle", StyleProvider.getSystemFontStyle());
+			cfg.setSharedVariable("defaultFontSize", StyleProvider.getSystemFontSize());
+			cfg.setSharedVariable("sharedResources", CheckResourceReferenceJob.map);
+			cfg.setSharedVariable("sectionTitleColor", StyleProvider
 					.getFormColorAsHex(IFormColors.TITLE));
-			this.cfg.setSharedVariable("sectionBgColor", StyleProvider
+			cfg.setSharedVariable("sectionBgColor", StyleProvider
 					.getFormColorAsHex(IFormColors.TB_BORDER));
 		} catch (TemplateModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return cfg;
 	}
 
 	/**
@@ -105,7 +109,7 @@ public class FreemarkerRenderer {
 		try {
 			Template freemarkerTemplate;
 			freemarkerTemplate = new Template(templateName, new InputStreamReader(template),
-					this.cfg);
+					buildConfig());
 
 			Map<String, Object> root = new HashMap<String, Object>();
 
@@ -145,7 +149,7 @@ public class FreemarkerRenderer {
 		try {
 			Template freemarekerTemplate;
 			freemarekerTemplate = new Template(templateName, new InputStreamReader(template),
-					this.cfg);
+					buildConfig());
 
 			Map<String, Object> root = new HashMap<String, Object>();
 			if (xmlFile != null) {

@@ -109,4 +109,11 @@
             typeId="REPORT">
       </creationtrigger>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/report.gif"
+            infotype="REPORT">
+      </image>
+   </extension>
 </plugin>

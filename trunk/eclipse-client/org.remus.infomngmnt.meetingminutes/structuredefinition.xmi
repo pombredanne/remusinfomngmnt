@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="ASCII"?>
 <infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.model/model/infomngmnt.ecore">
-  <structureItems type="DATETIME" label="The time the meeting took place" id="meetingtime" createAlways="true"/>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" id="attendees" createAlways="true" upperBound="-1">
-    <structureItems type="STRING" id="attendee"/>
+  <structureItems type="DATETIME" label="The time the meeting took place" id="meetingtime"/>
+  <structureItems type="DATETIME" id="meetingend"/>
+  <structureItems xsi:type="infomngmnt:DynamicStructure" id="attendees" upperBound="-1">
+    <structureItems type="STRING" id="attendee" createAlways="false"/>
   </structureItems>
-  <structureItems type="STRING" id="moderator" createAlways="true"/>
-  <structureItems type="STRING" label="The meeting place" id="place" createAlways="true"/>
-  <structureItems type="STRING" label="The general log" id="log" createAlways="true"/>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" id="attachments" createAlways="true" upperBound="-1">
-    <structureItems canHaveBinaryReferences="true" id="attachment">
-      <structureItems type="STRING" id="attachmentLabel" createAlways="true"/>
+  <structureItems type="STRING" id="moderator"/>
+  <structureItems type="STRING" label="The meeting place" id="place"/>
+  <structureItems type="STRING" label="The general log" id="log"/>
+  <structureItems xsi:type="infomngmnt:DynamicStructure" id="attachments" upperBound="-1">
+    <structureItems canHaveBinaryReferences="true" id="attachment" createAlways="false">
+      <structureItems type="STRING" id="attachmentLabel"/>
     </structureItems>
   </structureItems>
-  <structureItems type="STRING" id="decisions" createAlways="true"/>
-  <structureItems type="STRING" id="todos" createAlways="true"/>
+  <structureItems type="STRING" id="decisions"/>
+  <structureItems type="STRING" id="todos"/>
 </infomngmnt:InformationStructureDefinition>

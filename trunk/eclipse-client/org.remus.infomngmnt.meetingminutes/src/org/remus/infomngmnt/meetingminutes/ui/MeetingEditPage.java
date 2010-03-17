@@ -53,6 +53,7 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 	private Text placeText;
 	private RichTextBindingWidget createRichText;
 	private Text moderator;
+	private TimeCombo enddate;
 
 	/**
 	 * 
@@ -147,7 +148,7 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		this.subjectText = toolkit.createText(client, "", SWT.BORDER);
 		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(this.subjectText);
-		Label receivedLabel = toolkit.createLabel(client, "Date");
+		Label receivedLabel = toolkit.createLabel(client, "Start");
 		receivedLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		Composite dueParent = toolkit.createComposite(client);
@@ -162,9 +163,24 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		this.date.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
 		toolkit.adapt(this.date, false, false);
 		toolkit.paintBordersFor(dueParent);
-		GridData dueDateLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+		GridData dueDateLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		dueParent.setLayoutData(dueDateLayoutData);
 		toolkit.adapt(this.date);
+
+		Label endLabel = toolkit.createLabel(client, "End");
+		endLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+
+		Composite endParent = toolkit.createComposite(client);
+		endParent.setLayout(layout);
+		this.enddate = new TimeCombo(endParent, SWT.FLAT);
+		GridDataFactory.fillDefaults().hint(180, SWT.DEFAULT).grab(true, false).applyTo(
+				this.enddate);
+		this.enddate.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		toolkit.adapt(this.enddate, false, false);
+		toolkit.paintBordersFor(endParent);
+		toolkit.adapt(this.enddate);
+		GridData endDataLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		endParent.setLayoutData(endDataLayoutData);
 
 		Label contentTypeLabel = toolkit.createLabel(client, "Location");
 		contentTypeLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
@@ -177,7 +193,7 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		moderatorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		this.moderator = toolkit.createText(client, "", SWT.BORDER);
-		this.moderator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		this.moderator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new ContactsWithEmailSmartField(this.moderator);
 		addControl(this.moderator);
 
@@ -200,6 +216,11 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		createCDateTime.bindModel(
 				read.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_DATETIME), read
 						.getFeatureByNodeId(MeetingMinutesActivator.NODE_NAME_DATETIME));
+		CDateTimeBindingWidget createCDateTime2 = AdditionalBindingWidgetFactory.createCDateTime(
+				this.enddate.getDate(), getDatabindingContext(), getEditingDomain());
+		createCDateTime2.bindModel(read
+				.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_END_DATETIME), read
+				.getFeatureByNodeId(MeetingMinutesActivator.NODE_NAME_END_DATETIME));
 
 		this.createRichText = AdditionalBindingWidgetFactory.createRichText(this.richtext, this);
 		this.createRichText.bindModel(read.getChildByNodeId(MeetingMinutesActivator.NODE_NAME_LOG),

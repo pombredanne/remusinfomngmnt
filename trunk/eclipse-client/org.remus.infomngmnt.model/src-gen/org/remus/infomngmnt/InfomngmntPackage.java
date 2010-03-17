@@ -254,22 +254,13 @@ public interface InfomngmntPackage extends EPackage {
 	int INFORMATION_UNIT__CHILD_VALUES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>References</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INFORMATION_UNIT__REFERENCES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 7;
-
-	/**
 	 * The feature id for the '<em><b>Links</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__LINKS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 8;
+	int INFORMATION_UNIT__LINKS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
@@ -278,7 +269,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__CREATION_DATE = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 9;
+	int INFORMATION_UNIT__CREATION_DATE = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -287,7 +278,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__DESCRIPTION = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 10;
+	int INFORMATION_UNIT__DESCRIPTION = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Keywords</b></em>' attribute.
@@ -296,7 +287,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__KEYWORDS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 11;
+	int INFORMATION_UNIT__KEYWORDS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Calendar Entry</b></em>' containment reference list.
@@ -305,7 +296,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__CALENDAR_ENTRY = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 12;
+	int INFORMATION_UNIT__CALENDAR_ENTRY = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Binary References</b></em>' containment reference.
@@ -314,7 +305,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__BINARY_REFERENCES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 13;
+	int INFORMATION_UNIT__BINARY_REFERENCES = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Comments</b></em>' containment reference list.
@@ -323,7 +314,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT__COMMENTS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 14;
+	int INFORMATION_UNIT__COMMENTS = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 13;
 
 	/**
 	 * The number of structural features of the '<em>Information Unit</em>' class.
@@ -332,7 +323,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 15;
+	int INFORMATION_UNIT_FEATURE_COUNT = ABSTRACT_INFORMATION_UNIT_FEATURE_COUNT + 14;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.BinaryReferenceImpl <em>Binary Reference</em>}' class.
@@ -391,13 +382,31 @@ public interface InfomngmntPackage extends EPackage {
 	int LINK = 5;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * The feature id for the '<em><b>Local Information Unit</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__TARGET = 0;
+	int LINK__LOCAL_INFORMATION_UNIT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Remote Url</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK__REMOTE_URL = 1;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK__TYPE = 2;
 
 	/**
 	 * The number of structural features of the '<em>Link</em>' class.
@@ -406,7 +415,7 @@ public interface InfomngmntPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK_FEATURE_COUNT = 1;
+	int LINK_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.remus.infomngmnt.impl.CommentImpl <em>Comment</em>}' class.
@@ -2326,17 +2335,6 @@ public interface InfomngmntPackage extends EPackage {
 	EReference getInformationUnit_ChildValues();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.remus.infomngmnt.InformationUnit#getReferences <em>References</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>References</em>'.
-	 * @see org.remus.infomngmnt.InformationUnit#getReferences()
-	 * @see #getInformationUnit()
-	 * @generated
-	 */
-	EReference getInformationUnit_References();
-
-	/**
 	 * Returns the meta object for the containment reference list '{@link org.remus.infomngmnt.InformationUnit#getLinks <em>Links</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2467,15 +2465,37 @@ public interface InfomngmntPackage extends EPackage {
 	EClass getLink();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.remus.infomngmnt.Link#getTarget <em>Target</em>}'.
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Link#getLocalInformationUnit <em>Local Information Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Target</em>'.
-	 * @see org.remus.infomngmnt.Link#getTarget()
+	 * @return the meta object for the attribute '<em>Local Information Unit</em>'.
+	 * @see org.remus.infomngmnt.Link#getLocalInformationUnit()
 	 * @see #getLink()
 	 * @generated
 	 */
-	EReference getLink_Target();
+	EAttribute getLink_LocalInformationUnit();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Link#getRemoteUrl <em>Remote Url</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Remote Url</em>'.
+	 * @see org.remus.infomngmnt.Link#getRemoteUrl()
+	 * @see #getLink()
+	 * @generated
+	 */
+	EAttribute getLink_RemoteUrl();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.remus.infomngmnt.Link#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.remus.infomngmnt.Link#getType()
+	 * @see #getLink()
+	 * @generated
+	 */
+	EAttribute getLink_Type();
 
 	/**
 	 * Returns the meta object for class '{@link org.remus.infomngmnt.Comment <em>Comment</em>}'.
@@ -3909,14 +3929,6 @@ public interface InfomngmntPackage extends EPackage {
 		EReference INFORMATION_UNIT__CHILD_VALUES = eINSTANCE.getInformationUnit_ChildValues();
 
 		/**
-		 * The meta object literal for the '<em><b>References</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference INFORMATION_UNIT__REFERENCES = eINSTANCE.getInformationUnit_References();
-
-		/**
 		 * The meta object literal for the '<em><b>Links</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4017,12 +4029,28 @@ public interface InfomngmntPackage extends EPackage {
 		EClass LINK = eINSTANCE.getLink();
 
 		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Local Information Unit</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference LINK__TARGET = eINSTANCE.getLink_Target();
+		EAttribute LINK__LOCAL_INFORMATION_UNIT = eINSTANCE.getLink_LocalInformationUnit();
+
+		/**
+		 * The meta object literal for the '<em><b>Remote Url</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LINK__REMOTE_URL = eINSTANCE.getLink_RemoteUrl();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LINK__TYPE = eINSTANCE.getLink_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.remus.infomngmnt.impl.CommentImpl <em>Comment</em>}' class.

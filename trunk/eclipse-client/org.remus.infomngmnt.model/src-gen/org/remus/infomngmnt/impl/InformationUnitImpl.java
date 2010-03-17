@@ -52,7 +52,6 @@ import org.remus.infomngmnt.Link;
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDateValue <em>Date Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDoubleValue <em>Double Value</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getChildValues <em>Child Values</em>}</li>
- *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getReferences <em>References</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getLinks <em>Links</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getCreationDate <em>Creation Date</em>}</li>
  *   <li>{@link org.remus.infomngmnt.impl.InformationUnitImpl#getDescription <em>Description</em>}</li>
@@ -195,16 +194,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * @ordered
 	 */
 	protected EList<InformationUnit> childValues;
-
-	/**
-	 * The cached value of the '{@link #getReferences() <em>References</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReferences()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<InformationUnit> references;
 
 	/**
 	 * The cached value of the '{@link #getLinks() <em>Links</em>}' containment reference list.
@@ -468,18 +457,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<InformationUnit> getReferences() {
-		if (references == null) {
-			references = new EObjectResolvingEList<InformationUnit>(InformationUnit.class, this, InfomngmntPackage.INFORMATION_UNIT__REFERENCES);
-		}
-		return references;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<Link> getLinks() {
 		if (links == null) {
 			links = new EObjectContainmentEList<Link>(Link.class, this, InfomngmntPackage.INFORMATION_UNIT__LINKS);
@@ -661,8 +638,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return getDoubleValue();
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				return getChildValues();
-			case InfomngmntPackage.INFORMATION_UNIT__REFERENCES:
-				return getReferences();
 			case InfomngmntPackage.INFORMATION_UNIT__LINKS:
 				return getLinks();
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:
@@ -711,10 +686,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				getChildValues().clear();
 				getChildValues().addAll((Collection<? extends InformationUnit>)newValue);
-				return;
-			case InfomngmntPackage.INFORMATION_UNIT__REFERENCES:
-				getReferences().clear();
-				getReferences().addAll((Collection<? extends InformationUnit>)newValue);
 				return;
 			case InfomngmntPackage.INFORMATION_UNIT__LINKS:
 				getLinks().clear();
@@ -773,9 +744,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				getChildValues().clear();
 				return;
-			case InfomngmntPackage.INFORMATION_UNIT__REFERENCES:
-				getReferences().clear();
-				return;
 			case InfomngmntPackage.INFORMATION_UNIT__LINKS:
 				getLinks().clear();
 				return;
@@ -823,8 +791,6 @@ public class InformationUnitImpl extends AbstractInformationUnitImpl implements 
 				return doubleValue != DOUBLE_VALUE_EDEFAULT;
 			case InfomngmntPackage.INFORMATION_UNIT__CHILD_VALUES:
 				return childValues != null && !childValues.isEmpty();
-			case InfomngmntPackage.INFORMATION_UNIT__REFERENCES:
-				return references != null && !references.isEmpty();
 			case InfomngmntPackage.INFORMATION_UNIT__LINKS:
 				return links != null && !links.isEmpty();
 			case InfomngmntPackage.INFORMATION_UNIT__CREATION_DATE:

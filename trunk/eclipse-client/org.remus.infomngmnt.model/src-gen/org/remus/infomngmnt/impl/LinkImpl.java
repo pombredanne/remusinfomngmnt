@@ -33,7 +33,9 @@ import org.remus.infomngmnt.Link;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.remus.infomngmnt.impl.LinkImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.LinkImpl#getLocalInformationUnit <em>Local Information Unit</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.LinkImpl#getRemoteUrl <em>Remote Url</em>}</li>
+ *   <li>{@link org.remus.infomngmnt.impl.LinkImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -41,15 +43,59 @@ import org.remus.infomngmnt.Link;
  */
 public class LinkImpl extends EObjectImpl implements Link {
 	/**
-	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+	 * The default value of the '{@link #getLocalInformationUnit() <em>Local Information Unit</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTarget()
+	 * @see #getLocalInformationUnit()
 	 * @generated
 	 * @ordered
 	 */
-	protected InformationUnit target;
-
+	protected static final String LOCAL_INFORMATION_UNIT_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getLocalInformationUnit() <em>Local Information Unit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLocalInformationUnit()
+	 * @generated
+	 * @ordered
+	 */
+	protected String localInformationUnit = LOCAL_INFORMATION_UNIT_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getRemoteUrl() <em>Remote Url</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRemoteUrl()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String REMOTE_URL_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getRemoteUrl() <em>Remote Url</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRemoteUrl()
+	 * @generated
+	 * @ordered
+	 */
+	protected String remoteUrl = REMOTE_URL_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TYPE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String type = TYPE_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,16 +120,8 @@ public class LinkImpl extends EObjectImpl implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InformationUnit getTarget() {
-		if (target != null && target.eIsProxy()) {
-			InternalEObject oldTarget = (InternalEObject)target;
-			target = (InformationUnit)eResolveProxy(oldTarget);
-			if (target != oldTarget) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, InfomngmntPackage.LINK__TARGET, oldTarget, target));
-			}
-		}
-		return target;
+	public String getLocalInformationUnit() {
+		return localInformationUnit;
 	}
 
 	/**
@@ -91,20 +129,53 @@ public class LinkImpl extends EObjectImpl implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InformationUnit basicGetTarget() {
-		return target;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTarget(InformationUnit newTarget) {
-		InformationUnit oldTarget = target;
-		target = newTarget;
+	public void setLocalInformationUnit(String newLocalInformationUnit) {
+		String oldLocalInformationUnit = localInformationUnit;
+		localInformationUnit = newLocalInformationUnit;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK__TARGET, oldTarget, target));
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK__LOCAL_INFORMATION_UNIT, oldLocalInformationUnit, localInformationUnit));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getRemoteUrl() {
+		return remoteUrl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRemoteUrl(String newRemoteUrl) {
+		String oldRemoteUrl = remoteUrl;
+		remoteUrl = newRemoteUrl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK__REMOTE_URL, oldRemoteUrl, remoteUrl));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(String newType) {
+		String oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, InfomngmntPackage.LINK__TYPE, oldType, type));
 	}
 
 	/**
@@ -115,9 +186,12 @@ public class LinkImpl extends EObjectImpl implements Link {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case InfomngmntPackage.LINK__TARGET:
-				if (resolve) return getTarget();
-				return basicGetTarget();
+			case InfomngmntPackage.LINK__LOCAL_INFORMATION_UNIT:
+				return getLocalInformationUnit();
+			case InfomngmntPackage.LINK__REMOTE_URL:
+				return getRemoteUrl();
+			case InfomngmntPackage.LINK__TYPE:
+				return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -130,8 +204,14 @@ public class LinkImpl extends EObjectImpl implements Link {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case InfomngmntPackage.LINK__TARGET:
-				setTarget((InformationUnit)newValue);
+			case InfomngmntPackage.LINK__LOCAL_INFORMATION_UNIT:
+				setLocalInformationUnit((String)newValue);
+				return;
+			case InfomngmntPackage.LINK__REMOTE_URL:
+				setRemoteUrl((String)newValue);
+				return;
+			case InfomngmntPackage.LINK__TYPE:
+				setType((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -145,8 +225,14 @@ public class LinkImpl extends EObjectImpl implements Link {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.LINK__TARGET:
-				setTarget((InformationUnit)null);
+			case InfomngmntPackage.LINK__LOCAL_INFORMATION_UNIT:
+				setLocalInformationUnit(LOCAL_INFORMATION_UNIT_EDEFAULT);
+				return;
+			case InfomngmntPackage.LINK__REMOTE_URL:
+				setRemoteUrl(REMOTE_URL_EDEFAULT);
+				return;
+			case InfomngmntPackage.LINK__TYPE:
+				setType(TYPE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -160,10 +246,34 @@ public class LinkImpl extends EObjectImpl implements Link {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case InfomngmntPackage.LINK__TARGET:
-				return target != null;
+			case InfomngmntPackage.LINK__LOCAL_INFORMATION_UNIT:
+				return LOCAL_INFORMATION_UNIT_EDEFAULT == null ? localInformationUnit != null : !LOCAL_INFORMATION_UNIT_EDEFAULT.equals(localInformationUnit);
+			case InfomngmntPackage.LINK__REMOTE_URL:
+				return REMOTE_URL_EDEFAULT == null ? remoteUrl != null : !REMOTE_URL_EDEFAULT.equals(remoteUrl);
+			case InfomngmntPackage.LINK__TYPE:
+				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (localInformationUnit: ");
+		result.append(localInformationUnit);
+		result.append(", remoteUrl: ");
+		result.append(remoteUrl);
+		result.append(", type: ");
+		result.append(type);
+		result.append(')');
+		return result.toString();
 	}
 
 } //LinkImpl

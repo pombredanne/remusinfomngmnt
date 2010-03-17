@@ -524,7 +524,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getInformationUnit_References() {
+	public EReference getInformationUnit_Links() {
 		return (EReference)informationUnitEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -532,16 +532,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getInformationUnit_Links() {
-		return (EReference)informationUnitEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getInformationUnit_CreationDate() {
-		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(9);
+		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -549,7 +541,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_Description() {
-		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(10);
+		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -557,7 +549,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EAttribute getInformationUnit_Keywords() {
-		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(11);
+		return (EAttribute)informationUnitEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -565,7 +557,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EReference getInformationUnit_CalendarEntry() {
-		return (EReference)informationUnitEClass.getEStructuralFeatures().get(12);
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -573,7 +565,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EReference getInformationUnit_BinaryReferences() {
-		return (EReference)informationUnitEClass.getEStructuralFeatures().get(13);
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -581,7 +573,7 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	 * @generated
 	 */
 	public EReference getInformationUnit_Comments() {
-		return (EReference)informationUnitEClass.getEStructuralFeatures().get(14);
+		return (EReference)informationUnitEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -625,11 +617,30 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getLink_Target() {
-		return (EReference)linkEClass.getEStructuralFeatures().get(0);
+	public EAttribute getLink_LocalInformationUnit() {
+		return (EAttribute)linkEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLink_RemoteUrl() {
+		return (EAttribute)linkEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLink_Type() {
+		return (EAttribute)linkEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1637,7 +1648,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__DATE_VALUE);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__DOUBLE_VALUE);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__CHILD_VALUES);
-		createEReference(informationUnitEClass, INFORMATION_UNIT__REFERENCES);
 		createEReference(informationUnitEClass, INFORMATION_UNIT__LINKS);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__CREATION_DATE);
 		createEAttribute(informationUnitEClass, INFORMATION_UNIT__DESCRIPTION);
@@ -1652,7 +1662,9 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		createEAttribute(binaryReferenceEClass, BINARY_REFERENCE__DIRTY);
 
 		linkEClass = createEClass(LINK);
-		createEReference(linkEClass, LINK__TARGET);
+		createEAttribute(linkEClass, LINK__LOCAL_INFORMATION_UNIT);
+		createEAttribute(linkEClass, LINK__REMOTE_URL);
+		createEAttribute(linkEClass, LINK__TYPE);
 
 		commentEClass = createEClass(COMMENT);
 		createEAttribute(commentEClass, COMMENT__AUTHOR);
@@ -1871,7 +1883,6 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getInformationUnit_DateValue(), ecorePackage.getEDate(), "dateValue", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_DoubleValue(), ecorePackage.getEDouble(), "doubleValue", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_ChildValues(), this.getInformationUnit(), null, "childValues", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInformationUnit_References(), this.getInformationUnit(), null, "references", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInformationUnit_Links(), this.getLink(), null, "links", null, 0, -1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_CreationDate(), ecorePackage.getEDate(), "creationDate", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInformationUnit_Description(), ecorePackage.getEString(), "description", null, 0, 1, InformationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1886,7 +1897,9 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		initEAttribute(getBinaryReference_Dirty(), ecorePackage.getEBoolean(), "dirty", null, 0, 1, BinaryReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getLink_Target(), this.getInformationUnit(), null, "target", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLink_LocalInformationUnit(), ecorePackage.getEString(), "localInformationUnit", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLink_RemoteUrl(), ecorePackage.getEString(), "remoteUrl", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLink_Type(), ecorePackage.getEString(), "type", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComment_Author(), ecorePackage.getEString(), "author", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2065,6 +2078,8 @@ public class InfomngmntPackageImpl extends EPackageImpl implements InfomngmntPac
 		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.ADD_LOCAL);
 		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.ADD_REMOTE);
 		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.RESOLVE_CONFLICT);
+		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.SKIP_LOCAL);
+		addEEnumLiteral(synchronizationActionEEnum, SynchronizationAction.SKIP_REMOTE);
 
 		initEEnum(informationStructureTypeEEnum, InformationStructureType.class, "InformationStructureType");
 		addEEnumLiteral(informationStructureTypeEEnum, InformationStructureType.NONE);

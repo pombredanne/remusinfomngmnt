@@ -39,7 +39,10 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Link;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.ui.editor.EditorActivator;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
+import org.remus.infomngmnt.ui.viewer.ViewerActivator;
 import org.remus.infomngmnt.ui.viewer.dialogs.InfoUnitSelectionDialog;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -53,7 +56,7 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 				return StatusCreator.newStatus("Cannot link to the same item");
 			}
 			for (Object link : NewLinkWizardPage.this.input) {
-				if (((Link) link).getTarget().getId().equals(
+				if (((Link) link).getLocalInformationUnit().equals(
 						((AbstractInformationUnit) object).getId())) {
 					return StatusCreator.newStatus("Item is already linked.");
 				}
@@ -72,14 +75,18 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 	private Button newButton;
 	private final ItemProvider itemProvider;
 	private WritableList input;
+	private final IInformationTypeImage typeHandler;
 
 	/**
 	 * Create the wizard
+	 * 
+	 * @param typeHandler
 	 */
 	public NewLinkWizardPage(final Shell parentShell, final InformationUnit infoUnit,
-			final EditingDomain domain) {
+			final EditingDomain domain, final IInformationTypeImage typeHandler) {
 		super(parentShell);
 		this.infoUnit = infoUnit;
+		this.typeHandler = typeHandler;
 		this.itemProvider = new ItemProvider(infoUnit.getLinks());
 		setTitle("Wizard Page title");
 	}
@@ -128,15 +135,26 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 		this.tableViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
-				return ((Link) element).getTarget().getLabel();
+				IApplicationModel applicationService = ViewerActivator.getDefault()
+						.getApplicationService();
+				InformationUnitListItem itemByLink = applicationService
+						.getItemByLink((Link) element);
+				if (itemByLink != null) {
+					return itemByLink.getLabel();
+				}
+				return "Target not found";
 			}
 
 			@Override
 			public Image getImage(final Object element) {
-				// return
-				// InformationExtensionManager.getInstance().getInfoTypeByType(
-				// ((Link) element).getTarget().getType()).getImage();
-				// FIXME
+				IApplicationModel applicationService = ViewerActivator.getDefault()
+						.getApplicationService();
+				InformationUnitListItem itemByLink = applicationService
+						.getItemByLink((Link) element);
+				if (itemByLink != null) {
+					return ViewerActivator.getDefault().getImageService().getImageByInfoType(
+							itemByLink.getType());
+				}
 				return null;
 			}
 		});
@@ -162,15 +180,14 @@ public class NewLinkWizardPage extends TitleAreaDialog {
 			public void handleEvent(final Event event) {
 				InfoUnitSelectionDialog diag = InfoUnitSelectionDialog.create(getShell(),
 						new IInputValidatorImplementation());
-
 				if (diag.open() == IDialogConstants.OK_ID) {
 					InformationUnitListItem newItem = (InformationUnitListItem) diag.getResult()[0];
 					Link createLink = InfomngmntFactory.eINSTANCE.createLink();
-					Object adapter = newItem.getAdapter(InformationUnit.class);
-					if (adapter != null) {
-						createLink.setTarget((InformationUnit) adapter);
-						NewLinkWizardPage.this.input.add(createLink);
+					createLink.setLocalInformationUnit(newItem.getId());
+					if (newItem.getSynchronizationMetaData() != null) {
+						createLink.setRemoteUrl(newItem.getSynchronizationMetaData().getUrl());
 					}
+					NewLinkWizardPage.this.input.add(createLink);
 				}
 			}
 		});

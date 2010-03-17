@@ -5,7 +5,9 @@ import org.osgi.framework.BundleContext;
 
 import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.services.RemusServiceTracker;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -23,6 +25,10 @@ public class ViewerActivator extends AbstractUIPlugin {
 	private IEditingHandler editService;
 
 	private IApplicationModel applicationService;
+
+	private IInformationTypeImage imageService;
+
+	private IInformationTypeHandler typeService;
 
 	/**
 	 * The constructor
@@ -93,6 +99,20 @@ public class ViewerActivator extends AbstractUIPlugin {
 			this.applicationService = this.serviceTracker.getService(IApplicationModel.class);
 		}
 		return this.applicationService;
+	}
+
+	public IInformationTypeImage getImageService() {
+		if (this.imageService == null) {
+			this.imageService = this.serviceTracker.getService(IInformationTypeImage.class);
+		}
+		return this.imageService;
+	}
+
+	public IInformationTypeHandler getTypeService() {
+		if (this.typeService == null) {
+			this.typeService = this.serviceTracker.getService(IInformationTypeHandler.class);
+		}
+		return this.typeService;
 	}
 
 }

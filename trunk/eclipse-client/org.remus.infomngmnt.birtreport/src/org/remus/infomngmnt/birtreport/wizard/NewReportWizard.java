@@ -24,6 +24,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnit;
@@ -32,9 +33,12 @@ import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.extension.IReportTemplate;
 import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.common.core.util.ResourceUtil;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.ui.editors.InformationEditor;
+import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
@@ -156,6 +160,23 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	public void dispose() {
 		ReportActivator.getDefault().getServiceTracker().ungetService(this.service);
 		super.dispose();
+	}
+
+	@Override
+	protected void performActionAfterCreation() {
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
+					new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)),
+					InformationEditor.ID);
+		} catch (Exception e) {
+			// will come soon.
+		}
+		// we also reveal the created list-item, that can be found in the
+		// navigation
+		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class),
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow());
 	}
 
 }

@@ -26,7 +26,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
-import org.eclipse.ui.internal.UIPlugin;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
@@ -165,8 +164,8 @@ public class NavigationContextMenu implements IMenuListener, IPropertyListener,
 		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), this.redoAction);
 
 		this.refreshAction = new RefreshTreeAction();
-		this.refreshAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin
-				.getDefault(), "icons/iconexperience/16/nav_refresh_blue.png"));
+		this.refreshAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				ViewerActivator.getDefault(), "icons/refresh.gif"));
 		actionBars.setGlobalActionHandler(ActionFactory.REFRESH.getId(), this.refreshAction);
 
 		this.renameAction = new RenameAction();

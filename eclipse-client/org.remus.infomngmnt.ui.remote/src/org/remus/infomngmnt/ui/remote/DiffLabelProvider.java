@@ -35,6 +35,7 @@ import org.remus.infomngmnt.core.extension.IInfoType;
 import org.remus.infomngmnt.core.remote.sync.SyncUtil;
 import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.ui.UIPlugin;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -203,6 +204,14 @@ public class DiffLabelProvider extends LabelProvider {
 	}
 
 	private Image getImageFromModel(final EObject object) {
+		if (object instanceof InformationUnitListItem) {
+			IInformationTypeImage typeImage = RemoteUiActivator.getDefault().getServiceTracker()
+					.getService(IInformationTypeImage.class);
+			String type = ((InformationUnitListItem) object).getType();
+			Image imageByInfoType = typeImage.getImageByInfoType(type);
+			RemoteUiActivator.getDefault().getServiceTracker().ungetService(typeImage);
+			return imageByInfoType;
+		}
 		IItemLabelProvider adapt = (IItemLabelProvider) UIPlugin.getDefault().getEditService()
 				.getAdapterFactory().adapt(object, IItemLabelProvider.class);
 		if (adapt != null && adapt.getImage(object) != null) {

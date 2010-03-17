@@ -12,8 +12,15 @@
 
 package org.remus.infomngmnt.plaintext.wizard;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.ui.PlatformUI;
+
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.plaintext.Activator;
+import org.remus.infomngmnt.ui.editors.InformationEditor;
+import org.remus.infomngmnt.ui.editors.InformationEditorInput;
 import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
@@ -47,7 +54,19 @@ public class NewPlainTextWizard extends NewInfoObjectWizard {
 
 	@Override
 	protected void performActionAfterCreation() {
-		// TODO Auto-generated method stub
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
+					new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)),
+					InformationEditor.ID);
+		} catch (Exception e) {
+			// will come soon.
+		}
+		// we also reveal the created list-item, that can be found in the
+		// navigation
+		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class),
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow());
 
 	}
 

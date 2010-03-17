@@ -14,7 +14,6 @@ package org.remus.infomngmnt.core.ref.infounit;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.lucene.document.Document;
@@ -28,14 +27,16 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 
 import org.remus.infomngmnt.InformationUnit;
+import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.core.ref.IIndexWriteOperation;
 import org.remus.infomngmnt.core.ref.IndexSearchOperation;
 import org.remus.infomngmnt.core.ref.LuceneStore;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
+import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 
 /**
  * <p>
@@ -73,10 +74,10 @@ public class ReferencedUnitStore extends LuceneStore implements IReferencedUnitS
 
 	public void update(final InformationUnit unit) {
 		delete(unit.getId());
-		List<InformationUnit> nonContainments = checkNonContainments(unit, unit.getId());
+		List<InformationUnitListItem> nonContainments = checkNonContainments(unit, unit.getId());
 		final List<Document> documents2index = new ArrayList<Document>();
 		if (nonContainments.size() > 0) {
-			for (InformationUnit informationUnit : nonContainments) {
+			for (InformationUnitListItem informationUnit : nonContainments) {
 				final Document document = new Document();
 
 				Field unitField = new Field(INFOID, unit.getId(), Field.Store.YES,
@@ -117,35 +118,20 @@ public class ReferencedUnitStore extends LuceneStore implements IReferencedUnitS
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<InformationUnit> checkNonContainments(final EObject unit, final String id) {
-		List<InformationUnit> returnValue = new ArrayList<InformationUnit>();
-		EList<EReference> eAllReferences = unit.eClass().getEAllReferences();
-		for (EReference eReference : eAllReferences) {
-			if (!eReference.isContainment()) {
-				Object eGet = unit.eGet(eReference);
-				if (eGet instanceof Collection) {
-					for (Object obj : (Collection) eGet) {
-						if (obj instanceof InformationUnit) {
-							returnValue.add((InformationUnit) obj);
-						}
-					}
-				} else if (eGet instanceof InformationUnit) {
-					returnValue.add((InformationUnit) eGet);
-				}
-			} else {
-				Object eGet = unit.eGet(eReference);
-				if (eGet instanceof Collection) {
-					for (Object obj : (Collection) eGet) {
-						if (obj instanceof EObject) {
-							returnValue.addAll(checkNonContainments((EObject) obj, id));
-						}
-					}
-				} else if (eGet instanceof EObject) {
-					returnValue.addAll(checkNonContainments((EObject) eGet, id));
-				}
+	private List<InformationUnitListItem> checkNonContainments(final InformationUnit unit,
+			final String id) {
+		List<InformationUnitListItem> item = new ArrayList<InformationUnitListItem>();
+		EList<Link> links = unit.getLinks();
+		IApplicationModel service = InfomngmntEditPlugin.getPlugin().getService(
+				IApplicationModel.class);
+		for (Link link : links) {
+			InformationUnitListItem itemByLink = service.getItemByLink(link);
+			if (itemByLink != null) {
+				item.add(itemByLink);
 			}
+
 		}
-		return returnValue;
+		return item;
 	}
 
 	public void delete(final String informationUnitId) {

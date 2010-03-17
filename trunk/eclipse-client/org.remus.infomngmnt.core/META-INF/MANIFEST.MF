@@ -33,16 +33,15 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.services;bundle-version="[0.1.0,1.0.0)"
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/ruleextensions.xml, 
- OSGI-INF/rules.xml,
- OSGI-INF/saveparticipantextensions.xml,
+Service-Component: OSGI-INF/saveparticipantextensions.xml,
  OSGI-INF/referencedunitstore.xml,
  OSGI-INF/jobs.xml,
  OSGI-INF/notificationmanager.xml,
  OSGI-INF/edit.xml,
  OSGI-INF/application.xml,
  OSGI-INF/infotypes.xml,
- OSGI-INF/binaryreferencesstore.xml
+ OSGI-INF/binaryreferencesstore.xml,
+ OSGI-INF/synchronizationcache.xml
 Import-Package: org.apache.log4j
 Bundle-Activator: org.remus.infomngmnt.provider.InfomngmntEditPlugin$Implementation
 

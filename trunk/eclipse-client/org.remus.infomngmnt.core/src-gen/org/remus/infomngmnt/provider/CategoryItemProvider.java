@@ -39,9 +39,8 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.Category}
- * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.Category} object.
+ * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
 public class CategoryItemProvider extends SynchronizableObjectItemProvider implements
@@ -53,7 +52,7 @@ public class CategoryItemProvider extends SynchronizableObjectItemProvider imple
 	 * 
 	 * @generated
 	 */
-	public CategoryItemProvider(final AdapterFactory adapterFactory) {
+	public CategoryItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -64,30 +63,37 @@ public class CategoryItemProvider extends SynchronizableObjectItemProvider imple
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature. <!-- begin-user-doc
+	 * This adds a property descriptor for the Id feature.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_Category_id_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_Category_id_feature",
-						"_UI_Category_type"), InfomngmntPackage.Literals.CATEGORY__ID, true, false,
-				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Category_id_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Category_id_feature", "_UI_Category_type"),
+				 InfomngmntPackage.Literals.CATEGORY__ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -96,13 +102,20 @@ public class CategoryItemProvider extends SynchronizableObjectItemProvider imple
 	 * 
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_Category_label_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_Category_label_feature",
-						"_UI_Category_type"), InfomngmntPackage.Literals.CATEGORY__LABEL, true,
-				false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addLabelPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Category_label_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Category_label_feature", "_UI_Category_type"),
+				 InfomngmntPackage.Literals.CATEGORY__LABEL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -111,33 +124,37 @@ public class CategoryItemProvider extends SynchronizableObjectItemProvider imple
 	 * 
 	 * @generated
 	 */
-	protected void addDescriptionPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_Category_description_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_Category_description_feature",
-						"_UI_Category_type"), InfomngmntPackage.Literals.CATEGORY__DESCRIPTION,
-				true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addDescriptionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Category_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Category_description_feature", "_UI_Category_type"),
+				 InfomngmntPackage.Literals.CATEGORY__DESCRIPTION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to
-	 * deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand},
-	 * {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in
-	 * {@link #createCommand}. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
-		if (this.childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__CHILDREN);
-			this.childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT);
+			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__CHILDREN);
+			childrenFeatures.add(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -226,16 +243,18 @@ public class CategoryItemProvider extends SynchronizableObjectItemProvider imple
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors,
-			final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(InfomngmntPackage.Literals.CATEGORY__CHILDREN,
-				InfomngmntFactory.eINSTANCE.createCategory()));
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.CATEGORY__CHILDREN,
+				 InfomngmntFactory.eINSTANCE.createCategory()));
 
-		newChildDescriptors.add(createChildParameter(
-				InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT, InfomngmntFactory.eINSTANCE
-						.createInformationUnitListItem()));
+		newChildDescriptors.add
+			(createChildParameter
+				(InfomngmntPackage.Literals.CATEGORY__INFORMATION_UNIT,
+				 InfomngmntFactory.eINSTANCE.createInformationUnitListItem()));
 	}
 
 }

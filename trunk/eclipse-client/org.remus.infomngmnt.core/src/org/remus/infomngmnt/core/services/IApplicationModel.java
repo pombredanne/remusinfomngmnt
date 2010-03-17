@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.remus.infomngmnt.ApplicationRoot;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
 
 public interface IApplicationModel {
 
@@ -23,6 +24,8 @@ public interface IApplicationModel {
 	Map<String, InformationUnitListItem> getAllItems(final IProgressMonitor monitor);
 
 	InformationUnitListItem getItemById(final String id, final IProgressMonitor monitor);
+
+	InformationUnitListItem getItemByLink(Link link);
 
 	InformationUnitListItem getItemByIdLocalDeletedIncluded(final String id,
 			final IProgressMonitor monitor);

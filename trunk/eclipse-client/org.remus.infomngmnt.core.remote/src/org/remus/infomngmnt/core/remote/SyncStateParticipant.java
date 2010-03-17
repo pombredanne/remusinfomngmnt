@@ -31,12 +31,15 @@ import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.remote.sync.SyncStateParticipantNotfier;
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.ISynchronizationItemCache;
 import org.remus.infomngmnt.model.remote.IChangeSetDefinition;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class SyncStateParticipant implements ISaveParticipant {
+
+	private ISynchronizationItemCache service;
 
 	public void handleChanged(final InformationUnit oldValue, final InformationUnit newValue) {
 		Object adapter = newValue.getAdapter(InformationUnitListItem.class);
@@ -132,17 +135,14 @@ public class SyncStateParticipant implements ISaveParticipant {
 	}
 
 	public void handleCreated(final InformationUnit newValue) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public void handleDeleted(final String informationUnitId) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public void handleClean(final IProject project) {
-		// TODO Auto-generated method stub
 
 	}
 

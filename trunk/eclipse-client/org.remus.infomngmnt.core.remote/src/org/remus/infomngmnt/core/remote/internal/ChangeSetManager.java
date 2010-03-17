@@ -600,16 +600,12 @@ public class ChangeSetManager implements IChangeHandler {
 				final ModelElementChangeRightTarget addOp = (ModelElementChangeRightTarget) diffElement;
 				EObject rightElement = addOp.getRightElement();
 				if (rightElement instanceof AbstractInformationUnit) {
-
 					item.getSyncObjectActionMap().put((SynchronizableObject) rightElement,
 							SynchronizationAction.ADD_LOCAL);
 
 				} else if (rightElement instanceof Category) {
-					// TODO implement for deleted items
-
 					item.getSyncCategoryActionMap().put((Category) rightElement,
 							SynchronizationAction.ADD_LOCAL);
-
 				}
 			}
 			if (diffElement instanceof DiffGroup) {

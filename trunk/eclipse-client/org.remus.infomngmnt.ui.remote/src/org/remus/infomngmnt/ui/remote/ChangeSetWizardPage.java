@@ -15,6 +15,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -40,6 +41,7 @@ import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
 import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.category.CategorySmartField;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.util.CategoryUtil;
 import org.remus.infomngmnt.util.StatusCreator;
 
@@ -77,7 +79,7 @@ public class ChangeSetWizardPage extends WizardPage implements IValidatingWizard
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
 		container.setLayout(gridLayout);
-		setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(RemoteUiActivator.getDefault(),
 				"icons/iconexperience/wizards/changeset_wizard.png"));
 
 		final Label parentCategoryLabel = new Label(container, SWT.NONE);
@@ -157,7 +159,20 @@ public class ChangeSetWizardPage extends WizardPage implements IValidatingWizard
 		this.tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		this.treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(UIPlugin.getDefault()
-				.getEditService().getAdapterFactory()));
+				.getEditService().getAdapterFactory()) {
+			@Override
+			public Image getImage(final Object object) {
+				if (object instanceof InformationUnitListItem) {
+					IInformationTypeImage typeImage = RemoteUiActivator.getDefault()
+							.getServiceTracker().getService(IInformationTypeImage.class);
+					String type = ((InformationUnitListItem) object).getType();
+					Image imageByInfoType = typeImage.getImageByInfoType(type);
+					RemoteUiActivator.getDefault().getServiceTracker().ungetService(typeImage);
+					return imageByInfoType;
+				}
+				return super.getImage(object);
+			}
+		});
 		this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(UIPlugin.getDefault()
 				.getEditService().getAdapterFactory()) {
 			@Override

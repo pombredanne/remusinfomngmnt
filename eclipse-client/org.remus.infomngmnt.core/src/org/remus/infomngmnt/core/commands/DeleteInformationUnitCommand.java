@@ -29,19 +29,18 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.DeleteCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ItemProvider;
 
 import org.remus.infomngmnt.BinaryReference;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
@@ -70,19 +69,27 @@ public class DeleteInformationUnitCommand implements Command {
 	private final IApplicationModel applicationService;
 
 	private static class InfoUnit2PathMapper {
-		public InfoUnit2PathMapper(final IPath fullPath, final InformationUnit unit) {
+
+		public InfoUnit2PathMapper(final IPath fullPath,
+				final InformationUnitListItem informationUnitListItem) {
 			this.fullPath = fullPath;
-			this.unit = unit;
+			this.informationUnitListItem = informationUnitListItem;
+
 		}
 
+		private final InformationUnitListItem informationUnitListItem;
 		private final IPath fullPath;
-		private final InformationUnit unit;
+		private InformationUnit unit;
 
 		public IPath getFullPath() {
 			return this.fullPath;
 		}
 
 		public InformationUnit getUnit() {
+			if (this.unit == null) {
+				this.unit = (InformationUnit) this.informationUnitListItem
+						.getAdapter(InformationUnit.class);
+			}
 			return this.unit;
 		}
 
@@ -126,10 +133,8 @@ public class DeleteInformationUnitCommand implements Command {
 			 */
 			try {
 				IPath pathInWorkspace = new Path(informationUnitListItem.getWorkspacePath());
-				InformationUnit adapter = (InformationUnit) informationUnitListItem
-						.getAdapter(InformationUnit.class);
 				this.map.put(informationUnitListItem, new InfoUnit2PathMapper(pathInWorkspace,
-						adapter));
+						informationUnitListItem));
 			} catch (Exception e) {
 				// do nothing
 			}
@@ -234,61 +239,22 @@ public class DeleteInformationUnitCommand implements Command {
 							new NullProgressMonitor());
 					InformationUnit adapter = (InformationUnit) itemById
 							.getAdapter(InformationUnit.class);
-					this.referenceDomain.getResourceSet().getResources().add(adapter.eResource());
-				}
-				this.referenceDomain.getResourceSet().getResources().add(
-						infoUnit2PathMapper.getUnit().eResource());
-				relevantObjects.add(infoUnit2PathMapper.getUnit());
-			}
-		}
-		this.usages = EcoreUtil.UsageCrossReferencer.findAll(relevantObjects, this.referenceDomain
-				.getResourceSet());
-		for (Map.Entry<EObject, Collection<EStructuralFeature.Setting>> entry : this.usages
-				.entrySet()) {
-			EObject eObject = entry.getKey();
-			Collection<EStructuralFeature.Setting> settings = entry.getValue();
-			for (EStructuralFeature.Setting setting : settings) {
-				EObject referencingEObject = setting.getEObject();
-				if (!relevantObjects.contains(referencingEObject)) {
-					EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
-					if (eStructuralFeature.isChangeable()) {
-						if (eStructuralFeature.isMany()) {
-							this.referenceDomain.getCommandStack().execute(
-									RemoveCommand.create(this.referenceDomain, referencingEObject,
-											eStructuralFeature, eObject));
-						} else {
-
-							/*
-							 * We have here an excpetion.
-							 */
-							if (eStructuralFeature == InfomngmntPackage.Literals.LINK__TARGET) {
-								EObject eContainer = referencingEObject.eContainer();
-								ItemProvider itemProvider = new ItemProvider(
-										(Collection<?>) eContainer
-												.eGet(InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS));
-								itemProvider.getChildren().remove(referencingEObject);
-								Command command = SetCommand.create(this.referenceDomain,
-										eContainer,
-										InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS,
-										itemProvider.getChildren());
-								this.referenceDomain.getCommandStack().execute(command);
-								InfomngmntEditPlugin.getPlugin().getEditService()
-										.saveObjectToResource(eContainer);
-
-							} else {
-								this.referenceDomain.getCommandStack().execute(
-										org.eclipse.emf.edit.command.SetCommand.create(
-												this.referenceDomain, referencingEObject,
-												eStructuralFeature, null));
-							}
-
+					EList<Link> links = (adapter).getLinks();
+					List<Link> links2Remove = new ArrayList<Link>();
+					for (Link link : links) {
+						if (link.getLocalInformationUnit() != null
+								&& link.getLocalInformationUnit().equals(
+										infoUnit2PathMapper.getUnit().getId())) {
+							links2Remove.add(link);
 						}
 					}
+					if (links2Remove.size() > 0) {
+						(adapter).getLinks().removeAll(links2Remove);
+						InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(
+								adapter);
+					}
 				}
-				if (referencingEObject.eResource() != null) {
-					InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(
-							referencingEObject);
-				}
+
 			}
 		}
 

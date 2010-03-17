@@ -77,7 +77,7 @@ public class CommandFactory {
 	public static CreateChildCommand CREATE_LINK(final InformationUnit source,
 			final InformationUnit target, final EditingDomain domain) {
 		Link createLink = InfomngmntFactory.eINSTANCE.createLink();
-		createLink.setTarget(target);
+		createLink.setLocalInformationUnit(source.getId());
 		return new CreateChildCommand(domain, source,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LINKS, createLink,
 				Collections.EMPTY_LIST);

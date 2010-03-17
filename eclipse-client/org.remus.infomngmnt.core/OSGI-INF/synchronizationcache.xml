@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="synchronizationcache">
+   <implementation class="org.remus.infomngmnt.core.ref.infounit.SynchronizationCache"/>
+   <service>
+      <provide interface="org.remus.infomngmnt.core.services.ISynchronizationItemCache"/>
+   </service> 
+</scr:component>

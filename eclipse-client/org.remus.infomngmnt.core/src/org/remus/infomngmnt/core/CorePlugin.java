@@ -1,7 +1,14 @@
 package org.remus.infomngmnt.core;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.emf.common.util.EList;
 import org.osgi.framework.BundleContext;
+
+import org.remus.infomngmnt.Category;
+import org.remus.infomngmnt.core.services.IApplicationModel;
+import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.services.RemusServiceTracker;
+import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -43,7 +50,17 @@ public class CorePlugin extends Plugin {
 	@Override
 	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
-
+		RemusServiceTracker remusServiceTracker = new RemusServiceTracker(getBundle());
+		IApplicationModel service = remusServiceTracker.getService(IApplicationModel.class);
+		IEditingHandler editService = remusServiceTracker.getService(IEditingHandler.class);
+		EList<Category> rootCategories = service.getModel().getRootCategories();
+		for (Category category : rootCategories) {
+			try {
+				editService.saveObjectToResource(category);
+			} catch (Exception e) {
+				getLog().log(StatusCreator.newStatus("Error saving datastructure", e));
+			}
+		}
 		super.stop(context);
 	}
 

@@ -48,6 +48,7 @@ import org.remus.infomngmnt.core.services.IHtmlGenerationErrorGenerator;
 import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
+import org.remus.infomngmnt.core.services.ISynchronizationItemCache;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.CategoryUtil;
@@ -70,9 +71,14 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 
 	private final IInformationTypeHandler informationTypeHandler;
 
+	private final ISynchronizationItemCache syncCacheService;
+
 	public InformationDeltaVisitor() {
 		this.referenceService = InfomngmntEditPlugin.getPlugin().getService(
 				IReferencedUnitStore.class);
+		this.syncCacheService = InfomngmntEditPlugin.getPlugin().getService(
+				ISynchronizationItemCache.class);
+
 		this.saveParticipantService = InfomngmntEditPlugin.getPlugin().getService(
 				ISaveParticipantExtensionService.class);
 		this.binaryReferenceService = InfomngmntEditPlugin.getPlugin().getService(
@@ -184,6 +190,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				case IResourceDelta.REMOVED:
 					String lastSegment = resourceDelta.getResource().getFullPath()
 							.removeFileExtension().lastSegment();
+					this.syncCacheService.delete(lastSegment);
 					this.referenceService.delete(lastSegment);
 					this.binaryReferenceService.delete(lastSegment);
 					this.saveParticipantService.fireEvent(ISaveParticipantExtensionService.DELETED,
@@ -267,6 +274,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			unitListItem.setLabel(objectFromFile.getLabel());
 			unitListItem.setType(objectFromFile.getType());
 			category.getInformationUnit().add(unitListItem);
+			adapter = unitListItem;
 		} else {
 			String label = objectFromFile.getLabel();
 			String label2 = ((AbstractInformationUnit) adapter).getLabel();
@@ -279,7 +287,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 				domain.dispose();
 			}
 		}
-
+		this.syncCacheService.update((InformationUnitListItem) adapter);
 		this.referenceService.update(objectFromFile);
 	}
 

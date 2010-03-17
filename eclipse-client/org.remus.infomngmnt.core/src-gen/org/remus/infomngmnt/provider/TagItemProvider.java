@@ -34,9 +34,8 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.Tag;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.Tag}
- * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ * This is the item provider adapter for a {@link org.remus.infomngmnt.Tag} object.
+ * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
 public class TagItemProvider extends AdapterItemProvider implements IEditingDomainItemProvider,
@@ -48,7 +47,7 @@ public class TagItemProvider extends AdapterItemProvider implements IEditingDoma
 	 * 
 	 * @generated
 	 */
-	public TagItemProvider(final AdapterFactory adapterFactory) {
+	public TagItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,29 +58,36 @@ public class TagItemProvider extends AdapterItemProvider implements IEditingDoma
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
 			addInfoUnitsPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature. <!-- begin-user-doc
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_Tag_name_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_Tag_name_feature",
-						"_UI_Tag_type"), InfomngmntPackage.Literals.TAG__NAME, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Tag_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Tag_name_feature", "_UI_Tag_type"),
+				 InfomngmntPackage.Literals.TAG__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -90,13 +96,20 @@ public class TagItemProvider extends AdapterItemProvider implements IEditingDoma
 	 * 
 	 * @generated
 	 */
-	protected void addInfoUnitsPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(), getString("_UI_Tag_infoUnits_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_Tag_infoUnits_feature",
-						"_UI_Tag_type"), InfomngmntPackage.Literals.TAG__INFO_UNITS, true, false,
-				true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	protected void addInfoUnitsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Tag_infoUnits_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Tag_infoUnits_feature", "_UI_Tag_type"),
+				 InfomngmntPackage.Literals.TAG__INFO_UNITS,
+				 true,
+				 false,
+				 true,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -111,36 +124,35 @@ public class TagItemProvider extends AdapterItemProvider implements IEditingDoma
 	}
 
 	/**
-	 * This returns the label text for the adapted class. <!-- begin-user-doc
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		String label = ((Tag) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_Tag_type")
-				: getString("_UI_Tag_type") + " " + label;
+	public String getText(Object object) {
+		String label = ((Tag)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Tag_type") :
+			getString("_UI_Tag_type") + " " + label;
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to
-	 * update any cached children and by creating a viewer notification, which
-	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Tag.class)) {
-		case InfomngmntPackage.TAG__NAME:
-		case InfomngmntPackage.TAG__INFO_UNITS:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-					false, true));
-			return;
+			case InfomngmntPackage.TAG__NAME:
+			case InfomngmntPackage.TAG__INFO_UNITS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -153,8 +165,7 @@ public class TagItemProvider extends AdapterItemProvider implements IEditingDoma
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors,
-			final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

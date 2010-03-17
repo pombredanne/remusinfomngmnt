@@ -52,6 +52,7 @@ import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.SynchronizationMetadata;
 import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.common.core.operation.DelayedRunnable;
@@ -60,6 +61,7 @@ import org.remus.infomngmnt.core.extension.ISaveParticipant;
 import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.core.services.ISaveParticipantExtensionService;
+import org.remus.infomngmnt.core.services.ISynchronizationItemCache;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.util.CategoryUtil;
@@ -391,6 +393,22 @@ public class ApplicationModelPool implements IApplicationModel {
 	public void setEditService(final IEditingHandler service) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public InformationUnitListItem getItemByLink(final Link link) {
+		InformationUnitListItem itemById = getItemById(link.getLocalInformationUnit(), null);
+		if (itemById != null) {
+			return itemById;
+		}
+		// Cahce for synced item is injected by an osgi service from a bundle
+		// that handles all the sync-stuff
+		ISynchronizationItemCache service = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+				.getService(ISynchronizationItemCache.class);
+		// if service not present probably no sync bundles installed.
+		if (service != null) {
+			return service.getItemByUrl(link.getRemoteUrl());
+		}
+		return null;
 	}
 
 }

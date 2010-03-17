@@ -31,9 +31,12 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
+import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.remus.infomngmnt.InfomngmntPackage;
+import org.remus.infomngmnt.Link;
 
 /**
  * This is the item provider adapter for a {@link org.remus.infomngmnt.Link} object.
@@ -71,29 +74,75 @@ public class LinkItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addTargetPropertyDescriptor(object);
+			addLocalInformationUnitPropertyDescriptor(object);
+			addRemoteUrlPropertyDescriptor(object);
+			addTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Target feature.
+	 * This adds a property descriptor for the Local Information Unit feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTargetPropertyDescriptor(Object object) {
+	protected void addLocalInformationUnitPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Link_target_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Link_target_feature", "_UI_Link_type"),
-				 InfomngmntPackage.Literals.LINK__TARGET,
+				 getString("_UI_Link_localInformationUnit_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Link_localInformationUnit_feature", "_UI_Link_type"),
+				 InfomngmntPackage.Literals.LINK__LOCAL_INFORMATION_UNIT,
 				 true,
 				 false,
-				 true,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Remote Url feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRemoteUrlPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Link_remoteUrl_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Link_remoteUrl_feature", "_UI_Link_type"),
+				 InfomngmntPackage.Literals.LINK__REMOTE_URL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Link_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Link_type_feature", "_UI_Link_type"),
+				 InfomngmntPackage.Literals.LINK__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -117,7 +166,10 @@ public class LinkItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Link_type");
+		String label = ((Link)object).getLocalInformationUnit();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Link_type") :
+			getString("_UI_Link_type") + " " + label;
 	}
 
 	/**
@@ -130,6 +182,14 @@ public class LinkItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(Link.class)) {
+			case InfomngmntPackage.LINK__LOCAL_INFORMATION_UNIT:
+			case InfomngmntPackage.LINK__REMOTE_URL:
+			case InfomngmntPackage.LINK__TYPE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 

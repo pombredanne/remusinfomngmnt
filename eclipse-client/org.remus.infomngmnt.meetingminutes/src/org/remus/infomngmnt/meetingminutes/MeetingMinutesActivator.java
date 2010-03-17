@@ -20,6 +20,8 @@ public class MeetingMinutesActivator extends AbstractUIPlugin {
 
 	public static final String NODE_NAME_DATETIME = "meetingtime"; //$NON-NLS-1$
 
+	public static final String NODE_NAME_END_DATETIME = "meetingend"; //$NON-NLS-1$
+
 	public static final String NODE_NAME_ATTENDEES = "attendees"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_ATTENDEE = "attendee"; //$NON-NLS-1$

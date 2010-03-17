@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.core.remote.sync;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -46,6 +49,7 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.Link;
 import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.SynchronizableObject;
 import org.remus.infomngmnt.SynchronizationAction;
@@ -65,6 +69,7 @@ import org.remus.infomngmnt.core.remote.RemoteActivator;
 import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
 import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IEditingHandler;
+import org.remus.infomngmnt.core.services.IReferencedUnitStore;
 import org.remus.infomngmnt.model.remote.IChangeSetDefinition;
 import org.remus.infomngmnt.util.CategoryUtil;
 import org.remus.infomngmnt.util.StatusCreator;
@@ -188,6 +193,7 @@ public class ChangeSetExecutor {
 		Set<Category> keySet = item.getSyncCategoryActionMap().keySet();
 		MultiStatus status = new MultiStatus(CorePlugin.PLUGIN_ID, 500,
 				"Error while synchronizing", null);
+		final List<InformationUnitListItem> itemsWithNewRemoteUrl = new ArrayList<InformationUnitListItem>();
 		for (Category category : keySet) {
 			SynchronizationAction synchronizationAction = item.getSyncCategoryActionMap().get(
 					category);
@@ -234,6 +240,8 @@ public class ChangeSetExecutor {
 							IProgressMonitor.UNKNOWN);
 					subProgressMonitor.setTaskName("Adding remote category");
 					addRemoteCategory(category, subProgressMonitor);
+					itemsWithNewRemoteUrl.addAll(Arrays.asList(CategoryUtil
+							.getAllInfoUnitItems(category)));
 				} catch (Exception e) {
 					append2Status(status, e);
 				}
@@ -266,6 +274,8 @@ public class ChangeSetExecutor {
 							subProgressMonitor.setTaskName("Updating local information unit");
 							replaceLocalInfoUnit((InformationUnitListItem) synchronizableObject,
 									item, subProgressMonitor);
+							itemsWithNewRemoteUrl
+									.add((InformationUnitListItem) synchronizableObject);
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
@@ -311,6 +321,9 @@ public class ChangeSetExecutor {
 							subProgressMonitor.setTaskName("Replacing remote information unit");
 							replaceRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
 									subProgressMonitor);
+							itemsWithNewRemoteUrl
+									.add((InformationUnitListItem) synchronizableObject);
+
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
@@ -322,6 +335,8 @@ public class ChangeSetExecutor {
 							subProgressMonitor.setTaskName("Adding remote information unit");
 							addRemoteInfoUnit((InformationUnitListItem) synchronizableObject,
 									subProgressMonitor);
+							itemsWithNewRemoteUrl
+									.add((InformationUnitListItem) synchronizableObject);
 						} catch (Exception e) {
 							append2Status(status, e);
 						}
@@ -341,6 +356,11 @@ public class ChangeSetExecutor {
 					}
 				}
 			}
+		}
+
+		monitor.setTaskName("Adjusting references to new remote URIs");
+		for (InformationUnitListItem linkChangeObjects : itemsWithNewRemoteUrl) {
+			adjustLinks(linkChangeObjects);
 		}
 		monitor.worked(1);
 		if (status.getChildren().length > 0) {
@@ -807,6 +827,41 @@ public class ChangeSetExecutor {
 		localCategory.setSynchronizationMetaData((SynchronizationMetadata) EcoreUtil.copy(category
 				.getSynchronizationMetaData()));
 		localCategory.setLabel(category.getLabel());
+	}
+
+	private void adjustLinks(final InformationUnitListItem item) {
+		IReferencedUnitStore service = RemoteActivator.getDefault().getServiceTracker().getService(
+				IReferencedUnitStore.class);
+		InformationUnitListItem itemById2 = this.applicationService.getItemById(item.getId(), null);
+		String[] referencedInfoUnitIds = service.getReferencedInfoUnitIds(itemById2.getId());
+		for (String string : referencedInfoUnitIds) {
+			InformationUnitListItem itemById = this.applicationService.getItemById(string,
+					new NullProgressMonitor());
+			if (itemById != null) {
+				InformationUnit adapter = (InformationUnit) itemById
+						.getAdapter(InformationUnit.class);
+				EList<Link> links = adapter.getLinks();
+				for (Link link : links) {
+					if (link.getLocalInformationUnit().equals(itemById2.getId())
+							&& !itemById2.getSynchronizationMetaData().getUrl().equals(
+									link.getRemoteUrl())) {
+						link.setRemoteUrl(itemById2.getSynchronizationMetaData().getUrl());
+						this.editService.saveObjectToResource(adapter);
+						if (itemById != null) {
+							Command setSycnMetadata = SetCommand
+									.create(
+											this.editService.getNavigationEditingDomain(),
+											itemById.getSynchronizationMetaData(),
+											InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+											SynchronizationState.LOCAL_EDITED);
+							this.editService.execute(setSycnMetadata);
+
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 	public void dispose() {

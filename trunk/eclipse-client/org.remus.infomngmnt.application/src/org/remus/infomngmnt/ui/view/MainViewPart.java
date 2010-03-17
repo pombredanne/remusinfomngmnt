@@ -104,6 +104,7 @@ public class MainViewPart extends ViewPart implements ISetSelectionTarget, IEdit
 
 	@Override
 	public void init(final IViewSite site, final IMemento memento) throws PartInitException {
+		UIPlugin.getDefault().getApplicationService().getModel();
 		super.init(site, memento);
 		this.buttonBar.init(site, memento);
 	}

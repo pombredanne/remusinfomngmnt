@@ -45,7 +45,7 @@ public interface RemoteContainer extends RemoteObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteContainer_Children()
-	 * @model containment="true"
+	 * @model containment="true" transient="true"
 	 * @generated
 	 */
 	EList<RemoteObject> getChildren();
@@ -61,7 +61,7 @@ public interface RemoteContainer extends RemoteObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Exclusion Children</em>' reference list.
 	 * @see org.remus.infomngmnt.InfomngmntPackage#getRemoteContainer_ExclusionChildren()
-	 * @model
+	 * @model transient="true"
 	 * @generated
 	 */
 	EList<RemoteObject> getExclusionChildren();

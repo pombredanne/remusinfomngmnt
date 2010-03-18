@@ -32,9 +32,10 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.RemoteContainer;
 
 /**
- * This is the item provider adapter for a {@link org.remus.infomngmnt.RemoteContainer} object.
- * <!-- begin-user-doc -->
+ * This is the item provider adapter for a
+ * {@link org.remus.infomngmnt.RemoteContainer} object. <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class RemoteContainerItemProvider extends RemoteObjectItemProvider implements
@@ -46,7 +47,7 @@ public class RemoteContainerItemProvider extends RemoteObjectItemProvider implem
 	 * 
 	 * @generated
 	 */
-	public RemoteContainerItemProvider(AdapterFactory adapterFactory) {
+	public RemoteContainerItemProvider(final AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -57,14 +58,14 @@ public class RemoteContainerItemProvider extends RemoteObjectItemProvider implem
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
+		if (this.itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addChildrenPropertyDescriptor(object);
 			addExclusionChildrenPropertyDescriptor(object);
 		}
-		return itemPropertyDescriptors;
+		return this.itemPropertyDescriptors;
 	}
 
 	/**
@@ -73,20 +74,14 @@ public class RemoteContainerItemProvider extends RemoteObjectItemProvider implem
 	 * 
 	 * @generated
 	 */
-	protected void addChildrenPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_RemoteContainer_children_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteContainer_children_feature", "_UI_RemoteContainer_type"),
-				 InfomngmntPackage.Literals.REMOTE_CONTAINER__CHILDREN,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+	protected void addChildrenPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) this.adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_RemoteContainer_children_feature"), getString(
+						"_UI_PropertyDescriptor_description",
+						"_UI_RemoteContainer_children_feature", "_UI_RemoteContainer_type"),
+				InfomngmntPackage.Literals.REMOTE_CONTAINER__CHILDREN, true, false, true, null,
+				null, null));
 	}
 
 	/**
@@ -95,31 +90,28 @@ public class RemoteContainerItemProvider extends RemoteObjectItemProvider implem
 	 * 
 	 * @generated
 	 */
-	protected void addExclusionChildrenPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_RemoteContainer_exclusionChildren_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RemoteContainer_exclusionChildren_feature", "_UI_RemoteContainer_type"),
-				 InfomngmntPackage.Literals.REMOTE_CONTAINER__EXCLUSION_CHILDREN,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+	protected void addExclusionChildrenPropertyDescriptor(final Object object) {
+		this.itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) this.adapterFactory)
+						.getRootAdapterFactory(), getResourceLocator(),
+						getString("_UI_RemoteContainer_exclusionChildren_feature"), getString(
+								"_UI_PropertyDescriptor_description",
+								"_UI_RemoteContainer_exclusionChildren_feature",
+								"_UI_RemoteContainer_type"),
+						InfomngmntPackage.Literals.REMOTE_CONTAINER__EXCLUSION_CHILDREN, true,
+						false, true, null, null, null));
 	}
 
 	/**
-	 * This returns RemoteContainer.gif.
-	 * <!-- begin-user-doc --> <!--
+	 * This returns RemoteContainer.gif. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RemoteContainer"));
+	public Object getImage(final Object object) {
+		return overlayImage(object, getResourceLocator().getImage(
+				"iconexperience/folder_green_network.png"));
 	}
 
 	/**
@@ -135,14 +127,15 @@ public class RemoteContainerItemProvider extends RemoteObjectItemProvider implem
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc --> <!--
+	 * This handles model notifications by calling {@link #updateChildren} to
+	 * update any cached children and by creating a viewer notification, which
+	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(final Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -155,7 +148,8 @@ public class RemoteContainerItemProvider extends RemoteObjectItemProvider implem
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors,
+			final Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

@@ -146,9 +146,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoteContainer" eSuperTypes="#//RemoteObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//RemoteObject" containment="true"/>
+        eType="#//RemoteObject" transient="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exclusionChildren" upperBound="-1"
-        eType="#//RemoteObject"/>
+        eType="#//RemoteObject" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SynchronizationMetadata" eSuperTypes="#//Adapter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="repositoryId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -23,7 +23,7 @@ public class NewMeetingWizard extends NewInfoObjectWizard {
 
 	public NewMeetingWizard() {
 		super();
-		setWindowTitle("New Meeting Minutes");
+		setWindowTitle("New Appointment");
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class NewMeetingWizard extends NewInfoObjectWizard {
 	@Override
 	public void addPages() {
 		super.addPages();
-		this.page1.setTitle("New Meeting Minutes");
-		this.page1.setMessage("This wizard enables you to create a new meeting protocol");
+		this.page1.setTitle("New Appointment");
+		this.page1.setMessage("This wizard enables you to create a new appointment");
 		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
 				MeetingMinutesActivator.getDefault(), "icons/iconexperience/new_wizard.png"));
 	}

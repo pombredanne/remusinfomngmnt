@@ -5,7 +5,7 @@
          point="org.remus.infomngmnt.core.informationType">
       <information
             excludeFromIndex="false"
-            name="Meeting Minutes"
+            name="Appointment"
             presentation="org.remus.infomngmnt.meetingminutes.extension.MeetingMinutesRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="MEETING">
@@ -19,7 +19,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/meeting_new.png"
             id="org.remus.infomngmnt.meetingminutes.new"
-            name="Meeting Minutes">
+            name="Appointment">
       </wizard>
    </extension>
    <extension
@@ -32,7 +32,7 @@
             editpage="org.remus.infomngmnt.meetingminutes.ui.MeetingEditPage"
             icon="icons/iconexperience/edit_meeting.png"
             id="org.remus.infomngmnt.meetingminutes.general"
-            label="Edit Meeting"
+            label="Edit Appointment"
             type="MEETING">
       </editPage>
       <editPage

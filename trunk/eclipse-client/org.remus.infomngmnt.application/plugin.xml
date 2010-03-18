@@ -31,7 +31,23 @@
          </property>
          <property
                name="startupProgressRect"
-               value="5,275,445,15">
+               value="125,280,150,10">
+         </property>
+		  <property
+               name="aboutImage"
+               value="about.png">
+         </property>
+         <property
+               name="aboutText"
+               value="Remus Information Management&#x0A;&#x0A;Version: {0}&#x0A;BuildId: {1}&#x0A;Date: {2}&#x0A;&#x0A;(c) Copyright RIM contributors and other 2009. All rights reserverd.&#x0A;Visit http://www.remus-software.org&#x0A;&#x0A;This product uses software developed by the Eclipse Foundation and &#x0A;its members (http://www.eclipse.org), Apache (http://www.apache.org)&#x0A;and others. For a full list see &#x0A;http://www.remus-software.org/integrated-thirdparty-packages">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="1000,1000,270,15">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="FFFFFF">
          </property>
          <!--
          <property

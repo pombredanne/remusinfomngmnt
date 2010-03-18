@@ -99,7 +99,7 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	@Override
 	public boolean canFinish() {
 
-		return super.canFinish();
+		return this.page2.isPageComplete();
 	}
 
 	/*

@@ -112,6 +112,7 @@ public class ParameterSelectionPage extends WizardPage {
 	 */
 	public ParameterSelectionPage() {
 		super("parameterSelection");
+		setPageComplete(false);
 	}
 
 	/**
@@ -128,6 +129,7 @@ public class ParameterSelectionPage extends WizardPage {
 		this.container.setLayout(this.stackLayout = new StackLayout());
 		buildTemplateUi();
 		setControl(this.container);
+		setPageComplete(true);
 	}
 
 }

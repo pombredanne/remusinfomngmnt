@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remote.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.googlecalendar.GoogleCalendarConnector"
+            credentialprovider="org.remus.infomngmnt.connector.googlecalendar.GoogleCalendarCredentialProvider"
+            id="org.remus.infomngmnt.connector.googlecalendar"
+            name="Google Calendar">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+      <respository
+            icon="icons/date.png"
+            id="org.remus.infomngmnt.connector.googlecalendar.ui"
+            newWizard="org.remus.infomngmnt.connector.googlecalendar.ui.NewGoogleCalendarRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.googlecalendar">
+      </respository>
+   </extension>
+
+</plugin>

@@ -389,6 +389,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#getRepositoryUrl()
 	 */
+	@Override
 	public String getRepositoryUrl() {
 		return "http://www.google.com/m8/feeds/";
 	}
@@ -454,6 +455,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	 * 
 	 * @see org.remus.infomngmnt.core.remote.IRepository#validate()
 	 */
+	@Override
 	public IStatus validate() {
 		try {
 			reset();
@@ -468,7 +470,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	public synchronized ContactsService getApi() throws RemoteException {
 		if (this.api == null) {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
-			this.api = new ContactsService("Google-contactsExampleApp-3");
+			this.api = new ContactsService("Remus Information Management");
 			try {
 				this.api.setUserCredentials(getCredentialProvider().getUserName(),
 						getCredentialProvider().getPassword());

@@ -31,21 +31,17 @@ public class Mp3Player extends AbstractMediaPlayer {
 	 */
 	public String buildHtml(final IPath mediaFilePath, final int widht, final int height,
 			final Map<String, String> options) {
-		String htmlString = "<div id=\"mp3player\" style=\"margin-top:10px;text-align: center\"></div>\r\n"
-				+ "<script type=\"text/javascript\">\r\n"
-				+ "	var so = new SWFObject(\""
+		String htmlString = "<div id=\"gsplayer\" style=\"margin-top:10px;text-align: center\">\r\n<script type=\"text/javascript\">\r\n"
+				+ "	var html = swf(\"gsplayer\",\""
 				+ CheckResourceReferenceJob.map.get(REF_RES_1)
-				+ "\", \"swfplayer\", \""
+				+ "\",\""
 				+ (widht == 0 ? 480 : widht)
-				+ "\", \""
-				+ (height == 0 ? 25 : height)
-				+ "\", \"9\", \"#000000\");\r\n"
-				+ "	so.addVariable(\"mp3\", \""
+				+ "\",\""
+				+ (height == 0 ? 27 : height)
+				+ "\",{path:\""
 				+ mediaFilePath.toOSString().replaceAll("\\\\", "\\\\\\\\")
-				+ "\");\r\n"
-				+ "	//so.addVariable(\"autoplay\",\"true\");\r\n"
-				+ "	so.addParam(\"allowFullScreen\",\"true\");\r\n"
-				+ "	so.write(\"mp3player\");\r\n" + "</script>";
+				+ "\",type:\"mp3\",fullscreen:'false'},{allowfullscreen:\"false\",allowScriptAccess:\"sameDomain\"});\r\n"
+				+ "\r\ndocument.write(html);\r\n" + "</script></div>";
 		return htmlString;
 	}
 

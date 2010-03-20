@@ -271,13 +271,13 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
 					.toArray(new Occur[flagList.size()]), getAnalyser());
 			IndexSearchOperation<List<TimeSpan>> operation = new IndexSearchOperation<List<TimeSpan>>(
-					getIndexSearcher()) {
+					this) {
 
 				public List<TimeSpan> call() throws Exception {
 					List<TimeSpan> returnValue = new ArrayList<TimeSpan>();
 					try {
 
-						TopDocs search = this.reader.search(tagQuery, null, 1000);
+						TopDocs search = getIndexReader().search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
@@ -337,6 +337,7 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 			termList2.add("[" + convertDate(timespan.getEndDate()) + " TO " + Long.MAX_VALUE + "]");
 			flagList2.add(Occur.MUST);
 		}
+		final Tasklist taskList = ModelFactory.eINSTANCE.createTasklist();
 
 		try {
 			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
@@ -349,13 +350,11 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 			booleanQuery.add(tagQuery, Occur.SHOULD);
 			booleanQuery.add(spanQuery, Occur.SHOULD);
 
-			IndexSearchOperation<Tasklist> operation = new IndexSearchOperation<Tasklist>(
-					getIndexSearcher()) {
+			IndexSearchOperation<Tasklist> operation = new IndexSearchOperation<Tasklist>(this) {
 				public Tasklist call() throws Exception {
-					final Tasklist taskList = ModelFactory.eINSTANCE.createTasklist();
 					try {
 
-						TopDocs search = this.reader.search(booleanQuery, null, 1000);
+						TopDocs search = getIndexReader().search(booleanQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
@@ -396,12 +395,13 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 				}
 
 			};
-			return read(operation);
+			Tasklist read = read(operation);
+			return read;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return taskList;
 
 	}
 

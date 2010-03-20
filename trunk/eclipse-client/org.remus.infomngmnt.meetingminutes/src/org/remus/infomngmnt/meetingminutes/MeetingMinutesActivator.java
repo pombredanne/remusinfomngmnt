@@ -42,6 +42,10 @@ public class MeetingMinutesActivator extends AbstractUIPlugin {
 
 	public static final String NODE_NAME_TODOS = "todos"; //$NON-NLS-1$
 
+	public static final String NODE_NAME_REMINDER = "reminder"; //$NON-NLS-1$
+
+	public static final String NODE_NAME_REPEAT = "recurring"; //$NON-NLS-1$
+
 	private RemusServiceTracker serviceTracker;
 
 	/**

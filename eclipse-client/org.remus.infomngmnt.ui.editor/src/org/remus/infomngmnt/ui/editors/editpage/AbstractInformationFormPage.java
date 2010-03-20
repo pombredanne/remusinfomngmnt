@@ -12,6 +12,7 @@
 
 package org.remus.infomngmnt.ui.editors.editpage;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -208,6 +209,13 @@ public abstract class AbstractInformationFormPage extends InformationFormPage im
 	protected void bind(final AbstractBindingWidget widget, final String nodeId) {
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
 		widget.bindModel(read.getChildByNodeId(nodeId), read.getFeatureByNodeId(nodeId));
+	}
+
+	protected void bind(final AbstractBindingWidget widget, final String nodeId,
+			final UpdateValueStrategy target2Model, final UpdateValueStrategy model2target) {
+		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
+		widget.bindModel(read.getChildByNodeId(nodeId), read.getFeatureByNodeId(nodeId),
+				target2Model, model2target);
 	}
 
 	/**

@@ -27,3 +27,4 @@ Require-Bundle:
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.remus.infomngmnt.contact.shared
+Export-Package: org.remus.infomngmnt.meetingminutes

@@ -15,4 +15,6 @@
   </structureItems>
   <structureItems type="STRING" id="decisions"/>
   <structureItems type="STRING" id="todos"/>
+  <structureItems id="reminder"/>
+  <structureItems id="recurring"/>
 </infomngmnt:InformationStructureDefinition>

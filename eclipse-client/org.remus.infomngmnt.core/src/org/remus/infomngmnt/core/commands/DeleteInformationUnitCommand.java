@@ -147,7 +147,7 @@ public class DeleteInformationUnitCommand implements Command {
 	 * @see org.eclipse.emf.common.command.Command#canExecute()
 	 */
 	public boolean canExecute() {
-		if (this.delegateCommand == null) {
+		if (this.delegateCommand == null || this.delegateCommand.getCommandList().size() == 0) {
 			return true;
 		}
 		return this.delegateCommand.canExecute();

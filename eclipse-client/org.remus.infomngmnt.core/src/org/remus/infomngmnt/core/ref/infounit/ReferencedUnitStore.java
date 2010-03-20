@@ -22,6 +22,7 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -165,7 +166,7 @@ public class ReferencedUnitStore extends LuceneStore implements IReferencedUnitS
 		try {
 
 			IndexSearchOperation<List<String>> operation = new IndexSearchOperation<List<String>>(
-					getIndexSearcher()) {
+					this) {
 				public List<String> call() throws Exception {
 					Query tagQuery = MultiFieldQueryParser.parse(termList
 							.toArray(new String[termList.size()]), fieldList
@@ -173,11 +174,12 @@ public class ReferencedUnitStore extends LuceneStore implements IReferencedUnitS
 							.toArray(new Occur[flagList.size()]), getAnalyser());
 					final List<String> returnValue = new ArrayList<String>();
 					try {
-						TopDocs search = this.reader.search(tagQuery, null, 1000);
+						IndexSearcher indexReader = getIndexReader();
+						TopDocs search = indexReader.search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
-								Document doc = this.reader.doc(scoreDoc.doc);
+								Document doc = indexReader.doc(scoreDoc.doc);
 								returnValue.add(doc.get(INFOID));
 							} catch (CorruptIndexException e) {
 								// TODO Auto-generated catch block

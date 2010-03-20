@@ -19,6 +19,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
@@ -75,16 +76,17 @@ public class SynchronizationCache extends LuceneStore implements ISynchronizatio
 
 			final Query tagQuery = new TermQuery(new Term(URL, url.replaceAll("\\\\", "/")));
 			IndexSearchOperation<InformationUnitListItem> operation = new IndexSearchOperation<InformationUnitListItem>(
-					getIndexSearcher()) {
+					this) {
 
 				public InformationUnitListItem call() throws Exception {
 					try {
 
-						TopDocs search = this.reader.search(tagQuery, null, 1000);
+						IndexSearcher indexReader = getIndexReader();
+						TopDocs search = indexReader.search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
-								Document doc = this.reader.doc(scoreDoc.doc);
+								Document doc = indexReader.doc(scoreDoc.doc);
 								String string = doc.get(INFOID);
 								if (string != null) {
 									IApplicationModel service = InfomngmntEditPlugin.getPlugin()

@@ -21,6 +21,7 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -133,17 +134,17 @@ public class BinaryReferenceStore extends LuceneStore implements IBinaryReferenc
 			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
 					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
 					.toArray(new Occur[flagList.size()]), getAnalyser());
-			IndexSearchOperation<String> operation = new IndexSearchOperation<String>(
-					getIndexSearcher()) {
+			IndexSearchOperation<String> operation = new IndexSearchOperation<String>(this) {
 
 				public String call() throws Exception {
 					try {
 
-						TopDocs search = this.reader.search(tagQuery, null, 1000);
+						IndexSearcher indexReader = getIndexReader();
+						TopDocs search = indexReader.search(tagQuery, null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
-								Document doc = this.reader.doc(scoreDoc.doc);
+								Document doc = indexReader.doc(scoreDoc.doc);
 								return doc.get(INFOID);
 							} catch (CorruptIndexException e) {
 								// TODO Auto-generated catch block

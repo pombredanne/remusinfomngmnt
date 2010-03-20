@@ -21,10 +21,15 @@ import org.apache.lucene.search.IndexSearcher;
  */
 public abstract class IndexSearchOperation<T> implements Callable<T> {
 
-	protected final IndexSearcher reader;
+	private final LuceneStore store;
 
-	public IndexSearchOperation(final IndexSearcher searcher) {
-		this.reader = searcher;
+	public IndexSearchOperation(final LuceneStore store) {
+		this.store = store;
+
+	}
+
+	public IndexSearcher getIndexReader() {
+		return this.store.getIndexSearcher();
 	}
 
 }

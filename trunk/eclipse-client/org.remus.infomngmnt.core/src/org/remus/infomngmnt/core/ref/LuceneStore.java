@@ -67,13 +67,17 @@ public abstract class LuceneStore {
 		boolean errorOccured = false;
 		try {
 			returnValue = submit.get();
-			this.log.debug("Returned result --> " + returnValue.toString());
+			if (returnValue != null) {
+				this.log.debug("Returned result --> " + returnValue.toString());
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
+			e.printStackTrace();
 			errorOccured = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			this.lock.unlock();
 			if (errorOccured) {
@@ -211,7 +215,8 @@ public abstract class LuceneStore {
 		if (this.indexSearcher != null) {
 			try {
 				this.indexSearcher.close();
-			} catch (IOException e) {
+			} catch (Throwable e) {
+				e.printStackTrace();
 				// do nothing
 			}
 			this.indexSearcher = null;

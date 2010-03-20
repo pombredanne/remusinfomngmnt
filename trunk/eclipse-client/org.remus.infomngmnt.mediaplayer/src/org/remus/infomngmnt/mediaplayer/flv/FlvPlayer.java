@@ -27,6 +27,8 @@ public class FlvPlayer extends AbstractMediaPlayer {
 	public static final String REF_RES_1 = "org_remus_infomngmnt_mediaplayer_playerFlashSWF"; //$NON-NLS-1$
 	public static final String REF_RES_2 = "org_remus_infomngmnt_mediaplayer_swfobjects"; //$NON-NLS-1$
 
+	protected String playerType = "flv";
+
 	/**
 	 * 
 	 */
@@ -43,21 +45,19 @@ public class FlvPlayer extends AbstractMediaPlayer {
 	 */
 	public String buildHtml(final IPath mediaFilePath, final int widht, final int height,
 			final Map<String, String> options) {
-		String htmlString = "<div id=\"flvplayer\" style=\"margin-top:10px;text-align: center\"></div>\r\n"
-				+ "<script type=\"text/javascript\">\r\n"
-				+ "	var so = new SWFObject(\""
+		String htmlString = "<div id=\"gsplayer\" style=\"margin-top:10px;text-align: center\">\r\n<script type=\"text/javascript\">\r\n"
+				+ "	var html = swf(\"gsplayer\",\""
 				+ CheckResourceReferenceJob.map.get(REF_RES_1)
-				+ "\", \"swfplayer\", \""
+				+ "\",\""
 				+ (widht == 0 ? 480 : widht)
-				+ "\", \""
+				+ "\",\""
 				+ (height == 0 ? 300 : height)
-				+ "\", \"9\", \"#000000\");\r\n"
-				+ "	so.addVariable(\"flv\", \""
+				+ "\",{path:\""
 				+ mediaFilePath.toOSString().replaceAll("\\\\", "\\\\\\\\")
-				+ "\");\r\n"
-				+ "	//so.addVariable(\"autoplay\",\"true\");\r\n"
-				+ "	so.addParam(\"allowFullScreen\",\"true\");\r\n"
-				+ "	so.write(\"flvplayer\");\r\n" + "</script>";
+				+ "\",type:\""
+				+ this.playerType
+				+ "\",fullscreen:'true'},{allowfullscreen:\"true\",allowScriptAccess:\"sameDomain\"});\r\n"
+				+ "\r\ndocument.write(html);\r\n" + "</script></div>";
 		return htmlString;
 	}
 

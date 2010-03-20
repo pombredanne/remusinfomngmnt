@@ -6,11 +6,11 @@
          point="org.remus.infomngmnt.jslib.browserReferenceResource">
       <referenceResource
             id="org.remus.infomngmnt.mediaplayer.playerFlashSWF"
-            resource="mpwplayer/mpw_player.swf">
+            resource="mpwplayer/player.swf">
       </referenceResource>
       <referenceResource
             id="org.remus.infomngmnt.mediaplayer.swfobjects"
-            resource="mpwplayer/swfobject.js">
+            resource="mpwplayer/scripts.js">
       </referenceResource>
    </extension>
    <extension
@@ -24,6 +24,9 @@
          </supportedmediatype>
          <supportedmediatype
                name="mp4">
+         </supportedmediatype>
+         <supportedmediatype
+               name="m4v">
          </supportedmediatype>
       </mediaplayer>
       <mediaplayer

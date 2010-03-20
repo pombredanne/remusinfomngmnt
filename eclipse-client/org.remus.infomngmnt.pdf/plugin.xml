@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="pdf2image" name="pdf2image" schema="schema/pdf2image.exsd"/>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            excludeFromIndex="false"
+            name="PDF Document"
+            presentation="org.remus.infomngmnt.pdf.core.PdfInformationRepresentation"
+            structuredefinition="strucuturedefinition.xmi"
+            type="PDF">
+      </information>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.editor.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.pdf.ui.PdfMetadaEditPage"
+            icon="icons/pdf.png"
+            id="org.remus.infomngmnt.pdf.editPage1"
+            label="Edit Pdf Metadata"
+            type="PDF">
+      </editPage>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.remus.infomngmnt.ui.simple"
+            class="org.remus.infomngmnt.pdf.ui.NewPdfWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/pdf.png"
+            id="org.remus.infomngmnt.pdf.wizard"
+            name="PDF Document">
+      </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.pdf.pdf2image">
+      <pdfImageRenderer
+            class="org.remus.infomngmnt.pdf.renderer.DefaultImageRenderer"
+            id="org.remus.infomngmnt.pdf.pdfImageRenderer2"
+            name="Default Image Renderer">
+      </pdfImageRenderer>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.pdf.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.pdf.nextbutton"
+            resource="tinyslider/right.gif">
+      </referenceResource>
+      <referenceResource
+            id="org.remus.infomngmnt.pdf.previousbutton"
+            resource="tinyslider/left.gif">
+      </referenceResource>
+      <referenceResource
+            id="org.remus.infomngmnt.pdf.script"
+            resource="tinyslider/script.js">
+      </referenceResource>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.ui.infotypes"
+            class="org.remus.infomngmnt.pdf.preferences.RendererPreferencePage"
+            id="org.remus.infomngmnt.pdf.page1"
+            name="Pdf">
+      </page>
+   </extension>
+
+</plugin>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.pdf.pdf2image">
+      <pdfImageRenderer
+            class="org.remus.infomngmnt.pdf.renderer.PdfRenderer"
+            id="org.remus.infomngmnt.pdf.renderer.pdfImageRenderer1"
+            name="Suns LGPGL PDFRenderer">
+      </pdfImageRenderer>
+   </extension>
+
+</plugin>

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PDF Renderer
+Bundle-SymbolicName: org.remus.infomngmnt.pdf.renderer;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Tom Seidel
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.remus.infomngmnt.pdf;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)"
+Bundle-ClassPath: lib/PDFRenderer.jar,
+ .

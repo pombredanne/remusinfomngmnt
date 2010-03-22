@@ -435,7 +435,7 @@ public class ChangeSetManager implements IChangeHandler {
 	 * org.remus.infomngmnt.ChangeSetItem, org.remus.infomngmnt.Category,
 	 * boolean)
 	 */
-	public DiffModel createDiffModel(final ChangeSetItem changeSetItem,
+	public synchronized DiffModel createDiffModel(final ChangeSetItem changeSetItem,
 			final Category targetCategory, final boolean replaceAllLocal) throws ChangeSetException {
 		DiffModel returnValue = null;
 		/*
@@ -509,13 +509,14 @@ public class ChangeSetManager implements IChangeHandler {
 			}
 		}
 
+		String compareId = IdFactory.createNewId(null);
 		Resource res1 = new ResourceImpl(URI.createFileURI(RemoteActivator.getDefault()
-				.getStateLocation().append(COMPARE_FOLDER).append(IdFactory.createNewId(null))
+				.getStateLocation().append(COMPARE_FOLDER).append(compareId)
 				.addFileExtension("xml").toOSString()));
 		res1.getContents().add(remoteCopy);
 
 		Resource res2 = new ResourceImpl(URI.createFileURI(RemoteActivator.getDefault()
-				.getStateLocation().append(COMPARE_FOLDER).append(IdFactory.createNewId(null))
+				.getStateLocation().append(COMPARE_FOLDER).append(compareId + "_local")
 				.addFileExtension("xml").toOSString()));
 		res2.getContents().add(copy);
 
@@ -669,11 +670,23 @@ public class ChangeSetManager implements IChangeHandler {
 
 					if (addOp.getAttribute() == InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__HASH) {
 						if (itemById.getSynchronizationMetaData().getSyncState() == SynchronizationState.LOCAL_EDITED) {
-							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
-									SynchronizationAction.RESOLVE_CONFLICT);
+							if (itemById instanceof Category) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
+										SynchronizationAction.RESOLVE_CONFLICT);
+							} else {
+								item.getSyncObjectActionMap().put(
+										(SynchronizableObject) parentByClass,
+										SynchronizationAction.RESOLVE_CONFLICT);
+							}
 						} else {
-							item.getSyncObjectActionMap().put((SynchronizableObject) parentByClass,
-									SynchronizationAction.REPLACE_LOCAL);
+							if (itemById instanceof Category) {
+								item.getSyncCategoryActionMap().put((Category) parentByClass,
+										SynchronizationAction.REPLACE_LOCAL);
+							} else {
+								item.getSyncObjectActionMap().put(
+										(SynchronizableObject) parentByClass,
+										SynchronizationAction.REPLACE_LOCAL);
+							}
 						}
 
 					} else {

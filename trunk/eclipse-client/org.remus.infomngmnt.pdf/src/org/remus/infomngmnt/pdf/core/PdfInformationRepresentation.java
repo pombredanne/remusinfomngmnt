@@ -73,14 +73,22 @@ public class PdfInformationRepresentation extends AbstractInformationRepresentat
 		width = width == 0 ? 300 : width;
 		IPDF2ImageExtensionService service = Activator.getDefault().getServiceTracker().getService(
 				IPDF2ImageExtensionService.class);
-		String string = Activator.getDefault().getPreferenceStore().getString(
-				PreferenceInitializer.DEFAULT_RENDERER);
-		IPdfImageRenderer rendererById = service.getRendererById(string);
+		String renderer = (String) read.getValueByNodeId(Activator.RENDERER);
+		IPdfImageRenderer rendererById = null;
+		if (renderer != null) {
+			rendererById = service.getRendererById(renderer);
+		}
+		if (rendererById == null) {
+			String string = Activator.getDefault().getPreferenceStore().getString(
+					PreferenceInitializer.DEFAULT_RENDERER);
+			rendererById = service.getRendererById(string);
+		}
 		if (rendererById == null) {
 			rendererById = service.getAllRender()[0];
 		}
 		List<ImageInformation> convert = rendererById.getRenderer().convert(getBuildFolder(),
 				binaryReferenceFile, new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+
 		getBuildFolder().refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		int biggestHeight = 0;
 		int biggestWidth = 0;
@@ -95,10 +103,32 @@ public class PdfInformationRepresentation extends AbstractInformationRepresentat
 		for (ImageInformation string2 : convert) {
 			IFile file = getBuildFolder().getFile(string2.getFileName());
 			if (file.exists()) {
-				string2.setFileName(URI.createFileURI(file.getLocation().toOSString()).toString());
+				// Image image = new Image(UIUtil.getDisplay(),
+				// file.getLocation().toOSString());
 				double factor2 = (double) string2.getWidth() / (double) width;
+				// monitor.setTaskName("Scaling image " + file.getName());
+				// ImageData scaledTo =
+				// image.getImageData().scaledTo(width.intValue(),
+				// ((Double) (string2.getHeight() / factor2)).intValue());
+				// monitor.setTaskName("Scaling " + file.getName() +
+				// " completed");
+				// ImageLoader loader = new ImageLoader();
+				//
+				// loader.data = new ImageData[] { scaledTo };
+				// long currentTimeMillis = System.currentTimeMillis();
+				// IFile newFile = getBuildFolder().getFile("scaled_" +
+				// file.getName() + ".png");
+				//
+				// loader.save(newFile.getLocation().toOSString(),
+				// SWT.IMAGE_PNG);
+				// newFile.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+				// System.out.println("Saving image took "
+				// + (System.currentTimeMillis() - currentTimeMillis) + " ms");
+				string2.setFileName(URI.createFileURI(file.getLocation().toOSString()).toString());
+
 				string2.setWidth(width.intValue());
 				string2.setHeight(((Double) (string2.getHeight() / factor2)).intValue());
+				// image.dispose();
 			}
 		}
 		HashMap<String, Object> additionals = new HashMap<String, Object>();

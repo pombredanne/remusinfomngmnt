@@ -17,6 +17,18 @@ public class Activator extends AbstractUIPlugin {
 
 	public static final String SLIDER_WIDTH = "sliderWidth";
 
+	public static final String RENDERER = "renderer"; //$NON-NLS-1$
+
+	public static final String TITLE = "title"; //$NON-NLS-1$
+
+	public static final String AUTHOR = "author"; //$NON-NLS-1$
+
+	public static final String CREATOR = "creator"; //$NON-NLS-1$
+
+	public static final String PRODUCER = "producer"; //$NON-NLS-1$
+
+	public static final String CREATION_DATE = "creationDate"; //$NON-NLS-1$
+
 	// The shared instance
 	private static Activator plugin;
 

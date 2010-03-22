@@ -5,4 +5,10 @@
     <structureItems type="LONG" id="page"/>
   </structureItems>
   <structureItems type="LONG" id="sliderWidth"/>
+  <structureItems type="STRING" id="renderer"/>
+  <structureItems type="STRING" id="title"/>
+  <structureItems type="STRING" id="author"/>
+  <structureItems type="STRING" id="creator"/>
+  <structureItems label="" id="producer"/>
+  <structureItems type="DATETIME" id="creationDate"/>
 </infomngmnt:InformationStructureDefinition>

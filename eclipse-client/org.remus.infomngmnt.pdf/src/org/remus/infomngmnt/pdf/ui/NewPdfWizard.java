@@ -14,6 +14,8 @@ package org.remus.infomngmnt.pdf.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -25,6 +27,7 @@ import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.commands.CommandFactory;
 import org.remus.infomngmnt.core.commands.CreateBinaryReferenceCommand;
+import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
@@ -48,9 +51,31 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 
 	@Override
 	protected Command getAdditionalCommands() {
+
 		IFile tmpFile = ((GeneralPdfPage) this.page1).getTmpFile();
 
 		if (tmpFile != null) {
+			try {
+				PDDocument pdfDocument = PDDocument.load(tmpFile.getLocationURI().toURL());
+				PDDocumentInformation info = pdfDocument.getDocumentInformation();
+				InformationStructureEdit edit = InformationStructureEdit
+						.newSession(Activator.TYPE_ID);
+
+				edit.setValue(this.newElement, Activator.AUTHOR, info.getAuthor());
+				edit.setValue(this.newElement, Activator.TITLE, info.getTitle());
+				edit.setValue(this.newElement, Activator.CREATOR, info.getCreator());
+				edit.setValue(this.newElement, Activator.PRODUCER, info.getProducer());
+				try {
+					edit.setValue(this.newElement, Activator.CREATION_DATE, info.getCreationDate()
+							.getTime());
+				} catch (Throwable e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} catch (Throwable e1) {
+				// We do nothing here.
+			}
+
 			LoadFileToTmpFromPathRunnable loadImageRunnable = new LoadFileToTmpFromPathRunnable();
 			loadImageRunnable.setFilePath(tmpFile.getLocation().toOSString());
 			try {

@@ -71,5 +71,25 @@
             name="Pdf">
       </page>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
+            node="author"
+            typeId="PDF">
+      </index>
+      <secondaryIndex
+            class="org.remus.infomngmnt.pdf.index.PDFTextExtractor"
+            node="sliderWidth"
+            typeId="PDF">
+      </secondaryIndex>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/pdf.png"
+            infotype="PDF">
+      </image>
+   </extension>
 
 </plugin>

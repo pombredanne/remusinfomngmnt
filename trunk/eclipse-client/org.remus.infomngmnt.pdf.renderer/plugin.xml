@@ -8,6 +8,26 @@
             id="org.remus.infomngmnt.pdf.renderer.pdfImageRenderer1"
             name="Suns LGPGL PDFRenderer">
       </pdfImageRenderer>
+      <pdfImageRenderer
+            class="org.remus.infomngmnt.pdf.renderer.GhostRenderer"
+            id="org.remus.infomngmnt.pdf.renderer.pdfImageRendererGhost"
+            name="GhostScript Renderer">
+      </pdfImageRenderer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.remus.infomngmnt.pdf.page1"
+            class="org.remus.infomngmnt.pdf.renderer.ui.GhostPreferencePage"
+            id="org.remus.infomngmnt.pdf.renderer.ghost"
+            name="GhostView Image Rendering">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.pdf.renderer.PreferenceInitializer">
+      </initializer>
    </extension>
 
 </plugin>

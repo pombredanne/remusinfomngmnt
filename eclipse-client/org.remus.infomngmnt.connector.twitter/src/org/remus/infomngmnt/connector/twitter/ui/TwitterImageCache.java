@@ -13,16 +13,16 @@
 package org.remus.infomngmnt.connector.twitter.ui;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
@@ -48,6 +48,18 @@ public class TwitterImageCache {
 	private IContainer container;
 	private IRetrieveFileTransferContainerAdapter fileReceiveAdapter;
 
+	final ISchedulingRule mutexRule = new ISchedulingRule() {
+		public boolean isConflicting(final ISchedulingRule rule) {
+			return rule == TwitterImageCache.this.mutexRule;
+		}
+
+		public boolean contains(final ISchedulingRule rule) {
+			return rule == TwitterImageCache.this.mutexRule
+					|| rule == ResourcesPlugin.getWorkspace().getRoot().getProject(
+							ResourceUtil.PROJECT_NAME_TMP);
+		}
+	};
+
 	public void checkCache(final String userName, final URL imageUrl,
 			final ImageCacheCallBack callback) {
 		File file = TwitterActivator.getDefault().getStateLocation().append("avatars").toFile();
@@ -59,7 +71,8 @@ public class TwitterImageCache {
 		if (!file2.exists()) {
 			try {
 				file2.createNewFile();
-				final IFile tempFile = ResourceUtil.createTempFile();
+				final File tempFile = File.createTempFile("avatar",
+						org.remus.infomngmnt.resources.util.ResourceUtil.TMPFILE_FILE_EXTENSION);
 				DownloadFileJob job = new DownloadFileJob(imageUrl, tempFile,
 						getFileReceiveAdapter());
 				job.schedule();
@@ -68,19 +81,16 @@ public class TwitterImageCache {
 					public void done(final IJobChangeEvent event) {
 						try {
 							FileOutputStream fileOutputStream = new FileOutputStream(file2);
-							InputStream contents = tempFile.getContents();
+							InputStream contents = new FileInputStream(tempFile);
 							StreamUtil.stream(contents, fileOutputStream);
 							fileOutputStream.flush();
 							fileOutputStream.close();
 							contents.close();
-							tempFile.delete(true, new NullProgressMonitor());
+							tempFile.delete();
 							if (callback != null) {
 								callback.callBack(file2.getAbsolutePath());
 							}
 						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (CoreException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (IOException e) {

@@ -16,6 +16,10 @@ import java.text.DateFormat;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Adapter;
@@ -87,6 +91,7 @@ import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
 import org.remus.infomngmnt.ui.databinding.Date2StringConverter;
+import org.remus.infomngmnt.ui.editors.EditorUtil;
 import org.remus.infomngmnt.ui.notification.NotificationActivator;
 import org.remus.infomngmnt.ui.notification.provider.NotificationLabelProvider;
 
@@ -342,8 +347,8 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 				@Override
 				public void linkActivated(final HyperlinkEvent e) {
 					Object href = e.getHref();
-					// FIXME
-					// EditorUtil.openInfoUnit(href.toString());
+
+					EditorUtil.openInfoUnit(href.toString());
 				}
 			});
 
@@ -507,7 +512,25 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 			final ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
 			this.deleteAction = new DeleteAction(activeEditor.getEditingDomain(),
-					removeAllReferencesOnDelete());
+					removeAllReferencesOnDelete()) {
+				@Override
+				public void run() {
+					new Job("Delete Notifications") {
+
+						@Override
+						protected IStatus run(final IProgressMonitor monitor) {
+							runSuper();
+							return Status.OK_STATUS;
+						}
+					}.schedule();
+
+				}
+
+				private void runSuper() {
+					super.run();
+
+				}
+			};
 			this.deleteAction.setImageDescriptor(sharedImages
 					.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 			this.deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete");

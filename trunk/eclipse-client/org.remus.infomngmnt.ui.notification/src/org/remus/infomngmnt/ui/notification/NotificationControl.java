@@ -38,6 +38,7 @@ import org.remus.infomngmnt.common.service.ITrayService;
 import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.core.services.IInformationTypeHandler;
+import org.remus.infomngmnt.ui.editors.EditorUtil;
 import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.ui.notification.view.NotificationView;
 
@@ -118,8 +119,7 @@ public class NotificationControl extends Composite {
 					@Override
 					public void linkActivated(final HyperlinkEvent e) {
 						notification.setNoticed(true);
-						// FIXME
-						// EditorUtil.openInfoUnit(notification.getAffectedInfoUnitIds().get(0));
+						EditorUtil.openInfoUnit(notification.getAffectedInfoUnitIds().get(0));
 						ITrayService trayService = getTrayService();
 						if (trayService != null && trayService.isMinimized()) {
 							trayService.restoreFromTray(UIUtil.getPrimaryWindow().getShell());

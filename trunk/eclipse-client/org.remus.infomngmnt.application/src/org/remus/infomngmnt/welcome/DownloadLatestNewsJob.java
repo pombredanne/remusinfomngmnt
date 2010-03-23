@@ -13,6 +13,10 @@
 package org.remus.infomngmnt.welcome;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
@@ -25,7 +29,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.cyberneko.html.parsers.DOMParser;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -74,8 +77,8 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		try {
-			IFile tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
-					.createTempFile("html");
+			File tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+					.createTempFileOnFileSystem("html");
 			DownloadFileJob downloadJob = new DownloadFileJob(new URL(URL_LATEST_NEWS), tempFile,
 					getFileReceiveAdapter());
 			IStatus run = downloadJob.run(monitor);
@@ -85,7 +88,10 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 					getTarget().refreshLocal(IResource.DEPTH_INFINITE, monitor);
 					getTarget().delete(false, monitor);
 				}
-				tempFile.copy(getTarget().getFullPath(), true, monitor);
+				FileInputStream inputStream = new FileInputStream(tempFile);
+				getTarget().create(inputStream, true, monitor);
+				StreamCloser.closeStreams(inputStream);
+				tempFile.delete();
 				schedule(24 * 60 * 60 * 1000);
 			} else {
 				schedule(60000);
@@ -96,14 +102,17 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return Status.OK_STATUS;
 	}
 
-	private void appendStyles(final IFile tempFile, final IProgressMonitor monitor) {
+	private void appendStyles(final File tempFile, final IProgressMonitor monitor) {
 		final DOMParser parser = new DOMParser();
 		try {
-			InputStream contents = tempFile.getContents();
+			InputStream contents = new FileInputStream(tempFile);
 			parser.parse(new org.apache.xerces.xni.parser.XMLInputSource(null, null, null,
 					contents, "UTF-8"));
 			final Document document = parser.getDocument();
@@ -147,8 +156,12 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 			transformer.transform(source, result);
 			ByteArrayInputStream source2 = new ByteArrayInputStream(writer.toString().getBytes(
 					"UTF-8"));
-			tempFile.setContents(source2, true, false, monitor);
-			StreamCloser.closeStreams(source2, contents);
+			StreamCloser.closeStreams(contents);
+			FileOutputStream fileOutputStream = new FileOutputStream(tempFile, false);
+			StreamUtil.stream(source2, fileOutputStream);
+			fileOutputStream.flush();
+			fileOutputStream.close();
+			StreamCloser.closeStreams(contents);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

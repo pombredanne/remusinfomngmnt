@@ -47,6 +47,8 @@ public class ResourceUtil {
 
 	public static final String DOT_FILE_EXTENSION = ".info";
 
+	public static final String TMPFILE_FILE_EXTENSION = ".remus";
+
 	public static final String PRIMARY_CONTENT_FILE = "primaryContent.info"; //$NON-NLS-1$
 
 	public static final String SETTINGS_FOLDER = ".settings"; //$NON-NLS-1$

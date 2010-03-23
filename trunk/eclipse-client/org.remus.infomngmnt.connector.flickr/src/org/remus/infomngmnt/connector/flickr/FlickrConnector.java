@@ -16,6 +16,9 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -36,6 +39,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
@@ -136,7 +140,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 
 	private IRetrieveFileTransferContainerAdapter fileReceiveAdapter;
 
-	private IFile tmpFile;
+	private File tmpFile;
 
 	/*
 	 * (non-Javadoc)
@@ -543,7 +547,17 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
 			throws RemoteException {
 		if (localInfoFragment.getType().equals(ImagePlugin.TYPE_ID)) {
-			return this.tmpFile;
+			IFile tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+					.createTempFile(new Path(this.tmpFile.getPath()).getFileExtension());
+			try {
+				FileInputStream fileInputStream = new FileInputStream(this.tmpFile);
+				tempFile.setContents(fileInputStream, true, false, new SubProgressMonitor(monitor,
+						IProgressMonitor.UNKNOWN));
+			} catch (Exception e) {
+				throw new RemoteException(StatusCreator.newStatus("Error loading downloaded file",
+						e));
+			}
+			return tempFile;
 		}
 		return null;
 	}
@@ -623,15 +637,15 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				} catch (FlickrException e) {
 					originalUrl = currentPhoto.getLargeUrl();
 				}
-				IFile tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
-						.createTempFile(currentPhoto.getOriginalFormat());
+				File tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+						.createTempFileOnFileSystem(currentPhoto.getOriginalFormat());
 				DownloadFileJob job;
 				try {
 					job = new DownloadFileJob(new URL(originalUrl), tempFile,
 							getFileReceiveAdapter());
 					IStatus run = job.run(monitor);
 					if (run.isOK()) {
-						InputStream contents = tempFile.getContents();
+						InputStream contents = new FileInputStream(tempFile);
 						ImageData[] load = new ImageLoader().load(contents);
 						int width = load[0].width;
 						int height = load[0].height;
@@ -690,6 +704,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

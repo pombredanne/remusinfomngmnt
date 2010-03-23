@@ -14,6 +14,7 @@ package org.remus.infomngmnt.core.internal.jobs;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -23,16 +24,20 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.NotificationCollection;
+import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
 import org.remus.infomngmnt.core.jobs.AbstractJob;
+import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.core.services.IJobExtensionService;
 import org.remus.infomngmnt.core.services.INotificationManagerManager;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
@@ -101,8 +106,14 @@ public class RemusNotificationManager implements INotificationManagerManager {
 			// this.allNotifications.getNotifcations().remove(
 			// this.allNotifications.getNotifcations().size() - 1);
 			// }
-			this.allNotifications.getNotifcations().add(0,
-					(org.remus.infomngmnt.Notification) EcoreUtil.copy(notification));
+			IEditingHandler service = InfomngmntEditPlugin.getPlugin().getServiceTracker()
+					.getService(IEditingHandler.class);
+			DisposableEditingDomain createNewEditingDomain = service.createNewEditingDomain();
+			Command create = AddCommand.create(createNewEditingDomain, this.allNotifications,
+					InfomngmntPackage.Literals.NOTIFICATION_COLLECTION__NOTIFCATIONS, Collections
+							.singletonList(EcoreUtil.copy(notification)), 0);
+			createNewEditingDomain.getCommandStack().execute(create);
+			createNewEditingDomain.dispose();
 		}
 
 	}

@@ -188,7 +188,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		birthDayParent.setLayoutData(dueDateLayoutData);
 		this.toolkit.adapt(this.birthDay);
 
-		this.toolkit.createLabel(group_Person, "Name Of Partner:");
+		this.toolkit.createLabel(group_Person, "Name of Partner:");
 		this.tx_NamePartner = this.toolkit.createText(group_Person, null, SWT.BORDER);
 		this.tx_NamePartner.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
@@ -222,7 +222,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		this.tx_Department = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_Department.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_General, "Name Of Manager:");
+		this.toolkit.createLabel(group_General, "Name of Manager:");
 		this.tx_NameManager = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_NameManager.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 

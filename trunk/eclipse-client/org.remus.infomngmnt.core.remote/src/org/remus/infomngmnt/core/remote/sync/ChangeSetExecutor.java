@@ -642,8 +642,8 @@ public class ChangeSetExecutor {
 
 	private void replaceLocalInfoUnit(final InformationUnitListItem synchronizableObject,
 			final ChangeSetItem changeSetItem, final IProgressMonitor monitor) throws CoreException {
-		InformationUnitListItem itemById = this.applicationService.getItemById(synchronizableObject
-				.getId(), monitor);
+		InformationUnitListItem itemById = this.applicationService.getItemByIdLocalDeletedIncluded(
+				synchronizableObject.getId(), monitor);
 		if (itemById == null) {
 			throw new ChangeSetException(
 					StatusCreator
@@ -764,7 +764,8 @@ public class ChangeSetExecutor {
 			editingDomain.getCommandStack().execute(cc);
 		}
 
-		itemById = this.applicationService.getItemById(synchronizableObject.getId(), monitor);
+		itemById = this.applicationService.getItemByIdLocalDeletedIncluded(synchronizableObject
+				.getId(), monitor);
 		itemById.setUnread(true);
 
 		InformationUnit newInformationUnit = (InformationUnit) itemById
@@ -833,29 +834,31 @@ public class ChangeSetExecutor {
 		IReferencedUnitStore service = RemoteActivator.getDefault().getServiceTracker().getService(
 				IReferencedUnitStore.class);
 		InformationUnitListItem itemById2 = this.applicationService.getItemById(item.getId(), null);
-		String[] referencedInfoUnitIds = service.getReferencedInfoUnitIds(itemById2.getId());
-		for (String string : referencedInfoUnitIds) {
-			InformationUnitListItem itemById = this.applicationService.getItemById(string,
-					new NullProgressMonitor());
-			if (itemById != null) {
-				InformationUnit adapter = (InformationUnit) itemById
-						.getAdapter(InformationUnit.class);
-				EList<Link> links = adapter.getLinks();
-				for (Link link : links) {
-					if (link.getLocalInformationUnit().equals(itemById2.getId())
-							&& !itemById2.getSynchronizationMetaData().getUrl().equals(
-									link.getRemoteUrl())) {
-						link.setRemoteUrl(itemById2.getSynchronizationMetaData().getUrl());
-						this.editService.saveObjectToResource(adapter);
-						if (itemById != null) {
-							Command setSycnMetadata = SetCommand
-									.create(
-											this.editService.getNavigationEditingDomain(),
-											itemById.getSynchronizationMetaData(),
-											InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
-											SynchronizationState.LOCAL_EDITED);
-							this.editService.execute(setSycnMetadata);
+		if (itemById2 != null) {
+			String[] referencedInfoUnitIds = service.getReferencedInfoUnitIds(itemById2.getId());
+			for (String string : referencedInfoUnitIds) {
+				InformationUnitListItem itemById = this.applicationService.getItemById(string,
+						new NullProgressMonitor());
+				if (itemById != null) {
+					InformationUnit adapter = (InformationUnit) itemById
+							.getAdapter(InformationUnit.class);
+					EList<Link> links = adapter.getLinks();
+					for (Link link : links) {
+						if (link.getLocalInformationUnit().equals(itemById2.getId())
+								&& !itemById2.getSynchronizationMetaData().getUrl().equals(
+										link.getRemoteUrl())) {
+							link.setRemoteUrl(itemById2.getSynchronizationMetaData().getUrl());
+							this.editService.saveObjectToResource(adapter);
+							if (itemById != null) {
+								Command setSycnMetadata = SetCommand
+										.create(
+												this.editService.getNavigationEditingDomain(),
+												itemById.getSynchronizationMetaData(),
+												InfomngmntPackage.Literals.SYNCHRONIZATION_METADATA__SYNC_STATE,
+												SynchronizationState.LOCAL_EDITED);
+								this.editService.execute(setSycnMetadata);
 
+							}
 						}
 					}
 				}

@@ -219,6 +219,20 @@ public class ResourceUtil {
 		return createTempFile(null);
 	}
 
+	public static File createTempFileOnFileSystem() {
+		return createTempFileOnFileSystem("remus");
+	}
+
+	public static File createTempFileOnFileSystem(final String extension) {
+		File tempFile;
+		try {
+			tempFile = File.createTempFile("tmp", extension);
+		} catch (IOException e) {
+			throw new IllegalStateException("Error creating temp file");
+		}
+		return tempFile;
+	}
+
 	public static URI getFileSystemURI(final String text) {
 		return URIUtil.toURI(text);
 	}

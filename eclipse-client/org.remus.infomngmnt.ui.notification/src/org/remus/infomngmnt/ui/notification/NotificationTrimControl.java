@@ -127,10 +127,11 @@ public class NotificationTrimControl extends Composite {
 								.getAffectedInfoUnitIds().get(0))) {
 					this.notifications2Show.get(notification.getAffectedInfoUnitIds().get(0))
 							.setNoticed(true);
-					this.notifications2Show.put(notification.getAffectedInfoUnitIds().get(0),
-							notification);
 				} else if (notification.getAffectedInfoUnitIds().size() == 0) {
 					this.notifications2Show.put(null, notification);
+				} else {
+					this.notifications2Show.put(notification.getAffectedInfoUnitIds().get(0),
+							notification);
 				}
 				i++;
 			}

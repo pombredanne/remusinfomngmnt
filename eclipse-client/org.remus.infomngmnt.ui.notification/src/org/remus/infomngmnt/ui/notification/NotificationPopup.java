@@ -28,10 +28,13 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
+import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.Notification;
 import org.remus.infomngmnt.common.service.ITrayService;
 import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.ui.editors.EditorUtil;
+import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
 import org.remus.infomngmnt.ui.popup.AbstractNotificationPopup;
 import org.remus.infomngmnt.ui.widgets.ScalingHyperlink;
 
@@ -47,8 +50,16 @@ public class NotificationPopup extends AbstractNotificationPopup {
 
 	private List<Notification> notifications;
 
+	private final IInformationTypeImage imageService;
+
+	private final IApplicationModel appService;
+
 	public NotificationPopup(final Shell parent) {
 		super(parent.getDisplay());
+		this.imageService = NotificationActivator.getDefault().getServiceTracker().getService(
+				IInformationTypeImage.class);
+		this.appService = NotificationActivator.getDefault().getServiceTracker().getService(
+				IApplicationModel.class);
 	}
 
 	public void setContents(final List<Notification> notifications) {
@@ -57,6 +68,13 @@ public class NotificationPopup extends AbstractNotificationPopup {
 
 	public List<Notification> getNotifications() {
 		return new ArrayList<Notification>(this.notifications);
+	}
+
+	@Override
+	public boolean close() {
+		NotificationActivator.getDefault().getServiceTracker().ungetService(this.imageService);
+		NotificationActivator.getDefault().getServiceTracker().ungetService(this.appService);
+		return super.close();
 	}
 
 	@Override
@@ -94,8 +112,15 @@ public class NotificationPopup extends AbstractNotificationPopup {
 						itemLink);
 
 				itemLink.setText(notification.getMessage());
-				if (notification.getImage() != null && notification.getImage() instanceof Image) {
-					itemLink.setImage((Image) notification.getImage());
+				if (notification.getAffectedInfoUnitIds().size() > 0
+						&& this.appService.getItemById(
+								notification.getAffectedInfoUnitIds().get(0), null) != null) {
+					InformationUnitListItem itemById = this.appService.getItemById(notification
+							.getAffectedInfoUnitIds().get(0), null);
+					Image image = this.imageService.getImageByInfoType(itemById.getType());
+					if (image != null) {
+						itemLink.setImage(image);
+					}
 				} else {
 					itemLink.setImage(NotificationUtil.getImageBySeverity(notification
 							.getSeverity()));

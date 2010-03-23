@@ -38,19 +38,26 @@
 }
  </style>
 <body>
-	<#if data.meetingtime?has_content >
-	<div style="text-align:right; padding:0px; margin:0px" class="systemfont">
-		${data.meetingtime?datetime?string.long}
-	</div>
-	</#if>
 	<div style="margin:5px;">
 		<table>
 			
 			<tr>
 				<td class="bold" colspan="2">${data.__label?html}</td>
 			</tr>
+			<#if data.meetingtime?has_content >
 			<tr>
+				<td class="bold">Start Time:</td>
+				<td>${data.meetingtime?datetime?string.long}</td>
+			</tr>
+			</#if>
+			<#if data.meetingend?has_content >
+			<tr>
+				<td class="bold">Start Time:</td>
+				<td>${data.meetingend?datetime?string.long}</td>
+			</tr>
+			</#if>
 			<#if data.__keywords?has_content >
+			<tr>
 				<td class="bold">Keywords:</td>
 				<td>${data.__keywords?html}</td>
 			</tr>

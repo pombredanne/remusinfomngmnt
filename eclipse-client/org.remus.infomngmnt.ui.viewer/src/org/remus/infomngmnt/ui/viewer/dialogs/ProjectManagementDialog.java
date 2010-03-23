@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -39,6 +40,7 @@ import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
+import org.remus.infomngmnt.core.CorePlugin;
 import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.ui.viewer.ViewerActivator;
 import org.remus.infomngmnt.ui.viewer.internal.ResourceManager;
@@ -326,7 +328,7 @@ public class ProjectManagementDialog extends TitleAreaDialog {
 	private boolean checkOpenButton(final IStructuredSelection selection) {
 		List list = selection.toList();
 		for (Object object : list) {
-			if (((IProject) object).isOpen()
+			if (((IProject) object).isOpen() || ((IProject) object).getLocationURI() == null
 					|| ((IProject) object).getLocationURI().getScheme().startsWith("encrypted")) {
 				return false;
 			}
@@ -370,8 +372,8 @@ public class ProjectManagementDialog extends TitleAreaDialog {
 			@Override
 			public Image getImage(final Object element) {
 				if (((IProject) element).isOpen()) {
-					return ResourceManager.getPluginImage(ViewerActivator.getDefault(),
-							"icons/iconexperience/folder_green.png");
+					return ResourceManager.getPluginImage(Platform.getBundle(CorePlugin.PLUGIN_ID)
+							.getBundleContext(), "icons/iconexperience/folder_green.png");
 				} else {
 					return ResourceManager.getPluginImage(ViewerActivator.getDefault(),
 							"icons/iconexperience/16/folder_closed.png");

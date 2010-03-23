@@ -14,6 +14,8 @@ package org.remus.infomngmnt.connector.rss;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -150,19 +152,19 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			InputStream xmlReader = null;
 			InputSource is = null;
 			try {
-				IFile tempFile = ResourceUtil.createTempFile();
+				File tempFile = ResourceUtil.createTempFileOnFileSystem();
 				DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(getRepositoryUrl()),
 						tempFile, getFileReceiveAdapter());
 				downloadFileJob.run(new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
-				xmlReader = tempFile.getContents();
-				is = new InputSource(xmlReader);
+				FileInputStream fileInputStream = new FileInputStream(tempFile);
+				is = new InputSource(fileInputStream);
 				SyndFeed build = getApi().build(is);
 				List entries = build.getEntries();
 				for (Object object : entries) {
 					returnValue.add(buildFeedEntry((SyndEntry) object));
 				}
-				tempFile.delete(true, false, new SubProgressMonitor(monitor,
-						IProgressMonitor.UNKNOWN));
+				StreamCloser.closeStreams(fileInputStream);
+				tempFile.delete();
 
 				return returnValue.toArray(new RemoteObject[returnValue.size()]);
 			} catch (Exception e) {

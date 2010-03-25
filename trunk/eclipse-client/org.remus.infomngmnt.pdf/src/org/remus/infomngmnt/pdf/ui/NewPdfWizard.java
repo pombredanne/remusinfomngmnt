@@ -45,14 +45,14 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 	 */
 	public NewPdfWizard() {
 		setNeedsProgressMonitor(true);
-		setWindowTitle("New photo/graphic");
+		setWindowTitle("New PDF Document");
 
 	}
 
 	@Override
 	protected Command getAdditionalCommands() {
 
-		IFile tmpFile = ((GeneralPdfPage) this.page1).getTmpFile();
+		IFile tmpFile = getTmpFile();
 
 		if (tmpFile != null) {
 			try {
@@ -95,6 +95,10 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 			return addFileToInfoUnit;
 		}
 		return super.getAdditionalCommands();
+	}
+
+	protected IFile getTmpFile() {
+		return ((GeneralPdfPage) this.page1).getTmpFile();
 	}
 
 	/*

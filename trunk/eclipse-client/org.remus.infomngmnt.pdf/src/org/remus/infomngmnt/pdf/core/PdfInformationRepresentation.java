@@ -86,6 +86,7 @@ public class PdfInformationRepresentation extends AbstractInformationRepresentat
 		if (rendererById == null) {
 			rendererById = service.getAllRender()[0];
 		}
+
 		List<ImageInformation> convert = rendererById.getRenderer().convert(getBuildFolder(),
 				binaryReferenceFile, new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
 
@@ -134,7 +135,9 @@ public class PdfInformationRepresentation extends AbstractInformationRepresentat
 		HashMap<String, Object> additionals = new HashMap<String, Object>();
 		additionals.put("imagesPaths", convert);
 		additionals.put("width", width);
-		additionals.put("height", width * factor);
+		additionals.put("height", !Double.isNaN(factor) ? width * factor : width);
+		additionals.put("pdfSrc", URI.createFileURI(binaryReferenceFile.getLocation().toOSString())
+				.toString());
 
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;

@@ -88,17 +88,17 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 		}
 		InformationStructureRead read = InformationStructureRead.newSession(getValue());
 		EList<InformationUnit> dynamicList = read
-				.getDynamicList(ContactActivator.NODE_NAME_ADRESSES);
+				.getDynamicList(ContactActivator.NODE_NAME_ADDRESSES);
 		for (InformationUnit informationUnit : dynamicList) {
 			InformationStructureRead adressRead = InformationStructureRead.newSession(
 					informationUnit, ContactActivator.TYPE_ID);
-			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS).equals(
-					ContactActivator.NODE_NAME_HOME_ADRESS)) {
+			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS).equals(
+					ContactActivator.NODE_NAME_HOME_ADDRESS)) {
 				parameterMap.put("formattedHomeAdress", ContactUtil
 						.getFormattedAdress(informationUnit));
 			}
-			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS).equals(
-					ContactActivator.NODE_NAME_WORK_ADRESS)) {
+			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS).equals(
+					ContactActivator.NODE_NAME_WORK_ADDRESS)) {
 				parameterMap.put("formattedWorkAdress", ContactUtil
 						.getFormattedAdress(informationUnit));
 			}

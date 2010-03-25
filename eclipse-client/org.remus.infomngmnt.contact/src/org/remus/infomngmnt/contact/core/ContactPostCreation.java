@@ -35,14 +35,14 @@ public class ContactPostCreation extends PostCreationHandler {
 	public Command handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
 		InformationStructureRead read = InformationStructureRead.newSession(unit);
 		EList<InformationUnit> dynamicList = read
-				.getDynamicList(ContactActivator.NODE_NAME_ADRESSES);
+				.getDynamicList(ContactActivator.NODE_NAME_ADDRESSES);
 		List<String> presentAdressTypes = new ArrayList<String>();
 		if (dynamicList.size() != 7) {
 			for (InformationUnit informationUnit : dynamicList) {
 				InformationStructureRead adressTypeRead = InformationStructureRead.newSession(
 						informationUnit, ContactActivator.TYPE_ID);
 				presentAdressTypes.add((String) adressTypeRead
-						.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS));
+						.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS));
 			}
 		}
 		List<String> availableAdressTypes = new ArrayList<String>();
@@ -55,7 +55,7 @@ public class ContactPostCreation extends PostCreationHandler {
 		for (String str : availableAdressTypes) {
 			if (!presentAdressTypes.contains(str)) {
 				InformationUnit newAdressType = edit.createSubType(
-						ContactActivator.NODE_NAME_ADRESS, str);
+						ContactActivator.NODE_NAME_ADDRESS, str);
 				edit.addDynamicNode(unit, newAdressType, this.editingDomain);
 			}
 		}

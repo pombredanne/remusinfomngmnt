@@ -90,7 +90,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	private AbstractHyperlink tl_Homepage;
 	private FormToolkit toolkit;
 	private ComboAndTextFieldComposite instantMessagingComposite;
-	private ComboViewer adressComboViewer;
+	private ComboViewer addressComboViewer;
 	private ComboAndTextFieldComposite firstPhone;
 	private ComboAndTextFieldComposite secondPhone;
 	private ComboAndTextFieldComposite thirdPhone;
@@ -258,7 +258,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 
 	private void createGroupAddress(final Composite compositeGeneral) {
 		final Group group_Address = new Group(compositeGeneral, SWT.NONE);
-		group_Address.setText("Adress");
+		group_Address.setText("Address");
 		final GridData gd_GroupAddress = new GridData();
 		gd_GroupAddress.grabExcessVerticalSpace = true;
 		gd_GroupAddress.verticalAlignment = GridData.FILL;
@@ -270,16 +270,16 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		group_Address.setLayout(gl_Address);
 
 		Combo adressCombo = new Combo(group_Address, SWT.DROP_DOWN | SWT.READ_ONLY);
-		this.adressComboViewer = new ComboViewer(adressCombo);
+		this.addressComboViewer = new ComboViewer(adressCombo);
 		adressCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-		this.adressComboViewer.setLabelProvider(new LabelProvider() {
+		this.addressComboViewer.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
 				return ((KeyValueObject) element).getValue();
 			}
 		});
-		this.adressComboViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
-		this.adressComboViewer.setInput(ContactUtil.getAdressCollection());
+		this.addressComboViewer.setContentProvider(UIUtil.getArrayContentProviderInstance());
+		this.addressComboViewer.setInput(ContactUtil.getAdressCollection());
 		adressCombo.select(0);
 
 		this.bt_EditAddress = this.toolkit.createButton(group_Address, "Edit", SWT.NONE);
@@ -313,7 +313,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 			}
 		});
 
-		this.adressComboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		this.addressComboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent event) {
 				handleAdressComboChange((KeyValueObject) ((IStructuredSelection) event
 						.getSelection()).getFirstElement());
@@ -328,12 +328,12 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		if (firstElement != null) {
 			InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
 			EList<InformationUnit> dynamicList = read
-					.getDynamicList(ContactActivator.NODE_NAME_ADRESSES);
+					.getDynamicList(ContactActivator.NODE_NAME_ADDRESSES);
 			for (InformationUnit informationUnit : dynamicList) {
 				InformationStructureRead adressTypeRead = InformationStructureRead.newSession(
 						informationUnit, ContactActivator.TYPE_ID);
 				Object valueByNodeId = adressTypeRead
-						.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS);
+						.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS);
 				if (valueByNodeId != null && valueByNodeId.equals(firstElement.getId())) {
 					this.currentSelectedAdress = informationUnit;
 					break;
@@ -487,7 +487,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		this.thirdPhone.setInformationUnit(getModelObject());
 		this.thirdPhone.bindValuesToUi();
 		this.thirdPhone.select(4);
-		handleAdressComboChange((KeyValueObject) ((IStructuredSelection) this.adressComboViewer
+		handleAdressComboChange((KeyValueObject) ((IStructuredSelection) this.addressComboViewer
 				.getSelection()).getFirstElement());
 		addNameListeners();
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
@@ -522,19 +522,19 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 
 	private void removeAdressListeners() {
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_STREET).eAdapters().remove(
+				ContactActivator.NODE_NAME_ADDRESS_STREET).eAdapters().remove(
 				this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_LOCALITY).eAdapters().remove(
+				ContactActivator.NODE_NAME_ADDRESS_LOCALITY).eAdapters().remove(
 				this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX).eAdapters().remove(
+				ContactActivator.NODE_NAME_ADDRESS_POST_OFFICE_BOX).eAdapters().remove(
 				this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_POSTAL).eAdapters().remove(
+				ContactActivator.NODE_NAME_ADDRESS_POSTAL).eAdapters().remove(
 				this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_REGION).eAdapters().remove(
+				ContactActivator.NODE_NAME_ADDRESS_REGION).eAdapters().remove(
 				this.adressChangeAdapter);
 
 	}
@@ -565,17 +565,17 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 
 	private void addAdressListeners() {
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_STREET).eAdapters().add(this.adressChangeAdapter);
+				ContactActivator.NODE_NAME_ADDRESS_STREET).eAdapters().add(this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_LOCALITY).eAdapters().add(
+				ContactActivator.NODE_NAME_ADDRESS_LOCALITY).eAdapters().add(
 				this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX).eAdapters().add(
+				ContactActivator.NODE_NAME_ADDRESS_POST_OFFICE_BOX).eAdapters().add(
 				this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_POSTAL).eAdapters().add(this.adressChangeAdapter);
+				ContactActivator.NODE_NAME_ADDRESS_POSTAL).eAdapters().add(this.adressChangeAdapter);
 		InformationUtil.getChildByType(this.currentSelectedAdress,
-				ContactActivator.NODE_NAME_ADRESS_REGION).eAdapters().add(this.adressChangeAdapter);
+				ContactActivator.NODE_NAME_ADDRESS_REGION).eAdapters().add(this.adressChangeAdapter);
 
 	}
 

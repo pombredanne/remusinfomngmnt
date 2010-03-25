@@ -32,15 +32,15 @@ import org.remus.infomngmnt.search.analyzer.SecondaryIndex;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class AdressAnalyzer implements ISecondaryAnalyzer {
+public class AddressAnalyzer implements ISecondaryAnalyzer {
 
-	private static Map<String, String> adressConverter;
+	private static Map<String, String> addressConverter;
 
 	static {
-		adressConverter = new HashMap<String, String>();
+		addressConverter = new HashMap<String, String>();
 		KeyValueObject[] adressCollection = ContactUtil.getAdressCollection();
 		for (KeyValueObject keyValueObject : adressCollection) {
-			adressConverter.put(keyValueObject.getId(), keyValueObject.getValue());
+			addressConverter.put(keyValueObject.getId(), keyValueObject.getValue());
 		}
 	}
 
@@ -54,24 +54,24 @@ public class AdressAnalyzer implements ISecondaryAnalyzer {
 	public ISecondaryIndex[] analyze(final InformationUnit unit, final String node) {
 		InformationStructureRead read = InformationStructureRead.newSession(unit);
 		EList<InformationUnit> dynamicList = read
-				.getDynamicList(ContactActivator.NODE_NAME_ADRESSES);
+				.getDynamicList(ContactActivator.NODE_NAME_ADDRESSES);
 		List<ISecondaryIndex> returnValue = new ArrayList<ISecondaryIndex>();
 		for (InformationUnit informationUnit : dynamicList) {
 			InformationStructureRead adressRead = InformationStructureRead.newSession(
 					informationUnit, ContactActivator.TYPE_ID);
 			StringWriter sw = new StringWriter();
 			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_REGION));
+					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_REGION));
 			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_LOCALITY));
+					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_LOCALITY));
 			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_STREET));
+					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_STREET));
 			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_POSTAL));
+					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_POSTAL));
 			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX));
-			returnValue.add(SecondaryIndex.CREATE(adressConverter.get(adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADRESS)), sw.toString(), null));
+					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_POST_OFFICE_BOX));
+			returnValue.add(SecondaryIndex.CREATE(addressConverter.get(adressRead
+					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS)), sw.toString(), null));
 		}
 		return returnValue.toArray(new ISecondaryIndex[returnValue.size()]);
 	}

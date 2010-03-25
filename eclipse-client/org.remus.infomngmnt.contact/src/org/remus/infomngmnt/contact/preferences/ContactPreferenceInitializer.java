@@ -31,7 +31,7 @@ public class ContactPreferenceInitializer extends AbstractPreferenceInitializer 
 	public static final String MAPS_IMAGE_HEIGHT = "MAPS_IMAGE_HEIGHT"; //$NON-NLS-1$
 	public static final String MAPS_IMAGE_ZOOMLEVEL = "MAPS_IMAGE_ZOOMLEVEL"; //$NON-NLS-1$
 	public static final String FORMATTED_NAME_PATTERN = "FORMATTED_NAME_PATTERN"; //$NON-NLS-1$
-	public static final String FORMATTED_ADRESS_PATTERN = "FORMATTED_ADRESS_PATTERN"; //$NON-NLS-1$
+	public static final String FORMATTED_ADDRESS_PATTERN = "FORMATTED_ADRESS_PATTERN"; //$NON-NLS-1$
 
 	/**
 	 * 
@@ -50,7 +50,7 @@ public class ContactPreferenceInitializer extends AbstractPreferenceInitializer 
 	public void initializeDefaultPreferences() {
 		this.store.setDefault(SHOW_PHONE_LINKS, false);
 		this.store.setDefault(FORMATTED_NAME_PATTERN, "$title $firstname $lastname");
-		this.store.setDefault(FORMATTED_ADRESS_PATTERN, "$street\n\n$postal $locality");
+		this.store.setDefault(FORMATTED_ADDRESS_PATTERN, "$street\n\n$postal $locality");
 		this.store.setDefault(MAPS_IMAGE_WIDTH, 300);
 		this.store.setDefault(MAPS_IMAGE_HEIGHT, 300);
 		this.store.setDefault(MAPS_IMAGE_ZOOMLEVEL, 10);

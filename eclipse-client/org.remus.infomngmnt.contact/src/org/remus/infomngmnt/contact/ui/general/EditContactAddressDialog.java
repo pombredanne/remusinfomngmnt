@@ -193,49 +193,49 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 		TextBindingWidget bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Street,
 				this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_STREET),
+				ContactActivator.NODE_NAME_ADDRESS_STREET),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
 		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Pob, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_POST_OFFICE_BOX),
+				ContactActivator.NODE_NAME_ADDRESS_POST_OFFICE_BOX),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
 		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Locality, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_LOCALITY),
+				ContactActivator.NODE_NAME_ADDRESS_LOCALITY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
 		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Region, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_REGION),
+				ContactActivator.NODE_NAME_ADDRESS_REGION),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
 		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Postal, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_POSTAL),
+				ContactActivator.NODE_NAME_ADDRESS_POSTAL),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
 		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Longitude, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_LONGITUDE),
+				ContactActivator.NODE_NAME_ADDRESS_LONGITUDE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
 		bindingWidget = BindingWidgetFactory.createTextBinding(this.tx_Latitude, this.provider);
 		bindingWidget.bindModel(InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_LATITUDE),
+				ContactActivator.NODE_NAME_ADDRESS_LATITUDE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		addBinding(bindingWidget.getBinding());
 
 		IObservableValue emfCountry = EMFEditObservables.observeValue(this.provider
 				.getEditingDomain(), InformationUtil.getChildByType(this.adress,
-				ContactActivator.NODE_NAME_ADRESS_COUNTRY),
+				ContactActivator.NODE_NAME_ADDRESS_COUNTRY),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		CountryComboObservable swtCountry = new CountryComboObservable(this.countryCombo);
 		addBinding(this.provider.getDatabindingContext().bindValue(swtCountry, emfCountry, null,
@@ -246,6 +246,6 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Edit Adress");
+		newShell.setText("Edit Address");
 	}
 }

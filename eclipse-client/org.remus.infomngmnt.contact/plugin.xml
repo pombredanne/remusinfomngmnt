@@ -251,7 +251,7 @@
             typeId="CONTACT">
       </index>
       <secondaryIndex
-            class="org.remus.infomngmnt.contact.index.AdressAnalyzer"
+            class="org.remus.infomngmnt.contact.index.AddressAnalyzer"
             node="adress"
             typeId="CONTACT">
       </secondaryIndex>

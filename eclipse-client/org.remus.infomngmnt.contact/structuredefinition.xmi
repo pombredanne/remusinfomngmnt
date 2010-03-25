@@ -53,8 +53,8 @@
   <structureItems type="STRING" id="detNotes"/>
   <structureItems type="STRING" id="miscPubKey"/>
   <structureItems type="STRING" id="miscMime"/>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" label="" id="adresses">
-    <structureItems type="STRING" id="adress" createAlways="false">
+  <structureItems xsi:type="infomngmnt:DynamicStructure" label="" id="addresses">
+    <structureItems type="STRING" id="address" createAlways="false">
       <structureItems type="STRING" label="The adress' street" id="street"/>
       <structureItems type="STRING" label="The adress' postoffice box" id="postofficebox"/>
       <structureItems type="STRING" label="The adress' city" id="locality"/>

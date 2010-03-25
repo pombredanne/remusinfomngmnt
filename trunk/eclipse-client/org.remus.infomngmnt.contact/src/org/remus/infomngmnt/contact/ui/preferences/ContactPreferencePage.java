@@ -53,7 +53,7 @@ public class ContactPreferencePage extends FieldEditorPreferencePage implements
 	@Override
 	protected void createFieldEditors() {
 		MultiLineStringFieldEditor fieldEditor = new MultiLineStringFieldEditor(
-				ContactPreferenceInitializer.FORMATTED_ADRESS_PATTERN, "Adress format",
+				ContactPreferenceInitializer.FORMATTED_ADDRESS_PATTERN, "Address format",
 				this.formatGroup);
 		fieldEditor.setHeight(50);
 

@@ -55,7 +55,7 @@ public class ContactUtil {
 	public static String getFormattedAdress(final InformationUnit unit) {
 		StringWriter returnValue = new StringWriter();
 		String string = ContactActivator.getDefault().getPreferenceStore().getString(
-				ContactPreferenceInitializer.FORMATTED_ADRESS_PATTERN);
+				ContactPreferenceInitializer.FORMATTED_ADDRESS_PATTERN);
 		Pattern compile = Pattern.compile(FORMATTED_REGEXP, Pattern.MULTILINE);
 		Matcher matcher = compile.matcher(string);
 		int lastEnd = 0;
@@ -94,14 +94,14 @@ public class ContactUtil {
 	public static KeyValueObject[] getAdressCollection() {
 		KeyValueObject[] returnValue = new KeyValueObject[7];
 
-		returnValue[0] = new KeyValueObject(ContactActivator.NODE_NAME_WORK_ADRESS, "Work");
-		returnValue[1] = new KeyValueObject(ContactActivator.NODE_NAME_HOME_ADRESS, "Home");
-		returnValue[2] = new KeyValueObject(ContactActivator.NODE_NAME_INTERNAT_ADRESS,
+		returnValue[0] = new KeyValueObject(ContactActivator.NODE_NAME_WORK_ADDRESS, "Work");
+		returnValue[1] = new KeyValueObject(ContactActivator.NODE_NAME_HOME_ADDRESS, "Home");
+		returnValue[2] = new KeyValueObject(ContactActivator.NODE_NAME_INTERNAT_ADDRESS,
 				"International");
-		returnValue[3] = new KeyValueObject(ContactActivator.NODE_NAME_POSTAL_ADRESS, "Postal");
-		returnValue[4] = new KeyValueObject(ContactActivator.NODE_NAME_PARCEL_ADRESS, "Parcel");
-		returnValue[5] = new KeyValueObject(ContactActivator.NODE_NAME_DOMESTIC_ADRESS, "Domestic");
-		returnValue[6] = new KeyValueObject(ContactActivator.NODE_NAME_OTHER_ADRESS, "Other");
+		returnValue[3] = new KeyValueObject(ContactActivator.NODE_NAME_POSTAL_ADDRESS, "Postal");
+		returnValue[4] = new KeyValueObject(ContactActivator.NODE_NAME_PARCEL_ADDRESS, "Parcel");
+		returnValue[5] = new KeyValueObject(ContactActivator.NODE_NAME_DOMESTIC_ADDRESS, "Domestic");
+		returnValue[6] = new KeyValueObject(ContactActivator.NODE_NAME_OTHER_ADDRESS, "Other");
 
 		return returnValue;
 	}

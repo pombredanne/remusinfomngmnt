@@ -20,10 +20,10 @@
 <#assign pnVoice = infoUnit["childValues[@type='pnVoice']/@stringValue"]>
 <#assign pnWork = infoUnit["childValues[@type='pnWork']/@stringValue"]>
 
-<#assign worklatitude = infoUnit["childValues[@type='adresses']/childValues[@stringValue='workAdress']/childValues[@type='latitude']/@stringValue"]>
-<#assign worklongtitude = infoUnit["childValues[@type='adresses']/childValues[@stringValue='workAdress']/childValues[@type='longitude']/@stringValue"]>
-<#assign homelatitude = infoUnit["childValues[@type='adresses']/childValues[@stringValue='homeAdress']/childValues[@type='latitude']/@stringValue"]>
-<#assign homelongitude = infoUnit["childValues[@type='adresses']/childValues[@stringValue='homeAdress']/childValues[@type='longitude']/@stringValue"]>
+<#assign worklatitude = infoUnit["childValues[@type='addresses']/childValues[@stringValue='workAddress']/childValues[@type='latitude']/@stringValue"]>
+<#assign worklongtitude = infoUnit["childValues[@type='addresses']/childValues[@stringValue='workAddress']/childValues[@type='longitude']/@stringValue"]>
+<#assign homelatitude = infoUnit["childValues[@type='addresses']/childValues[@stringValue='homeAddress']/childValues[@type='latitude']/@stringValue"]>
+<#assign homelongitude = infoUnit["childValues[@type='addresses']/childValues[@stringValue='homeAddress']/childValues[@type='longitude']/@stringValue"]>
 
 
 
@@ -222,7 +222,7 @@
   	</#if>
   	<#if additionals.formattedWorkAdress?has_content || additionals.formattedHomeAdress?has_content>
   		<div class="headerSection" style="margin:0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
-  		<span class="systemfont" style="font-weight:bold;">Adress</span>
+  		<span class="systemfont" style="font-weight:bold;">Address</span>
   	</div>
   	<div style="margin-left:5px;margin-top:10px;">
   	<table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -250,7 +250,7 @@
   				<td valign="top">${additionals.formattedHomeAdress?replace("\n","<br>")}</td>
   				<#if additionals.createMapsImage && additionals.mapskey?has_content && homelatitude?has_content && homelongitude?has_content>
   				<td>&nbsp;</td>
-  				<td align="right"><img src="https://maps-api-ssl.google.com/staticmap?key=${additionals.mapskey?url}&size=${additionals.mapsWidth?url}x${additionals.mapsHeight?url}&zoom=${additionals.mapsZoom?url}&markers=${homelatitude},${homelongitude}"</td>
+  				<td align="right"><img src="https://maps-api-ssl.google.com/staticmap?key=${additionals.mapskey?url}&size=${additionals.mapsWidth?url}x${additionals.mapsHeight?url}&zoom=${additionals.mapsZoom?url}&markers=${homelatitude},${homelongitude}"></td>
   				</#if>
   			</tr>
 	  	</#if>

@@ -12,7 +12,7 @@
 
 package org.remus.infomngmnt.search.ui.editor;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.ui.URIEditorInput;
@@ -54,7 +54,8 @@ public class SearchResultEditor extends SharedHeaderFormEditor {
 	private Search model;
 	private SearchOutline contentOutlinePage;
 
-	public final static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+	public final static DateFormat SDF = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+			DateFormat.FULL);
 	private static final String CONTEXT_ID = "org.remus.infomngmnt.search.searchEditorContext";
 
 	protected IPartListener partListener = new IPartListener() {

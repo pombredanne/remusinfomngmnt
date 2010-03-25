@@ -93,28 +93,28 @@
                   path="detBirth">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/homeAdress/street">
+                  path="addresses/homeAddress/street">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/homeAdress/postofficebox">
+                  path="addresses/homeAddress/postofficebox">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/homeAdress/locality">
+                  path="addresses/homeAddress/locality">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/homeAdress/postal">
+                  path="addresses/homeAddress/postal">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/workAdress/street">
+                  path="addresses/workAddress/street">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/workAdress/postofficebox">
+                  path="addresses/workAddress/postofficebox">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/workAdress/locality">
+                  path="addresses/workAddress/locality">
             </changeObjectIdValue>
             <changeObjectIdValue
-                  path="adresses/workAdress/postal">
+                  path="addresses/workAddress/postal">
             </changeObjectIdValue>
          </changeDefinition>
       </repository-connector>

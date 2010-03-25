@@ -237,17 +237,24 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 			public void handleEvent(final Event event) {
 				IPDF2ImageExtensionService service = Activator.getDefault().getServiceTracker()
 						.getService(IPDF2ImageExtensionService.class);
-				String string = Activator.getDefault().getPreferenceStore().getString(
-						PreferenceInitializer.DEFAULT_RENDERER);
-				IPdfImageRenderer rendererById = service.getRendererById(string);
+				InformationStructureRead read = InformationStructureRead
+						.newSession(getModelObject());
+				String renderer = (String) read.getValueByNodeId(Activator.RENDERER);
+				IPdfImageRenderer rendererById = null;
+				if (renderer != null) {
+					rendererById = service.getRendererById(renderer);
+				}
+				if (rendererById == null) {
+					String string = Activator.getDefault().getPreferenceStore().getString(
+							PreferenceInitializer.DEFAULT_RENDERER);
+					rendererById = service.getRendererById(string);
+				}
 				if (rendererById == null) {
 					rendererById = service.getAllRender()[0];
 				}
 				IFile binaryReferenceFile = InformationUtil
 						.getBinaryReferenceFile(getModelObject());
 				Dimension convert = rendererById.getRenderer().firstSlid(binaryReferenceFile);
-				InformationStructureRead read = InformationStructureRead
-						.newSession(getModelObject());
 				InformationUnit childByNodeId = read.getChildByNodeId(Activator.SLIDER_WIDTH);
 				Command command = SetCommand.create(getEditingDomain(), childByNodeId, read
 						.getFeatureByNodeId(Activator.SLIDER_WIDTH), ((Integer) convert.width)

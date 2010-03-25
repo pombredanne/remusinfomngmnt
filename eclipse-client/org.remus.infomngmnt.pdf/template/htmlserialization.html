@@ -82,22 +82,36 @@
 		</table>
 	</div>
   	<div>
+  		<#assign images = additionals.imagesPaths >
   		<div class="audioplayer" style="margin: 0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
   			<span class="systemfont" style="font-weight:bold;">PDF Slider</span>
   		</div>
-  		<#assign images = additionals.imagesPaths >
   		<div id="wrapper">
+  			
 			<div>
+				<#if (images?size > 0) >
 				<div class="sliderbutton"><img src="${.globals.sharedResources.org_remus_infomngmnt_pdf_previousbutton}" width="32" height="38" alt="Previous" onclick="slideshow.move(-1)" /></div>
+				</#if>
 				<div id="slider" style="border:1px black;">
-		
+					<#if (images?size > 0) >
 					<ul style="margin:0; padding:0;">
 						<#list images as item >
-						<li style="margin:0; padding:0;"><img src="${item.fileName}" width="${item.width}" height="${item.height}" alt="Sea turtle" /></li>
+						<li style="margin:0; padding:0;"><img src="${item.fileName}" width="${item.width}" height="${item.height}" alt="Page ${item_index + 1}" /></li>
 						</#list>
 					</ul>
+					<#else >
+						<embed
+						    type="application/pdf"
+						    src="${additionals.pdfSrc?html}"
+						    id="pdfDocument"
+						    width="${additionals.width}"
+						    height="${additionals.height}">
+						</embed>
+					</#if>
 				</div>
+				<#if (images?size > 0) >
 				<div class="sliderbutton"><img src="${.globals.sharedResources.org_remus_infomngmnt_pdf_nextbutton}" width="32" height="38" alt="Next" onclick="slideshow.move(1)" /></div>
+				</#if>
 			</div>
 			<ul id="pagination" class="pagination">
 				<#list images as item >

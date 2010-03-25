@@ -21,6 +21,14 @@
             label="Edit Pdf Metadata"
             type="PDF">
       </editPage>
+      <editorAction
+            commandId="org.remus.infomngmnt.pdf.openExtenal"
+            typeId="PDF">
+      </editorAction>
+      <editorAction
+            commandId="org.remus.infomngmnt.pdf.split"
+            typeId="PDF">
+      </editorAction>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -39,6 +47,11 @@
             class="org.remus.infomngmnt.pdf.renderer.DefaultImageRenderer"
             id="org.remus.infomngmnt.pdf.pdfImageRenderer2"
             name="Default Image Renderer">
+      </pdfImageRenderer>
+      <pdfImageRenderer
+            class="org.remus.infomngmnt.pdf.renderer.NoImageRenderer"
+            id="org.remus.infomngmnt.pdf.noRendering"
+            name="Embed System PDF Viewer">
       </pdfImageRenderer>
    </extension>
    <extension
@@ -90,6 +103,118 @@
             image="icons/pdf.png"
             infotype="PDF">
       </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+         <menu
+               icon="icons/pdf.png"
+               id="org.remus.infomngmnt.pdf.contextmenu"
+               label="PDF"
+               mnemonic="m">
+            <command
+                  commandId="org.remus.infomngmnt.pdf.split"
+                  style="push">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.remus.infomngmnt.iutypes.typeEquals"
+                           value="PDF">
+                     </test>
+                  </iterate>
+               </with>
+            </visibleWhen>
+            <command
+                  commandId="org.remus.infomngmnt.pdf.merge"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.pdf.openExtenal"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.remus.infomngmnt.pdf.split"
+            name="Split PDF">
+      </command>
+      <command
+            id="org.remus.infomngmnt.pdf.merge"
+            name="Merge">
+      </command>
+      <command
+            id="org.remus.infomngmnt.pdf.openExtenal"
+            name="Open in external Application">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.pdf.split"
+            icon="icons/branch.gif">
+      </image>
+      <image
+            commandId="org.remus.infomngmnt.pdf.merge"
+            icon="icons/merge.gif">
+      </image>
+      <image
+            commandId="org.remus.infomngmnt.pdf.openExtenal"
+            icon="icons/application_go.png">
+      </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.remus.infomngmnt.pdf.handler.SplitPdfHandler"
+            commandId="org.remus.infomngmnt.pdf.split">
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.pdf.handler.MergeHandler"
+            commandId="org.remus.infomngmnt.pdf.merge">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.remus.infomngmnt.iutypes.typeEquals"
+                           value="PDF">
+                     </test>
+                  </iterate>
+                  <count
+                        value="(1-">
+                  </count>
+               </and>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.pdf.handler.OpenInExternalApplication"
+            commandId="org.remus.infomngmnt.pdf.openExtenal">
+      </handler>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <creationtrigger
+            class="org.remus.infomngmnt.pdf.ui.PdfCreationTrigger"
+            typeId="PDF">
+      </creationtrigger>
+      <validTransfers
+            transferId="org.remus.infomngmnt.core.filetransfer"
+            typeId="PDF">
+      </validTransfers>
    </extension>
 
 </plugin>

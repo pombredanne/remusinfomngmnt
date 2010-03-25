@@ -129,14 +129,14 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		startdateLabel.setText("Start-Date");
 
 		this.startTime = new CDateTime(dateTimeGroup, CDT.BORDER | CDT.DROP_DOWN);
-		this.startTime.setPattern("yyyy-MM-dd '@' hh:mm a");
+		this.startTime.setFormat(CDT.DATE_MEDIUM | CDT.TIME_MEDIUM);
 		this.startTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label enddateLabel = new Label(dateTimeGroup, SWT.NONE);
 		enddateLabel.setText("End-Date");
 
 		this.endTime = new CDateTime(dateTimeGroup, CDT.BORDER | CDT.DROP_DOWN);
-		this.endTime.setPattern("yyyy-MM-dd '@' hh:mm a");
+		this.endTime.setFormat(CDT.DATE_MEDIUM | CDT.TIME_MEDIUM);
 		this.endTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label notificationLabel = new Label(dateTimeGroup, SWT.NONE);

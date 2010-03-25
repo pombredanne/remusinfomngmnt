@@ -13,7 +13,7 @@
 package org.remus.infomngmnt.ui.calendar;
 
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -29,7 +29,7 @@ import org.remus.infomngmnt.calendar.model.Task;
  */
 public class CalendarEntryUtil {
 
-	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+	static DateFormat sdf = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.FULL);
 
 	public static String setFormTextRepresentation(final CalendarEntry entry,
 			final boolean printEvents) {

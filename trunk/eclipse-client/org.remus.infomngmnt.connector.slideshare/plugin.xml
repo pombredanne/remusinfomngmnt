@@ -44,10 +44,10 @@
                            ifEmpty="false">
                         <and>
                            <test
-                                 property="org.remus.infomngmnt.ui.canCommitOrReplace">
+                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
                            </test>
                            <test
-                                 property="org.remus.infomngmnt.ui.repositoryIdEquals"
+                                 property="org.remus.infomngmnt.remote.repositoryIdEquals"
                                  value="org.remus.infomngmnt.connector.slideshare">
                            </test>
                         </and>

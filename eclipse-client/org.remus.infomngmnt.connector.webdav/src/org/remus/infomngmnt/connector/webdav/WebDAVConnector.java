@@ -197,7 +197,85 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 
 	public RemoteObject commit(final SynchronizableObject item2commit,
 			final IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
+		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(item2commit, monitor);
+		if (remoteObject != null) {
+			if (item2commit instanceof InformationUnitListItem) {
+				try {
+					InformationUnit adapter = (InformationUnit) item2commit
+							.getAdapter(InformationUnit.class);
+					InformationUnit copy = (InformationUnit) EcoreUtil.copy(adapter);
+
+					byte[] saveObjectToByte = this.editingService.saveObjectToByte(copy);
+					String infoFile = new StringWriter().append(remoteObject.getUrl()).append("/")
+							.append(remoteObject.getId()).append(".info").toString();
+					getApi().put(infoFile, saveObjectToByte);
+					String binaryFolder = new StringWriter().append(remoteObject.getUrl()).append(
+							"/").append(FOLDER_NAME_BINARIES).append("/").toString();
+
+					InformationStructureRead read = InformationStructureRead.newSession(adapter);
+					List<BinaryReference> binaryReferences = read.getBinaryReferences();
+					if (getApi().exists(binaryFolder)) {
+						getApi().delete(binaryFolder);
+					}
+					if (binaryReferences.size() > 0) {
+						getApi().createDirectory(binaryFolder);
+						for (BinaryReference binaryReference : binaryReferences) {
+							IFile binaryReferenceToFile = InformationUtil.binaryReferenceToFile(
+									binaryReference, adapter);
+							String projectRelativePath = binaryReference.getProjectRelativePath();
+							String binaryRefFile = new StringWriter().append(binaryFolder).append(
+									"/").append(projectRelativePath).toString();
+
+							InputStream contents = null;
+							try {
+								contents = binaryReferenceToFile.getContents();
+								getApi().put(binaryRefFile, contents);
+							} finally {
+								if (contents != null) {
+									StreamCloser.closeStreams(contents);
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					throw new RemoteException(StatusCreator
+							.newStatus("Error committing element", e));
+				}
+				try {
+					List<DavResource> resources = getApi().getResources(remoteObject.getUrl());
+					if (resources.size() > 0) {
+						return buildSingleInfoUnit(resources.get(0));
+					}
+				} catch (SardineException e) {
+					// do nothing
+				}
+
+			}
+			if (item2commit instanceof Category) {
+				Category copy = (Category) EcoreUtil.copy(item2commit);
+				copy.getChildren().clear();
+				copy.getInformationUnit().clear();
+				copy
+						.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
+				String infoFile = new StringWriter().append(remoteObject.getUrl()).append("/")
+						.append(FILENAME_CAT).toString();
+				try {
+					byte[] saveObjectToByte = this.editingService.saveObjectToByte(copy);
+					getApi().put(infoFile, saveObjectToByte);
+				} catch (Exception e) {
+					throw new RemoteException(StatusCreator.newStatus("Error committing category",
+							e));
+				}
+				try {
+					List<DavResource> resources = getApi().getResources(remoteObject.getUrl());
+					if (resources.size() > 0) {
+						return buildSingleCategory(resources.get(0));
+					}
+				} catch (SardineException e) {
+					// do nothing
+				}
+			}
+		}
 		return null;
 	}
 

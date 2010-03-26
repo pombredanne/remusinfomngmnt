@@ -92,7 +92,7 @@ public class WebdavConnectionWizardPage extends WizardPage {
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("Feed-Url:");
+		apiurlLabel.setText("WebDAV-Url:");
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		this.apiUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));

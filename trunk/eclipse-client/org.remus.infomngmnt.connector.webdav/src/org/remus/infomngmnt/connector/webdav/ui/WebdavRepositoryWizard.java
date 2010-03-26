@@ -30,7 +30,7 @@ public class WebdavRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public WebdavRepositoryWizard() {
-		setWindowTitle("RSS/Atom Feed");
+		setWindowTitle("WebDAV");
 	}
 
 	@Override

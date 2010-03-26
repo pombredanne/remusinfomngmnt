@@ -15,8 +15,6 @@ package org.remus.infomngmnt.ui.viewer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -28,12 +26,8 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -51,15 +45,8 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPreferenceConstants;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
 import org.remus.infomngmnt.Category;
@@ -71,7 +58,6 @@ import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.core.model.AllProjectContentAdapter;
 import org.remus.infomngmnt.ui.viewer.context.NavigationContextMenu;
 import org.remus.infomngmnt.ui.viewer.dnd.NavigationDropAdapter;
-import org.remus.infomngmnt.ui.viewer.internal.ResourceManager;
 import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
 import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 
@@ -81,49 +67,9 @@ import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 public class NavigationViewer implements ISelectionProvider, IEditingDomainProvider,
 		ISetSelectionTarget, IViewerProvider {
 
-	IPartListener partListener = new IPartListener() {
-		public void partActivated(final IWorkbenchPart part) {
-			if (part instanceof EditorPart) {
-				IEditorInput input = ((EditorPart) part).getEditorInput();
-				if (input instanceof IPathEditorInput) {
-					Object adapter = Platform.getAdapterManager().getAdapter(
-							ResourcesPlugin.getWorkspace().getRoot().getFile(
-									((IPathEditorInput) input).getPath()),
-							InformationUnitListItem.class);
-					if (adapter != null) {
-						setSelection(new StructuredSelection(adapter));
-					}
-				}
-			}
-			if (part == NavigationViewer.this.parentcontainer.getPart()) {
-				// NavigationView.this.actionBar.setActiveDomain(NavigationView.this);
-			}
-
-		}
-
-		public void partBroughtToTop(final IWorkbenchPart part) {
-
-		}
-
-		public void partClosed(final IWorkbenchPart part) {
-
-		}
-
-		public void partDeactivated(final IWorkbenchPart part) {
-
-		}
-
-		public void partOpened(final IWorkbenchPart part) {
-
-		}
-	};
-
 	private AdapterFactoryContentProvider contentProvider;
 	private ILabelProvider labelProvider;
 	private TreeViewer viewer;
-	private Action linkEditorAction;
-	private boolean linkEditor;
-	private IDialogSettings settings;
 	private NavigationContextMenu actionBar;
 	private String contextMenuId;
 
@@ -187,7 +133,6 @@ public class NavigationViewer implements ISelectionProvider, IEditingDomainProvi
 		initProvider();
 		initInput();
 		initOpen();
-		initLinkWithEditor();
 		createActions();
 		initDrag();
 		initDrop();
@@ -240,7 +185,6 @@ public class NavigationViewer implements ISelectionProvider, IEditingDomainProvi
 	}
 
 	public void init(final IViewSite site, final IMemento memento) {
-		this.settings = ViewerActivator.getDefault().getDialogSettings();
 		if (memento != null) {
 			ViewerActivator.getDefault().getApplicationService();
 			IMemento[] children = memento.getChildren("expanded");
@@ -377,8 +321,7 @@ public class NavigationViewer implements ISelectionProvider, IEditingDomainProvi
 	}
 
 	public void initToolbar(final IToolBarManager toolbarManager) {
-		toolbarManager.add(this.linkEditorAction);
-		toolbarManager.update(true);
+
 	}
 
 	private void hookActionBars() {
@@ -426,89 +369,6 @@ public class NavigationViewer implements ISelectionProvider, IEditingDomainProvi
 	public void addSelectionChangedListener(final ISelectionChangedListener listener) {
 		this.viewer.addSelectionChangedListener(listener);
 
-	}
-
-	/**
-	 * 
-	 */
-	private void initLinkWithEditor() {
-		if (this.settings == null) {
-			return;
-		}
-		// Try the dialog settings first, which remember the last choice.
-		final String setting = this.settings
-				.get(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR);
-		if (setting != null) {
-			this.linkEditor = setting.equals("true"); //$NON-NLS-1$
-		}
-		// Link with editor
-
-		this.linkEditorAction = new Action("Link with editor", IAction.AS_CHECK_BOX) {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.jface.action.Action#run()
-			 */
-			@Override
-			public void run() {
-				setLinkingEnabled(isChecked());
-			}
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.jface.action.Action#getToolTipText()
-			 */
-			@Override
-			public String getToolTipText() {
-				return getText();
-			}
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.jface.action.Action#getImageDescriptor()
-			 */
-			@Override
-			public ImageDescriptor getImageDescriptor() {
-				return ResourceManager.getPluginImageDescriptor(ViewerActivator.getDefault(),
-						"icons/synced.gif");
-
-			}
-
-		};
-		this.linkEditorAction.setChecked(this.linkEditor);
-		// setLinkingEnabled(true);
-
-	}
-
-	public void setLinkingEnabled(final boolean enabled) {
-		this.linkEditor = enabled;
-
-		// remember the last settings in the dialog settings
-		this.settings.put(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR, enabled);
-
-		// if turning linking on, update the selection to correspond to the
-		// active editor
-		if (enabled) {
-			if (PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage() != null) {
-				IEditorInput editorInput = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage().getActiveEditor().getEditorInput();
-				if (editorInput instanceof IPathEditorInput) {
-					// FIXME
-					Object adapter = Platform.getAdapterManager().getAdapter(editorInput,
-							InformationUnitListItem.class);
-					if (adapter != null) {
-						setSelection(new StructuredSelection(adapter));
-					}
-				}
-			}
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(
-					this.partListener);
-		} else {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-					.removePartListener(this.partListener);
-		}
 	}
 
 	public ISelection getSelection() {

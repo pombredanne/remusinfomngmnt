@@ -564,7 +564,8 @@ public class ChangeSetManager implements IChangeHandler {
 		List<InformationUnitListItem> informationUnit = new ArrayList<InformationUnitListItem>(copy
 				.getInformationUnit());
 		for (InformationUnitListItem informationUnitListItem : informationUnit) {
-			if (informationUnitListItem.getSynchronizationMetaData().getSyncState() == SynchronizationState.IGNORED) {
+			if (informationUnitListItem.getSynchronizationMetaData() == null
+					|| informationUnitListItem.getSynchronizationMetaData().getSyncState() == SynchronizationState.IGNORED) {
 				copy.getInformationUnit().remove(informationUnitListItem);
 			}
 		}

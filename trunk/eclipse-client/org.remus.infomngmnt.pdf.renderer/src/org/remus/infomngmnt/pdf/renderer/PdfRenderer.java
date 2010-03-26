@@ -55,7 +55,7 @@ public class PdfRenderer implements IPdf2ImageRenderer {
 			pdffile = new PDFFile(buf);
 
 			// draw the first page to an image
-			for (int i = 0, n = pdffile.getNumPages(); i < n; i++) {
+			for (int i = 1, n = pdffile.getNumPages(); i <= n; i++) {
 				PDFPage page = pdffile.getPage(i);
 
 				// get the width and height for the doc at the default zoom

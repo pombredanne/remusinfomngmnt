@@ -26,6 +26,8 @@ import org.remus.infomngmnt.model.service.IResourceLoader;
 import org.remus.infomngmnt.ui.desktop.extension.ITraySectionDefinition;
 import org.remus.infomngmnt.ui.desktop.extension.TraySectionManager;
 import org.remus.infomngmnt.ui.desktop.services.ITrayConfigurationService;
+import org.remus.infomngmnt.ui.rules.service.IRuleService;
+import org.remus.infomngmnt.ui.tray.DropSectionPreferencePage;
 import org.remus.uimodel.TraySection;
 import org.remus.uimodel.TraySectionCollection;
 import org.remus.uimodel.UimodelFactory;
@@ -37,9 +39,9 @@ import org.remus.uimodel.provider.UimodelEditPlugin;
  */
 public class TrayConfigurationManager implements ITrayConfigurationService {
 
-	public static final String SEARCH_BOX_ID = "org.remus.infomngmnt.ui.searchBox"; //$NON-NLS-1$
+	public static final String SEARCH_BOX_ID = "org.remus.infomngmnt.search.desktop.sectionBox1"; //$NON-NLS-1$
 	public static final String DROP_BOX_ID = "org.remus.infomngmnt.ui.dropBox"; //$NON-NLS-1$
-	public static final String NOTIFICATION_BOX = "org.remus.infomngmnt.ui.notificationBox"; //$NON-NLS-1$
+	public static final String NOTIFICATION_BOX = "org.remus.infomngmnt.ui.notification.tray.sectionBox"; //$NON-NLS-1$
 
 	public static final String PATH_TO_TRAY_CONFIG_FILE = "tray/trayconfig.xmi"; //$NON-NLS-1$
 
@@ -70,9 +72,54 @@ public class TrayConfigurationManager implements ITrayConfigurationService {
 			ResourceSet resourceSet = new ResourceSetImpl();
 			resourceSet.getPackageRegistry().put(UimodelPackage.eNS_URI, UimodelPackage.eINSTANCE);
 			Resource resource = resourceSet.createResource(createURI);
-			this.traySections = UimodelFactory.eINSTANCE.createTraySectionCollection();
+			// FIXME remove later
+			this.traySections = buildInitialSectionConfiguration();
 			resource.getContents().add(this.traySections);
 		}
+	}
+
+	/**
+	 * 
+	 * This has to be removed later. It's built if the user has not setup any
+	 * tray-sctions
+	 * 
+	 * @return
+	 */
+	private TraySectionCollection buildInitialSectionConfiguration() {
+		TraySectionCollection returnValue = UimodelFactory.eINSTANCE.createTraySectionCollection();
+
+		// Search-Box.
+		ITraySectionDefinition sectionDefinitionById = TraySectionManager.getInstance()
+				.getSectionDefinitionById(SEARCH_BOX_ID);
+		TraySection searchTraySection = UimodelFactory.eINSTANCE.createTraySection();
+		searchTraySection.setImage(sectionDefinitionById.getImage());
+		searchTraySection.setImplementation(sectionDefinitionById.getImplementation());
+		searchTraySection.setName(sectionDefinitionById.getLabel());
+		searchTraySection.setTemplateId(sectionDefinitionById.getId());
+		returnValue.getSections().add(searchTraySection);
+		// Drop-Box
+		ITraySectionDefinition dropBoxDefinition = TraySectionManager.getInstance()
+				.getSectionDefinitionById(DROP_BOX_ID);
+		TraySection dropTraySection = UimodelFactory.eINSTANCE.createTraySection();
+		dropTraySection.setImage(dropBoxDefinition.getImage());
+		dropTraySection.setImplementation(dropBoxDefinition.getImplementation());
+		dropTraySection.setName(dropBoxDefinition.getLabel());
+		dropTraySection.setTemplateId(dropBoxDefinition.getId());
+		dropTraySection.getPreferenceOptions().put(DropSectionPreferencePage.RULESET_KEY,
+				IRuleService.DEFAULT_RULENAME);
+		returnValue.getSections().add(dropTraySection);
+
+		// Notifications
+		ITraySectionDefinition notifcationBox = TraySectionManager.getInstance()
+				.getSectionDefinitionById(NOTIFICATION_BOX);
+		TraySection notificationTraySection = UimodelFactory.eINSTANCE.createTraySection();
+		notificationTraySection.setImage(notifcationBox.getImage());
+		notificationTraySection.setImplementation(notifcationBox.getImplementation());
+		notificationTraySection.setName(notifcationBox.getLabel());
+		notificationTraySection.setTemplateId(notifcationBox.getId());
+		returnValue.getSections().add(notificationTraySection);
+
+		return returnValue;
 	}
 
 	public TraySectionCollection getTraySections() {

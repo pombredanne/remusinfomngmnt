@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.remote.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.webdav.WebDAVConnector"
+            credentialprovider="org.remus.infomngmnt.connector.webdav.WebDavCredentialProvider"
+            id="org.remus.infomngmnt.connector.webdav.repository-connector"
+            name="WebDAV">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+      <respository
+            icon="icons/webdav.png"
+            id="org.remus.infomngmnt.connector.webdav.respository1"
+            newWizard="org.remus.infomngmnt.connector.webdav.ui.WebdavRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.webdav.repository-connector">
+      </respository>
+   </extension>
+
+</plugin>

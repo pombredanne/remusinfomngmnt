@@ -9,6 +9,6 @@
   <structureItems type="STRING" id="title"/>
   <structureItems type="STRING" id="author"/>
   <structureItems type="STRING" id="creator"/>
-  <structureItems label="" id="producer"/>
+  <structureItems type="STRING" label="" id="producer"/>
   <structureItems type="DATETIME" id="creationDate"/>
 </infomngmnt:InformationStructureDefinition>

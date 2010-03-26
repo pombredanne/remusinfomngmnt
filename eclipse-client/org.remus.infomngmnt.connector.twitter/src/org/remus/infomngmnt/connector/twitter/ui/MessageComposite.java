@@ -1,7 +1,7 @@
 package org.remus.infomngmnt.connector.twitter.ui;
 
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.eclipse.jface.action.IAction;
@@ -37,7 +37,8 @@ public class MessageComposite extends Composite {
 	public static final String URL_REGEXP = "((mailto\\:|(news|(ht|f)tp(s?))\\://){1}\\S+)"; //$NON-NLS-1$
 	private ToolBarManager toolBarManager;
 
-	public final static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+	public final static DateFormat SDF = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+			DateFormat.SHORT);
 	private IHyperlinkListener messageListener;
 	private IHyperlinkListener metaListener;
 	private final boolean renderPhoto;

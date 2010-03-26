@@ -19,7 +19,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -238,11 +237,6 @@ public class RemoteRepositoryViewer implements ISelectionProvider, IEditingDomai
 
 	private String getId() {
 		return this.parentContainer.getId();
-	}
-
-	public void initToolbar(final IToolBarManager toolbarManager) {
-		toolbarManager.add(this.addRepAction);
-		toolbarManager.update(true);
 	}
 
 	public void addSelectionChangedListener(final ISelectionChangedListener listener) {

@@ -5,6 +5,8 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.handlers.IHandlerService;
 
+import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
 import org.remus.infomngmnt.util.StatusCreator;
 
 public class AddRemoteRepositoryAction extends Action {
@@ -30,9 +32,9 @@ public class AddRemoteRepositoryAction extends Action {
 	public AddRemoteRepositoryAction() {
 		setToolTipText("Add new repository");
 		setText("Add new repository");
-		// FIXME
-		// setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
-		// "icons/iconexperience/16/server_new.png"));
+
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(RemoteUiActivator.getDefault(),
+				"icons/iconexperience/16/server_new.png"));
 	}
 
 	@Override

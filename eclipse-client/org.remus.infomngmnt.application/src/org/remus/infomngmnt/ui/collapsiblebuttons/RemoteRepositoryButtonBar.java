@@ -13,14 +13,18 @@
 package org.remus.infomngmnt.ui.collapsiblebuttons;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IViewSite;
 
 import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.remote.view.RemoteRepositoryViewer;
+import org.remus.infomngmnt.ui.remote.view.action.AddRemoteRepositoryAction;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -30,6 +34,8 @@ public class RemoteRepositoryButtonBar extends CollapsibleButtonBar implements I
 
 	private final RemoteRepositoryViewer remoteRepositoryViewer;
 
+	private AddRemoteRepositoryAction addRepAction;
+
 	public RemoteRepositoryButtonBar() {
 		this.remoteRepositoryViewer = new RemoteRepositoryViewer();
 	}
@@ -38,6 +44,14 @@ public class RemoteRepositoryButtonBar extends CollapsibleButtonBar implements I
 	public void createControl(final Composite parent) {
 		this.remoteRepositoryViewer.createControl(parent, getViewSite());
 		setControl(this.remoteRepositoryViewer.getTopControl());
+
+	}
+
+	@Override
+	public void init(final IViewSite site, final IMemento memento) {
+		this.addRepAction = new AddRemoteRepositoryAction();
+		this.addRepAction.setViewSite(site);
+		super.init(site, memento);
 	}
 
 	public Viewer getViewer() {
@@ -65,6 +79,13 @@ public class RemoteRepositoryButtonBar extends CollapsibleButtonBar implements I
 	@Override
 	public boolean setFocus() {
 		return this.remoteRepositoryViewer.setFocus();
+	}
+
+	@Override
+	public void initToolbar(final IToolBarManager toolbarManager) {
+		toolbarManager.add(this.addRepAction);
+		toolbarManager.update(true);
+
 	}
 
 }

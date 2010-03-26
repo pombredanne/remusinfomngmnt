@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.common.ui.UIUtil;
@@ -116,6 +118,18 @@ public class TweetDialog extends TitleAreaDialog {
 		this.availableCharacterLabel.setText(String.valueOf(MAX_CHAR));
 		this.styledText.getFTextField().setText(
 				this.initialMessage != null ? this.initialMessage : "");
+
+		new Label(container, SWT.NONE).setText("Special Characters:");
+		ToolBar tb = new ToolBar(container, SWT.HORIZONTAL | SWT.FLAT);
+		tb.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 3, 1));
+		addButton(tb, "\u2190", "Arrow right");
+		addButton(tb, "\u2192", "Arrow left");
+		addButton(tb, "\u2194", "Arrow left and right");
+		addButton(tb, "\u263A", "White smiley");
+		addButton(tb, "\u2665", "Black heart");
+		addButton(tb, "\u266B", "Black note");
+		addButton(tb, "\u263C", "White sun");
+		addButton(tb, "\u2020", "Black cross");
 
 		final Label uploadImageLabel = new Label(container, SWT.NONE);
 		uploadImageLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
@@ -267,6 +281,19 @@ public class TweetDialog extends TitleAreaDialog {
 		return area;
 	}
 
+	private void addButton(final ToolBar tb, final String string, final String tooltip) {
+		final ToolItem item = new ToolItem(tb, SWT.PUSH | SWT.BORDER);
+		item.setText(string);
+		item.setToolTipText(tooltip);
+		item.addListener(SWT.Selection, new Listener() {
+
+			public void handleEvent(final Event event) {
+				TweetDialog.this.styledText.getFTextField().insert(item.getText());
+			}
+		});
+
+	}
+
 	protected void checkOkButton() {
 		if (getButton(OK) != null) {
 			getButton(OK)
@@ -299,7 +326,7 @@ public class TweetDialog extends TitleAreaDialog {
 	@Override
 	protected Point getInitialSize() {
 		return UIUtil.getDialogSettingsInitialSize(TwitterActivator.getDefault(), this, new Point(
-				500, 375));
+				500, 500));
 	}
 
 	@Override

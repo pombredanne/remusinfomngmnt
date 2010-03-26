@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.osgi.util.NLS;
 
 import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
@@ -206,6 +207,7 @@ public class InformationDeltaVisitor implements IResourceDeltaVisitor {
 			final IFile resource) {
 
 		try {
+			this.monitor.subTask(NLS.bind("Building \'\'{0}\'\'", objectFromFile.getLabel()));
 			resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 			this.binaryReferenceService.update(objectFromFile);
 			AbstractInformationRepresentation informationRepresentation = infoTypeByType

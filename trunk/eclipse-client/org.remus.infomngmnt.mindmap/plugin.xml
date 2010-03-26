@@ -130,5 +130,12 @@
             typeId="MINDMAP">
       </creationtrigger>
    </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/brain.png"
+            infotype="MINDMAP">
+      </image>
+   </extension>
 
 </plugin>

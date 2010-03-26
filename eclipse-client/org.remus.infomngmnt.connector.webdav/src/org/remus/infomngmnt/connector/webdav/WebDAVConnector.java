@@ -11,8 +11,10 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.osgi.framework.BundleContext;
@@ -569,6 +571,16 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 
 		}
 		return this.api;
+	}
+
+	@Override
+	public IStatus validate() {
+		try {
+			getApi().getResources(getRepositoryUrl());
+		} catch (Exception e) {
+			return StatusCreator.newStatus(e.getMessage());
+		}
+		return Status.OK_STATUS;
 	}
 
 }

@@ -120,8 +120,8 @@ public class DateCombo extends Composite implements ISelectionProvider {
 
 			@Override
 			public ImageDescriptor getImageDescriptor() {
-				return ResourceManager.getPluginImageDescriptor(Platform
-						.getBundle(ResourceManager.PLUGIN_ID), "icons/calendar.png");
+				return ResourceManager.getPluginImageDescriptor(Platform.getBundle(
+						ResourceManager.PLUGIN_ID).getBundleContext(), "icons/calendar.png");
 			}
 		});
 		menuManager.add(new Action("None", IAction.AS_CHECK_BOX) {

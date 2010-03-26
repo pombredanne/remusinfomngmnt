@@ -215,7 +215,6 @@ public class RemoteRepositoryViewer implements ISelectionProvider, IEditingDomai
 		}, PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
 		this.viewer.setContentProvider(contentProvider);
 		this.viewer.setLabelProvider(labelProvider);
-		this.parentContainer.setSelectionProvider(this.viewer);
 	}
 
 	/**

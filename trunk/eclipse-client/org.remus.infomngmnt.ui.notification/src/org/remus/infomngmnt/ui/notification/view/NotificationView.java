@@ -113,7 +113,8 @@ public class NotificationView extends AbstractScrolledTitledView implements IEdi
 			getSite().getShell().getDisplay().asyncExec(new Runnable() {
 
 				public void run() {
-					NotificationView.this.masterDetail.viewer.refresh();
+					if (!NotificationView.this.masterDetail.viewer.getControl().isDisposed())
+						NotificationView.this.masterDetail.viewer.refresh();
 				}
 			});
 		};

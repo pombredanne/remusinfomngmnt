@@ -9,6 +9,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -51,6 +52,7 @@ public class RepositoryDialog extends TitleAreaDialog {
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		composite.setLayout(new GridLayout());
 		final TableViewer tableViewer = new TableViewer(composite, SWT.BORDER);
+		tableViewer.setSorter(new ViewerSorter());
 		this.table = tableViewer.getTable();
 		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		this.table.setLayoutData(layoutData);

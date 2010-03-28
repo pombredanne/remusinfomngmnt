@@ -211,7 +211,13 @@ public class MessageComposite extends Composite {
 		sw.append(SDF.format(dateValue));
 		if (this.renderSource) {
 			sw.append(" via ");
-			sw.append(sourceLink);
+			if (sourceLink == null || sourceLink.trim().length() == 0) {
+				sw.append("Unknown");
+			} else {
+				// RIMCONNECTORS-17 Some source providers sent invalid urls.
+				String replaceAll = sourceLink.replaceAll("&", "&amp;");
+				sw.append(replaceAll);
+			}
 		}
 		if (replyId != null) {
 			sw.append(" in reply to ").append(
@@ -219,8 +225,17 @@ public class MessageComposite extends Composite {
 					.append("</a>");
 		}
 		sw.append("</p></form>");
-		this.metaFormText.setText(sw.toString(), true, false);
-		this.metaFormText.setData(TwitterActivator.MESSAGE_INTERNAL_ID, internalId);
+		try {
+			this.metaFormText.setText(sw.toString(), true, false);
+			this.metaFormText.setData(TwitterActivator.MESSAGE_INTERNAL_ID, internalId);
+		} catch (Exception e) {
+			StringWriter errorSw = new StringWriter();
+			errorSw.append("<form><p vspace=\"false\">");
+			errorSw.append("Ups. There was an error while rendering this twitter status...");
+			errorSw.append("</p></form>");
+			this.metaFormText.setText(errorSw.toString(), true, false);
+			this.metaFormText.setData(TwitterActivator.MESSAGE_INTERNAL_ID, internalId);
+		}
 	}
 
 	/**

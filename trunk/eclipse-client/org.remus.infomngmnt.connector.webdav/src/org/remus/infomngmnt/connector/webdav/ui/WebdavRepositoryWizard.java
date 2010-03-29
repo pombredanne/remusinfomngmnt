@@ -39,6 +39,14 @@ public class WebdavRepositoryWizard extends NewRepositoryWizard {
 	}
 
 	@Override
+	public boolean performFinish() {
+		if (!this.repository.getUrl().endsWith("/")) {
+			this.repository.setUrl(this.repository.getUrl() + "/");
+		}
+		return super.performFinish();
+	};
+
+	@Override
 	public IWizardPage getNextPage(final IWizardPage page) {
 		IWizardPage nextPage = super.getNextPage(page);
 		if (nextPage == this.page1) {

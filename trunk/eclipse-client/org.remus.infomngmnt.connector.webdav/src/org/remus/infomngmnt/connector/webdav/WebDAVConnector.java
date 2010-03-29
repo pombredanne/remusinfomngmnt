@@ -74,7 +74,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 
 	public static final String FOLDER_PREFIX_CAT = "CAT_"; //$NON-NLS-1$
 	public static final String FOLDER_PREFIX_INFO = "INFO_"; //$NON-NLS-1$
-	public static final String FOLDER_NAME_BINARIES = ".binaries"; //$NON-NLS-1$
+	public static final String FOLDER_NAME_BINARIES = "binaries"; //$NON-NLS-1$
 	public static final String FILENAME_CAT = "category.xml"; //$NON-NLS-1$
 
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
@@ -138,7 +138,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				InformationStructureRead read = InformationStructureRead.newSession(adapter);
 				List<BinaryReference> binaryReferences = read.getBinaryReferences();
 				if (binaryReferences.size() > 0) {
-					String binaryFolder = new StringWriter().append(newPath).append("/").append(
+					String binaryFolder = new StringWriter().append(newPath).append(
 							FOLDER_NAME_BINARIES).toString();
 					getApi().createDirectory(binaryFolder);
 					for (BinaryReference binaryReference : binaryReferences) {
@@ -508,6 +508,13 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				return davResource;
 			}
 		}
+		// we have to check for invalid responses
+		for (DavResource davResource : resources) {
+			if ((davResource.getAbsoluteUrl() + "/").equals(url)) {
+				return davResource;
+			}
+		}
+
 		return null;
 	}
 

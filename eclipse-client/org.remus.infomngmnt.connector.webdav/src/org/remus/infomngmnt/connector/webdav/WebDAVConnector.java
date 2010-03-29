@@ -514,6 +514,30 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				return davResource;
 			}
 		}
+		// // This is really ugly. for the idiots that cannot implement the
+		// webdav
+		// // spec.
+		// for (DavResource davResource : resources) {
+		// String baseUrl = davResource.getBaseUrl();
+		// if (baseUrl.substring(0, baseUrl.length() -
+		// 1).endsWith(davResource.getName())
+		// && davResource.getName().indexOf("/") != -1) {
+		// List<DavResource> resources2;
+		// try {
+		// resources2 = getApi().getResources(baseUrl.substring(0,
+		// baseUrl.length() - 1));
+		// } catch (SardineException e) {
+		// throw new RemoteException(StatusCreator.newStatus(
+		// "Error getting remote object", e));
+		// }
+		// for (DavResource davResource2 : resources2) {
+		// if (davResource2.getAbsoluteUrl().equals(url)) {
+		// return davResource;
+		// }
+		// }
+		// }
+		//
+		// }
 
 		return null;
 	}

@@ -34,5 +34,58 @@
             name="Youtube">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+         <menu
+               icon="icons/youtube.png"
+               id="org.remus.infomngmnt.youtube.contextmenu"
+               label="Youtube"
+               mnemonic="l">
+            <command
+                  commandId="org.remus.infomngmnt.connector.youtube.copyEmbed"
+                  style="push">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false">
+                        <and>
+                           <test
+                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
+                           </test>
+                           <test
+                                 property="org.remus.infomngmnt.remote.repositoryIdEquals"
+                                 value="org.remus.infomngmnt.connector.youtube">
+                           </test>
+                        </and>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.remus.infomngmnt.connector.youtube.copyEmbed"
+            name="Open Video on Youtube">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.remus.infomngmnt.connector.youtube.handler.OpenVideoOnYoutubeHandler"
+            commandId="org.remus.infomngmnt.connector.youtube.copyEmbed">
+      </handler>
+   </extension>
 
 </plugin>

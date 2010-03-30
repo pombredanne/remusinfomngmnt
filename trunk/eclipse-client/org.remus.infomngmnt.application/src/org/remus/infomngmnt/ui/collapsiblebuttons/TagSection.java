@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
@@ -42,6 +41,7 @@ import org.remus.infomngmnt.ui.UIPlugin;
 import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonBar;
 import org.remus.infomngmnt.ui.editors.InformationEditor;
 import org.remus.infomngmnt.ui.editors.InformationEditorInput;
+import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
 import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 
 /**
@@ -106,7 +106,7 @@ public class TagSection extends CollapsibleButtonBar {
 			}
 		};
 
-		this.labelProvider = new NavigatorDecoratingLabelProvider(new AdapterFactoryLabelProvider(
+		this.labelProvider = new NavigatorDecoratingLabelProvider(new InformationUnitLabelProvider(
 				UIPlugin.getDefault().getEditService().getAdapterFactory()));
 
 		this.viewer.setContentProvider(this.contentProvider);

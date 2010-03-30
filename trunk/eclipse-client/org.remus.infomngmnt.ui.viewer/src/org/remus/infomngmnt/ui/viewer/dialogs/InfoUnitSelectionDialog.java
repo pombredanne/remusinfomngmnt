@@ -22,7 +22,6 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -34,6 +33,7 @@ import org.remus.infomngmnt.AbstractInformationUnit;
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.ui.viewer.ViewerActivator;
+import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
 import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.remus.infomngmnt.util.CategoryUtil;
 
@@ -181,10 +181,10 @@ public class InfoUnitSelectionDialog extends FilteredItemsSelectionDialog {
 	public static InfoUnitSelectionDialog create(final Shell shell, final IInputValidator validator) {
 		InfoUnitSelectionDialog diag = new InfoUnitSelectionDialog(shell, false, validator);
 		diag.setListLabelProvider(new NavigatorDecoratingLabelProvider(
-				new AdapterFactoryLabelProvider(ViewerActivator.getDefault().getEditService()
+				new InformationUnitLabelProvider(ViewerActivator.getDefault().getEditService()
 						.getAdapterFactory())));
 		diag.setDetailsLabelProvider(new NavigatorDecoratingLabelProvider(
-				new AdapterFactoryLabelProvider(ViewerActivator.getDefault().getEditService()
+				new InformationUnitLabelProvider(ViewerActivator.getDefault().getEditService()
 						.getAdapterFactory())) {
 			@Override
 			public String getText(final Object element) {

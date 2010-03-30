@@ -47,8 +47,17 @@ public class TrayConfigurationManager implements ITrayConfigurationService {
 
 	private TraySectionCollection traySections;
 
+	private transient boolean initialized;
+
 	public TrayConfigurationManager() {
-		init();
+		this.initialized = false;
+	}
+
+	protected synchronized void checkForInitialization() {
+		if (!this.initialized) {
+			init();
+			this.initialized = true;
+		}
 	}
 
 	private void init() {
@@ -123,10 +132,12 @@ public class TrayConfigurationManager implements ITrayConfigurationService {
 	}
 
 	public TraySectionCollection getTraySections() {
+		checkForInitialization();
 		return this.traySections;
 	}
 
 	public void save() throws IOException {
+		checkForInitialization();
 		this.traySections.eResource().save(Collections.EMPTY_MAP);
 	}
 

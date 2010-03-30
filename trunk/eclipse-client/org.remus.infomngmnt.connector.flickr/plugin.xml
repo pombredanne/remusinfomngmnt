@@ -38,5 +38,77 @@
             repository-id="org.remus.infomngmnt.connector.flickr.">
       </respository>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+         <menu
+               icon="icons/flickr.png"
+               id="org.remus.infomngmnt.flickr.contextmenu"
+               label="Flickr"
+               mnemonic="l">
+            <command
+                  commandId="org.remus.infomngmnt.connector.flickr.openWeb"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.remus.infomngmnt.connector.flickr.copyImageUrlToClipboard"
+                  style="push">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false">
+                        <and>
+                           <test
+                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
+                           </test>
+                           <test
+                                 property="org.remus.infomngmnt.remote.repositoryIdEquals"
+                                 value="org.remus.infomngmnt.connector.flickr.">
+                           </test>
+                        </and>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.remus.infomngmnt.connector.flickr.openWeb"
+            name="Open Photo on flickr">
+      </command>
+      <command
+            id="org.remus.infomngmnt.connector.flickr.copyImageUrlToClipboard"
+            name="Copy Image Url to Clipboard">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.remus.infomngmnt.connector.flickr.handler.OpenElementOnFlickrHandler"
+            commandId="org.remus.infomngmnt.connector.flickr.openWeb">
+      </handler>
+      <handler
+            class="org.remus.infomngmnt.connector.flickr.handler.CopyImageUrlToClipboradHandler"
+            commandId="org.remus.infomngmnt.connector.flickr.copyImageUrlToClipboard">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.remus.infomngmnt.connector.flickr.copyImageUrlToClipboard"
+            icon="IMG_TOOL_PASTE">
+      </image>
+   </extension>
 
 </plugin>

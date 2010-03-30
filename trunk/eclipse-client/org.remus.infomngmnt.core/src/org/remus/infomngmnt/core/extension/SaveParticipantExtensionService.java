@@ -89,6 +89,8 @@ public class SaveParticipantExtensionService extends PluginRegistryDynamic imple
 			case DELETED:
 				if (oldValue instanceof InformationUnit) {
 					element.handleDeleted(oldValue.toString());
+				} else if (oldValue instanceof String) {
+					element.handleDeleted((String) oldValue);
 				}
 				break;
 			default:

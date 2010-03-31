@@ -40,6 +40,10 @@
             commandId="org.remus.infomngmnt.password.openUrl"
             typeId="PASSWORD">
       </editorAction>
+      <editorAction
+            commandId="org.remus.infomngmnt.password.fillCrendetials"
+            typeId="PASSWORD">
+      </editorAction>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -86,6 +90,10 @@
                   commandId="org.remus.infomngmnt.password.openUrl"
                   style="push">
             </command>
+            <command
+                  commandId="org.remus.infomngmnt.password.fillCrendetials"
+                  style="push">
+            </command>
             <separator
                   name="additions"
                   visible="false">
@@ -128,6 +136,10 @@
             id="org.remus.infomngmnt.password.openUrl"
             name="Open URL in Browser">
       </command>
+      <command
+            id="org.remus.infomngmnt.password.fillCrendetials"
+            name="Fill credentials into last active window">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -147,6 +159,10 @@
             class="org.remus.infomngmnt.password.handler.OpenUrlInBrowserHandler"
             commandId="org.remus.infomngmnt.password.openUrl">
       </handler>
+      <handler
+            class="org.remus.infomngmnt.password.handler.FillCredentialsHandler"
+            commandId="org.remus.infomngmnt.password.fillCrendetials">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -165,6 +181,10 @@
       <image
             commandId="org.remus.infomngmnt.password.openUrl"
             icon="icons/iconexperience/window_earth.png">
+      </image>
+      <image
+            commandId="org.remus.infomngmnt.password.fillCrendetials"
+            icon="icons/cog.png">
       </image>
    </extension>
    <extension

@@ -24,6 +24,7 @@ Export-Package: org.remus.infomngmnt.common.fieldassist,
  org.remus.infomngmnt.common.ui.image,
  org.remus.infomngmnt.common.ui.jface,
  org.remus.infomngmnt.common.ui.quickaccess,
+ org.remus.infomngmnt.common.ui.swt,
  org.remus.infomngmnt.common.ui.view,
  org.remus.infomngmnt.common.ui.wizards
 Bundle-ClassPath: .

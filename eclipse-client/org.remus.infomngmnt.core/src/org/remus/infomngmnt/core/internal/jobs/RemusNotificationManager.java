@@ -51,8 +51,18 @@ public class RemusNotificationManager implements INotificationManagerManager {
 
 	private NotificationCollection allNotifications;
 
+	private transient boolean initialized;
+
 	public RemusNotificationManager() {
-		init();
+		this.initialized = false;
+
+	}
+
+	protected synchronized void checkForInitialization() {
+		if (!this.initialized) {
+			init();
+			this.initialized = true;
+		}
 	}
 
 	private final Job job = new Job("Checking for jobs to run") {
@@ -97,6 +107,7 @@ public class RemusNotificationManager implements INotificationManagerManager {
 	};
 
 	public void addNotification(final List<org.remus.infomngmnt.Notification> run) {
+		checkForInitialization();
 		for (org.remus.infomngmnt.Notification notification : run) {
 			// FIXME
 			// if ((this.allNotifications.getNotifcations().size() - 1) ==
@@ -172,6 +183,7 @@ public class RemusNotificationManager implements INotificationManagerManager {
 	 * @return the allNotifications
 	 */
 	public NotificationCollection getAllNotifications() {
+		checkForInitialization();
 		return this.allNotifications;
 	}
 

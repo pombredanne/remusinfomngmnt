@@ -506,14 +506,17 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
 			final IProgressMonitor monitor) throws RemoteException {
 		String url = object.getSynchronizationMetaData().getUrl();
-		if (getRepositoryById(getLocalRepositoryId()).getUrl().equals(url)) {
-			return getRepositoryById(getLocalRepositoryId());
-		}
-		if (object instanceof Category) {
-			return buildSingleCategory(new File(url));
-		}
-		if (object instanceof InformationUnitListItem) {
-			return buildSingleInfoUnit(new File(url));
+		// validate whether Directory exists, otherwise access is not possible
+		if (validate(url).isOK()){
+			if (getRepositoryById(getLocalRepositoryId()).getUrl().equals(url)) {
+				return getRepositoryById(getLocalRepositoryId());
+			}
+			if (object instanceof Category) {
+				return buildSingleCategory(new File(url));
+			}
+			if (object instanceof InformationUnitListItem) {
+				return buildSingleInfoUnit(new File(url));
+			}
 		}
 		return null;
 	}
@@ -577,6 +580,6 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 		if (file.exists() && file.isDirectory() && file.canWrite()) {
 			return Status.OK_STATUS;
 		}
-		return StatusCreator.newStatus("Not a valid directory");
+		return StatusCreator.newStatus("Not a valid directory: " + url);
 	}
 }

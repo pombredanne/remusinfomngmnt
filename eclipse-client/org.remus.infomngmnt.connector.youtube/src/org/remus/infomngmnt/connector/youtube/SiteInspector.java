@@ -36,7 +36,7 @@ public class SiteInspector {
 		InputStream contents = file.getContents();
 		String convertStreamToString = StreamUtil.convertStreamToString(contents);
 
-		Pattern compile = Pattern.compile(REGEXP_STRING);
+		Pattern compile = Pattern.compile("(fmt_url_map=)(.+)(&)");
 		Matcher matcher = compile.matcher(convertStreamToString);
 		Map<String, String> returnValue = new HashMap<String, String>();
 		if (matcher.find()) {
@@ -57,6 +57,30 @@ public class SiteInspector {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		} else {
+			// RIMCONNECTORS-24 old pattern does not work everywhere.
+			compile = Pattern.compile("(fmt_url_map=)(.+)(&)");
+			matcher = compile.matcher(convertStreamToString);
+			if (matcher.find()) {
+				String escapeJavaScript;
+				try {
+					escapeJavaScript = URLDecoder.decode(matcher.group(2), "UTF-8");
+					String[] split = StringUtils.split(escapeJavaScript, ",");
+					for (String string : split) {
+						String[] split2 = StringUtils.split(string, "|");
+						if (split2.length == 2) {
+							String data = split2[1];
+							if (data.endsWith("\"")) {
+								data = data.substring(0, data.length() - 1);
+							}
+							returnValue.put(split2[0], data);
+						}
+					}
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return returnValue;

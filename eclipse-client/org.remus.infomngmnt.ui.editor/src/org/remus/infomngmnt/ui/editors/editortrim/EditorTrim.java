@@ -136,16 +136,20 @@ public class EditorTrim extends WorkbenchWindowControlContribution {
 		if (part instanceof IEditorPart) {
 			IEditorInput editorInput = ((IEditorPart) part).getEditorInput();
 			if (editorInput instanceof IPathEditorInput) {
-				IPath path = ((IPathEditorInput) editorInput).getPath();
-				String infoUnit = this.binaryReferenceService.getReferencedInfoUnitIdByPath(path
-						.segment(0), path.lastSegment());
-				if (infoUnit != null) {
-					InformationUnitListItem itemById = EditorActivator.getDefault()
-							.getApplicationService().getItemById(infoUnit, null);
-					if (itemById != null) {
-						handleBackSwitching(itemById);
-						return;
+				try {
+					IPath path = ((IPathEditorInput) editorInput).getPath();
+					String infoUnit = this.binaryReferenceService.getReferencedInfoUnitIdByPath(
+							path.segment(path.segmentCount() - 3), path.lastSegment());
+					if (infoUnit != null) {
+						InformationUnitListItem itemById = EditorActivator.getDefault()
+								.getApplicationService().getItemById(infoUnit, null);
+						if (itemById != null) {
+							handleBackSwitching(itemById);
+							return;
+						}
 					}
+				} catch (Exception e) {
+					// if any error occurs, we do nothing here.
 				}
 			}
 			handleActivate((String) null);

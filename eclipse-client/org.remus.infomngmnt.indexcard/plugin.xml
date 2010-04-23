@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.remus.infomngmnt.core.informationType">
+      <information
+            excludeFromIndex="false"
+            icon="icons/iconexperience/indexcard.png"
+            name="IndexCard"
+            presentation="org.remus.infomngmnt.indexcard.extension.IndexCardInformationRepresentation"
+            structuredefinition="structuredefinition.xmi"
+            type="INDEXCARD">
+      </information>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.remus.infomngmnt.ui.simple"
+            class="org.remus.infomngmnt.indexcard.ui.NewIndexCardWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/indexcard_new.png"
+            id="org.remus.infomngmnt.indexcard.wizard"
+            name="Indexcard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+      <validTransfers
+            transferId="org.remus.infomngmnt.indexcard.filetransfer"
+            typeId="INDEXCARD">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.indexcard.htmltransfer"
+            typeId="INDEXCARD">
+      </validTransfers>
+      <validTransfers
+            transferId="org.remus.infomngmnt.indexcard.texttransfer"
+            typeId="INDEXCARD">
+      </validTransfers>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.editor.informationUi">
+      <editPage
+            editpage="org.remus.infomngmnt.indexcard.ui.FormPage"
+            icon="icons/iconexperience/indexcard_edit.png"
+            id="org.remus.infomngmnt.indexcard.editPage"
+            label="Edit Indexcard"
+            type="INDEXCARD">
+      </editPage>
+   </extension>
+   <extension
+         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+      <image
+            image="icons/iconexperience/indexcard.png"
+            infotype="INDEXCARD">
+      </image>
+   </extension>
+
+</plugin>

@@ -20,6 +20,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -28,12 +29,14 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -49,13 +52,12 @@ import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.Rating;
 import org.remus.infomngmnt.ui.editor.EditorActivator;
-import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
+import org.remus.infomngmnt.ui.rating.internal.ResourceManager;
 
 public class RatingOverviewDialog extends TitleAreaDialog {
 
 	private Text text;
 	private Table table;
-	private Combo ratingCombo;
 	private Text ratingComment;
 	private Text ratingAuthor;
 	private InformationUnit infoUnit;
@@ -63,10 +65,16 @@ public class RatingOverviewDialog extends TitleAreaDialog {
 	private TableViewer tableViewer;
 	private Button deleteButton;
 	private Button addButton;
-	private Button newButton;
 	private final ItemProvider itemProvider;
 	private WritableList input;
 	
+	private Rating currentRating = Rating.USELESS;
+	private Button btnFirst;
+	private Button btnSecond;
+	private Button btnThird;
+	private Button btnFourth;
+	private Button btnFifth;
+
 	
 	public RatingOverviewDialog(final Shell parentShell, final InformationUnit infoUnit,
 			final EditingDomain domain) {
@@ -118,36 +126,120 @@ public class RatingOverviewDialog extends TitleAreaDialog {
 		final Label ratingLabel = new Label(ratingsEditGroup, SWT.NONE);
 		ratingLabel.setText("Select Rating");
 		
-		ratingCombo = new Combo(ratingsEditGroup, SWT.NONE);
-		ratingCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));		
-		ratingCombo.add(Rating.USELESS.getName());
-		ratingCombo.add(Rating.POOR.getName());
-		ratingCombo.add(Rating.AVERAGE.getName());
-		ratingCombo.add(Rating.HELPFUL.getName());
-		ratingCombo.add(Rating.FANTASTIC.getName());
-				
+		Composite innerRatingCmp = new Composite(ratingsEditGroup, SWT.NONE);
+		RowLayout rowLayout = new RowLayout();
+		rowLayout.wrap = false;
+		innerRatingCmp.setLayout(rowLayout);
+		btnFirst = new Button(innerRatingCmp, SWT.FLAT | SWT.ICON);
+		btnFirst.setImage(ResourceManager.getPluginImage(RatingActivator
+				.getDefault(), "icons/star_yellow.png"));
+		btnFirst.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				currentRating = Rating.USELESS;
+				btnSecond.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+				btnThird.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+				btnFourth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+				btnFifth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+			}
+		});
+		btnSecond = new Button(innerRatingCmp, SWT.FLAT | SWT.ICON);
+		btnSecond.setImage(ResourceManager.getPluginImage(RatingActivator
+				.getDefault(), "icons/star_grey.png"));
+		btnSecond.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				currentRating = Rating.POOR;
+				btnSecond.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnThird.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+				btnFourth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+				btnFifth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+			}
+		});
+		btnThird = new Button(innerRatingCmp, SWT.FLAT | SWT.ICON);
+		btnThird.setImage(ResourceManager.getPluginImage(RatingActivator
+				.getDefault(), "icons/star_grey.png"));
+		btnThird.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				currentRating = Rating.AVERAGE;
+				btnSecond.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnThird.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnFourth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+				btnFifth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+			}
+		});
+		btnFourth = new Button(innerRatingCmp, SWT.FLAT | SWT.ICON);
+		btnFourth.setImage(ResourceManager.getPluginImage(RatingActivator
+				.getDefault(), "icons/star_grey.png"));
+		btnFourth.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				currentRating = Rating.AVERAGE;
+				btnSecond.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnThird.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnFourth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnFifth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_grey.png"));
+			}
+		});
+		btnFifth = new Button(innerRatingCmp, SWT.FLAT | SWT.ICON);
+		btnFifth.setImage(ResourceManager.getPluginImage(RatingActivator
+				.getDefault(), "icons/star_grey.png"));
+		btnFifth.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				currentRating = Rating.AVERAGE;
+				btnSecond.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnThird.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnFourth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+				btnFifth.setImage(ResourceManager.getPluginImage(
+						RatingActivator.getDefault(), "icons/star_yellow.png"));
+			}
+		});				
 		final Label authorLabel = new Label(ratingsEditGroup, SWT.NONE);
 		authorLabel.setText("Author");		
-		this.ratingAuthor = new Text(ratingsEditGroup, SWT.BORDER + SWT.MULTI);
-		this.ratingAuthor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));		
+		this.ratingAuthor = new Text(ratingsEditGroup, SWT.BORDER | SWT.MULTI);	
+		this.ratingAuthor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		IDialogSettings dlgset = RatingActivator.getDefault().getDialogSettings();
+		if (dlgset.get("AuthorSetting") != null) {
+			this.ratingAuthor.setText(dlgset.get("AuthorSetting"));
+		}
 		
 		final Label commentLabel = new Label(ratingsEditGroup, SWT.NONE);
 		commentLabel.setText("Comment");		
-		this.ratingComment = new Text(ratingsEditGroup, SWT.BORDER + SWT.MULTI);
-		this.ratingComment.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		
+		this.ratingComment = new Text(ratingsEditGroup, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP);
+		final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gd.heightHint = 40;
+		this.ratingComment.setLayoutData(gd);
+				
+		@SuppressWarnings("unused")
+		final Label dummyLabel = new Label(ratingsEditGroup, SWT.NONE);
 		this.addButton = new Button(ratingsEditGroup, SWT.NONE);
 		this.addButton.setLayoutData(new GridData(SWT.FILL, SWT.RIGHT, false, false));
 		this.addButton.setText("Add");
 		this.addButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				Comment createComment = InfomngmntFactory.eINSTANCE.createComment();				
-				Rating rating;
-				rating = Rating.get(ratingCombo.getSelectionIndex());
-				createComment.setRating(rating);
+				Comment createComment = InfomngmntFactory.eINSTANCE.createComment();
+				createComment.setRating(currentRating);
 				createComment.setComment(ratingComment.getText());
 				createComment.setAuthor(ratingAuthor.getText());
 				RatingOverviewDialog.this.input.add(createComment);
+				IDialogSettings dlgset = RatingActivator.getDefault().getDialogSettings();
+				dlgset.put("AuthorSetting", ratingAuthor.getText());
 			}
 		});
 		
@@ -160,7 +252,7 @@ public class RatingOverviewDialog extends TitleAreaDialog {
 		final GridLayout gridLayout_1 = new GridLayout();
 		ratingsListGroup.setLayout(gridLayout_1);
 
-		this.tableViewer = new TableViewer(ratingsListGroup, SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
+		this.tableViewer = new TableViewer(ratingsListGroup, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		this.tableViewer.setContentProvider(new ObservableListContentProvider());
 		this.tableViewer.setLabelProvider(new LabelProvider() {
 			@Override
@@ -185,7 +277,7 @@ public class RatingOverviewDialog extends TitleAreaDialog {
 		});
 
 		this.table = this.tableViewer.getTable();
-		this.table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		this.table.setLayoutData(new GridData(SWT.FILL | SWT.H_SCROLL, SWT.FILL, false, true));
 
 		final Composite composite = new Composite(ratingsListGroup, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
@@ -250,7 +342,7 @@ public class RatingOverviewDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(500, 460);
+		return new Point(500, 500);
 	}
 	
 	

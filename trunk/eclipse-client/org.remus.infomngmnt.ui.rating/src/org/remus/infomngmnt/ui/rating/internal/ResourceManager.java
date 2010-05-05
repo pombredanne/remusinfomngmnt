@@ -14,7 +14,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
 import org.remus.infomngmnt.common.ui.image.SWTResourceManager;
+import org.remus.infomngmnt.ui.rating.RatingActivator;
 
 /**
  * Utility class for managing OS resources associated with SWT/JFace controls
@@ -159,6 +161,17 @@ public class ResourceManager extends SWTResourceManager {
 			decoratedMap.put(decorator, result);
 		}
 		return result;
+	}
+	
+
+	/**
+	 * Get scaled image
+	 */
+	public static Image getScaledPluginImage(final Object plugin, final String name, final double factor) {
+		Image img = getPluginImage(plugin, name);
+		int width = img.getBounds().width;
+	    int height = img.getBounds().height;
+	    return new Image(Display.getCurrent(), img.getImageData().scaledTo((int)(width*factor), (int)(height*factor)));
 	}
 
 	/**

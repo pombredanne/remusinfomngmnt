@@ -24,6 +24,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -186,13 +187,41 @@ public class RatingOutline implements IOutlineSection {
 	
 	private void buildList() {
 		EList<Comment> comments = this.infoUnit.getComments();
-		this.commentSection.setText(NLS.bind("Ratings ({0})", comments.size()));
+		// calculate average for headline
+		int average = 0;
+		String avStr = "";
+		if (comments.size() != 0) {			
+			for (Comment comment : comments) {
+				average += comment.getRating().ordinal()+1;
+			}
+			average = average / comments.size();			
+		}
+		switch (average) {
+			case 1:
+				avStr = "*";
+				break;
+			case 2:
+				avStr = "**";
+				break;
+			case 3:
+				avStr = "***";
+				break;
+			case 4:
+				avStr = "****";
+				break;
+			case 5:
+				avStr = "*****";
+				break;
+		}
+		// set headline
+		this.commentSection.setText(NLS.bind("Ratings ({0}) - average: "+ avStr, comments.size()));
 		if (comments.size() == 0) {
 			this.commentFormText.setText(
 					"<form><p>No Ratings done so far for this unit. You can <a href=\"addRating\">add a new Rating</a>.</p></form>",
 					true, false);
 			return;
 		}
+		// set content
 		StringBuilder sw = new StringBuilder();
 		sw.append("<form>");
 		for (Comment comment : comments) {
@@ -234,18 +263,15 @@ public class RatingOutline implements IOutlineSection {
 					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
 					break;
 			}
-			
-			sw.append(comment.getRating());
-			sw.append(", " + comment.getAuthor() + "<br></br>");
+						
+			sw.append("  , " + comment.getAuthor() + "<br></br>");
 			sw.append(comment.getComment());
 			sw.append("</p>");
 		}
 		sw.append("</form>");
 		this.commentFormText.setText(sw.toString(), true, false);
-		this.commentFormText.setImage("star_yellow", ResourceManager.getPluginImage(RatingActivator
-				.getDefault(), "icons/star_yellow.png"));
-		this.commentFormText.setImage("star_grey", ResourceManager.getPluginImage(RatingActivator
-				.getDefault(), "icons/star_grey.png"));
+		this.commentFormText.setImage("star_yellow", ResourceManager.getScaledPluginImage(RatingActivator.getDefault(), "icons/star_yellow.png", 0.75));
+		this.commentFormText.setImage("star_grey", ResourceManager.getScaledPluginImage(RatingActivator.getDefault(), "icons/star_grey.png", 0.75));
 		this.form.reflow(false);	
 	}
 }

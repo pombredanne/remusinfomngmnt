@@ -13,7 +13,9 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 
 import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.InfomngmntFactory;
@@ -342,6 +344,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 			final IProgressMonitor monitor) throws RemoteException {
 		String url = object.getSynchronizationMetaData().getUrl();
 		if (url.equals(getRepositoryUrl())) {
+			getApi();
 			return getRepositoryById(object.getSynchronizationMetaData().getRepositoryId());
 		}
 		if (object instanceof Category) {
@@ -407,6 +410,16 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 	@Override
 	public String getRepositoryUrl() {
 		return METAFEED_URL_BASE;
+	}
+
+	@Override
+	public IStatus validate() {
+		try {
+			getApi();
+			return Status.OK_STATUS;
+		} catch (RemoteException e) {
+			return StatusCreator.newStatus("Error conecting to service", e);
+		}
 	}
 
 	/*

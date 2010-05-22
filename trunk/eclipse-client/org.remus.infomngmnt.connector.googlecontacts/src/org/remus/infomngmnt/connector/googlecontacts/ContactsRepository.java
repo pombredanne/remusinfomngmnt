@@ -353,6 +353,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 			final IProgressMonitor monitor) throws RemoteException {
 		String url = object.getSynchronizationMetaData().getUrl();
 		if (url.equals(getRepositoryUrl())) {
+			getApi();
 			return getRepositoryById(object.getSynchronizationMetaData().getRepositoryId());
 		}
 		if (object instanceof Category) {

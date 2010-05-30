@@ -28,8 +28,11 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.remus.infomngmnt.BinaryReference;
+import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.InformationUnitListItem;
+import org.remus.infomngmnt.common.core.util.IdFactory;
+import org.remus.infomngmnt.common.core.util.ModelUtil;
 import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.provider.InfomngmntEditPlugin;
 import org.remus.infomngmnt.resources.util.ResourceUtil;
@@ -52,16 +55,19 @@ public class CopyInformationUnitCommand implements Command {
 		this.fullObject = (InformationUnit) affectedObject.getAdapter(InformationUnit.class);
 		this.sourceBinaryReferences = new ArrayList<IFile>();
 		this.targetBinaryReferences = new ArrayList<IFile>();
+		this.sourceBinaryReferenceIds = new ArrayList<String>();
 		InformationStructureRead read = InformationStructureRead.newSession(this.fullObject);
 		List<BinaryReference> binaryReferences = read.getBinaryReferences();
 		for (BinaryReference binaryReference : binaryReferences) {
 			binaryReference.getProjectRelativePath();
-			this.sourceBinaryReferences.add(ResourcesPlugin.getWorkspace().getRoot().getProject(
+			IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getProject(
 					new Path(this.sourcePath).segment(0)).getFolder(ResourceUtil.BINARY_FOLDER)
-					.getFile(binaryReference.getProjectRelativePath()));
+					.getFile(binaryReference.getProjectRelativePath());
+			this.sourceBinaryReferences.add(sourceFile);
+			this.sourceBinaryReferenceIds.add(binaryReference.getId());
 			this.targetBinaryReferences.add(ResourcesPlugin.getWorkspace().getRoot().getProject(
 					new Path(this.targetPath).segment(0)).getFolder(ResourceUtil.BINARY_FOLDER)
-					.getFile(binaryReference.getProjectRelativePath()));
+					.getFile(IdFactory.createId() + "." + sourceFile.getFileExtension()));
 		}
 	}
 
@@ -72,6 +78,7 @@ public class CopyInformationUnitCommand implements Command {
 	private final String sourcePath;
 
 	private final List<IFile> sourceBinaryReferences;
+	private final List<String> sourceBinaryReferenceIds;
 	private final List<IFile> targetBinaryReferences;
 	private final InformationUnit fullObject;
 
@@ -129,10 +136,23 @@ public class CopyInformationUnitCommand implements Command {
 		try {
 			NullProgressMonitor monitor = new NullProgressMonitor();
 			InformationUnit copy = (InformationUnit) EcoreUtil.copy(this.fullObject);
-			copy.setId(this.affectedObject.getId());
+			copy.setId(IdFactory.createNewId(monitor));
+			List<Object> allChildren = ModelUtil.getAllChildren(copy,
+					InfomngmntPackage.Literals.BINARY_REFERENCE);
 			for (int i = 0, n = this.sourceBinaryReferences.size(); i < n; i++) {
 				this.sourceBinaryReferences.get(i).copy(
 						this.targetBinaryReferences.get(i).getFullPath(), true, monitor);
+				for (Object object : allChildren) {
+					if (object instanceof BinaryReference) {
+						if (((BinaryReference) object).getId().equals(
+								this.sourceBinaryReferenceIds.get(i))) {
+							((BinaryReference) object)
+									.setProjectRelativePath(this.targetBinaryReferences.get(i)
+											.getProjectRelativePath().toString());
+						}
+
+					}
+				}
 			}
 			InfomngmntEditPlugin.getPlugin().getEditService().saveObjectToResource(this.targetFile,
 					copy);

@@ -24,7 +24,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -36,37 +35,35 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
+
 import org.remus.infomngmnt.Comment;
 import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.Rating;
 import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.ui.editors.outline.IOutlineSection;
 import org.remus.infomngmnt.ui.rating.internal.ResourceManager;
-import org.remus.infomngmnt.ui.viewer.ViewerActivator;
 
 /**
- * Outline Section for rating of Information Units. Implements extension point "informationUi.outlineSection"
- * Is managed by class ui.editor.oultine.LinkOutline.java.
+ * Outline Section for rating of Information Units. Implements extension point
+ * "informationUi.outlineSection" Is managed by class
+ * ui.editor.oultine.LinkOutline.java.
  * 
  * @author Andreas Deinlein
- *
+ * 
  */
 public class RatingOutline implements IOutlineSection {
 
 	private InformationUnit infoUnit;
-	
-	private EditingDomain domain;	
-//TODO: remove later on, if not needed	
-//	private IApplicationModel applicationService;
-//	private IEditingHandler editService;
-	
+
+	private EditingDomain domain;
+	// TODO: remove later on, if not needed
+	// private IApplicationModel applicationService;
+	// private IEditingHandler editService;
+
 	private ScrolledForm form;
 	private Section commentSection;
 	private FormText commentFormText;
-		
+
 	private final AdapterImpl ratingListChangeAdapter = new AdapterImpl() {
 		@Override
 		public void notifyChanged(final org.eclipse.emf.common.notify.Notification msg) {
@@ -74,26 +71,25 @@ public class RatingOutline implements IOutlineSection {
 				buildList();
 			}
 		}
-	};	
-	
+	};
+
 	public RatingOutline() {
 		// constructor
 	}
-	
-	@Override
-	public void bindValuesToUi(EditingDomain domain, InformationUnit infoUnit) {
+
+	public void bindValuesToUi(final EditingDomain domain, final InformationUnit infoUnit) {
 		this.domain = domain;
 		this.infoUnit = infoUnit;
-//		this.applicationService = ViewerActivator.getDefault().getApplicationService();
-//		this.editService = ViewerActivator.getDefault().getEditService();
-		
+		// this.applicationService =
+		// ViewerActivator.getDefault().getApplicationService();
+		// this.editService = ViewerActivator.getDefault().getEditService();
+
 		buildList();
 
 		this.infoUnit.eAdapters().add(this.ratingListChangeAdapter);
 	}
 
-	@Override
-	public void createControl(ScrolledForm form, FormToolkit toolkit) {
+	public void createControl(final ScrolledForm form, final FormToolkit toolkit) {
 		this.form = form;
 		createCommentSection(form, toolkit);
 
@@ -135,9 +131,9 @@ public class RatingOutline implements IOutlineSection {
 		this.commentSection.setClient(this.commentFormText);
 
 		// initialize toolbar
-		initializeLinkToolBar(this.commentSection, toolkit);	
+		initializeLinkToolBar(this.commentSection, toolkit);
 	}
-	
+
 	/**
 	 * Initialize the toolbar
 	 */
@@ -146,12 +142,13 @@ public class RatingOutline implements IOutlineSection {
 		UIUtil.createSectionToolbar(section, toolkit, new Action("Edit Ratings") {
 			@Override
 			public void run() {
-				RatingOverviewDialog ratingDlg = new RatingOverviewDialog(RatingOutline.this.form.getShell(),
-						RatingOutline.this.infoUnit, RatingOutline.this.domain);
+				RatingOverviewDialog ratingDlg = new RatingOverviewDialog(RatingOutline.this.form
+						.getShell(), RatingOutline.this.infoUnit, RatingOutline.this.domain);
 				if (ratingDlg.open() == IDialogConstants.OK_ID) {
 					performResult(ratingDlg.getResult());
 				}
 			}
+
 			@Override
 			public ImageDescriptor getImageDescriptor() {
 				return null;
@@ -167,58 +164,55 @@ public class RatingOutline implements IOutlineSection {
 		((AbstractCommand) command).setLabel("Edit Comments");
 		this.domain.getCommandStack().execute(command);
 	}
-	
-	@Override
+
 	public void dispose() {
 
 	}
 
-	@Override
 	public void disposeModel() {
 		this.infoUnit.eAdapters().remove(this.ratingListChangeAdapter);
 	}
 
-	@Override
 	public int getSortRanking() {
 		// TODO Auto-generated method stub getSortRanking
 		return 0;
 	}
 
-	
 	private void buildList() {
 		EList<Comment> comments = this.infoUnit.getComments();
 		// calculate average for headline
 		int average = 0;
 		String avStr = "";
-		if (comments.size() != 0) {			
+		if (comments.size() != 0) {
 			for (Comment comment : comments) {
-				average += comment.getRating().ordinal()+1;
+				average += comment.getRating().ordinal() + 1;
 			}
-			average = average / comments.size();			
+			average = average / comments.size();
 		}
 		switch (average) {
-			case 1:
-				avStr = "*";
-				break;
-			case 2:
-				avStr = "**";
-				break;
-			case 3:
-				avStr = "***";
-				break;
-			case 4:
-				avStr = "****";
-				break;
-			case 5:
-				avStr = "*****";
-				break;
+		case 1:
+			avStr = "*";
+			break;
+		case 2:
+			avStr = "**";
+			break;
+		case 3:
+			avStr = "***";
+			break;
+		case 4:
+			avStr = "****";
+			break;
+		case 5:
+			avStr = "*****";
+			break;
 		}
 		// set headline
-		this.commentSection.setText(NLS.bind("Ratings ({0}) - average: "+ avStr, comments.size()));
+		this.commentSection.setText(NLS.bind("Ratings ({0}) - average: " + avStr, comments.size()));
 		if (comments.size() == 0) {
-			this.commentFormText.setText(
-					"<form><p>No Ratings done so far for this unit. You can <a href=\"addRating\">add a new Rating</a>.</p></form>",
-					true, false);
+			this.commentFormText
+					.setText(
+							"<form><p>No Ratings done so far for this unit. You can <a href=\"addRating\">add a new Rating</a>.</p></form>",
+							true, false);
 			return;
 		}
 		// set content
@@ -227,51 +221,53 @@ public class RatingOutline implements IOutlineSection {
 		for (Comment comment : comments) {
 			sw.append("<p>");
 			switch (comment.getRating()) {
-				case USELESS:
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					break;
-				case POOR:
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					break;
-				case AVERAGE:
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					break;
-				case HELPFUL:
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_grey").append("\" /> ");
-					break;
-				case FANTASTIC:
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					sw.append("<img href=\"").append("star_yellow").append("\" /> ");
-					break;
+			case USELESS:
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				break;
+			case POOR:
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				break;
+			case AVERAGE:
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				break;
+			case HELPFUL:
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_grey").append("\" /> ");
+				break;
+			case FANTASTIC:
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				sw.append("<img href=\"").append("star_yellow").append("\" /> ");
+				break;
 			}
-						
+
 			sw.append("  , " + comment.getAuthor() + "<br></br>");
 			sw.append(comment.getComment());
 			sw.append("</p>");
 		}
 		sw.append("</form>");
 		this.commentFormText.setText(sw.toString(), true, false);
-		this.commentFormText.setImage("star_yellow", ResourceManager.getScaledPluginImage(RatingActivator.getDefault(), "icons/star_yellow.png", 0.75));
-		this.commentFormText.setImage("star_grey", ResourceManager.getScaledPluginImage(RatingActivator.getDefault(), "icons/star_grey.png", 0.75));
-		this.form.reflow(false);	
+		this.commentFormText.setImage("star_yellow", ResourceManager.getScaledPluginImage(
+				RatingActivator.getDefault(), "icons/star_yellow.png", 0.75));
+		this.commentFormText.setImage("star_grey", ResourceManager.getScaledPluginImage(
+				RatingActivator.getDefault(), "icons/star_grey.png", 0.75));
+		this.form.reflow(false);
 	}
 }

@@ -335,7 +335,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 	}
 
 	private RemoteObject buildSingleInfoUnit(final DavResource file2) throws RemoteException {
-		if (file2.isDirectory()) {
+		if (file2.isDirectory() || file2.isCurrentDirectory()) {
 			List<DavResource> resources;
 			try {
 				resources = getApi().getResources(file2.getAbsoluteUrl());
@@ -412,7 +412,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 	}
 
 	private RemoteContainer buildSingleCategory(final DavResource file2) throws RemoteException {
-		if (file2.isDirectory()) {
+		if (file2.isDirectory() || file2.isCurrentDirectory()) {
 			List<DavResource> resources;
 			try {
 				resources = getApi().getResources(file2.getAbsoluteUrl());

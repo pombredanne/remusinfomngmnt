@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editortrimcontribution
             commandId="org.remus.infomngmnt.birtbridge.openReport"
             typeId="REPORT">

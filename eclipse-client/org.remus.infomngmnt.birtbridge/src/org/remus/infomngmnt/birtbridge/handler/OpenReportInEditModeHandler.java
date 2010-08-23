@@ -18,18 +18,18 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.remus.BinaryReference;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 
-import org.remus.infomngmnt.BinaryReference;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remote.remoteRepository">
+         point="org.eclipse.remus.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.link.delicious.DelicicousRepository"
             credentialprovider="org.remus.infomngmnt.link.delicious.security.DeliciousCredentialProvider"
@@ -26,7 +26,7 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+         point="org.eclipse.remus.ui.remote.repositoryUi">
       <respository
             icon="icons/delicious.gif"
             id="org.remus.infomngmnt.link.delicious.ui"
@@ -37,7 +37,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.ui.repositories"
+            category="org.eclipse.remus.ui.repositories"
             class="org.remus.infomngmnt.link.delicious.DeliciousPreferencePage"
             id="org.remus.infomngmnt.link.delicious.preferencePage"
             name="Del.icio.us">

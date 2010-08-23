@@ -14,11 +14,11 @@ package org.remus.infomngmnt.eclipsemarketplace.ui;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
 
-import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.eclipsemarketplace.api.Constants;
-import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

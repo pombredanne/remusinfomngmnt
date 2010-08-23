@@ -40,6 +40,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.remus.common.core.util.StringUtils;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -48,7 +49,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.eclipsemarketplace.api.beans.Category;
 import org.remus.infomngmnt.eclipsemarketplace.api.beans.CategoryEntry;
 import org.remus.infomngmnt.eclipsemarketplace.api.beans.Market;

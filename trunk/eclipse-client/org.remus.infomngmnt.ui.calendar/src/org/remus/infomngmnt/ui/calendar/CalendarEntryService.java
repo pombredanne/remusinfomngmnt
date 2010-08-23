@@ -33,11 +33,14 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.aspencloud.calypso.util.TimeSpan;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.CalendarEntryType;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.ref.IIndexWriteOperation;
+import org.eclipse.remus.core.ref.IndexSearchOperation;
+import org.eclipse.remus.core.ref.LuceneStore;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.CalendarEntryType;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.calendar.model.EndEvent;
 import org.remus.infomngmnt.calendar.model.ModelFactory;
 import org.remus.infomngmnt.calendar.model.StartEvent;
@@ -45,9 +48,6 @@ import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 import org.remus.infomngmnt.ccalendar.service.ICalendarChangeSupport;
 import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
-import org.remus.infomngmnt.core.ref.IIndexWriteOperation;
-import org.remus.infomngmnt.core.ref.IndexSearchOperation;
-import org.remus.infomngmnt.core.ref.LuceneStore;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**

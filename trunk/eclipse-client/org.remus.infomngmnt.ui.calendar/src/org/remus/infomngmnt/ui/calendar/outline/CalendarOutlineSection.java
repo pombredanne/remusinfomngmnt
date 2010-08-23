@@ -33,6 +33,16 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.util.ModelUtil;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.ui.editors.outline.IOutlineSection;
+import org.eclipse.remus.ui.viewer.ViewerActivator;
+import org.eclipse.remus.util.IdFactory;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -49,22 +59,12 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.ui.calendar.CalendarActivator;
 import org.remus.infomngmnt.ui.calendar.CalendarEditor;
 import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
 import org.remus.infomngmnt.ui.calendar.NewCalendarEntryDialog;
 import org.remus.infomngmnt.ui.calendar.internal.ResourceManager;
-import org.remus.infomngmnt.ui.editors.outline.IOutlineSection;
-import org.remus.infomngmnt.ui.viewer.ViewerActivator;
-import org.remus.infomngmnt.util.IdFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

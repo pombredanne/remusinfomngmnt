@@ -27,6 +27,11 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.nebula.widgets.calendarcombo.ColorCache;
 import org.eclipse.nebula.widgets.calendarcombo.DefaultColorManager;
 import org.eclipse.nebula.widgets.calendarcombo.DefaultSettings;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonBar;
+import org.eclipse.remus.ui.editors.EditorUtil;
+import org.eclipse.remus.ui.widgets.CalendarComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -51,16 +56,11 @@ import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 import org.remus.infomngmnt.ccalendar.service.ICalendarChangeSupport;
 import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.ui.calendar.CalendarActivator;
 import org.remus.infomngmnt.ui.calendar.CalendarEditor;
 import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
-import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonBar;
-import org.remus.infomngmnt.ui.editors.EditorUtil;
-import org.remus.infomngmnt.ui.widgets.CalendarComposite;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

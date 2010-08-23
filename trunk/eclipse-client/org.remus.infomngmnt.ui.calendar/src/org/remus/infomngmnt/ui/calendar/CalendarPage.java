@@ -24,6 +24,8 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.ui.editors.EditorUtil;
+import org.eclipse.remus.ui.editors.InformationFormPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.layout.GridData;
@@ -46,8 +48,6 @@ import org.eclipse.ui.internal.WorkbenchMessages;
 import org.remus.infomgmnt.provider.CalendarContentProvider;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.ccalendar.CCalendar;
-import org.remus.infomngmnt.ui.editors.EditorUtil;
-import org.remus.infomngmnt.ui.editors.InformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

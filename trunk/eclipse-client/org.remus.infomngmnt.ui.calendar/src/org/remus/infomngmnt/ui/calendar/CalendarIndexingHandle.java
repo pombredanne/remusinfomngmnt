@@ -13,9 +13,9 @@
 package org.remus.infomngmnt.ui.calendar;
 
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.resources.util.IPostProjectHandle;
 
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.resources.util.IPostProjectHandle;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -16,8 +16,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.aspencloud.calypso.util.TimeSpan;
+import org.eclipse.remus.CalendarEntryType;
 
-import org.remus.infomngmnt.CalendarEntryType;
 import org.remus.infomngmnt.calendar.model.TaskType;
 
 /**

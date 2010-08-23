@@ -24,8 +24,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarListenerAdapter;
+import org.eclipse.remus.ui.widgets.CalendarComposite;
 
-import org.remus.infomngmnt.ui.widgets.CalendarComposite;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

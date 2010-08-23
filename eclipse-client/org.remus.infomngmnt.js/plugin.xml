@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.remus.js.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.js.curvycorner"
+            resource="js/curvycorners.js">
+      </referenceResource>
+      <referenceResource
+            id="org.remus.infomngmnt.js.overlib"
+            resource="js/overlib.js">
+      </referenceResource>
+   </extension>
+</plugin>

@@ -5,6 +5,20 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.edit.DisposableEditingDomain;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.TextBindingWidget;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
+import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -17,23 +31,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.audio.AudioActivator;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

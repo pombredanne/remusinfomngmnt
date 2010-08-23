@@ -15,19 +15,19 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.editors.InformationEditor;
+import org.eclipse.remus.ui.editors.InformationEditorInput;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.audio.AudioActivator;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.editors.InformationEditorInput;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -12,9 +12,10 @@
 
 package org.remus.infomngmnt.mail.rules;
 
+import org.eclipse.remus.ui.rules.service.ICreationTrigger;
+import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
+
 import org.remus.infomngmnt.mail.ui.NewMailWizard;
-import org.remus.infomngmnt.ui.rules.service.ICreationTrigger;
-import org.remus.infomngmnt.ui.rules.wizard.NewObjectWizardDelegate;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

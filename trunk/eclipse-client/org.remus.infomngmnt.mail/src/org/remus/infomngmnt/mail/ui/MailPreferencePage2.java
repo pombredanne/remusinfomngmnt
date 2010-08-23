@@ -10,12 +10,12 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FontFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.remus.resources.util.ResourceUtil;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import org.remus.infomngmnt.mail.MailActivator;
 import org.remus.infomngmnt.mail.preferences.MailPreferenceInitializer;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 public class MailPreferencePage2 extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {

@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
             name="Mail/News"
@@ -23,7 +23,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.mail.ui.MailEditPage"
             icon="icons/iconexperience/mail_edit.png"
@@ -57,7 +57,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.ui.infotypes"
+            category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.mail.ui.MailPreferencePage2"
             id="org.remus.infomngmnt.mail.preferences"
             name="Mail">
@@ -84,7 +84,7 @@
                         ifEmpty="false"
                         operator="and">
                      <test
-                           property="org.remus.infomngmnt.iutypes.typeEquals"
+                           property="org.eclipse.remus.iutypes.typeEquals"
                            value="MAIL">
                      </test>
                   </iterate>
@@ -121,14 +121,14 @@
       </initializer>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/mail.png"
             infotype="MAIL">
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <index
             analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
             node="content"
@@ -141,21 +141,21 @@
       </index>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="MAIL">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="MAIL">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="MAIL">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.urlTransfer"
+            transferId="org.eclipse.remus.core.urlTransfer"
             typeId="MAIL">
       </validTransfers>
       <creationtrigger

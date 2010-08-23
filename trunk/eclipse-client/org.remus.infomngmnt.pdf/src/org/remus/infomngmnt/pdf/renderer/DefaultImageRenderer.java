@@ -24,12 +24,12 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.graphics.Image;
 
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.pdf.extension.IPdf2ImageRenderer;
 import org.remus.infomngmnt.pdf.extension.ImageInformation;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

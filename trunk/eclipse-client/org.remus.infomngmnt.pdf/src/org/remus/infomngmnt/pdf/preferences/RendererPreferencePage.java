@@ -12,15 +12,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.pdf.extension.IPdfImageRenderer;
 import org.remus.infomngmnt.pdf.service.IPDF2ImageExtensionService;
-import org.remus.infomngmnt.util.InformationUtil;
 
 public class RendererPreferencePage extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {

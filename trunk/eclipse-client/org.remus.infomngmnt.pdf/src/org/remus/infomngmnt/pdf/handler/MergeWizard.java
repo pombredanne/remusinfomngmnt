@@ -22,13 +22,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.ui.IWorkbench;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
 import org.remus.infomngmnt.pdf.ui.NewPdfWizard;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

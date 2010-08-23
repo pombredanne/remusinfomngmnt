@@ -24,6 +24,17 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.ui.category.CategoryBrowser;
+import org.eclipse.remus.util.CategoryUtil;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -35,18 +46,7 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.pdf.Activator;
-import org.remus.infomngmnt.ui.category.CategoryBrowser;
-import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.InformationUtil;
 
 public class SplitDialog extends Dialog {
 	private Text pdf2Split;

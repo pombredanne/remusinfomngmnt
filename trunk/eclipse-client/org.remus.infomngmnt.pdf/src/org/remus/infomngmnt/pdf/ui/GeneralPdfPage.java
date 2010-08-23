@@ -20,6 +20,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
+import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,10 +36,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

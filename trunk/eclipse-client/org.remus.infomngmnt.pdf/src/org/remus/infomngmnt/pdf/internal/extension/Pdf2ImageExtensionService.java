@@ -19,8 +19,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.remus.common.core.extension.PluginRegistryDynamic;
 
-import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.pdf.extension.IPdfImageRenderer;
 import org.remus.infomngmnt.pdf.service.IPDF2ImageExtensionService;

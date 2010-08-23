@@ -21,12 +21,12 @@ import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.search.analyzer.ISecondaryAnalyzer;
+import org.eclipse.remus.search.analyzer.ISecondaryIndex;
+import org.eclipse.remus.search.analyzer.SecondaryIndex;
+import org.eclipse.remus.util.InformationUtil;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.search.analyzer.ISecondaryAnalyzer;
-import org.remus.infomngmnt.search.analyzer.ISecondaryIndex;
-import org.remus.infomngmnt.search.analyzer.SecondaryIndex;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

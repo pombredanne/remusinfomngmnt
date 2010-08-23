@@ -20,6 +20,13 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.remus.AbstractInformationUnit;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
+import org.eclipse.remus.ui.viewer.ViewerActivator;
+import org.eclipse.remus.ui.viewer.provider.InformationUnitLabelProvider;
+import org.eclipse.remus.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,14 +37,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import org.remus.infomngmnt.AbstractInformationUnit;
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.pdf.Activator;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.ui.viewer.ViewerActivator;
-import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
-import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

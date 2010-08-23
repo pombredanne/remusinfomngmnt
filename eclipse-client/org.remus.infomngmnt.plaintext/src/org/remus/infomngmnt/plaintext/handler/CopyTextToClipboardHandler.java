@@ -15,14 +15,14 @@ package org.remus.infomngmnt.plaintext.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -1,5 +1,10 @@
 package org.remus.infomngmnt.plaintext.ui;
 
+import org.eclipse.remus.common.ui.jface.AnnotatingQuickFixTextBox;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.StyledTextBindingWidget;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -10,11 +15,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 public class FormPage extends AbstractInformationFormPage {
 

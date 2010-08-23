@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             name="Unformatted Text"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
@@ -89,7 +89,7 @@
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.plaintext.ui.FormPage"
             icon="icons/iconexperience/text_edit.png"
@@ -103,20 +103,20 @@
       </editorAction>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/text.png"
             infotype="PLAINTEXT">
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="PLAINTEXT">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.urlTransfer"
+            transferId="org.eclipse.remus.core.urlTransfer"
             typeId="PLAINTEXT">
       </validTransfers>
       <creationtrigger
@@ -125,7 +125,7 @@
       </creationtrigger>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <index
             analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
             node="contents"

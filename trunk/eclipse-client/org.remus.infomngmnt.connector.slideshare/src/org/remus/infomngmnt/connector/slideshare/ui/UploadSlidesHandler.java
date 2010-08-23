@@ -17,10 +17,10 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.SynchronizableObject;
+import org.eclipse.remus.SynchronizationMetadata;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.SynchronizationMetadata;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

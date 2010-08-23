@@ -19,6 +19,21 @@ import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.common.ui.jface.AnnotatingQuickFixTextBox;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.databinding.BindingUtil;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.CheckBoxBindingWidget;
+import org.eclipse.remus.ui.databinding.ComboBindingWidget;
+import org.eclipse.remus.ui.databinding.SpinnerSliderBindingWidget;
+import org.eclipse.remus.ui.databinding.StyledTextBindingWidget;
+import org.eclipse.remus.ui.databinding.TextBindingWidget;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.widgets.DateCombo;
+import org.eclipse.remus.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.eclipse.remus.ui.widgets.databinding.DatePickerBindingWidget;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,24 +49,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.task.TaskPriority;
 import org.remus.infomngmnt.task.TaskStatus;
-import org.remus.infomngmnt.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.CheckBoxBindingWidget;
-import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.ui.databinding.SpinnerSliderBindingWidget;
-import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
-import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.ui.widgets.DateCombo;
-import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
-import org.remus.infomngmnt.ui.widgets.databinding.DatePickerBindingWidget;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

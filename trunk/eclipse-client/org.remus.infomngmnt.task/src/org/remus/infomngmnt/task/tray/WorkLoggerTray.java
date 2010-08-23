@@ -25,6 +25,18 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.desktop.extension.AbstractTraySection;
+import org.eclipse.remus.ui.viewer.provider.NavigatorDecoratingLabelProvider;
+import org.eclipse.remus.uimodel.TraySection;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
@@ -36,19 +48,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.task.TaskActivator;
-import org.remus.infomngmnt.ui.desktop.extension.AbstractTraySection;
-import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.uimodel.TraySection;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

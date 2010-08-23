@@ -15,8 +15,8 @@ package org.remus.infomngmnt.connector.flickr;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.equinox.security.storage.StorageException;
+import org.eclipse.remus.core.remote.security.CredentialProvider;
 
-import org.remus.infomngmnt.core.remote.security.CredentialProvider;
 
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.REST;

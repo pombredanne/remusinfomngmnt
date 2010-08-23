@@ -20,17 +20,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.core.remote.AbstractExtensionRepository;
+import org.eclipse.remus.core.remote.services.IRepositoryExtensionService;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.ui.remote.NewRepositoryWizard;
+import org.eclipse.remus.ui.remote.RemoteUiActivator;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.widgets.Composite;
 
-import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.flickr.FlickrCredentials;
 import org.remus.infomngmnt.connector.flickr.FlickrPlugin;
-import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.ui.remote.NewRepositoryWizard;
-import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.REST;

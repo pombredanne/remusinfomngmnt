@@ -46,37 +46,37 @@ import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.RemoteContainer;
+import org.eclipse.remus.RemoteObject;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.SynchronizableObject;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.common.core.streams.StreamUtil;
+import org.eclipse.remus.common.io.transfer.DownloadFileJob;
+import org.eclipse.remus.core.edit.DisposableEditingDomain;
+import org.eclipse.remus.core.extension.IInfoType;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.remote.AbstractExtensionRepository;
+import org.eclipse.remus.core.remote.RemoteActivator;
+import org.eclipse.remus.core.remote.RemoteException;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.core.services.IInformationTypeHandler;
+import org.eclipse.remus.model.remote.ILoginCallBack;
+import org.eclipse.remus.model.remote.IRepository;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.xml.sax.SAXException;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RemoteContainer;
-import org.remus.infomngmnt.RemoteObject;
-import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
-import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.remote.RemoteActivator;
-import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
-import org.remus.infomngmnt.model.remote.ILoginCallBack;
-import org.remus.infomngmnt.model.remote.IRepository;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.FlickrException;
@@ -547,7 +547,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
 			throws RemoteException {
 		if (localInfoFragment.getType().equals(ImagePlugin.TYPE_ID)) {
-			IFile tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+			IFile tempFile = org.eclipse.remus.common.core.util.ResourceUtil
 					.createTempFile(new Path(this.tmpFile.getPath()).getFileExtension());
 			try {
 				FileInputStream fileInputStream = new FileInputStream(this.tmpFile);
@@ -637,7 +637,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				} catch (FlickrException e) {
 					originalUrl = currentPhoto.getLargeUrl();
 				}
-				File tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+				File tempFile = org.eclipse.remus.common.core.util.ResourceUtil
 						.createTempFileOnFileSystem(currentPhoto.getOriginalFormat());
 				DownloadFileJob job;
 				try {
@@ -667,7 +667,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 							 * file to get its size to transform all notes to
 							 * the downloaded image size..sigh
 							 */
-							IFile mediumFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+							IFile mediumFile = org.eclipse.remus.common.core.util.ResourceUtil
 									.createTempFile(currentPhoto.getOriginalFormat());
 							job = new DownloadFileJob(new URL(currentPhoto.getMediumUrl()),
 									mediumFile, getFileReceiveAdapter());

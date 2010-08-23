@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="true"
             name="Video"
@@ -12,7 +12,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.video.editor.VideoEditPage"
             icon="icons/iconexperience/film_edit.png"
@@ -48,24 +48,24 @@
       </perspectiveExtension>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/film.png"
             infotype="VIDEO">
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <creationtrigger
             class="org.remus.infomngmnt.video.newwizard.VideoCreationWizard"
             typeId="VIDEO">
       </creationtrigger>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="VIDEO">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.urlTransfer"
+            transferId="org.eclipse.remus.core.urlTransfer"
             typeId="VIDEO">
       </validTransfers>
    </extension>

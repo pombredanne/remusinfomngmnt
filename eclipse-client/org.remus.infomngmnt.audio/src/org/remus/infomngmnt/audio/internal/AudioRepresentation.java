@@ -26,16 +26,16 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.js.rendering.FreemarkerRenderer;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.util.StatusCreator;
 
 import org.remus.infomngmnt.audio.AudioActivator;
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -76,7 +76,7 @@ public class AudioRepresentation extends AbstractInformationRepresentation {
 		IMediaPlayer mediaPlayer = service.getPlayerByType(playerType);
 		remusServiceTracker.ungetService(service);
 		this.audioHref = getFile().getProject().getFolder(
-				org.remus.infomngmnt.resources.util.ResourceUtil.BINARY_FOLDER).getFile(
+				org.eclipse.remus.resources.util.ResourceUtil.BINARY_FOLDER).getFile(
 				getValue().getBinaryReferences().getProjectRelativePath()).getLocation();
 		/*
 		 * Next: build the html snippet for displaying the media and put them

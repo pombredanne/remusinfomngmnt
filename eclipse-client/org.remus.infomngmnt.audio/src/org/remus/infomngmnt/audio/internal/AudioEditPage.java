@@ -21,6 +21,9 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -38,10 +41,7 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.audio.AudioActivator;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

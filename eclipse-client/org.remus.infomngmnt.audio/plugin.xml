@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
             name="Audio"
@@ -15,7 +15,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             canFinishEarly="true"
-            category="org.remus.infomngmnt.ui.simple"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.audio.wizard.NewAudioWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             hasPages="true"
@@ -25,7 +25,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.audio.internal.AudioEditPage"
             id="org.remus.infomngmnt.audio.editPage1"
@@ -34,9 +34,9 @@
       </editPage>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="AUDIO">
       </validTransfers>
       <creationtrigger
@@ -45,7 +45,7 @@
       </creationtrigger>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/loudspeaker.png"
             infotype="AUDIO">

@@ -14,14 +14,14 @@ package org.remus.infomngmnt.video.newwizard;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 import org.remus.infomngmnt.video.VideoActivator;
 
 /**

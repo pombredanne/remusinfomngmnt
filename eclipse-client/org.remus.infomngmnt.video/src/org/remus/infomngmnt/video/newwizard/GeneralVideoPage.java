@@ -4,6 +4,19 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.edit.DisposableEditingDomain;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.TextBindingWidget;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
+import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -16,21 +29,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.util.InformationUtil;
 import org.remus.infomngmnt.video.VideoActivator;
 
 /**

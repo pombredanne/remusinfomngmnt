@@ -26,17 +26,17 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.js.rendering.FreemarkerRenderer;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 import org.remus.infomngmnt.video.VideoActivator;
 
 /**

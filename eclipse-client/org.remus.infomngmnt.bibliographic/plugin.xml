@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
             name="Book"
@@ -222,7 +222,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.bibliographic.ui.EditBookPage"
             icon="icons/iconexperience/book_blue_edit.png"
@@ -446,7 +446,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/book_blue.png"
             infotype="BOOK">
@@ -505,149 +505,149 @@
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="BOOKLET">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="BOOKLET">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="BOOKLET">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="CONFERENCE">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="CONFERENCE">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="CONFERENCE">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="INBOOK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="INBOOK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="INBOOK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="INCOLLECTION">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="INCOLLECTION">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="INCOLLECTION">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="INPROCEEDINGS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="INPROCEEDINGS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="INPROCEEDINGS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="MANUAL">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="MANUAL">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="MANUAL">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="MASTERSTHESIS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="MASTERSTHESIS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="MASTERSTHESIS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="MISC">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="MISC">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="MISC">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="PHDTHESIS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="PHDTHESIS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="PHDTHESIS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="PROCEEDINGS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="PROCEEDINGS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="PROCEEDINGS">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="TECHREPORT">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="TECHREPORT">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="TECHREPORT">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="UNPUBLISHED">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="UNPUBLISHED">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="UNPUBLISHED">
       </validTransfers>
    </extension>

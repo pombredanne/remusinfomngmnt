@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.databinding.BindingUtil;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -27,12 +31,8 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
 import org.remus.infomngmnt.bibliographic.Messages;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 public abstract class BibliographicAbstractInformationFormPage extends AbstractInformationFormPage {
 	

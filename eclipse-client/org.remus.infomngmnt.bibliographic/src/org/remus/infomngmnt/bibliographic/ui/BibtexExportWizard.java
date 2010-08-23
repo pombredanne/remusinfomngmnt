@@ -19,12 +19,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.remus.Category;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
 
-import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
 import org.remus.infomngmnt.bibliographic.extension.BibtexExportOperation;
 

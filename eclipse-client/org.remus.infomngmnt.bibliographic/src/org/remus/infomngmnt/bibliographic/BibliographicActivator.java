@@ -11,10 +11,10 @@
  *******************************************************************************/
 package org.remus.infomngmnt.bibliographic;
 
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle

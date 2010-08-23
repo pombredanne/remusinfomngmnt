@@ -14,9 +14,9 @@ package org.remus.infomngmnt.mindmap.extension;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.create.PostCreationHandler;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.create.PostCreationHandler;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

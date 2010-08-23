@@ -17,16 +17,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.xmind.ui.internal.WorkbookFactory;
 import org.xmind.ui.mindmap.MindMapUI;
 
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mindmap.MindmapActivator;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

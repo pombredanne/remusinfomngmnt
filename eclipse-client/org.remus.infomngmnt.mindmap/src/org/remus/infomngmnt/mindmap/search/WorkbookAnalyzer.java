@@ -19,17 +19,17 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.remus.BinaryReference;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.search.analyzer.IAnalyzer;
+import org.eclipse.remus.util.InformationUtil;
 import org.xmind.core.ISheet;
 import org.xmind.core.ITopic;
 import org.xmind.core.IWorkbook;
 import org.xmind.ui.internal.editor.WorkbookRef;
 import org.xmind.ui.internal.editor.WorkbookRefManager;
 
-import org.remus.infomngmnt.BinaryReference;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.search.analyzer.IAnalyzer;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

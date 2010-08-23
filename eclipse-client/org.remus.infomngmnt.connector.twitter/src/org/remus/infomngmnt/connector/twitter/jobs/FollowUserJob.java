@@ -16,10 +16,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.common.core.operation.CancelableJob;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.common.core.operation.CancelableJob;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import twitter4j.Twitter;
 

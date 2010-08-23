@@ -33,14 +33,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.remus.common.core.streams.StreamUtil;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.StatusCreator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

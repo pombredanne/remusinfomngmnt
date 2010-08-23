@@ -21,6 +21,16 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.desktop.extension.AbstractTraySection;
+import org.eclipse.remus.uimodel.TraySection;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -31,21 +41,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.ui.MessageComposite;
 import org.remus.infomngmnt.connector.twitter.ui.MessageHyperLinkAdapter;
 import org.remus.infomngmnt.connector.twitter.ui.actions.TweetAction;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.desktop.extension.AbstractTraySection;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.uimodel.TraySection;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

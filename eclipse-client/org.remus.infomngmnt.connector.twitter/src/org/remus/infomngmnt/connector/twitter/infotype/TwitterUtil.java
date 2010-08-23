@@ -20,20 +20,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.SynchronizationState;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.remote.RemoteActivator;
+import org.eclipse.remus.core.remote.services.IRepositoryService;
+import org.eclipse.remus.core.remote.sync.SyncUtil;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.model.remote.IRepository;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.SynchronizationState;
-import org.remus.infomngmnt.common.core.util.StringUtils;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.remote.RemoteActivator;
-import org.remus.infomngmnt.core.remote.services.IRepositoryService;
-import org.remus.infomngmnt.core.remote.sync.SyncUtil;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.model.remote.IRepository;
 
 import twitter4j.DirectMessage;
 import twitter4j.Status;

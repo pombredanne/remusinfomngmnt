@@ -14,8 +14,8 @@ package org.remus.infomngmnt.connector.twitter.ui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.remus.common.ui.UIUtil;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.connector.twitter.jobs.SendMessageJob;
 import org.remus.infomngmnt.connector.twitter.ui.TweetDialog;
 

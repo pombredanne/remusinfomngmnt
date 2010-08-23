@@ -11,6 +11,12 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.jface.AnnotatingQuickFixTextBox;
+import org.eclipse.remus.core.remote.security.CredentialProvider;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.ImageTransfer;
@@ -32,14 +38,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.jobs.UploadImageJob;
-import org.remus.infomngmnt.core.remote.security.CredentialProvider;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.StatusCreator;
 
 public class TweetDialog extends TitleAreaDialog {
 

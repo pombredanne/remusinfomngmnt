@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.PopupDialog;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.image.CommonImageRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -13,8 +15,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

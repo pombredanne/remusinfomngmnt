@@ -17,13 +17,13 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.connector.twitter.jobs.SendMessageJob;
 import org.remus.infomngmnt.connector.twitter.ui.TweetDialog;
-import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

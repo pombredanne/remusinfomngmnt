@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.remus.common.ui.image.ResourceManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.GridData;
@@ -19,7 +20,6 @@ import org.remus.infomngmnt.birtreport.extension.IReportTemplate;
 import org.remus.infomngmnt.birtreport.extension.ITemplateParameter;
 import org.remus.infomngmnt.birtreport.extension.ParameterControlManager;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 
 public class ParameterSelectionPage extends WizardPage {
 

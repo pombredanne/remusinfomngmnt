@@ -5,6 +5,13 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.ui.category.CategorySmartField;
+import org.eclipse.remus.ui.viewer.provider.InformationUnitLabelProvider;
+import org.eclipse.remus.util.CategoryUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -15,15 +22,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
-import org.remus.infomngmnt.Category;
 import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.ui.category.CategorySmartField;
-import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
-import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /*******************************************************************************
  * Copyright (c) 2009 Tom Seidel, Remus Software

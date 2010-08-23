@@ -17,14 +17,13 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.remus.rules.RuleValue;
+import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
+import org.eclipse.remus.ui.rules.script.DefaultScriptConstants;
+import org.eclipse.remus.ui.rules.service.ICreationTrigger;
+import org.eclipse.remus.ui.rules.transfer.TransferWrapper;
+import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
 import org.eclipse.swt.widgets.Display;
-
-import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.ui.rules.script.DefaultScriptConstants;
-import org.remus.infomngmnt.ui.rules.service.ICreationTrigger;
-import org.remus.infomngmnt.ui.rules.transfer.TransferWrapper;
-import org.remus.infomngmnt.ui.rules.wizard.NewObjectWizardDelegate;
-import org.remus.rules.RuleValue;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -3,7 +3,7 @@
 <plugin>
    <extension-point id="pdf2image" name="pdf2image" schema="schema/pdf2image.exsd"/>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
             name="PDF Document"
@@ -13,7 +13,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.pdf.ui.PdfMetadaEditPage"
             icon="icons/pdf.png"
@@ -61,7 +61,7 @@
       </initializer>
    </extension>
    <extension
-         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+         point="org.eclipse.remus.js.browserReferenceResource">
       <referenceResource
             id="org.remus.infomngmnt.pdf.nextbutton"
             resource="tinyslider/right.gif">
@@ -78,14 +78,14 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.ui.infotypes"
+            category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.pdf.preferences.RendererPreferencePage"
             id="org.remus.infomngmnt.pdf.page1"
             name="Pdf">
       </page>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <index
             analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
             node="author"
@@ -98,7 +98,7 @@
       </secondaryIndex>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/pdf.png"
             infotype="PDF">
@@ -206,13 +206,13 @@
       </handler>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <creationtrigger
             class="org.remus.infomngmnt.pdf.ui.PdfCreationTrigger"
             typeId="PDF">
       </creationtrigger>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="PDF">
       </validTransfers>
    </extension>

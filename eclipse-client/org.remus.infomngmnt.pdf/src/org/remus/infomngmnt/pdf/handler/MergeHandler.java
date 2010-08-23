@@ -17,10 +17,10 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

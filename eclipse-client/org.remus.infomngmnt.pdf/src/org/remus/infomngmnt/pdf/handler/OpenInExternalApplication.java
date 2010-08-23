@@ -18,11 +18,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.program.Program;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

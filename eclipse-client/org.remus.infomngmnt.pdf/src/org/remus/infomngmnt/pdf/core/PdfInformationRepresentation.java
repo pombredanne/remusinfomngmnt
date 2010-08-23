@@ -28,18 +28,18 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.js.rendering.FreemarkerRenderer;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.pdf.extension.IPdfImageRenderer;
 import org.remus.infomngmnt.pdf.extension.ImageInformation;
 import org.remus.infomngmnt.pdf.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.pdf.service.IPDF2ImageExtensionService;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

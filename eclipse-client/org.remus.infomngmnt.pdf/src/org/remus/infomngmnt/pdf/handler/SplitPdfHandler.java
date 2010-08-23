@@ -24,13 +24,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

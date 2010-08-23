@@ -40,6 +40,15 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.ComboBindingWidget;
+import org.eclipse.remus.ui.databinding.SpinnerSliderBindingWidget;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -57,20 +66,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.pdf.extension.IPdf2ImageRenderer;
 import org.remus.infomngmnt.pdf.extension.IPdfImageRenderer;
 import org.remus.infomngmnt.pdf.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.pdf.service.IPDF2ImageExtensionService;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.ui.databinding.SpinnerSliderBindingWidget;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

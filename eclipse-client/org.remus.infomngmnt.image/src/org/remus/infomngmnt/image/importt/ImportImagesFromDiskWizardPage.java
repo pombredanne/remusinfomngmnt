@@ -18,6 +18,11 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.wizards.IValidatingWizard;
+import org.eclipse.remus.common.ui.wizards.WizardValidatingUtil;
+import org.eclipse.remus.ui.category.CategoryBrowser;
+import org.eclipse.remus.ui.databinding.BeansBindingUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,12 +34,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.wizards.IValidatingWizard;
-import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
 import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.ui.category.CategoryBrowser;
-import org.remus.infomngmnt.ui.databinding.BeansBindingUtil;
 
 public class ImportImagesFromDiskWizardPage extends WizardPage implements IValidatingWizard {
 

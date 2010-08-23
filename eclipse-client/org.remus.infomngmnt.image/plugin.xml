@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             name="Photo/Graphics"
             presentation="org.remus.infomngmnt.image.core.ImageInformationRepresentation"
@@ -25,7 +25,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.image.ui.ImageEditPage"
             icon="icons/iconexperience/photo_landscape_edit.png"
@@ -44,7 +44,7 @@
       </perspectiveExtension>
    </extension>
    <extension
-         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+         point="org.eclipse.remus.js.browserReferenceResource">
       <referenceResource
             id="org.remus.infomngmnt.image.showCommentImage"
             resource="icons/iconexperience/messages.png">
@@ -60,7 +60,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.desktop.trayAction">
+         point="org.eclipse.remus.ui.desktop.trayAction">
       <trayAction
             class="org.remus.infomngmnt.image.tray.CreateScreenShotAction"
             icon="icons/iconexperience/screenshot_new.png"
@@ -69,17 +69,17 @@
       </trayAction>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="IMAGE">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.imagetransfer"
+            transferId="org.eclipse.remus.core.imagetransfer"
             typeId="IMAGE">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.urlTransfer"
+            transferId="org.eclipse.remus.core.urlTransfer"
             typeId="IMAGE">
       </validTransfers>
       <creationtrigger
@@ -88,14 +88,14 @@
       </creationtrigger>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/photo_landscape.png"
             infotype="IMAGE">
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <secondaryIndex
             class="org.remus.infomngmnt.image.internal.index.CommentIndexer"
             node="links"

@@ -15,11 +15,11 @@ import java.awt.Point;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.util.InformationUtil;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * A command to add a Shape to a ShapeDiagram. The command can be undone or

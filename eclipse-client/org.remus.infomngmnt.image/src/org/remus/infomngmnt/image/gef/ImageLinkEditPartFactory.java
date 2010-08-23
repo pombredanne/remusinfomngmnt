@@ -13,8 +13,8 @@ package org.remus.infomngmnt.image.gef;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
+import org.eclipse.remus.InformationUnit;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 

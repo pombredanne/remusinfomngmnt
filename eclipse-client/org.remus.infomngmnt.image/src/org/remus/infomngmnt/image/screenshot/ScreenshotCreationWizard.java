@@ -15,11 +15,11 @@ package org.remus.infomngmnt.image.screenshot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.rules.RulesFactory;
 import org.eclipse.swt.graphics.ImageData;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.image.ui.ImageCreationTrigger;
-import org.remus.rules.RulesFactory;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

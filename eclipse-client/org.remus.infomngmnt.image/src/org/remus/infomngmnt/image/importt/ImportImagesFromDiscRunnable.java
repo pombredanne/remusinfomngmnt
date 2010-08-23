@@ -25,20 +25,20 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.util.IdFactory;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.edit.DisposableEditingDomain;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.CategoryUtil;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.IdFactory;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
-import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.CategoryUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

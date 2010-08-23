@@ -38,14 +38,14 @@ import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * EditPart for the a ShapesDiagram instance.

@@ -7,18 +7,18 @@ Bundle-Activator: org.remus.infomngmnt.connector.flickr.FlickrPlugin
 Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.remus.infomngmnt.core,
- org.remus.infomngmnt.ui,
+ org.eclipse.remus.core,
+ org.eclipse.remus.ui,
  org.eclipse.equinox.security;bundle-version="1.0.1",
  org.remus.infomngmnt.image,
  org.apache.commons.lang;bundle-version="2.3.0",
  org.eclipse.ecf.filetransfer;bundle-version="2.0.0",
  org.eclipse.ecf;bundle-version="2.0.0",
- org.remus.infomngmnt.core.remote;bundle-version="0.1.0",
- org.remus.infomngmnt.model;bundle-version="0.1.0",
- org.remus.infomngmnt.ui.remote;bundle-version="0.1.0",
- org.remus.infomngmnt.common.io;bundle-version="0.1.0",
- org.remus.infomngmnt.services;bundle-version="0.1.0"
+ org.eclipse.remus.core.remote;bundle-version="0.1.0",
+ org.eclipse.remus.model;bundle-version="0.1.0",
+ org.eclipse.remus.ui.remote;bundle-version="0.1.0",
+ org.eclipse.remus.common.io;bundle-version="0.1.0",
+ org.eclipse.remus.services;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/flickrapi-1.1.jar,

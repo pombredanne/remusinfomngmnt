@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remote.remoteRepository">
+         point="org.eclipse.remus.core.remote.remoteRepository">
       <repository-connector
       		id="org.remus.infomngmnt.connector.flickr."
             class="org.remus.infomngmnt.connector.flickr.FlickrConnector"
@@ -30,7 +30,7 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+         point="org.eclipse.remus.ui.remote.repositoryUi">
       <respository
             icon="icons/flickr.png"
             id="org.remus.infomngmnt.connector.flickr.ui"
@@ -67,10 +67,10 @@
                            ifEmpty="false">
                         <and>
                            <test
-                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
+                                 property="org.eclipse.remus.remote.canCommitOrReplace">
                            </test>
                            <test
-                                 property="org.remus.infomngmnt.remote.repositoryIdEquals"
+                                 property="org.eclipse.remus.remote.repositoryIdEquals"
                                  value="org.remus.infomngmnt.connector.flickr.">
                            </test>
                         </and>

@@ -21,17 +21,17 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.RemoteObject;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.common.io.transfer.DownloadFileJob;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.remote.RemoteException;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RemoteObject;
 import org.remus.infomngmnt.audio.AudioActivator;
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
 import org.remus.infomngmnt.connector.rss.RssConnector;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import com.sun.syndication.feed.synd.SyndCategory;
 import com.sun.syndication.feed.synd.SyndContent;

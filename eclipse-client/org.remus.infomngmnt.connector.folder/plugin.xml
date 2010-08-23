@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remote.remoteRepository">
+         point="org.eclipse.remus.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.connector.folder.FolderConnector"
             id="org.remus.infomngmnt.connector.folder.folder"
@@ -10,7 +10,7 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+         point="org.eclipse.remus.ui.remote.repositoryUi">
       <respository
             icon="icons/iconexperience/folder.png"
             id="org.remus.infomngmnt.connector.folder.respository1"

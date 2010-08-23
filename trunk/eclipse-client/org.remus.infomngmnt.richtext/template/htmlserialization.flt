@@ -1,4 +1,4 @@
-<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#ftl ns_prefixes={"D":"http://eclipse.org/remus/1.0"}>
 <#setting url_escaping_charset="UTF-8">  
 <#assign infoUnit = doc.InformationUnit>
 <#assign hasText= infoUnit["count(@stringValue)"] != 0>
@@ -9,8 +9,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_images}"></script>
-  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_curvycorner}"></script>
+  <script src="${.globals.sharedResources.org_eclipse_remus_js_images}"></script>
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_js_curvycorner}"></script>
   <script type="text/JavaScript">
 	  window.onload = function()
 	  {

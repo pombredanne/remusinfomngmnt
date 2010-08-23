@@ -12,11 +12,11 @@
 
 package org.remus.infomngmnt.richtext.wizard;
 
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
 import org.eclipse.swt.widgets.Composite;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -14,10 +14,7 @@ package org.remus.infomngmnt.richtext.editor;
 
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -28,12 +25,20 @@ import javax.xml.transform.stream.StreamResult;
 import org.cyberneko.html.parsers.DOMParser;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.eclipse.remus.ui.widgets.databinding.RichTextBindingWidget;
+import org.eclipse.remus.ui.widgets.databinding.RichTextWidget;
+import org.eclipse.remus.ui.widgets.richtext.ActionConfiguration;
+import org.eclipse.remus.ui.widgets.richtext.actions.InsertEditAnchorAction;
+import org.eclipse.remus.ui.widgets.richtext.actions.InsertEditImageAction;
+import org.eclipse.remus.ui.widgets.richtext.actions.InsertEditLinkAction;
+import org.eclipse.remus.ui.widgets.richtext.actions.UnlinkAction;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.forms.IManagedForm;
@@ -46,21 +51,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
-import org.remus.infomngmnt.ui.widgets.databinding.RichTextBindingWidget;
-import org.remus.infomngmnt.ui.widgets.databinding.RichTextWidget;
-import org.remus.infomngmnt.ui.widgets.richtext.ActionConfiguration;
-import org.remus.infomngmnt.ui.widgets.richtext.actions.HrAction;
-import org.remus.infomngmnt.ui.widgets.richtext.actions.InsertEditAnchorAction;
-import org.remus.infomngmnt.ui.widgets.richtext.actions.InsertEditImageAction;
-import org.remus.infomngmnt.ui.widgets.richtext.actions.InsertEditLinkAction;
-import org.remus.infomngmnt.ui.widgets.richtext.actions.UnlinkAction;
-
 import de.spiritlink.richhtml4eclipse.widgets.AllActionConstants;
-import de.spiritlink.richhtml4eclipse.widgets.EventConstants;
-import de.spiritlink.richhtml4eclipse.widgets.JavaScriptCommands;
 import de.spiritlink.richhtml4eclipse.widgets.PropertyConstants;
 
 /**
@@ -129,7 +120,8 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 				.add(new InsertEditAnchorAction(this.richtext.getComposer()));
 		this.toolsActionsToolbarManager.add(new InsertEditLinkAction(this.richtext.getComposer()));
 		this.toolsActionsToolbarManager.add(new UnlinkAction(this.richtext.getComposer()));
-		this.toolsActionsToolbarManager.add(new HrAction(this.richtext.getComposer()));
+		// this.toolsActionsToolbarManager.add(new
+		// HrAction(this.richtext.getComposer()));
 		ActionConfiguration.fillToolsToolbar(this.richtext.getComposer(),
 				this.toolsActionsToolbarManager);
 		this.toolsActionsToolbarManager.update(true);
@@ -207,35 +199,18 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 				}
 			}
 		};
-		this.richtext.getComposer().addListener(EventConstants.ALL, listener);
-		this.richtext.getComposer().execute(JavaScriptCommands.GET_HTML);
-		while (html[0] == null) {
-			if (!getSite().getShell().getDisplay().readAndDispatch()) {
-				getSite().getShell().getDisplay().sleep();
-			}
-		}
-		getModelObject().setStringValue(html[0]);
-		this.richtext.getComposer().removeListener(EventConstants.ALL, listener);
+		// this.richtext.getComposer().addListener(EventConstants.ALL,
+		// listener);
+		// this.richtext.getComposer().execute(JavaScriptCommands.GET_HTML);
+		// while (html[0] == null) {
+		// if (!getSite().getShell().getDisplay().readAndDispatch()) {
+		// getSite().getShell().getDisplay().sleep();
+		// }
+		// }
+		// getModelObject().setStringValue(html[0]);
+		// this.richtext.getComposer().removeListener(EventConstants.ALL,
+		// listener);
 
-	}
-
-	private static String[] getFontList() {
-		Set s = new HashSet();
-		// Add names of all bitmap fonts.
-		FontData[] fds = Display.getCurrent().getFontList(null, false);
-		for (int i = 0; i < fds.length; ++i) {
-			s.add(fds[i].getName());
-		}
-		// Add names of all scalable fonts.
-		fds = Display.getCurrent().getFontList(null, true);
-		for (int i = 0; i < fds.length; ++i) {
-			s.add(fds[i].getName());
-		}
-		// Sort the result and print it.
-		String[] answer = new String[s.size()];
-		s.toArray(answer);
-		Arrays.sort(answer);
-		return answer;
 	}
 
 }

@@ -27,8 +27,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
+import org.eclipse.remus.common.core.streams.StringOutputStream;
 
-import org.remus.infomngmnt.common.core.streams.StringOutputStream;
 import org.remus.oda.Dataset;
 import org.remus.oda.OdaFactory;
 import org.remus.oda.OdaPackage;

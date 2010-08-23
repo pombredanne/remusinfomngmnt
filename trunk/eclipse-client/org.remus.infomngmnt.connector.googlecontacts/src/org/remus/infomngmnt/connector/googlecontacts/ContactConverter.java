@@ -22,12 +22,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.model.InformationStructureRead;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.contacts.Birthday;

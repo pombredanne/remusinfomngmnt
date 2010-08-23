@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remote.remoteRepository">
+         point="org.eclipse.remus.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.connector.googlecontacts.ContactsRepository"
             credentialprovider="org.remus.infomngmnt.connector.googlecontacts.GoogleContactsCredentialProvider"
@@ -120,7 +120,7 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+         point="org.eclipse.remus.ui.remote.repositoryUi">
       <respository
             icon="icons/repository.png"
             id="org.remus.infomngmnt.connector.googlecontacts.ui"

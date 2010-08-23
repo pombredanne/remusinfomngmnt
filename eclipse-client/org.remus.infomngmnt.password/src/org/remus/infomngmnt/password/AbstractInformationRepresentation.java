@@ -21,17 +21,16 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
-import org.remus.infomngmnt.util.StatusCreator;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.js.rendering.FreemarkerRenderer;
+import org.eclipse.remus.util.StatusCreator;
 
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
  */
 public class AbstractInformationRepresentation extends
-		org.remus.infomngmnt.core.extension.AbstractInformationRepresentation {
+		org.eclipse.remus.core.extension.AbstractInformationRepresentation {
 
 	public AbstractInformationRepresentation() {
 		// TODO Auto-generated constructor stub

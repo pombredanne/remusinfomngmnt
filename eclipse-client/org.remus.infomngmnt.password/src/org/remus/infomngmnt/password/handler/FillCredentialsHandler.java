@@ -17,15 +17,15 @@ import java.util.ArrayList;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.swt.DisplayKeyPoster;
+import org.eclipse.remus.common.ui.swt.PostEvent;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.swt.DisplayKeyPoster;
-import org.remus.infomngmnt.common.ui.swt.PostEvent;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.password.PasswordPlugin;
-import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

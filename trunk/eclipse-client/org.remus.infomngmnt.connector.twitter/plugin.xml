@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remote.remoteRepository">
+         point="org.eclipse.remus.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.connector.twitter.TwitterRepository"
             credentialprovider="org.remus.infomngmnt.connector.twitter.TwitterCredentials"
@@ -18,7 +18,7 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+         point="org.eclipse.remus.ui.remote.repositoryUi">
       <respository
             icon="icons/twitter.png"
             id="org.remus.infomngmnt.connector.twitter.ui"
@@ -27,7 +27,7 @@
       </respository>
    </extension>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="false"
             excludeFromIndex="false"
@@ -52,7 +52,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.connector.twitter.ui.TwitterEditPage"
             icon="icons/iconexperience/messages.png"
@@ -92,10 +92,10 @@
                            ifEmpty="false">
                         <and>
                            <test
-                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
+                                 property="org.eclipse.remus.remote.canCommitOrReplace">
                            </test>
                            <test
-                                 property="org.remus.infomngmnt.remote.repositoryIdEquals"
+                                 property="org.eclipse.remus.remote.repositoryIdEquals"
                                  value="org.remus.infomngmnt.connector.twitter.twitterConnector">
                            </test>
                         </and>
@@ -125,10 +125,10 @@
                   <iterate>
                      <and>
                         <test
-                              property="org.remus.infomngmnt.remote.canCommitOrReplace">
+                              property="org.eclipse.remus.remote.canCommitOrReplace">
                         </test>
                         <test
-                              property="org.remus.infomngmnt.remote.repositoryIdEquals"
+                              property="org.eclipse.remus.remote.repositoryIdEquals"
                               value="org.remus.infomngmnt.connector.twitter.twitterConnector">
                         </test>
                      </and>
@@ -149,7 +149,7 @@
       </propertyTester>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.desktop.traySection">
+         point="org.eclipse.remus.ui.desktop.traySection">
       <sectionBox
             id="org.remus.infomngmnt.connector.twitter.sectionBox"
             multiple="true"
@@ -165,7 +165,7 @@
       </sectionBox>
    </extension>
    <extension
-         point="org.remus.infomngmnt.core.job">
+         point="org.eclipse.remus.core.job">
       <job
             class="org.remus.infomngmnt.connector.twitter.jobs.RefreshAllFriendsJob"
             id="org.remus.infomngmnt.connector.twitter.sync"
@@ -191,14 +191,14 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.ui.repositories"
+            category="org.eclipse.remus.ui.repositories"
             class="org.remus.infomngmnt.connector.twitter.ui.TwitterPreferencePage2"
             id="org.remus.infomngmnt.connector.twitter"
             name="Twitter">
       </page>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/messages.png"
             infotype="TWITTER">
@@ -213,7 +213,7 @@
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <secondaryIndex
             class="org.remus.infomngmnt.connector.twitter.index.TwitterMessageIndexer"
             node="messages"

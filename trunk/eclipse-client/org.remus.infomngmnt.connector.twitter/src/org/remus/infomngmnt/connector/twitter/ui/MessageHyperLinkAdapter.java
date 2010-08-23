@@ -1,6 +1,8 @@
 package org.remus.infomngmnt.connector.twitter.ui;
 
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.remote.sync.SyncUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
@@ -18,7 +20,6 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.internal.forms.Messages;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.jobs.FollowUserJob;
@@ -26,7 +27,6 @@ import org.remus.infomngmnt.connector.twitter.jobs.UnFollowUserJob;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
 import org.remus.infomngmnt.connector.twitter.ui.actions.OpenConversationAction;
 import org.remus.infomngmnt.connector.twitter.ui.actions.SendDirectMessageAction;
-import org.remus.infomngmnt.core.remote.sync.SyncUtil;
 
 public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 	private Menu userPopup;

@@ -13,12 +13,12 @@
 package org.remus.infomngmnt.connector.twitter.tester;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.SynchronizationState;
+import org.eclipse.remus.ui.editors.InformationEditor;
 import org.eclipse.ui.part.EditorPart;
 
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.SynchronizationState;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

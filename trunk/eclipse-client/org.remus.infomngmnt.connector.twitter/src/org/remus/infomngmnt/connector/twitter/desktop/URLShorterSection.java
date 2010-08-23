@@ -16,6 +16,16 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.Notification;
+import org.eclipse.remus.NotificationImportance;
+import org.eclipse.remus.Severity;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.image.CommonImageRegistry;
+import org.eclipse.remus.core.services.INotificationManagerManager;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.desktop.extension.AbstractTraySection;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -30,17 +40,7 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.Notification;
-import org.remus.infomngmnt.NotificationImportance;
-import org.remus.infomngmnt.Severity;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.CommonImageRegistry;
 import org.remus.infomngmnt.connector.twitter.ui.ShrinkURLUtils;
-import org.remus.infomngmnt.core.services.INotificationManagerManager;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.desktop.extension.AbstractTraySection;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author tom

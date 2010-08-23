@@ -29,14 +29,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.util.InformationUtil;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.core.streams.ReaderInputStream;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -112,7 +111,7 @@ public class TwitterDetailledInfoRepresentation extends AbstractInformationRepre
 				+ ("output".equalsIgnoreCase(servletName) ? "" : "&__document=" + encodedDocumentName) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ "&__format=" + format //$NON-NLS-1$
 				+ "&__svg=" + String.valueOf(bSVGFlag) //$NON-NLS-1$
-				+ (WebViewer.LocaleTable.containsKey(locale) ? "&__locale=" + WebViewer.LocaleTable.get(locale) : "") //$NON-NLS-1$ //$NON-NLS-2$
+				+ (WebViewer.LOCALE_TABLE.containsKey(locale) ? "&__locale=" + WebViewer.LOCALE_TABLE.get(locale) : "") //$NON-NLS-1$ //$NON-NLS-2$
 				+ "&__designer=true" //$NON-NLS-1$
 				+ "&__masterpage=" + String.valueOf(bMasterPageContent) + getParameters(params); //$NON-NLS-1$
 

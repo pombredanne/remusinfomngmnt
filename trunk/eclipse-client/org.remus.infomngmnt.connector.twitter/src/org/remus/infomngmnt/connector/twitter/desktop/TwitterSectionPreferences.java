@@ -18,6 +18,13 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.desktop.extension.AbstractTrayPreferencePage;
+import org.eclipse.remus.ui.viewer.provider.NavigatorDecoratingLabelProvider;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,14 +37,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.desktop.extension.AbstractTrayPreferencePage;
-import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -13,8 +13,8 @@
 package org.remus.infomngmnt.connector.twitter.ui.actions;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.remus.common.ui.image.ResourceManager;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.jobs.AddFavoriteJob;
 

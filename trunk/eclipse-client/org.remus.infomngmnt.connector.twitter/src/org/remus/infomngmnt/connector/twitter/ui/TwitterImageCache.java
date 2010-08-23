@@ -28,14 +28,14 @@ import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.remus.common.core.streams.StreamUtil;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.common.io.transfer.DownloadFileJob;
+import org.eclipse.remus.core.remote.sync.SyncUtil;
+import org.eclipse.remus.model.remote.IRepository;
 
-import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
-import org.remus.infomngmnt.core.remote.sync.SyncUtil;
-import org.remus.infomngmnt.model.remote.IRepository;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -72,7 +72,7 @@ public class TwitterImageCache {
 			try {
 				file2.createNewFile();
 				final File tempFile = File.createTempFile("avatar",
-						org.remus.infomngmnt.resources.util.ResourceUtil.TMPFILE_FILE_EXTENSION);
+						org.eclipse.remus.resources.util.ResourceUtil.TMPFILE_FILE_EXTENSION);
 				DownloadFileJob job = new DownloadFileJob(imageUrl, tempFile,
 						getFileReceiveAdapter());
 				job.schedule();

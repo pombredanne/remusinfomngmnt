@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://remus-software.org/infomngmnt/1.0" xsi:schemaLocation="http://remus-software.org/infomngmnt/1.0 ../org.remus.infomngmnt.model/model/infomngmnt.ecore" canHaveBinaryReferences="true">
+<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://eclipse.org/remus/1.0" xsi:schemaLocation="http://eclipse.org/remus/1.0 ../org.eclipse.remus.model/model/infomngmnt.ecore" canHaveBinaryReferences="true">
   <structureItems xsi:type="infomngmnt:DynamicStructure" id="users" upperBound="-1">
     <structureItems type="STRING" label="A single user" id="user" createAlways="false">
       <structureItems type="STRING" id="username"/>

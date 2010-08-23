@@ -20,16 +20,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.remote.sync.SyncUtil;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.ui.ConversationPopup;
-import org.remus.infomngmnt.core.remote.sync.SyncUtil;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import twitter4j.Status;
 import twitter4j.Twitter;

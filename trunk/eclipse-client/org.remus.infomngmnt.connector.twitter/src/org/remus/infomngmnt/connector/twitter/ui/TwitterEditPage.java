@@ -18,6 +18,11 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.remote.sync.SyncUtil;
+import org.eclipse.remus.ui.editors.InformationEditor;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IManagedForm;
@@ -26,17 +31,12 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
 import org.remus.infomngmnt.connector.twitter.ui.actions.Add2FavoriteActions;
 import org.remus.infomngmnt.connector.twitter.ui.actions.ReplyAction;
 import org.remus.infomngmnt.connector.twitter.ui.actions.RetweetAction;
-import org.remus.infomngmnt.core.remote.sync.SyncUtil;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

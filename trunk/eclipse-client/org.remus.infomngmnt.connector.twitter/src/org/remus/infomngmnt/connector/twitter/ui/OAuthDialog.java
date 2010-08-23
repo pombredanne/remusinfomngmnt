@@ -6,6 +6,7 @@ import org.cyberneko.html.parsers.DOMParser;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.ProgressEvent;
@@ -20,7 +21,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;

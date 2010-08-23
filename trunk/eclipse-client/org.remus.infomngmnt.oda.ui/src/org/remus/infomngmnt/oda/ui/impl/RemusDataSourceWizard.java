@@ -40,6 +40,20 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.DynamicStructure;
+import org.eclipse.remus.InformationStructureDefinition;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.extension.IInfoType;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.core.services.IInformationTypeHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.category.CategorySmartField;
+import org.eclipse.remus.ui.viewer.provider.StructureDefinitionLabelProvider;
+import org.eclipse.remus.util.CategoryUtil;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -54,22 +68,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.DynamicStructure;
-import org.remus.infomngmnt.InformationStructureDefinition;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.oda.core.Constants;
 import org.remus.infomngmnt.oda.ui.OdaUiActivator;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.category.CategorySmartField;
-import org.remus.infomngmnt.ui.viewer.provider.StructureDefinitionLabelProvider;
-import org.remus.infomngmnt.util.CategoryUtil;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

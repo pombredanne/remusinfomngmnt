@@ -13,11 +13,11 @@
 package org.remus.infomngmnt.oda.ui.impl;
 
 import org.eclipse.jface.viewers.IFontProvider;
+import org.eclipse.remus.InformationStructureItem;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.ui.viewer.provider.StructureDefinitionLabelProvider;
 import org.eclipse.swt.graphics.Font;
 
-import org.remus.infomngmnt.InformationStructureItem;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.ui.viewer.provider.StructureDefinitionLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

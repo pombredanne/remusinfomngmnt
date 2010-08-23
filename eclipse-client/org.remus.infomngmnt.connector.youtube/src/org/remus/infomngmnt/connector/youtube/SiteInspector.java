@@ -23,8 +23,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.remus.common.core.streams.StreamUtil;
 
-import org.remus.infomngmnt.common.core.streams.StreamUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

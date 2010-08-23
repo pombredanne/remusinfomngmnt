@@ -14,9 +14,9 @@ package org.remus.infomngmnt.connector.youtube.readonly;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.ui.remote.IRepositoryActionContributor;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
-import org.remus.infomngmnt.ui.remote.IRepositoryActionContributor;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

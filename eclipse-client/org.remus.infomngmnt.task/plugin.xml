@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="false"
             excludeFromIndex="false"
@@ -13,7 +13,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.task.ui.TaskEditPage"
             icon="icons/iconexperience/task_edit.png"
@@ -45,7 +45,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.core.job">
+         point="org.eclipse.remus.core.job">
       <job
             class="org.remus.infomngmnt.task.job.CheckTaskDueJob"
             id="org.remus.infomngmnt.task.checkDue"
@@ -54,7 +54,7 @@
       </job>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.desktop.traySection">
+         point="org.eclipse.remus.ui.desktop.traySection">
       <sectionBox
             id="org.remus.infomngmnt.task.workLog"
             multiple="false"
@@ -63,14 +63,14 @@
       </sectionBox>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/task.png"
             infotype="TASK">
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <index
             analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
             node="TASK"
@@ -88,29 +88,29 @@
       </secondaryIndex>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="TASK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="TASK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.imagetransfer"
+            transferId="org.eclipse.remus.core.imagetransfer"
             typeId="TASK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.rftTransfer"
+            transferId="org.eclipse.remus.core.rftTransfer"
             typeId="TASK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="TASK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.urlTransfer"
+            transferId="org.eclipse.remus.core.urlTransfer"
             typeId="TASK">
       </validTransfers>
       <creationtrigger

@@ -21,16 +21,16 @@ import java.util.Set;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.Notification;
+import org.eclipse.remus.NotificationImportance;
+import org.eclipse.remus.Severity;
+import org.eclipse.remus.core.jobs.AbstractJob;
+import org.eclipse.remus.util.InformationUtil;
 
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.Notification;
-import org.remus.infomngmnt.NotificationImportance;
-import org.remus.infomngmnt.Severity;
-import org.remus.infomngmnt.core.jobs.AbstractJob;
 import org.remus.infomngmnt.task.TaskActivator;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

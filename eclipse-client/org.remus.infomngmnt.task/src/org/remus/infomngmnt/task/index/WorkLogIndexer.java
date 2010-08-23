@@ -17,12 +17,12 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.search.analyzer.ISecondaryAnalyzer;
+import org.eclipse.remus.search.analyzer.ISecondaryIndex;
+import org.eclipse.remus.search.analyzer.SecondaryIndex;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.search.analyzer.ISecondaryAnalyzer;
-import org.remus.infomngmnt.search.analyzer.ISecondaryIndex;
-import org.remus.infomngmnt.search.analyzer.SecondaryIndex;
 import org.remus.infomngmnt.task.TaskActivator;
 
 /**

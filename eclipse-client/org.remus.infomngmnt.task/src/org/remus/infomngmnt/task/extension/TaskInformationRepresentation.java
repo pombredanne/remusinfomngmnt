@@ -18,11 +18,11 @@ import java.util.Date;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.core.model.InformationStructureRead;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.task.TaskActivator;
 
 /**

@@ -12,9 +12,10 @@
 
 package org.remus.infomngmnt.task.ui.wizard;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
+
 import org.remus.infomngmnt.task.TaskActivator;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

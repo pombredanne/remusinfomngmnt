@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
             name="MindMap"
@@ -24,7 +24,7 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.mindmap.ui.MindMapEditPage"
             icon="icons/iconexperience/mindmap_edit.png"
@@ -110,19 +110,19 @@
       </handler>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.analyzer">
+         point="org.eclipse.remus.search.analyzer">
       <analyzer
             class="org.remus.infomngmnt.mindmap.search.WorkbookAnalyzer"
             id="org.remus.infomngmnt.mindmap.analyzer">
       </analyzer>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="MINDMAP">
       </validTransfers>
       <creationtrigger
@@ -131,7 +131,7 @@
       </creationtrigger>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/brain.png"
             infotype="MINDMAP">

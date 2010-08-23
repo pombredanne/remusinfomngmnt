@@ -14,6 +14,9 @@ package org.remus.infomngmnt.mindmap.ui;
 
 import java.util.List;
 
+import org.eclipse.remus.BinaryReference;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -25,10 +28,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.BinaryReference;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mindmap.handler.OpenMindMapEditorHandler;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

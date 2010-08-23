@@ -15,17 +15,17 @@ package org.remus.infomngmnt.mindmap.extension;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.remus.BinaryReference;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.editors.editpage.AbstractDelegationEditorPart;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.xmind.ui.internal.editor.MindMapEditor;
 
-import org.remus.infomngmnt.BinaryReference;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mindmap.MindmapActivator;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractDelegationEditorPart;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

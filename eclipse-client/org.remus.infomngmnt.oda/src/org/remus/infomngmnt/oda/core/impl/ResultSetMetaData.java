@@ -12,15 +12,15 @@ import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.InformationStructureDefinition;
+import org.eclipse.remus.InformationStructureItem;
+import org.eclipse.remus.InformationStructureType;
+import org.eclipse.remus.core.extension.IInfoType;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.core.services.IInformationTypeHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
 
-import org.remus.infomngmnt.InformationStructureDefinition;
-import org.remus.infomngmnt.InformationStructureItem;
-import org.remus.infomngmnt.InformationStructureType;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.services.IInformationTypeHandler;
 import org.remus.infomngmnt.oda.core.OdaCoreActivator;
-import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.oda.Dataset;
 
 /**

@@ -3,6 +3,7 @@ package org.remus.infomngmnt.birtreport.ui;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.StatusDialog;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -15,7 +16,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.util.StatusCreator;
 
 public class ReportParameterDialog extends StatusDialog {
 	private Text text;

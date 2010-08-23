@@ -19,10 +19,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.remus.common.core.extension.PluginRegistryDynamic;
 
 import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
-import org.remus.infomngmnt.common.core.extension.PluginRegistryDynamic;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

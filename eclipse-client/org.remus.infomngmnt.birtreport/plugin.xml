@@ -3,7 +3,7 @@
 <plugin>
    <extension-point id="reporttemplate" name="reporttemplate" schema="schema/reporttemplate.exsd"/>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="true"
             excludeFromIndex="true"
@@ -14,7 +14,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.birtreport.ui.ReportParameterPage"
             icon="icons/parameter.gif"
@@ -99,9 +99,9 @@
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="REPORT">
       </validTransfers>
       <creationtrigger
@@ -110,7 +110,7 @@
       </creationtrigger>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/report.gif"
             infotype="REPORT">

@@ -13,6 +13,12 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.common.ui.wizards.WizardValidatingUtil;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
+import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -26,17 +32,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.extension.IReportTemplate;
 import org.remus.infomngmnt.birtreport.extension.ITemplateCategory;
 import org.remus.infomngmnt.birtreport.extension.ReportTemplateManager;
 import org.remus.infomngmnt.birtreport.internal.extension.ReportContentProvider;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.common.ui.wizards.WizardValidatingUtil;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.ui.operation.LoadFileToTmpFromPathRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -14,11 +14,11 @@ package org.remus.infomngmnt.birtreport.ui;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.swt.graphics.Image;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.birtreport.ReportActivator;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

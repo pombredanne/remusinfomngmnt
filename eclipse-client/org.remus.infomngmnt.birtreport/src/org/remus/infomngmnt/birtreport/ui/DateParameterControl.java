@@ -20,13 +20,13 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.remus.ui.widgets.DateCombo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
-import org.remus.infomngmnt.ui.widgets.DateCombo;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

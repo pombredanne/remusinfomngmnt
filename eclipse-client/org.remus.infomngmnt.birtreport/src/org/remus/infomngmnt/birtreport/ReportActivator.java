@@ -3,10 +3,10 @@ package org.remus.infomngmnt.birtreport;
 import org.eclipse.birt.report.viewer.ViewerPlugin;
 import org.eclipse.birt.report.viewer.utilities.SocketUtil;
 import org.eclipse.birt.report.viewer.utilities.WebViewer;
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle

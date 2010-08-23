@@ -17,21 +17,21 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.streams.FileUtil;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.Point;
 
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.streams.FileUtil;
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 public class LoadImageRunnable extends CancelableRunnable {
 

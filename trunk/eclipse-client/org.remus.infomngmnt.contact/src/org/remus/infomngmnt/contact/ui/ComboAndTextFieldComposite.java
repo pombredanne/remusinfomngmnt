@@ -20,19 +20,19 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.util.KeyValueObject;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.IEMFEditBindingProvider;
+import org.eclipse.remus.ui.databinding.TextBindingWidget;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.KeyValueObject;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.IEMFEditBindingProvider;
-import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

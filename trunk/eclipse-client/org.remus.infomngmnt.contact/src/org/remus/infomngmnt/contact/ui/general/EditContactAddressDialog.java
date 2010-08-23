@@ -23,6 +23,17 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.jface.BindingStatusDialog;
+import org.eclipse.remus.core.services.IGeoData;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.IEMFEditBindingProvider;
+import org.eclipse.remus.ui.databinding.TextBindingWidget;
+import org.eclipse.remus.ui.widgets.CountryCombo;
+import org.eclipse.remus.ui.widgets.databinding.CountryComboObservable;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,18 +46,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.jface.BindingStatusDialog;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.services.IGeoData;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.IEMFEditBindingProvider;
-import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
-import org.remus.infomngmnt.ui.widgets.CountryCombo;
-import org.remus.infomngmnt.ui.widgets.databinding.CountryComboObservable;
-import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditContactAddressDialog extends BindingStatusDialog {
 

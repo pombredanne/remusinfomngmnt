@@ -18,6 +18,8 @@ import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.jface.MultiLineStringFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -31,8 +33,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.jface.MultiLineStringFieldEditor;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
 

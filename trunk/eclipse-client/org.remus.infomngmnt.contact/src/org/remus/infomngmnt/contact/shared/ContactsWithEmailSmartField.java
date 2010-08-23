@@ -20,17 +20,17 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.eclipse.remus.common.fieldassist.SmartField;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.infotypes.service.IInformationTypeImage;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.common.fieldassist.SmartField;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

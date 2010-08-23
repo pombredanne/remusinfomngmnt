@@ -20,6 +20,14 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.jface.BindingStatusDialog;
+import org.eclipse.remus.ui.databinding.AbstractBindingWidget;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.ComboBindingWidget;
+import org.eclipse.remus.ui.databinding.IEMFEditBindingProvider;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -31,15 +39,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.jface.BindingStatusDialog;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.ui.databinding.AbstractBindingWidget;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.ui.databinding.IEMFEditBindingProvider;
-import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditContactPersonDialog extends BindingStatusDialog {
 

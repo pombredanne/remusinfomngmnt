@@ -31,6 +31,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -43,12 +48,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditContactEmailDialog extends StatusDialog {
 

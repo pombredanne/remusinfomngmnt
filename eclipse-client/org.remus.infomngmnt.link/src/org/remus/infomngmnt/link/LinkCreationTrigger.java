@@ -12,8 +12,9 @@
 
 package org.remus.infomngmnt.link;
 
+import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
+
 import org.remus.infomngmnt.link.ui.NewLinkWizard;
-import org.remus.infomngmnt.ui.rules.wizard.NewObjectWizardDelegate;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

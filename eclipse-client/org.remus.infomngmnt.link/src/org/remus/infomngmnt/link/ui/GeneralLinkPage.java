@@ -23,6 +23,10 @@ import org.eclipse.emf.databinding.EObjectObservableValue;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,13 +38,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.internal.ResourceManager;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

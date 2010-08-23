@@ -24,14 +24,14 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.remus.BinaryReference;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.util.CategoryUtil;
 
-import org.remus.infomngmnt.BinaryReference;
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.bibliographic.BibliographicActivator;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.util.CategoryUtil;
 
 public class XmlExportOperation implements IRunnableWithProgress {
 

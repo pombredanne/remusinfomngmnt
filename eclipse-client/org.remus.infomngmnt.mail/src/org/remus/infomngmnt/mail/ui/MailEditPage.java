@@ -20,6 +20,15 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.nebula.widgets.cdatetime.CDT;
 import org.eclipse.nebula.widgets.cdatetime.CDateTime;
+import org.eclipse.remus.common.ui.jface.AnnotatingQuickFixTextBox;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.databinding.BindingUtil;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.ComboBindingWidget;
+import org.eclipse.remus.ui.databinding.StyledTextBindingWidget;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.eclipse.remus.ui.widgets.databinding.CDateTimeBindingWidget;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,18 +42,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
 import org.remus.infomngmnt.contact.shared.ContactsWithEmailSmartField;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
-import org.remus.infomngmnt.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.ComboBindingWidget;
-import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
-import org.remus.infomngmnt.ui.widgets.databinding.CDateTimeBindingWidget;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

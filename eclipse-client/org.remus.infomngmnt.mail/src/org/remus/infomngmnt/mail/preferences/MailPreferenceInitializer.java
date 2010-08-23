@@ -15,10 +15,10 @@ package org.remus.infomngmnt.mail.preferences;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.mail.MailActivator;
 
 /**

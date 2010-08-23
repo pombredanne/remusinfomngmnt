@@ -14,11 +14,11 @@ package org.remus.infomngmnt.oda.ui.impl;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.remus.InformationStructure;
+import org.eclipse.remus.InformationStructureType;
+import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.swt.graphics.Image;
 
-import org.remus.infomngmnt.InformationStructure;
-import org.remus.infomngmnt.InformationStructureType;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.oda.Column;
 
 /**

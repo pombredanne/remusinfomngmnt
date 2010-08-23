@@ -25,6 +25,16 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.remus.AbstractInformationUnit;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.swt.DisplayKeyPoster;
+import org.eclipse.remus.common.ui.swt.PostEvent;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.services.RemusServiceTracker;
+import org.eclipse.remus.ui.desktop.extension.AbstractTraySection;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -39,17 +49,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-import org.remus.infomngmnt.AbstractInformationUnit;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.swt.DisplayKeyPoster;
-import org.remus.infomngmnt.common.ui.swt.PostEvent;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.services.IApplicationModel;
 import org.remus.infomngmnt.password.PasswordPlugin;
-import org.remus.infomngmnt.services.RemusServiceTracker;
-import org.remus.infomngmnt.ui.desktop.extension.AbstractTraySection;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -73,7 +73,7 @@ public class PasswordTraySection extends AbstractTraySection {
 	private ToolItem toolItem4;
 
 	@Override
-	public void init(final FormToolkit pToolkit, final org.remus.uimodel.TraySection section) {
+	public void init(final FormToolkit pToolkit, final org.eclipse.remus.uimodel.TraySection section) {
 		this.remusServiceTracker = new RemusServiceTracker(Platform
 				.getBundle(PasswordPlugin.PLUGIN_ID));
 		super.init(pToolkit, section);

@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.ui.desktop.traySection">
+         point="org.eclipse.remus.ui.desktop.traySection">
       <sectionBox
             id="org.remus.infomngmnt.password.desktop.pwd"
             multiple="false"

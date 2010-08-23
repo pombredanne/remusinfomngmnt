@@ -19,23 +19,23 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.search.Search;
+import org.eclipse.remus.search.ui.view.SearchView;
+import org.eclipse.remus.ui.viewer.provider.InformationUnitLabelProvider;
+import org.eclipse.remus.ui.viewer.provider.NavigatorDecoratingLabelProvider;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
-import org.remus.infomngmnt.search.Search;
-import org.remus.infomngmnt.search.ui.view.SearchView;
-import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
-import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

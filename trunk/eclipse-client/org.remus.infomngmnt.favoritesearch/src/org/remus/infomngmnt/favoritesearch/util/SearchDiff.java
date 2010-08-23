@@ -17,18 +17,18 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.search.Search;
+import org.eclipse.remus.search.SearchFactory;
+import org.eclipse.remus.search.SearchResult;
+import org.eclipse.remus.search.service.ISearchCallBack;
+import org.eclipse.remus.search.service.ISearchService;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
-import org.remus.infomngmnt.search.Search;
-import org.remus.infomngmnt.search.SearchFactory;
-import org.remus.infomngmnt.search.SearchResult;
-import org.remus.infomngmnt.search.service.ISearchCallBack;
-import org.remus.infomngmnt.search.service.ISearchService;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

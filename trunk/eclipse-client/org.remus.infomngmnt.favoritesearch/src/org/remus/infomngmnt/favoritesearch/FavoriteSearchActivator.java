@@ -1,11 +1,11 @@
 package org.remus.infomngmnt.favoritesearch;
 
+import org.eclipse.remus.search.service.IFavoriteSearchHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import org.remus.infomngmnt.favoritesearch.service.FavSearchHandler;
-import org.remus.infomngmnt.search.service.IFavoriteSearchHandler;
-import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle

@@ -34,15 +34,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.js.rendering.FreemarkerRenderer;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
 import org.remus.infomngmnt.sourcecode.PreferenceInitializer;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

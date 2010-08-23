@@ -20,6 +20,13 @@ import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,14 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

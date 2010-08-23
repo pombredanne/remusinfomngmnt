@@ -13,12 +13,12 @@
 package org.remus.infomngmnt.sourcecode.wizard;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

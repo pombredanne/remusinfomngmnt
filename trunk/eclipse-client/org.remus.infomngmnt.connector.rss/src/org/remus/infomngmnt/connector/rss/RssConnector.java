@@ -42,37 +42,37 @@ import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.core.security.ConnectContextFactory;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.RemoteContainer;
+import org.eclipse.remus.RemoteObject;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.SynchronizableObject;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.common.io.transfer.DownloadFileJob;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.commands.CreateBinaryReferenceCommand;
+import org.eclipse.remus.core.edit.DisposableEditingDomain;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.core.remote.AbstractExtensionRepository;
+import org.eclipse.remus.core.remote.RemoteActivator;
+import org.eclipse.remus.core.remote.RemoteException;
+import org.eclipse.remus.core.remote.services.IRepositoryService;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.model.remote.ILoginCallBack;
+import org.eclipse.remus.model.remote.IRepository;
+import org.eclipse.remus.util.StatusCreator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RemoteContainer;
-import org.remus.infomngmnt.RemoteObject;
-import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.commands.CreateBinaryReferenceCommand;
-import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.remote.RemoteActivator;
-import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.core.remote.services.IRepositoryService;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
-import org.remus.infomngmnt.model.remote.ILoginCallBack;
-import org.remus.infomngmnt.model.remote.IRepository;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import com.sun.syndication.feed.synd.SyndCategory;
 import com.sun.syndication.feed.synd.SyndContent;
@@ -415,7 +415,7 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 					IFile targetFile = addFileToInfoUnit.getTargetFile();
 					if (targetFile.exists()) {
 						((Element) node).setAttribute("src",
-								org.remus.infomngmnt.common.core.util.StringUtils.join("cid:",
+								org.eclipse.remus.common.core.util.StringUtils.join("cid:",
 										addFileToInfoUnit.getCreatedId()));
 						changed = true;
 					}

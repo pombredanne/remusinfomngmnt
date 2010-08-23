@@ -26,20 +26,20 @@ import org.eclipse.emf.query.statements.FROM;
 import org.eclipse.emf.query.statements.IQueryResult;
 import org.eclipse.emf.query.statements.SELECT;
 import org.eclipse.emf.query.statements.WHERE;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.Notification;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.edit.DisposableEditingDomain;
+import org.eclipse.remus.core.jobs.AbstractJob;
+import org.eclipse.remus.core.remote.services.IRepositoryService;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.Notification;
-import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.rss.RssActivator;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
-import org.remus.infomngmnt.core.jobs.AbstractJob;
-import org.remus.infomngmnt.core.remote.services.IRepositoryService;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

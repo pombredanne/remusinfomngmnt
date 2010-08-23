@@ -20,6 +20,11 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonBar;
+import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonComposite;
+import org.eclipse.remus.ui.collapsiblebutton.IBarSelectionChangeListener;
+import org.eclipse.remus.ui.collapsiblebutton.service.ICollapsibleButtonExtensionService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -34,11 +39,6 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IEvaluationService;
 
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonBar;
-import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonComposite;
-import org.remus.infomngmnt.ui.collapsiblebutton.IBarSelectionChangeListener;
-import org.remus.infomngmnt.ui.collapsiblebutton.service.ICollapsibleButtonExtensionService;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

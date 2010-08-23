@@ -1,6 +1,11 @@
 package org.remus.infomngmnt.welcome;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.remus.common.ui.html.OfflineBrowser;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.js.TemplateLocation;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.preference.UIPreferenceInitializer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.graphics.Image;
@@ -26,12 +31,6 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.ui.part.EditorPart;
-
-import org.remus.infomngmnt.common.ui.html.OfflineBrowser;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.jslib.TemplateLocation;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
 
 public class WelcomeEditor2 extends EditorPart {
 

@@ -27,6 +27,13 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonBar;
+import org.eclipse.remus.ui.editors.InformationEditor;
+import org.eclipse.remus.ui.editors.InformationEditorInput;
+import org.eclipse.remus.ui.viewer.NavigationViewer;
+import org.eclipse.remus.ui.viewer.ViewerActivator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IMemento;
@@ -40,13 +47,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonBar;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.editors.InformationEditorInput;
-import org.remus.infomngmnt.ui.viewer.NavigationViewer;
-import org.remus.infomngmnt.ui.viewer.ViewerActivator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -1,11 +1,11 @@
 package org.remus.infomngmnt.application;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.remus.services.IPerspectiveService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import org.remus.infomngmnt.application.internal.PerspectiveService;
-import org.remus.infomngmnt.services.IPerspectiveService;
 
 /**
  * The activator class controls the plug-in life cycle

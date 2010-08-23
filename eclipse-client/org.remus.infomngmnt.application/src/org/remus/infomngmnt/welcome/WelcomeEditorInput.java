@@ -13,11 +13,11 @@
 package org.remus.infomngmnt.welcome;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.ui.UIPlugin;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.ui.UIPlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

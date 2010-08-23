@@ -15,6 +15,15 @@ package org.remus.infomngmnt.ui.trayaction;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.service.ITrayService;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.desktop.extension.IToolbarItemProvider;
+import org.eclipse.remus.ui.editors.InformationEditor;
+import org.eclipse.remus.ui.editors.InformationEditorInput;
+import org.eclipse.remus.ui.viewer.dialogs.InfoUnitSelectionDialog;
+import org.eclipse.remus.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -25,15 +34,6 @@ import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.common.service.ITrayService;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.desktop.extension.IToolbarItemProvider;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.editors.InformationEditorInput;
-import org.remus.infomngmnt.ui.viewer.dialogs.InfoUnitSelectionDialog;
-import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

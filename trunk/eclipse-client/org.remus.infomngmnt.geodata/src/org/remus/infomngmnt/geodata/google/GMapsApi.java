@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.remus.core.services.IGeoData;
 
-import org.remus.infomngmnt.core.services.IGeoData;
 import org.remus.infomngmnt.geodata.GeoDataActivator;
 import org.remus.infomngmnt.geodata.preferences.GeoDataPreferenceInitializer;
 

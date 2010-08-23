@@ -15,10 +15,10 @@ package org.remus.infomngmnt.link.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
 import org.eclipse.swt.program.Program;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.ui.handlerutil.InformationHandlerUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

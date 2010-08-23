@@ -18,17 +18,17 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.commands.CreateBinaryReferenceCommand;
+import org.eclipse.remus.core.create.PostCreationHandler;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.util.InformationUtil;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.core.commands.CommandFactory;
-import org.remus.infomngmnt.core.commands.CreateBinaryReferenceCommand;
-import org.remus.infomngmnt.core.create.PostCreationHandler;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.operation.IndexWebPageRunnable;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

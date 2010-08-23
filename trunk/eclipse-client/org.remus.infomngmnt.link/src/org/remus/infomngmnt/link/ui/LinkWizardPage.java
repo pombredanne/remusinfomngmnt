@@ -2,6 +2,7 @@ package org.remus.infomngmnt.link.ui;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.remus.InformationUnit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -13,7 +14,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.internal.ResourceManager;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;

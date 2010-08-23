@@ -25,12 +25,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.util.StatusCreator;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.js.rendering.FreemarkerRenderer;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

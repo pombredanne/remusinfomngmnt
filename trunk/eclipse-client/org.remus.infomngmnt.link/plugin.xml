@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             name="Link"
             postCreationHandler="org.remus.infomngmnt.link.LinkCreationFactory"
@@ -12,7 +12,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.link.ui.EditLinkPage"
             icon="icons/iconexperience/link_edit.png"
@@ -45,7 +45,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.ui.infotypes"
+            category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.link.preferences.LinkEditorPreferencePage"
             id="org.remus.infomngmnt.link.preferencePage"
             name="Link">
@@ -68,7 +68,7 @@
       </perspectiveExtension>
    </extension>
    <extension
-         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+         point="org.eclipse.remus.js.browserReferenceResource">
       <referenceResource
             id="org.remus.infomngmnt.link.fittosizeimage"
             resource="icons/iconexperience/fit_to_size.png">
@@ -129,14 +129,14 @@
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/link.png"
             infotype="LINK">
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <index
             analyzer="org.remus.infomngmnt.search.HtmlAnalyzer"
             node="index"
@@ -144,13 +144,13 @@
       </index>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="LINK">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.urlTransfer"
+            transferId="org.eclipse.remus.core.urlTransfer"
             typeId="LINK">
       </validTransfers>
       <creationtrigger

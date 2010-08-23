@@ -26,6 +26,12 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.core.remote.ValidateConnectionJob;
+import org.eclipse.remus.core.remote.security.CredentialProvider;
+import org.eclipse.remus.core.remote.sync.SyncUtil;
+import org.eclipse.remus.model.remote.IRepository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -40,13 +46,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.googlecalendar.GoogleCalendarCredentialProvider;
-import org.remus.infomngmnt.core.remote.ValidateConnectionJob;
-import org.remus.infomngmnt.core.remote.security.CredentialProvider;
-import org.remus.infomngmnt.core.remote.sync.SyncUtil;
-import org.remus.infomngmnt.model.remote.IRepository;
 
 public class GoogleCalendarConnectionWizardPage extends WizardPage {
 

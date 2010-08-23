@@ -16,11 +16,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.model.InformationStructureRead;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
 
 import com.google.gdata.data.DateTime;

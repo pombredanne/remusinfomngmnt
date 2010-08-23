@@ -12,11 +12,11 @@
 package org.remus.infomngmnt.password;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>

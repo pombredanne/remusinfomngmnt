@@ -1,4 +1,4 @@
-<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
+<#ftl ns_prefixes={"D":"http://eclipse.org/remus/1.0"}>
 <#setting url_escaping_charset="UTF-8">  
 <#assign infoUnit = doc.InformationUnit>
 <#assign hasText= infoUnit["count(@stringValue)"] != 0>

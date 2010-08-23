@@ -11,8 +11,8 @@
 package org.remus.infomngmnt.image.gef;
 
 import org.eclipse.gef.commands.Command;
+import org.eclipse.remus.InformationUnit;
 
-import org.remus.infomngmnt.InformationUnit;
 
 /**
  * A command to remove a shape from its parent.

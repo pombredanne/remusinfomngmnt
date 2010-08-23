@@ -17,11 +17,10 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.ui.rules.extension.AbstractCreationPreferencePage;
 import org.eclipse.swt.SWT;
-
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.ui.rules.extension.AbstractCreationPreferencePage;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

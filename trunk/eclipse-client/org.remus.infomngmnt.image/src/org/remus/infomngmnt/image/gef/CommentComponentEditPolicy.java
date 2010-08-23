@@ -13,8 +13,8 @@ package org.remus.infomngmnt.image.gef;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
+import org.eclipse.remus.InformationUnit;
 
-import org.remus.infomngmnt.InformationUnit;
 
 /**
  * This edit policy enables the removal of a Shapes instance from its container. 

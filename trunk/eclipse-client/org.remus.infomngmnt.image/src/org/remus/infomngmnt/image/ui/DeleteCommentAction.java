@@ -19,9 +19,9 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.InformationUnit;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.image.gef.IEditingDomainHolder;
 

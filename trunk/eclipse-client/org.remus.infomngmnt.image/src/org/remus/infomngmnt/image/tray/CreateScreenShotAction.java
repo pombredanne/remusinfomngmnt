@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.image.tray;
 
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.remus.ui.desktop.extension.IToolbarItemProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -20,7 +21,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import org.remus.infomngmnt.image.screenshot.ScreenshotCreationWizard;
-import org.remus.infomngmnt.ui.desktop.extension.IToolbarItemProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

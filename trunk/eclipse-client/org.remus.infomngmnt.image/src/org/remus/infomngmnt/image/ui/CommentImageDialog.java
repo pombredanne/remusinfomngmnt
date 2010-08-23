@@ -8,6 +8,8 @@ import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.ViewForm;
@@ -22,11 +24,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.gef.ImageLinkEditPartFactory;
 import org.remus.infomngmnt.image.internal.ResourceManager;
-import org.remus.infomngmnt.util.InformationUtil;
 
 public class CommentImageDialog extends TitleAreaDialog {
 

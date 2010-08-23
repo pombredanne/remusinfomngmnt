@@ -32,17 +32,17 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.ui.progress.CancelableRunnable;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.graphics.ImageData;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.ui.progress.CancelableRunnable;
-import org.remus.infomngmnt.util.StatusCreator;
 
 import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;

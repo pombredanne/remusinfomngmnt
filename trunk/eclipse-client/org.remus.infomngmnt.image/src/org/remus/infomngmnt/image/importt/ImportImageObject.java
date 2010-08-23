@@ -12,7 +12,7 @@
 
 package org.remus.infomngmnt.image.importt;
 
-import org.remus.infomngmnt.common.core.beans.PropertyChangeObject;
+import org.eclipse.remus.common.core.beans.PropertyChangeObject;
 
 
 /**

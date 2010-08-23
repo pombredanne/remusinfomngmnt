@@ -27,23 +27,23 @@ import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.util.ResourceUtil;
+import org.eclipse.remus.common.io.transfer.DownloadFileJob;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.rules.RuleValue;
+import org.eclipse.remus.ui.rules.internal.transfer.FileTransferWrapper;
+import org.eclipse.remus.ui.rules.internal.transfer.URLTransferWrapper;
+import org.eclipse.remus.ui.rules.transfer.TransferWrapper;
+import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.ResourceUtil;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
 import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.ui.rules.internal.transfer.FileTransferWrapper;
-import org.remus.infomngmnt.ui.rules.internal.transfer.URLTransferWrapper;
-import org.remus.infomngmnt.ui.rules.transfer.TransferWrapper;
-import org.remus.infomngmnt.ui.rules.wizard.NewObjectWizardDelegate;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
-import org.remus.rules.RuleValue;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

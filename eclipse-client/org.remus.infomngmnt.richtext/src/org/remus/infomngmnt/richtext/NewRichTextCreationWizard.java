@@ -12,9 +12,10 @@
 
 package org.remus.infomngmnt.richtext;
 
+import org.eclipse.remus.ui.rules.service.ICreationTrigger;
+import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
+
 import org.remus.infomngmnt.richtext.wizard.NewRichTextWizard;
-import org.remus.infomngmnt.ui.rules.service.ICreationTrigger;
-import org.remus.infomngmnt.ui.rules.wizard.NewObjectWizardDelegate;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

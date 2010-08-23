@@ -13,10 +13,10 @@
 package org.remus.infomngmnt.richtext.wizard;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.richtext.RichTextPlugin;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

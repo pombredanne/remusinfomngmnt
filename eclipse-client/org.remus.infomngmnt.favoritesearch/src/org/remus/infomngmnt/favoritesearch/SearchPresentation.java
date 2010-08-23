@@ -16,8 +16,8 @@ import java.io.InputStream;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
 
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

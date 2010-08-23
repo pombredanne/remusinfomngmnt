@@ -21,14 +21,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.model.service.ResourceConstants;
+import org.eclipse.remus.search.Search;
+import org.eclipse.remus.search.SearchFactory;
+import org.eclipse.remus.search.SearchPackage;
+import org.eclipse.remus.search.SearchResult;
 
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
-import org.remus.infomngmnt.model.service.ResourceConstants;
-import org.remus.infomngmnt.search.Search;
-import org.remus.infomngmnt.search.SearchFactory;
-import org.remus.infomngmnt.search.SearchPackage;
-import org.remus.infomngmnt.search.SearchResult;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

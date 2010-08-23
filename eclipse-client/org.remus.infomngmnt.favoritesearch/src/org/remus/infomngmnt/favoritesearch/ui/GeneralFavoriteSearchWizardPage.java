@@ -12,10 +12,11 @@
 
 package org.remus.infomngmnt.favoritesearch.ui;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.search.Search;
-import org.remus.infomngmnt.ui.newwizards.GeneralPage;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.eclipse.remus.search.Search;
+import org.eclipse.remus.ui.newwizards.GeneralPage;
+
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

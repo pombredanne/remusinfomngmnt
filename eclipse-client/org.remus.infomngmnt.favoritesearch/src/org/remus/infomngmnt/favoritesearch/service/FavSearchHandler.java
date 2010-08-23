@@ -14,12 +14,12 @@ package org.remus.infomngmnt.favoritesearch.service;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.search.Search;
+import org.eclipse.remus.search.service.IFavoriteSearchHandler;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.common.ui.UIUtil;
 import org.remus.infomngmnt.favoritesearch.ui.NewFavoriteSearchWizard;
-import org.remus.infomngmnt.search.Search;
-import org.remus.infomngmnt.search.service.IFavoriteSearchHandler;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -22,6 +22,13 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.search.Search;
+import org.eclipse.remus.search.SearchResult;
+import org.eclipse.remus.ui.editors.EditorUtil;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.infotypes.service.IInformationTypeImage;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
@@ -38,16 +45,9 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 import org.remus.infomngmnt.favoritesearch.util.SearchDiff;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
-import org.remus.infomngmnt.search.Search;
-import org.remus.infomngmnt.search.SearchResult;
-import org.remus.infomngmnt.ui.editors.EditorUtil;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.ui.infotypes.service.IInformationTypeImage;
-import org.remus.infomngmnt.util.InformationUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

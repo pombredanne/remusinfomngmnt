@@ -1,11 +1,11 @@
 package org.remus.infomngmnt.ui.calendar;
 
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**

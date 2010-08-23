@@ -21,21 +21,21 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.core.util.IdFactory;
+import org.eclipse.remus.common.core.util.ModelUtil;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.edit.DisposableEditingDomain;
+import org.eclipse.remus.core.services.IApplicationModel;
+import org.eclipse.remus.core.services.IEditingHandler;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 import org.remus.infomngmnt.ccalendar.service.ICalendarService;
-import org.remus.infomngmnt.common.core.util.IdFactory;
-import org.remus.infomngmnt.common.core.util.ModelUtil;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.core.edit.DisposableEditingDomain;
-import org.remus.infomngmnt.core.services.IApplicationModel;
-import org.remus.infomngmnt.core.services.IEditingHandler;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**

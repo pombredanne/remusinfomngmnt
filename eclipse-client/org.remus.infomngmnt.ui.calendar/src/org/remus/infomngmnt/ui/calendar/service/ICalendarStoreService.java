@@ -13,9 +13,9 @@
 package org.remus.infomngmnt.ui.calendar.service;
 
 import org.aspencloud.calypso.util.TimeSpan;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.InformationUnit;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 
 /**

@@ -14,7 +14,7 @@
       </editor>
    </extension>
    <extension
-         point="org.remus.infomngmnt.core.postProjectHandle">
+         point="org.eclipse.remus.core.postProjectHandle">
       <projectHandle
             handle="org.remus.infomngmnt.ui.calendar.CalendarIndexingHandle">
       </projectHandle>
@@ -28,14 +28,14 @@
          </run></builder>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <outlineSection
             class="org.remus.infomngmnt.ui.calendar.outline.CalendarOutlineSection"
             id="org.remus.infomngmnt.ui.calendar.outlineSection">
       </outlineSection>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.collapsiblebutton.collapsibleButtonBar">
+         point="org.eclipse.remus.ui.collapsiblebutton.collapsibleButtonBar">
       <collapsibleButton
             bigImage="icons/iconexperience/24/calendar.png"
             class="org.remus.infomngmnt.ui.calendar.collapsiblebuttons.CalendarSection"

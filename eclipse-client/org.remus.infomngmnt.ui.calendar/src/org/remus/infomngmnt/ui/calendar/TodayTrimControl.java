@@ -22,6 +22,8 @@ import java.util.List;
 import org.aspencloud.calypso.util.TimeSpan;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseTrackAdapter;
@@ -37,8 +39,6 @@ import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 import org.remus.infomngmnt.ccalendar.service.ICalendarChangeSupport;
 import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.services.RemusServiceTracker;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**

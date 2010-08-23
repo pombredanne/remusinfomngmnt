@@ -7,19 +7,20 @@ Bundle-Activator: org.remus.infomngmnt.ui.calendar.CalendarActivator
 Bundle-Vendor: Remus Software
 Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
- org.remus.infomngmnt.services;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.model;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.core;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.services;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.model;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.core;bundle-version="[0.1.0,1.0.0)",
  org.remus.infomngmnt.calendar;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.ui.forms;bundle-version="[3.4.0,4.0.0)",
- org.remus.infomngmnt.ui.collapsiblebutton;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.ui.collapsiblebutton;bundle-version="[0.1.0,1.0.0)",
  org.apache.commons.lang;bundle-version="2.3.0",
  org.eclipse.nebula.widgets.cdatetime;bundle-version="[0.14.0,1.0.0)",
- org.remus.infomngmnt.ui.widgets;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.ui.editor;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.ui.viewer;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.common.ui;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.ui.widgets.databinding;bundle-version="[0.1.0,1.0.0)"
+ org.eclipse.remus.ui.widgets;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.ui.editor;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.ui.viewer;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.common.ui;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.ui.widgets.databinding;bundle-version="[0.1.0,1.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/calendarstoreservice.xml, OSGI-INF/calendarservice.xml
+Import-Package: org.eclipse.nebula.widgets.calendarcombo

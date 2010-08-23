@@ -24,15 +24,15 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.core.extension.IInfoType;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.core.services.IInformationTypeHandler;
+import org.eclipse.remus.resources.util.ResourceUtil;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.extension.IInfoType;
-import org.remus.infomngmnt.core.services.IEditingHandler;
-import org.remus.infomngmnt.core.services.IInformationTypeHandler;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**
@@ -77,7 +77,7 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 			for (IResource resource : members) {
 				if (resource.getType() == IResource.FILE
 						&& resource.getFileExtension().equals(
-								org.remus.infomngmnt.resources.util.ResourceUtil.FILE_EXTENSION)) {
+								org.eclipse.remus.resources.util.ResourceUtil.FILE_EXTENSION)) {
 					InformationUnit objectFromFile = this.editService.getObjectFromFile(
 							(IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit());
 					if (objectFromFile != null) {

@@ -18,10 +18,10 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.aspencloud.calypso.util.TimeSpan;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.CalendarEntryType;
+import org.eclipse.remus.InfomngmntFactory;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.CalendarEntryType;
-import org.remus.infomngmnt.InfomngmntFactory;
 import org.remus.infomngmnt.calendar.model.Task;
 
 /**

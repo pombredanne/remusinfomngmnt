@@ -15,8 +15,8 @@ package org.remus.infomngmnt.mediaplayer.flv;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.remus.js.extension.CheckResourceReferenceJob;
 
-import org.remus.infomngmnt.jslib.extension.CheckResourceReferenceJob;
 import org.remus.infomngmnt.mediaplayer.extension.AbstractMediaPlayer;
 
 /**

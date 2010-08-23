@@ -34,21 +34,21 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.CalendarEntryType;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.core.services.IGeoData;
+import org.eclipse.remus.js.rendering.FreemarkerRenderer;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.util.InformationUtil;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.CalendarEntry;
-import org.remus.infomngmnt.CalendarEntryType;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
 import org.remus.infomngmnt.contact.core.ContactUtil;
 import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
-import org.remus.infomngmnt.core.extension.AbstractInformationRepresentation;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.core.services.IGeoData;
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.util.InformationUtil;
-import org.remus.infomngmnt.util.StatusCreator;
 
 public class ContactInformationRepresentation extends AbstractInformationRepresentation {
 

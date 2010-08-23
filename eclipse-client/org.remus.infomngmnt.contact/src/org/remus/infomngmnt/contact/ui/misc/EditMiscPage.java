@@ -9,6 +9,16 @@ import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.TextBindingWidget;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.widgets.DateCombo;
+import org.eclipse.remus.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.eclipse.remus.ui.widgets.databinding.DatePickerBindingWidget;
+import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -25,18 +35,8 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.TextBindingWidget;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.ui.widgets.DateCombo;
-import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
-import org.remus.infomngmnt.ui.widgets.databinding.DatePickerBindingWidget;
-import org.remus.infomngmnt.util.InformationUtil;
 
 public class EditMiscPage extends AbstractInformationFormPage {
 

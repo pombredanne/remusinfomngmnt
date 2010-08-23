@@ -16,14 +16,14 @@ package org.remus.infomngmnt.contact.wizard;
  * 
  */
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InformationUnitListItem;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactUtil;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
 
 public class NewContactWizard extends NewInfoObjectWizard implements INewWizard {
 

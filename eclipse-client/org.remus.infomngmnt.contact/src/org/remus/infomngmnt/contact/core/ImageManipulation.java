@@ -19,11 +19,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.remus.InformationUnit;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import org.remus.infomngmnt.InformationUnit;
 import org.remus.infomngmnt.contact.ui.general.LoadImageRunnable;
 
 public class ImageManipulation {

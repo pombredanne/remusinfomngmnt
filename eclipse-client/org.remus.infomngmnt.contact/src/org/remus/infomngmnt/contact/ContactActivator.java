@@ -15,10 +15,10 @@ package org.remus.infomngmnt.contact;
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
  * 
  */
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import org.remus.infomngmnt.services.RemusServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle

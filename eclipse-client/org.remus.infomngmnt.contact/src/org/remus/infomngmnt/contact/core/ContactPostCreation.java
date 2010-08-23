@@ -18,13 +18,13 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.util.KeyValueObject;
+import org.eclipse.remus.core.create.PostCreationHandler;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.model.InformationStructureRead;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.KeyValueObject;
 import org.remus.infomngmnt.contact.ContactActivator;
-import org.remus.infomngmnt.core.create.PostCreationHandler;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

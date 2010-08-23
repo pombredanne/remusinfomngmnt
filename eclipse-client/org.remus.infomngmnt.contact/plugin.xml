@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="true"
             name="Contact"
@@ -13,7 +13,7 @@
       </information>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.contact.ui.general.EditGeneralPage"
             icon="icons/iconexperience/contact.png"
@@ -51,7 +51,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.ui.infotypes"
+            category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.contact.ui.preferences.ContactPreferencePage"
             id="org.remus.infomngmnt.contact.preferences"
             name="Contact">
@@ -64,14 +64,14 @@
       </initializer>
    </extension>
    <extension
-         point="org.remus.infomngmnt.jslib.browserReferenceResource">
+         point="org.eclipse.remus.js.browserReferenceResource">
       <referenceResource
             id="org.remus.infomngmnt.contact.phone"
             resource="icons/iconexperience/phone_call.png">
       </referenceResource>
    </extension>
    <extension
-         point="org.remus.infomngmnt.core.job">
+         point="org.eclipse.remus.core.job">
       <job
             class="org.remus.infomngmnt.contact.ui.jobs.CheckBirthdayJob"
             id="org.remus.infomngmnt.contact.birthdayreminder"
@@ -80,17 +80,17 @@
       </job>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="CONTACT">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="CONTACT">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.urlTransfer"
+            transferId="org.eclipse.remus.core.urlTransfer"
             typeId="CONTACT">
       </validTransfers>
       <creationtrigger
@@ -99,7 +99,7 @@
       </creationtrigger>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <index
             analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
             node="title"
@@ -257,7 +257,7 @@
       </secondaryIndex>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/contact.png"
             infotype="CONTACT">

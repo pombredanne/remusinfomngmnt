@@ -19,15 +19,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.common.core.util.KeyValueObject;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.search.analyzer.ISecondaryAnalyzer;
+import org.eclipse.remus.search.analyzer.ISecondaryIndex;
+import org.eclipse.remus.search.analyzer.SecondaryIndex;
 
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.common.core.util.KeyValueObject;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactUtil;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
-import org.remus.infomngmnt.search.analyzer.ISecondaryAnalyzer;
-import org.remus.infomngmnt.search.analyzer.ISecondaryIndex;
-import org.remus.infomngmnt.search.analyzer.SecondaryIndex;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -71,10 +71,10 @@
       <perspectiveExtension
             targetID="org.remus.infomngmnt.ui.infoperspective">
          <newWizardShortcut
-               id="org.remus.infomngmnt.ui.newInfoProjectWizard">
+               id="org.eclipse.remus.ui.newInfoProjectWizard">
          </newWizardShortcut>
          <newWizardShortcut
-               id="org.remus.infomngmnt.ui.newCategoryWizard">
+               id="org.eclipse.remus.ui.newCategoryWizard">
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
@@ -89,7 +89,7 @@
       </editor>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.desktop.trayAction">
+         point="org.eclipse.remus.ui.desktop.trayAction">
       <trayAction
             class="org.remus.infomngmnt.ui.trayaction.OpenElementToolItem"
             icon="icons/iconexperience/16/folder_document.png"
@@ -119,9 +119,9 @@
          point="org.eclipse.ui.views">
           <view
             allowMultiple="false"
-            category="org.remus.infomngmnt.ui.viewcategory"
+            category="org.eclipse.remus.ui.viewcategory"
             class="org.remus.infomngmnt.ui.view.MainViewPart"
-            icon="platform:/plugin/org.remus.infomngmnt.ui.editor/icons/iconexperience/16/document.png"
+            icon="platform:/plugin/org.eclipse.remus.ui.editor/icons/iconexperience/16/document.png"
             id="org.remus.infomngmnt.ui.main"
             name="Navigation"
             restorable="true">
@@ -136,7 +136,7 @@
       </context>
    </extension>
     <extension
-         point="org.remus.infomngmnt.ui.collapsiblebutton.collapsibleButtonBar">
+         point="org.eclipse.remus.ui.collapsiblebutton.collapsibleButtonBar">
       <collapsibleButton
             bigImage="icons/iconexperience/24/workplace.png"
             class="org.remus.infomngmnt.ui.collapsiblebuttons.NavigationSection"
@@ -176,7 +176,7 @@
                label="Remote Synchronization"
                mnemonic="e">
             <command
-                  commandId="org.remus.infomngmnt.ui.remote.syncCategory"
+                  commandId="org.eclipse.remus.ui.remote.syncCategory"
                   icon="icons/iconexperience/16/server_client_exchange.png"
                   style="push">
                <visibleWhen
@@ -184,7 +184,7 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.remus.infomngmnt.ui.remote.shareCategory"
+                  commandId="org.eclipse.remus.ui.remote.shareCategory"
                   icon="icons/iconexperience/16/server_from_client.png"
                   style="push">
                <visibleWhen
@@ -196,7 +196,7 @@
                   visible="true">
             </separator>
             <command
-                  commandId="org.remus.infomngmnt.ui.remote.commitCommand"
+                  commandId="org.eclipse.remus.ui.remote.commitCommand"
                   icon="icons/iconexperience/16/arrow2_right_green.png"
                   style="push">
                <visibleWhen
@@ -204,7 +204,7 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.remus.infomngmnt.ui.remote.addToRepository"
+                  commandId="org.eclipse.remus.ui.remote.addToRepository"
                   icon="icons/iconexperience/16/server_from_client.png"
                   style="push">
                <visibleWhen
@@ -212,7 +212,7 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.remus.infomngmnt.ui.remote.replaceCommand"
+                  commandId="org.eclipse.remus.ui.remote.replaceCommand"
                   icon="icons/iconexperience/16/arrow2_left_red.png"
                   style="push">
             </command>
@@ -221,15 +221,15 @@
                   visible="true">
             </separator>
             <command
-                  commandId="org.remus.infomngmnt.ui.remote.ignoreForSynchronization"
-                  icon="platform:/plugin/org.remus.infomngmnt.ui.remote/icons/iconexperience/16/funnel.png"
+                  commandId="org.eclipse.remus.ui.remote.ignoreForSynchronization"
+                  icon="platform:/plugin/org.eclipse.remus.ui.remote/icons/iconexperience/16/funnel.png"
                   style="push">
                <visibleWhen
                      checkEnabled="true">
                </visibleWhen>
             </command>
             <command
-                  commandId="org.remus.infomngmnt.ui.remote.disconnect"
+                  commandId="org.eclipse.remus.ui.remote.disconnect"
                   icon="icons/iconexperience/16/server_delete.png"
                   style="push">
                <visibleWhen
@@ -249,7 +249,7 @@
       <menuContribution
             locationURI="menu:window?after=additions">
          <command
-               commandId="org.remus.infomngmnt.ui.viewer.projectmanagement"
+               commandId="org.eclipse.remus.ui.viewer.projectmanagement"
                style="push">
          </command>
       </menuContribution>
@@ -259,7 +259,7 @@
          <toolbar
                id="org.remus.infomngmnt.ui.trimtoolbar2">
             <control
-                  class="org.remus.infomngmnt.ui.editors.editortrim.EditorTrim"
+                  class="org.eclipse.remus.ui.editors.editortrim.EditorTrim"
                   id="org.remus.infomngmnt.ui.editors.editortrim.EditorTrim">
             </control>
          </toolbar>
@@ -267,7 +267,7 @@
          <toolbar
                id="org.remus.infomngmnt.ui.trimtoolbar">
             <control
-                  class="org.remus.infomngmnt.ui.notification.NotificationTrimArea"
+                  class="org.eclipse.remus.ui.notification.NotificationTrimArea"
                   id="org.remus.infomngmnt.ui.notification.NotificationTrimArea">
             </control>
          </toolbar>
@@ -291,19 +291,19 @@
              sequence="M1+T">
        </key>
        <key
-             commandId="org.remus.infomngmnt.ui.remote.newRepository"
-             contextId="org.remus.infomngmnt.ui.remote.repositories"
+             commandId="org.eclipse.remus.ui.remote.newRepository"
+             contextId="org.eclipse.remus.ui.remote.repositories"
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
              sequence="M1+Y">
        </key>
        <key
-             commandId="org.remus.infomngmnt.ui.remote.shareCategory"
+             commandId="org.eclipse.remus.ui.remote.shareCategory"
              contextId="org.remus.infomngmnt.ui.navigationContext"
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
              sequence="M2+M3+R">
        </key>
        <key
-             commandId="org.remus.infomngmnt.ui.remote.syncCategory"
+             commandId="org.eclipse.remus.ui.remote.syncCategory"
              contextId="org.remus.infomngmnt.ui.navigationContext"
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
              sequence="M2+M3+T">
@@ -315,5 +315,31 @@
             class="org.remus.infomngmnt.application.handler.OpenInfoTypeHandler"
             commandId="org.remus.infomngmnt.ui.openInfoType">
       </handler>
+    </extension>
+    <extension
+          point="org.eclipse.ui.newWizards">
+           <primaryWizard
+            id="org.eclipse.remus.ui.newInfoProjectWizard">
+      </primaryWizard>
+      <primaryWizard
+            id="org.eclipse.remus.ui.newCategoryWizard">
+      </primaryWizard>
+      <wizard
+            category="org.eclipse.remus.ui.general"
+            class="org.eclipse.remus.ui.project.NewProjectWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/16/folder_green_new.png"
+            id="org.eclipse.remus.ui.newInfoProjectWizard"
+            name="Information Project"
+            project="true">
+      </wizard>
+      <wizard
+            category="org.eclipse.remus.ui.general"
+            class="org.eclipse.remus.ui.category.NewCategoryWizard"
+            finalPerspective="org.remus.infomngmnt.ui.infoperspective"
+            icon="icons/iconexperience/16/folder_blue_new.png"
+            id="org.eclipse.remus.ui.newCategoryWizard"
+            name="Category">
+      </wizard>
     </extension>
 </plugin>

@@ -17,14 +17,14 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.ui.editors.InformationEditor;
+import org.eclipse.remus.ui.editors.InformationEditorInput;
+import org.eclipse.remus.ui.viewer.dialogs.InfoUnitSelectionDialog;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.editors.InformationEditorInput;
-import org.remus.infomngmnt.ui.viewer.dialogs.InfoUnitSelectionDialog;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

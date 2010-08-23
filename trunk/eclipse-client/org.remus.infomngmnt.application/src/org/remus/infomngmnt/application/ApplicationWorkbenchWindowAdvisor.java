@@ -26,6 +26,13 @@ import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.common.service.ITrayService;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.desktop.panel.DesktopWindow;
+import org.eclipse.remus.ui.preference.UIPreferenceInitializer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -82,14 +89,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 
-import org.remus.infomngmnt.common.service.ITrayService;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.desktop.panel.DesktopWindow;
 import org.remus.infomngmnt.ui.perspective.Perspective;
-import org.remus.infomngmnt.ui.preference.UIPreferenceInitializer;
 import org.remus.infomngmnt.welcome.WelcomeEditor;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor implements

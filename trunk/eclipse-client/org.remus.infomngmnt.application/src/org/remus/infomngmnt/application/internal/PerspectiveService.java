@@ -12,7 +12,8 @@
 
 package org.remus.infomngmnt.application.internal;
 
-import org.remus.infomngmnt.services.IPerspectiveService;
+import org.eclipse.remus.services.IPerspectiveService;
+
 import org.remus.infomngmnt.ui.perspective.Perspective;
 
 /**

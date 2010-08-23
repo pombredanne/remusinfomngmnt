@@ -38,6 +38,11 @@ import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.common.core.streams.StreamUtil;
+import org.eclipse.remus.common.io.transfer.DownloadFileJob;
+import org.eclipse.remus.common.ui.html.DownloadMissingUrlJob;
+import org.eclipse.remus.resources.util.ResourceUtil;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -45,11 +50,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import org.remus.infomngmnt.common.core.streams.StreamCloser;
-import org.remus.infomngmnt.common.core.streams.StreamUtil;
-import org.remus.infomngmnt.common.ui.html.DownloadMissingUrlJob;
-import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
-import org.remus.infomngmnt.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -77,7 +77,7 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		try {
-			File tempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+			File tempFile = org.eclipse.remus.common.core.util.ResourceUtil
 					.createTempFileOnFileSystem("html");
 			DownloadFileJob downloadJob = new DownloadFileJob(new URL(URL_LATEST_NEWS), tempFile,
 					getFileReceiveAdapter());

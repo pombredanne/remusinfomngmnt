@@ -27,22 +27,22 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.remus.AvailableTags;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.SynchronizationMetadata;
+import org.eclipse.remus.Tag;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonBar;
+import org.eclipse.remus.ui.editors.InformationEditor;
+import org.eclipse.remus.ui.editors.InformationEditorInput;
+import org.eclipse.remus.ui.viewer.provider.InformationUnitLabelProvider;
+import org.eclipse.remus.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.AvailableTags;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.SynchronizationMetadata;
-import org.remus.infomngmnt.Tag;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonBar;
-import org.remus.infomngmnt.ui.editors.InformationEditor;
-import org.remus.infomngmnt.ui.editors.InformationEditorInput;
-import org.remus.infomngmnt.ui.viewer.provider.InformationUnitLabelProvider;
-import org.remus.infomngmnt.ui.viewer.provider.NavigatorDecoratingLabelProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

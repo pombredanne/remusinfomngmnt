@@ -12,6 +12,10 @@
 
 package org.remus.infomngmnt.ui.trayaction;
 
+import org.eclipse.remus.common.service.ITrayService;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.ui.UIPlugin;
+import org.eclipse.remus.ui.desktop.extension.IToolbarItemProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -20,10 +24,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-import org.remus.infomngmnt.common.service.ITrayService;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.ui.UIPlugin;
-import org.remus.infomngmnt.ui.desktop.extension.IToolbarItemProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

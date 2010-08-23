@@ -18,13 +18,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonBar;
+import org.eclipse.remus.ui.remote.view.RemoteRepositoryViewer;
+import org.eclipse.remus.ui.remote.view.action.AddRemoteRepositoryAction;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 
-import org.remus.infomngmnt.ui.collapsiblebutton.CollapsibleButtonBar;
-import org.remus.infomngmnt.ui.remote.view.RemoteRepositoryViewer;
-import org.remus.infomngmnt.ui.remote.view.action.AddRemoteRepositoryAction;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

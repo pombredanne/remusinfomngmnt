@@ -36,6 +36,12 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.core.remote.security.CredentialProvider;
+import org.eclipse.remus.core.remote.services.IRepositoryExtensionService;
+import org.eclipse.remus.model.remote.IRepository;
+import org.eclipse.remus.ui.remote.RemoteUiActivator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -50,13 +56,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.InfomngmntPackage;
-import org.remus.infomngmnt.RemoteRepository;
 import org.remus.infomngmnt.connector.slideshare.SlideshareActivator;
-import org.remus.infomngmnt.core.remote.security.CredentialProvider;
-import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
-import org.remus.infomngmnt.model.remote.IRepository;
-import org.remus.infomngmnt.ui.remote.RemoteUiActivator;
 
 public class SlideshareConnectionWizardPage extends WizardPage {
 

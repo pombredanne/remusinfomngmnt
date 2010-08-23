@@ -21,6 +21,16 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.common.core.operation.CancelableJob;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.remote.AbstractExtensionRepository;
+import org.eclipse.remus.core.remote.RemoteActivator;
+import org.eclipse.remus.core.remote.services.IRepositoryExtensionService;
+import org.eclipse.remus.core.remote.services.IRepositoryService;
+import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -36,18 +46,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.common.core.operation.CancelableJob;
-import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.common.ui.UIUtil;
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.connector.slideshare.SlideshareActivator;
 import org.remus.infomngmnt.connector.slideshare.SlideshareConnector;
-import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.remote.RemoteActivator;
-import org.remus.infomngmnt.core.remote.services.IRepositoryExtensionService;
-import org.remus.infomngmnt.core.remote.services.IRepositoryService;
-import org.remus.infomngmnt.util.StatusCreator;
 
 public class UploadSlideDialog extends TitleAreaDialog {
 

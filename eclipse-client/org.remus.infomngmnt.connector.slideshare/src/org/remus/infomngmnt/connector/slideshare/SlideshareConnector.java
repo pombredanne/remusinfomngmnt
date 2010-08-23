@@ -44,28 +44,28 @@ import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InfomngmntFactory;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.RemoteContainer;
+import org.eclipse.remus.RemoteObject;
+import org.eclipse.remus.RemoteRepository;
+import org.eclipse.remus.SynchronizableObject;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.eclipse.remus.common.io.proxy.Proxy;
+import org.eclipse.remus.common.io.proxy.ProxyUtil;
+import org.eclipse.remus.common.io.transfer.DownloadFileJob;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.remote.AbstractExtensionRepository;
+import org.eclipse.remus.core.remote.RemoteActivator;
+import org.eclipse.remus.core.remote.RemoteException;
+import org.eclipse.remus.core.remote.services.IRepositoryService;
+import org.eclipse.remus.model.remote.ILoginCallBack;
+import org.eclipse.remus.model.remote.IRepository;
+import org.eclipse.remus.util.StatusCreator;
 
-import org.remus.infomngmnt.Category;
-import org.remus.infomngmnt.InfomngmntFactory;
-import org.remus.infomngmnt.InformationUnit;
-import org.remus.infomngmnt.InformationUnitListItem;
-import org.remus.infomngmnt.RemoteContainer;
-import org.remus.infomngmnt.RemoteObject;
-import org.remus.infomngmnt.RemoteRepository;
-import org.remus.infomngmnt.SynchronizableObject;
-import org.remus.infomngmnt.common.core.util.StringUtils;
-import org.remus.infomngmnt.commons.io.proxy.Proxy;
-import org.remus.infomngmnt.commons.io.proxy.ProxyUtil;
-import org.remus.infomngmnt.commons.io.transfer.DownloadFileJob;
-import org.remus.infomngmnt.core.model.InformationStructureEdit;
-import org.remus.infomngmnt.core.remote.AbstractExtensionRepository;
-import org.remus.infomngmnt.core.remote.RemoteActivator;
-import org.remus.infomngmnt.core.remote.RemoteException;
-import org.remus.infomngmnt.core.remote.services.IRepositoryService;
-import org.remus.infomngmnt.model.remote.ILoginCallBack;
-import org.remus.infomngmnt.model.remote.IRepository;
 import org.remus.infomngmnt.onlineresource.OnlineResourceActivator;
-import org.remus.infomngmnt.util.StatusCreator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -463,7 +463,7 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 			RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(syncObject, monitor);
 			Slideshow wrappedObject = (Slideshow) remoteObject.getWrappedObject();
 			String thumbnailUrl = wrappedObject.getThumbnailUrl();
-			IFile createTempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+			IFile createTempFile = org.eclipse.remus.common.core.util.ResourceUtil
 					.createTempFile("jpg");
 			try {
 				DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(StringEscapeUtils
@@ -482,7 +482,7 @@ public class SlideshareConnector extends AbstractExtensionRepository implements 
 			RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(syncObject, monitor);
 			Slideshow wrappedObject = (Slideshow) remoteObject.getWrappedObject();
 			String downloadUrl = wrappedObject.getDownloadUrl();
-			IFile createTempFile = org.remus.infomngmnt.common.core.util.ResourceUtil
+			IFile createTempFile = org.eclipse.remus.common.core.util.ResourceUtil
 					.createTempFile(wrappedObject.getFormat().getValue());
 
 			try {

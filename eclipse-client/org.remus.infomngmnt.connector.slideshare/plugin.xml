@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.remote.remoteRepository">
+         point="org.eclipse.remus.core.remote.remoteRepository">
       <repository-connector
             class="org.remus.infomngmnt.connector.slideshare.SlideshareConnector"
             credentialprovider="org.remus.infomngmnt.connector.slideshare.SlideshareCredentialProvider"
@@ -11,7 +11,7 @@
       </repository-connector>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.remote.repositoryUi">
+         point="org.eclipse.remus.ui.remote.repositoryUi">
       <respository
             icon="icons/slideshare.png"
             id="org.remus.infomngmnt.connector.slideshar"
@@ -44,10 +44,10 @@
                            ifEmpty="false">
                         <and>
                            <test
-                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
+                                 property="org.eclipse.remus.remote.canCommitOrReplace">
                            </test>
                            <test
-                                 property="org.remus.infomngmnt.remote.repositoryIdEquals"
+                                 property="org.eclipse.remus.remote.repositoryIdEquals"
                                  value="org.remus.infomngmnt.connector.slideshare">
                            </test>
                         </and>

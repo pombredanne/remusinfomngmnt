@@ -15,6 +15,16 @@ package org.remus.infomngmnt.meetingminutes.ui;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.databinding.BindingUtil;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.widgets.TimeCombo;
+import org.eclipse.remus.ui.widgets.databinding.AdditionalBindingWidgetFactory;
+import org.eclipse.remus.ui.widgets.databinding.CDateTimeBindingWidget;
+import org.eclipse.remus.ui.widgets.databinding.RichTextBindingWidget;
+import org.eclipse.remus.ui.widgets.databinding.RichTextWidget;
+import org.eclipse.remus.ui.widgets.richtext.ActionConfiguration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -27,18 +37,8 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.InfomngmntPackage;
 import org.remus.infomngmnt.contact.shared.ContactsWithEmailSmartField;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
-import org.remus.infomngmnt.ui.databinding.BindingUtil;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.ui.widgets.TimeCombo;
-import org.remus.infomngmnt.ui.widgets.databinding.AdditionalBindingWidgetFactory;
-import org.remus.infomngmnt.ui.widgets.databinding.CDateTimeBindingWidget;
-import org.remus.infomngmnt.ui.widgets.databinding.RichTextBindingWidget;
-import org.remus.infomngmnt.ui.widgets.databinding.RichTextWidget;
-import org.remus.infomngmnt.ui.widgets.richtext.ActionConfiguration;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             name="Source Code"
             presentation="org.remus.infomngmnt.sourcecode.core.SourceCodeInformationRepresentation"
@@ -24,7 +24,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.remus.infomngmnt.ui.infotypes"
+            category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.sourcecode.prefs.SourceCodePreferencePage"
             id="org.remus.infomngmnt.sourcecode.sourcePref"
             name="Source-Code">
@@ -37,7 +37,7 @@
       </initializer>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.sourcecode.editor.EditSourcePage"
             icon="icons/iconexperience/code_colored_edit.png"
@@ -118,7 +118,7 @@
       </image>
    </extension>
    <extension
-         point="org.remus.infomngmnt.search.indexer">
+         point="org.eclipse.remus.search.indexer">
       <index
             analyzer="org.remus.infomngmnt.search.SimpleAnalyzer"
             node="SOURCE"
@@ -126,13 +126,13 @@
       </index>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.core.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="SOURCE">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.core.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="SOURCE">
       </validTransfers>
       <creationtrigger
@@ -141,7 +141,7 @@
       </creationtrigger>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/code_colored.png"
             infotype="SOURCE">

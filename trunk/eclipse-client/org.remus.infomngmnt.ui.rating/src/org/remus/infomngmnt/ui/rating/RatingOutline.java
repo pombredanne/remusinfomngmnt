@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Andreas Deinlein, Remus Software
+ * Copyright (c) 2010 Andreas Deinlein, Deasw
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at

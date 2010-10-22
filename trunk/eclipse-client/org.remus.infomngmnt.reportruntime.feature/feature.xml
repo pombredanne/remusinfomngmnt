@@ -339,11 +339,7 @@
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="org.mozilla.rhino"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+  
 
    <plugin
          id="org.eclipse.equinox.http.registry"
@@ -441,7 +437,7 @@
          unpack="false"/>
 
    <plugin
-         id="com.lowagie.itext"
+         id="com.lowagie.text"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -551,7 +547,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.oda"
+         id="org.eclipse.remus.oda"
          download-size="0"
          install-size="0"
          version="0.0.0"

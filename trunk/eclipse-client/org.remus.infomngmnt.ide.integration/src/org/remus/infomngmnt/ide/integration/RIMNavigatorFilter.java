@@ -15,8 +15,7 @@ package org.remus.infomngmnt.ide.integration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-
-import org.remus.infomngmnt.resources.util.ResourceUtil;
+import org.eclipse.remus.resources.util.ResourceUtil;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -38,10 +37,12 @@ public class RIMNavigatorFilter extends ViewerFilter {
 	 * .Viewer, java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public boolean select(final Viewer viewer, final Object parentElement, final Object element) {
-		return !(element instanceof IProject && (ResourceUtil.isRelevantProject((IProject) element)
-				|| ResourceUtil.PROJECT_NAME_TMP.equals(((IProject) element).getName())
-				|| ResourceUtil.PROJECT_NAME_INTERN.equals(((IProject) element).getName()) || "__internal_referencedLibraries"
+	public boolean select(final Viewer viewer, final Object parentElement,
+			final Object element) {
+		return !(element instanceof IProject && (ResourceUtil
+				.isRelevantProject((IProject) element)
+				|| ResourceUtil.PROJECT_NAME_INTERN.equals(((IProject) element)
+						.getName()) || "__internal_referencedLibraries"
 				.equals(((IProject) element).getName())));
 	}
 

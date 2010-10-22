@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.ui;resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Import-Package: org.remus.infomngmnt.common.service,
- org.remus.infomngmnt.common.ui,
- org.remus.infomngmnt.resources.util,
- org.remus.infomngmnt.ui.desktop
+Import-Package: org.eclipse.remus.common.service,
+ org.eclipse.remus.common.ui,
+ org.eclipse.remus.resources.util,
+ org.eclipse.remus.ui.desktop.panel,
+ org.eclipse.remus.ui.popup

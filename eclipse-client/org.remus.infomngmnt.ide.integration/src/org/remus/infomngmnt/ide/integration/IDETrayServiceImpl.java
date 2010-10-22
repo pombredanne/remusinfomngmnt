@@ -12,10 +12,9 @@
 
 package org.remus.infomngmnt.ide.integration;
 
+import org.eclipse.remus.common.service.ITrayService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
-
-import org.remus.infomngmnt.common.service.ITrayService;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>

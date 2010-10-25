@@ -281,6 +281,17 @@
          </toolbar>
          -->
       </menuContribution>
+      <menuContribution
+            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=sync">
+         <menu
+               label="Search"
+               mnemonic="a">
+            <command
+                  commandId="org.eclipse.remus.ui.searchReferences"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
    </extension>
     <extension
           point="org.eclipse.ui.bindings">

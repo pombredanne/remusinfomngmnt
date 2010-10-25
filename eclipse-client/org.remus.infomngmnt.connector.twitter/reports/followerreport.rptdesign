@@ -84,13 +84,13 @@
         </scalar-parameter>
     </parameters>
     <data-sources>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="Users" id="7">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="Users" id="7">
             <property name="informationType">TWITTER-USER</property>
             <property name="baseSelection">users</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="currentfollowers" id="8">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="currentfollowers" id="8">
             <list-property name="computedColumns">
                 <structure>
                     <property name="name">avatarimagesrc</property>
@@ -510,7 +510,7 @@
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="exfollowers" id="143">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="exfollowers" id="143">
             <list-property name="computedColumns">
                 <structure>
                     <property name="name">avatarimagesrc</property>

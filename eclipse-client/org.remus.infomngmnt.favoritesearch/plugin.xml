@@ -25,7 +25,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="formheading:org.remus.infomngmnt.search.ui.view.SearchView?after=additions">
+            locationURI="formheading:org.eclipse.remus.search.ui.view.SearchView?after=additions">
          <command
                commandId="org.remus.infomngmnt.favoritesearch.loadFavSearch"
                icon="icons/iconexperience/fav_search.png"

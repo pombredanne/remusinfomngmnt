@@ -223,12 +223,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.spiritlink.richhtml4eclipse"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="javax.activation"
          download-size="0"
          install-size="0"
@@ -640,13 +634,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.equinox.p2.exemplarysetup"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.equinox.p2.garbagecollector"
          download-size="0"
          install-size="0"
@@ -943,42 +930,42 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.common.core"
+         id="org.eclipse.remus.common.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.common.ui"
+         id="org.eclipse.remus.common.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.core"
+         id="org.eclipse.remus.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.efs"
+         id="org.eclipse.remus.efs"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.efs.file"
+         id="org.eclipse.remus.efs.file"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.efs.password"
+         id="org.eclipse.remus.efs.password"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -992,13 +979,7 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.jslib"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.remus.infomngmnt.libs"
+         id="org.remus.infomngmnt.js"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -1011,21 +992,21 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.search"
+         id="org.eclipse.remus.search"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.search.local"
+         id="org.eclipse.remus.search.local"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui"
+         id="org.eclipse.remus.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1226,7 +1207,7 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.common.flags"
+         id="org.eclipse.remus.common.flags"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1347,21 +1328,21 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.search.desktop"
+         id="org.eclipse.remus.search.desktop"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.search.ui"
+         id="org.eclipse.remus.search.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.services"
+         id="org.eclipse.remus.services"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1375,140 +1356,187 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.collapsiblebutton"
+         id="org.eclipse.remus.ui.collapsiblebutton"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.databinding"
+         id="org.eclipse.remus.ui.databinding"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.desktop"
+         id="org.eclipse.remus.ui.desktop"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.desktop.clock"
+         id="org.eclipse.remus.ui.desktop.clock"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.editor"
+         id="org.eclipse.remus.ui.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.infotypes"
+         id="org.eclipse.remus.ui.infotypes"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.link"
+         id="org.eclipse.remus.ui.link"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.notification"
+         id="org.eclipse.remus.ui.notification"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.notification.tray"
+         id="org.eclipse.remus.ui.notification.tray"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.popup"
+         id="org.eclipse.remus.ui.popup"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.remote"
+         id="org.eclipse.remus.ui.remote"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.rules"
+         id="org.eclipse.remus.ui.rules"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.rules.notification"
+         id="org.eclipse.remus.ui.rules.notification"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.viewer"
+         id="org.eclipse.remus.ui.viewer"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.widgets"
+         id="org.eclipse.remus.ui.widgets"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.widgets.databinding"
+         id="org.eclipse.remus.ui.widgets.databinding"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.model"
+         id="org.eclipse.remus.model"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.common.io"
+         id="org.eclipse.remus.common.io"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.core.remote"
+         id="org.eclipse.remus.core.remote"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.ui.rating"
+         id="org.eclipse.equinox.p2.operations"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.remus.js"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.lucene.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.lucene.highlighter"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.io"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.nebula.widgets.calendarcombo"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.htmltext"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.lucene.memory"
          download-size="0"
          install-size="0"
          version="0.0.0"

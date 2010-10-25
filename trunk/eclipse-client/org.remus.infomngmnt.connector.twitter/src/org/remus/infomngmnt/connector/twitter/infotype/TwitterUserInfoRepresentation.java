@@ -134,6 +134,12 @@ public class TwitterUserInfoRepresentation extends AbstractInformationRepresenta
 	}
 
 	private static String getBaseURL() {
+		try {
+			WebappAccessor.start("viewer", ViewerPlugin.PLUGIN_ID);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "http://" + WebappAccessor.getHost() + ":" //$NON-NLS-1$ //$NON-NLS-2$
 				+ WebappAccessor.getPort(ViewerPlugin.WEBAPP_CONTEXT) + "/viewer/"; //$NON-NLS-1$
 	}

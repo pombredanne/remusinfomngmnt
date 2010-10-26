@@ -72,18 +72,18 @@
         </scalar-parameter>
     </parameters>
     <data-sources>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="Messages" id="7">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="Messages" id="7">
             <property name="rootElement">tewaawet/Tom Seidel@twitter/My twitter</property>
             <property name="informationType">TWITTER-DETAIL</property>
             <property name="baseSelection">messages</property>
         </oda-data-source>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="User-Details" id="8">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="User-Details" id="8">
             <property name="rootElement">tewaawet/Tom Seidel@twitter/My twitter</property>
             <property name="informationType">TWITTER-DETAIL</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="Data Set" id="9">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="Data Set" id="9">
             <list-property name="computedColumns">
                 <structure>
                     <property name="name">isReply</property>
@@ -170,7 +170,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="content"/>
   <columns name="replystatusid"/>
   <columns name="date"/>
@@ -245,7 +245,7 @@
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="Data Set1" id="10">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="Data Set1" id="10">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">detailmembersince</property>
@@ -352,7 +352,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="detailmembersince"/>
   <columns name="detailusername"/>
   <columns name="detailwebsite"/>

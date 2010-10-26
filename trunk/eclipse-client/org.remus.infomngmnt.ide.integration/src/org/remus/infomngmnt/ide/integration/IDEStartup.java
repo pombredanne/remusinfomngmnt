@@ -12,10 +12,14 @@
 
 package org.remus.infomngmnt.ide.integration;
 
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.ui.IStartup;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.ui.IStartup;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -33,9 +37,17 @@ public class IDEStartup implements IStartup {
 			if (bundle != null && bundle.getState() == Bundle.RESOLVED) {
 				bundle.start();
 			}
-			bundle = Platform.getBundle("org.remus.infomngmnt.search.local");
+			bundle = Platform.getBundle("org.eclipse.remus.search.local");
 			if (bundle != null && bundle.getState() == Bundle.RESOLVED) {
 				bundle.start();
+			}
+			if (ResourceUtil.getProject("Inbox") == null) {
+				try {
+					ResourceUtil.createNewProject("Inbox",
+							new NullProgressMonitor());
+				} catch (CoreException e) {
+					// do nothing.
+				}
 			}
 		} catch (BundleException e) {
 			// TODO Auto-generated catch block

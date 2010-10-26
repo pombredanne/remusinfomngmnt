@@ -127,13 +127,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.oda.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.remus.infomngmnt.birtbridge"
          download-size="0"
          install-size="0"
@@ -233,6 +226,13 @@
 
    <plugin
          id="org.eclipse.birt.chart.ui.extension"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.remus.oda.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

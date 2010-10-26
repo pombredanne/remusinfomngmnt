@@ -14,8 +14,12 @@ package org.remus.infomngmnt.image.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.operation.LoadImageRunnable;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.remus.Category;
 import org.eclipse.remus.InformationUnitListItem;
@@ -24,9 +28,6 @@ import org.eclipse.remus.core.edit.DisposableEditingDomain;
 import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
-
-import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -41,34 +42,43 @@ public class NewImageWizard extends NewInfoObjectWizard {
 	public NewImageWizard() {
 		setNeedsProgressMonitor(true);
 		setWindowTitle("New photo/graphic");
-		this.editingHandler = ImagePlugin.getDefault().getServiceTracker().getService(
-				IEditingHandler.class);
+		editingHandler = ImagePlugin.getDefault().getServiceTracker()
+				.getService(IEditingHandler.class);
 
 	}
 
 	@Override
 	protected Command getAdditionalCommands() {
-		IFile tmpFile = ((GeneralImagePage) this.page1).getTmpFile();
+		IFile tmpFile = ((GeneralImagePage) page1).getTmpFile();
 
 		if (tmpFile != null) {
-			DisposableEditingDomain editingDomain = this.editingHandler.createNewEditingDomain();
-			LoadImageRunnable loadImageRunnable = new LoadImageRunnable();
+			DisposableEditingDomain editingDomain = editingHandler
+					.createNewEditingDomain();
+			final LoadImageRunnable loadImageRunnable = new LoadImageRunnable();
 			loadImageRunnable.setImagePath(tmpFile.getLocation().toOSString());
-			loadImageRunnable.setImageNode(this.newElement);
+			loadImageRunnable.setImageNode(newElement);
 			loadImageRunnable.setDomain(editingDomain);
 			editingDomain.getCommandStack().flush();
 			editingDomain.dispose();
-			try {
-				getContainer().run(true, false, loadImageRunnable);
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return CommandFactory.addFileToInfoUnit(tmpFile, this.newElement, this.editingHandler
-					.getNavigationEditingDomain());
+			getShell().getDisplay().syncExec(new Runnable() {
+
+				public void run() {
+					try {
+						new ProgressMonitorDialog(getShell()).run(true, false,
+								loadImageRunnable);
+					} catch (InvocationTargetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
+			});
+			return CommandFactory.addFileToInfoUnit(tmpFile, newElement,
+					editingHandler.getNavigationEditingDomain());
 		}
 		return super.getAdditionalCommands();
 	}
@@ -80,18 +90,19 @@ public class NewImageWizard extends NewInfoObjectWizard {
 	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
-	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
+	public void init(final IWorkbench workbench,
+			final IStructuredSelection selection) {
 
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
-			this.page1 = new GeneralImagePage((Category) firstElement);
+			page1 = new GeneralImagePage((Category) firstElement);
 		} else if (firstElement instanceof InformationUnitListItem) {
-			this.page1 = new GeneralImagePage((InformationUnitListItem) firstElement);
+			page1 = new GeneralImagePage((InformationUnitListItem) firstElement);
 		} else {
-			this.page1 = new GeneralImagePage((Category) null);
+			page1 = new GeneralImagePage((Category) null);
 		}
-		if (this.files != null) {
-			this.page1.setFiles(this.files);
+		if (files != null) {
+			page1.setFiles(files);
 		}
 		setCategoryToPage();
 

@@ -38,12 +38,12 @@
         </scalar-parameter>
     </parameters>
     <data-sources>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="TwitterFeed" id="35">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="TwitterFeed" id="35">
             <property name="rootElement">Kommunikation</property>
             <property name="informationType">TWITTER</property>
             <property name="baseSelection">messages</property>
         </oda-data-source>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="Data Source" id="143">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="Data Source" id="143">
             <text-property name="displayName"></text-property>
             <property name="rootElement">Kommunikation/tmseidel@twitter/All friends</property>
             <property name="informationType">TWITTER</property>
@@ -51,7 +51,7 @@
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="Data Set" id="36">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="Data Set" id="36">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">@label</property>
@@ -94,7 +94,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="@label"/>
   <columns name="user"/>
 </oda:Dataset>
@@ -148,7 +148,7 @@
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="startDate" id="112">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="startDate" id="112">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">date</property>
@@ -185,7 +185,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="date"/>
 </oda:Dataset>
 ]]></xml-property>
@@ -219,7 +219,7 @@
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="endDate" id="115">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="endDate" id="115">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">date</property>
@@ -256,7 +256,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="date"/>
 </oda:Dataset>
 ]]></xml-property>

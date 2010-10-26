@@ -52,14 +52,14 @@
         </scalar-parameter>
     </parameters>
     <data-sources>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="Twitterfeed" id="180">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="Twitterfeed" id="180">
             <property name="rootElement">Inbox</property>
             <property name="informationType">TWITTER</property>
             <property name="baseSelection">messages</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="User" id="181">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="User" id="181">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">date</property>
@@ -127,7 +127,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="date"/>
   <columns name="userid"/>
   <columns name="content"/>
@@ -201,7 +201,7 @@
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="Username" id="184">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="Username" id="184">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">user</property>
@@ -260,7 +260,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="user"/>
   <columns name="userid"/>
 </oda:Dataset>

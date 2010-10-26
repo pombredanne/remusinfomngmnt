@@ -14,6 +14,9 @@ package org.remus.infomngmnt.image.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.internal.ResourceManager;
+
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
@@ -41,9 +44,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.image.ImagePlugin;
-import org.remus.infomngmnt.image.internal.ResourceManager;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -56,17 +56,18 @@ public class GeneralImagePage extends GeneralPage {
 
 	public GeneralImagePage(final Category category) {
 		super(category);
-		this.loadImageJob = new LoadFileToTmpFromPathRunnable();
-		if (this.files == null || this.files.length == 0) {
-			this.files = new IFile[1];
+		loadImageJob = new LoadFileToTmpFromPathRunnable();
+		if (files == null || files.length == 0) {
+			files = new IFile[1];
 		}
 
 	}
 
 	public GeneralImagePage(final InformationUnitListItem selection) {
 		super(selection);
-		if (this.files == null || this.files.length == 0) {
-			this.files = new IFile[1];
+		loadImageJob = new LoadFileToTmpFromPathRunnable();
+		if (files == null || files.length == 0) {
+			files = new IFile[1];
 		}
 	}
 
@@ -76,7 +77,8 @@ public class GeneralImagePage extends GeneralPage {
 		container.setLayout(new GridLayout());
 		setTitle("New Photo/Graphics");
 		setMessage("This wizard enables you to create a new image from a file.");
-		setImageDescriptor(ResourceManager.getPluginImageDescriptor(ImagePlugin.getDefault(),
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				ImagePlugin.getDefault(),
 				"icons/iconexperience/photo_wizard_title.png"));
 
 		doCreateParentElementGroup(container);
@@ -88,19 +90,19 @@ public class GeneralImagePage extends GeneralPage {
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_nameText.horizontalSpan = 2;
-		this.nameText.setLayoutData(gd_nameText);
+		nameText.setLayoutData(gd_nameText);
 
-		if (this.files[0] == null) {
+		if (files[0] == null) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
-			this.fileNameText = new Text(group, SWT.BORDER);
+			fileNameText = new Text(group, SWT.BORDER);
 			gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_nameText.horizontalSpan = 2;
-			this.fileNameText.setLayoutData(gd_nameText);
+			fileNameText.setLayoutData(gd_nameText);
 
-			this.browseButton = new Button(group, SWT.PUSH);
-			this.browseButton.setText("Browse...");
-			this.browseButton.addListener(SWT.Selection, new Listener() {
+			browseButton = new Button(group, SWT.PUSH);
+			browseButton.setText("Browse...");
+			browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
 					FileDialog fd = new FileDialog(getShell());
@@ -108,7 +110,7 @@ public class GeneralImagePage extends GeneralPage {
 					fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
 					String open = fd.open();
 					if (open != null) {
-						GeneralImagePage.this.fileNameText.setText(open);
+						fileNameText.setText(open);
 					}
 				}
 
@@ -125,23 +127,25 @@ public class GeneralImagePage extends GeneralPage {
 	@Override
 	protected void initDatabinding() {
 		super.initDatabinding();
-		if (this.fileNameText != null) {
-			InformationUnit origFilePathNode = InformationUtil.getChildByType(this.unit,
-					ImagePlugin.ORIGINAL_FILEPATH);
-			ISWTObservableValue swtUrl = SWTObservables.observeDelayedValue(500, SWTObservables
-					.observeText(this.fileNameText, SWT.Modify));
-			IObservableValue emfUrl = EMFObservables.observeValue(origFilePathNode,
+		if (fileNameText != null) {
+			InformationUnit origFilePathNode = InformationUtil.getChildByType(
+					unit, ImagePlugin.ORIGINAL_FILEPATH);
+			ISWTObservableValue swtUrl = SWTObservables.observeDelayedValue(
+					500, SWTObservables.observeText(fileNameText, SWT.Modify));
+			IObservableValue emfUrl = EMFObservables.observeValue(
+					origFilePathNode,
 					InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 			swtUrl.addValueChangeListener(new IValueChangeListener() {
 				public void handleValueChange(final ValueChangeEvent event) {
-					String newValue = (String) event.getObservableValue().getValue();
+					String newValue = (String) event.getObservableValue()
+							.getValue();
 					try {
-						GeneralImagePage.this.loadImageJob.setFilePath(newValue);
-						getContainer().run(true, true, GeneralImagePage.this.loadImageJob);
+						loadImageJob.setFilePath(newValue);
+						getContainer().run(true, true, loadImageJob);
 						GeneralImagePage.this.nameText.setText(new Path(
-								GeneralImagePage.this.fileNameText.getText()).removeFileExtension()
+								fileNameText.getText()).removeFileExtension()
 								.lastSegment());
-						GeneralImagePage.this.files[0] = GeneralImagePage.this.loadImageJob
+						GeneralImagePage.this.files[0] = loadImageJob
 								.getTmpFile();
 					} catch (InvocationTargetException e) {
 						setErrorMessage(e.getCause().getMessage());
@@ -152,7 +156,7 @@ public class GeneralImagePage extends GeneralPage {
 				}
 
 			});
-			this.ctx.bindValue(swtUrl, emfUrl, null, null);
+			ctx.bindValue(swtUrl, emfUrl, null, null);
 		}
 
 	}
@@ -161,7 +165,7 @@ public class GeneralImagePage extends GeneralPage {
 	 * @return the tmpFile
 	 */
 	public IFile getTmpFile() {
-		return this.files[0];
+		return files[0];
 	}
 
 }

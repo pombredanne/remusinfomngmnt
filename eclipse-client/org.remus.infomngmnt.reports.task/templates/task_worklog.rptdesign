@@ -62,16 +62,16 @@
         </scalar-parameter>
     </parameters>
     <data-sources>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="Task-Source" id="12">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="Task-Source" id="12">
             <property name="informationType">TASK</property>
             <property name="baseSelection">workunits</property>
         </oda-data-source>
-        <oda-data-source extensionID="org.remus.infomngmnt.oda" name="Label" id="255">
+        <oda-data-source extensionID="org.eclipse.remus.oda" name="Label" id="255">
             <property name="informationType">TASK</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="Worklog" id="13">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="Worklog" id="13">
             <list-property name="computedColumns">
                 <structure>
                     <property name="name">CalendarWeek</property>
@@ -152,7 +152,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="workunitstart"/>
   <columns name="workunitend"/>
   <columns name="description"/>
@@ -226,7 +226,7 @@
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
-        <oda-data-set extensionID="org.remus.infomngmnt.oda.dataSet" name="Task-Name" id="157">
+        <oda-data-set extensionID="org.eclipse.remus.oda.dataSet" name="Task-Name" id="157">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">@label</property>
@@ -262,7 +262,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="@label"/>
 </oda:Dataset>
 ]]></xml-property>

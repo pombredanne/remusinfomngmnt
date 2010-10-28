@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component immediate="false" name="securityprovider">
-   <implementation class="org.remus.infomngmnt.efs.internal.extension.SecurityProviderExtension"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.efs.extension.ISecurityProviderExtension"/>
-   </service>
-</component>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="repositoryuiextension">
-   <implementation class="org.remus.infomngmnt.ui.remote.internal.service.RepositoryExtensionService"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.ui.remote.service.IRepositoryExtensionService"/>
-   </service>
-</component>

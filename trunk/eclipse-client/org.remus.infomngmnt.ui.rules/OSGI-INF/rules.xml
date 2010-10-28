@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="rules">
-   <implementation class="org.remus.infomngmnt.ui.rules.internal.service.RuleUtil"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.ui.rules.service.IRuleService"/>
-   </service>
-   <reference bind="setResourceLoader" cardinality="1..1" interface="org.remus.infomngmnt.model.service.IResourceLoader" name="IResourceLoader" policy="static"/>
-</component>

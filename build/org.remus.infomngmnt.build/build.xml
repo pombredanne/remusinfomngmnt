@@ -361,16 +361,16 @@
     			<include name="**/*.png"/>
 			</fileset>
 		</copy>
-		<copy file="${build.dir.location}/customization/org.eclipse.remus.core/new/bookmark_blue.png" 
+		<copy file="${build.dir.location}/customization/iconreplacement/org.eclipse.remus.core/new/bookmark_blue.png" 
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/bookmark_blue.png" 
 			overwrite="true" />
-		<copy file="${build.dir.location}/customization/org.eclipse.remus.core/new/folder_blue.png" 
+		<copy file="${build.dir.location}/customization/iconreplacement/org.eclipse.remus.core/new/folder_blue.png" 
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_blue.png" 
 			overwrite="true" />
-		<copy file="${build.dir.location}/customization/org.eclipse.remus.core/new/folder_green_network.png" 
+		<copy file="${build.dir.location}/customization/iconreplacement/org.eclipse.remus.core/new/folder_green_network.png" 
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green_network.png" 
 			overwrite="true" />
-		<copy file="${build.dir.location}/customization/org.eclipse.remus.core/new/folder_green.png" 
+		<copy file="${build.dir.location}/customization/iconreplacement/org.eclipse.remus.core/new/folder_green.png" 
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green.png" 
 			overwrite="true" />
 		<copy file="${build.dir.location}/lib/groovy-all-1.6.2.jar" 

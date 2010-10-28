@@ -4,4 +4,6 @@ org\.eclipse\.ui,plugin\.xml,/ui.xslt
 org\.eclipse\.ui\.editors,plugin\.xml,/editors.xslt
 org\.eclipse\.compare,plugin\.xml,/compare.xslt
 org\.xmind\.ui,plugin\.xml,/xmind.xslt
+org\.eclipse\.equinox\.p2\.ui\.sdk,/p2.xslt
+org\.eclipse\.epp\.mpc\.ui,/mpc.xslt
 

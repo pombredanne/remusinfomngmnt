@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="rulextensions">
-   <implementation class="org.remus.infomngmnt.ui.rules.internal.service.RuleExtensionManager"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.ui.rules.service.IRuleExtensionService"/>
-   </service>
-</component>

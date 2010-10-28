@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="jobs">
-   <implementation class="org.remus.infomngmnt.core.extension.JobExtensionSerivce"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.core.services.IJobExtensionService"/>
-   </service>
-</component>

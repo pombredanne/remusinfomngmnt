@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="scripts.xml">
-   <implementation class="org.remus.infomngmnt.ui.rules.internal.service.ScriptExtensionManager"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.ui.rules.service.IGroovyScriptExtensionService"/>
-   </service>
-</scr:component>

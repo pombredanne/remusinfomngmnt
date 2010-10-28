@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="saveparticipantextensions">
-   <implementation class="org.remus.infomngmnt.core.extension.SaveParticipantExtensionService"/>
-   <service>
-      <provide interface="org.remus.infomngmnt.core.services.ISaveParticipantExtensionService"/>
-   </service>
-</component>

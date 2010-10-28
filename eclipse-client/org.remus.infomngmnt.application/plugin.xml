@@ -353,4 +353,13 @@
             name="Category">
       </wizard>
     </extension>
+     <extension
+         point="org.eclipse.epp.mpc.ui.catalog">
+      <catalog
+            description="Marketplace for installing additional components to your information management system."
+            icon="icons/iconexperience/windowimages/cabinet_open_32.png"
+            label="Remus Information Management - Marketplace"
+            url="http://remus-software.org/marketplace/">
+      </catalog>
+   </extension>
 </plugin>

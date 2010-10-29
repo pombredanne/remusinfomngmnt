@@ -1120,17 +1120,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.swt.wpf.win32.x86"
-         os="win32"
-         ws="wpf"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ui.cocoa"
          ws="cocoa"
          download-size="0"

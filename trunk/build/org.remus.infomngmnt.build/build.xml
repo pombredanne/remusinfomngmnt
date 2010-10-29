@@ -142,6 +142,13 @@
 		<antcall target="checkoutPackage">
 			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.calendarcombo" />
+			<param name="cvs.name" value="org.eclipse.nebula.widgets.calendarcombo"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
 			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.cdatetime" />
 			<param name="cvs.name" value="org.eclipse.nebula.widgets.cdatetime"  />
 		</antcall>

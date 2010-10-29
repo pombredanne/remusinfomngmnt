@@ -341,6 +341,12 @@
 		<antcall target="checkoutPackage">
 					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.mylyn.htmltext" />
+					<param name="cvs.name" value="org.eclipse.mylyn.htmltext"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
 					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.viewer" />
 					<param name="cvs.name" value="org.eclipse.remus.ui.viewer"  />
 		</antcall>
@@ -363,21 +369,21 @@
 			</fileset>
 		</copy>
 		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/bookmark_blue.png" 
-			tofile="${build.dir.location}/../plugins/org.eclipse.remus.core/icons/iconexperience/bookmark_blue.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/bookmark_blue.png" 
 			overwrite="true" />
 		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/folder_blue.png" 
-			tofile="${build.dir.location}/../plugins/org.eclipse.remus.core/icons/iconexperience/folder_blue.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_blue.png" 
 			overwrite="true" />
 		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/folder_green_network.png" 
-			tofile="${build.dir.location}/../plugins/org.eclipse.remus.core/icons/iconexperience/folder_green_network.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green_network.png" 
 			overwrite="true" />
 		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/folder_green.png" 
-			tofile="${build.dir.location}/../plugins/org.eclipse.remus.core/icons/iconexperience/folder_green.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green.png" 
 			overwrite="true" />
 		<copy file="${build.dir.location}/../customization/lib/groovy-all-1.6.2.jar" 
-			tofile="${build.dir.location}/../plugins/org.eclipse.remus.ui.rules/lib/groovy-all-1.6.2.jar" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.ui.rules/lib/groovy-all-1.6.2.jar" 
 			overwrite="true" />
-		<copy todir="${build.dir.location}/../plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
+		<copy todir="${build.dir.location}/plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
 					<fileset dir="${build.dir.location}/../customization/cdateiconreplacement">
 		    			<include name="**/*.png"/>
 					</fileset>

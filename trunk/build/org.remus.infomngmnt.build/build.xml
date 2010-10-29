@@ -14,6 +14,7 @@
 	<property name="jar.location" value="/opt/eclipse/plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar"/>
 	<property name="pde.build.location" location="/opt/eclipse/plugins/org.eclipse.pde.build_3.6.1.R36x_v20100823/scripts/productBuild/productBuild.xml"/>
 	<property name="build.dir.location" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-TRUNK/build/org.remus.infomngmnt.build/output"/>
+	<property name="build.dir.location2" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-TRUNK/build/org.remus.infomngmnt.build"/>
 	
 
 	<tstamp>
@@ -399,7 +400,7 @@
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
 			<arg value="${pde.build.location}" />
-			<arg value="-Dbuilder=${build.dir.location}" />
+			<arg value="-Dbuilder=${build.dir.location2}" />
 		</java>
 		<!-- <exec executable="pdeBuild.bat" /> -->
 	</target>

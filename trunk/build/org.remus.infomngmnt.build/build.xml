@@ -56,32 +56,32 @@
 		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.metadata.repository.prefs" />
 		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.artifact.repository.prefs" />
 		<!-- Adding p2 profile data - I've found no better way to do this -->
-		<zip destfile="N.RIM/RIM-win32.win32.x86.zip" update="true">
+		<zip destfile="output/N.RIM/RIM-win32.win32.x86.zip" update="true">
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
-		<zip destfile="N.RIM/RIM-win32.win32.x86_64.zip" update="true">
+		<zip destfile="output/N.RIM/RIM-win32.win32.x86_64.zip" update="true">
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
-		<zip destfile="N.RIM/RIM-linux.gtk.x86_64.zip" update="true">
+		<zip destfile="output/N.RIM/RIM-linux.gtk.x86_64.zip" update="true">
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
-		<zip destfile="N.RIM/RIM-linux.gtk.x86.zip" update="true">
+		<zip destfile="output/N.RIM/RIM-linux.gtk.x86.zip" update="true">
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
-		<zip destfile="N.RIM/RIM-macosx.carbon.ppc.zip" update="true">
+		<zip destfile="output/N.RIM/RIM-macosx.carbon.ppc.zip" update="true">
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
-		<zip destfile="N.RIM/RIM-macosx.cocoa.x86.zip" update="true">
+		<zip destfile="output/N.RIM/RIM-macosx.cocoa.x86.zip" update="true">
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>

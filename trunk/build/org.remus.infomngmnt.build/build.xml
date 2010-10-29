@@ -145,7 +145,7 @@
 			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.cdatetime" />
 			<param name="cvs.name" value="org.eclipse.nebula.widgets.cdatetime"  />
 		</antcall>
-		
+		<!--
 		<antcall target="checkoutPackage">
 					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 					<param name="cvs.tag"  value="HEAD" />
@@ -362,7 +362,7 @@
 					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.widgets.databinding" />
 					<param name="cvs.name" value="org.eclipse.remus.ui.widgets.databinding"  />
 		</antcall>
-		
+		-->
 		<copy todir="${build.dir.location}/../plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
 			<fileset dir="${build.dir.location}/../customization/cdateiconreplacement">
     			<include name="**/*.png"/>
@@ -380,9 +380,11 @@
 		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/folder_green.png" 
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green.png" 
 			overwrite="true" />
+		<!--
 		<copy file="${build.dir.location}/../customization/lib/groovy-all-1.6.2.jar" 
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.ui.rules/lib/groovy-all-1.6.2.jar" 
 			overwrite="true" />
+		-->
 		<copy todir="${build.dir.location}/plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
 					<fileset dir="${build.dir.location}/../customization/cdateiconreplacement">
 		    			<include name="**/*.png"/>

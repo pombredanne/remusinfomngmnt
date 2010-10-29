@@ -406,7 +406,7 @@
 	</target>
 	<target name="checkoutPackage">
 		<cvs cvsroot="${cvs.root}" tag="${cvs.tag}" package="${cvs.package}" dest="cvscheckout" />
-		<copy todir="plugins/${cvs.name}">
+		<copy todir="${build.dir.location}/plugins/${cvs.name}">
 			<fileset dir="cvscheckout/${cvs.package}">
 		</fileset>
 		</copy>

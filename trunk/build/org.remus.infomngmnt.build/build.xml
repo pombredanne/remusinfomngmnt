@@ -415,7 +415,7 @@
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
 			<arg value="${pde.build.location}" />
-			<arg value="-Dbuilder=${build.dir.location2}" />
+			<arg value="-Dbuilder=${build.dir.location}" />
 		</java>
 		<!-- <exec executable="pdeBuild.bat" /> -->
 	</target>

@@ -87,7 +87,9 @@
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
 		
-		
+		<move todir="${build.dir.location2}/N.RIM">
+			<fileset dir="${build.dir.location}/N.RIM" />
+		</move>
 		
 		
 		

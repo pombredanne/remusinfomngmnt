@@ -41,6 +41,7 @@ public class RIMNavigatorFilter extends ViewerFilter {
 			final Object element) {
 		return !(element instanceof IProject && (ResourceUtil
 				.isRelevantProject((IProject) element)
+				|| "__tmp".equals(((IProject) element).getName())
 				|| ResourceUtil.PROJECT_NAME_INTERN.equals(((IProject) element)
 						.getName()) || "__internal_referencedLibraries"
 				.equals(((IProject) element).getName())));

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  	<extensionContent id="orgremusinfomngmntideintegration-introExtension" style="css/sample.css" name="Remus Information Management" path="overview/@">
+		<group style-id="content-group" id="orgremusinfomngmntideintegration-introLink-group">
+       		<link label="Remus Information Management" url="http://wiki.eclipse.org/Remus/Getting_Startet" id="orgremusinfomngmntideintegration-introLink" style-id="content-link">
+          		<text>Find out how to use Remus within your Eclipse SDK and learn how to install information types and remote connectors.</text>
+       		</link>
+       	</group>
+  	</extensionContent>
+</introContent>

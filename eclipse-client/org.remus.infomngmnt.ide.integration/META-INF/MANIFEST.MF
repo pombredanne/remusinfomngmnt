@@ -10,7 +10,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.ui.navigator,
  org.eclipse.core.resources,
- org.eclipse.jdt.ui;resolution:=optional
+ org.eclipse.jdt.ui;resolution:=optional,
+ org.eclipse.ui.intro,
+ org.eclipse.ui.intro.universal
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.remus,

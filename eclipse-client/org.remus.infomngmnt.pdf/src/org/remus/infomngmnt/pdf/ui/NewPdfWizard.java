@@ -14,10 +14,11 @@ package org.remus.infomngmnt.pdf.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.remus.infomngmnt.pdf.Activator;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.remus.Category;
 import org.eclipse.remus.InformationUnitListItem;
@@ -33,7 +34,8 @@ import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
-import org.remus.infomngmnt.pdf.Activator;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -56,18 +58,21 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 
 		if (tmpFile != null) {
 			try {
-				PDDocument pdfDocument = PDDocument.load(tmpFile.getLocationURI().toURL());
-				PDDocumentInformation info = pdfDocument.getDocumentInformation();
+				PDDocument pdfDocument = PDDocument.load(tmpFile
+						.getLocationURI().toURL());
+				PDDocumentInformation info = pdfDocument
+						.getDocumentInformation();
 				InformationStructureEdit edit = InformationStructureEdit
 						.newSession(Activator.TYPE_ID);
 
-				edit.setValue(this.newElement, Activator.AUTHOR, info.getAuthor());
-				edit.setValue(this.newElement, Activator.TITLE, info.getTitle());
-				edit.setValue(this.newElement, Activator.CREATOR, info.getCreator());
-				edit.setValue(this.newElement, Activator.PRODUCER, info.getProducer());
+				edit.setValue(newElement, Activator.AUTHOR, info.getAuthor());
+				edit.setValue(newElement, Activator.TITLE, info.getTitle());
+				edit.setValue(newElement, Activator.CREATOR, info.getCreator());
+				edit.setValue(newElement, Activator.PRODUCER,
+						info.getProducer());
 				try {
-					edit.setValue(this.newElement, Activator.CREATION_DATE, info.getCreationDate()
-							.getTime());
+					edit.setValue(newElement, Activator.CREATION_DATE, info
+							.getCreationDate().getTime());
 				} catch (Throwable e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -76,21 +81,30 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 				// We do nothing here.
 			}
 
-			LoadFileToTmpFromPathRunnable loadImageRunnable = new LoadFileToTmpFromPathRunnable();
+			final LoadFileToTmpFromPathRunnable loadImageRunnable = new LoadFileToTmpFromPathRunnable();
 			loadImageRunnable.setFilePath(tmpFile.getLocation().toOSString());
-			try {
-				getContainer().run(true, false, loadImageRunnable);
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			IEditingHandler service = Activator.getDefault().getServiceTracker().getService(
-					IEditingHandler.class);
-			CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory.addFileToInfoUnit(
-					tmpFile, this.newElement, service.getNavigationEditingDomain());
+			getShell().getDisplay().syncExec(new Runnable() {
+
+				public void run() {
+					try {
+						new ProgressMonitorDialog(getShell()).run(true, false,
+								loadImageRunnable);
+					} catch (InvocationTargetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
+			});
+			IEditingHandler service = Activator.getDefault()
+					.getServiceTracker().getService(IEditingHandler.class);
+			CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory
+					.addFileToInfoUnit(tmpFile, newElement,
+							service.getNavigationEditingDomain());
 			Activator.getDefault().getServiceTracker().ungetService(service);
 			return addFileToInfoUnit;
 		}
@@ -98,7 +112,7 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 	}
 
 	protected IFile getTmpFile() {
-		return ((GeneralPdfPage) this.page1).getTmpFile();
+		return ((GeneralPdfPage) page1).getTmpFile();
 	}
 
 	/*
@@ -108,18 +122,19 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
-	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
+	public void init(final IWorkbench workbench,
+			final IStructuredSelection selection) {
 
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
-			this.page1 = new GeneralPdfPage((Category) firstElement);
+			page1 = new GeneralPdfPage((Category) firstElement);
 		} else if (firstElement instanceof InformationUnitListItem) {
-			this.page1 = new GeneralPdfPage((InformationUnitListItem) firstElement);
+			page1 = new GeneralPdfPage((InformationUnitListItem) firstElement);
 		} else {
-			this.page1 = new GeneralPdfPage((Category) null);
+			page1 = new GeneralPdfPage((Category) null);
 		}
-		if (this.files != null) {
-			this.page1.setFiles(this.files);
+		if (files != null) {
+			page1.setFiles(files);
 		}
 		setCategoryToPage();
 
@@ -128,17 +143,23 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 	@Override
 	protected void performActionAfterCreation() {
 		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-					new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)),
-					InformationEditor.ID);
+			PlatformUI
+					.getWorkbench()
+					.getActiveWorkbenchWindow()
+					.getActivePage()
+					.openEditor(
+							new InformationEditorInput((IFile) newElement
+									.getAdapter(IFile.class)),
+							InformationEditor.ID);
 		} catch (Exception e) {
 			// will come soon.
 		}
 		// we also reveal the created list-item, that can be found in the
 		// navigation
-		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class),
+		UIUtil.selectAndReveal(
+				newElement.getAdapter(InformationUnitListItem.class),
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench()
+		UIUtil.selectAndReveal(newElement, PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow());
 
 	}

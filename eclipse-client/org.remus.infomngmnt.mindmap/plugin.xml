@@ -137,5 +137,12 @@
             infotype="MINDMAP">
       </image>
    </extension>
+   <extension
+         point="org.eclipse.remus.js.browserReferenceResource">
+      <referenceResource
+            id="org.remus.infomngmnt.mindmap.fittosizeimage"
+            resource="icons/iconexperience/fit_to_size.png">
+      </referenceResource>
+   </extension>
 
 </plugin>

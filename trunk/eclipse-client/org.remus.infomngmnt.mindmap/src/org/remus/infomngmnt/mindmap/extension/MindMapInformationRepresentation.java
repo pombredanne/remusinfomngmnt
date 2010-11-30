@@ -19,6 +19,13 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
+import org.remus.infomngmnt.mindmap.MindmapActivator;
+import org.xmind.core.IWorkbook;
+import org.xmind.core.io.IStorage;
+import org.xmind.ui.internal.editor.WorkbookRef;
+import org.xmind.ui.internal.editor.WorkbookRefManager;
+import org.xmind.ui.mindmap.MindMapImageExtractor;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -37,19 +44,12 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Display;
-import org.xmind.core.IWorkbook;
-import org.xmind.core.io.IStorage;
-import org.xmind.ui.internal.editor.WorkbookRef;
-import org.xmind.ui.internal.editor.WorkbookRefManager;
-import org.xmind.ui.mindmap.MindMapImageExtractor;
-
-import org.remus.infomngmnt.jslib.rendering.FreemarkerRenderer;
-import org.remus.infomngmnt.mindmap.MindmapActivator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class MindMapInformationRepresentation extends AbstractInformationRepresentation {
+public class MindMapInformationRepresentation extends
+		AbstractInformationRepresentation {
 
 	private WorkbookRefManager manager;
 	private WorkbookRef workbookRef;
@@ -58,16 +58,18 @@ public class MindMapInformationRepresentation extends AbstractInformationReprese
 
 	@Override
 	public void handlePreBuild(final IProgressMonitor monitor) {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
 		List<BinaryReference> binaryReferences = read.getBinaryReferences();
 		try {
 			if (binaryReferences.size() > 0) {
-				IFile binaryReferenceToFile = InformationUtil.binaryReferenceToFile(
-						binaryReferences.get(0), getValue());
-				this.manager = WorkbookRefManager.getInstance();
-				this.workbookRef = this.manager.addReferrer(binaryReferenceToFile, null);
-				this.storage = this.workbookRef.createStorage();
-				this.workbookRef.loadWorkbook(this.storage, null, monitor);
+				IFile binaryReferenceToFile = InformationUtil
+						.binaryReferenceToFile(binaryReferences.get(0),
+								getValue());
+				manager = WorkbookRefManager.getInstance();
+				workbookRef = manager.addReferrer(binaryReferenceToFile, null);
+				storage = workbookRef.createStorage();
+				workbookRef.loadWorkbook(storage, null, monitor);
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
@@ -83,9 +85,9 @@ public class MindMapInformationRepresentation extends AbstractInformationReprese
 	}
 
 	@Override
-	public void handlePostBuild(final IFile derivedFile, final IProgressMonitor monitor)
-			throws CoreException {
-		this.workbookRef.dispose(true);
+	public void handlePostBuild(final IFile derivedFile,
+			final IProgressMonitor monitor) throws CoreException {
+		workbookRef.dispose(true);
 		super.handlePostBuild(derivedFile, monitor);
 	}
 
@@ -105,13 +107,14 @@ public class MindMapInformationRepresentation extends AbstractInformationReprese
 	 */
 	@SuppressWarnings("restriction")
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 
 		try {
-			IWorkbook workbook = this.workbookRef.getWorkbook();
-			MindMapImageExtractor mindMapImageExtractor = new MindMapImageExtractor(Display
-					.getDefault(), workbook.getPrimarySheet(), workbook.getPrimarySheet()
-					.getRootTopic());
+			IWorkbook workbook = workbookRef.getWorkbook();
+			MindMapImageExtractor mindMapImageExtractor = new MindMapImageExtractor(
+					Display.getDefault(), workbook.getPrimarySheet(), workbook
+							.getPrimarySheet().getRootTopic());
 			Image image = mindMapImageExtractor.getImage();
 			ImageLoader loader = new ImageLoader();
 
@@ -120,36 +123,45 @@ public class MindMapInformationRepresentation extends AbstractInformationReprese
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			loader.save(baos, SWT.IMAGE_PNG);
 			mindMapImageExtractor.dispose();
-			this.imageHref = file.getLocation().toOSString();
+			imageHref = file.getLocation().toOSString();
 			byte[] bytesFromFile = baos.toByteArray();
 			baos.close();
 			if (!file.exists()) {
-				file.create(new ByteArrayInputStream(bytesFromFile), true, monitor);
+				file.create(new ByteArrayInputStream(bytesFromFile), true,
+						monitor);
 			} else {
-				file.setContents(new ByteArrayInputStream(bytesFromFile), true, false, monitor);
+				file.setContents(new ByteArrayInputStream(bytesFromFile), true,
+						false, monitor);
 			}
-			InformationStructureRead read = InformationStructureRead.newSession(getValue());
+			InformationStructureRead read = InformationStructureRead
+					.newSession(getValue());
 			ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 			InputStream templateIs = null;
 			try {
-				templateIs = FileLocator.openStream(Platform.getBundle(MindmapActivator.PLUGIN_ID),
+				templateIs = FileLocator.openStream(
+						Platform.getBundle(MindmapActivator.PLUGIN_ID),
 						new Path("template/htmlserialization.flt"), false);
-				FreemarkerRenderer.getInstance().process(
-						MindmapActivator.PLUGIN_ID,
-						templateIs,
-						returnValue,
-						Collections.singletonMap("imageHref", URI.createFileURI(file.getLocation()
-								.toOSString())), read.getContentsAsStrucuturedMap(),
-						read.getDynamicContentAsStructuredMap());
+				org.eclipse.remus.js.rendering.FreemarkerRenderer.getInstance()
+						.process(
+								MindmapActivator.PLUGIN_ID,
+								templateIs,
+								returnValue,
+								Collections.singletonMap("imageHref", URI
+										.createFileURI(file.getLocation()
+												.toOSString())),
+								read.getContentsAsStrucuturedMap(),
+								read.getDynamicContentAsStructuredMap());
 			} catch (IOException e) {
-				throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+				throw new CoreException(StatusCreator.newStatus(
+						"Error reading locations", e));
 			} finally {
 				StreamCloser.closeStreams(templateIs);
 			}
 			return new ByteArrayInputStream(returnValue.toByteArray());
 
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error generating html-output", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error generating html-output", e));
 		}
 
 	}

@@ -112,6 +112,12 @@
 		</copy>
 		
 		
+		<antcall target="checkoutFeature">
+							<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+							<param name="cvs.tag"  value="HEAD" />
+							<param name="cvs.package" value="org.eclipse.remus/features/org.eclipse.remus.core.feature" />
+							<param name="cvs.name" value="org.eclipse.remus.core.feature"  />
+		</antcall>
 		
 		<antcall target="checkoutPackage">
 			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
@@ -424,6 +430,13 @@
 	<target name="checkoutPackage">
 		<cvs cvsroot="${cvs.root}" tag="${cvs.tag}" package="${cvs.package}" dest="cvscheckout" />
 		<copy todir="${build.dir.location}/plugins/${cvs.name}">
+			<fileset dir="cvscheckout/${cvs.package}">
+		</fileset>
+		</copy>
+	</target>
+	<target name="checkoutFeature">
+		<cvs cvsroot="${cvs.root}" tag="${cvs.tag}" package="${cvs.package}" dest="cvscheckout" />
+		<copy todir="${build.dir.location}/features/${cvs.name}">
 			<fileset dir="cvscheckout/${cvs.package}">
 		</fileset>
 		</copy>

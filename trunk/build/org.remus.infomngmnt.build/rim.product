@@ -3,7 +3,6 @@
 
 <product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="0.1.0.qualifier" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
       <linux>/org.remus.infomngmnt.application/config.ini</linux>
       <macosx>/org.remus.infomngmnt.application/config.ini</macosx>
@@ -31,19 +30,16 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
+
 
    <plugins>
    </plugins>
 
    <features>
-      <feature id="org.remus.infomngmnt.core.feature" version="0.1.0.qualifier"/>
-      <feature id="org.remus.infomngmnt.infotypes.feature" version="0.1.0.qualifier"/>
-      <feature id="org.remus.infomngmnt.reportruntime.feature" version="0.1.0.qualifier"/>
-      <feature id="org.remus.infomngmnt.reporttemplates.feature" version="0.1.0.qualifier"/>
-      <feature id="org.remus.infomngmnt.repository.feature" version="0.1.0.qualifier"/>
+      <feature id="org.eclipse.remus.core.feature" version="0.1.0.qualifier"/>
+      <feature id="org.remus.infomngmnt.rcp" version="1.0.0.qualifier"/>
    </features>
 
 

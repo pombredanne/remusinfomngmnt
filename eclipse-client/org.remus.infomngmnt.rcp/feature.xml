@@ -40,13 +40,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.remus.infomngmnt.application"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.compare.core"
          download-size="0"
          install-size="0"
@@ -269,14 +262,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.remus.infomngmnt.logging"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
    <plugin
@@ -765,8 +750,8 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-        
-     <plugin
+
+   <plugin
          id="org.eclipse.core.filesystem.win32.x86"
          os="win32"
          arch="x86"
@@ -776,7 +761,7 @@
          fragment="true"
          unpack="false"/>
 
-	<plugin
+   <plugin
          id="org.eclipse.swt.win32.win32.x86"
          os="win32"
          ws="win32"
@@ -786,7 +771,7 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.core.filesystem.linux.x86_64"
          os="linux"
@@ -866,8 +851,8 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
-    <plugin
+
+   <plugin
          id="org.eclipse.ui.cocoa"
          ws="cocoa"
          download-size="0"
@@ -884,5 +869,5 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-   
+
 </feature>

@@ -102,12 +102,14 @@
 		<copy todir="${build.dir.location}/features" >
 			<fileset dir="${build.dir.location}/../../../eclipse-client/">
    			 	<include name="*.feature/**"/>
+   			 	<include name="org.remus.infomngmnt.rcp/**"/>
 			</fileset>		
 		</copy>
 		
 		<copy todir="${build.dir.location}/plugins/">
 			<fileset dir="${build.dir.location}/../../../eclipse-client/">
    			 	<exclude name="*.feature/**"/>
+   			 	<exclude name="org.remus.infomngmnt.rcp/**"/>
 			</fileset>		
 		</copy>
 		

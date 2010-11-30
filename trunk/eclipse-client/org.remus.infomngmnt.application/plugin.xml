@@ -77,6 +77,14 @@
                id="org.eclipse.remus.ui.newCategoryWizard">
          </newWizardShortcut>
       </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="org.eclipse.ui.views.ContentOutline"
+               minimized="false"
+               relationship="stack">
+         </view>
+      </perspectiveExtension>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
@@ -359,7 +367,8 @@
             description="Marketplace for installing additional components to your information management system."
             icon="icons/iconexperience/windowimages/cabinet_open_32.png"
             label="Remus Information Management - Marketplace"
-            url="http://remus-software.org/marketplace/">
+            url="http://remus-software.org/marketplace/"
+            dependenciesRepository="http://download.eclipse.org/releases/helios">
       </catalog>
    </extension>
 </plugin>

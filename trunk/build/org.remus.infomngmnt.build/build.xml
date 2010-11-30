@@ -113,6 +113,16 @@
 			</fileset>		
 		</copy>
 		
+		<delete>
+			<fileset dir="${build.dir.location}/features">
+				<include name="org.remus.infomngmnt.birtdesigner.feature/**" />
+				<include name="org.remus.infomngmnt.core.feature/**" />
+				<include name="org.remus.infomngmnt.infotypes.feature/**" />
+				<include name="org.remus.infomngmnt.reportruntime.feature/**" />
+				<include name="org.remus.infomngmnt.reporttemplates.feature/**" />
+				<include name="org.remus.infomngmnt.repository.feature/**" />
+			</fileset>
+		</delete>
 		
 		<antcall target="checkoutFeature">
 							<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />

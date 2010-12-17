@@ -112,7 +112,7 @@
    			 	<exclude name="org.remus.infomngmnt.rcp/**"/>
 			</fileset>		
 		</copy>
-		
+		<rename dest="${build.dir.location}/plugins/org.eclipse.remus.application/" src="${build.dir.location}/plugins/org.remus.infomngmnt.application/"/>
 		<delete>
 			<fileset dir="${build.dir.location}/features">
 				<include name="org.remus.infomngmnt.birtdesigner.feature/**" />

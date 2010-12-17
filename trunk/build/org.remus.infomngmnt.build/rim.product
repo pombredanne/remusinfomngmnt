@@ -21,18 +21,17 @@
       location="org.remus.infomngmnt.application"
       startupProgressRect="5,275,445,15" />
    <launcher name="rim">
-      <linux icon="/org.eclips.remus.application/launchericons/xpm/cabinet_open.xpm"/>
-      <macosx icon="/org.eclips.remus.application/launchericons/icns/Mac.icns"/>
+      <linux icon="/org.eclipse.remus.application/launchericons/xpm/cabinet_open.xpm"/>
+      <macosx icon="/org.eclipse.remus.application/launchericons/icns/Mac.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/org.eclips.remus.application/launchericons/ico/Win.ico"/>
+         <ico path="/org.eclipse.remus.application/launchericons/ico/Win.ico"/>
          <bmp/>
       </win>
    </launcher>
 
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>

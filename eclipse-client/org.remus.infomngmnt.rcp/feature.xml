@@ -213,7 +213,7 @@ Each party waives its rights to a jury trial in any resulting
 litigation.
    </license>
 
-<!--
+
    <plugin
          id="org.eclipse.swt.win32.win32.x86_64"
          download-size="0"
@@ -221,7 +221,7 @@ litigation.
          version="0.0.0"
          fragment="true"
          unpack="false"/>
--->
+
    <plugin
          id="org.eclipse.ui.win32"
          download-size="0"
@@ -560,7 +560,7 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-<!--
+
    <plugin
          id="org.eclipse.core.net.win32.x86_64"
          download-size="0"
@@ -568,7 +568,7 @@ litigation.
          version="0.0.0"
          fragment="true"
          unpack="false"/>
--->
+
    <plugin
          id="org.eclipse.ui.forms"
          download-size="0"
@@ -715,7 +715,7 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-<!--
+
    <plugin
          id="org.eclipse.core.filesystem.win32.x86_64"
          download-size="0"
@@ -723,7 +723,7 @@ litigation.
          version="0.0.0"
          fragment="true"
          unpack="false"/>
--->
+
    <plugin
          id="org.apache.commons.codec"
          download-size="0"

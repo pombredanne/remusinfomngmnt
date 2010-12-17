@@ -366,12 +366,14 @@
 					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.rules.notification" />
 					<param name="cvs.name" value="org.eclipse.remus.ui.rules.notification"  />
 		</antcall>
+		<!--
 		<antcall target="checkoutPackage">
 					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 					<param name="cvs.tag"  value="HEAD" />
 					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.mylyn.htmltext" />
 					<param name="cvs.name" value="org.eclipse.mylyn.htmltext"  />
 		</antcall>
+		-->
 		<antcall target="checkoutPackage">
 					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 					<param name="cvs.tag"  value="HEAD" />

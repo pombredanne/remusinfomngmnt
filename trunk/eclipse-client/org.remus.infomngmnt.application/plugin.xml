@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="org.remus.infomngmnt.application.Application">
+               class="org.eclipse.remus.application.Application">
          </run>
       </application>
    </extension>
@@ -15,7 +15,7 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="org.remus.infomngmnt.application.application"
+            application="org.eclipse.remus.application.application"
             name="Remus Information Management">
          <property
                name="windowImages"
@@ -60,7 +60,7 @@
 	 <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="org.remus.infomngmnt.ui.perspective.Perspective"
+            class="org.eclipse.remus.ui.perspective.Perspective"
             icon="icons/rim_icon.png"
             id="org.remus.infomngmnt.ui.infoperspective"
             name="Information Management">
@@ -89,37 +89,37 @@
    <extension
          point="org.eclipse.ui.editors">
          <editor
-            class="org.remus.infomngmnt.welcome.WelcomeEditor2"
+            class="org.eclipse.remus.welcome.WelcomeEditor2"
             default="false"
             icon="icons/iconexperience/16/earth.png"
-            id="org.remus.infomngmnt.welcome.WelcomeEditor"
+            id="org.eclipse.remus.welcome.WelcomeEditor"
             name="Welcome to Remus!">
       </editor>
    </extension>
    <extension
          point="org.eclipse.remus.ui.desktop.trayAction">
       <trayAction
-            class="org.remus.infomngmnt.ui.trayaction.OpenElementToolItem"
+            class="org.eclipse.remus.ui.trayaction.OpenElementToolItem"
             icon="icons/iconexperience/16/folder_document.png"
-            id="org.remus.infomngmnt.ui.openElement"
+            id="org.eclipse.remus.ui.openElement"
             name="Open Infotype">
       </trayAction>
       <trayAction
-            class="org.remus.infomngmnt.ui.trayaction.RestoreFromTrayToolItem"
+            class="org.eclipse.remus.ui.trayaction.RestoreFromTrayToolItem"
             icon="icons/iconexperience/16/fit_to_size.png"
-            id="org.remus.infomngmnt.ui.restoreFromTray"
+            id="org.eclipse.remus.ui.restoreFromTray"
             name="Restore from Tray">
       </trayAction>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
           <command
-            defaultHandler="org.remus.infomngmnt.application.handler.OpenWelcomeHandler"
-            id="org.remus.infomngmnt.ui.openWelcome"
+            defaultHandler="org.eclipse.remus.application.handler.OpenWelcomeHandler"
+            id="org.eclipse.remus.ui.openWelcome"
             name="Welcome">
       </command>
        <command
-            id="org.remus.infomngmnt.ui.openInfoType"
+            id="org.eclipse.remus.ui.openInfoType"
             name="Open Information-Type">
       </command>
    </extension>
@@ -128,9 +128,9 @@
           <view
             allowMultiple="false"
             category="org.eclipse.remus.ui.viewcategory"
-            class="org.remus.infomngmnt.ui.view.MainViewPart"
+            class="org.eclipse.remus.ui.view.MainViewPart"
             icon="platform:/plugin/org.eclipse.remus.ui.editor/icons/iconexperience/16/document.png"
-            id="org.remus.infomngmnt.ui.main"
+            id="org.eclipse.remus.ui.main"
             name="Navigation"
             restorable="true">
       </view>
@@ -138,7 +138,7 @@
     <extension
          point="org.eclipse.ui.contexts">
       <context
-            id="org.remus.infomngmnt.ui.navigationContext"
+            id="org.eclipse.remus.ui.navigationContext"
             name="Main View - Navigation Context"
             parentId="org.eclipse.ui.contexts.window">
       </context>
@@ -147,29 +147,29 @@
          point="org.eclipse.remus.ui.collapsiblebutton.collapsibleButtonBar">
       <collapsibleButton
             bigImage="icons/iconexperience/24/workplace.png"
-            class="org.remus.infomngmnt.ui.collapsiblebuttons.NavigationSection"
-            contextId="org.remus.infomngmnt.ui.navigationContext"
+            class="org.eclipse.remus.ui.collapsiblebuttons.NavigationSection"
+            contextId="org.eclipse.remus.ui.navigationContext"
             icon="icons/iconexperience/16/workplace.png"
-            id="org.remus.infomngmnt.ui.navigation"
+            id="org.eclipse.remus.ui.navigation"
             name="Navigation"
             order="10"
             tooltip="Navigation">
       </collapsibleButton>
       <collapsibleButton
             bigImage="icons/iconexperience/24/bookmark_silver.png"
-            class="org.remus.infomngmnt.ui.collapsiblebuttons.TagSection"
+            class="org.eclipse.remus.ui.collapsiblebuttons.TagSection"
             icon="icons/iconexperience/16/bookmark_silver.png"
-            id="org.remus.infomngmnt.ui.tags"
+            id="org.eclipse.remus.ui.tags"
             name="Tags"
             order="20"
             tooltip="Tags">
       </collapsibleButton>
       <collapsibleButton
             bigImage="icons/iconexperience/24/server_network.png"
-            class="org.remus.infomngmnt.ui.collapsiblebuttons.RemoteRepositoryButtonBar"
-            contextId="org.remus.infomngmnt.ui.navigationContext"
+            class="org.eclipse.remus.ui.collapsiblebuttons.RemoteRepositoryButtonBar"
+            contextId="org.eclipse.remus.ui.navigationContext"
             icon="icons/iconexperience/16/server_network.png"
-            id="org.remus.infomngmnt.application.remoteRepo"
+            id="org.eclipse.remus.application.remoteRepo"
             name="Remote Repositories"
             order="30"
             tooltip="Remote Repositories">
@@ -179,7 +179,7 @@
     <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=sync">
+            locationURI="popup:org.eclipse.remus.ui.navigation?after=sync">
          <menu
                label="Remote Synchronization"
                mnemonic="e">
@@ -200,7 +200,7 @@
                </visibleWhen>
             </command>
             <separator
-                  name="org.remus.infomngmnt.ui.separator2"
+                  name="org.eclipse.remus.ui.separator2"
                   visible="true">
             </separator>
             <command
@@ -225,7 +225,7 @@
                   style="push">
             </command>
             <separator
-                  name="org.remus.infomngmnt.ui.separator1"
+                  name="org.eclipse.remus.ui.separator1"
                   visible="true">
             </separator>
             <command
@@ -249,7 +249,7 @@
       <menuContribution
             locationURI="menu:help?after=help-primary-additions-start">
          <command
-               commandId="org.remus.infomngmnt.ui.openWelcome"
+               commandId="org.eclipse.remus.ui.openWelcome"
                icon="icons/iconexperience/16/earth.png"
                style="push">
          </command>
@@ -265,18 +265,18 @@
             locationURI="toolbar:org.eclipse.ui.trim.status">
         
          <toolbar
-               id="org.remus.infomngmnt.ui.trimtoolbar2">
+               id="org.eclipse.remus.ui.trimtoolbar2">
             <control
                   class="org.eclipse.remus.ui.editors.editortrim.EditorTrim"
-                  id="org.remus.infomngmnt.ui.editors.editortrim.EditorTrim">
+                  id="org.eclipse.remus.ui.editors.editortrim.EditorTrim">
             </control>
          </toolbar>
         
          <toolbar
-               id="org.remus.infomngmnt.ui.trimtoolbar">
+               id="org.eclipse.remus.ui.trimtoolbar">
             <control
                   class="org.eclipse.remus.ui.notification.NotificationTrimArea"
-                  id="org.remus.infomngmnt.ui.notification.NotificationTrimArea">
+                  id="org.eclipse.remus.ui.notification.NotificationTrimArea">
             </control>
          </toolbar>
          
@@ -290,7 +290,7 @@
          -->
       </menuContribution>
       <menuContribution
-            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=sync">
+            locationURI="popup:org.eclipse.remus.ui.navigation?after=sync">
          <menu
                label="Search"
                mnemonic="a">
@@ -304,7 +304,7 @@
     <extension
           point="org.eclipse.ui.bindings">
        <key
-             commandId="org.remus.infomngmnt.ui.openInfoType"
+             commandId="org.eclipse.remus.ui.openInfoType"
              contextId="org.eclipse.ui.contexts.window"
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
              sequence="M1+T">
@@ -317,13 +317,13 @@
        </key>
        <key
              commandId="org.eclipse.remus.ui.remote.shareCategory"
-             contextId="org.remus.infomngmnt.ui.navigationContext"
+             contextId="org.eclipse.remus.ui.navigationContext"
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
              sequence="M2+M3+R">
        </key>
        <key
              commandId="org.eclipse.remus.ui.remote.syncCategory"
-             contextId="org.remus.infomngmnt.ui.navigationContext"
+             contextId="org.eclipse.remus.ui.navigationContext"
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
              sequence="M2+M3+T">
        </key>
@@ -331,8 +331,8 @@
     <extension
           point="org.eclipse.ui.handlers">
         <handler
-            class="org.remus.infomngmnt.application.handler.OpenInfoTypeHandler"
-            commandId="org.remus.infomngmnt.ui.openInfoType">
+            class="org.eclipse.remus.application.handler.OpenInfoTypeHandler"
+            commandId="org.eclipse.remus.ui.openInfoType">
       </handler>
     </extension>
     <extension

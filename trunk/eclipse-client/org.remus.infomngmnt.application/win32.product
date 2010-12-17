@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Remus Information Management" id="org.remus.infomngmnt.application.product" application="org.remus.infomngmnt.application.application" version="1.0.0" useFeatures="true" includeLaunchers="true">
+<product name="Remus Information Management" id="org.eclipse.remus.application.product" application="org.eclipse.remus.application.application" version="1.0.0" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/org.remus.infomngmnt.application/about.png"/>
+      <image path="/org.eclipse.remus.application/about.png"/>
       <text>
          Remus Information Management
 
@@ -23,7 +23,9 @@ http://www.remus-software.org/integrated-thirdparty-packages
    </aboutInfo>
 
    <configIni use="default">
-      <win32>/org.remus.infomngmnt.application/config.ini</win32>
+      <linux>/org.eclipse.remus.application/config.ini</linux>
+      <macosx>/org.eclipse.remus.application/config.ini</macosx>
+      <win32>/org.eclipse.remus.application/config.ini</win32>
    </configIni>
 
    <launcherArgs>
@@ -32,17 +34,17 @@ http://www.remus-software.org/integrated-thirdparty-packages
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.remus.infomngmnt.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
+   <windowImages i16="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
 
    <splash
-      location="org.remus.infomngmnt.application"
+      location="org.eclipse.remus.application"
       startupProgressRect="125,280,150,10"
       startupMessageRect="1000,1000,270,15"
       startupForegroundColor="FFFFFF" />
    <launcher>
       <solaris/>
       <win useIco="true">
-         <ico path="/org.remus.infomngmnt.application/launchericons/ico/Win.ico"/>
+         <ico path="/org.eclipse.remus.application/launchericons/ico/Win.ico"/>
          <bmp/>
       </win>
    </launcher>
@@ -161,7 +163,7 @@ http://www.remus-software.org/integrated-thirdparty-packages
       <plugin id="org.eclipse.ui.workbench"/>
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
       <plugin id="org.eclipse.update.configurator"/>
-      <plugin id="org.remus.infomngmnt.application"/>
+      <plugin id="org.remus.infomngmnt.application" fragment=""/>
       <plugin id="org.remus.infomngmnt.calendar"/>
       <plugin id="org.remus.infomngmnt.common.core" fragment=""/>
       <plugin id="org.remus.infomngmnt.common.ui" fragment=""/>

@@ -426,10 +426,10 @@
          ================================= -->
 	<target name="build" description="description" depends="depending">
 		<!-- Set Build-ID -->
-		<propertyfile file="${build.dir.location}/plugins/org.remus.infomngmnt.application/config.ini">
+		<propertyfile file="${build.dir.location}/plugins/org.eclipse.remus.application/config.ini">
 		  <entry  key="eclipse.buildId" value="${buildId}"/>
 		</propertyfile>
-		<propertyfile file="${build.dir.location}/plugins/org.remus.infomngmnt.application/about.mappings">
+		<propertyfile file="${build.dir.location}/plugins/org.eclipse.remus.application/about.mappings">
 		  <entry key="1" value="${buildId}"/>
 		  <entry key="2" value="${buildTime}"/>
 		</propertyfile>

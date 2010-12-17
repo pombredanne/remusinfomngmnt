@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Remus Information Management" id="org.eclips.remus.application.product" application="org.eclips.remus.application.application" version="0.1.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Remus Information Management" id="org.eclipse.remus.application.product" application="org.eclipse.remus.application.application" version="0.1.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
-      <linux>/org.eclips.remus.application/config.ini</linux>
-      <macosx>/org.eclips.remus.application/config.ini</macosx>
-      <win32>/org.eclips.remus.application/config.ini</win32>
+      <linux>/org.eclipse.remus.application/config.ini</linux>
+      <macosx>/org.eclipse.remus.application/config.ini</macosx>
+      <win32>/org.eclipse.remus.application/config.ini</win32>
    </configIni>
 
    <launcherArgs>
@@ -15,7 +15,7 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/org.eclips.remus.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.eclips.remus.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.eclips.remus.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.eclips.remus.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.eclips.remus.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
+   <windowImages i16="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
 
    <splash
       location="org.remus.infomngmnt.application"

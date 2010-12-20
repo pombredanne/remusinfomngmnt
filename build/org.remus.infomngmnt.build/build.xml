@@ -411,9 +411,10 @@
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green.png" 
 			overwrite="true" />
 		
-		<copy file="${build.dir.location}/../customization/lib/groovy-all-1.6.2.jar" 
+		<!--<copy file="${build.dir.location}/../customization/lib/groovy-all-1.6.2.jar" 
 			tofile="${build.dir.location}/plugins/org.eclipse.remus.ui.rules/lib/groovy-all-1.6.2.jar" 
 			overwrite="true" />
+			-->
 		
 		<copy todir="${build.dir.location}/plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
 					<fileset dir="${build.dir.location}/../customization/cdateiconreplacement">

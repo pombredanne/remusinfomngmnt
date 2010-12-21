@@ -15,7 +15,7 @@
    <windowImages i16="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_16.png" i32="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_32.png" i48="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_48.png" i64="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_64.png" i128="/org.eclipse.remus.application/icons/iconexperience/windowimages/cabinet_open_128.png"/>
 
    <splash
-      location="org.remus.infomngmnt.application"
+      location="org.eclipse.remus.application"
       startupProgressRect="5,275,445,15" />
    <launcher name="rim">
       <linux icon="/org.eclipse.remus.application/launchericons/xpm/cabinet_open.xpm"/>

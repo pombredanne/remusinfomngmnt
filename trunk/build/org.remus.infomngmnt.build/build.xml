@@ -49,7 +49,7 @@
 		<delete dir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
 		</delete>
 		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
-			<fileset dir="buildRepo"></fileset>
+			<fileset dir="output/buildRepo"></fileset>
 		</copy>
 		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" />
 		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.metadata.repository.prefs" />

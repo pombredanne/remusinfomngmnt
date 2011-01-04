@@ -1,11 +1,21 @@
 package org.eclipse.remus.welcome;
 
+import java.util.List;
+
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.epp.internal.mpc.ui.CatalogRegistry;
+import org.eclipse.epp.internal.mpc.ui.commands.MarketplaceWizardCommand;
+import org.eclipse.epp.mpc.ui.CatalogDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.remus.common.ui.html.OfflineBrowser;
 import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.services.IInformationTypeHandler;
 import org.eclipse.remus.js.TemplateLocation;
 import org.eclipse.remus.ui.UIPlugin;
 import org.eclipse.remus.ui.preference.UIPreferenceInitializer;
+import org.eclipse.remus.ui.remote.service.IRepositoryExtensionService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.graphics.Image;
@@ -25,6 +35,7 @@ import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.AbstractHyperlink;
 import org.eclipse.ui.forms.widgets.Form;
+import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.Section;
@@ -33,6 +44,8 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.ui.part.EditorPart;
 
 public class WelcomeEditor2 extends EditorPart {
+	public WelcomeEditor2() {
+	}
 
 	public static final String ID = "org.eclipse.remus.welcome.WelcomeEditor"; //$NON-NLS-1$
 
@@ -72,20 +85,71 @@ public class WelcomeEditor2 extends EditorPart {
 
 		final Composite composite_1 = toolkit
 				.createComposite(section, SWT.NONE);
-		composite_1.setLayout(new TableWrapLayout());
 		toolkit.paintBordersFor(composite_1);
 		section.setClient(composite_1);
+		composite_1.setLayout(new GridLayout(1, false));
 
-		final ImageHyperlink learnRimInImageHyperlink = toolkit
-				.createImageHyperlink(createComposite, SWT.NONE);
-		learnRimInImageHyperlink.setLayoutData(new GridData(SWT.CENTER,
-				SWT.CENTER, true, false));
-		learnRimInImageHyperlink.setText("Learn Remus in 5 Minutes (Video)");
-		learnRimInImageHyperlink.setImage(ResourceManager.getPluginImage(
-				UIPlugin.getDefault(), "icons/iconexperience/16/film.png"));
-		learnRimInImageHyperlink.setHref(UIPlugin.getDefault()
-				.getPreferenceStore()
-				.getString(UIPreferenceInitializer.VIDEO_LINK));
+		Section sctnStatus = toolkit.createSection(createComposite, SWT.NONE);
+		sctnStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+				false, 1, 1));
+		toolkit.paintBordersFor(sctnStatus);
+		sctnStatus.setText("Installation Status");
+
+		Composite composite_3 = toolkit.createComposite(sctnStatus, SWT.NONE);
+		toolkit.paintBordersFor(composite_3);
+		sctnStatus.setClient(composite_3);
+		composite_3.setLayout(new GridLayout(3, false));
+
+		ImageHyperlink mghprlnkInformationTypes = toolkit.createImageHyperlink(
+				composite_3, SWT.NONE);
+		mghprlnkInformationTypes.setLayoutData(new GridData(SWT.CENTER,
+				SWT.CENTER, false, false, 1, 1));
+		toolkit.paintBordersFor(mghprlnkInformationTypes);
+		IInformationTypeHandler service = UIPlugin.getDefault()
+				.getServiceTracker().getService(IInformationTypeHandler.class);
+		int installedInformationTypes = service.getTypes().size();
+		mghprlnkInformationTypes.setText(NLS.bind("{0} Information type(s)",
+				installedInformationTypes));
+
+		ImageHyperlink mghprlnkConnectorsInstalled = toolkit
+				.createImageHyperlink(composite_3, SWT.NONE);
+		mghprlnkConnectorsInstalled.setLayoutData(new GridData(SWT.CENTER,
+				SWT.CENTER, false, false, 1, 1));
+		toolkit.paintBordersFor(mghprlnkConnectorsInstalled);
+		IRepositoryExtensionService service2 = UIPlugin.getDefault()
+				.getServiceTracker()
+				.getService(IRepositoryExtensionService.class);
+		int installedRepositoryUis = service2.getAllItems().size();
+		mghprlnkConnectorsInstalled.setText(NLS.bind("{0} Connector(s)",
+				installedRepositoryUis));
+
+		ImageHyperlink mghprlnkInstallAddons = toolkit.createImageHyperlink(
+				composite_3, SWT.NONE);
+		mghprlnkInstallAddons.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER,
+				true, false, 1, 1));
+		toolkit.paintBordersFor(mghprlnkInstallAddons);
+		mghprlnkInstallAddons.setText("Install Add-Ons...");
+		mghprlnkInstallAddons.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent e) {
+				MarketplaceWizardCommand command = new MarketplaceWizardCommand();
+				List<CatalogDescriptor> catalogDescriptors = CatalogRegistry
+						.getInstance().getCatalogDescriptors();
+				command.setCatalogDescriptors(catalogDescriptors);
+				for (CatalogDescriptor catalogDescriptor : catalogDescriptors) {
+					if (catalogDescriptor.getLabel().toLowerCase()
+							.contains("remus")) {
+						command.setSelectedCatalogDescriptor(catalogDescriptor);
+						break;
+					}
+				}
+				try {
+					command.execute(new ExecutionEvent());
+				} catch (ExecutionException e1) {
+					// do nothing.
+				}
+			}
+		});
 
 		final Section linksSection = toolkit.createSection(createComposite,
 				SWT.NONE);
@@ -100,27 +164,93 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.paintBordersFor(composite_2);
 		linksSection.setClient(composite_2);
 
-		final ImageHyperlink imageHyperlink_1 = toolkit.createImageHyperlink(
-				composite_2, SWT.NONE);
-		imageHyperlink_1.setLayoutData(new TableWrapData(TableWrapData.FILL,
-				TableWrapData.TOP));
-		imageHyperlink_1.setText("Frequently Asked Questions");
-		imageHyperlink_1.setImage(ResourceManager.getPluginImage(
+		FormText formText = toolkit.createFormText(composite_2, false);
+		formText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
+				TableWrapData.TOP, 1, 1));
+		toolkit.paintBordersFor(formText);
+		formText.setText(
+				"<form><p><img href=\"info\" /> <a>Getting started</a> - Learn how to use the different functionalities of Remus.</p></form>",
+				true, false);
+		formText.setImage("info", ResourceManager.getPluginImage(
 				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
-		imageHyperlink_1.setHref(UIPlugin.getDefault().getPreferenceStore()
-				.getString(UIPreferenceInitializer.FAQ_LINK));
+		formText.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent e) {
+				Program.launch("http://wiki.eclipse.org/Remus/Getting_started");
+			}
+		});
 
-		final ImageHyperlink imageHyperlink = toolkit.createImageHyperlink(
-				composite_2, SWT.NONE);
-		imageHyperlink.setLayoutData(new TableWrapData(TableWrapData.FILL,
-				TableWrapData.TOP));
-		imageHyperlink.setText("User Documentation");
-		imageHyperlink.setImage(ResourceManager.getPluginImage(
+		FormText formText_1 = toolkit.createFormText(composite_2, false);
+		formText_1.setLayoutData(new TableWrapData(TableWrapData.FILL,
+				TableWrapData.TOP, 1, 1));
+		toolkit.paintBordersFor(formText_1);
+		formText_1
+				.setText(
+						"<form><p><img href=\"info\" /> <a>Install add-ons, new information types or remote connectors</a> - Extend your Remus installation with new functionalities.</p></form>",
+						true, false);
+		formText_1.setImage("info", ResourceManager.getPluginImage(
 				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
-		imageHyperlink.setHref(UIPlugin.getDefault().getPreferenceStore()
-				.getString(UIPreferenceInitializer.USER_DOCUMENTATION_LINK));
-		addHyperlinks(learnRimInImageHyperlink, imageHyperlink,
-				imageHyperlink_1);
+		formText_1.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent e) {
+				MarketplaceWizardCommand command = new MarketplaceWizardCommand();
+				List<CatalogDescriptor> catalogDescriptors = CatalogRegistry
+						.getInstance().getCatalogDescriptors();
+				command.setCatalogDescriptors(catalogDescriptors);
+				for (CatalogDescriptor catalogDescriptor : catalogDescriptors) {
+					if (catalogDescriptor.getLabel().toLowerCase()
+							.contains("remus")) {
+						command.setSelectedCatalogDescriptor(catalogDescriptor);
+						break;
+					}
+				}
+			}
+		});
+
+		FormText formText_2 = toolkit.createFormText(composite_2, false);
+		toolkit.paintBordersFor(formText_2);
+		formText_2
+				.setText(
+						"<form><p><img href=\"info\" /> <a>User documentation</a> - Browse through the detailed user documentation to learn Remus.</p></form>",
+						true, false);
+		formText_2.setImage("info", ResourceManager.getPluginImage(
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText_2.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent e) {
+				Program.launch("http://wiki.eclipse.org/Remus");
+			}
+		});
+
+		FormText formText_3 = toolkit.createFormText(composite_2, false);
+		toolkit.paintBordersFor(formText_3);
+		formText_3
+				.setText(
+						"<form><p><img href=\"info\" /> <a>User Forums</a> - Get help in the user forums from the Remus community.</p></form>",
+						true, false);
+		formText_3.setImage("info", ResourceManager.getPluginImage(
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText_3.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent e) {
+				Program.launch("http://www.eclipse.org/forums/index.php?t=thread&frm_id=166");
+			}
+		});
+
+		FormText formText_4 = toolkit.createFormText(composite_2, false);
+		toolkit.paintBordersFor(formText_4);
+		formText_4
+				.setText(
+						"<form><p><img href=\"info\" /> <a>Get involved</a> - Report bugs and feedback, request new features or join our development team.</p></form>",
+						true, false);
+		formText_4.setImage("info", ResourceManager.getPluginImage(
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText_4.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent e) {
+				Program.launch("http://remus-software.org/jira");
+			}
+		});
 
 		final Label label = new Label(createComposite, SWT.SEPARATOR
 				| SWT.HORIZONTAL);
@@ -216,5 +346,4 @@ public class WelcomeEditor2 extends EditorPart {
 	public boolean isSaveAsAllowed() {
 		return false;
 	}
-
 }

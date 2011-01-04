@@ -29,6 +29,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.cyberneko.html.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -43,13 +46,6 @@ import org.eclipse.remus.common.core.streams.StreamUtil;
 import org.eclipse.remus.common.io.transfer.DownloadFileJob;
 import org.eclipse.remus.common.ui.html.DownloadMissingUrlJob;
 import org.eclipse.remus.resources.util.ResourceUtil;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -60,11 +56,12 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 
 	private IRetrieveFileTransferContainerAdapter fileReceiveAdapter;
 
-	public static final String URL_LATEST_NEWS = "http://remus-software.org/latest-news-app?tmpl=component"; //$NON-NLS-1$
+	public static final String URL_LATEST_NEWS = "http://remus-software.org/project-news?tmpl=component"; //$NON-NLS-1$
 	public static final String URL_PREFIX = "http://remus-software.org"; //$NON-NLS-1$
 
 	public DownloadLatestNewsJob() {
-		super(URL_LATEST_NEWS, ResourceUtil.getInternalFile("latest-news.html", false));
+		super(URL_LATEST_NEWS, ResourceUtil.getInternalFile("latest-news.html",
+				false));
 		// TODO Auto-generated constructor stub
 	}
 
@@ -79,11 +76,11 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 		try {
 			File tempFile = org.eclipse.remus.common.core.util.ResourceUtil
 					.createTempFileOnFileSystem("html");
-			DownloadFileJob downloadJob = new DownloadFileJob(new URL(URL_LATEST_NEWS), tempFile,
-					getFileReceiveAdapter());
+			DownloadFileJob downloadJob = new DownloadFileJob(new URL(
+					URL_LATEST_NEWS), tempFile, getFileReceiveAdapter());
 			IStatus run = downloadJob.run(monitor);
 			if (run.isOK()) {
-				appendStyles(tempFile, monitor);
+				// appendStyles(tempFile, monitor);
 				if (getTarget().exists()) {
 					getTarget().refreshLocal(IResource.DEPTH_INFINITE, monitor);
 					getTarget().delete(false, monitor);
@@ -109,44 +106,67 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 		return Status.OK_STATUS;
 	}
 
-	private void appendStyles(final File tempFile, final IProgressMonitor monitor) {
+	private void appendStyles(final File tempFile,
+			final IProgressMonitor monitor) {
 		final DOMParser parser = new DOMParser();
 		try {
 			InputStream contents = new FileInputStream(tempFile);
-			parser.parse(new org.apache.xerces.xni.parser.XMLInputSource(null, null, null,
-					contents, "UTF-8"));
+			parser.parse(new org.apache.xerces.xni.parser.XMLInputSource(null,
+					null, null, contents, "UTF-8"));
 			final Document document = parser.getDocument();
 			NodeList elementsByTagName = document.getElementsByTagName("head");
-			for (int i = 0; i < elementsByTagName.getLength(); i++) {
-				final Node node = elementsByTagName.item(i);
-
-				NodeList childNodes = node.getChildNodes();
-				while (childNodes.getLength() > 0) {
-					node.removeChild(childNodes.item(0));
-				}
-				Element createElement = document.createElement("style");
-				Attr createAttribute = document.createAttribute("type");
-				createAttribute.setNodeValue("text/css");
-				InputStream resourceAsStream = DownloadLatestNewsJob.class
-						.getResourceAsStream("template.css");
-				Text createComment = document.createTextNode(StreamUtil
-						.convertStreamToString(resourceAsStream));
-				createElement.setAttributeNode(createAttribute);
-				createElement.appendChild(createComment);
-				node.appendChild(createElement);
-				break;
-			}
-			elementsByTagName = document.getElementsByTagName("a");
-			for (int i = 0; i < elementsByTagName.getLength(); i++) {
-				final Node node = elementsByTagName.item(i);
-				((Element) node).setAttribute("target", "_blank");
-				String attribute = ((Element) node).getAttribute("href");
-				// Joomla cuts all internal links...
-				if (attribute.startsWith("/")) {
-					((Element) node).setAttribute("href", URL_PREFIX + attribute);
-				}
-			}
-			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			// for (int i = 0; i < elementsByTagName.getLength(); i++) {
+			// final Node node = elementsByTagName.item(i);
+			//
+			// NodeList childNodes = node.getChildNodes();
+			// while (childNodes.getLength() > 0) {
+			// node.removeChild(childNodes.item(0));
+			// }
+			// Element createElement = document.createElement("style");
+			// Attr createAttribute = document.createAttribute("type");
+			// createAttribute.setNodeValue("text/css");
+			// InputStream resourceAsStream = DownloadLatestNewsJob.class
+			// .getResourceAsStream("template.css");
+			// Text createComment = document.createTextNode(StreamUtil
+			// .convertStreamToString(resourceAsStream));
+			// createElement.setAttributeNode(createAttribute);
+			// createElement.appendChild(createComment);
+			// node.appendChild(createElement);
+			// break;
+			// }
+			// elementsByTagName = document.getElementsByTagName("a");
+			// for (int i = 0; i < elementsByTagName.getLength(); i++) {
+			// final Node node = elementsByTagName.item(i);
+			// ((Element) node).setAttribute("target", "_blank");
+			// String attribute = ((Element) node).getAttribute("href");
+			// // Joomla cuts all internal links...
+			// if (attribute.startsWith("/")) {
+			// ((Element) node).setAttribute("href", URL_PREFIX
+			// + attribute);
+			// }
+			// }
+			// elementsByTagName = document.getElementsByTagName("link");
+			// for (int i = 0; i < elementsByTagName.getLength(); i++) {
+			// final Node node = elementsByTagName.item(i);
+			// String attribute = ((Element) node).getAttribute("href");
+			// // Joomla cuts all internal links...
+			// if (attribute.startsWith("/")) {
+			// ((Element) node).setAttribute("href", URL_PREFIX
+			// + attribute);
+			// }
+			// }
+			// elementsByTagName = document.getElementsByTagName("script");
+			// for (int i = 0; i < elementsByTagName.getLength(); i++) {
+			// final Node node = elementsByTagName.item(i);
+			// String attribute = ((Element) node).getAttribute("src");
+			// // Joomla cuts all internal links...
+			// if (attribute.startsWith("/")) {
+			// ((Element) node)
+			// .setAttribute("src", URL_PREFIX + attribute);
+			// }
+			// }
+			final Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
 			transformer.setOutputProperty("omit-xml-declaration", "yes");
 
 			final DOMSource source = new DOMSource(document);
@@ -154,11 +174,12 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 
 			final StreamResult result = new StreamResult(writer);
 			transformer.transform(source, result);
-			ByteArrayInputStream source2 = new ByteArrayInputStream(writer.toString().getBytes(
-					"UTF-8"));
+			ByteArrayInputStream source2 = new ByteArrayInputStream(writer
+					.toString().getBytes("UTF-8"));
+			FileOutputStream fileOutputStream = new FileOutputStream(tempFile,
+					false);
+			StreamUtil.stream(contents, fileOutputStream);
 			StreamCloser.closeStreams(contents);
-			FileOutputStream fileOutputStream = new FileOutputStream(tempFile, false);
-			StreamUtil.stream(source2, fileOutputStream);
 			fileOutputStream.flush();
 			fileOutputStream.close();
 			StreamCloser.closeStreams(contents);
@@ -174,16 +195,17 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 	}
 
 	private IRetrieveFileTransferContainerAdapter getFileReceiveAdapter() {
-		if (this.container == null) {
+		if (container == null) {
 			try {
-				this.container = ContainerFactory.getDefault().createContainer();
+				container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container", e);
+				throw new RuntimeException("Error initializing sync-container",
+						e);
 			}
-			this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
+			fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) container
 					.getAdapter(IRetrieveFileTransferContainerAdapter.class);
 		}
-		return this.fileReceiveAdapter;
+		return fileReceiveAdapter;
 	}
 
 }

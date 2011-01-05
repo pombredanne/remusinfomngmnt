@@ -66,7 +66,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+            locationURI="popup:org.eclipse.remus.ui.navigation?after=iuspecific">
          <menu
                icon="icons/iconexperience/mail.png"
                id="org.remus.infomngmnt.mail.contextmenu"

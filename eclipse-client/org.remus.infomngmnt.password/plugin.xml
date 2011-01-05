@@ -68,7 +68,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+            locationURI="popup:org.eclipse.remus.ui.navigation?after=iuspecific">
          <menu
                icon="icons/iconexperience/key.png"
                id="org.remus.infomngmnt.passwordcontextmenu"
@@ -108,7 +108,7 @@
                      </count>
                      <iterate>
                         <test
-                              property="org.remus.infomngmnt.iutypes.typeEquals"
+                              property="org.eclipse.remus.iutypes.typeEquals"
                               value="PASSWORD">
                         </test>
                      </iterate>

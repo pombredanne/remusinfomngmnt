@@ -58,7 +58,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+            locationURI="popup:org.eclipse.remus.ui.navigation?after=iuspecific">
          <menu
                icon="icons/iconexperience/brain.png"
                id="org.remus.infomngmnt.mindmap.contextmenu"
@@ -78,7 +78,7 @@
                      </count>
                      <iterate>
                         <test
-                              property="org.remus.infomngmnt.iutypes.typeEquals"
+                              property="org.eclipse.remus.iutypes.typeEquals"
                               value="MINDMAP">
                         </test>
                      </iterate>

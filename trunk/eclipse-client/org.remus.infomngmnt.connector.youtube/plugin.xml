@@ -37,7 +37,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.remus.infomngmnt.ui.navigation?after=iuspecific">
+            locationURI="popup:org.eclipse.remus.ui.navigation?after=iuspecific">
          <menu
                icon="icons/youtube.png"
                id="org.remus.infomngmnt.youtube.contextmenu"
@@ -59,7 +59,7 @@
                            ifEmpty="false">
                         <and>
                            <test
-                                 property="org.remus.infomngmnt.remote.canCommitOrReplace">
+                                 property="org.eclipse.remus.remote.canCommitOrReplace">
                            </test>
                            <test
                                  property="org.eclipse.remus.remote.repositoryIdEquals"

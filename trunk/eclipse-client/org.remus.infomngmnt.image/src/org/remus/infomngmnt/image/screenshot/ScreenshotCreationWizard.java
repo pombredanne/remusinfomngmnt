@@ -12,14 +12,16 @@
 
 package org.remus.infomngmnt.image.screenshot;
 
+import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.ui.ImageCreationTrigger;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.remus.common.ui.UIUtil;
+import org.eclipse.remus.core.model.InformationStructureEdit;
 import org.eclipse.remus.rules.RulesFactory;
 import org.eclipse.swt.graphics.ImageData;
-
-import org.remus.infomngmnt.image.ui.ImageCreationTrigger;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -30,20 +32,24 @@ public class ScreenshotCreationWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		final ImageData imageData = ScreenshotCreationWizard.this.page1.createImage()
-				.getImageData();
+		final ImageData imageData = page1.createImage().getImageData();
 		getShell().getDisplay().asyncExec(new Runnable() {
 
 			public void run() {
 				try {
 					ImageCreationTrigger imageCreationTrigger = new ImageCreationTrigger();
-					imageCreationTrigger.setDefaults(imageData, RulesFactory.eINSTANCE
-							.createRuleValue(), null);
+					InformationStructureEdit edit = InformationStructureEdit
+							.newSession(ImagePlugin.TYPE_ID);
+					imageCreationTrigger.setNewInformationUnit(edit
+							.newInformationUnit());
+					imageCreationTrigger.setDefaults(imageData,
+							RulesFactory.eINSTANCE.createRuleValue(), null);
 					imageCreationTrigger.handleCreationRequest();
 				} catch (CoreException e) {
 					ErrorDialog.openError(UIUtil.getDisplay().getActiveShell(),
 							"Error creating new information unit",
-							"Error occured while executing your request.", e.getStatus());
+							"Error occured while executing your request.",
+							e.getStatus());
 				}
 			}
 
@@ -55,7 +61,7 @@ public class ScreenshotCreationWizard extends Wizard {
 	@Override
 	public void addPages() {
 		setWindowTitle("Capture desktop");
-		addPage(this.page1 = new ScreenshotCreationPage());
+		addPage(page1 = new ScreenshotCreationPage());
 
 	}
 

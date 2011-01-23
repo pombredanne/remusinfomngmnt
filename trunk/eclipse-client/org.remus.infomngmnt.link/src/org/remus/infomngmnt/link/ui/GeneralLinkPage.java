@@ -14,6 +14,10 @@ package org.remus.infomngmnt.link.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.link.internal.ResourceManager;
+import org.remus.infomngmnt.link.webshot.WebshotUtil;
+
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
@@ -38,10 +42,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import org.remus.infomngmnt.link.LinkActivator;
-import org.remus.infomngmnt.link.internal.ResourceManager;
-import org.remus.infomngmnt.link.webshot.WebshotUtil;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -51,18 +51,19 @@ public class GeneralLinkPage extends GeneralPage {
 	private Button obTainTextFromHtml;
 	private String tmpText;
 	private final IRunnableWithProgress obtainJob = new IRunnableWithProgress() {
-		public void run(final IProgressMonitor monitor) throws InvocationTargetException,
-				InterruptedException {
+		public void run(final IProgressMonitor monitor)
+				throws InvocationTargetException, InterruptedException {
 			monitor.beginTask("Obtaining title", IProgressMonitor.UNKNOWN);
 			Thread runThread = new Thread() {
 				@Override
 				public void run() {
 
 					final String newTitle = WebshotUtil
-							.obtainHtmlTitle(GeneralLinkPage.this.tmpText);
+							.obtainHtmlTitle(tmpText);
 					getShell().getDisplay().asyncExec(new Runnable() {
 						public void run() {
 							GeneralLinkPage.this.nameText.setText(newTitle);
+							validate(true);
 						}
 					});
 				}
@@ -92,7 +93,8 @@ public class GeneralLinkPage extends GeneralPage {
 
 		setTitle("New Link");
 		setMessage("This wizard enables you to create a new link from a url.");
-		setImageDescriptor(ResourceManager.getPluginImageDescriptor(LinkActivator.getDefault(),
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				LinkActivator.getDefault(),
 				"icons/iconexperience/link_wizard_title.png"));
 
 		doCreateParentElementGroup(container);
@@ -101,14 +103,14 @@ public class GeneralLinkPage extends GeneralPage {
 		group.setLayout(new GridLayout(3, false));
 		group.setText("Name && URL");
 		doCreateNameElements(group);
-		this.obTainTextFromHtml = new Button(group, SWT.PUSH);
-		this.obTainTextFromHtml.setText("Obtain title");
-		this.obTainTextFromHtml.addListener(SWT.Selection, new Listener() {
+		obTainTextFromHtml = new Button(group, SWT.PUSH);
+		obTainTextFromHtml.setText("Obtain title");
+		obTainTextFromHtml.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
-				GeneralLinkPage.this.tmpText = GeneralLinkPage.this.urlText.getText();
+				tmpText = urlText.getText();
 				try {
-					getContainer().run(true, true, GeneralLinkPage.this.obtainJob);
+					getContainer().run(true, true, obtainJob);
 				} catch (InvocationTargetException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -123,10 +125,11 @@ public class GeneralLinkPage extends GeneralPage {
 
 		final Label nameLabel = new Label(group, SWT.NONE);
 		nameLabel.setText("URL");
-		this.urlText = new Text(group, SWT.BORDER);
-		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		urlText = new Text(group, SWT.BORDER);
+		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true,
+				false);
 		gd_nameText.horizontalSpan = 2;
-		this.urlText.setLayoutData(gd_nameText);
+		urlText.setLayoutData(gd_nameText);
 
 		doCreatePropertiesGroup(container);
 		initDatabinding();
@@ -138,18 +141,20 @@ public class GeneralLinkPage extends GeneralPage {
 	@Override
 	protected void initDatabinding() {
 		super.initDatabinding();
-		ISWTObservableValue swtUrl = SWTObservables.observeText(this.urlText, SWT.Modify);
-		IObservableValue emfUrl = EMFObservables.observeValue(this.unit,
+		ISWTObservableValue swtUrl = SWTObservables.observeText(urlText,
+				SWT.Modify);
+		IObservableValue emfUrl = EMFObservables.observeValue(unit,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 		emfUrl.addValueChangeListener(new IValueChangeListener() {
 
 			public void handleValueChange(final ValueChangeEvent event) {
-				Object value = ((EObjectObservableValue) event.getSource()).getValue();
-				GeneralLinkPage.this.obTainTextFromHtml.setEnabled(value.toString().length() > 0);
+				Object value = ((EObjectObservableValue) event.getSource())
+						.getValue();
+				obTainTextFromHtml.setEnabled(value.toString().length() > 0);
 			}
 
 		});
-		this.ctx.bindValue(swtUrl, emfUrl, null, null);
+		ctx.bindValue(swtUrl, emfUrl, null, null);
 
 	}
 

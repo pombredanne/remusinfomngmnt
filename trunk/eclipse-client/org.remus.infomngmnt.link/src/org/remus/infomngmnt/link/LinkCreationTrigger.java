@@ -12,9 +12,12 @@
 
 package org.remus.infomngmnt.link;
 
-import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
-
 import org.remus.infomngmnt.link.ui.NewLinkWizard;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.remus.rules.RuleValue;
+import org.eclipse.remus.ui.rules.transfer.TransferWrapper;
+import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -24,6 +27,13 @@ public class LinkCreationTrigger extends NewObjectWizardDelegate {
 	public LinkCreationTrigger() {
 		super(new NewLinkWizard());
 
+	}
+
+	@Override
+	protected void setDefaults(Object value, RuleValue ruleValue,
+			TransferWrapper transferType) throws CoreException {
+		// TODO Auto-generated method stub
+		super.setDefaults(value, ruleValue, transferType);
 	}
 
 }

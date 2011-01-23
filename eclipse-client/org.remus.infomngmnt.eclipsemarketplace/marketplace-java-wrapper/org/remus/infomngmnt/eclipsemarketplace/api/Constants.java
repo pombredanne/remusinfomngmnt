@@ -27,6 +27,8 @@ public final class Constants {
 
 	public static final String XML = "xml";
 
+	public static final String API = "api/p";
+
 	public static final String TAXONOMY = "taxonomy/";
 	public static final String TERM = "term/";
 	public static final String NODE = "node/";

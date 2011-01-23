@@ -23,4 +23,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.remus.infomngmnt.link
+Export-Package: org.remus.infomngmnt.link,
+ org.remus.infomngmnt.link.webshot

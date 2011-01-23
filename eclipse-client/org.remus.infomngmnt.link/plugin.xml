@@ -158,5 +158,18 @@
             typeId="LINK">
       </creationtrigger>
    </extension>
+   <extension
+         point="org.eclipse.remus.ui.rules.script">
+      <groovyScript
+            bindingclass="org.remus.infomngmnt.link.script.LinkGroovyBinding"
+            id="org.remus.infomngmnt.link.groovyScript2"
+            source="script/LinkUtil.groovy">
+      </groovyScript>
+      <method
+            id="org.remus.infomngmnt.link.method1"
+            name="Getting the Title from a URL"
+            string="LinkUtil.getTitleFromUrl(String url)">
+      </method>
+   </extension>
 
 </plugin>

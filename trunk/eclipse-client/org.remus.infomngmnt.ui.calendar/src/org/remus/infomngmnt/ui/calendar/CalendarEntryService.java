@@ -15,32 +15,10 @@ package org.remus.infomngmnt.ui.calendar;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.aspencloud.calypso.util.TimeSpan;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.remus.CalendarEntry;
-import org.eclipse.remus.CalendarEntryType;
-import org.eclipse.remus.InfomngmntPackage;
-import org.eclipse.remus.InformationUnit;
-import org.eclipse.remus.core.ref.IIndexWriteOperation;
-import org.eclipse.remus.core.ref.IndexSearchOperation;
-import org.eclipse.remus.core.ref.LuceneStore;
-
 import org.remus.infomngmnt.calendar.model.EndEvent;
 import org.remus.infomngmnt.calendar.model.ModelFactory;
 import org.remus.infomngmnt.calendar.model.StartEvent;
@@ -50,11 +28,34 @@ import org.remus.infomngmnt.ccalendar.service.ICalendarChangeSupport;
 import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.remus.CalendarEntry;
+import org.eclipse.remus.CalendarEntryType;
+import org.eclipse.remus.InfomngmntPackage;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.core.ref.IIndexWriteOperation;
+import org.eclipse.remus.core.ref.IndexSearchOperation;
+import org.eclipse.remus.core.ref.LuceneStore;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class CalendarEntryService extends LuceneStore implements ICalendarStoreService,
-		ICalendarChangeSupport {
+public class CalendarEntryService extends LuceneStore implements
+		ICalendarStoreService, ICalendarChangeSupport {
 
 	public static final String INDEX_LOCATION = "calendarIndex/"; //$NON-NLS-1$
 
@@ -93,36 +94,41 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 	public void add(final InformationUnit unit, final CalendarEntry entry) {
 		final Document returnValue = new Document();
 		if (entry.getStart() != null) {
-			Field startField = new Field(STARTDATE, convertDate(entry.getStart()), Field.Store.YES,
+			Field startField = new Field(STARTDATE,
+					convertDate(entry.getStart()), Field.Store.YES,
 					Field.Index.TOKENIZED);
 			returnValue.add(startField);
 		}
 		if (entry.getEnd() != null) {
-			Field endField = new Field(ENDATE, convertDate(entry.getEnd()), Field.Store.YES,
-					Field.Index.TOKENIZED);
+			Field endField = new Field(ENDATE, convertDate(entry.getEnd()),
+					Field.Store.YES, Field.Index.TOKENIZED);
 			returnValue.add(endField);
 		}
 
-		Field unitField = new Field(INFOID, unit.getId(), Field.Store.YES, Field.Index.TOKENIZED);
+		Field unitField = new Field(INFOID, unit.getId(), Field.Store.YES,
+				Field.Index.TOKENIZED);
 		returnValue.add(unitField);
 
-		Field typeField = new Field(TYPE, unit.getType(), Field.Store.YES, Field.Index.TOKENIZED);
+		Field typeField = new Field(TYPE, unit.getType(), Field.Store.YES,
+				Field.Index.TOKENIZED);
 		returnValue.add(typeField);
 
-		Field nameField = new Field(NAME, entry.getTitle(), Field.Store.YES, Field.Index.TOKENIZED);
+		Field nameField = new Field(NAME, entry.getTitle(), Field.Store.YES,
+				Field.Index.TOKENIZED);
 		returnValue.add(nameField);
 
-		Field notificationField = new Field(NOTIFICATION, String.valueOf(entry.getReminder()),
-				Field.Store.YES, Field.Index.TOKENIZED);
+		Field notificationField = new Field(NOTIFICATION, String.valueOf(entry
+				.getReminder()), Field.Store.YES, Field.Index.TOKENIZED);
 		returnValue.add(notificationField);
 
-		Field tasktypeField = new Field(TASKTYPE, entry.getEntryType().getLiteral(),
-				Field.Store.YES, Field.Index.TOKENIZED);
+		Field tasktypeField = new Field(TASKTYPE, entry.getEntryType()
+				.getLiteral(), Field.Store.YES,
+				Field.Index.NOT_ANALYZED_NO_NORMS);
 
 		returnValue.add(tasktypeField);
 
 		Field entryIdFiled = new Field(ENTRYID, entry.getId(), Field.Store.YES,
-				Field.Index.TOKENIZED);
+				Field.Index.NOT_ANALYZED_NO_NORMS);
 		returnValue.add(entryIdFiled);
 
 		write(new IIndexWriteOperation() {
@@ -147,7 +153,8 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 				indexWriter.setUseCompoundFile(false);
 				try {
 					indexWriter.deleteDocuments(term);
-					fireDirtyTimeSpan(new TimeSpan(calendarEntry.getStart(), calendarEntry.getEnd()));
+					fireDirtyTimeSpan(new TimeSpan(calendarEntry.getStart(),
+							calendarEntry.getEnd()));
 				} catch (CorruptIndexException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -181,15 +188,18 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 		});
 	}
 
-	public void update(final InformationUnit unit, final CalendarEntry[] calendarContributions) {
-		final List<TimeSpan> timespansForInfoUnitId = getTimespansForInfoUnitId(unit.getId());
+	public void update(final InformationUnit unit,
+			final CalendarEntry[] calendarContributions) {
+		final List<TimeSpan> timespansForInfoUnitId = getTimespansForInfoUnitId(unit
+				.getId());
 		final Term term = new Term(INFOID, unit.getId());
 
 		write(new IIndexWriteOperation() {
 			public void write(final IndexWriter indexWriter) {
 				indexWriter.setUseCompoundFile(false);
 				try {
-					List<TimeSpan> timespansForInfoUnitId2 = getTimespansForInfoUnitId(unit.getId());
+					List<TimeSpan> timespansForInfoUnitId2 = getTimespansForInfoUnitId(unit
+							.getId());
 					for (TimeSpan timeSpan : timespansForInfoUnitId2) {
 						timespansForInfoUnitId.add(timeSpan);
 					}
@@ -201,25 +211,28 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 					// latest end date. So we throw only on event with a larger
 					// timepsan
 					// instead of many small timespan events.
-					EList<CalendarEntry> calendarEntry = unit.getCalendarEntry();
+					EList<CalendarEntry> calendarEntry = unit
+							.getCalendarEntry();
 					for (CalendarEntry calendarEntry2 : calendarEntry) {
 						add(unit, calendarEntry2);
-						timespansForInfoUnitId.add(new TimeSpan(calendarEntry2.getStart(),
-								calendarEntry2.getEnd()));
+						timespansForInfoUnitId.add(new TimeSpan(calendarEntry2
+								.getStart(), calendarEntry2.getEnd()));
 
 					}
 					for (CalendarEntry additionalEntry : calendarContributions) {
-						additionalEntry.eUnset(InfomngmntPackage.Literals.CALENDAR_ENTRY__ID);
+						additionalEntry
+								.eUnset(InfomngmntPackage.Literals.CALENDAR_ENTRY__ID);
 						additionalEntry.setId(unit.getId());
 						additionalEntry.setReminder(0);
-						additionalEntry.setEntryType(CalendarEntryType.ONE_TIME);
+						additionalEntry
+								.setEntryType(CalendarEntryType.ONE_TIME);
 						if (additionalEntry.getTitle() == null) {
 							additionalEntry.setTitle(unit.getLabel());
 						}
 
 						add(unit, additionalEntry);
-						timespansForInfoUnitId.add(new TimeSpan(additionalEntry.getStart(),
-								additionalEntry.getEnd()));
+						timespansForInfoUnitId.add(new TimeSpan(additionalEntry
+								.getStart(), additionalEntry.getEnd()));
 					}
 					fireDirtyTimeSpan(calculateBiggestTimeSpan(timespansForInfoUnitId));
 				} catch (CorruptIndexException e) {
@@ -234,7 +247,8 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 
 	}
 
-	private TimeSpan calculateBiggestTimeSpan(final List<TimeSpan> timespansForInfoUnitId) {
+	private TimeSpan calculateBiggestTimeSpan(
+			final List<TimeSpan> timespansForInfoUnitId) {
 		Date earliestStart = null;
 		Date latestEnd = null;
 		for (TimeSpan timeSpan : timespansForInfoUnitId) {
@@ -258,55 +272,41 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 	}
 
 	private List<TimeSpan> getTimespansForInfoUnitId(final String infoUnitId) {
-		List<String> termList = new ArrayList<String>();
-		List<String> fieldList = new ArrayList<String>();
-		List<Occur> flagList = new ArrayList<Occur>();
+		final Query tagQuery = new TermQuery(new Term(INFOID, infoUnitId));
+		IndexSearchOperation<List<TimeSpan>> operation = new IndexSearchOperation<List<TimeSpan>>(
+				this) {
 
-		fieldList.add(INFOID);
-		termList.add(infoUnitId);
-		flagList.add(Occur.MUST);
+			public List<TimeSpan> call() throws Exception {
+				List<TimeSpan> returnValue = new ArrayList<TimeSpan>();
+				try {
 
-		try {
-			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
-					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
-					.toArray(new Occur[flagList.size()]), getAnalyser());
-			IndexSearchOperation<List<TimeSpan>> operation = new IndexSearchOperation<List<TimeSpan>>(
-					this) {
-
-				public List<TimeSpan> call() throws Exception {
-					List<TimeSpan> returnValue = new ArrayList<TimeSpan>();
-					try {
-
-						TopDocs search = getIndexReader().search(tagQuery, null, 1000);
-						ScoreDoc[] docs = search.scoreDocs;
-						for (ScoreDoc scoreDoc : docs) {
-							try {
-								Document doc = getIndexSearcher().doc(scoreDoc.doc);
-								TimeSpan ts = new TimeSpan(convertDate(doc.get(STARTDATE)),
-										convertDate(doc.get(ENDATE)));
-								returnValue.add(ts);
-							} catch (CorruptIndexException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+					TopDocs search = getIndexReader().search(tagQuery, null,
+							1000);
+					ScoreDoc[] docs = search.scoreDocs;
+					for (ScoreDoc scoreDoc : docs) {
+						try {
+							Document doc = getIndexSearcher().doc(scoreDoc.doc);
+							TimeSpan ts = new TimeSpan(
+									convertDate(doc.get(STARTDATE)),
+									convertDate(doc.get(ENDATE)));
+							returnValue.add(ts);
+						} catch (CorruptIndexException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
-					return returnValue;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+				return returnValue;
+			}
 
-			};
-			return read(operation);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return Collections.EMPTY_LIST;
+		};
+		return read(operation);
 	}
 
 	public Tasklist getItems(final TimeSpan timespan) {
@@ -331,49 +331,65 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 
 		if (timespan.getStartDate() != null && timespan.getEndDate() != null) {
 			fieldList2.add(STARTDATE);
-			termList2.add("[0 TO " + convertDate(timespan.getStartDate()) + "]");
+			termList2
+					.add("[0 TO " + convertDate(timespan.getStartDate()) + "]");
 			flagList2.add(Occur.MUST);
 			fieldList2.add(ENDATE);
-			termList2.add("[" + convertDate(timespan.getEndDate()) + " TO " + Long.MAX_VALUE + "]");
+			termList2.add("[" + convertDate(timespan.getEndDate()) + " TO "
+					+ Long.MAX_VALUE + "]");
 			flagList2.add(Occur.MUST);
 		}
 		final Tasklist taskList = ModelFactory.eINSTANCE.createTasklist();
 
 		try {
-			final Query tagQuery = MultiFieldQueryParser.parse(termList.toArray(new String[termList
-					.size()]), fieldList.toArray(new String[fieldList.size()]), flagList
-					.toArray(new Occur[flagList.size()]), getAnalyser());
-			Query spanQuery = MultiFieldQueryParser.parse(termList2.toArray(new String[termList2
-					.size()]), fieldList2.toArray(new String[fieldList2.size()]), flagList2
-					.toArray(new Occur[flagList2.size()]), getAnalyser());
+			final Query tagQuery = MultiFieldQueryParser
+					.parse(termList.toArray(new String[termList.size()]),
+							fieldList.toArray(new String[fieldList.size()]),
+							flagList.toArray(new Occur[flagList.size()]),
+							getAnalyser());
+			Query spanQuery = MultiFieldQueryParser.parse(
+					termList2.toArray(new String[termList2.size()]),
+					fieldList2.toArray(new String[fieldList2.size()]),
+					flagList2.toArray(new Occur[flagList2.size()]),
+					getAnalyser());
 			final BooleanQuery booleanQuery = new BooleanQuery();
 			booleanQuery.add(tagQuery, Occur.SHOULD);
 			booleanQuery.add(spanQuery, Occur.SHOULD);
 
-			IndexSearchOperation<Tasklist> operation = new IndexSearchOperation<Tasklist>(this) {
+			IndexSearchOperation<Tasklist> operation = new IndexSearchOperation<Tasklist>(
+					this) {
 				public Tasklist call() throws Exception {
 					try {
 
-						TopDocs search = getIndexReader().search(booleanQuery, null, 1000);
+						TopDocs search = getIndexReader().search(booleanQuery,
+								null, 1000);
 						ScoreDoc[] docs = search.scoreDocs;
 						for (ScoreDoc scoreDoc : docs) {
 							try {
-								Document doc = getIndexSearcher().doc(scoreDoc.doc);
+								Document doc = getIndexSearcher().doc(
+										scoreDoc.doc);
 								Task task = ModelFactory.eINSTANCE.createTask();
 								StartEvent createStartEvent = ModelFactory.eINSTANCE
 										.createStartEvent();
-								createStartEvent.setDate(convertDate(doc.get(STARTDATE)));
-								EndEvent createEndEvent = ModelFactory.eINSTANCE.createEndEvent();
-								createEndEvent.setDate(convertDate(doc.get(ENDATE)));
+								createStartEvent.setDate(convertDate(doc
+										.get(STARTDATE)));
+								EndEvent createEndEvent = ModelFactory.eINSTANCE
+										.createEndEvent();
+								createEndEvent.setDate(convertDate(doc
+										.get(ENDATE)));
 								task.setName(doc.get(NAME));
-								task.setId(doc.get(INFOID) + "_" + doc.get(ENTRYID));
+								task.setId(doc.get(INFOID) + "_"
+										+ doc.get(ENTRYID));
 								task.setDetails(doc.get(DESCRIPTION));
 								task.setStart(createStartEvent);
-								task.setType(CalendarEntryTypeStrings.convert(CalendarEntryType
-										.get(doc.get(TASKTYPE))));
-								task.setReadonly(doc.get(INFOID).equals(doc.get(ENTRYID)));
+								task.setType(CalendarEntryTypeStrings
+										.convert(CalendarEntryType.get(doc
+												.get(TASKTYPE))));
+								task.setReadonly(doc.get(INFOID).equals(
+										doc.get(ENTRYID)));
 								try {
-									task.setNotification(Integer.parseInt(doc.get(NOTIFICATION)));
+									task.setNotification(Integer.parseInt(doc
+											.get(NOTIFICATION)));
 								} catch (NumberFormatException e) {
 									// do nothing
 								}
@@ -406,18 +422,18 @@ public class CalendarEntryService extends LuceneStore implements ICalendarStoreS
 	}
 
 	protected void fireDirtyTimeSpan(final TimeSpan ts) {
-		for (IDirtyTimespanListener element : this.listenerList) {
+		for (IDirtyTimespanListener element : listenerList) {
 			element.handleDirtyTimeSpan(ts);
 		}
 	}
 
 	public void addTimeSpanListener(final IDirtyTimespanListener listener) {
-		this.listenerList.add(listener);
+		listenerList.add(listener);
 
 	}
 
 	public void removeTimeSpanListener(final IDirtyTimespanListener listener) {
-		this.listenerList.remove(listener);
+		listenerList.remove(listener);
 	}
 
 }

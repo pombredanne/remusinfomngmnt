@@ -28,7 +28,7 @@ import org.eclipse.swt.graphics.ImageData;
  */
 public class ScreenshotCreationWizard extends Wizard {
 
-	private ScreenshotCreationPage page1;
+	private ScreenshotCreationPage2 page1;
 
 	@Override
 	public boolean performFinish() {
@@ -61,7 +61,7 @@ public class ScreenshotCreationWizard extends Wizard {
 	@Override
 	public void addPages() {
 		setWindowTitle("Capture desktop");
-		addPage(page1 = new ScreenshotCreationPage());
+		addPage(page1 = new ScreenshotCreationPage2());
 
 	}
 

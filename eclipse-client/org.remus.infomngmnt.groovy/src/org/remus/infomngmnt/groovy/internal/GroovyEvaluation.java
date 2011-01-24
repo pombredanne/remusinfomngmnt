@@ -18,6 +18,7 @@ import groovy.util.GroovyScriptEngine;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,6 +38,8 @@ public class GroovyEvaluation implements IGroovyEvaluation {
 
 	private IGroovyEvaluationBinding binding;
 	private ClassLoader classLoader;
+	private final Map<String, GroovyScriptEngine> engineCache = new HashMap<String, GroovyScriptEngine>();
+	private final Map<String, File> scriptCache = new HashMap<String, File>();
 
 	/*
 	 * (non-Javadoc)
@@ -69,46 +72,53 @@ public class GroovyEvaluation implements IGroovyEvaluation {
 	 */
 	public Object evaluate(String script) throws Exception {
 
+		File scriptFile;
+		Object evaluate = null;
 		Map<String, ? extends Object> variables = binding.getVariables();
 		Set<String> keySet = variables.keySet();
-		IPath cpPath = RuleEditPlugin.getPlugin().getStateLocation()
-				.append(IGroovyScript.CPFOLDERNAME);
-		Object evaluate = null;
-		String scriptName = "S" + System.currentTimeMillis() + ".groovy";
-		File[] listFiles = cpPath.toFile().listFiles();
-		File scriptFile = cpPath.append(scriptName).toFile();
 
-		FileUtils.writeStringToFile(scriptFile, script);
-		URL[] classPathUrls = new URL[listFiles.length + 1];
-		for (int i = 0; i < listFiles.length; i++) {
-			try {
-				classPathUrls[i] = listFiles[i].toURI().toURL();
-			} catch (MalformedURLException e) {
+		if (engineCache.get(script) == null) {
+			IPath cpPath = RuleEditPlugin.getPlugin().getStateLocation()
+					.append(IGroovyScript.CPFOLDERNAME);
+			String scriptName = "S" + System.currentTimeMillis() + ".groovy";
+			File[] listFiles = cpPath.toFile().listFiles();
+			scriptFile = cpPath.append(scriptName).toFile();
+
+			FileUtils.writeStringToFile(scriptFile, script);
+			URL[] classPathUrls = new URL[listFiles.length + 1];
+			for (int i = 0; i < listFiles.length; i++) {
+				try {
+					classPathUrls[i] = listFiles[i].toURI().toURL();
+				} catch (MalformedURLException e) {
+				}
 			}
-		}
-		try {
-			classPathUrls[listFiles.length] = scriptFile.toURI().toURL();
-		} catch (MalformedURLException e1) {
+			try {
+				classPathUrls[listFiles.length] = scriptFile.toURI().toURL();
+			} catch (MalformedURLException e1) {
 
-		}
-		GroovyScriptEngine engine;
-		if (classLoader == null) {
-			engine = new GroovyScriptEngine(classPathUrls);
-		} else {
+			}
+			GroovyScriptEngine engine;
+			if (classLoader == null) {
+				engine = new GroovyScriptEngine(classPathUrls);
+			} else {
 
-			engine = new GroovyScriptEngine(classPathUrls, classLoader);
+				engine = new GroovyScriptEngine(classPathUrls, classLoader);
+			}
+			scriptCache.put(script, scriptFile);
+			engineCache.put(script, engine);
 		}
 
 		Binding binding = new Binding();
 		for (String string : keySet) {
 			binding.setVariable(string, variables.get(string));
 		}
-		evaluate = engine.run(scriptFile.toURI().toString(), binding);
+		evaluate = engineCache.get(script).run(
+				scriptCache.get(script).toURI().toString(), binding);
 		for (String string : keySet) {
 			Object variable = binding.getVariable(string);
 			this.binding.setVariable(string, variable);
 		}
-		scriptFile.deleteOnExit();
+		scriptCache.get(script).deleteOnExit();
 
 		return evaluate;
 	}

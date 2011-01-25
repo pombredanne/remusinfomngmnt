@@ -295,7 +295,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="user"/>
   <columns name="username"/>
   <columns name="url"/>
@@ -715,7 +715,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<oda:Dataset xmlns:oda="http://remus-software.org/oda/1.0">
+<oda:Dataset xmlns:oda="http://eclipse.org/remus/oda/1.0">
   <columns name="user"/>
   <columns name="username"/>
   <columns name="url"/>

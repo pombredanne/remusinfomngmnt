@@ -14,6 +14,10 @@ package org.remus.infomngmnt.link;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
+import org.remus.infomngmnt.link.webshot.WebshotUtil;
+import org.remus.infomngmnt.operation.IndexWebPageRunnable;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
@@ -26,19 +30,18 @@ import org.eclipse.remus.core.create.PostCreationHandler;
 import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.util.InformationUtil;
 
-import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
-import org.remus.infomngmnt.link.webshot.WebshotUtil;
-import org.remus.infomngmnt.operation.IndexWebPageRunnable;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class LinkCreationFactory extends PostCreationHandler {
 
 	@Override
-	public Command handlePreSaving(final InformationUnit unit, final IProgressMonitor monitor) {
-		IPreferenceStore preferenceStore = LinkActivator.getDefault().getPreferenceStore();
-		String string = preferenceStore.getString(LinkPreferenceInitializer.SCREENSHOT_CMD);
+	public Command handlePreSaving(final InformationUnit unit,
+			final IProgressMonitor monitor) {
+		IPreferenceStore preferenceStore = LinkActivator.getDefault()
+				.getPreferenceStore();
+		String string = preferenceStore
+				.getString(LinkPreferenceInitializer.SCREENSHOT_CMD);
 
 		final boolean indexWebContent = preferenceStore
 				.getBoolean(LinkPreferenceInitializer.INDEX_DOCUMENT);
@@ -47,11 +50,12 @@ public class LinkCreationFactory extends PostCreationHandler {
 				&& string.length() > 0;
 		if (indexWebContent) {
 			monitor.beginTask("Indexing web-content", IProgressMonitor.UNKNOWN);
-			IndexWebPageRunnable runnable = new IndexWebPageRunnable(unit.getStringValue());
+			IndexWebPageRunnable runnable = new IndexWebPageRunnable(
+					unit.getStringValue());
 			try {
 				runnable.run(monitor);
-				InformationUnit childByType = InformationUtil.getChildByType(unit,
-						LinkActivator.NODE_INDEX);
+				InformationUnit childByType = InformationUtil.getChildByType(
+						unit, LinkActivator.NODE_INDEX);
 				childByType.setStringValue(runnable.getContent());
 			} catch (InvocationTargetException e) {
 				// TODO Auto-generated catch block
@@ -61,15 +65,18 @@ public class LinkCreationFactory extends PostCreationHandler {
 				e.printStackTrace();
 			}
 		}
-		if (makeWebShot) {
-			IEditingHandler service = LinkActivator.getDefault().getServiceTracker().getService(
-					IEditingHandler.class);
+		if (makeWebShot && WebshotUtil.isWebShotToolingEnabled()) {
+			IEditingHandler service = LinkActivator.getDefault()
+					.getServiceTracker().getService(IEditingHandler.class);
 			monitor.beginTask("Webshotting the link", IProgressMonitor.UNKNOWN);
 			IFile tmpFile = ResourceUtil.createTempFile("png");
-			WebshotUtil.performWebShot(unit.getStringValue(), tmpFile.getLocation().toOSString());
-			CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory.addFileToInfoUnit(
-					tmpFile, unit, service.getNavigationEditingDomain());
-			LinkActivator.getDefault().getServiceTracker().ungetService(service);
+			WebshotUtil.performWebShot(unit.getStringValue(), tmpFile
+					.getLocation().toOSString());
+			CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory
+					.addFileToInfoUnit(tmpFile, unit,
+							service.getNavigationEditingDomain());
+			LinkActivator.getDefault().getServiceTracker()
+					.ungetService(service);
 			return addFileToInfoUnit;
 
 		}

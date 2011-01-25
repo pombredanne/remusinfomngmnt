@@ -12,10 +12,10 @@
 
 package org.remus.infomngmnt.link.preferences;
 
+import org.remus.infomngmnt.link.LinkActivator;
+
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
-import org.remus.infomngmnt.link.LinkActivator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -27,12 +27,16 @@ public class LinkPreferenceInitializer extends AbstractPreferenceInitializer {
 	public static final String MAKE_SCREENSHOT = "MAKE_SCREENSHOT"; //$NON-NLS-1$
 	public static final String SCREENSHOT_CMD = "SCREENSHOT_CMD"; //$NON-NLS-1$
 	public static final String URL_WEBSHOTHELP = "URL_WEBSHOTHELP"; //$NON-NLS-1$
+	public static final String LIST_RENDERER = "LIST_RENDERER"; //$NON-NLS-1$
+	public static final String LIST_RENDERER_URL = "LIST_RENDERER_URL"; //$NON-NLS-1$
+	public static final String LIST_RENDERER_ARGUMENTS = "LIST_RENDERER_ARGUMENTS"; //$NON-NLS-1$
+	public static final String RENDERER_SELECTED = "RENDERER_SELECTED"; //$NON-NLS-1$
 
 	/**
 	 * 
 	 */
 	public LinkPreferenceInitializer() {
-		this.store = LinkActivator.getDefault().getPreferenceStore();
+		store = LinkActivator.getDefault().getPreferenceStore();
 	}
 
 	/*
@@ -43,10 +47,20 @@ public class LinkPreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		this.store.setDefault(INDEX_DOCUMENT, true);
-		this.store.setDefault(MAKE_SCREENSHOT, true);
-		this.store.setDefault(URL_WEBSHOTHELP,
+		store.setDefault(INDEX_DOCUMENT, true);
+		store.setDefault(MAKE_SCREENSHOT, true);
+		store.setDefault(URL_WEBSHOTHELP,
 				"http://remus-software.org/faq/10-why-is-webshotting-diabled");
+		store.setDefault(LIST_RENDERER,
+				"None,IECapt (Win),CutyCapt (Linux),Webkit2png (Mac)");
+		store.setDefault(
+				LIST_RENDERER_URL,
+				",http://iecapt.sourceforge.net/,http://cutycapt.sourceforge.net/,http://www.paulhammond.org/webkit2png/");
+		store.setDefault(
+				LIST_RENDERER_ARGUMENTS,
+				"|{LOC},--url=\"{URL}\",--out=\"{OUT}\",--silent|{LOC},--url={URL},--out=\"{OUT}\"|python,{LOC},-o \"{OUT}\",-F,{URL}");
+		store.setDefault(RENDERER_SELECTED, 0);
+
 		//this.store.setDefault(SCREENSHOT_CMD, "C:\\Downloads\\IECapt.exe --url=\"{URL}\" --out=\"{OUT}\" --silent"); //$NON-NLS-1$
 	}
 

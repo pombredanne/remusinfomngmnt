@@ -15,15 +15,17 @@ package org.remus.infomngmnt.link.webshot;
 import java.io.IOException;
 
 import org.cyberneko.html.parsers.DOMParser;
-import org.eclipse.jface.preference.IPreferenceStore;
+import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-import org.remus.infomngmnt.link.LinkActivator;
-import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.eclipse.swt.SWT;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -33,35 +35,56 @@ public class WebshotUtil {
 	public static final String URL_PLACEHOLDER = "{URL}"; //$NON-NLS-1$
 	public static final String OUTFILE_PLACEHOLDER = "{OUT}"; //$NON-NLS-1$
 
+	public static final boolean IS_WIN = "win32".equals(SWT.getPlatform());
+
 	public static boolean isWebShotToolingEnabled() {
-		IPreferenceStore store = LinkActivator.getDefault().getPreferenceStore();
-		String string = store.getString(LinkPreferenceInitializer.SCREENSHOT_CMD);
-		return string.indexOf(URL_PLACEHOLDER) != -1 && string.indexOf(OUTFILE_PLACEHOLDER) != -1;
+		IPreferenceStore store = LinkActivator.getDefault()
+				.getPreferenceStore();
+		String string = store
+				.getString(LinkPreferenceInitializer.RENDERER_SELECTED);
+		String cmd = store.getString(LinkPreferenceInitializer.SCREENSHOT_CMD);
+
+		return Integer.valueOf(string) >= 1 && cmd != null
+				&& cmd.trim().length() > 0;
 	}
 
 	public static void performWebShot(String url, String out) {
-		IPreferenceStore store = LinkActivator.getDefault().getPreferenceStore();
-		String string = store.getString(LinkPreferenceInitializer.SCREENSHOT_CMD);
-		string = string.replaceAll("\\{URL\\}", url);
-		string = string.replaceAll("\\{OUT\\}", out.replaceAll("\\\\", "\\\\\\\\"));
+		IPreferenceStore store = LinkActivator.getDefault()
+				.getPreferenceStore();
+		String string = store
+				.getString(LinkPreferenceInitializer.SCREENSHOT_CMD);
+		int selectedRenderer = Integer.valueOf(store
+				.getString(LinkPreferenceInitializer.RENDERER_SELECTED));
+		String[] arguments = store.getString(
+				LinkPreferenceInitializer.LIST_RENDERER_ARGUMENTS).split("\\|")[selectedRenderer]
+				.split(",");
+		for (int i = 0; i < arguments.length; i++) {
+			arguments[i] = arguments[i]
+					.replaceAll("\\{URL\\}", url)
+					.replaceAll("\\{OUT\\}", out.replaceAll("\\\\", "\\\\\\\\"))
+					.replaceAll("\\{LOC\\}",
+							string.replaceAll("\\\\", "\\\\\\\\"));
+		}
+		System.out.println("executing: " + StringUtils.join(arguments));
 		try {
-			Process exec = Runtime.getRuntime().exec(string);
+			Process exec = Runtime.getRuntime().exec(arguments);
 			exec.waitFor();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	public static String obtainHtmlTitle(String url) {
 		DOMParser parser = new DOMParser();
 		try {
 			parser.parse(url);
-			NodeList elementsByTagName = parser.getDocument().getElementsByTagName("title");
+			NodeList elementsByTagName = parser.getDocument()
+					.getElementsByTagName("title");
 			if (elementsByTagName.getLength() > 0) {
 				NodeList childNodes = elementsByTagName.item(0).getChildNodes();
 				if (childNodes.getLength() > 0) {
@@ -84,8 +107,6 @@ public class WebshotUtil {
 		}
 		return null;
 
-
 	}
-
 
 }

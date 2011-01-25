@@ -58,7 +58,7 @@ public class LinkPreferenceInitializer extends AbstractPreferenceInitializer {
 				",http://iecapt.sourceforge.net/,http://cutycapt.sourceforge.net/,http://www.paulhammond.org/webkit2png/");
 		store.setDefault(
 				LIST_RENDERER_ARGUMENTS,
-				"|{LOC},--url=\"{URL}\",--out=\"{OUT}\",--silent|{LOC},--url={URL},--out=\"{OUT}\"|python,{LOC},-o \"{OUT}\",-F,{URL}");
+				"|{LOC},--url=\"{URL}\",--out=\"{OUT}\",--silent|{LOC},--url={URL},--out={OUT}|python,{LOC},-o \"{OUT}\",-F,{URL}");
 		store.setDefault(RENDERER_SELECTED, 0);
 
 		//this.store.setDefault(SCREENSHOT_CMD, "C:\\Downloads\\IECapt.exe --url=\"{URL}\" --out=\"{OUT}\" --silent"); //$NON-NLS-1$

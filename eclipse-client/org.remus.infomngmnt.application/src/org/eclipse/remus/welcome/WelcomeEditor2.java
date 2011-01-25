@@ -204,6 +204,11 @@ public class WelcomeEditor2 extends EditorPart {
 						break;
 					}
 				}
+				try {
+					command.execute(new ExecutionEvent());
+				} catch (ExecutionException e1) {
+					// do nothing.
+				}
 			}
 		});
 

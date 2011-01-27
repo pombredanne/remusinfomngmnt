@@ -367,8 +367,7 @@
             description="Marketplace for installing additional components to your information management system."
             icon="icons/iconexperience/windowimages/cabinet_open_32.png"
             label="Remus Information Management - Marketplace"
-            url="http://remus-software.org/marketplace/"
-            dependenciesRepository="http://download.eclipse.org/releases/helios">
+            url="http://remus-software.org/marketplace/">
       </catalog>
    </extension>
 </plugin>

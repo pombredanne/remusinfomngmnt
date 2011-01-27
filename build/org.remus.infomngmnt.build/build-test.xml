@@ -440,7 +440,7 @@
 			<arg value="-buildfile" />
 			<arg value="${pde.build.location}" />
 			<arg value="-Dbuilder=${build.dir.location2}" />
-			<arg value="-buildDirectory" />
+			<arg value="-DbuildDirectory" />
 			<arg value="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-REMUSTEST/build/org.remus.infomngmnt.build/output" />
 		</java>
 		<!-- <exec executable="pdeBuild.bat" /> -->

@@ -39,10 +39,14 @@
    </features>
 
    <configurations>
-      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.equinox.transforms.xslt" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.equinox.transforms.xslt.plugin" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.remus.search.local" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
    </configurations>
 
 </product>

@@ -472,6 +472,7 @@
 			    <exclude name="xpm/**"/>
 			    <exclude name="build.properties"/>
 			    <exclude name="build.xml"/>
+			    <exclude name="build-silent.xml"/>
 			    <exclude name="customTargets.xml"/>
 			    <exclude name="rim.product"/>
 			</fileset>

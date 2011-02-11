@@ -300,12 +300,16 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 						createNewObject.setDescription(mediaGroup.getDescription()
 								.getPlainTextContent());
 					}
-					List<String> keywords = mediaGroup.getKeywords().getKeywords();
-					StringBuilder sb = new StringBuilder();
-					for (String string : keywords) {
-						sb.append(string).append(" ");
+					if (mediaGroup.getKeywords() != null) {
+						List<String> keywords = mediaGroup.getKeywords().getKeywords();
+						if (keywords != null) {
+							StringBuilder sb = new StringBuilder();
+							for (String string : keywords) {
+								sb.append(string).append(" ");
+							}
+							createNewObject.setKeywords(sb.toString());
+						}
 					}
-					createNewObject.setKeywords(sb.toString());
 				}
 			}
 			return createNewObject;

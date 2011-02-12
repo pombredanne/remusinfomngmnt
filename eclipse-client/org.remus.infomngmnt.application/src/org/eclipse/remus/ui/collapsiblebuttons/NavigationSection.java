@@ -14,7 +14,6 @@ package org.eclipse.remus.ui.collapsiblebuttons;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.Action;
@@ -30,6 +29,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.remus.InformationUnitListItem;
 import org.eclipse.remus.common.ui.image.ResourceManager;
 import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonBar;
+import org.eclipse.remus.ui.collapsiblebutton.IViewerProvider;
 import org.eclipse.remus.ui.editors.InformationEditor;
 import org.eclipse.remus.ui.editors.InformationEditorInput;
 import org.eclipse.remus.ui.viewer.NavigationViewer;
@@ -47,12 +47,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class NavigationSection extends CollapsibleButtonBar implements ISelectionProvider,
-		IEditingDomainProvider, ISetSelectionTarget, IViewerProvider {
+public class NavigationSection extends CollapsibleButtonBar implements
+		ISelectionProvider, IEditingDomainProvider, ISetSelectionTarget,
+		IViewerProvider {
 
 	private final NavigationViewer viewer;
 
@@ -66,8 +66,8 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 				IEditorInput input = ((EditorPart) part).getEditorInput();
 				if (input instanceof InformationEditorInput) {
 					IFile file2 = ((InformationEditorInput) input).getFile();
-					Object adapter = Platform.getAdapterManager().getAdapter(file2,
-							InformationUnitListItem.class);
+					Object adapter = Platform.getAdapterManager().getAdapter(
+							file2, InformationUnitListItem.class);
 					if (adapter != null) {
 						setSelection(new StructuredSelection(adapter));
 					}
@@ -97,12 +97,16 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 	};
 
 	public NavigationSection() {
-		this.viewer = new NavigationViewer() {
+		viewer = new NavigationViewer() {
 			@Override
 			protected void handleOpen(final InformationUnitListItem object) {
 				try {
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-							.openEditor(new InformationEditorInput(object), InformationEditor.ID);
+					PlatformUI
+							.getWorkbench()
+							.getActiveWorkbenchWindow()
+							.getActivePage()
+							.openEditor(new InformationEditorInput(object),
+									InformationEditor.ID);
 				} catch (PartInitException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -113,85 +117,87 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 
 	@Override
 	public void createControl(final Composite parent) {
-		this.viewer.setContextMenuId(getId());
-		this.viewer.createControl(getViewSite(), parent);
+		viewer.setContextMenuId(getId());
+		viewer.createControl(getViewSite(), parent);
 
 		initLinkWithEditor();
-		setControl(this.viewer.getViewer().getControl());
+		setControl(viewer.getViewer().getControl());
 
 	}
 
-	public void addSelectionChangedListener(final ISelectionChangedListener listener) {
-		this.viewer.addSelectionChangedListener(listener);
+	public void addSelectionChangedListener(
+			final ISelectionChangedListener listener) {
+		viewer.addSelectionChangedListener(listener);
 
 	}
 
 	public ISelection getSelection() {
-		return this.viewer.getSelection();
+		return viewer.getSelection();
 
 	}
 
-	public void removeSelectionChangedListener(final ISelectionChangedListener listener) {
-		this.viewer.removeSelectionChangedListener(listener);
+	public void removeSelectionChangedListener(
+			final ISelectionChangedListener listener) {
+		viewer.removeSelectionChangedListener(listener);
 
 	}
 
 	public void setSelection(final ISelection selection) {
-		this.viewer.setSelection(selection);
+		viewer.setSelection(selection);
 
 	}
 
 	public EditingDomain getEditingDomain() {
-		return this.viewer.getEditingDomain();
+		return viewer.getEditingDomain();
 	}
 
 	public void selectReveal(final ISelection selection) {
-		this.viewer.selectReveal(selection);
+		viewer.selectReveal(selection);
 
 	}
 
 	@Override
 	public boolean setFocus() {
-		return this.viewer.setFocus();
+		return viewer.setFocus();
 	}
 
 	@Override
 	public void init(final IViewSite site, final IMemento memento) {
-		this.settings = ViewerActivator.getDefault().getDialogSettings();
-		this.viewer.init(site, memento);
+		settings = ViewerActivator.getDefault().getDialogSettings();
+		viewer.init(site, memento);
 		super.init(site, memento);
 	}
 
 	@Override
 	public void saveState(final IMemento child) {
-		this.viewer.saveState(child);
+		viewer.saveState(child);
 	}
 
 	@Override
 	public void dispose() {
-		this.viewer.dispose();
+		viewer.dispose();
 	}
 
 	public Viewer getViewer() {
-		return this.viewer.getViewer();
+		return viewer.getViewer();
 	}
 
 	/**
 	 * 
 	 */
 	private void initLinkWithEditor() {
-		if (this.settings == null) {
+		if (settings == null) {
 			return;
 		}
 		// Try the dialog settings first, which remember the last choice.
-		final String setting = this.settings
+		final String setting = settings
 				.get(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR);
 		if (setting != null) {
-			this.linkEditor = setting.equals("true"); //$NON-NLS-1$
+			linkEditor = setting.equals("true"); //$NON-NLS-1$
 		}
 		// Link with editor
 
-		this.linkEditorAction = new Action("Link with editor", IAction.AS_CHECK_BOX) {
+		linkEditorAction = new Action("Link with editor", IAction.AS_CHECK_BOX) {
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -219,49 +225,53 @@ public class NavigationSection extends CollapsibleButtonBar implements ISelectio
 			 */
 			@Override
 			public ImageDescriptor getImageDescriptor() {
-				return ResourceManager.getPluginImageDescriptor(ViewerActivator.getDefault(),
-						"icons/synced.gif");
+				return ResourceManager.getPluginImageDescriptor(
+						ViewerActivator.getDefault(), "icons/synced.gif");
 
 			}
 
 		};
-		this.linkEditorAction.setChecked(this.linkEditor);
+		linkEditorAction.setChecked(linkEditor);
 		// setLinkingEnabled(true);
 
 	}
 
 	public void setLinkingEnabled(final boolean enabled) {
-		this.linkEditor = enabled;
+		linkEditor = enabled;
 
 		// remember the last settings in the dialog settings
-		this.settings.put(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR, enabled);
+		settings.put(IWorkbenchPreferenceConstants.LINK_NAVIGATOR_TO_EDITOR,
+				enabled);
 
 		// if turning linking on, update the selection to correspond to the
 		// active editor
 		if (enabled) {
-			if (PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage() != null) {
-				IEditorInput editorInput = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage().getActiveEditor().getEditorInput();
+			if (PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getActivePage() != null) {
+				IEditorInput editorInput = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage()
+						.getActiveEditor().getEditorInput();
 				if (editorInput instanceof IPathEditorInput) {
 					// FIXME
-					Object adapter = Platform.getAdapterManager().getAdapter(editorInput,
-							InformationUnitListItem.class);
+					Object adapter = Platform.getAdapterManager().getAdapter(
+							editorInput, InformationUnitListItem.class);
 					if (adapter != null) {
 						setSelection(new StructuredSelection(adapter));
 					}
 				}
 			}
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(
-					this.partListener);
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getActivePage().addPartListener(partListener);
 		} else {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-					.removePartListener(this.partListener);
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getActivePage().removePartListener(partListener);
 		}
 	}
 
 	@Override
 	public void initToolbar(final IToolBarManager toolbarManager) {
-		toolbarManager.add(this.linkEditorAction);
+		toolbarManager.add(linkEditorAction);
+		super.initToolbar(toolbarManager);
 		toolbarManager.update(true);
 	}
 

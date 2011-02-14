@@ -38,5 +38,11 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.epp.mpc.help.ui;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.remus.ui.perspective,
+Export-Package: org.eclipse.remus.application,
+ org.eclipse.remus.application.handler,
+ org.eclipse.remus.application.internal;x-internal:=true,
+ org.eclipse.remus.ui.collapsiblebuttons,
+ org.eclipse.remus.ui.perspective,
+ org.eclipse.remus.ui.trayaction,
+ org.eclipse.remus.ui.view,
  org.eclipse.remus.welcome

@@ -146,29 +146,29 @@
     <extension
          point="org.eclipse.remus.ui.collapsiblebutton.collapsibleButtonBar">
       <collapsibleButton
-            bigImage="icons/iconexperience/24/workplace.png"
+            bigImage="icons/24/workplace_24x24.png"
             class="org.eclipse.remus.ui.collapsiblebuttons.NavigationSection"
             contextId="org.eclipse.remus.ui.navigationContext"
-            icon="icons/iconexperience/16/workplace.png"
+            icon="icons/16/workplace_16x16.png"
             id="org.eclipse.remus.ui.navigation"
             name="Navigation"
             order="10"
             tooltip="Navigation">
       </collapsibleButton>
       <collapsibleButton
-            bigImage="icons/iconexperience/24/bookmark_silver.png"
+            bigImage="icons/24/bookmark_24x24.png"
             class="org.eclipse.remus.ui.collapsiblebuttons.TagSection"
-            icon="icons/iconexperience/16/bookmark_silver.png"
+            icon="icons/16/bookmark_16x16.png"
             id="org.eclipse.remus.ui.tags"
             name="Tags"
             order="20"
             tooltip="Tags">
       </collapsibleButton>
       <collapsibleButton
-            bigImage="icons/iconexperience/24/server_network.png"
+            bigImage="icons/24/server_24x24.png"
             class="org.eclipse.remus.ui.collapsiblebuttons.RemoteRepositoryButtonBar"
             contextId="org.eclipse.remus.ui.navigationContext"
-            icon="icons/iconexperience/16/server_network.png"
+            icon="icons/16/server_16x16.png"
             id="org.eclipse.remus.application.remoteRepo"
             name="Remote Repositories"
             order="30"
@@ -297,6 +297,19 @@
             <command
                   commandId="org.eclipse.remus.ui.searchReferences"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.remus.InformationUnitListItem">
+                        </instanceof>
+                     </iterate>
+                  </with>
+               </visibleWhen>
             </command>
          </menu>
       </menuContribution>

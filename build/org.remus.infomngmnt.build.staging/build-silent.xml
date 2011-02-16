@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     06.10.2008 21:18:48                                                        
+
+     project    
+     description
+                   
+     tmseidel                                                                
+     ====================================================================== -->
+
+
+<project name="project" default="build">
+	
+	<property name="jar.location" value="/opt/eclipse/plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar"/>
+	<property name="pde.build.location" location="/opt/eclipse/plugins/org.eclipse.pde.build_3.6.1.R36x_v20100823/scripts/productBuild/productBuild.xml"/>
+	<property name="build.dir.location" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-REMUSTEST/build/org.remus.infomngmnt.build/output"/>
+	<property name="build.dir.location2" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-REMUSTEST/build/org.remus.infomngmnt.build"/>
+	
+
+	<tstamp>
+		<format property="buildTime" pattern="yyyy-MM-dd_HH_mm" />
+	</tstamp>
+
+	<!-- properties -->
+
+
+
+
+	<description>
+            description
+    </description>
+
+	<target name="rename">
+		<!--
+		<move file="N.RIM/RIM-linux.gtk.x86_64.zip" failonerror="false" tofile="N.RIM/RIM-linux.gtk.x86_64.tar.gz"></move>
+		<move file="N.RIM/RIM-linux.gtk.x86.zip" failonerror="false" tofile="N.RIM/RIM-linux.gtk.x86.tar.gz"></move>
+		<move file="N.RIM/RIM-macosx.carbon.ppc.zip" failonerror="false" tofile="N.RIM/RIM-macosx.carbon.ppc.tar.gz"></move>
+		<move file="N.RIM/RIM-macosx.cocoa.x86.zip" failonerror="false" tofile="N.RIM/RIM-macosx.cocoa.x86.tar.gz"></move>
+		-->
+		<java failonerror="false" fork="true" jar="${jar.location}">
+			<arg value="-application" />
+			<arg value="org.eclipse.equinox.p2.publisher.CategoryPublisher" />
+			<arg value="-metadataRepository" />
+			<arg value="file:${build.dir.location}/buildRepo" />
+			<arg value="-categoryDefinition" />
+			<arg value="file:${build.dir.location}/../customization/rim_repository_category.xml" />
+		</java>
+		<!--
+		<delete dir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
+		</delete>
+		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
+			<fileset dir="output/buildRepo"></fileset>
+		</copy>
+		-->
+		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" />
+		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.metadata.repository.prefs" />
+		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.artifact.repository.prefs" />
+		<!-- Adding p2 profile data - I've found no better way to do this -->
+		<zip destfile="output/N.RIM/RIM-win32.win32.x86.zip" update="true">
+			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
+		</zip>
+		<zip destfile="output/N.RIM/RIM-win32.win32.x86_64.zip" update="true">
+			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
+		</zip>
+		<zip destfile="output/N.RIM/RIM-linux.gtk.x86_64.zip" update="true">
+			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
+		</zip>
+		<zip destfile="output/N.RIM/RIM-linux.gtk.x86.zip" update="true">
+			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
+		</zip>
+		<zip destfile="output/N.RIM/RIM-macosx.carbon.ppc.zip" update="true">
+			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
+		</zip>
+		<zip destfile="output/N.RIM/RIM-macosx.cocoa.x86.zip" update="true">
+			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
+		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
+		</zip>
+		
+		<move todir="${build.dir.location2}/N.RIM">
+			<fileset dir="${build.dir.location}/N.RIM" />
+		</move>
+		
+		
+		
+	</target>
+
+	<target name="depending">
+		<mkdir dir="${build.dir.location}" />
+		<mkdir dir="${build.dir.location}/features" />
+		<mkdir dir="${build.dir.location}/plugins/" />
+		<copy todir="${build.dir.location}/features" >
+			<fileset dir="${build.dir.location}/../../../eclipse-client/">
+   			 	<include name="*.feature/**"/>
+   			 	<include name="org.remus.infomngmnt.rcp/**"/>
+			</fileset>		
+		</copy>
+		
+		<copy todir="${build.dir.location}/plugins/">
+			<fileset dir="${build.dir.location}/../../../eclipse-client/">
+   			 	<exclude name="*.feature/**"/>
+   			 	<exclude name="org.remus.infomngmnt.rcp/**"/>
+			</fileset>		
+		</copy>
+		<rename dest="${build.dir.location}/plugins/org.eclipse.remus.application/" src="${build.dir.location}/plugins/org.remus.infomngmnt.application/"/>
+		<delete>
+			<fileset dir="${build.dir.location}/features">
+				<include name="org.remus.infomngmnt.birtdesigner.feature/**" />
+				<include name="org.remus.infomngmnt.core.feature/**" />
+				<include name="org.remus.infomngmnt.infotypes.feature/**" />
+				<include name="org.remus.infomngmnt.reportruntime.feature/**" />
+				<include name="org.remus.infomngmnt.reporttemplates.feature/**" />
+				<include name="org.remus.infomngmnt.repository.feature/**" />
+			</fileset>
+		</delete>
+		
+		<antcall target="checkoutFeature">
+							<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+							<param name="cvs.tag"  value="HEAD" />
+							<param name="cvs.package" value="org.eclipse.remus/features/org.eclipse.remus.core.feature" />
+							<param name="cvs.name" value="org.eclipse.remus.core.feature"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.equinox/components/bundles/org.eclipse.equinox.transforms.hook" />
+			<param name="cvs.name" value="org.eclipse.equinox.transforms.hook"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/rt" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.equinox/components/bundles/org.eclipse.equinox.transforms.xslt" />
+			<param name="cvs.name" value="org.eclipse.equinox.transforms.xslt"  />
+		</antcall>
+		
+		<!--
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.collapsiblebuttons" />
+			<param name="cvs.name" value="org.eclipse.nebula.widgets.collapsiblebuttons"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.cwt" />
+			<param name="cvs.name" value="org.eclipse.nebula.cwt"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.calendarcombo" />
+			<param name="cvs.name" value="org.eclipse.nebula.widgets.calendarcombo"  />
+		</antcall>
+		
+		<antcall target="checkoutPackage">
+			<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+			<param name="cvs.tag"  value="HEAD" />
+			<param name="cvs.package" value="org.eclipse.swt.nebula/org.eclipse.nebula.widgets.cdatetime" />
+			<param name="cvs.name" value="org.eclipse.nebula.widgets.cdatetime"  />
+		</antcall>
+		-->
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.common.core" />
+					<param name="cvs.name" value="org.eclipse.remus.common.core"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.common.flags" />
+					<param name="cvs.name" value="org.eclipse.remus.common.flags"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.common.io" />
+					<param name="cvs.name" value="org.eclipse.remus.common.io"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.common.ui" />
+					<param name="cvs.name" value="org.eclipse.remus.common.ui"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.core" />
+					<param name="cvs.name" value="org.eclipse.remus.core"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.core.remote" />
+					<param name="cvs.name" value="org.eclipse.remus.core.remote"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.efs" />
+					<param name="cvs.name" value="org.eclipse.remus.efs"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.efs.file" />
+					<param name="cvs.name" value="org.eclipse.remus.efs.file"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.efs.password" />
+					<param name="cvs.name" value="org.eclipse.remus.efs.password"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.js" />
+					<param name="cvs.name" value="org.eclipse.remus.js"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.model" />
+					<param name="cvs.name" value="org.eclipse.remus.model"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.oda" />
+					<param name="cvs.name" value="org.eclipse.remus.oda"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.oda.ui" />
+					<param name="cvs.name" value="org.eclipse.remus.oda.ui"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.search" />
+					<param name="cvs.name" value="org.eclipse.remus.search"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.search.desktop" />
+					<param name="cvs.name" value="org.eclipse.remus.search.desktop"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.search.local" />
+					<param name="cvs.name" value="org.eclipse.remus.search.local"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.search.ui" />
+					<param name="cvs.name" value="org.eclipse.remus.search.ui"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.services" />
+					<param name="cvs.name" value="org.eclipse.remus.services"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui" />
+					<param name="cvs.name" value="org.eclipse.remus.ui"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.collapsiblebutton" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.collapsiblebutton"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.databinding" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.databinding"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.desktop" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.desktop"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.desktop.clock" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.desktop.clock"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.editor" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.editor"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.infotypes" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.infotypes"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.link" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.link"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.notification" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.notification"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.notification.tray" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.notification.tray"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.popup" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.popup"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.remote" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.remote"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.rules" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.rules"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.rules.notification" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.rules.notification"  />
+		</antcall>
+		<!--
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.mylyn.htmltext" />
+					<param name="cvs.name" value="org.eclipse.mylyn.htmltext"  />
+		</antcall>
+		-->
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.viewer" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.viewer"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.widgets" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.widgets"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.widgets.databinding" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.widgets.databinding"  />
+		</antcall>
+		
+		<copy todir="${build.dir.location}/../plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
+			<fileset dir="${build.dir.location}/../customization/cdateiconreplacement">
+    			<include name="**/*.png"/>
+			</fileset>
+		</copy>
+		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/bookmark_blue.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/bookmark_blue.png" 
+			overwrite="true" />
+		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/folder_blue.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_blue.png" 
+			overwrite="true" />
+		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/folder_green_network.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green_network.png" 
+			overwrite="true" />
+		<copy file="${build.dir.location}/../customization/iconreplacement/org.eclipse.remus.core/new/folder_green.png" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.core/icons/iconexperience/folder_green.png" 
+			overwrite="true" />
+		
+		<!--<copy file="${build.dir.location}/../customization/lib/groovy-all-1.6.2.jar" 
+			tofile="${build.dir.location}/plugins/org.eclipse.remus.ui.rules/lib/groovy-all-1.6.2.jar" 
+			overwrite="true" />
+			-->
+		
+		<copy todir="${build.dir.location}/plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
+					<fileset dir="${build.dir.location}/../customization/cdateiconreplacement">
+		    			<include name="**/*.png"/>
+					</fileset>
+				</copy>
+	</target>
+	<!-- ================================= 
+          target: test              
+         ================================= -->
+	<target name="build" description="description" depends="depending">
+		<!-- Set Build-ID -->
+		<propertyfile file="${build.dir.location}/plugins/org.eclipse.remus.application/config.ini">
+		  <entry  key="eclipse.buildId" value="${buildId}"/>
+		</propertyfile>
+		<propertyfile file="${build.dir.location}/plugins/org.eclipse.remus.application/about.mappings">
+		  <entry key="1" value="${buildId}"/>
+		  <entry key="2" value="${buildTime}"/>
+		</propertyfile>
+		<java failonerror="true" fork="true" jar="${jar.location}">
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${pde.build.location}" />
+			<arg value="-Dbuilder=${build.dir.location2}" />
+			<arg value="-DbuildDirectory" />
+			<arg value="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-REMUSTEST/build/org.remus.infomngmnt.build/output" />
+		</java>
+		<!-- <exec executable="pdeBuild.bat" /> -->
+	</target>
+	<target name="checkoutPackage">
+		<cvs cvsroot="${cvs.root}" tag="${cvs.tag}" package="${cvs.package}" dest="cvscheckout" />
+		<copy todir="${build.dir.location}/plugins/${cvs.name}">
+			<fileset dir="cvscheckout/${cvs.package}">
+		</fileset>
+		</copy>
+	</target>
+	<target name="checkoutFeature">
+		<cvs cvsroot="${cvs.root}" tag="${cvs.tag}" package="${cvs.package}" dest="cvscheckout" />
+		<copy todir="${build.dir.location}/features/${cvs.name}">
+			<fileset dir="cvscheckout/${cvs.package}">
+		</fileset>
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" description="Cleaning previous build">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="." includes="**/*">
+			    <exclude name="customization/**"/>
+				<exclude name="cvscheckout/**"/>
+			    <exclude name="ico/**"/>
+			    <exclude name="xpm/**"/>
+			    <exclude name="build.properties"/>
+			    <exclude name="build.xml"/>
+			    <exclude name="build-silent.xml"/>
+			    <exclude name="customTargets.xml"/>
+			    <exclude name="rim.product"/>
+			</fileset>
+		</delete>
+	</target>
+
+
+	
+	<!-- ================================= 
+          target: name              
+         ================================= -->
+	<target name="setproperties" description="description">
+		<copy overwrite="true" file="${plugin_customization}" todir="${build.root.location.plugins}/${app.property.name}">
+		</copy>
+	</target>
+</project>

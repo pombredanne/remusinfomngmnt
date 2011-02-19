@@ -191,14 +191,6 @@
                      checkEnabled="true">
                </visibleWhen>
             </command>
-            <command
-                  commandId="org.eclipse.remus.ui.remote.shareCategory"
-                  icon="icons/iconexperience/16/server_from_client.png"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="true">
-               </visibleWhen>
-            </command>
             <separator
                   name="org.eclipse.remus.ui.separator2"
                   visible="true">

@@ -12,9 +12,17 @@
 
 package org.remus.infomngmnt.link.webshot;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.cyberneko.html.parsers.DOMParser;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.common.core.streams.StreamUtil;
+import org.eclipse.remus.common.core.util.StringUtils;
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.w3c.dom.DOMException;
@@ -23,10 +31,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.remus.common.core.util.StringUtils;
-import org.eclipse.swt.SWT;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -34,8 +38,6 @@ public class WebshotUtil {
 
 	public static final String URL_PLACEHOLDER = "{URL}"; //$NON-NLS-1$
 	public static final String OUTFILE_PLACEHOLDER = "{OUT}"; //$NON-NLS-1$
-
-	public static final boolean IS_WIN = "win32".equals(SWT.getPlatform());
 
 	public static boolean isWebShotToolingEnabled() {
 		IPreferenceStore store = LinkActivator.getDefault()
@@ -67,7 +69,9 @@ public class WebshotUtil {
 		}
 		System.out.println("executing: " + StringUtils.join(arguments));
 		try {
+
 			Process exec = Runtime.getRuntime().exec(arguments);
+
 			exec.waitFor();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -75,6 +79,28 @@ public class WebshotUtil {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if (store.getString(LinkPreferenceInitializer.LIST_RENDERER).split(",")[selectedRenderer]
+				.startsWith("Webkit")) {
+			try {
+				File file = new File(out + "-full.png");
+				if (file.exists()) {
+					FileInputStream fileInputStream = new FileInputStream(file);
+					FileOutputStream fileOutputStream = new FileOutputStream(
+							new File(out));
+					StreamUtil.stream(fileInputStream, fileOutputStream);
+					StreamCloser.closeStreams(fileInputStream);
+					fileOutputStream.flush();
+					fileOutputStream.close();
+					file.delete();
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}

@@ -14,28 +14,22 @@ package org.remus.infomngmnt.pdf.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.remus.infomngmnt.pdf.Activator;
-
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.remus.Category;
 import org.eclipse.remus.InformationUnitListItem;
-import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.core.commands.CommandFactory;
 import org.eclipse.remus.core.commands.CreateBinaryReferenceCommand;
 import org.eclipse.remus.core.model.InformationStructureEdit;
 import org.eclipse.remus.core.services.IEditingHandler;
-import org.eclipse.remus.ui.editors.InformationEditor;
-import org.eclipse.remus.ui.editors.InformationEditorInput;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.remus.infomngmnt.pdf.Activator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -137,30 +131,6 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 			page1.setFiles(files);
 		}
 		setCategoryToPage();
-
-	}
-
-	@Override
-	protected void performActionAfterCreation() {
-		try {
-			PlatformUI
-					.getWorkbench()
-					.getActiveWorkbenchWindow()
-					.getActivePage()
-					.openEditor(
-							new InformationEditorInput((IFile) newElement
-									.getAdapter(IFile.class)),
-							InformationEditor.ID);
-		} catch (Exception e) {
-			// will come soon.
-		}
-		// we also reveal the created list-item, that can be found in the
-		// navigation
-		UIUtil.selectAndReveal(
-				newElement.getAdapter(InformationUnitListItem.class),
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-		UIUtil.selectAndReveal(newElement, PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow());
 
 	}
 

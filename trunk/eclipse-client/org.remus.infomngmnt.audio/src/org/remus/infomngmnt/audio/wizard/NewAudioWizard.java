@@ -17,16 +17,11 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.remus.Category;
 import org.eclipse.remus.InformationUnitListItem;
-import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.core.commands.CommandFactory;
 import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.services.RemusServiceTracker;
-import org.eclipse.remus.ui.editors.InformationEditor;
-import org.eclipse.remus.ui.editors.InformationEditorInput;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
-
 import org.remus.infomngmnt.audio.AudioActivator;
 
 /**
@@ -43,14 +38,15 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 	public NewAudioWizard() {
 		setNeedsProgressMonitor(true);
 		setWindowTitle("New audio");
-		this.serviceTracker = new RemusServiceTracker(Platform.getBundle(AudioActivator.PLUGIN_ID));
-		this.editService = this.serviceTracker.getService(IEditingHandler.class);
+		serviceTracker = new RemusServiceTracker(
+				Platform.getBundle(AudioActivator.PLUGIN_ID));
+		editService = serviceTracker.getService(IEditingHandler.class);
 
 	}
 
 	@Override
 	public void dispose() {
-		this.serviceTracker.ungetService(this.editService);
+		serviceTracker.ungetService(editService);
 		super.dispose();
 	}
 
@@ -61,24 +57,25 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
-	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
+	public void init(final IWorkbench workbench,
+			final IStructuredSelection selection) {
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
-			this.page1 = new GeneralAudioPage((Category) firstElement);
+			page1 = new GeneralAudioPage((Category) firstElement);
 		} else if (firstElement instanceof InformationUnitListItem) {
-			this.page1 = new GeneralAudioPage((InformationUnitListItem) firstElement);
+			page1 = new GeneralAudioPage((InformationUnitListItem) firstElement);
 		} else {
-			this.page1 = new GeneralAudioPage((Category) null);
+			page1 = new GeneralAudioPage((Category) null);
 		}
 
 	}
 
 	@Override
 	protected Command getAdditionalCommands() {
-		IFile tmpFile = ((GeneralAudioPage) this.page1).getTmpFile();
+		IFile tmpFile = ((GeneralAudioPage) page1).getTmpFile();
 		if (tmpFile != null) {
-			return CommandFactory.addFileToInfoUnit(tmpFile, this.newElement, this.editService
-					.getNavigationEditingDomain());
+			return CommandFactory.addFileToInfoUnit(tmpFile, newElement,
+					editService.getNavigationEditingDomain());
 		}
 		return super.getAdditionalCommands();
 	}
@@ -92,24 +89,6 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 	@Override
 	protected String getInfoTypeId() {
 		return AudioActivator.TYPE_ID;
-	}
-
-	@Override
-	protected void performActionAfterCreation() {
-		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-					new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)),
-					InformationEditor.ID);
-		} catch (Exception e) {
-			// will come soon.
-		}
-		// we also reveal the created list-item, that can be found in the
-		// navigation
-		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class),
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow());
-
 	}
 
 }

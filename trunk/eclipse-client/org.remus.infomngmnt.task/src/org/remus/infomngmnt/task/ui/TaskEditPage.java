@@ -48,7 +48,6 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.task.TaskPriority;
 import org.remus.infomngmnt.task.TaskStatus;
@@ -93,13 +92,15 @@ public class TaskEditPage extends AbstractInformationFormPage {
 	}
 
 	private void doCreateGeneralSection(Composite body, FormToolkit toolkit) {
-		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.EXPANDED);
-		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		final Section generalSection = toolkit.createSection(body,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.EXPANDED);
+		final GridData gd_generalSection = new GridData(SWT.FILL,
+				SWT.BEGINNING, true, false);
 		generalSection.setLayoutData(gd_generalSection);
 		generalSection.setText("General");
 
-		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
+		final Composite client = toolkit.createComposite(generalSection,
+				SWT.NONE);
 		client.setLayout(new GridLayout(6, false));
 		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 
@@ -108,13 +109,16 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		generalSection.setClient(client);
 
 		Label subjectLabel = toolkit.createLabel(client, "Subject");
-		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
+				false, false));
 
 		this.subjectText = toolkit.createText(client, "");
-		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 5, 1));
 
 		Label dueLabel = toolkit.createLabel(client, "Due date");
-		dueLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		dueLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
+				false));
 
 		Composite dueParent = toolkit.createComposite(client);
 		GridLayout layout = new GridLayout(2, false);
@@ -124,50 +128,61 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		layout.horizontalSpacing = 2;
 		dueParent.setLayout(layout);
 		this.dueDate = new DateCombo(dueParent, SWT.FLAT);
-		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false).applyTo(
-				this.dueDate);
-		this.dueDate.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false)
+				.applyTo(this.dueDate);
+		this.dueDate.setData(FormToolkit.KEY_DRAW_BORDER,
+				FormToolkit.TEXT_BORDER);
 		toolkit.adapt(this.dueDate, false, false);
 		toolkit.paintBordersFor(dueParent);
-		GridData dueDateLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+		GridData dueDateLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER,
+				false, false);
 		dueParent.setLayoutData(dueDateLayoutData);
 		toolkit.adapt(this.dueDate);
 
 		Label statusLabel = toolkit.createLabel(client, "Status");
-		statusLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		statusLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
+				false, false));
 
 		this.statusCombo = new Combo(client, SWT.DROP_DOWN);
-		this.statusCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		this.statusCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 3, 1));
 		toolkit.adapt(this.statusCombo, false, false);
 
 		toolkit.createLabel(client, "");
-		this.completedCheckBox = toolkit.createButton(client, "Completed", SWT.CHECK);
-		this.completedCheckBox.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+		this.completedCheckBox = toolkit.createButton(client, "Completed",
+				SWT.CHECK);
+		this.completedCheckBox.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false, 5, 1));
 
 		Label startsLabel = toolkit.createLabel(client, "Starts");
-		startsLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		startsLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
+				false, false));
 
 		Composite startsAtParent = toolkit.createComposite(client);
 		startsAtParent.setLayout(layout);
 		this.startsDate = new DateCombo(startsAtParent, SWT.FLAT);
-		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false).applyTo(
-				this.startsDate);
-		this.startsDate.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false)
+				.applyTo(this.startsDate);
+		this.startsDate.setData(FormToolkit.KEY_DRAW_BORDER,
+				FormToolkit.TEXT_BORDER);
 		toolkit.adapt(this.startsDate, false, false);
 		toolkit.paintBordersFor(startsAtParent);
 		startsAtParent.setLayoutData(dueDateLayoutData);
 		toolkit.adapt(this.startsDate);
 
 		Label prioLabel = toolkit.createLabel(client, "Priority");
-		prioLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		prioLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
+				false));
 
 		this.prioCombo = new Combo(client, SWT.DROP_DOWN);
-		this.prioCombo.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
+		this.prioCombo.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
+				true, false));
 
 		toolkit.adapt(this.prioCombo, false, false);
 
 		Label completion = toolkit.createLabel(client, "Completion");
-		completion.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		completion.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
+				false));
 
 		Composite sliderParent = toolkit.createComposite(client);
 		GridLayout sliderLayout = new GridLayout(1, false);
@@ -177,42 +192,49 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		sliderLayout.horizontalSpacing = 2;
 		sliderParent.setLayout(sliderLayout);
 		this.slider = new Slider(sliderParent, SWT.HORIZONTAL);
-		this.slider.setMaximum(100);
+		this.slider.setMaximum(110);
 		this.slider.setMinimum(0);
 		this.slider.setIncrement(5);
-		this.slider.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		this.slider.setData(FormToolkit.KEY_DRAW_BORDER,
+				FormToolkit.TEXT_BORDER);
 		GridDataFactory.fillDefaults().hint(120, SWT.DEFAULT).grab(true, false)
 				.applyTo(this.slider);
-		sliderParent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		sliderParent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false));
 		toolkit.adapt(this.slider, false, false);
 
 		Label createSeparator = toolkit.createSeparator(client, SWT.HORIZONTAL);
-		createSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+		createSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 6, 1));
 
 		toolkit.createLabel(client, "");
-		this.notficiaionButton = toolkit.createButton(client, "Notfication", SWT.CHECK);
+		this.notficiaionButton = toolkit.createButton(client, "Notfication",
+				SWT.CHECK);
 
 		this.notificationCombo = new Combo(client, SWT.DROP_DOWN);
-		this.notificationCombo
-				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		this.notificationCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				false, false, 2, 1));
 
 		toolkit.createLabel(client, "Assignee").setLayoutData(
 				new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		this.assigneeText = toolkit.createText(client, "");
-		this.assigneeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.assigneeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false));
 
 		new ContactsSmartField(this.assigneeText);
 	}
 
 	private void doCreateDescriptionSection(Composite body, FormToolkit toolkit) {
-		final Section generalSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.EXPANDED);
-		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
+		final Section generalSection = toolkit.createSection(body,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.EXPANDED);
+		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL,
+				true, true);
 		generalSection.setLayoutData(gd_generalSection);
 		generalSection.setText("Description");
 
-		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
+		final Composite client = toolkit.createComposite(generalSection,
+				SWT.NONE);
 		client.setLayout(new GridLayout());
 		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 
@@ -227,48 +249,57 @@ public class TaskEditPage extends AbstractInformationFormPage {
 
 	@Override
 	public void bindValuesToUi() {
-		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getModelObject());
 
-		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
-				this.description.getFTextField(), this);
-		textBindingWidget.bindModel(getModelObject(), read
-				.getFeatureByNodeId(TaskActivator.INFO_TYPE_ID));
+		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory
+				.createStyledText(this.description.getFTextField(), this);
+		textBindingWidget.bindModel(getModelObject(),
+				read.getFeatureByNodeId(TaskActivator.INFO_TYPE_ID));
 
 		DatePickerBindingWidget dateComboBinding = AdditionalBindingWidgetFactory
 				.createDateComboBinding(this.dueDate, this);
-		dateComboBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_DUE_DATE), read
-				.getFeatureByNodeId(TaskActivator.NODE_NAME_DUE_DATE));
+		dateComboBinding.bindModel(
+				read.getChildByNodeId(TaskActivator.NODE_NAME_DUE_DATE),
+				read.getFeatureByNodeId(TaskActivator.NODE_NAME_DUE_DATE));
 
 		DatePickerBindingWidget startComboBinding = AdditionalBindingWidgetFactory
 				.createDateComboBinding(this.startsDate, this);
-		startComboBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_STARTED), read
-				.getFeatureByNodeId(TaskActivator.NODE_NAME_STARTED));
+		startComboBinding.bindModel(
+				read.getChildByNodeId(TaskActivator.NODE_NAME_STARTED),
+				read.getFeatureByNodeId(TaskActivator.NODE_NAME_STARTED));
 
-		TextBindingWidget subjectBinding = BindingWidgetFactory.createTextBinding(this.subjectText,
-				this);
+		TextBindingWidget subjectBinding = BindingWidgetFactory
+				.createTextBinding(this.subjectText, this);
 		subjectBinding.bindModel(getModelObject(),
 				InfomngmntPackage.Literals.ABSTRACT_INFORMATION_UNIT__LABEL);
 
-		SpinnerSliderBindingWidget sliderBindingWidget = BindingWidgetFactory.createSpinner(
-				this.slider, getDatabindingContext(), getEditingDomain());
-		sliderBindingWidget.bindModel(read
-				.getChildByNodeId(TaskActivator.NODE_NAME_COMPLETED_PERCENTAGE), read
-				.getFeatureByNodeId(TaskActivator.NODE_NAME_COMPLETED_PERCENTAGE));
+		SpinnerSliderBindingWidget sliderBindingWidget = BindingWidgetFactory
+				.createSpinner(this.slider, getDatabindingContext(),
+						getEditingDomain());
+		sliderBindingWidget
+				.bindModel(
+						read.getChildByNodeId(TaskActivator.NODE_NAME_COMPLETED_PERCENTAGE),
+						read.getFeatureByNodeId(TaskActivator.NODE_NAME_COMPLETED_PERCENTAGE));
 
-		CheckBoxBindingWidget completedBinding = BindingWidgetFactory.createCheckboxBinding(
-				this.completedCheckBox, this);
-		completedBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_COMPLETED), read
-				.getFeatureByNodeId(TaskActivator.NODE_NAME_COMPLETED));
+		CheckBoxBindingWidget completedBinding = BindingWidgetFactory
+				.createCheckboxBinding(this.completedCheckBox, this);
+		completedBinding.bindModel(
+				read.getChildByNodeId(TaskActivator.NODE_NAME_COMPLETED),
+				read.getFeatureByNodeId(TaskActivator.NODE_NAME_COMPLETED));
 
 		CheckBoxBindingWidget notificationCheckBinding = BindingWidgetFactory
 				.createCheckboxBinding(this.notficiaionButton, this);
-		notificationCheckBinding.bindModel(read.getChildByNodeId(TaskActivator.NODE_NAME_NOTIFY),
+		notificationCheckBinding.bindModel(
+				read.getChildByNodeId(TaskActivator.NODE_NAME_NOTIFY),
 				read.getFeatureByNodeId(TaskActivator.NODE_NAME_NOTIFY));
 
-		ComboBindingWidget notificationBinding = BindingWidgetFactory.createComboBinding(
-				this.notificationCombo, getDatabindingContext(), getEditingDomain());
-		notificationBinding.setInput(Arrays.asList(new Long[] { -1L, 0L, 5L, 10L, 15L, 20L, 30L,
-				45L, 60L, 90L, 120L, 180L, 240L, 300L, 360L, 420L, 480L, 540L, 600L, 660L, 720L }));
+		ComboBindingWidget notificationBinding = BindingWidgetFactory
+				.createComboBinding(this.notificationCombo,
+						getDatabindingContext(), getEditingDomain());
+		notificationBinding.setInput(Arrays.asList(new Long[] { -1L, 0L, 5L,
+				10L, 15L, 20L, 30L, 45L, 60L, 90L, 120L, 180L, 240L, 300L,
+				360L, 420L, 480L, 540L, 600L, 660L, 720L }));
 		notificationBinding.setLabelProvider(new LabelProvider() {
 			@Override
 			public String getText(final Object element) {
@@ -276,56 +307,62 @@ public class TaskEditPage extends AbstractInformationFormPage {
 			}
 		});
 
-		notificationBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_MINUTES_BEFORE_DUE),
+		notificationBinding.bindModel(InformationUtil.getChildByType(
+				getModelObject(), TaskActivator.NODE_NAME_MINUTES_BEFORE_DUE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE);
 
-		ComboBindingWidget priorityBinding = BindingWidgetFactory.createComboBinding(
-				this.prioCombo, getDatabindingContext(), getEditingDomain());
+		ComboBindingWidget priorityBinding = BindingWidgetFactory
+				.createComboBinding(this.prioCombo, getDatabindingContext(),
+						getEditingDomain());
 		priorityBinding.setInput(Arrays.asList(TaskPriority.values()));
 		priorityBinding.setLabelProvider(new LabelProvider());
 		EMFUpdateValueStrategy prioTarget2Model = BindingUtil
-				.createUpdateStratyWithConverter(new Converter(TaskPriority.class, String.class) {
+				.createUpdateStratyWithConverter(new Converter(
+						TaskPriority.class, String.class) {
 					public Object convert(Object fromObject) {
 						return ((TaskPriority) fromObject).getKey();
 					}
 				});
 		EMFUpdateValueStrategy prioModel2Target = BindingUtil
-				.createUpdateStratyWithConverter(new Converter(String.class, TaskPriority.class) {
+				.createUpdateStratyWithConverter(new Converter(String.class,
+						TaskPriority.class) {
 					public Object convert(Object fromObject) {
 						return TaskPriority.fromKey(fromObject.toString());
 					}
 				});
-		priorityBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_PRIORITY),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, prioTarget2Model,
-				prioModel2Target);
+		priorityBinding.bindModel(InformationUtil.getChildByType(
+				getModelObject(), TaskActivator.NODE_NAME_PRIORITY),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+				prioTarget2Model, prioModel2Target);
 
-		ComboBindingWidget statusBinding = BindingWidgetFactory.createComboBinding(
-				this.statusCombo, getDatabindingContext(), getEditingDomain());
+		ComboBindingWidget statusBinding = BindingWidgetFactory
+				.createComboBinding(this.statusCombo, getDatabindingContext(),
+						getEditingDomain());
 		statusBinding.setInput(Arrays.asList(TaskStatus.values()));
 		statusBinding.setLabelProvider(new LabelProvider());
 		EMFUpdateValueStrategy statusTarget2Model = BindingUtil
-				.createUpdateStratyWithConverter(new Converter(TaskStatus.class, String.class) {
+				.createUpdateStratyWithConverter(new Converter(
+						TaskStatus.class, String.class) {
 					public Object convert(Object fromObject) {
 						return ((TaskStatus) fromObject).getKey();
 					}
 				});
 		EMFUpdateValueStrategy statusModel2Target = BindingUtil
-				.createUpdateStratyWithConverter(new Converter(String.class, TaskStatus.class) {
+				.createUpdateStratyWithConverter(new Converter(String.class,
+						TaskStatus.class) {
 					public Object convert(Object fromObject) {
 						return TaskStatus.fromKey(fromObject.toString());
 					}
 				});
-		statusBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_STATUS),
-				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, statusTarget2Model,
-				statusModel2Target);
+		statusBinding.bindModel(InformationUtil.getChildByType(
+				getModelObject(), TaskActivator.NODE_NAME_STATUS),
+				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+				statusTarget2Model, statusModel2Target);
 
-		TextBindingWidget assigneeBinding = BindingWidgetFactory.createTextBinding(
-				this.assigneeText, this);
-		assigneeBinding.bindModel(InformationUtil.getChildByType(getModelObject(),
-				TaskActivator.NODE_NAME_ASIGNEE),
+		TextBindingWidget assigneeBinding = BindingWidgetFactory
+				.createTextBinding(this.assigneeText, this);
+		assigneeBinding.bindModel(InformationUtil.getChildByType(
+				getModelObject(), TaskActivator.NODE_NAME_ASIGNEE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
 
 		super.bindValuesToUi();

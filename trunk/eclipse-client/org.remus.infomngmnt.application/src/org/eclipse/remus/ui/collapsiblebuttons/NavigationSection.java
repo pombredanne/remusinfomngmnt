@@ -45,6 +45,7 @@ import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
 /**
@@ -64,8 +65,8 @@ public class NavigationSection extends CollapsibleButtonBar implements
 		public void partActivated(final IWorkbenchPart part) {
 			if (part instanceof EditorPart) {
 				IEditorInput input = ((EditorPart) part).getEditorInput();
-				if (input instanceof InformationEditorInput) {
-					IFile file2 = ((InformationEditorInput) input).getFile();
+				if (input instanceof FileEditorInput) {
+					IFile file2 = ((FileEditorInput) input).getFile();
 					Object adapter = Platform.getAdapterManager().getAdapter(
 							file2, InformationUnitListItem.class);
 					if (adapter != null) {

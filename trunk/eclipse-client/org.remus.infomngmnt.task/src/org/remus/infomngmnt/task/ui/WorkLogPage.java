@@ -40,6 +40,7 @@ import org.eclipse.remus.impl.InformationUnitImpl;
 import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
 import org.eclipse.remus.ui.databinding.StyledTextBindingWidget;
 import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.ui.jface.SubListContentProviderUpdater;
 import org.eclipse.remus.ui.widgets.databinding.AdditionalBindingWidgetFactory;
 import org.eclipse.remus.ui.widgets.databinding.CDateTimeBindingWidget;
 import org.eclipse.remus.util.InformationUtil;
@@ -62,7 +63,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
-
 import org.remus.infomngmnt.task.TaskActivator;
 
 /**
@@ -106,11 +106,13 @@ public class WorkLogPage extends AbstractInformationFormPage {
 		private SectionPart spart;
 
 		@Override
-		protected void createMasterPart(IManagedForm pManagedForm, Composite parent) {
+		protected void createMasterPart(IManagedForm pManagedForm,
+				Composite parent) {
 			this.managedForm = pManagedForm;
 			FormToolkit toolkit = this.managedForm.getToolkit();
 
-			Section section = toolkit.createSection(parent, Section.DESCRIPTION);
+			Section section = toolkit
+					.createSection(parent, Section.DESCRIPTION);
 			section.setText("Worklog history");
 			section.setDescription("This list contains all logged units of work.");
 			section.marginWidth = 10;
@@ -136,27 +138,39 @@ public class WorkLogPage extends AbstractInformationFormPage {
 			this.managedForm.addPart(this.spart);
 			this.viewer = new TableViewer(t);
 
-			this.viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-				public void selectionChanged(final SelectionChangedEvent event) {
-					WorklogMasterPage.this.managedForm.fireSelectionChanged(
-							WorklogMasterPage.this.spart, event.getSelection());
-				}
-			});
+			this.viewer
+					.addSelectionChangedListener(new ISelectionChangedListener() {
+						public void selectionChanged(
+								final SelectionChangedEvent event) {
+							WorklogMasterPage.this.managedForm
+									.fireSelectionChanged(
+											WorklogMasterPage.this.spart,
+											event.getSelection());
+						}
+					});
 
 		}
 
 		public void bindValuesToUi() {
 			ObservableListContentProvider ocp = new ObservableListContentProvider();
-			IObservableList observeList = EMFObservables.observeList(InformationUtil
-					.getChildByType(getModelObject(), TaskActivator.NODE_NAME_WORKED_UNITS),
+
+			new SubListContentProviderUpdater(ocp, this.viewer,
+					TaskActivator.INFO_TYPE_ID,
+					TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION,
+					InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+
+			IObservableList observeList = EMFObservables.observeList(
+					InformationUtil.getChildByType(getModelObject(),
+							TaskActivator.NODE_NAME_WORKED_UNITS),
 					InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES);
 			this.viewer.setContentProvider(ocp);
 			this.viewer.setLabelProvider(new LabelProvider() {
 				@Override
 				public String getText(Object element) {
-					InformationUnit childByType = InformationUtil.getChildByType(
-							(InformationUnit) element,
-							TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION);
+					InformationUnit childByType = InformationUtil
+							.getChildByType(
+									(InformationUnit) element,
+									TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION);
 					if (childByType.getStringValue() == null
 							|| childByType.getStringValue().trim().length() == 0) {
 						return "No desciption";
@@ -166,17 +180,22 @@ public class WorkLogPage extends AbstractInformationFormPage {
 
 				@Override
 				public Image getImage(Object element) {
-					return ResourceManager.getPluginImage(TaskActivator.getDefault(),
+					return ResourceManager.getPluginImage(
+							TaskActivator.getDefault(),
 							"icons/iconexperience/history2.png");
 				}
 			});
 			this.viewer.setSorter(new ViewerSorter() {
 				@Override
 				public int compare(Viewer viewer, Object e1, Object e2) {
-					Date start1 = InformationUtil.getChildByType((InformationUnit) e1,
-							TaskActivator.NODE_NAME_WORKED_UNIT_STARTED).getDateValue();
-					Date start2 = InformationUtil.getChildByType((InformationUnit) e2,
-							TaskActivator.NODE_NAME_WORKED_UNIT_STARTED).getDateValue();
+					Date start1 = InformationUtil.getChildByType(
+							(InformationUnit) e1,
+							TaskActivator.NODE_NAME_WORKED_UNIT_STARTED)
+							.getDateValue();
+					Date start2 = InformationUtil.getChildByType(
+							(InformationUnit) e2,
+							TaskActivator.NODE_NAME_WORKED_UNIT_STARTED)
+							.getDateValue();
 					if (start1 == null && start2 == null) {
 						return 0;
 					}
@@ -200,18 +219,20 @@ public class WorkLogPage extends AbstractInformationFormPage {
 				public void run() {
 					InformationStructureEdit edit = InformationStructureEdit
 							.newSession(TaskActivator.INFO_TYPE_ID);
-					InformationUnit unit = edit.createSubType(TaskActivator.NODE_NAME_WORKED_UNIT,
-							null);
-					edit.addDynamicNode(getModelObject(), unit, getEditingDomain());
+					InformationUnit unit = edit.createSubType(
+							TaskActivator.NODE_NAME_WORKED_UNIT, null);
+					edit.addDynamicNode(getModelObject(), unit,
+							getEditingDomain());
 				}
 
 				@Override
 				public ImageDescriptor getImageDescriptor() {
-					return PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-							ISharedImages.IMG_OBJ_ADD);
+					return PlatformUI.getWorkbench().getSharedImages()
+							.getImageDescriptor(ISharedImages.IMG_OBJ_ADD);
 				}
 			};
-			BaseSelectionListenerAction removeAction = new BaseSelectionListenerAction("Delete") {
+			BaseSelectionListenerAction removeAction = new BaseSelectionListenerAction(
+					"Delete") {
 				@Override
 				protected boolean updateSelection(IStructuredSelection selection) {
 					return !selection.isEmpty();
@@ -226,21 +247,24 @@ public class WorkLogPage extends AbstractInformationFormPage {
 
 				@Override
 				public ImageDescriptor getImageDescriptor() {
-					return PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-							ISharedImages.IMG_ETOOL_DELETE);
+					return PlatformUI.getWorkbench().getSharedImages()
+							.getImageDescriptor(ISharedImages.IMG_ETOOL_DELETE);
 				}
 
 			};
 			removeAction.setEnabled(!this.viewer.getSelection().isEmpty());
 			this.viewer.addSelectionChangedListener(removeAction);
-			this.spart.getManagedForm().getForm().getToolBarManager().add(addAction);
-			this.spart.getManagedForm().getForm().getToolBarManager().add(removeAction);
+			this.spart.getManagedForm().getForm().getToolBarManager()
+					.add(addAction);
+			this.spart.getManagedForm().getForm().getToolBarManager()
+					.add(removeAction);
 
 		}
 
 		@Override
 		protected void registerPages(DetailsPart detailsPart) {
-			detailsPart.registerPage(InformationUnitImpl.class, new WorkLogDetailsPage());
+			detailsPart.registerPage(InformationUnitImpl.class,
+					new WorkLogDetailsPage());
 		}
 
 	}
@@ -288,24 +312,26 @@ public class WorkLogPage extends AbstractInformationFormPage {
 			this.s1.setClient(composite);
 
 			toolkit.createLabel(composite, "Description");
-			this.descriptionText = new AnnotatingQuickFixTextBox(composite, "", "");
-			TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP);
+			this.descriptionText = new AnnotatingQuickFixTextBox(composite, "",
+					"");
+			TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB,
+					TableWrapData.TOP);
 			data.heightHint = 80;
 			this.descriptionText.setLayoutData(data);
 
 			toolkit.createLabel(composite, "Start");
-			this.startTime = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN | CDT.TIME_MEDIUM
-					| CDT.DATE_MEDIUM);
+			this.startTime = new CDateTime(composite, CDT.BORDER
+					| CDT.DROP_DOWN | CDT.TIME_MEDIUM | CDT.DATE_MEDIUM);
 
-			this.startTime.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
-					TableWrapData.TOP));
+			this.startTime.setLayoutData(new TableWrapData(
+					TableWrapData.FILL_GRAB, TableWrapData.TOP));
 			toolkit.adapt(this.startTime, false, false);
 
 			toolkit.createLabel(composite, "End");
-			this.endTime = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN | CDT.TIME_MEDIUM
-					| CDT.DATE_MEDIUM);
-			this.endTime
-					.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
+			this.endTime = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN
+					| CDT.TIME_MEDIUM | CDT.DATE_MEDIUM);
+			this.endTime.setLayoutData(new TableWrapData(
+					TableWrapData.FILL_GRAB, TableWrapData.TOP));
 			toolkit.adapt(this.endTime, false, false);
 
 		}
@@ -351,21 +377,24 @@ public class WorkLogPage extends AbstractInformationFormPage {
 		public void selectionChanged(IFormPart part, ISelection selection) {
 			disposeBindings();
 
-			this.model = (InformationUnit) ((IStructuredSelection) selection).getFirstElement();
-			this.textBindingWidget = BindingWidgetFactory.createStyledText(this.descriptionText
-					.getFTextField(), WorkLogPage.this);
-			this.textBindingWidget.bindModel(InformationUtil.getChildByType(this.model,
-					TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION),
+			this.model = (InformationUnit) ((IStructuredSelection) selection)
+					.getFirstElement();
+			this.textBindingWidget = BindingWidgetFactory.createStyledText(
+					this.descriptionText.getFTextField(), WorkLogPage.this);
+			this.textBindingWidget.bindModel(InformationUtil
+					.getChildByType(this.model,
+							TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION),
 					InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-			this.startBinding = AdditionalBindingWidgetFactory.createCDateTime(this.startTime,
-					getDatabindingContext(), getEditingDomain());
-			this.startBinding.bindModel(InformationUtil.getChildByType(this.model,
-					TaskActivator.NODE_NAME_WORKED_UNIT_STARTED),
+			this.startBinding = AdditionalBindingWidgetFactory
+					.createCDateTime(this.startTime, getDatabindingContext(),
+							getEditingDomain());
+			this.startBinding.bindModel(InformationUtil.getChildByType(
+					this.model, TaskActivator.NODE_NAME_WORKED_UNIT_STARTED),
 					InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
-			this.endBinding = AdditionalBindingWidgetFactory.createCDateTime(this.endTime,
-					getDatabindingContext(), getEditingDomain());
-			this.endBinding.bindModel(InformationUtil.getChildByType(this.model,
-					TaskActivator.NODE_NAME_WORKED_UNIT_END),
+			this.endBinding = AdditionalBindingWidgetFactory.createCDateTime(
+					this.endTime, getDatabindingContext(), getEditingDomain());
+			this.endBinding.bindModel(InformationUtil.getChildByType(
+					this.model, TaskActivator.NODE_NAME_WORKED_UNIT_END),
 					InfomngmntPackage.Literals.INFORMATION_UNIT__DATE_VALUE);
 
 		}

@@ -2,6 +2,7 @@ package org.remus.infomngmnt.task;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.remus.infomngmnt.task.navigation.TaskStateStore;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -46,6 +47,8 @@ public class TaskActivator extends AbstractUIPlugin {
 
 	public static final String INFO_TYPE_ID = "TASK";
 
+	private TaskStateStore store;
+
 	/**
 	 * The constructor
 	 */
@@ -62,6 +65,7 @@ public class TaskActivator extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		this.store = new TaskStateStore();
 		plugin = this;
 	}
 
@@ -85,6 +89,10 @@ public class TaskActivator extends AbstractUIPlugin {
 	 */
 	public static TaskActivator getDefault() {
 		return plugin;
+	}
+
+	public TaskStateStore getStore() {
+		return this.store;
 	}
 
 }

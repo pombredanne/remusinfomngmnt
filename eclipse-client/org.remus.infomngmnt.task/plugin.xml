@@ -61,6 +61,13 @@
             name="Work Logger"
             sectionControl="org.remus.infomngmnt.task.tray.WorkLoggerTray">
       </sectionBox>
+      <sectionBox
+            icon="icons/iconexperience/task.png"
+            id="org.remus.infomngmnt.task.sectionBox1"
+            multiple="false"
+            name="Tasks"
+            sectionControl="org.remus.infomngmnt.task.tray.DueDateSection">
+      </sectionBox>
    </extension>
    <extension
          point="org.eclipse.remus.ui.infotypes.infotypeimages">
@@ -117,6 +124,24 @@
             class="org.remus.infomngmnt.task.ui.wizard.TaskCreationTrigger"
             typeId="TASK">
       </creationtrigger>
+   </extension>
+   <extension
+         point="org.eclipse.remus.core.saveParticipant">
+      <participant
+            class="org.remus.infomngmnt.task.navigation.TaskSaveParticipant">
+      </participant>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="org.remus.infomngmnt.task.navigation.TaskStatusDecorator"
+            id="org.remus.infomngmnt.task.statusDescorator"
+            label="Task Status-Decorator"
+            lightweight="true"
+            location="TOP_LEFT"
+            state="true">
+      </decorator>
    </extension>
 
 </plugin>

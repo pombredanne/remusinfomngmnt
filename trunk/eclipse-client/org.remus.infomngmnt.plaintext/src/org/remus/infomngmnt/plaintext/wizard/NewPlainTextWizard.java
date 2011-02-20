@@ -12,15 +12,8 @@
 
 package org.remus.infomngmnt.plaintext.wizard;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.remus.InformationUnitListItem;
-import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.common.ui.image.ResourceManager;
-import org.eclipse.remus.ui.editors.InformationEditor;
-import org.eclipse.remus.ui.editors.InformationEditorInput;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
-import org.eclipse.ui.PlatformUI;
-
 import org.remus.infomngmnt.plaintext.Activator;
 
 /**
@@ -41,33 +34,15 @@ public class NewPlainTextWizard extends NewInfoObjectWizard {
 	@Override
 	public void addPages() {
 		super.addPages();
-		this.page1.setTitle("New unformatted text");
-		this.page1.setMessage("This wizard enables you to create new unformatted text units");
-		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(Activator
-				.getDefault(), "icons/iconexperience/new_wizard.png"));
+		page1.setTitle("New unformatted text");
+		page1.setMessage("This wizard enables you to create new unformatted text units");
+		page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				Activator.getDefault(), "icons/iconexperience/new_wizard.png"));
 	}
 
 	// protected void setDefaults(final Object value, final RuleValue ruleValue,
 	// final TransferWrapper transferType) throws CoreException {
 	// this.newElement.setStringValue(String.valueOf(value));
 	// }
-
-	@Override
-	protected void performActionAfterCreation() {
-		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-					new InformationEditorInput((IFile) this.newElement.getAdapter(IFile.class)),
-					InformationEditor.ID);
-		} catch (Exception e) {
-			// will come soon.
-		}
-		// we also reveal the created list-item, that can be found in the
-		// navigation
-		UIUtil.selectAndReveal(this.newElement.getAdapter(InformationUnitListItem.class),
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-		UIUtil.selectAndReveal(this.newElement, PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow());
-
-	}
 
 }

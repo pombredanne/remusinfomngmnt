@@ -93,6 +93,7 @@
 		
 		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip"></unzip>
 		<antcall target="installTestFeature"></antcall>
+		<antcall target="run-test"></antcall>
 		
 		
 		<move todir="${build.dir.location2}/N.RIM">
@@ -123,7 +124,7 @@
 		</target>
 	
 	 <target name="installTestFeature" description="description">
-	    	<java failonerror="false" fork="true" jar="${jar.location}">
+	    	<java failonerror="false" fork="true" jar="${jar.test.location}">
 	         	    <arg line=" -application org.eclipse.equinox.p2.director.app.application" />
 	         	    <arg line=" -nosplash" />
 	         	    <arg line=" --launcher.suppressErrors" />

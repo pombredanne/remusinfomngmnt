@@ -106,6 +106,12 @@
 		
 	</target>
 	
+	<target name="run-test-forked">
+		<exec executable="/opt/apache-ant-1.7.1/bin/ant">
+			<arg value="-buildfile "/>
+		</exec>
+	</target>
+	
 	<target name="run-test" description="--> Uses org.eclipse.test plugin">
 		    <ant
 		        antfile="${deployDir}/plugins/org.eclipse.test_3.3.100/library.xml"
@@ -121,6 +127,7 @@
 		    <property name="ws" value="gtk" />
 		    <property name="arch" value="x86" />
 		   	<property name="timeout" value="600000"/>
+		    <property name="plugincustomization" value="${build.dir.location}/../customization/test/plugin_customization.ini" />
 		   	<property name="eclipse-home" value="${deployDir}"/>
 		    </ant>
 		</target>

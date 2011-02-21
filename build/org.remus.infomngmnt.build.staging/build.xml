@@ -23,7 +23,15 @@
 
 	<!-- properties -->
 
-
+	<!-- Testing properties -->
+	<property name="unzipTarget" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-REMUSTEST/build/test"/>
+	<property name="deployDir" location="${unzipTarget}/RIM"/>
+	<property name="testDir" location="/opt/testingFeature"/>
+	<property name="p2.director.installIU" value="org.eclipse.remus.test.feature.feature.group" />
+	<property name="p2.director.install.path" value="${deployDir}" />
+	<property name="p2.director.destination" value="${deployDir}" />
+	<property name="p2.director.input.repo" value="${testDir}" />
+	<property name="jar.test.location" location="${deployDir}/plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar"/>
 
 
 	<description>
@@ -81,6 +89,11 @@
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
+		<delete dir="${unzipTarget}" failonerror="false" />
+		
+		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip"></unzip>
+		<antcall target="installTestFeature"></antcall>
+		
 		
 		<move todir="${build.dir.location2}/N.RIM">
 			<fileset dir="${build.dir.location}/N.RIM" />
@@ -89,6 +102,48 @@
 		
 		
 	</target>
+	
+	<target name="run-test" description="--> Uses org.eclipse.test plugin">
+		    <ant
+		        antfile="${deployDir}/plugins/org.eclipse.test_3.3.100/library.xml"
+		        target="ui-test"
+		        dir="${deployDir}">
+		    <property name="application" 
+		value="org.eclipse.test.uitestapplication" />
+		    <property name="data-dir" value="${deployDir}/workspace" />
+		    <property name="plugin-name" value="org.eclipse.remus.test" />
+		    <property name="classname" 
+		value="org.eclipse.remus.test.SimpleTest" />
+		    <property name="os" value="linux" />
+		    <property name="ws" value="gtk" />
+		    <property name="arch" value="x86" />
+		   	<property name="timeout" value="600000"/>
+		   	<property name="eclipse-home" value="${deployDir}"/>
+		    </ant>
+		</target>
+	
+	 <target name="installTestFeature" description="description">
+	    	<java failonerror="false" fork="true" jar="${jar.location}">
+	         	    <arg line=" -application org.eclipse.equinox.p2.director.app.application" />
+	         	    <arg line=" -nosplash" />
+	         	    <arg line=" --launcher.suppressErrors" />
+	         	    <arg line=" -consoleLog" />
+	         	    <arg line=" -flavor tooling" />
+	         	    <arg line=" -roaming" />
+	         	    <arg line=" -profile profile" />
+	         	    <arg line=" -destination ${p2.director.install.path}" />
+	         	    <arg line=" -bundlepool ${p2.director.destination}" />
+	         	    <arg line=" -installIU ${p2.director.installIU}" />
+	         	    <arg line=" -metadataRepository file:${p2.director.input.repo},file:${p2.director.destination}/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile"/>
+	         	    <arg line=" -artifactRepository file:${p2.director.input.repo},file:${p2.director.destination}" />
+	         	    <arg line=" -profileProperties org.eclipse.update.install.features=true" />
+	         	    <arg line=" -vmargs" />
+	         	    <arg line=" -Declipse.p2.data.area=${p2.director.destination}/p2" />
+	         	    <arg line=" -Declipse.p2.MD5Check=false" />
+	         	  </java>
+
+	    </target>
+
 
 	<target name="depending">
 		<mkdir dir="${build.dir.location}" />

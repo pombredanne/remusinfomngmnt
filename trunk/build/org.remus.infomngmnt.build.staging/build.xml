@@ -113,6 +113,7 @@
 	</target>
 	
 	<target name="run-test" description="--> Uses org.eclipse.test plugin">
+		<exec command="export DISPLAY=:2" />
 		    <ant
 		        antfile="${deployDir}/plugins/org.eclipse.test_3.3.100/library.xml"
 		        target="ui-test"

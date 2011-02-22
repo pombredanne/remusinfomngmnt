@@ -598,7 +598,7 @@
          	    <arg line=" -profile profile" />
          	    <arg line=" -destination ${p2.director.install.path}" />
          	    <arg line=" -bundlepool ${p2.director.destination}" />
-         	    <arg line=" -installIU ${marketplace.installUI}" />
+         	    <arg line=" -installIU ${marketplace.installUI}.feature.group" />
          	    <arg line=" -metadataRepository file:${p2.marketplace.input.repo},file:${p2.director.destination}/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile"/>
          	    <arg line=" -artifactRepository file:${p2.marketplace.input.repo},file:${p2.director.destination}" />
          	    <arg line=" -profileProperties org.eclipse.update.install.features=true" />

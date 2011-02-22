@@ -175,7 +175,7 @@
 			<param name="marketplace.installUI" value="org.remus.infomngmnt.groovy.feature" />
 		</antcall>
 		<antcall target="installFeatureFromMarketplace">
-			<param name="marketplace.installUI" value="org.remus.infomngmnt.reportruntime.feature 	" />
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.reportruntime.feature" />
 		</antcall>
 	
 	</target>

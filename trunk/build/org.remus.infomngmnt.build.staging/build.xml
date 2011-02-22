@@ -31,6 +31,7 @@
 	<property name="p2.director.install.path" value="${deployDir}" />
 	<property name="p2.director.destination" value="${deployDir}" />
 	<property name="p2.director.input.repo" value="${testDir}" />
+	<property name="p2.marketplace.input.repo" value="/var/www/vhosts/remus-software.org/httpdocs/updatesites/remus" />
 	<property name="jar.test.location" location="${deployDir}/plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar"/>
 
 
@@ -94,6 +95,9 @@
 		<delete dir="${unzipTarget}" failonerror="false" />
 		
 		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip"></unzip>
+		<antcall target="testFeatureInstallFromMarketplace" />
+		<delete dir="${unzipTarget}" failonerror="false" />
+		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip"></unzip>
 		<antcall target="installTestFeature"></antcall>
 		<antcall target="run-test"></antcall>
 		
@@ -106,11 +110,76 @@
 		
 	</target>
 	
-	<target name="run-test-forked">
-		<exec executable="/opt/apache-ant-1.7.1/bin/ant">
-			<arg value="-buildfile "/>
-		</exec>
+	<target name="testFeatureInstallFromMarketplace">
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.mindmap.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.twitter.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.eclipse.remus.reportruntime.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomgnmgnt.google.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.calendar.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomgnmnt.multimedia.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.textediting.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.filebased.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.delicious.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.pdf.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.contacttask.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.password.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.link.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.birtdesigner.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.favsearch.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.rss.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.slideshare.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.flickr.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.eclipsemp.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.youtube.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.groovy.feature" />
+		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.reportruntime.feature 	" />
+		</antcall>
+	
 	</target>
+	
 	
 	<target name="run-test" description="--> Uses org.eclipse.test plugin">
 		    <ant
@@ -516,6 +585,27 @@
 			<fileset dir="cvscheckout/${cvs.package}">
 		</fileset>
 		</copy>
+	</target>
+	
+	<target name="installFeatureFromMarketplace">
+    	<java failonerror="true" fork="true" jar="${jar.test.location}">
+         	    <arg line=" -application org.eclipse.equinox.p2.director.app.application" />
+         	    <arg line=" -nosplash" />
+         	    <arg line=" --launcher.suppressErrors" />
+         	    <arg line=" -consoleLog" />
+         	    <arg line=" -flavor tooling" />
+         	    <arg line=" -roaming" />
+         	    <arg line=" -profile profile" />
+         	    <arg line=" -destination ${p2.director.install.path}" />
+         	    <arg line=" -bundlepool ${p2.director.destination}" />
+         	    <arg line=" -installIU ${marketplace.installUI}" />
+         	    <arg line=" -metadataRepository file:${p2.marketplace.input.repo},file:${p2.director.destination}/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile"/>
+         	    <arg line=" -artifactRepository file:${p2.marketplace.input.repo},file:${p2.director.destination}" />
+         	    <arg line=" -profileProperties org.eclipse.update.install.features=true" />
+         	    <arg line=" -vmargs" />
+         	    <arg line=" -Declipse.p2.data.area=${p2.director.destination}/p2" />
+         	    <arg line=" -Declipse.p2.MD5Check=false" />
+         	  </java>
 	</target>
 
 	<!-- ================================= 

@@ -134,25 +134,20 @@
 
 	<target name="installFeatureFromMarketplace">
 		<java failonerror="true" fork="true" jar="${jar.test.location}">
-			<arg line=" -application org.eclipse.equinox.p2.director.app.application" />
-			<arg line=" -nosplash" />
-			<arg line=" --launcher.suppressErrors" />
-			<arg line=" -consoleLog" />
-			<arg line=" -flavor tooling" />
-			<arg line=" -roaming" />
-			<arg line=" -profile profile" />
+			<arg line=" -application org.eclipse.equinox.p2.director" />
+			<arg line=" -repository file:${p2.marketplace.input.repo}" />
+			<arg line=" -installIU ${marketplace.installUI}" />
 			<arg line=" -destination ${p2.director.install.path}" />
-			<arg line=" -bundlepool ${p2.director.destination}" />
-			<arg line=" -installIU ${marketplace.installUI}.feature.group" />
-			<arg line=" -metadataRepository file:${p2.marketplace.input.repo},file:${p2.director.destination}/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile" />
-			<arg line=" -artifactRepository file:${p2.marketplace.input.repo},file:${p2.director.destination}" />
+			<arg line=" -profile profile" />
 			<arg line=" -profileProperties org.eclipse.update.install.features=true" />
+			<arg line=" -bundlepool ${p2.director.destination}" />
+			<arg line=" -consoleLog" />
 			<arg line=" -p2.os ${p2.os}" />
 			<arg line=" -p2.ws ${p2.ws}" />
 			<arg line=" -p2.arch ${p2.arch}" />
-			<arg line=" -vmargs" />
+			<!--<arg line=" -vmargs" />
 			<arg line=" -Declipse.p2.data.area=${p2.director.destination}/p2" />
-			<arg line=" -Declipse.p2.MD5Check=false" />
+			<arg line=" -Declipse.p2.MD5Check=false" />-->
 		</java>
 	</target>
 

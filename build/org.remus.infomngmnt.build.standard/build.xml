@@ -14,8 +14,8 @@
 	<property name="build.dir.location" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-TRUNK/build/org.remus.infomngmnt.build/N.RIM"/>
 	<property name="unzipTarget" location="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-STANDARD/standard"/>
 	<property name="p2.marketplace.input.repo" value="/var/www/vhosts/remus-software.org/httpdocs/updatesites/remus" />
-	<property name="jar.test.location" location="${deployDir}/plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar"/>
 	<property name="deployDir" location="${unzipTarget}/RIM"/>
+	<property name="jar.test.location" location="${deployDir}/plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar"/>
 	<property name="p2.director.install.path" value="${deployDir}" />
 	<property name="p2.director.destination" value="${deployDir}" />
 

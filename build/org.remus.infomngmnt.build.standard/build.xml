@@ -136,7 +136,7 @@
 		<java failonerror="true" fork="true" jar="${jar.test.location}">
 			<arg line=" -application org.eclipse.equinox.p2.director" />
 			<arg line=" -repository file:${p2.marketplace.input.repo}" />
-			<arg line=" -installIU ${marketplace.installUI}" />
+			<arg line=" -installIU ${marketplace.installUI}.feature.group" />
 			<arg line=" -destination ${p2.director.install.path}" />
 			<arg line=" -profile profile" />
 			<arg line=" -profileProperties org.eclipse.update.install.features=true" />

@@ -52,7 +52,7 @@
 
 	
     <target name="pack" description="description" depends="clean">
-    	<unzip dest="${unzipTarget}" src="${build.dir.location}}/${pack.zip}"></unzip>
+    	<unzip dest="${unzipTarget}" src="${build.dir.location}/${pack.zip}"></unzip>
     	<antcall target="installFeatureFromMarketplace">
     		<param name="marketplace.installUI" value="org.remus.infomngmnt.mindmap.feature" />
     	</antcall>

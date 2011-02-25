@@ -108,13 +108,6 @@
 			<fileset dir="${build.dir.location}/N.RIM" />
 		</move>
 
-		<delete dir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
-		</delete>
-		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
-			<fileset dir="output/buildRepo">
-			</fileset>
-		</copy>
-
 
 	</target>
 
@@ -572,7 +565,7 @@
 	</target>
 
 	<target name="installFeatureFromMarketplace">
-		<java failonerror="true" fork="true" jar="${jar.test.location}">
+		<java failonerror="true" fork="true" jar="${jar.test.location}" >
 			<arg line=" -application org.eclipse.equinox.p2.director.app.application" />
 			<arg line=" -nosplash" />
 			<arg line=" --launcher.suppressErrors" />

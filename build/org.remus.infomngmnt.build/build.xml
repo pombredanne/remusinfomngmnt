@@ -56,12 +56,7 @@
 			<arg value="file:${build.dir.location}/../customization/rim_repository_category.xml" />
 		</java>
 
-		<delete dir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
-		</delete>
-		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
-			<fileset dir="output/buildRepo">
-			</fileset>
-		</copy>
+
 		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" />
 		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.metadata.repository.prefs" />
 		<touch file="${build.dir.location}/../customization/p2profiledata/org.eclipse.equinox.p2.artifact.repository.prefs" />
@@ -97,10 +92,6 @@
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs" />
 		</zip>
 
-		<move todir="${build.dir.location2}/N.RIM">
-			<fileset dir="${build.dir.location}/N.RIM" />
-		</move>
-
 		<delete dir="${unzipTarget}" failonerror="false" />
 
 		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip">
@@ -113,7 +104,16 @@
 		</antcall>
 		<antcall target="run-test">
 		</antcall>
+		<move todir="${build.dir.location2}/N.RIM">
+			<fileset dir="${build.dir.location}/N.RIM" />
+		</move>
 
+		<delete dir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
+		</delete>
+		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
+			<fileset dir="output/buildRepo">
+			</fileset>
+		</copy>
 
 
 	</target>

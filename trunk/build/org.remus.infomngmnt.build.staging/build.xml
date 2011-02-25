@@ -191,7 +191,7 @@
 		    <property name="data-dir" value="${deployDir}/workspace" />
 		    <property name="plugin-name" value="org.eclipse.remus.test" />
 		    <property name="classname" 
-		value="org.eclipse.remus.test.SimpleTest" />
+		value="org.eclipse.remus.test.RemusTestSuite" />
 		    <property name="os" value="linux" />
 		    <property name="ws" value="gtk" />
 		    <property name="arch" value="x86" />

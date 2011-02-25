@@ -81,7 +81,7 @@ public class WelcomeEditor2 extends EditorPart {
 		final Section section = toolkit.createSection(createComposite,
 				Section.DESCRIPTION);
 		section.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section.setDescription("Welcome to Remus Information Management. This application allows you to store all your incoming information in an easy and comfortable way. If you are new to Remus check out the 5-minutes video to see what Remus can do for you. Have fun!");
+		section.setDescription("Welcome to Remus Information Management. This application allows you to store all your incoming information in an easy and comfortable way. If you are new to Remus check out the following links for Tutorials and Documentation.");
 
 		final Composite composite_1 = toolkit
 				.createComposite(section, SWT.NONE);

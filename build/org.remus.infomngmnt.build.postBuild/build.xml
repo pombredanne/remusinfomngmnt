@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     25.02.2011 18:03:45                                                        
+
+     project    
+     description
+                   
+     tom                                                                
+     ====================================================================== -->
+<project name="project" default="default">
+    <description>
+            description
+    </description>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" description="description">
+    	
+    	<delete dir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
+    		</delete>
+    		<copy todir="/var/www/vhosts/remus-software.org/httpdocs/updatesites/rcp" failonerror="false">
+    			<fileset dir="/opt/bamboo/bamboohome/xml-data/build-dir/RCP-TRUNK/build/org.remus.infomngmnt.build/output/buildRepo">
+    			</fileset>
+    	</copy>
+    </target>
+
+   
+
+</project>

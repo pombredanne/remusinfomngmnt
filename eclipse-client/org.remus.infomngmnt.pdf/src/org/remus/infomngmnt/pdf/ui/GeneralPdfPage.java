@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -49,19 +48,14 @@ public class GeneralPdfPage extends GeneralPage {
 
 	public GeneralPdfPage(final Category category) {
 		super(category);
-		this.loadImageJob = new LoadFileToTmpFromPathRunnable();
-		if (this.files == null || this.files.length == 0) {
-			this.files = new IFile[1];
-		}
+		loadImageJob = new LoadFileToTmpFromPathRunnable();
 
 	}
 
 	public GeneralPdfPage(final InformationUnitListItem selection) {
 		super(selection);
-		if (this.files == null || this.files.length == 0) {
-			this.files = new IFile[1];
-		}
-		this.loadImageJob = new LoadFileToTmpFromPathRunnable();
+
+		loadImageJob = new LoadFileToTmpFromPathRunnable();
 	}
 
 	@Override
@@ -80,19 +74,19 @@ public class GeneralPdfPage extends GeneralPage {
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_nameText.horizontalSpan = 2;
-		this.nameText.setLayoutData(gd_nameText);
+		nameText.setLayoutData(gd_nameText);
 
-		if (this.files[0] == null) {
+		if (files == null || files.length == 0 || files[0] == null) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
-			this.fileNameText = new Text(group, SWT.BORDER);
+			fileNameText = new Text(group, SWT.BORDER);
 			gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_nameText.horizontalSpan = 2;
-			this.fileNameText.setLayoutData(gd_nameText);
+			fileNameText.setLayoutData(gd_nameText);
 
-			this.browseButton = new Button(group, SWT.PUSH);
-			this.browseButton.setText("Browse...");
-			this.browseButton.addListener(SWT.Selection, new Listener() {
+			browseButton = new Button(group, SWT.PUSH);
+			browseButton.setText("Browse...");
+			browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
 					FileDialog fd = new FileDialog(getShell());
@@ -100,7 +94,7 @@ public class GeneralPdfPage extends GeneralPage {
 					fd.setFilterNames(new String[] { "PDF Files" });
 					String open = fd.open();
 					if (open != null) {
-						GeneralPdfPage.this.fileNameText.setText(open);
+						fileNameText.setText(open);
 					}
 				}
 
@@ -117,22 +111,22 @@ public class GeneralPdfPage extends GeneralPage {
 	@Override
 	protected void initDatabinding() {
 		super.initDatabinding();
-		if (this.fileNameText != null) {
+		if (fileNameText != null) {
 
-			ISWTObservableValue swtUrl = SWTObservables.observeDelayedValue(500, SWTObservables
-					.observeText(this.fileNameText, SWT.Modify));
+			ISWTObservableValue swtUrl = SWTObservables.observeDelayedValue(
+					500, SWTObservables.observeText(fileNameText, SWT.Modify));
 
 			swtUrl.addValueChangeListener(new IValueChangeListener() {
 				public void handleValueChange(final ValueChangeEvent event) {
-					String newValue = (String) event.getObservableValue().getValue();
+					String newValue = (String) event.getObservableValue()
+							.getValue();
 					try {
-						GeneralPdfPage.this.loadImageJob.setFilePath(newValue);
-						getContainer().run(true, true, GeneralPdfPage.this.loadImageJob);
+						loadImageJob.setFilePath(newValue);
+						getContainer().run(true, true, loadImageJob);
 						GeneralPdfPage.this.nameText.setText(new Path(
-								GeneralPdfPage.this.fileNameText.getText()).removeFileExtension()
+								fileNameText.getText()).removeFileExtension()
 								.lastSegment());
-						GeneralPdfPage.this.files[0] = GeneralPdfPage.this.loadImageJob
-								.getTmpFile();
+						addFile(loadImageJob.getTmpFile());
 					} catch (InvocationTargetException e) {
 						setErrorMessage(e.getCause().getMessage());
 					} catch (InterruptedException e) {
@@ -151,7 +145,7 @@ public class GeneralPdfPage extends GeneralPage {
 	 * @return the tmpFile
 	 */
 	public IFile getTmpFile() {
-		return this.files[0];
+		return files[0];
 	}
 
 }

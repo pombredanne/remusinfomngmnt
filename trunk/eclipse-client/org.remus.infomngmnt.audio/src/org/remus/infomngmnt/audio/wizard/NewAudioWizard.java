@@ -67,12 +67,14 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 		} else {
 			page1 = new GeneralAudioPage((Category) null);
 		}
+		setCategoryToPage();
+		setFilesToPage();
 
 	}
 
 	@Override
 	protected Command getAdditionalCommands() {
-		IFile tmpFile = ((GeneralAudioPage) page1).getTmpFile();
+		IFile tmpFile = ((GeneralAudioPage) page1).getFiles()[0];
 		if (tmpFile != null) {
 			return CommandFactory.addFileToInfoUnit(tmpFile, newElement,
 					editService.getNavigationEditingDomain());

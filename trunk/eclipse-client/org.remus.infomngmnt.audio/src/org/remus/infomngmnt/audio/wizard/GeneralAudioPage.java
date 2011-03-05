@@ -2,7 +2,6 @@ package org.remus.infomngmnt.audio.wizard;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.remus.Category;
@@ -30,7 +29,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-
 import org.remus.infomngmnt.audio.AudioActivator;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
@@ -43,7 +41,6 @@ public class GeneralAudioPage extends GeneralPage {
 	private Text fileNameText;
 	private Button browseButton;
 	protected String tmpText;
-	private IFile tmpFile;
 
 	private DisposableEditingDomain editingDomain;
 	private Text mediaTypeText;
@@ -64,7 +61,8 @@ public class GeneralAudioPage extends GeneralPage {
 		container.setLayout(new GridLayout());
 		setTitle("New Audio");
 		setMessage("This wizard enables you to create a new audio from a file.");
-		setImageDescriptor(ResourceManager.getPluginImageDescriptor(AudioActivator.getDefault(),
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				AudioActivator.getDefault(),
 				"icons/iconexperience/loudspeaker_wizard.png"));
 
 		doCreateParentElementGroup(container);
@@ -76,41 +74,41 @@ public class GeneralAudioPage extends GeneralPage {
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_nameText.horizontalSpan = 2;
-		this.nameText.setLayoutData(gd_nameText);
+		nameText.setLayoutData(gd_nameText);
 
 		final Label mediaTypeLabel = new Label(group, SWT.NONE);
 		mediaTypeLabel.setText("Media-Type");
 
-		this.mediaTypeText = new Text(group, SWT.BORDER);
-		this.mediaTypeText.setEditable(false);
+		mediaTypeText = new Text(group, SWT.BORDER);
+		mediaTypeText.setEditable(false);
 		gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_nameText.horizontalSpan = 2;
-		this.mediaTypeText.setLayoutData(gd_nameText);
+		mediaTypeText.setLayoutData(gd_nameText);
 
-		if (this.unit.getBinaryReferences() == null) {
+		if (files.length == 0) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
-			this.fileNameText = new Text(group, SWT.BORDER);
+			fileNameText = new Text(group, SWT.BORDER);
 			gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_nameText.horizontalSpan = 2;
-			this.fileNameText.setLayoutData(gd_nameText);
+			fileNameText.setLayoutData(gd_nameText);
 
-			this.browseButton = new Button(group, SWT.PUSH);
-			this.browseButton.setText("Browse...");
-			this.browseButton.addListener(SWT.Selection, new Listener() {
+			browseButton = new Button(group, SWT.PUSH);
+			browseButton.setText("Browse...");
+			browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
 					FileDialog fd = new FileDialog(getShell());
 					fd.setFilterExtensions(new String[] { "*.*" });
-					fd.setFilterNames(new String[] { "Videos" });
+					fd.setFilterNames(new String[] { "Audio files" });
 					String open = fd.open();
 					if (open != null) {
-						GeneralAudioPage.this.fileNameText.setText(open);
+						fileNameText.setText(open);
 						LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
 						runnable.setFilePath(open);
 						try {
 							getContainer().run(true, true, runnable);
-							GeneralAudioPage.this.tmpFile = runnable.getTmpFile();
+							addFile(runnable.getTmpFile());
 						} catch (InvocationTargetException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -122,6 +120,24 @@ public class GeneralAudioPage extends GeneralPage {
 				}
 
 			});
+		} else {
+			final InformationStructureRead read = InformationStructureRead
+					.newSession(unit);
+			IMediaPlayerExtensionService playerExtensionService = UIPlugin
+					.getDefault()
+					.getService(IMediaPlayerExtensionService.class);
+			String type = files[0].getFullPath().getFileExtension()
+					.toLowerCase();
+			IMediaPlayer playerByType = playerExtensionService
+					.getPlayerByType(type);
+			InformationUnit mediaTypeNode = read
+					.getChildByNodeId(AudioActivator.NODE_NAME_MEDIATYPE);
+			if (playerByType != null) {
+				mediaTypeNode.setStringValue(type);
+			} else {
+				mediaTypeNode
+						.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+			}
 		}
 
 		doCreatePropertiesGroup(container);
@@ -134,64 +150,57 @@ public class GeneralAudioPage extends GeneralPage {
 	@Override
 	protected void initDatabinding() {
 		super.initDatabinding();
-		final InformationStructureRead read = InformationStructureRead.newSession(this.unit);
-		TextBindingWidget mediaBinding = BindingWidgetFactory.createTextBinding(this.mediaTypeText,
-				this.ctx, getEditingDomain());
-		mediaBinding.bindModel(read.getChildByNodeId(AudioActivator.NODE_NAME_MEDIATYPE), read
-				.getFeatureByNodeId(AudioActivator.NODE_NAME_MEDIATYPE));
-		this.fileNameText.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(final Event event) {
-				IMediaPlayerExtensionService playerExtensionService = UIPlugin.getDefault()
-						.getService(IMediaPlayerExtensionService.class);
-				String type = new Path(GeneralAudioPage.this.fileNameText.getText())
-						.getFileExtension().toLowerCase();
-				IMediaPlayer playerByType = playerExtensionService.getPlayerByType(type);
-				InformationUnit mediaTypeNode = read
-						.getChildByNodeId(AudioActivator.NODE_NAME_MEDIATYPE);
-				if (playerByType != null) {
-					mediaTypeNode.setStringValue(type);
-				} else {
-					mediaTypeNode.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		final InformationStructureRead read = InformationStructureRead
+				.newSession(unit);
+		TextBindingWidget mediaBinding = BindingWidgetFactory
+				.createTextBinding(mediaTypeText, ctx, getEditingDomain());
+		mediaBinding.bindModel(
+				read.getChildByNodeId(AudioActivator.NODE_NAME_MEDIATYPE),
+				read.getFeatureByNodeId(AudioActivator.NODE_NAME_MEDIATYPE));
+		if (fileNameText != null) {
+			fileNameText.addListener(SWT.Modify, new Listener() {
+				public void handleEvent(final Event event) {
+					IMediaPlayerExtensionService playerExtensionService = UIPlugin
+							.getDefault().getService(
+									IMediaPlayerExtensionService.class);
+					String type = new Path(fileNameText.getText())
+							.getFileExtension().toLowerCase();
+					IMediaPlayer playerByType = playerExtensionService
+							.getPlayerByType(type);
+					InformationUnit mediaTypeNode = read
+							.getChildByNodeId(AudioActivator.NODE_NAME_MEDIATYPE);
+					if (playerByType != null) {
+						mediaTypeNode.setStringValue(type);
+					} else {
+						mediaTypeNode
+								.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+					}
+					String name = new Path(fileNameText.getText())
+							.removeFileExtension().lastSegment();
+					GeneralAudioPage.this.nameText.setText(name);
 				}
-				String name = new Path(GeneralAudioPage.this.fileNameText.getText())
-						.removeFileExtension().lastSegment();
-				GeneralAudioPage.this.nameText.setText(name);
-			}
-		});
+			});
+		}
 
 	}
 
 	private DisposableEditingDomain getEditingDomain() {
-		if (this.editingDomain == null) {
-			this.remusServiceTracker = new RemusServiceTracker(Platform
-					.getBundle(AudioActivator.PLUGIN_ID));
-			this.editService = this.remusServiceTracker.getService(IEditingHandler.class);
-			this.editingDomain = this.editService.createNewEditingDomain();
+		if (editingDomain == null) {
+			remusServiceTracker = new RemusServiceTracker(
+					Platform.getBundle(AudioActivator.PLUGIN_ID));
+			editService = remusServiceTracker.getService(IEditingHandler.class);
+			editingDomain = editService.createNewEditingDomain();
 		}
-		return this.editingDomain;
+		return editingDomain;
 	}
 
 	@Override
 	public void dispose() {
 		getEditingDomain().dispose();
-		if (this.remusServiceTracker != null && this.editService != null) {
-			this.remusServiceTracker.ungetService(this.editService);
+		if (remusServiceTracker != null && editService != null) {
+			remusServiceTracker.ungetService(editService);
 		}
 		super.dispose();
 	}
 
-	/**
-	 * @return the tmpFile
-	 */
-	public IFile getTmpFile() {
-		return this.tmpFile;
-	}
-
-	/**
-	 * @param tmpFile
-	 *            the tmpFile to set
-	 */
-	public void setTmpFile(final IFile tmpFile) {
-		this.tmpFile = tmpFile;
-	}
 }

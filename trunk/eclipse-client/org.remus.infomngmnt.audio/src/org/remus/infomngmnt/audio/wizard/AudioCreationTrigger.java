@@ -36,7 +36,7 @@ public class AudioCreationTrigger extends NewObjectWizardDelegate {
 	@Override
 	protected void setDefaults(final Object value, final RuleValue ruleValue,
 			final TransferWrapper transferType) throws CoreException {
-		Object droppedFiles = this.options.get(DefaultScriptConstants.KEY_FILES);
+		Object droppedFiles = options.get(DefaultScriptConstants.KEY_FILES);
 		if (droppedFiles != null && droppedFiles instanceof String[]) {
 			String[] paths = (String[]) droppedFiles;
 			/*
@@ -48,9 +48,9 @@ public class AudioCreationTrigger extends NewObjectWizardDelegate {
 			LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
 			runnable.setFilePath(string);
 			try {
-				new ProgressMonitorDialog(Display.getDefault().getActiveShell()).run(true, false,
-						runnable);
-				this.wrappingWizard.setFiles(new IFile[] { runnable.getTmpFile() });
+				new ProgressMonitorDialog(Display.getDefault().getActiveShell())
+						.run(true, false, runnable);
+				wrappingWizard.setFiles(new IFile[] { runnable.getTmpFile() });
 			} catch (InvocationTargetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

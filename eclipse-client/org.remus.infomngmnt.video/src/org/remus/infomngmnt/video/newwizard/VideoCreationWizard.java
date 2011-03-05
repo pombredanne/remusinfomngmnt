@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.rules.RuleValue;
-import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.eclipse.remus.ui.rules.internal.transfer.FileTransferWrapper;
 import org.eclipse.remus.ui.rules.service.ICreationTrigger;
@@ -29,12 +28,13 @@ import org.eclipse.remus.ui.rules.wizard.NewObjectWizardDelegate;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class VideoCreationWizard extends NewObjectWizardDelegate implements ICreationTrigger {
+public class VideoCreationWizard extends NewObjectWizardDelegate implements
+		ICreationTrigger {
 
 	/**
 	 * @param wrappingWizard
 	 */
-	public VideoCreationWizard(final NewInfoObjectWizard wrappingWizard) {
+	public VideoCreationWizard() {
 		super(new NewVideoWizard());
 
 	}
@@ -53,9 +53,10 @@ public class VideoCreationWizard extends NewObjectWizardDelegate implements ICre
 			LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
 			runnable.setFilePath(string);
 			try {
-				new ProgressMonitorDialog(UIUtil.getDisplay().getActiveShell()).run(true, false,
-						runnable);
-				this.wrappingWizard.setFiles(new IFile[] { runnable.getTmpFile() });
+				new ProgressMonitorDialog(UIUtil.getDisplay().getActiveShell())
+						.run(true, false, runnable);
+				this.wrappingWizard.setFiles(new IFile[] { runnable
+						.getTmpFile() });
 			} catch (InvocationTargetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

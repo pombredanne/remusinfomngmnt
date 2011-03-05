@@ -21,7 +21,6 @@ import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
-
 import org.remus.infomngmnt.video.VideoActivator;
 
 /**
@@ -38,9 +37,10 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 	public NewVideoWizard() {
 		setNeedsProgressMonitor(true);
 		setWindowTitle("New video");
-		this.remusServiceTracker = new RemusServiceTracker(Platform
-				.getBundle(VideoActivator.PLUGIN_ID));
-		this.editingHandler = this.remusServiceTracker.getService(IEditingHandler.class);
+		this.remusServiceTracker = new RemusServiceTracker(
+				Platform.getBundle(VideoActivator.PLUGIN_ID));
+		this.editingHandler = this.remusServiceTracker
+				.getService(IEditingHandler.class);
 
 	}
 
@@ -51,16 +51,21 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	@Override
-	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
+	public void init(final IWorkbench workbench,
+			final IStructuredSelection selection) {
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Category) {
-			this.page1 = new GeneralVideoPage((Category) firstElement, this.editingHandler);
-		} else if (firstElement instanceof InformationUnitListItem) {
-			this.page1 = new GeneralVideoPage((InformationUnitListItem) firstElement,
+			this.page1 = new GeneralVideoPage((Category) firstElement,
 					this.editingHandler);
+		} else if (firstElement instanceof InformationUnitListItem) {
+			this.page1 = new GeneralVideoPage(
+					(InformationUnitListItem) firstElement, this.editingHandler);
 		} else {
-			this.page1 = new GeneralVideoPage((Category) null, this.editingHandler);
+			this.page1 = new GeneralVideoPage((Category) null,
+					this.editingHandler);
 		}
+		setCategoryToPage();
+		setFilesToPage();
 
 	}
 
@@ -68,7 +73,8 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 	protected Command getAdditionalCommands() {
 		this.files = ((GeneralVideoPage) this.page1).getFiles();
 		if (this.files != null && this.files.length > 0) {
-			return CommandFactory.addFileToInfoUnit(this.files[0], this.newElement,
+			return CommandFactory.addFileToInfoUnit(this.files[0],
+					this.newElement,
 					this.editingHandler.getNavigationEditingDomain());
 		}
 		return super.getAdditionalCommands();

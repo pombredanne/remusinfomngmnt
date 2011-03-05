@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 import org.remus.infomngmnt.video.VideoActivator;
@@ -45,7 +44,8 @@ public class GeneralVideoPage extends GeneralPage {
 	private final DisposableEditingDomain editingDomain;
 	private Text mediaTypeText;
 
-	public GeneralVideoPage(final Category category, final IEditingHandler editingHandler) {
+	public GeneralVideoPage(final Category category,
+			final IEditingHandler editingHandler) {
 		super(category);
 		this.editingDomain = editingHandler.createNewEditingDomain();
 
@@ -63,7 +63,8 @@ public class GeneralVideoPage extends GeneralPage {
 		container.setLayout(new GridLayout());
 		setTitle("New Video");
 		setMessage("This wizard enables you to create a new video from a file.");
-		setImageDescriptor(ResourceManager.getPluginImageDescriptor(VideoActivator.getDefault(),
+		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
+				VideoActivator.getDefault(),
 				"icons/iconexperience/wizards/video_wizard_title.png"));
 
 		doCreateParentElementGroup(container);
@@ -86,7 +87,7 @@ public class GeneralVideoPage extends GeneralPage {
 		gd_nameText.horizontalSpan = 2;
 		this.mediaTypeText.setLayoutData(gd_nameText);
 
-		if (this.unit.getBinaryReferences() == null) {
+		if (this.files.length == 0) {
 			final Label nameLabel = new Label(group, SWT.NONE);
 			nameLabel.setText("File");
 			this.fileNameText = new Text(group, SWT.BORDER);
@@ -109,7 +110,8 @@ public class GeneralVideoPage extends GeneralPage {
 						runnable.setFilePath(open);
 						try {
 							getContainer().run(true, true, runnable);
-							GeneralVideoPage.this.files = new IFile[] { runnable.getTmpFile() };
+							GeneralVideoPage.this.files = new IFile[] { runnable
+									.getTmpFile() };
 						} catch (InvocationTargetException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -121,6 +123,23 @@ public class GeneralVideoPage extends GeneralPage {
 				}
 
 			});
+		} else {
+			IMediaPlayerExtensionService playerExtensionService = UIPlugin
+					.getDefault()
+					.getService(IMediaPlayerExtensionService.class);
+			String type = this.files[0].getFullPath().getFileExtension()
+					.toLowerCase();
+			IMediaPlayer playerByType = playerExtensionService
+					.getPlayerByType(type);
+			InformationUnit mediaTypeNode = InformationUtil.getChildByType(
+					GeneralVideoPage.this.unit,
+					VideoActivator.NODE_NAME_MEDIATYPE);
+			if (playerByType != null) {
+				mediaTypeNode.setStringValue(type);
+			} else {
+				mediaTypeNode
+						.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+			}
 		}
 
 		doCreatePropertiesGroup(container);
@@ -134,30 +153,37 @@ public class GeneralVideoPage extends GeneralPage {
 	protected void initDatabinding() {
 		super.initDatabinding();
 
-		TextBindingWidget mediaBinding = BindingWidgetFactory.createTextBinding(this.mediaTypeText,
-				this.ctx, this.editingDomain);
+		TextBindingWidget mediaBinding = BindingWidgetFactory
+				.createTextBinding(this.mediaTypeText, this.ctx,
+						this.editingDomain);
 		mediaBinding.bindModel(InformationUtil.getChildByType(this.unit,
 				VideoActivator.NODE_NAME_MEDIATYPE),
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
-		this.fileNameText.addListener(SWT.Modify, new Listener() {
-			public void handleEvent(final Event event) {
-				IMediaPlayerExtensionService playerExtensionService = UIPlugin.getDefault()
-						.getService(IMediaPlayerExtensionService.class);
-				String type = new Path(GeneralVideoPage.this.fileNameText.getText())
-						.getFileExtension().toLowerCase();
-				IMediaPlayer playerByType = playerExtensionService.getPlayerByType(type);
-				InformationUnit mediaTypeNode = InformationUtil.getChildByType(
-						GeneralVideoPage.this.unit, VideoActivator.NODE_NAME_MEDIATYPE);
-				if (playerByType != null) {
-					mediaTypeNode.setStringValue(type);
-				} else {
-					mediaTypeNode.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+		if (this.fileNameText != null) {
+			this.fileNameText.addListener(SWT.Modify, new Listener() {
+				public void handleEvent(final Event event) {
+					IMediaPlayerExtensionService playerExtensionService = UIPlugin
+							.getDefault().getService(
+									IMediaPlayerExtensionService.class);
+					String type = new Path(GeneralVideoPage.this.fileNameText
+							.getText()).getFileExtension().toLowerCase();
+					IMediaPlayer playerByType = playerExtensionService
+							.getPlayerByType(type);
+					InformationUnit mediaTypeNode = InformationUtil
+							.getChildByType(GeneralVideoPage.this.unit,
+									VideoActivator.NODE_NAME_MEDIATYPE);
+					if (playerByType != null) {
+						mediaTypeNode.setStringValue(type);
+					} else {
+						mediaTypeNode
+								.eUnset(InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE);
+					}
+					String name = new Path(GeneralVideoPage.this.fileNameText
+							.getText()).removeFileExtension().lastSegment();
+					GeneralVideoPage.this.nameText.setText(name);
 				}
-				String name = new Path(GeneralVideoPage.this.fileNameText.getText())
-						.removeFileExtension().lastSegment();
-				GeneralVideoPage.this.nameText.setText(name);
-			}
-		});
+			});
+		}
 
 	}
 

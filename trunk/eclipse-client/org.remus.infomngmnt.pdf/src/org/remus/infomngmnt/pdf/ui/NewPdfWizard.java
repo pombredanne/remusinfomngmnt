@@ -131,6 +131,7 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 			page1.setFiles(files);
 		}
 		setCategoryToPage();
+		setFilesToPage();
 
 	}
 

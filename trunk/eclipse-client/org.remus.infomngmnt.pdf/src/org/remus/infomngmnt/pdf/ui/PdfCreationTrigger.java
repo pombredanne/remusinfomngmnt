@@ -28,7 +28,8 @@ import org.eclipse.swt.widgets.Display;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class PdfCreationTrigger extends NewObjectWizardDelegate implements ICreationTrigger {
+public class PdfCreationTrigger extends NewObjectWizardDelegate implements
+		ICreationTrigger {
 
 	/**
 	 * @param wrappingWizard
@@ -41,7 +42,7 @@ public class PdfCreationTrigger extends NewObjectWizardDelegate implements ICrea
 	@Override
 	protected void setDefaults(final Object value, final RuleValue ruleValue,
 			final TransferWrapper transferType) throws CoreException {
-		Object droppedFiles = this.options.get(DefaultScriptConstants.KEY_FILES);
+		Object droppedFiles = options.get(DefaultScriptConstants.KEY_FILES);
 		if (droppedFiles != null && droppedFiles instanceof String[]) {
 			String[] paths = (String[]) droppedFiles;
 			/*
@@ -53,9 +54,9 @@ public class PdfCreationTrigger extends NewObjectWizardDelegate implements ICrea
 			LoadFileToTmpFromPathRunnable runnable = new LoadFileToTmpFromPathRunnable();
 			runnable.setFilePath(string);
 			try {
-				new ProgressMonitorDialog(Display.getDefault().getActiveShell()).run(true, false,
-						runnable);
-				this.wrappingWizard.setFiles(new IFile[] { runnable.getTmpFile() });
+				new ProgressMonitorDialog(Display.getDefault().getActiveShell())
+						.run(true, false, runnable);
+				wrappingWizard.setFiles(new IFile[] { runnable.getTmpFile() });
 			} catch (InvocationTargetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

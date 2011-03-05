@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="ASCII"?>
-<infomngmnt:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:infomngmnt="http://eclipse.org/remus/1.0" xsi:schemaLocation="http://eclipse.org/remus/1.0 ../org.eclipse.remus.model/model/infomngmnt.ecore" type="STRING">
+<remus:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:remus="http://eclipse.org/remus/1.0" xsi:schemaLocation="http://eclipse.org/remus/1.0 ../org.eclipse.remus.model/model/infomngmnt.ecore" type="STRING">
   <structureItems type="DATETIME" id="received"/>
   <structureItems type="STRING" id="contenttype"/>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" id="attachments" upperBound="-1">
-    <structureItems type="STRING" canHaveBinaryReferences="true" label="An attachement" id="attachment" createAlways="false">
-      <structureItems type="STRING" id="label"/>
+  <structureItems xsi:type="remus:DynamicStructure" id="attachments" upperBound="-1">
+    <structureItems type="STRING" canHaveBinaryReferences="true" label="An attachement" id="attachment">
+      <structureItems type="STRING" id="label" createAlways="false"/>
     </structureItems>
   </structureItems>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" id="embeddeds" upperBound="-1">
+  <structureItems xsi:type="remus:DynamicStructure" id="embeddeds" upperBound="-1">
     <structureItems type="STRING" canHaveBinaryReferences="true" label="An attachement" id="embedded" createAlways="false"/>
   </structureItems>
   <structureItems type="STRING" id="content"/>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" label="A list of recipients" id="recipients" upperBound="-1">
+  <structureItems xsi:type="remus:DynamicStructure" label="A list of recipients" id="recipients" upperBound="-1">
     <structureItems type="STRING" id="recipient" createAlways="false"/>
   </structureItems>
-  <structureItems xsi:type="infomngmnt:DynamicStructure" label="A list of carbon copy recipients" id="ccs" upperBound="-1">
+  <structureItems xsi:type="remus:DynamicStructure" label="A list of carbon copy recipients" id="ccs" upperBound="-1">
     <structureItems type="STRING" id="cc" createAlways="false"/>
   </structureItems>
   <structureItems type="STRING" id="moreInfo"/>
   <structureItems type="STRING" label="The email of the sender" id="sender"/>
-</infomngmnt:InformationStructureDefinition>
+</remus:InformationStructureDefinition>

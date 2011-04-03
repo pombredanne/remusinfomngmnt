@@ -73,7 +73,9 @@ public class DeleteOldEntriesJob extends AbstractJob {
 				.getService(IEditingHandler.class);
 		for (final RemoteRepository remoteRepository : repositories) {
 			if (RssActivator.REPOSITORY_ID.equals(remoteRepository
-					.getRepositoryTypeId())) {
+					.getRepositoryTypeId())
+					|| RssActivator.PODCAST_REPOSITORY_ID
+							.equals(remoteRepository.getRepositoryTypeId())) {
 				final int parseInt = Integer
 						.parseInt(remoteRepository
 								.getOptions()

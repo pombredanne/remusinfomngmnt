@@ -38,7 +38,6 @@ import org.eclipse.remus.core.remote.services.IRepositoryService;
 import org.eclipse.remus.core.services.IApplicationModel;
 import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.services.RemusServiceTracker;
-
 import org.remus.infomngmnt.connector.rss.RssActivator;
 
 /**
@@ -52,8 +51,8 @@ public class DeleteOldEntriesJob extends AbstractJob {
 	 * 
 	 */
 	public DeleteOldEntriesJob() {
-		this.remusServiceTracker = new RemusServiceTracker(Platform
-				.getBundle(RssActivator.PLUGIN_ID));
+		remusServiceTracker = new RemusServiceTracker(
+				Platform.getBundle(RssActivator.PLUGIN_ID));
 	}
 
 	/*
@@ -65,43 +64,53 @@ public class DeleteOldEntriesJob extends AbstractJob {
 	 */
 	@Override
 	public List<Notification> run(final IProgressMonitor monitor) {
-		EList<RemoteRepository> repositories = this.remusServiceTracker.getService(
-				IRepositoryService.class).getRepositories().getRepositories();
-		IApplicationModel applicationModel = this.remusServiceTracker
+		EList<RemoteRepository> repositories = remusServiceTracker
+				.getService(IRepositoryService.class).getRepositories()
+				.getRepositories();
+		IApplicationModel applicationModel = remusServiceTracker
 				.getService(IApplicationModel.class);
-		IEditingHandler editService = this.remusServiceTracker.getService(IEditingHandler.class);
+		IEditingHandler editService = remusServiceTracker
+				.getService(IEditingHandler.class);
 		for (final RemoteRepository remoteRepository : repositories) {
-			if (RssActivator.REPOSITORY_ID.equals(remoteRepository.getRepositoryTypeId())) {
-				final int parseInt = Integer.parseInt(remoteRepository.getOptions().get(
-						RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY));
-				SELECT select = new SELECT(
-						new FROM(applicationModel.getModel().getRootCategories()), new WHERE(
-								new EObjectCondition() {
-									@Override
-									public boolean isSatisfied(final EObject arg0) {
-										return arg0.eClass() == InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM
-												&& ((InformationUnitListItem) arg0)
-														.getSynchronizationMetaData() != null
-												&& remoteRepository.getId().equals(
-														((InformationUnitListItem) arg0)
-																.getSynchronizationMetaData()
-																.getRepositoryId())
-												&& ((InformationUnit) ((InformationUnitListItem) arg0)
-														.getAdapter(InformationUnit.class)) != null
-												&& ((InformationUnit) ((InformationUnitListItem) arg0)
-														.getAdapter(InformationUnit.class))
-														.getCreationDate().getTime()
-														+ (Long.valueOf(parseInt) * 1000L * 60L * 60L * 24L) < System
-														.currentTimeMillis();
-									}
-								}));
+			if (RssActivator.REPOSITORY_ID.equals(remoteRepository
+					.getRepositoryTypeId())) {
+				final int parseInt = Integer
+						.parseInt(remoteRepository
+								.getOptions()
+								.get(RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY));
+				SELECT select = new SELECT(new FROM(applicationModel.getModel()
+						.getRootCategories()), new WHERE(
+						new EObjectCondition() {
+							@Override
+							public boolean isSatisfied(final EObject arg0) {
+								return arg0.eClass() == InfomngmntPackage.Literals.INFORMATION_UNIT_LIST_ITEM
+										&& ((InformationUnitListItem) arg0)
+												.getSynchronizationMetaData() != null
+										&& remoteRepository
+												.getId()
+												.equals(((InformationUnitListItem) arg0)
+														.getSynchronizationMetaData()
+														.getRepositoryId())
+										&& ((InformationUnit) ((InformationUnitListItem) arg0)
+												.getAdapter(InformationUnit.class)) != null
+										&& ((InformationUnit) ((InformationUnitListItem) arg0)
+												.getAdapter(InformationUnit.class))
+												.getCreationDate().getTime()
+												+ (Long.valueOf(parseInt) * 1000L * 60L * 60L * 24L) < System
+												.currentTimeMillis();
+							}
+						}));
 				IQueryResult execute = select.execute();
 				Set<? extends EObject> eObjects = execute.getEObjects();
 				CompoundCommand compoundCommand = new CompoundCommand();
-				DisposableEditingDomain domain = editService.createNewEditingDomain();
+				DisposableEditingDomain domain = editService
+						.createNewEditingDomain();
 				for (EObject eObject : eObjects) {
-					compoundCommand.append(CommandFactory.DELETE_INFOUNIT(Collections
-							.singletonList((InformationUnitListItem) eObject), domain));
+					compoundCommand
+							.append(CommandFactory.DELETE_INFOUNIT_WITHOUT_SYNC_CHECK(
+									Collections
+											.singletonList((InformationUnitListItem) eObject),
+									domain));
 				}
 				if (compoundCommand.canExecute()) {
 					domain.getCommandStack().execute(compoundCommand);

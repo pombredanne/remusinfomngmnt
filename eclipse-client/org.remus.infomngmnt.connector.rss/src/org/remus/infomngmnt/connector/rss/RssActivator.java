@@ -16,6 +16,7 @@ public class RssActivator extends AbstractUIPlugin {
 	public static final String REPOSITORY_OPTIONS_BASIC_AUTHENTICATION = "REPOSITORY_OPTIONS_BASIC_AUTHENTICATION";
 
 	public static final String REPOSITORY_ID = "org.remus.infomngmnt.connector.rss"; //$NON-NLS-1$
+	public static final String PODCAST_REPOSITORY_ID = "org.remus.infomngmnt.connector.rss.podcast"; //$NON-NLS-1$
 	// The shared instance
 	private static RssActivator plugin;
 

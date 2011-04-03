@@ -65,14 +65,13 @@ import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.model.remote.ILoginCallBack;
 import org.eclipse.remus.model.remote.IRepository;
 import org.eclipse.remus.util.StatusCreator;
+import org.remus.infomngmnt.mail.ContentType;
+import org.remus.infomngmnt.mail.MailActivator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
-import org.remus.infomngmnt.mail.ContentType;
-import org.remus.infomngmnt.mail.MailActivator;
 
 import com.sun.syndication.feed.synd.SyndCategory;
 import com.sun.syndication.feed.synd.SyndContent;
@@ -84,7 +83,8 @@ import com.sun.syndication.io.XmlReader;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class RssConnector extends AbstractExtensionRepository implements IRepository {
+public class RssConnector extends AbstractExtensionRepository implements
+		IRepository {
 
 	private SyndFeedInput api;
 
@@ -131,9 +131,10 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * .remus.infomngmnt.SynchronizableObject,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
-			throws RemoteException {
-		throw new RemoteException(StatusCreator.newStatus("Deletion is not supported"));
+	public void deleteFromRepository(final SynchronizableObject item,
+			final IProgressMonitor monitor) throws RemoteException {
+		throw new RemoteException(
+				StatusCreator.newStatus("Deletion is not supported"));
 	}
 
 	/*
@@ -153,9 +154,10 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			InputSource is = null;
 			try {
 				File tempFile = ResourceUtil.createTempFileOnFileSystem();
-				DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(getRepositoryUrl()),
-						tempFile, getFileReceiveAdapter());
-				downloadFileJob.run(new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+				DownloadFileJob downloadFileJob = new DownloadFileJob(new URL(
+						getRepositoryUrl()), tempFile, getFileReceiveAdapter());
+				downloadFileJob.run(new SubProgressMonitor(monitor,
+						IProgressMonitor.UNKNOWN));
 				FileInputStream fileInputStream = new FileInputStream(tempFile);
 				is = new InputSource(fileInputStream);
 				SyndFeed build = getApi().build(is);
@@ -166,9 +168,11 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 				StreamCloser.closeStreams(fileInputStream);
 				tempFile.delete();
 
-				return returnValue.toArray(new RemoteObject[returnValue.size()]);
+				return returnValue
+						.toArray(new RemoteObject[returnValue.size()]);
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error getting feed entries", e));
+				throw new RemoteException(StatusCreator.newStatus(
+						"Error getting feed entries", e));
 			} finally {
 				StreamCloser.closeStreams(xmlReader);
 				is = null;
@@ -178,9 +182,11 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	}
 
 	private RemoteObject buildFeedEntry(final SyndEntry object) {
-		RemoteObject returnValue = InfomngmntFactory.eINSTANCE.createRemoteObject();
+		RemoteObject returnValue = InfomngmntFactory.eINSTANCE
+				.createRemoteObject();
 		if (object.getPublishedDate() != null) {
-			returnValue.setHash(String.valueOf(object.getPublishedDate().getTime()));
+			returnValue.setHash(String.valueOf(object.getPublishedDate()
+					.getTime()));
 		} else {
 			returnValue.setHash(object.getUri());
 		}
@@ -199,7 +205,8 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * infomngmnt.InformationUnitListItem,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public InformationUnit getFullObject(final InformationUnitListItem informationUnitListItem,
+	public InformationUnit getFullObject(
+			final InformationUnitListItem informationUnitListItem,
 			final IProgressMonitor monitor) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
@@ -213,15 +220,18 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * (org.remus.infomngmnt.SynchronizableObject,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
-			final IProgressMonitor monitor) throws RemoteException {
+	public RemoteObject getRemoteObjectBySynchronizableObject(
+			final SynchronizableObject object, final IProgressMonitor monitor)
+			throws RemoteException {
 		String url = object.getSynchronizationMetaData().getUrl();
 		if (url.equals(getRepositoryUrl())) {
-			return getRepositoryById(object.getSynchronizationMetaData().getRepositoryId());
-		} else {
-			RemoteRepository repositoryById = getRepositoryById(object.getSynchronizationMetaData()
+			return getRepositoryById(object.getSynchronizationMetaData()
 					.getRepositoryId());
-			RemoteObject[] children = getChildren(monitor, repositoryById, false);
+		} else {
+			RemoteRepository repositoryById = getRepositoryById(object
+					.getSynchronizationMetaData().getRepositoryId());
+			RemoteObject[] children = getChildren(monitor, repositoryById,
+					false);
 			for (RemoteObject remoteObject : children) {
 				if (remoteObject.getUrl().equals(url)) {
 					return remoteObject;
@@ -272,30 +282,39 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	}
 
 	@Override
-	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
+	public InformationUnit getPrefetchedInformationUnit(
+			final RemoteObject remoteObject) {
 		Object wrappedObject = remoteObject.getWrappedObject();
 		if (wrappedObject instanceof SyndEntry) {
 			SyndEntry entry = (SyndEntry) wrappedObject;
+			DisposableEditingDomain domain = RemoteActivator.getDefault()
+					.getServiceTracker().getService(IEditingHandler.class)
+					.createNewEditingDomain();
 			InformationStructureEdit edit = InformationStructureEdit
-					.newSession(MailActivator.INFO_TYPE_ID);
+					.newSession(MailActivator.INFO_TYPE_ID, domain);
 			InformationUnit newInformationUnit = edit.newInformationUnit();
 			newInformationUnit.setLabel(entry.getTitle());
-			edit.setValue(newInformationUnit, MailActivator.NODE_NAME_RECEIVED, entry
-					.getPublishedDate());
-			edit.setValue(newInformationUnit, MailActivator.INFO_TYPE_ID, entry.getTitle());
-			edit.setValue(newInformationUnit, MailActivator.NODE_NAME_CONTENT_TYPE,
+			edit.setValue(newInformationUnit, MailActivator.NODE_NAME_RECEIVED,
+					entry.getPublishedDate());
+			edit.setValue(newInformationUnit, MailActivator.INFO_TYPE_ID,
+					entry.getTitle());
+			edit.setValue(newInformationUnit,
+					MailActivator.NODE_NAME_CONTENT_TYPE,
 					ContentType.HTML.getKey());
-			edit.setValue(newInformationUnit, MailActivator.NODE_NAME_SENDER, entry.getAuthor());
-			edit.setValue(newInformationUnit, MailActivator.NODE_NAME_MORE_INFO, entry.getLink());
+			edit.setValue(newInformationUnit, MailActivator.NODE_NAME_SENDER,
+					entry.getAuthor());
+			edit.setValue(newInformationUnit,
+					MailActivator.NODE_NAME_MORE_INFO, entry.getLink());
 			List contents = entry.getContents();
 			if (contents.size() > 0 && contents.get(0) != null
 					&& contents.get(0) instanceof SyndContent) {
 				SyndContent object = (SyndContent) contents.get(0);
-				edit.setValue(newInformationUnit, MailActivator.NODE_NAME_CONTENT, object
-						.getValue());
+				edit.setValue(newInformationUnit,
+						MailActivator.NODE_NAME_CONTENT, object.getValue());
 			} else if (entry.getDescription() != null) {
-				edit.setValue(newInformationUnit, MailActivator.NODE_NAME_CONTENT, entry
-						.getDescription().getValue());
+				edit.setValue(newInformationUnit,
+						MailActivator.NODE_NAME_CONTENT, entry.getDescription()
+								.getValue());
 			}
 			List categories = entry.getCategories();
 			List<String> cats = new ArrayList<String>();
@@ -304,7 +323,11 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			}
 			String join = org.apache.commons.lang.StringUtils.join(cats, " ");
 			newInformationUnit.setKeywords(join);
-
+			try {
+				domain.dispose();
+			} catch (Exception e) {
+				// skip
+			}
 			return newInformationUnit;
 		}
 		return null;
@@ -317,7 +340,8 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 */
 	@Override
 	public boolean proceedLocalInformationUnitAfterSync(
-			final InformationUnit newOrUpdatedLocalInformationUnit, final IProgressMonitor monitor) {
+			final InformationUnit newOrUpdatedLocalInformationUnit,
+			final IProgressMonitor monitor) {
 		return parseContent(newOrUpdatedLocalInformationUnit, monitor);
 	}
 
@@ -328,7 +352,8 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * org.remus.infomngmnt.core.remote.IRepository#login(org.remus.infomngmnt
 	 * .core.remote.ILoginCallBack, org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public void login(final ILoginCallBack callback, final IProgressMonitor monitor) {
+	public void login(final ILoginCallBack callback,
+			final IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
 
 	}
@@ -339,9 +364,10 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	 * @see org.remus.infomngmnt.core.remote.IRepository#reset()
 	 */
 	public void reset() {
-		this.api = null;
-		this.container = null;
-		getCredentialProvider().removePropertyChangeListener(this.credentialsMovedListener);
+		api = null;
+		container = null;
+		getCredentialProvider().removePropertyChangeListener(
+				credentialsMovedListener);
 	}
 
 	/*
@@ -360,23 +386,28 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 		 * We have to do this, else the SynndFeedInput is eating more and more
 		 * memory and we end up with OutOfMemoryError :(
 		 */
-		if (this.api != null) {
+		if (api != null) {
 			reset();
 		}
-		getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
-		this.api = new SyndFeedInput();
+		getCredentialProvider().addPropertyChangeListener(
+				credentialsMovedListener);
+		api = new SyndFeedInput();
 
-		return this.api;
+		return api;
 	}
 
-	private boolean parseContent(final InformationUnit unit, final IProgressMonitor monitor) {
-		IEditingHandler service = RemoteActivator.getDefault().getServiceTracker().getService(
-				IEditingHandler.class);
-		InformationStructureRead read = InformationStructureRead.newSession(unit);
-		DisposableEditingDomain editingDomain = service.createNewEditingDomain();
+	private boolean parseContent(final InformationUnit unit,
+			final IProgressMonitor monitor) {
+		IEditingHandler service = RemoteActivator.getDefault()
+				.getServiceTracker().getService(IEditingHandler.class);
+		InformationStructureRead read = InformationStructureRead
+				.newSession(unit);
+		DisposableEditingDomain editingDomain = service
+				.createNewEditingDomain();
 		InformationStructureEdit edit = InformationStructureEdit.newSession(
 				MailActivator.INFO_TYPE_ID, editingDomain);
-		String content = (String) read.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
+		String content = (String) read
+				.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
 		final DOMParser parser = new DOMParser();
 
 		boolean changed = false;
@@ -401,8 +432,8 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 				} else {
 					tmpFile = ResourceUtil.createTempFile(fileExtension);
 				}
-				DownloadFileJob downloadFileJob = new DownloadFileJob(url, tmpFile,
-						getFileReceiveAdapter());
+				DownloadFileJob downloadFileJob = new DownloadFileJob(url,
+						tmpFile, getFileReceiveAdapter());
 				IStatus run = downloadFileJob.run(monitor);
 				if (run.isOK()) {
 					InformationUnit createSubType = edit.createSubType(
@@ -410,19 +441,22 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 					edit.addDynamicNode(unit, createSubType, editingDomain);
 
 					CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory
-							.addFileToInfoUnit(tmpFile, createSubType, editingDomain);
+							.addFileToInfoUnit(tmpFile, createSubType,
+									editingDomain);
 					editingDomain.getCommandStack().execute(addFileToInfoUnit);
 					IFile targetFile = addFileToInfoUnit.getTargetFile();
 					if (targetFile.exists()) {
 						((Element) node).setAttribute("src",
-								org.eclipse.remus.common.core.util.StringUtils.join("cid:",
-										addFileToInfoUnit.getCreatedId()));
+								org.eclipse.remus.common.core.util.StringUtils
+										.join("cid:", addFileToInfoUnit
+												.getCreatedId()));
 						changed = true;
 					}
 				}
 
 			}
-			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			final Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
 			transformer.setOutputProperty("omit-xml-declaration", "yes");
 
 			final DOMSource source = new DOMSource(document);
@@ -431,7 +465,8 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 			final StreamResult result = new StreamResult(writer);
 			transformer.transform(source, result);
 
-			edit.setValue(unit, MailActivator.NODE_NAME_CONTENT, writer.toString());
+			edit.setValue(unit, MailActivator.NODE_NAME_CONTENT,
+					writer.toString());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -452,25 +487,29 @@ public class RssConnector extends AbstractExtensionRepository implements IReposi
 	}
 
 	protected IRetrieveFileTransferContainerAdapter getFileReceiveAdapter() {
-		if (this.container == null) {
+		if (container == null) {
 			try {
-				this.container = ContainerFactory.getDefault().createContainer();
+				container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container", e);
+				throw new RuntimeException("Error initializing sync-container",
+						e);
 			}
 		}
-		IRepositoryService service = RemoteActivator.getDefault().getServiceTracker().getService(
-				IRepositoryService.class);
-		this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
+		IRepositoryService service = RemoteActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryService.class);
+		fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) container
 				.getAdapter(IRetrieveFileTransferContainerAdapter.class);
-		RemoteRepository repositoryById = service.getRepositoryById(getLocalRepositoryId());
+		RemoteRepository repositoryById = service
+				.getRepositoryById(getLocalRepositoryId());
 		if (Boolean.valueOf(repositoryById.getOptions().get(
 				RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION))) {
-			this.fileReceiveAdapter.setConnectContextForAuthentication(ConnectContextFactory
-					.createUsernamePasswordConnectContext(getCredentialProvider().getUserName(),
-							getCredentialProvider().getPassword()));
+			fileReceiveAdapter
+					.setConnectContextForAuthentication(ConnectContextFactory
+							.createUsernamePasswordConnectContext(
+									getCredentialProvider().getUserName(),
+									getCredentialProvider().getPassword()));
 		}
 		RemoteActivator.getDefault().getServiceTracker().ungetService(service);
-		return this.fileReceiveAdapter;
+		return fileReceiveAdapter;
 	}
 }

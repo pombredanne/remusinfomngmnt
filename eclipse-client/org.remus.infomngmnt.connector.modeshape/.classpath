@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/ezmorph-1.0.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/httpclient-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/httpcore-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json-lib-2.4-jdk15.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/modeshape-json-api-1.0.0-SNAPSHOT.jar" sourcepath="C:/IDEs/eclipse_sling/eclipse/workspace/modeshape-json-api/src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

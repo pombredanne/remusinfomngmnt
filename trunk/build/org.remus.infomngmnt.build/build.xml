@@ -561,6 +561,9 @@
 		<antcall target="installFeatureFromMarketplace">
 			<param name="marketplace.installUI" value="org.remus.infomngmnt.reportruntime.feature" />
 		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.modeshape.feature" />
+		</antcall>
 
 	</target>
 

@@ -155,7 +155,7 @@
 			<zipfileset dir="${unzipTarget}/RIM/plugins" fullpath="RIM/plugins" />
 			<zipfileset dir="${unzipTarget}/RIM/configuration" fullpath="RIM/configuration" />
 			<zipfileset dir="${unzipTarget}/RIM/p2" fullpath="RIM/p2" />
-			<zipfileset dir="${unzipTarget}/RIM/artifacts.xml" fullpath="RIM/artifacts.xml" />
+			<zipfileset file="${unzipTarget}/RIM/artifacts.xml" fullpath="RIM/artifacts.xml" />
 		</zip>
 
 	</target>

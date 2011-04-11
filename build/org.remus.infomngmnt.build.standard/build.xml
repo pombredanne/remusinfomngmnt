@@ -143,13 +143,33 @@
 		</antcall>
 		<delete dir="${unzipTarget}/RIM/workspace" failonerror="false">
 		</delete>
-		<chmod perm="u+x" file="${unzipTarget}/RIM/rim" failonerror="false"></chmod>
-		<chmod perm="u+x" dir="${unzipTarget}/RIM/rim.app" failonerror="false" includes="**/*"/>
+		<file />
+		
+
+		<antcall target="writeLinuxPermission" />
+		<antcall target="writeApplePermission" />
+		
 		<zip destfile="${pack.zip}" preserve0permissions="true">
 			<zipfileset dir="${unzipTarget}">
 			</zipfileset>
 		</zip>
 
+	</target>
+		
+	<target name="checkLinux">
+	    <available file="${unzipTarget}/RIM/rim" property="linux.file.exists"/>
+	</target>
+	
+	<target name="checkMac" unless="file.exists">
+	    <available file="${unzipTarget}/RIM/rim.app" type="dir" property="apple.file.exists"/>
+	</target>
+	
+	<target name="writeLinuxPermission" depends="checkLinux" if="linux.file.exists">
+		<chmod perm="u+x" file="${unzipTarget}/RIM/rim"></chmod>
+	</target>
+	
+	<target name="writeApplePermission" depends="checkMac" if="apple.file.exists">
+		<chmod perm="u+x" dir="${unzipTarget}/RIM/rim.app" failonerror="false" includes="**/**"/>
 	</target>
 
 

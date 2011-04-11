@@ -145,13 +145,17 @@
 		</delete>
 		<file />
 		
-
+		<!--
 		<antcall target="writeLinuxPermission" />
 		<antcall target="writeApplePermission" />
-		
-		<zip destfile="${pack.zip}" preserve0permissions="true">
-			<zipfileset dir="${unzipTarget}">
-			</zipfileset>
+		-->
+		<copyfile dest="${pack.zip}" src="${build.dir.location}/${pack.zip}"/>
+		<zip destfile="${pack.zip}" preserve0permissions="true" update="true">
+			<zipfileset dir="${unzipTarget}/RIM/features" fullpath="RIM/features" />
+			<zipfileset dir="${unzipTarget}/RIM/plugins" fullpath="RIM/plugins" />
+			<zipfileset dir="${unzipTarget}/RIM/configuration" fullpath="RIM/configuration" />
+			<zipfileset dir="${unzipTarget}/RIM/p2" fullpath="RIM/p2" />
+			<zipfileset dir="${unzipTarget}/RIM/artifacts.xml" fullpath="RIM/artifacts.xml" />
 		</zip>
 
 	</target>

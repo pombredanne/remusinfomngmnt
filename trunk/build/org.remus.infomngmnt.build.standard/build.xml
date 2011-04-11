@@ -150,12 +150,12 @@
 		<antcall target="writeApplePermission" />
 		-->
 		<copyfile dest="${pack.zip}" src="${build.dir.location}/${pack.zip}"/>
-		<zip destfile="${pack.zip}" preserve0permissions="true" update="true" basedir="${unzipTarget}">
-			<zipfileset dir="RIM/features" />
-			<zipfileset dir="RIM/plugins" />
-			<zipfileset dir="RIM/configuration" />
-			<zipfileset dir="RIM/p2" />
-			<zipfileset file="RIM/artifacts.xml" />
+		<zip destfile="${pack.zip}" preserve0permissions="true" update="true">
+			<zipfileset dir="${unzipTarget}/RIM/features" prefix="RIM/features" />
+			<zipfileset dir="${unzipTarget}/RIM/plugins" prefix="RIM/plugins" />
+			<zipfileset dir="${unzipTarget}/RIM/configuration" prefix="RIM/configuration" />
+			<zipfileset dir="${unzipTarget}/RIM/p2" prefix="RIM/p2" />
+			<zipfileset file="${unzipTarget}/RIM/artifacts.xml" fullpath="RIM/artifacts.xml" />
 		</zip>
 
 	</target>

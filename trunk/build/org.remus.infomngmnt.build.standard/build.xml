@@ -143,6 +143,8 @@
 		</antcall>
 		<delete dir="${unzipTarget}/RIM/workspace" failonerror="false">
 		</delete>
+		<chmod perm="u+x" file="${unzipTarget}/RIM/rim" failonerror="false"></chmod>
+		<chmod perm="u+x" dir="${unzipTarget}/RIM/rim.app" failonerror="false" includes="**/*"/>
 		<zip destfile="${pack.zip}" preserve0permissions="true">
 			<zipfileset dir="${unzipTarget}">
 			</zipfileset>

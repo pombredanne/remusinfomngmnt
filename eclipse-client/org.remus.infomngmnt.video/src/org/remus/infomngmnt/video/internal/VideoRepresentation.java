@@ -34,7 +34,6 @@ import org.eclipse.remus.resources.util.ResourceUtil;
 import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 import org.remus.infomngmnt.video.VideoActivator;
@@ -51,8 +50,8 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 	 * 
 	 */
 	public VideoRepresentation() {
-		this.remusServiceTracker = new RemusServiceTracker(Platform
-				.getBundle(VideoActivator.PLUGIN_ID));
+		this.remusServiceTracker = new RemusServiceTracker(
+				Platform.getBundle(VideoActivator.PLUGIN_ID));
 	}
 
 	/*
@@ -63,7 +62,8 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 		/*
 		 * At first we have to determine the player extension that can provide
 		 * the correct html for displaying the video.
@@ -73,17 +73,22 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 		IMediaPlayerExtensionService service = this.remusServiceTracker
 				.getService(IMediaPlayerExtensionService.class);
 
-		IMediaPlayer mediaPlayer = service.getPlayerByType(playerType.getStringValue());
+		IMediaPlayer mediaPlayer = service.getPlayerByType(playerType
+				.getStringValue());
 		/*
 		 * Next we have to get the width and height --> That are required
 		 * parameters for the mediaplayers html snippet.
 		 */
-		long widht = InformationUtil.getChildByType(getValue(), VideoActivator.NODE_NAME_WIDTH)
-				.getLongValue();
-		long height = InformationUtil.getChildByType(getValue(), VideoActivator.NODE_NAME_HEIGHT)
-				.getLongValue();
-		this.videoHref = getFile().getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
-				getValue().getBinaryReferences().getProjectRelativePath()).getLocation();
+		long widht = InformationUtil.getChildByType(getValue(),
+				VideoActivator.NODE_NAME_WIDTH).getLongValue();
+		long height = InformationUtil.getChildByType(getValue(),
+				VideoActivator.NODE_NAME_HEIGHT).getLongValue();
+		this.videoHref = getFile()
+				.getProject()
+				.getFolder(ResourceUtil.BINARY_FOLDER)
+				.getFile(
+						getValue().getBinaryReferences()
+								.getProjectRelativePath()).getLocation();
 		/*
 		 * Next: build the html snippet for displaying the media and put them
 		 * into a collection This collection will be passed to freemark. The
@@ -91,9 +96,11 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 		 */
 		Map<String, String> freemarkParameters = new HashMap<String, String>();
 		if (mediaPlayer != null) {
-			freemarkParameters.put("mediaplayerheader", mediaPlayer.buildHeaderScript());
-			freemarkParameters.put("mediaplayer", mediaPlayer.buildHtml(this.videoHref,
-					(int) widht, (int) height, Collections.<String, String> emptyMap()));
+			freemarkParameters.put("mediaplayerheader", //$NON-NLS-1$
+					mediaPlayer.buildHeaderScript());
+			freemarkParameters.put("mediaplayer", mediaPlayer.buildHtml( //$NON-NLS-1$
+					this.videoHref, (int) widht, (int) height,
+					Collections.<String, String> emptyMap()));
 		}
 
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
@@ -101,15 +108,17 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 		InputStream contentsIs = getFile().getContents();
 		this.remusServiceTracker.ungetService(service);
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(VideoActivator.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(VideoActivator.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
 			/*
 			 * We give the html-snippet for creating the mediaplayer
 			 */
-			FreemarkerRenderer.getInstance().process(VideoActivator.PLUGIN_ID, templateIs,
-					contentsIs, returnValue, freemarkParameters);
+			FreemarkerRenderer.getInstance().process(VideoActivator.PLUGIN_ID,
+					templateIs, contentsIs, returnValue, freemarkParameters);
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}

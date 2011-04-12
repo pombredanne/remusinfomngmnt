@@ -56,6 +56,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.video.VideoActivator;
+import org.remus.infomngmnt.video.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -67,16 +68,16 @@ public class VideoEditPage extends AbstractInformationFormPage {
 	private Text text;
 	private boolean keepRatio = true;
 	private float ratio = 0;
-	private final Action keepRationAction = new Action("", IAction.AS_CHECK_BOX) {
+	private final Action keepRationAction = new Action("", IAction.AS_CHECK_BOX) { //$NON-NLS-1$
 		@Override
 		public ImageDescriptor getImageDescriptor() {
 			return ImageDescriptor.createFromImage(ResourceManager.getPluginImage(VideoActivator
-					.getDefault(), "icons/iconexperience/fit_to_size.png"));
+					.getDefault(), "icons/iconexperience/fit_to_size.png")); //$NON-NLS-1$
 		};
 
 		@Override
 		public String getToolTipText() {
-			return "Keep Aspect ratio";
+			return Messages.VideoEditPage_KeepRatio;
 		};
 
 		@Override
@@ -100,7 +101,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.VideoEditPage_General);
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
@@ -109,7 +110,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(composite);
 		generalSection.setClient(composite);
 
-		toolkit.createLabel(composite, "Video-Name", SWT.NONE);
+		toolkit.createLabel(composite, Messages.VideoEditPage_VideoName, SWT.NONE);
 
 		this.text = toolkit.createText(composite, null, SWT.READ_ONLY);
 		this.text.setEditable(false);
@@ -119,7 +120,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		new Label(composite, SWT.NONE);
 
 		final Hyperlink openImageWithExternalApp = toolkit.createHyperlink(composite,
-				"Open Image with the default external application", SWT.NONE);
+				Messages.VideoEditPage_OpenWithExternal, SWT.NONE);
 		openImageWithExternalApp.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4,
 				1));
 		openImageWithExternalApp.addHyperlinkListener(new HyperlinkAdapter() {
@@ -140,14 +141,14 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		new Label(composite, SWT.NONE);
 
 		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite,
-				"Change video file", SWT.NONE);
+				Messages.VideoEditPage_ChangeVideoFile, SWT.NONE);
 		changeImageHyperlink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		changeImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				FileDialog fd = new FileDialog(getSite().getShell());
-				fd.setFilterExtensions(new String[] { "*.avi;*.mpg;*.mpeg;*.mp4;*.flv" });
-				fd.setFilterNames(new String[] { "Supported Videos (AVI,MPG,MPEG,MP4,FLV)" });
+				fd.setFilterExtensions(new String[] { "*.avi;*.mpg;*.mpeg;*.mp4;*.flv" }); //$NON-NLS-1$
+				fd.setFilterNames(new String[] { Messages.VideoEditPage_SupportedVideos });
 				String open = fd.open();
 				if (open != null) {
 
@@ -155,7 +156,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 			}
 		});
 
-		toolkit.createLabel(composite, "Width", SWT.NONE);
+		toolkit.createLabel(composite, Messages.VideoEditPage_Width, SWT.NONE);
 
 		this.widthText = toolkit.createText(composite, null, SWT.NONE);
 		final GridData gd_widthText = new GridData();
@@ -163,7 +164,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		this.widthText.setLayoutData(gd_widthText);
 		this.widthText.addVerifyListener(new VerifyListener() {
 			public void verifyText(final VerifyEvent e) {
-				Pattern pattern = Pattern.compile("[0-9]*");
+				Pattern pattern = Pattern.compile("[0-9]*"); //$NON-NLS-1$
 				Matcher m = pattern.matcher(e.text);
 				// ONLY NUMERICAL VALUES ARE ACCEPTED .
 				if (!m.matches()) {
@@ -172,7 +173,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 			}
 		});
 
-		toolkit.createLabel(composite, "px", SWT.NONE);
+		toolkit.createLabel(composite, Messages.VideoEditPage_px, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
 		ToolBar tb = new ToolBar(composite, SWT.FLAT);
@@ -182,7 +183,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		tbm.update(true);
 		tb.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 2));
 
-		final Label heightLabel = toolkit.createLabel(composite, "Height", SWT.NONE);
+		final Label heightLabel = toolkit.createLabel(composite, Messages.VideoEditPage_Height, SWT.NONE);
 		final GridData gd_heightLabel = new GridData();
 		heightLabel.setLayoutData(gd_heightLabel);
 
@@ -192,7 +193,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 		this.heightText.setLayoutData(gd_heightText);
 		this.heightText.addVerifyListener(new VerifyListener() {
 			public void verifyText(final VerifyEvent e) {
-				Pattern pattern = Pattern.compile("[0-9]*");
+				Pattern pattern = Pattern.compile("[0-9]*"); //$NON-NLS-1$
 				Matcher m = pattern.matcher(e.text);
 				// ONLY NUMERICAL VALUES ARE ACCEPTED .
 				if (!m.matches()) {
@@ -201,7 +202,7 @@ public class VideoEditPage extends AbstractInformationFormPage {
 			}
 		});
 
-		toolkit.createLabel(composite, "px", SWT.NONE);
+		toolkit.createLabel(composite, Messages.VideoEditPage_px, SWT.NONE);
 
 		doCreateSemanticSection(body, toolkit);
 

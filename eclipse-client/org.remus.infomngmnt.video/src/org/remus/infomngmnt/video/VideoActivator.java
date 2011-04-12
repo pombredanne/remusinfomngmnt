@@ -9,12 +9,12 @@ import org.osgi.framework.BundleContext;
 public class VideoActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.video";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.video"; //$NON-NLS-1$
 
 	// The shared instance
 	private static VideoActivator plugin;
 
-	public static String TYPE_ID = "VIDEO";
+	public static String TYPE_ID = "VIDEO"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_WIDTH = "width"; //$NON-NLS-1$
 

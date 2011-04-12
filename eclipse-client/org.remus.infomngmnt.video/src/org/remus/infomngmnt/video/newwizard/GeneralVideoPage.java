@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 import org.remus.infomngmnt.video.VideoActivator;
+import org.remus.infomngmnt.video.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -61,17 +62,17 @@ public class GeneralVideoPage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
-		setTitle("New Video");
-		setMessage("This wizard enables you to create a new video from a file.");
+		setTitle(Messages.GeneralVideoPage_Title);
+		setMessage(Messages.GeneralVideoPage_Subtitle);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
 				VideoActivator.getDefault(),
-				"icons/iconexperience/wizards/video_wizard_title.png"));
+				"icons/iconexperience/wizards/video_wizard_title.png")); //$NON-NLS-1$
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(3, false));
-		group.setText("Name && File");
+		group.setText(Messages.GeneralVideoPage_NameFile);
 		doCreateNameElements(group);
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -79,7 +80,7 @@ public class GeneralVideoPage extends GeneralPage {
 		this.nameText.setLayoutData(gd_nameText);
 
 		final Label mediaTypeLabel = new Label(group, SWT.NONE);
-		mediaTypeLabel.setText("Media-Type");
+		mediaTypeLabel.setText(Messages.GeneralVideoPage_MediaType);
 
 		this.mediaTypeText = new Text(group, SWT.BORDER);
 		this.mediaTypeText.setEditable(false);
@@ -89,20 +90,20 @@ public class GeneralVideoPage extends GeneralPage {
 
 		if (this.files.length == 0) {
 			final Label nameLabel = new Label(group, SWT.NONE);
-			nameLabel.setText("File");
+			nameLabel.setText(Messages.GeneralVideoPage_File);
 			this.fileNameText = new Text(group, SWT.BORDER);
 			gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_nameText.horizontalSpan = 2;
 			this.fileNameText.setLayoutData(gd_nameText);
 
 			this.browseButton = new Button(group, SWT.PUSH);
-			this.browseButton.setText("Browse...");
+			this.browseButton.setText(Messages.GeneralVideoPage_Browse);
 			this.browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
 					FileDialog fd = new FileDialog(getShell());
-					fd.setFilterExtensions(new String[] { "*.*" });
-					fd.setFilterNames(new String[] { "Videos" });
+					fd.setFilterExtensions(new String[] { "*.*" }); //$NON-NLS-1$
+					fd.setFilterNames(new String[] { Messages.GeneralVideoPage_Videos });
 					String open = fd.open();
 					if (open != null) {
 						GeneralVideoPage.this.fileNameText.setText(open);

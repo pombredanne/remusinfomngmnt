@@ -89,7 +89,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 				}
 			}
 		} catch (Exception e) {
-			throw new RemoteException(StatusCreator.newStatus("Error getting children of "
+			throw new RemoteException(StatusCreator.newStatus(Messages.DelicicousRepository_ErrorGettingChildren
 					+ container.getName(), e));
 		}
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
@@ -130,7 +130,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 	}
 
 	private Delicious getApi() {
-		System.out.println("CONTACTING API");
+		System.out.println("CONTACTING API"); //$NON-NLS-1$
 
 		/*
 		 * API requires to wait at least 1 second between api calls.
@@ -138,7 +138,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 		if (this.lastApiCall > 0) {
 			while ((System.currentTimeMillis() - this.lastApiCall) < 2000) {
 				try {
-					System.out.println("WAITING");
+					System.out.println("WAITING"); //$NON-NLS-1$
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					// do nothing
@@ -168,7 +168,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 			getApi().getRecentPosts();
 			return Status.OK_STATUS;
 		} catch (Exception e) {
-			return StatusCreator.newStatus("Error connecting...", e);
+			return StatusCreator.newStatus(Messages.DelicicousRepository_ErrorConnecting, e);
 		}
 	}
 
@@ -261,7 +261,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 					String categoryLabel = ((Category) item2commit.eContainer()).getLabel();
 					boolean categoryLabelInKeywords = false;
 					if (keywords != null) {
-						String[] split = keywords.split(" ");
+						String[] split = keywords.split(" "); //$NON-NLS-1$
 						for (String string : split) {
 							if (string.equals(categoryLabel)) {
 								categoryLabelInKeywords = true;
@@ -271,7 +271,7 @@ public class DelicicousRepository extends AbstractExtensionRepository {
 					}
 					if (!categoryLabelInKeywords) {
 						if (keywords != null) {
-							keywords += " " + categoryLabel;
+							keywords += " " + categoryLabel; //$NON-NLS-1$
 						} else {
 							keywords = categoryLabel;
 						}

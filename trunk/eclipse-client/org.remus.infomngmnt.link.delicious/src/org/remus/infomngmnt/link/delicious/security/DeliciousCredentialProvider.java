@@ -18,11 +18,10 @@ import org.eclipse.remus.core.remote.security.CredentialProvider;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class DeliciousCredentialProvider extends CredentialProvider {
-	
-	
+
 	public DeliciousCredentialProvider() {
 		super();
-		setGroup("del.icio.us");
+		setGroup("del.icio.us"); //$NON-NLS-1$
 	}
 
 }

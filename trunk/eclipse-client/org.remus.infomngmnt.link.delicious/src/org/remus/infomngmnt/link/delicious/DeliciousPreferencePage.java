@@ -32,7 +32,7 @@ public class DeliciousPreferencePage extends FieldEditorPreferencePage implement
 	@Override
 	protected void createFieldEditors() {
 		{
-			addField(new StringFieldEditor(PreferenceInitializer.API_URL, "API-URL", getFieldEditorParent()));
+			addField(new StringFieldEditor(PreferenceInitializer.API_URL, Messages.DeliciousPreferencePage_AOIUrl, getFieldEditorParent()));
 		}
 
 	}

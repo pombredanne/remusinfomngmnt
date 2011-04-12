@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.link.delicious.DelicicousRepository"
             credentialprovider="org.remus.infomngmnt.link.delicious.security.DeliciousCredentialProvider"
             id="org.remus.infomngmnt.link.delicious"
-            name="Delicious">
+            name="%repository-connector.name">
          <changeDefinition
                id="org.remus.infomngmnt.link.delicious.linkChange"
                informationType="LINK">
@@ -40,7 +40,7 @@
             category="org.eclipse.remus.ui.repositories"
             class="org.remus.infomngmnt.link.delicious.DeliciousPreferencePage"
             id="org.remus.infomngmnt.link.delicious.preferencePage"
-            name="Del.icio.us">
+            name="%page.name">
       </page>
    </extension>
    <extension

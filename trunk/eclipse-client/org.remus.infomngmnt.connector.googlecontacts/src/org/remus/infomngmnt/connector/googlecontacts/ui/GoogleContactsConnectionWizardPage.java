@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.connector.googlecontacts.Messages;
 
 
 public class GoogleContactsConnectionWizardPage extends WizardPage {
@@ -60,9 +61,9 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public GoogleContactsConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("Google Contacts Connector");
-		setDescription("Enter your login credentials");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.GoogleContactsConnectionWizardPage_GoogleContactConnector);
+		setDescription(Messages.GoogleContactsConnectionWizardPage_EnterCredentials);
 		this.manualName = false;
 	}
 
@@ -83,7 +84,7 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.GoogleContactsConnectionWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -96,7 +97,7 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 		});
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("API-Url:");
+		apiurlLabel.setText(Messages.GoogleContactsConnectionWizardPage_APIUrl);
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		final GridData gd_apiUrlText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -104,7 +105,7 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 		this.apiUrlText.setEditable(false);
 
 		final Group credentialsGroup = new Group(container, SWT.NONE);
-		credentialsGroup.setText("Credentials");
+		credentialsGroup.setText(Messages.GoogleContactsConnectionWizardPage_Credentials);
 		final GridData gd_credentialsGroup = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		credentialsGroup.setLayoutData(gd_credentialsGroup);
 		final GridLayout gridLayout_1 = new GridLayout();
@@ -112,14 +113,14 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 		credentialsGroup.setLayout(gridLayout_1);
 
 		final Label usernameLabel = new Label(credentialsGroup, SWT.NONE);
-		usernameLabel.setText("Username");
+		usernameLabel.setText(Messages.GoogleContactsConnectionWizardPage_Username);
 
 		this.userNameText = new Text(credentialsGroup, SWT.BORDER);
 		final GridData gd_userNameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		this.userNameText.setLayoutData(gd_userNameText);
 
 		final Label passwordLabel = new Label(credentialsGroup, SWT.NONE);
-		passwordLabel.setText("Password");
+		passwordLabel.setText(Messages.GoogleContactsConnectionWizardPage_Password);
 
 		this.passwordText = new Text(credentialsGroup, SWT.BORDER | SWT.PASSWORD);
 		final GridData gd_passwordText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -146,7 +147,7 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 					setErrorMessage(null);
 					setPageComplete(true);
 				} catch (InvocationTargetException e) {
-					setErrorMessage("Error validating your settings");
+					setErrorMessage(Messages.GoogleContactsConnectionWizardPage_ErrorValidatingSettings);
 					setPageComplete(false);
 				} catch (InterruptedException e) {
 					// do nothing
@@ -157,7 +158,7 @@ public class GoogleContactsConnectionWizardPage extends WizardPage {
 		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false);
 		validateCredentialsButton.setLayoutData(gd_validateCredentialsButton);
-		validateCredentialsButton.setText("Validate credentials");
+		validateCredentialsButton.setText(Messages.GoogleContactsConnectionWizardPage_ValidateCredentials);
 		bindValuesToUi();
 		setControl(container);
 

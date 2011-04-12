@@ -110,7 +110,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 						ContactEntry insert = getApi().insert(new URL(this.contactFeed), repo);
 						addContactPhoto(insert, getApi(), (InformationUnitListItem) item);
 						ContactEntry entry = getApi().getEntry(
-								new URL(insert.getId().replace("/base/", "/full/")),
+								new URL(insert.getId().replace("/base/", "/full/")), //$NON-NLS-1$ //$NON-NLS-2$
 								ContactEntry.class);
 						if (entry != null) {
 							return buildContact(entry, wrappedObject.getId());
@@ -118,7 +118,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 
 					}
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error adding contact", e));
+					throw new RemoteException(StatusCreator.newStatus(Messages.ContactsRepository_ErrorAddingContact, e));
 				}
 			}
 		} else if (item instanceof Category) {
@@ -129,7 +129,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 						contactGroupEntry);
 				return buildGroup(insert);
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error creating new group", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.ContactsRepository_ErrorCreatingGroup, e));
 			}
 		}
 		return null;
@@ -162,7 +162,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 					return buildContact(update, remoteParent.getId());
 				} catch (Exception e) {
 					throw new RemoteException(StatusCreator
-							.newStatus("Error updating a contact", e));
+							.newStatus(Messages.ContactsRepository_ErrorUpdatingContact, e));
 				}
 			} else if (item2commit instanceof Category
 					&& remoteObject.getWrappedObject() instanceof ContactGroupEntry) {
@@ -174,7 +174,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 					ContactGroupEntry update = wrappedObject.update();
 					return buildGroup(update);
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error updating category", e));
+					throw new RemoteException(StatusCreator.newStatus(Messages.ContactsRepository_ErrorUpdatingCategory, e));
 				}
 
 			}
@@ -202,7 +202,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 					((ContactGroupEntry) wrappedObject).delete();
 				}
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error deleting remoteobject"));
+				throw new RemoteException(StatusCreator.newStatus(Messages.ContactsRepository_ErrorDeletingRemote));
 			}
 		}
 
@@ -231,7 +231,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 		List<RemoteObject> returnValue = new ArrayList<RemoteObject>();
 		try {
 			Query myQuery = new Query(new URL(this.contactFeed));
-			myQuery.setStringCustomParameter("group", container.getId());
+			myQuery.setStringCustomParameter("group", container.getId()); //$NON-NLS-1$
 			ContactFeed resultFeed = getApi().query(myQuery, ContactFeed.class);
 			for (ContactEntry entry : resultFeed.getEntries()) {
 				if (!entry.hasDeleted()) {
@@ -260,7 +260,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 		createRemoteObject.setId(entry.getId());
 		createRemoteObject.setWrappedObject(entry);
 		createRemoteObject.setName(entry.getTitle().getPlainText());
-		createRemoteObject.setUrl(StringUtils.join(parentId, "_", entry.getId()));
+		createRemoteObject.setUrl(StringUtils.join(parentId, "_", entry.getId())); //$NON-NLS-1$
 		return createRemoteObject;
 	}
 
@@ -359,26 +359,26 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 		if (object instanceof Category) {
 			try {
 				ContactGroupEntry entry = getApi().getEntry(
-						new URL(url.replace("/base/", "/full/")), ContactGroupEntry.class);
+						new URL(url.replace("/base/", "/full/")), ContactGroupEntry.class); //$NON-NLS-1$ //$NON-NLS-2$
 				if (entry != null) {
 					return buildGroup(entry);
 				}
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error resolving online contact",
+				throw new RemoteException(StatusCreator.newStatus(Messages.ContactsRepository_ErrorResolving,
 						e));
 			}
 		} else if (object instanceof InformationUnitListItem) {
 			try {
-				String[] split = url.split("_");
+				String[] split = url.split("_"); //$NON-NLS-1$
 				ContactGroupEntry cateEntry = getApi().getEntry(
-						new URL(split[0].replace("/base/", "/full/")), ContactGroupEntry.class);
+						new URL(split[0].replace("/base/", "/full/")), ContactGroupEntry.class); //$NON-NLS-1$ //$NON-NLS-2$
 				ContactEntry entry = getApi().getEntry(
-						new URL(split[1].replace("/base/", "/full/")), ContactEntry.class);
+						new URL(split[1].replace("/base/", "/full/")), ContactEntry.class); //$NON-NLS-1$ //$NON-NLS-2$
 				if (entry != null) {
 					return buildContact(entry, cateEntry.getId());
 				}
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error resolving online contact",
+				throw new RemoteException(StatusCreator.newStatus(Messages.ContactsRepository_ErrorResolving,
 						e));
 			}
 		}
@@ -392,7 +392,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	 */
 	@Override
 	public String getRepositoryUrl() {
-		return "http://www.google.com/m8/feeds/";
+		return "http://www.google.com/m8/feeds/"; //$NON-NLS-1$
 	}
 
 	/*
@@ -424,7 +424,7 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 		URL photoUrl = new URL(photoLink.getHref());
 		service.delete(photoUrl, photoLink.getEtag());
 		GDataRequest request = service.createRequest(GDataRequest.RequestType.UPDATE, photoUrl,
-				new ContentType("image/jpeg"));
+				new ContentType("image/jpeg")); //$NON-NLS-1$
 
 		OutputStream requestStream = request.getRequestStream();
 		InformationUnit adapter = (InformationUnit) item.getAdapter(InformationUnit.class);
@@ -471,17 +471,17 @@ public class ContactsRepository extends AbstractExtensionRepository implements I
 	public synchronized ContactsService getApi() throws RemoteException {
 		if (this.api == null) {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
-			this.api = new ContactsService("Remus Information Management");
+			this.api = new ContactsService("Remus Information Management"); //$NON-NLS-1$
 			try {
 				this.api.setUserCredentials(getCredentialProvider().getUserName(),
 						getCredentialProvider().getPassword());
-				this.groupsFeed = StringUtils.join(getRepositoryUrl(), "groups/",
-						getCredentialProvider().getUserName(), "/full");
-				this.contactFeed = StringUtils.join(getRepositoryUrl(), "contacts/",
-						getCredentialProvider().getUserName(), "/full");
+				this.groupsFeed = StringUtils.join(getRepositoryUrl(), "groups/", //$NON-NLS-1$
+						getCredentialProvider().getUserName(), "/full"); //$NON-NLS-1$
+				this.contactFeed = StringUtils.join(getRepositoryUrl(), "contacts/", //$NON-NLS-1$
+						getCredentialProvider().getUserName(), "/full"); //$NON-NLS-1$
 			} catch (AuthenticationException e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error while validating credentials", e));
+						Messages.ContactsRepository_ErrorValidatingCredentials, e));
 			}
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 

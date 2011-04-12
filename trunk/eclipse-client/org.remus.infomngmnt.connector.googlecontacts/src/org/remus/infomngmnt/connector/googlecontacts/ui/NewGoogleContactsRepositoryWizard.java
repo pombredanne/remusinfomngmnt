@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.connector.googlecontacts.Messages;
 
 
 /**
@@ -30,7 +31,7 @@ public class NewGoogleContactsRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewGoogleContactsRepositoryWizard() {
-		setWindowTitle("New Google-Contacts connector");
+		setWindowTitle(Messages.NewGoogleContactsRepositoryWizard_NewConnector);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class NewGoogleContactsRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		newRemoteRepositry.setUrl("http://www.google.com/m8/feeds/");
+		newRemoteRepositry.setUrl("http://www.google.com/m8/feeds/"); //$NON-NLS-1$
 
 	}
 

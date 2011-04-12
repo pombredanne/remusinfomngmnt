@@ -23,11 +23,11 @@ import org.osgi.framework.BundleContext;
  */
 public class GeoDataActivator extends AbstractUIPlugin {
 
-	public static String GEODATA_INFO_ID = "GEODATA";
+	public static String GEODATA_INFO_ID = "GEODATA"; //$NON-NLS-1$
 	public static final String NODE_NAME_GOOGLE_API_KEY = "googleApiKey"; //$NON-NLS-1$
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.geodata";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.geodata"; //$NON-NLS-1$
 
 	// The shared instance
 	private static GeoDataActivator plugin;

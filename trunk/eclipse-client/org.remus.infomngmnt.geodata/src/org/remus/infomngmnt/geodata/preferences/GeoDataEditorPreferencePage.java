@@ -30,6 +30,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import org.remus.infomngmnt.geodata.GeoDataActivator;
+import org.remus.infomngmnt.geodata.Messages;
 
 public class GeoDataEditorPreferencePage extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {
@@ -50,7 +51,7 @@ public class GeoDataEditorPreferencePage extends FieldEditorPreferencePage imple
 	protected void createFieldEditors() {
 		{
 			this.sfe = new StringFieldEditor(GeoDataPreferenceInitializer.GOOGLE_API_KEY,
-					"Google Maps API Key:", 35, getFieldEditorParent());
+					Messages.GeoDataEditorPreferencePage_GetMapsKey, 35, getFieldEditorParent());
 			addField(this.sfe);
 
 		}
@@ -61,11 +62,11 @@ public class GeoDataEditorPreferencePage extends FieldEditorPreferencePage imple
 		// TODO Auto-generated method stub
 		Composite createContents = (Composite) super.createContents(parent);
 		Link link = new Link(createContents, SWT.NONE);
-		link.setText("<a>Get a Google Maps API Key</a>");
+		link.setText(Messages.GeoDataEditorPreferencePage_GetMapsKeyLink);
 		link.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				Program.launch("http://code.google.com/apis/maps/signup.html");
+				Program.launch(Messages.GeoDataEditorPreferencePage_GetMapsKeyUrl);
 			}
 		});
 		link.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));

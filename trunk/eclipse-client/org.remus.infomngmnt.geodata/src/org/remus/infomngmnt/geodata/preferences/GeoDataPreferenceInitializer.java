@@ -36,6 +36,6 @@ public class GeoDataPreferenceInitializer extends AbstractPreferenceInitializer 
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		this.store.setDefault(GOOGLE_API_KEY, "https://api.del.icio.us/v1/");
+		this.store.setDefault(GOOGLE_API_KEY, ""); //$NON-NLS-1$
 	}
 }

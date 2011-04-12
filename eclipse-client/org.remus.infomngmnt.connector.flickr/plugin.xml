@@ -7,7 +7,7 @@
       		id="org.remus.infomngmnt.connector.flickr."
             class="org.remus.infomngmnt.connector.flickr.FlickrConnector"
             credentialprovider="org.remus.infomngmnt.connector.flickr.FlickrCredentials"
-            name="Flickr">
+            name="%repository-connector.name">
          <changeDefinition
                id="org.remus.infomngmnt.connector.flickr.changeDefinition1"
                informationType="IMAGE">
@@ -45,8 +45,8 @@
          <menu
                icon="icons/flickr.png"
                id="org.remus.infomngmnt.flickr.contextmenu"
-               label="Flickr"
-               mnemonic="l">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.connector.flickr.openWeb"
                   style="push">
@@ -85,11 +85,11 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.connector.flickr.openWeb"
-            name="Open Photo on flickr">
+            name="%command.name">
       </command>
       <command
             id="org.remus.infomngmnt.connector.flickr.copyImageUrlToClipboard"
-            name="Copy Image Url to Clipboard">
+            name="%command.name.0">
       </command>
    </extension>
    <extension

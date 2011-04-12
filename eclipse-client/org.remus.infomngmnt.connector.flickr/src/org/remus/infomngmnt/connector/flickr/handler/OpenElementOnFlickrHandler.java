@@ -32,6 +32,7 @@ import org.eclipse.remus.ui.util.CancelableRunnable;
 import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.program.Program;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.remus.infomngmnt.connector.flickr.messages.Messages;
 
 
 import com.aetrion.flickr.photos.Photo;
@@ -62,13 +63,13 @@ public class OpenElementOnFlickrHandler extends AbstractHandler {
 
 					@Override
 					protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-						monitor.beginTask("Contacting Flickr Repository", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(Messages.OpenElementOnFlickrHandler_ContactingFlickr, IProgressMonitor.UNKNOWN);
 						RemoteObject remoteObject;
 						try {
 							remoteObject = remoteRepository.getRemoteObjectBySynchronizableObject(
 									adapter, monitor);
 						} catch (RemoteException e) {
-							return StatusCreator.newStatus("Error contacting Flickr Repository", e);
+							return StatusCreator.newStatus(Messages.OpenElementOnFlickrHandler_ErrorContactingFlickr, e);
 						}
 						if (remoteObject != null
 								&& remoteObject.getWrappedObject() instanceof Photo) {
@@ -83,8 +84,8 @@ public class OpenElementOnFlickrHandler extends AbstractHandler {
 				try {
 					pmd.run(true, true, runnable);
 				} catch (Exception e) {
-					ErrorDialog.openError(HandlerUtil.getActiveShell(event), "Error",
-							"Error contacting Flickr",
+					ErrorDialog.openError(HandlerUtil.getActiveShell(event), Messages.OpenElementOnFlickrHandler_Error,
+							Messages.OpenElementOnFlickrHandler_ErrorContactingFlickr,
 							e.getCause() instanceof CoreException ? ((CoreException) e.getCause())
 									.getStatus() : null);
 				}

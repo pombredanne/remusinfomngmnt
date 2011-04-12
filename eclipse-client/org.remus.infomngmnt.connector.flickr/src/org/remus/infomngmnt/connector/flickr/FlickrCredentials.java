@@ -17,7 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.remus.core.remote.security.CredentialProvider;
 
-
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.REST;
 import com.aetrion.flickr.RequestContext;
@@ -38,12 +37,12 @@ public class FlickrCredentials extends CredentialProvider {
 
 	public FlickrCredentials() {
 		super();
-		setGroup("flickr");
+		setGroup("flickr"); //$NON-NLS-1$
 	}
 
 	public String getRealName() {
 		try {
-			return getNode().get(REAL_NAME, "");
+			return getNode().get(REAL_NAME, ""); //$NON-NLS-1$
 		} catch (StorageException e) {
 			throw new SecurityException(e);
 		}
@@ -61,7 +60,7 @@ public class FlickrCredentials extends CredentialProvider {
 
 	public String getInternalId() {
 		try {
-			return getNode().get(INTERNAL_ID, "");
+			return getNode().get(INTERNAL_ID, ""); //$NON-NLS-1$
 		} catch (StorageException e) {
 			throw new SecurityException(e);
 		}
@@ -83,7 +82,8 @@ public class FlickrCredentials extends CredentialProvider {
 	public Flickr getFlickr() {
 
 		try {
-			this.flickr = new Flickr(FlickrPlugin.API_KEY, FlickrPlugin.SHARED_SECRET, new REST());
+			flickr = new Flickr(FlickrPlugin.API_KEY,
+					FlickrPlugin.SHARED_SECRET, new REST());
 			User user = new User();
 			user.setId(getInternalId());
 			user.setUsername(getUserName());
@@ -92,12 +92,12 @@ public class FlickrCredentials extends CredentialProvider {
 			auth.setPermission(Permission.DELETE);
 			auth.setToken(getPassword());
 			requestContext.setAuth(auth);
-			this.flickr.setAuth(auth);
+			flickr.setAuth(auth);
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return this.flickr;
+		return flickr;
 	}
 }

@@ -30,7 +30,6 @@ import org.xmind.core.IWorkbook;
 import org.xmind.ui.internal.editor.WorkbookRef;
 import org.xmind.ui.internal.editor.WorkbookRefManager;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -52,16 +51,21 @@ public class WorkbookAnalyzer implements IAnalyzer {
 	 */
 	public String analyze(final InformationUnit unit, final String attribute) {
 		WorkbookRef localworkbookRef = null;
-		InformationStructureRead read = InformationStructureRead.newSession(unit);
+		InformationStructureRead read = InformationStructureRead
+				.newSession(unit);
 		List<BinaryReference> binaryReferences = read.getBinaryReferences();
 		try {
 			if (binaryReferences.size() > 0) {
-				IFile binaryReferenceToFile = InformationUtil.binaryReferenceToFile(
-						binaryReferences.get(0), unit);
-				WorkbookRefManager localmanager = WorkbookRefManager.getInstance();
-				localworkbookRef = localmanager.addReferrer(binaryReferenceToFile, null);
-				org.xmind.core.io.IStorage localstorage = localworkbookRef.createStorage();
-				localworkbookRef.loadWorkbook(localstorage, null, new NullProgressMonitor());
+				IFile binaryReferenceToFile = InformationUtil
+						.binaryReferenceToFile(binaryReferences.get(0), unit);
+				WorkbookRefManager localmanager = WorkbookRefManager
+						.getInstance();
+				localworkbookRef = localmanager.addReferrer(
+						binaryReferenceToFile, null);
+				org.xmind.core.io.IStorage localstorage = localworkbookRef
+						.createStorage();
+				localworkbookRef.loadWorkbook(localstorage, null,
+						new NullProgressMonitor());
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
@@ -88,10 +92,10 @@ public class WorkbookAnalyzer implements IAnalyzer {
 
 	private StringBuffer appendTopic(final ITopic rootTopic) {
 		StringBuffer returnValue = new StringBuffer();
-		returnValue.append(rootTopic.getTitleText()).append(" ");
+		returnValue.append(rootTopic.getTitleText()).append(" "); //$NON-NLS-1$
 		Set<String> labels = rootTopic.getLabels();
 		for (String string : labels) {
-			returnValue.append(string).append(" ");
+			returnValue.append(string).append(" "); //$NON-NLS-1$
 		}
 		List<ITopic> allChildren = rootTopic.getAllChildren();
 		for (ITopic iTopic : allChildren) {

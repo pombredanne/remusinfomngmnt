@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class MindmapActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.mindmap";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.mindmap"; //$NON-NLS-1$
 
 	public static final String INFO_TYPE_ID = "MINDMAP"; //$NON-NLS-1$
 

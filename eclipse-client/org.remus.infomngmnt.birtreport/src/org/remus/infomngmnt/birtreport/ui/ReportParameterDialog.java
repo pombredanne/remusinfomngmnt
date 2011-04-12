@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.birtreport.messages.Messages;
 
 
 public class ReportParameterDialog extends StatusDialog {
@@ -50,7 +51,7 @@ public class ReportParameterDialog extends StatusDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Add/Edit Report parameter");
+		newShell.setText(Messages.ReportParameterDialog_AddEditParameter);
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class ReportParameterDialog extends StatusDialog {
 
 		Label label = new Label(container, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, true, 1, 1));
-		label.setText("Enter parameter name:");
+		label.setText(Messages.ReportParameterDialog_ParameterName);
 
 		this.text = new Text(container, SWT.BORDER);
 		if (this.name != null) {
@@ -81,7 +82,7 @@ public class ReportParameterDialog extends StatusDialog {
 
 		Label label2 = new Label(container, SWT.NONE);
 		label2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, true, 1, 1));
-		label2.setText("Enter parameter value:");
+		label2.setText(Messages.ReportParameterDialog_ParameterValue);
 
 		this.text2 = new Text(container, SWT.BORDER);
 		if (this.value != null) {
@@ -101,7 +102,7 @@ public class ReportParameterDialog extends StatusDialog {
 	protected void updateStatus(final boolean initial) {
 		IStatus status2set = Status.OK_STATUS;
 		if (this.text.getText().trim().length() == 0) {
-			status2set = StatusCreator.newStatus("Parameter name is mandatory");
+			status2set = StatusCreator.newStatus(Messages.ReportParameterDialog_ParameterNameMandatory);
 		}
 		if (initial) {
 			updateButtonsEnableState(status2set);

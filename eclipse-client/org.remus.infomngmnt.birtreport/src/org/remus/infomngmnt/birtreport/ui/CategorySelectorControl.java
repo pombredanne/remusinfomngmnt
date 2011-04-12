@@ -23,6 +23,7 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import org.remus.infomngmnt.birtreport.ReportActivator;
+import org.remus.infomngmnt.birtreport.messages.Messages;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
 
 /*******************************************************************************
@@ -71,7 +72,7 @@ public class CategorySelectorControl extends AbstractParameterControl {
 		}
 
 		this.browserButton = new Button(parent, SWT.NONE);
-		this.browserButton.setText("B&rowse...");
+		this.browserButton.setText(Messages.CategorySelectorControl_Browse);
 		this.browserButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				IEditingHandler editHandler = ReportActivator.getDefault().getServiceTracker()
@@ -85,8 +86,8 @@ public class CategorySelectorControl extends AbstractParameterControl {
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(parent
 						.getShell(), labelProvider, adapterFactoryContentProvider);
 				dialog.setAllowMultiple(false);
-				dialog.setTitle("Select a category");
-				dialog.setMessage("Select a cateogry");
+				dialog.setTitle(Messages.CategorySelectorControl_SelectCategory);
+				dialog.setMessage(Messages.CategorySelectorControl_SelectCategory);
 				dialog.setDoubleClickSelects(true);
 				dialog.addFilter(new ViewerFilter() {
 					@Override
@@ -98,9 +99,9 @@ public class CategorySelectorControl extends AbstractParameterControl {
 				dialog.setValidator(new ISelectionStatusValidator() {
 					public IStatus validate(final Object[] pselection) {
 						if (pselection.length == 0) {
-							return StatusCreator.newStatus("No parent category selected...");
+							return StatusCreator.newStatus(Messages.CategorySelectorControl_NoParentSelected);
 						}
-						return StatusCreator.newStatus(IStatus.OK, "", null);
+						return StatusCreator.newStatus(IStatus.OK, "", null); //$NON-NLS-1$
 					}
 				});
 				dialog.setInput(appService.getModel());

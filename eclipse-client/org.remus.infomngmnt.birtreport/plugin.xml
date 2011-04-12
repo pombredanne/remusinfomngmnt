@@ -7,7 +7,7 @@
       <information
             buildHtml="true"
             excludeFromIndex="true"
-            name="Report"
+            name="%information.name"
             presentation="org.remus.infomngmnt.birtreport.extension.BirtReportRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="REPORT">
@@ -19,7 +19,7 @@
             editpage="org.remus.infomngmnt.birtreport.ui.ReportParameterPage"
             icon="icons/parameter.gif"
             id="org.remus.infomngmnt.birtreport.editPage"
-            label="Edit Report-Parameters"
+            label="%editPage.label"
             type="REPORT">
       </editPage>
       <creationUiTrigger
@@ -59,7 +59,7 @@
       </parametertype>
       <template
             id="org.remus.infomngmnt.birtreport.blanktemplate"
-            label="Blank Report"
+            label="%blank.template.label"
             rptfile="templates/blank_report.rptdesign">
       </template>
    </extension>
@@ -71,7 +71,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/report_new.png"
             id="org.remus.infomngmnt.report.new"
-            name="Report">
+            name="%wizard.name">
       </wizard>
 	</extension>
    <extension
@@ -79,12 +79,12 @@
       <command
             defaultHandler="org.remus.infomngmnt.birtreport.handler.OpenInBrowserHandler"
             id="org.remus.infomngmnt.birtreport.openExternal"
-            name="Open Report in Browser">
+            name="%browser.command.name">
       </command>
       <command
             defaultHandler="org.remus.infomngmnt.birtreport.handler.ViewAsPdfHandler"
             id="org.remus.infomngmnt.birtreport.pdf"
-            name="View as PDF">
+            name="%pdf.command.name">
       </command>
    </extension>
    <extension

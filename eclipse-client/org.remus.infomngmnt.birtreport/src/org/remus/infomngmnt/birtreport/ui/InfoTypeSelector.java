@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import org.remus.infomngmnt.birtreport.ReportActivator;
+import org.remus.infomngmnt.birtreport.messages.Messages;
 import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
 
 /**
@@ -41,9 +42,9 @@ import org.remus.infomngmnt.birtreport.parameter.AbstractParameterControl;
  */
 public class InfoTypeSelector extends AbstractParameterControl {
 
-	public static final String INFO_TYPE = "infotype";
-	public static final String DIALOG_TITLE = "dialogtitle";
-	public static final String DIALOG_MESSAGE = "dialogmessage";
+	public static final String INFO_TYPE = "infotype"; //$NON-NLS-1$
+	public static final String DIALOG_TITLE = "dialogtitle"; //$NON-NLS-1$
+	public static final String DIALOG_MESSAGE = "dialogmessage"; //$NON-NLS-1$
 
 	private Text pathText;
 
@@ -70,7 +71,7 @@ public class InfoTypeSelector extends AbstractParameterControl {
 		IInfoType infoTypeByType = informationTypeHandler.getInfoTypeByType(this.options
 				.get(INFO_TYPE));
 		if (infoTypeByType == null) {
-			throw new IllegalArgumentException("Infotype not installed");
+			throw new IllegalArgumentException(Messages.InfoTypeSelector_InfoTypeNotInstalled);
 		}
 		this.pathText = new Text(parent, SWT.READ_ONLY | SWT.BORDER);
 		final GridData gd_feedText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -78,7 +79,7 @@ public class InfoTypeSelector extends AbstractParameterControl {
 
 		final Button browseButton = new Button(parent, SWT.NONE);
 		browseButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		browseButton.setText("Browse...");
+		browseButton.setText(Messages.InfoTypeSelector_Browse);
 		browseButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				Set<? extends EObject> allItemsByType = InformationUtil
@@ -100,17 +101,17 @@ public class InfoTypeSelector extends AbstractParameterControl {
 						.getShell(), labelProvider);
 				dialog.setAllowDuplicates(false);
 				dialog.setElements(allItemsByType.toArray());
-				dialog.setEmptySelectionMessage("Selection is required");
+				dialog.setEmptySelectionMessage(Messages.InfoTypeSelector_SelectionRequired);
 				dialog.setMultipleSelection(false);
 				if (InfoTypeSelector.this.options.get(DIALOG_TITLE) != null) {
 					dialog.setTitle(InfoTypeSelector.this.options.get(DIALOG_TITLE));
 				} else {
-					dialog.setTitle("Select a info item");
+					dialog.setTitle(Messages.InfoTypeSelector_SelectItem);
 				}
 				if (InfoTypeSelector.this.options.get(DIALOG_MESSAGE) != null) {
 					dialog.setMessage(InfoTypeSelector.this.options.get(DIALOG_MESSAGE));
 				} else {
-					dialog.setMessage("Please select a info item from the list");
+					dialog.setMessage(Messages.InfoTypeSelector_SelectItemFromList);
 				}
 				dialog.setIgnoreCase(true);
 				if (dialog.open() == IDialogConstants.OK_ID) {

@@ -37,6 +37,7 @@ import org.remus.infomngmnt.birtreport.extension.IReportTemplate;
 import org.remus.infomngmnt.birtreport.extension.ITemplateCategory;
 import org.remus.infomngmnt.birtreport.extension.ReportTemplateManager;
 import org.remus.infomngmnt.birtreport.internal.extension.ReportContentProvider;
+import org.remus.infomngmnt.birtreport.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -71,16 +72,16 @@ public class GeneralReportPage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
-		setTitle("New Report");
-		setMessage("This wizard enables you to create a new report.");
+		setTitle(Messages.GeneralReportPage_NewReport);
+		setMessage(Messages.GeneralReportPage_WizardSubtitle);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(ReportActivator.getDefault(),
-				"icons/create_report_wizard.gif"));
+				"icons/create_report_wizard.gif")); //$NON-NLS-1$
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(3, false));
-		group.setText("Name && File");
+		group.setText(Messages.GeneralReportPage_NameFile);
 		doCreateNameElements(group);
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -90,7 +91,7 @@ public class GeneralReportPage extends GeneralPage {
 		this.btnCreateFromReport = new Button(group, SWT.RADIO);
 		this.btnCreateFromReport.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3,
 				1));
-		this.btnCreateFromReport.setText("Create from Report Template");
+		this.btnCreateFromReport.setText(Messages.GeneralReportPage_CreateFromReportTemplate);
 
 		this.templateViewer = new TreeViewer(group, SWT.BORDER | SWT.FULL_SELECTION);
 		this.tree = this.templateViewer.getTree();
@@ -101,11 +102,11 @@ public class GeneralReportPage extends GeneralPage {
 		this.btnCreateFromBirt = new Button(group, SWT.RADIO);
 		this.btnCreateFromBirt
 				.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
-		this.btnCreateFromBirt.setToolTipText("Create from BIRT Report File");
-		this.btnCreateFromBirt.setText("Create from BIRT Report File");
+		this.btnCreateFromBirt.setToolTipText(Messages.GeneralReportPage_CreateFromFile);
+		this.btnCreateFromBirt.setText(Messages.GeneralReportPage_CreateFromFile);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("File");
+		nameLabel.setText(Messages.GeneralReportPage_File);
 		this.fileNameText = new Text(group, SWT.BORDER);
 		gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_nameText.horizontalSpan = 2;
@@ -115,13 +116,13 @@ public class GeneralReportPage extends GeneralPage {
 
 		this.browseButton = new Button(group, SWT.PUSH);
 		this.browseButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		this.browseButton.setText("Browse...");
+		this.browseButton.setText(Messages.GeneralReportPage_Browse);
 		this.browseButton.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
 				FileDialog fd = new FileDialog(getShell());
-				fd.setFilterExtensions(new String[] { "*.rptdesign" });
-				fd.setFilterNames(new String[] { "BIRT Reports" });
+				fd.setFilterExtensions(new String[] { "*.rptdesign" }); //$NON-NLS-1$
+				fd.setFilterNames(new String[] { Messages.GeneralReportPage_Reports });
 				String open = fd.open();
 				if (open != null) {
 					GeneralReportPage.this.fileNameText.setText(open);
@@ -216,18 +217,18 @@ public class GeneralReportPage extends GeneralPage {
 		if (this.btnCreateFromReport.getSelection()
 				&& !(((IStructuredSelection) this.templateViewer.getSelection()).getFirstElement() instanceof IReportTemplate)) {
 			if (showErrorMessage) {
-				setErrorMessage("No Template selected");
+				setErrorMessage(Messages.GeneralReportPage_NoTemplateSelected);
 				return false;
 			}
 		}
 		if (this.btnCreateFromBirt.getSelection()) {
 			if (this.fileNameText.getText().trim().length() == 0) {
-				setErrorMessage("No path specified");
+				setErrorMessage(Messages.GeneralReportPage_NoPathSpecified);
 				return false;
 			}
 			File file = new File(this.fileNameText.getText());
 			if (!file.isFile() || !file.canRead()) {
-				setErrorMessage("No valid report file");
+				setErrorMessage(Messages.GeneralReportPage_NotAValidFile);
 				return false;
 			}
 		}

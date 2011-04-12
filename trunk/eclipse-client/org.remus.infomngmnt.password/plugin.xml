@@ -5,7 +5,7 @@
          point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="false"
-            name="Password"
+            name="%information.name"
             presentation="org.remus.infomngmnt.password.AbstractInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="PASSWORD">
@@ -17,7 +17,7 @@
             editpage="org.remus.infomngmnt.password.EditPasswordPage"
             icon="icons/iconexperience/key.png"
             id="org.remus.infomngmnt.password.editPage1"
-            label="Edit Password"
+            label="%editPage.label"
             type="PASSWORD">
       </editPage>
       <creationUiTrigger
@@ -53,7 +53,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/password_new.png"
             id="org.remus.infomngmnt.password.newPasswordWizard"
-            name="Password">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -72,8 +72,8 @@
          <menu
                icon="icons/iconexperience/key.png"
                id="org.remus.infomngmnt.passwordcontextmenu"
-               label="Password"
-               mnemonic="r">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.password.copyUsername"
                   style="push">
@@ -122,23 +122,23 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.password.copyUsername"
-            name="Copy Username to Clipboard">
+            name="%copyusername.command.name">
       </command>
       <command
             id="org.remus.infomngmnt.password.copyPassword"
-            name="Copy Password to Clipboard">
+            name="%copypassword.command.name">
       </command>
       <command
             id="org.remus.infomngmnt.password.copyUrl"
-            name="Copy URL to Clipboard">
+            name="%copyurl.command.name">
       </command>
       <command
             id="org.remus.infomngmnt.password.openUrl"
-            name="Open URL in Browser">
+            name="%openurl.command.name">
       </command>
       <command
             id="org.remus.infomngmnt.password.fillCrendetials"
-            name="Fill credentials into last active window">
+            name="%fillcredentials.command.name">
       </command>
    </extension>
    <extension

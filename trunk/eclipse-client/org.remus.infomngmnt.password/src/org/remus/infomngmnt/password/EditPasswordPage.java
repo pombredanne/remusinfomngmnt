@@ -40,6 +40,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.password.generator.PasswordGenerationDialog;
+import org.remus.infomngmnt.password.messages.Messages;
 
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
@@ -80,7 +81,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		final Section section_1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("Additional");
+		section_1.setText(Messages.EditPasswordPage_Additional);
 
 		final Composite compositeAdditional = toolkit.createComposite(section_1, SWT.NONE);
 		final GridLayout gridLayoutAdditional = new GridLayout();
@@ -90,14 +91,14 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		section_1.setClient(compositeAdditional);
 
 		// Url
-		toolkit.createLabel(compositeAdditional, "Url:", SWT.NONE);
+		toolkit.createLabel(compositeAdditional, Messages.EditPasswordPage_Url, SWT.NONE);
 
 		this.textUrl = toolkit.createText(compositeAdditional, null, SWT.NONE);
 		this.textUrl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(compositeAdditional, SWT.NONE);
 
 		Hyperlink hyperlink = toolkit.createHyperlink(compositeAdditional,
-				"Open Url in System-Browser", SWT.NONE);
+				Messages.EditPasswordPage_OpenUrlInSystemBrowser, SWT.NONE);
 		hyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
@@ -111,7 +112,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.EditPasswordPage_General);
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
@@ -121,13 +122,13 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		generalSection.setClient(composite);
 
 		// Username
-		toolkit.createLabel(composite, "Username:", SWT.NONE);
+		toolkit.createLabel(composite, Messages.EditPasswordPage_Username, SWT.NONE);
 
 		this.textUsername = toolkit.createText(composite, null, SWT.NONE);
 		this.textUsername.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		// Password
-		toolkit.createLabel(composite, "Password:", SWT.NONE);
+		toolkit.createLabel(composite, Messages.EditPasswordPage_Password, SWT.NONE);
 
 		final Composite compositePassword = toolkit.createComposite(composite, SWT.NONE);
 		compositePassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -143,7 +144,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(compositePassword);
 
 		// create the button that will switch between the pages
-		final Button pageButton = toolkit.createButton(composite, "*****", SWT.TOGGLE);
+		final Button pageButton = toolkit.createButton(composite, "*****", SWT.TOGGLE); //$NON-NLS-1$
 		pageButton.setSelection(true);
 		pageButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
@@ -155,7 +156,7 @@ public class EditPasswordPage extends AbstractInformationFormPage {
 		new Label(composite, SWT.NONE);
 
 		// create the button that will open an password generation dialog
-		final Button generatePasswordButton = toolkit.createButton(composite, "Ge&nerate Password",
+		final Button generatePasswordButton = toolkit.createButton(composite, Messages.EditPasswordPage_Generate,
 				SWT.NONE);
 		generatePasswordButton
 				.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));

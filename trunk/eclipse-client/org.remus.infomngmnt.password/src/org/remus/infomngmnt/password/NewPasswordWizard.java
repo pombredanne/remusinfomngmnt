@@ -17,6 +17,8 @@ import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
+import org.remus.infomngmnt.password.messages.Messages;
+
 
 /**
  * @author Jan Hartwig <jhartwig@feb-radebeul.de>
@@ -25,7 +27,7 @@ import org.eclipse.ui.IWorkbench;
 public class NewPasswordWizard extends NewInfoObjectWizard implements INewWizard {
 
 	public NewPasswordWizard() {
-		setWindowTitle("Create new password");
+		setWindowTitle(Messages.NewPasswordWizard_Title);
 	}
 
 	@Override
@@ -36,10 +38,10 @@ public class NewPasswordWizard extends NewInfoObjectWizard implements INewWizard
 	@Override
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		super.init(workbench, selection);
-		this.page1.setTitle("Create new password");
+		this.page1.setTitle(Messages.NewPasswordWizard_Title);
 		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(PasswordPlugin
-				.getDefault(), "icons/iconexperience/wizards/create_password_wizard.png"));
-		this.page1.setMessage("This wizard enables you to store a new password.");
+				.getDefault(), "icons/iconexperience/wizards/create_password_wizard.png")); //$NON-NLS-1$
+		this.page1.setMessage(Messages.NewPasswordWizard_Subtitle);
 	}
 
 }

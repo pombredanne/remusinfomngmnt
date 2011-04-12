@@ -43,11 +43,11 @@ public class AbstractInformationRepresentation extends
 		InputStream contentsIs = getFile().getContents();
 		try {
 			templateIs = FileLocator.openStream(Platform.getBundle(PasswordPlugin.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
+					new Path("$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
 			FreemarkerRenderer.getInstance().process(PasswordPlugin.PLUGIN_ID, templateIs,
 					contentsIs, returnValue, null);
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus("Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}

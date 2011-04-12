@@ -28,6 +28,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.remus.common.core.extension.PluginRegistryDynamic;
 
 import org.remus.infomngmnt.mediaplayer.MediaPlayerActivator;
+import org.remus.infomngmnt.mediaplayer.Messages;
 import org.remus.infomngmnt.mediaplayer.extension.AbstractMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
@@ -53,21 +54,21 @@ public class MediaPlayerExtensionService extends PluginRegistryDynamic implement
 		}
 
 		public String getName() {
-			return "Unknown";
+			return Messages.MediaPlayerExtensionService_Unknown;
 		}
 
 		public String getId() {
-			return "unknown";
+			return Messages.MediaPlayerExtensionService_Unknown;
 		}
 
 		public String buildHtml(final IPath mediaFilePath, final int widht, final int height,
 				final Map<String, String> options) {
-			return NLS.bind("No player installed for mediatype {0}", mediaFilePath
+			return NLS.bind(Messages.MediaPlayerExtensionService_NoPlayerInstalled, mediaFilePath
 					.getFileExtension());
 		}
 
 		public String buildHeaderScript() {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 	};
 

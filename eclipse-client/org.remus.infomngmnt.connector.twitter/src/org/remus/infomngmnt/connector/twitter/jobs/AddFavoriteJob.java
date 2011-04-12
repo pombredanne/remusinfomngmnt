@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.remus.common.core.operation.CancelableJob;
 import org.eclipse.remus.util.StatusCreator;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 
 import twitter4j.Twitter;
@@ -31,7 +32,7 @@ public class AddFavoriteJob extends CancelableJob {
 	private final String repositoryId;
 
 	public AddFavoriteJob(final Long messageId, final String repositoryId) {
-		super("Adding to favorites");
+		super(Messages.AddFavoriteJob_AddToFavorites);
 		this.messageId = messageId;
 		this.repositoryId = repositoryId;
 	}
@@ -49,7 +50,7 @@ public class AddFavoriteJob extends CancelableJob {
 			Twitter twitterApi = TwitterUtil.getTwitterApi(this.repositoryId);
 			twitterApi.createFavorite(this.messageId);
 		} catch (Exception e) {
-			return StatusCreator.newStatus("Error adding favorite", e);
+			return StatusCreator.newStatus(Messages.AddFavoriteJob_ErrorAddingFavorites, e);
 		}
 		return Status.OK_STATUS;
 	}

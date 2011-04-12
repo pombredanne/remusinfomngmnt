@@ -56,16 +56,16 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 		this.originalPopup = ((Control) e.widget).getMenu();
 		String href = e.getHref().toString();
 		if (href.startsWith(TwitterUtil.HREF_USER_PREFIX)) {
-			String userName = e.getHref().toString().split("\\.")[1];
+			String userName = e.getHref().toString().split("\\.")[1]; //$NON-NLS-1$
 			buildUserPopup(e, userName, null);
 			((Control) e.widget).setMenu(this.userPopup);
 		} else if (href.startsWith(TwitterUtil.HREF_KEYWORD_PREFIX)) {
-			String keyWord = e.getHref().toString().split("\\.")[1];
+			String keyWord = e.getHref().toString().split("\\.")[1]; //$NON-NLS-1$
 			buildKeywordPopup(e, keyWord);
 			((Control) e.widget).setMenu(this.keyPopup);
 		} else if (href.startsWith(TwitterUtil.REPLY_USER_PREFIX)) {
-			String userName = e.getHref().toString().split("\\.")[2];
-			String replyId = e.getHref().toString().split("\\.")[1];
+			String userName = e.getHref().toString().split("\\.")[2]; //$NON-NLS-1$
+			String replyId = e.getHref().toString().split("\\.")[1]; //$NON-NLS-1$
 			buildUserPopup(e, userName, replyId);
 			((Control) e.widget).setMenu(this.userPopup);
 		}
@@ -81,7 +81,7 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 	private void buildKeywordPopup(final HyperlinkEvent e, final String keyWord) {
 		this.keyPopup = new Menu((Control) e.widget);
 		MenuItem item = new MenuItem(this.keyPopup, SWT.PUSH);
-		item.setText("Open twitter seach");
+		item.setText(org.remus.infomngmnt.connector.twitter.Messages.MessageHyperLinkAdapter_OpenTwitterSearch);
 		item.setEnabled(true);
 		item.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
@@ -90,7 +90,7 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 			}
 		});
 		MenuItem item2 = new MenuItem(this.keyPopup, SWT.PUSH);
-		item2.setText("Add a search-feed to repository");
+		item2.setText(org.remus.infomngmnt.connector.twitter.Messages.MessageHyperLinkAdapter_AddSearchFeedToRepo);
 		item2.setEnabled(TwitterUtil.onlineActionsAvailable(this.modelObject)
 				&& TwitterUtil.canAdd2Repository(SyncUtil.getRepositoryId(this.modelObject),
 						keyWord));
@@ -114,7 +114,7 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 
 		if (replyId != null) {
 			MenuItem item4 = new MenuItem(this.userPopup, SWT.PUSH);
-			item4.setText("View conversation");
+			item4.setText(org.remus.infomngmnt.connector.twitter.Messages.MessageHyperLinkAdapter_ViewConversation);
 			item4.setEnabled(TwitterUtil.onlineActionsAvailable(this.modelObject));
 			item4.addListener(SWT.Selection, new Listener() {
 				public void handleEvent(final Event event) {
@@ -127,7 +127,7 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 		}
 
 		MenuItem item = new MenuItem(this.userPopup, SWT.PUSH);
-		item.setText(NLS.bind("Follow {0}", userName));
+		item.setText(NLS.bind(org.remus.infomngmnt.connector.twitter.Messages.MessageHyperLinkAdapter_Follow, userName));
 		item.setEnabled(TwitterUtil.onlineActionsAvailable(this.modelObject));
 		item.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
@@ -136,7 +136,7 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 			}
 		});
 		MenuItem item2 = new MenuItem(this.userPopup, SWT.PUSH);
-		item2.setText(NLS.bind("Unfollow {0}", userName));
+		item2.setText(NLS.bind(org.remus.infomngmnt.connector.twitter.Messages.MessageHyperLinkAdapter_Unfollow, userName));
 		item2.setEnabled(TwitterUtil.onlineActionsAvailable(this.modelObject));
 		item2.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
@@ -145,7 +145,7 @@ public class MessageHyperLinkAdapter extends HyperlinkAdapter {
 			}
 		});
 		MenuItem item3 = new MenuItem(this.userPopup, SWT.PUSH);
-		item3.setText(NLS.bind("Send direct message", userName));
+		item3.setText(NLS.bind(org.remus.infomngmnt.connector.twitter.Messages.MessageHyperLinkAdapter_SendDirectMessage, userName));
 		item3.setEnabled(TwitterUtil.onlineActionsAvailable(this.modelObject));
 		item3.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {

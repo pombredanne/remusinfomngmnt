@@ -30,7 +30,7 @@ public class ReaderInputStream extends InputStream {
 	/** Source Reader */
 	private Reader in;
 
-	private String encoding = System.getProperty("file.encoding");
+	private String encoding = System.getProperty("file.encoding"); //$NON-NLS-1$
 
 	private byte[] slack;
 
@@ -44,7 +44,7 @@ public class ReaderInputStream extends InputStream {
 	 *            <CODE>Reader</CODE>. Must not be <code>null</code>.
 	 */
 	public ReaderInputStream(final Reader reader) {
-		this.in = reader;
+		in = reader;
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class ReaderInputStream extends InputStream {
 	public ReaderInputStream(final Reader reader, final String encoding) {
 		this(reader);
 		if (encoding == null) {
-			throw new IllegalArgumentException("encoding must not be null");
+			throw new IllegalArgumentException("encoding must not be null"); //$NON-NLS-1$
 		} else {
 			this.encoding = encoding;
 		}
@@ -75,15 +75,15 @@ public class ReaderInputStream extends InputStream {
 	 */
 	@Override
 	public synchronized int read() throws IOException {
-		if (this.in == null) {
-			throw new IOException("Stream Closed");
+		if (in == null) {
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
 
 		byte result;
-		if (this.slack != null && this.begin < this.slack.length) {
-			result = this.slack[this.begin];
-			if (++this.begin == this.slack.length) {
-				this.slack = null;
+		if (slack != null && begin < slack.length) {
+			result = slack[begin];
+			if (++begin == slack.length) {
+				slack = null;
 			}
 		} else {
 			byte[] buf = new byte[1];
@@ -115,31 +115,32 @@ public class ReaderInputStream extends InputStream {
 	 *                if an error occurs
 	 */
 	@Override
-	public synchronized int read(final byte[] b, final int off, int len) throws IOException {
-		if (this.in == null) {
-			throw new IOException("Stream Closed");
+	public synchronized int read(final byte[] b, final int off, int len)
+			throws IOException {
+		if (in == null) {
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
 
-		while (this.slack == null) {
+		while (slack == null) {
 			char[] buf = new char[len]; // might read too much
-			int n = this.in.read(buf);
+			int n = in.read(buf);
 			if (n == -1) {
 				return -1;
 			}
 			if (n > 0) {
-				this.slack = new String(buf, 0, n).getBytes(this.encoding);
-				this.begin = 0;
+				slack = new String(buf, 0, n).getBytes(encoding);
+				begin = 0;
 			}
 		}
 
-		if (len > this.slack.length - this.begin) {
-			len = this.slack.length - this.begin;
+		if (len > slack.length - begin) {
+			len = slack.length - begin;
 		}
 
-		System.arraycopy(this.slack, this.begin, b, off, len);
+		System.arraycopy(slack, begin, b, off, len);
 
-		if ((this.begin += len) >= this.slack.length) {
-			this.slack = null;
+		if ((begin += len) >= slack.length) {
+			slack = null;
 		}
 
 		return len;
@@ -155,7 +156,7 @@ public class ReaderInputStream extends InputStream {
 	@Override
 	public synchronized void mark(final int limit) {
 		try {
-			this.in.mark(limit);
+			in.mark(limit);
 		} catch (IOException ioe) {
 			throw new RuntimeException(ioe.getMessage());
 		}
@@ -168,13 +169,13 @@ public class ReaderInputStream extends InputStream {
 	 */
 	@Override
 	public synchronized int available() throws IOException {
-		if (this.in == null) {
-			throw new IOException("Stream Closed");
+		if (in == null) {
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
-		if (this.slack != null) {
-			return this.slack.length - this.begin;
+		if (slack != null) {
+			return slack.length - begin;
 		}
-		if (this.in.ready()) {
+		if (in.ready()) {
 			return 1;
 		} else {
 			return 0;
@@ -197,11 +198,11 @@ public class ReaderInputStream extends InputStream {
 	 */
 	@Override
 	public synchronized void reset() throws IOException {
-		if (this.in == null) {
-			throw new IOException("Stream Closed");
+		if (in == null) {
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
-		this.slack = null;
-		this.in.reset();
+		slack = null;
+		in.reset();
 	}
 
 	/**
@@ -212,10 +213,10 @@ public class ReaderInputStream extends InputStream {
 	 */
 	@Override
 	public synchronized void close() throws IOException {
-		if (this.in != null) {
-			this.in.close();
-			this.slack = null;
-			this.in = null;
+		if (in != null) {
+			in.close();
+			slack = null;
+			in = null;
 		}
 	}
 }

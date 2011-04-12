@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.ui.ShrinkURLUtils;
 
 /**
@@ -57,7 +58,7 @@ public class URLShorterSection extends AbstractTraySection {
 		gridLayout.marginTop = 0;
 		gridLayout.marginWidth = 0;
 		parent.setLayout(gridLayout);
-		this.urlText = this.toolkit.createText(parent, "", SWT.NO_BACKGROUND);
+		this.urlText = this.toolkit.createText(parent, "", SWT.NO_BACKGROUND); //$NON-NLS-1$
 
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gridData.widthHint = 130;
@@ -92,7 +93,7 @@ public class URLShorterSection extends AbstractTraySection {
 					Notification notification = InfomngmntFactory.eINSTANCE.createNotification();
 					if (event.getResult().isOK()) {
 						notification.setTimeStamp(new Date());
-						notification.setMessage("The shortened URL is now in your clipboard");
+						notification.setMessage(Messages.URLShorterSection_InClipboard);
 						notification.setImportance(NotificationImportance.LOW);
 						notification.setSeverity(Severity.OK);
 						UIUtil.getDisplay().asyncExec(new Runnable() {
@@ -116,7 +117,7 @@ public class URLShorterSection extends AbstractTraySection {
 
 					} else {
 						notification.setTimeStamp(new Date());
-						notification.setMessage("Error while creating shortened URL.");
+						notification.setMessage(Messages.URLShorterSection_ErrorShortening);
 						notification.setImportance(NotificationImportance.MEDIUM);
 						notification.setSeverity(Severity.ERROR);
 					}
@@ -141,13 +142,13 @@ public class URLShorterSection extends AbstractTraySection {
 		gridData.heightHint = SWT.DEFAULT;
 		createControl.setLayoutData(gridData);
 
-		IAction searchAction = new Action("", IAction.AS_PUSH_BUTTON) {
+		IAction searchAction = new Action("", IAction.AS_PUSH_BUTTON) { //$NON-NLS-1$
 			@Override
 			public void run() {
 				new ShrinkURLJob(URLShorterSection.this.urlText.getText()).schedule();
 			}
 		};
-		searchAction.setToolTipText("Search");
+		searchAction.setToolTipText(Messages.URLShorterSection_Search);
 		searchAction.setImageDescriptor(CommonImageRegistry.getInstance().getDescriptor(
 				CommonImageRegistry.START_TASK));
 		returnValue.add(searchAction);
@@ -183,7 +184,7 @@ public class URLShorterSection extends AbstractTraySection {
 		static Object FAMILY = new Object();
 
 		public ShrinkURLJob(final String url) {
-			super("Shring url");
+			super(Messages.URLShorterSection_ShrinkUrl);
 			this.url = url;
 		}
 
@@ -197,7 +198,7 @@ public class URLShorterSection extends AbstractTraySection {
 			try {
 				this.shortenURl = ShrinkURLUtils.getBitLyUrl(this.url);
 			} catch (Exception e) {
-				return StatusCreator.newStatus("Error creating shortened url", e);
+				return StatusCreator.newStatus(Messages.URLShorterSection_ErrorShortening, e);
 			}
 			return Status.OK_STATUS;
 

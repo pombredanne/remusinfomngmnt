@@ -22,6 +22,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 
@@ -76,10 +77,10 @@ public class MessageComposite extends Composite {
 		twd_metaFormText.grabHorizontal = true;
 		twd_metaFormText.colspan = 2;
 		this.metaFormText.setLayoutData(twd_metaFormText);
-		this.metaFormText.setFont(ResourceManager.getFont("Arial", 8, SWT.ITALIC));
+		this.metaFormText.setFont(ResourceManager.getFont("Arial", 8, SWT.ITALIC)); //$NON-NLS-1$
 
 		if (renderPhoto) {
-			this.photoLabel = this.toolkit.createLabel(this, "n.a.", SWT.NONE);
+			this.photoLabel = this.toolkit.createLabel(this, Messages.MessageComposite_Na, SWT.NONE);
 			final TableWrapData twd_photo = new TableWrapData(TableWrapData.LEFT, TableWrapData.TOP);
 			twd_photo.rowspan = 2;
 			twd_photo.maxWidth = 48;
@@ -96,7 +97,7 @@ public class MessageComposite extends Composite {
 			twd_formText.colspan = 2;
 		}
 		this.messageText.setLayoutData(twd_formText);
-		this.messageText.setText("FormText", false, false);
+		this.messageText.setText("FormText", false, false); //$NON-NLS-1$
 
 		if (renderToolbar) {
 			final ToolBar toolBar = new ToolBar(this, SWT.NONE);
@@ -151,7 +152,7 @@ public class MessageComposite extends Composite {
 		// direct messages have no source type
 		InformationUnit childByType = InformationUtil.getChildByType(message,
 				TwitterActivator.MESSAGE_SRC_TYPE);
-		String sourceLink = childByType != null ? childByType.getStringValue() : "unknown";
+		String sourceLink = childByType != null ? childByType.getStringValue() : Messages.MessageComposite_unknown;
 
 		// reply to - user
 		InformationUnit reply = InformationUtil.getChildByType(message, TwitterActivator.REPLY_ID);
@@ -194,7 +195,7 @@ public class MessageComposite extends Composite {
 						((TableWrapData) MessageComposite.this.photoLabel.getLayoutData()).heightHint = image
 								.getImageData().height;
 						;
-						MessageComposite.this.photoLabel.setText("");
+						MessageComposite.this.photoLabel.setText(Messages.MessageComposite_4);
 						MessageComposite.this.photoLabel.setImage(image);
 
 					}
@@ -206,33 +207,33 @@ public class MessageComposite extends Composite {
 			final String sourceLink, final Long internalId, final String replyId,
 			final Long replyStatusId) {
 		StringWriter sw = new StringWriter();
-		sw.append("<form><p vspace=\"false\">");
-		sw.append("<a href=\"user." + userId + "\">").append(userName).append("</a>, ");
+		sw.append("<form><p vspace=\"false\">"); //$NON-NLS-1$
+		sw.append("<a href=\"user." + userId + "\">").append(userName).append("</a>, "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		sw.append(SDF.format(dateValue));
 		if (this.renderSource) {
-			sw.append(" via ");
+			sw.append(Messages.MessageComposite_via);
 			if (sourceLink == null || sourceLink.trim().length() == 0) {
-				sw.append("Unknown");
+				sw.append(Messages.MessageComposite_Unknown);
 			} else {
 				// RIMCONNECTORS-17 Some source providers sent invalid urls.
-				String replaceAll = sourceLink.replaceAll("&", "&amp;");
+				String replaceAll = sourceLink.replaceAll("&", "&amp;"); //$NON-NLS-1$ //$NON-NLS-2$
 				sw.append(replaceAll);
 			}
 		}
 		if (replyId != null) {
-			sw.append(" in reply to ").append(
-					"<a href=\"reply." + replyStatusId + "." + replyId + "\">").append(replyId)
-					.append("</a>");
+			sw.append(Messages.MessageComposite_InReplyTo).append(
+					"<a href=\"reply." + replyStatusId + "." + replyId + "\">").append(replyId) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					.append("</a>"); //$NON-NLS-1$
 		}
-		sw.append("</p></form>");
+		sw.append("</p></form>"); //$NON-NLS-1$
 		try {
 			this.metaFormText.setText(sw.toString(), true, false);
 			this.metaFormText.setData(TwitterActivator.MESSAGE_INTERNAL_ID, internalId);
 		} catch (Exception e) {
 			StringWriter errorSw = new StringWriter();
-			errorSw.append("<form><p vspace=\"false\">");
-			errorSw.append("Ups. There was an error while rendering this twitter status...");
-			errorSw.append("</p></form>");
+			errorSw.append("<form><p vspace=\"false\">"); //$NON-NLS-1$
+			errorSw.append(Messages.MessageComposite_ErrorRendering);
+			errorSw.append("</p></form>"); //$NON-NLS-1$
 			this.metaFormText.setText(errorSw.toString(), true, false);
 			this.metaFormText.setData(TwitterActivator.MESSAGE_INTERNAL_ID, internalId);
 		}

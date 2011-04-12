@@ -33,7 +33,6 @@ import org.eclipse.remus.common.core.util.ResourceUtil;
 import org.eclipse.remus.common.io.transfer.DownloadFileJob;
 import org.eclipse.remus.core.remote.sync.SyncUtil;
 import org.eclipse.remus.model.remote.IRepository;
-
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
 
@@ -50,29 +49,33 @@ public class TwitterImageCache {
 
 	final ISchedulingRule mutexRule = new ISchedulingRule() {
 		public boolean isConflicting(final ISchedulingRule rule) {
-			return rule == TwitterImageCache.this.mutexRule;
+			return rule == mutexRule;
 		}
 
 		public boolean contains(final ISchedulingRule rule) {
-			return rule == TwitterImageCache.this.mutexRule
-					|| rule == ResourcesPlugin.getWorkspace().getRoot().getProject(
-							ResourceUtil.PROJECT_NAME_TMP);
+			return rule == mutexRule
+					|| rule == ResourcesPlugin.getWorkspace().getRoot()
+							.getProject(ResourceUtil.PROJECT_NAME_TMP);
 		}
 	};
 
 	public void checkCache(final String userName, final URL imageUrl,
 			final ImageCacheCallBack callback) {
-		File file = TwitterActivator.getDefault().getStateLocation().append("avatars").toFile();
+		File file = TwitterActivator.getDefault().getStateLocation()
+				.append("avatars").toFile(); //$NON-NLS-1$
 		if (!file.exists()) {
 			file.mkdir();
 		}
-		final File file2 = TwitterActivator.getDefault().getStateLocation().append("avatars")
-				.append(userName).addFileExtension("avatar").toFile();
+		final File file2 = TwitterActivator.getDefault().getStateLocation()
+				.append("avatars") //$NON-NLS-1$
+				.append(userName).addFileExtension("avatar").toFile(); //$NON-NLS-1$
 		if (!file2.exists()) {
 			try {
 				file2.createNewFile();
-				final File tempFile = File.createTempFile("avatar",
-						org.eclipse.remus.resources.util.ResourceUtil.TMPFILE_FILE_EXTENSION);
+				final File tempFile = File
+						.createTempFile(
+								"avatar", //$NON-NLS-1$
+								org.eclipse.remus.resources.util.ResourceUtil.TMPFILE_FILE_EXTENSION);
 				DownloadFileJob job = new DownloadFileJob(imageUrl, tempFile,
 						getFileReceiveAdapter());
 				job.schedule();
@@ -80,7 +83,8 @@ public class TwitterImageCache {
 					@Override
 					public void done(final IJobChangeEvent event) {
 						try {
-							FileOutputStream fileOutputStream = new FileOutputStream(file2);
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file2);
 							InputStream contents = new FileInputStream(tempFile);
 							StreamUtil.stream(contents, fileOutputStream);
 							fileOutputStream.flush();
@@ -107,14 +111,16 @@ public class TwitterImageCache {
 
 	}
 
-	public void getImageByUser(final String getDefault, final String repositoryId,
-			final ImageCacheCallBack callback) {
-		File file = TwitterActivator.getDefault().getStateLocation().append("avatars").toFile();
+	public void getImageByUser(final String getDefault,
+			final String repositoryId, final ImageCacheCallBack callback) {
+		File file = TwitterActivator.getDefault().getStateLocation()
+				.append("avatars").toFile(); //$NON-NLS-1$
 		if (!file.exists()) {
 			file.mkdir();
 		}
-		final File file2 = TwitterActivator.getDefault().getStateLocation().append("avatars")
-				.append(getDefault).addFileExtension("avatar").toFile();
+		final File file2 = TwitterActivator.getDefault().getStateLocation()
+				.append("avatars") //$NON-NLS-1$
+				.append(getDefault).addFileExtension("avatar").toFile(); //$NON-NLS-1$
 		if (file2.exists()) {
 			if (callback != null) {
 				callback.callBack(file2.getAbsolutePath());
@@ -124,16 +130,19 @@ public class TwitterImageCache {
 					.getRepositoryImplemenationByRepositoryId(repositoryId);
 			if (repositoryImplementation != null
 					&& repositoryImplementation instanceof TwitterRepository) {
-				Twitter api = ((TwitterRepository) repositoryImplementation).getApi();
+				Twitter api = ((TwitterRepository) repositoryImplementation)
+						.getApi();
 				try {
-					URL profileImageUrl = api.showUser(getDefault).getProfileImageURL();
-					checkCache(getDefault, profileImageUrl, new ImageCacheCallBack() {
-						public void callBack(final String path2File) {
-							if (callback != null) {
-								callback.callBack(path2File);
-							}
-						}
-					});
+					URL profileImageUrl = api.showUser(getDefault)
+							.getProfileImageURL();
+					checkCache(getDefault, profileImageUrl,
+							new ImageCacheCallBack() {
+								public void callBack(final String path2File) {
+									if (callback != null) {
+										callback.callBack(path2File);
+									}
+								}
+							});
 
 				} catch (TwitterException e) {
 					if (callback != null) {
@@ -145,16 +154,17 @@ public class TwitterImageCache {
 	}
 
 	private IRetrieveFileTransferContainerAdapter getFileReceiveAdapter() {
-		if (this.container == null) {
+		if (container == null) {
 			try {
-				this.container = ContainerFactory.getDefault().createContainer();
+				container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container", e);
+				throw new RuntimeException(
+						"Error initializing sync-container", e); //$NON-NLS-1$
 			}
-			this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
+			fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) container
 					.getAdapter(IRetrieveFileTransferContainerAdapter.class);
 		}
-		return this.fileReceiveAdapter;
+		return fileReceiveAdapter;
 	}
 
 }

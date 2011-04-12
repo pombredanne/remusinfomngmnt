@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.remus.util.StatusCreator;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 
 import twitter4j.Twitter;
@@ -43,7 +44,7 @@ public class SendMessageJob extends Job {
 
 	public SendMessageJob(final String text, final String repositoryId, final Long replyId,
 			final String userId) {
-		super("Sending message");
+		super(Messages.SendMessageJob_SendingMessage);
 		this.text = text;
 		this.repositoryId = repositoryId;
 		this.replyId = replyId;
@@ -58,7 +59,7 @@ public class SendMessageJob extends Job {
 	 */
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		monitor.beginTask("Sending message", IProgressMonitor.UNKNOWN);
+		monitor.beginTask(Messages.SendMessageJob_SendingMessage, IProgressMonitor.UNKNOWN);
 		try {
 			Twitter twitterApi = TwitterUtil.getTwitterApi(this.repositoryId);
 			if (this.replyId != null) {
@@ -69,7 +70,7 @@ public class SendMessageJob extends Job {
 				twitterApi.updateStatus(this.text);
 			}
 		} catch (TwitterException e) {
-			return StatusCreator.newStatus("Error while sending the message", e);
+			return StatusCreator.newStatus(Messages.SendMessageJob_ErrorSending, e);
 		}
 		return Status.OK_STATUS;
 	}

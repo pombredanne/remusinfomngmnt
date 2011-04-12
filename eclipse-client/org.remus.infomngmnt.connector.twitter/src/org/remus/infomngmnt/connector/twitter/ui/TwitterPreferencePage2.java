@@ -25,6 +25,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.forms.widgets.FormText;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
 
@@ -68,12 +69,12 @@ public class TwitterPreferencePage2 extends FieldEditorPreferencePage implements
 		this.createGroup = new Group(fieldEditorParent, SWT.NONE);
 		this.createGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		this.createGroup.setText("Update intervalls (in minutes)");
+		this.createGroup.setText(Messages.TwitterPreferencePage2_UpdateInterval);
 
 		FormText formText = new FormText(fieldEditorParent, SWT.WRAP);
 		formText
 				.setText(
-						"Setting to high refresh intervalls will bann you from twitter. You can use 100 calls in one hour, but remember that every refresh, every tweet every follow will need at least 1 api call.",
+						Messages.TwitterPreferencePage2_Warning,
 						false, false);
 		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, false);
 		layoutData.widthHint = 150;
@@ -93,25 +94,25 @@ public class TwitterPreferencePage2 extends FieldEditorPreferencePage implements
 	@Override
 	protected void createFieldEditors() {
 		IntegerFieldEditor friendsFeed = new IntegerFieldEditor(
-				TwitterPreferenceInitializer.RELOAD_ALL_FRIENDS_FEED, "Friends feed",
+				TwitterPreferenceInitializer.RELOAD_ALL_FRIENDS_FEED, Messages.TwitterPreferencePage2_FriendsFeed,
 				this.createGroup);
 		friendsFeed.fillIntoGrid(this.createGroup, 2);
 		IntegerFieldEditor repliesFeed = new IntegerFieldEditor(
-				TwitterPreferenceInitializer.RELOAD_REPLIES_FEED, "Replies feed", this.createGroup);
+				TwitterPreferenceInitializer.RELOAD_REPLIES_FEED, Messages.TwitterPreferencePage2_RepliesFeed, this.createGroup);
 		repliesFeed.fillIntoGrid(this.createGroup, 2);
 		IntegerFieldEditor directMessagesFeed = new IntegerFieldEditor(
-				TwitterPreferenceInitializer.RELOAD_DIRECT_MESSAGES_FEED, "Direct messages feed",
+				TwitterPreferenceInitializer.RELOAD_DIRECT_MESSAGES_FEED, Messages.TwitterPreferencePage2_DirectMessageFeed,
 				this.createGroup);
 		directMessagesFeed.fillIntoGrid(this.createGroup, 2);
 		IntegerFieldEditor searchFeeds = new IntegerFieldEditor(
-				TwitterPreferenceInitializer.RELOAD_SEARCH_FEEDS, "Search feeds", this.createGroup);
+				TwitterPreferenceInitializer.RELOAD_SEARCH_FEEDS, Messages.TwitterPreferencePage2_SearchFeeds, this.createGroup);
 		searchFeeds.fillIntoGrid(this.createGroup, 2);
 		IntegerFieldEditor shownMessage = new IntegerFieldEditor(
-				TwitterPreferenceInitializer.SHOWN_MESSAGE, "Visible Messages in Editor",
+				TwitterPreferenceInitializer.SHOWN_MESSAGE, Messages.TwitterPreferencePage2_VisibleMessages,
 				this.createGroup);
 		shownMessage.fillIntoGrid(this.createGroup, 2);
 		IntegerFieldEditor savedMessage = new IntegerFieldEditor(
-				TwitterPreferenceInitializer.SAVED_MESSAGES, "Saved Messages in Editor",
+				TwitterPreferenceInitializer.SAVED_MESSAGES, Messages.TwitterPreferencePage2_SavedMessages,
 				this.createGroup);
 		savedMessage.fillIntoGrid(this.createGroup, 2);
 		addField(friendsFeed);

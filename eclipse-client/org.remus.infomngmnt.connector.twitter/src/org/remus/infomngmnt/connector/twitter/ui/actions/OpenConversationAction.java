@@ -27,6 +27,7 @@ import org.eclipse.remus.core.remote.sync.SyncUtil;
 import org.eclipse.remus.ui.progress.CancelableRunnable;
 import org.eclipse.remus.util.StatusCreator;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.ui.ConversationPopup;
@@ -45,13 +46,13 @@ public class OpenConversationAction extends Action {
 
 	public OpenConversationAction(final String userId, final String replyId,
 			final InformationUnit informationUnit) {
-		super("Open conversation action");
+		super(Messages.OpenConversationAction_OpenConversation);
 		this.userId = userId;
 		this.replyId = replyId;
 		this.informationUnit = informationUnit;
 		this.repositoryId = SyncUtil.getRepositoryId(informationUnit);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(TwitterActivator.getDefault(),
-				"icons/iconexperience/user_into.png"));
+				"icons/iconexperience/user_into.png")); //$NON-NLS-1$
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class OpenConversationAction extends Action {
 
 			@Override
 			protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-				monitor.beginTask("Searching for replies", IProgressMonitor.UNKNOWN);
+				monitor.beginTask(Messages.OpenConversationAction_SearchForReplies, IProgressMonitor.UNKNOWN);
 				Twitter twitterApi = TwitterUtil
 						.getTwitterApi(OpenConversationAction.this.repositoryId);
 				try {
@@ -74,7 +75,7 @@ public class OpenConversationAction extends Action {
 						messages.add(TwitterUtil.buildMessage(showStatus));
 					}
 				} catch (Exception e) {
-					return StatusCreator.newStatus("Error loading conversation", e);
+					return StatusCreator.newStatus(Messages.OpenConversationAction_ErrorLoadingConversation, e);
 				}
 				return org.eclipse.core.runtime.Status.OK_STATUS;
 			}

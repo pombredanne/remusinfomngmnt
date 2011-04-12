@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.connector.twitter.TwitterRepository"
             credentialprovider="org.remus.infomngmnt.connector.twitter.TwitterCredentials"
             id="org.remus.infomngmnt.connector.twitter.twitterConnector"
-            name="Twitter">
+            name="%repository-connector.name">
          <changeDefinition
                id="org.remus.infomngmnt.connector.twitter.changeDefinition"
                informationType="TWITTER">
@@ -31,21 +31,21 @@
       <information
             buildHtml="false"
             excludeFromIndex="false"
-            name="Twitter Feed"
+            name="%feed.information.name"
             presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="TWITTER">
       </information>
       <information
             excludeFromIndex="true"
-            name="Twitter User Log"
+            name="%log.information.name"
             presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterUserInfoRepresentation"
             structuredefinition="userlogdefinition.xmi"
             type="TWITTER-USER">
       </information>
       <information
             excludeFromIndex="true"
-            name="Twitter User-Details"
+            name="%details.information.name"
             presentation="org.remus.infomngmnt.connector.twitter.infotype.TwitterDetailledInfoRepresentation"
             structuredefinition="detaildefinition.xmi"
             type="TWITTER-DETAIL">
@@ -57,7 +57,7 @@
             editpage="org.remus.infomngmnt.connector.twitter.ui.TwitterEditPage"
             icon="icons/iconexperience/messages.png"
             id="org.remus.infomngmnt.connector.twitter.ui.TwitterEditPage"
-            label="Feed"
+            label="%editPage.label"
             type="TWITTER">
       </editPage>
    </extension>
@@ -74,8 +74,8 @@
          <menu
                icon="icons/twitter.png"
                id="org.remus.infomngmnt.twitter.contextmenu"
-               label="Twitter"
-               mnemonic="l">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomnmnt.connector.twitter.tweet"
                   style="push">
@@ -110,7 +110,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomnmnt.connector.twitter.tweet"
-            name="Tweet">
+            name="%command.name">
       </command>
    </extension>
    <extension
@@ -153,14 +153,14 @@
       <sectionBox
             id="org.remus.infomngmnt.connector.twitter.sectionBox"
             multiple="true"
-            name="Twitter"
+            name="%twitter.sectionBox.name"
             preferencesclass="org.remus.infomngmnt.connector.twitter.desktop.TwitterSectionPreferences"
             sectionControl="org.remus.infomngmnt.connector.twitter.desktop.TwitterTraySection">
       </sectionBox>
       <sectionBox
             id="org.remus.infomngmnt.connector.twitter.urlShorter"
             multiple="false"
-            name="Short URL"
+            name="%shorturl.sectionBox.name"
             sectionControl="org.remus.infomngmnt.connector.twitter.desktop.URLShorterSection">
       </sectionBox>
    </extension>
@@ -169,23 +169,23 @@
       <job
             class="org.remus.infomngmnt.connector.twitter.jobs.RefreshAllFriendsJob"
             id="org.remus.infomngmnt.connector.twitter.sync"
-            name="Twitter All Friends Refresh">
+            name="%job.name">
       </job>
       <job
             class="org.remus.infomngmnt.connector.twitter.jobs.RefreshDirectMessagesJob"
             id="org.remus.infomngmnt.connector.twitter.directmessagesync"
-            name="Twitter Direct Messages Refresh">
+            name="%job.name.0">
       </job>
       <job
             class="org.remus.infomngmnt.connector.twitter.jobs.RefreshRepliesJob"
             id="org.remus.infomngmnt.connector.twitter.repliessync"
-            name="Twitter Replies Refresh">
+            name="%job.name.1">
       </job>
       <job
             class="org.remus.infomngmnt.connector.twitter.jobs.DeleteOldMessagesJob"
             id="org.remus.infomngmnt.connector.twitter.deleteOldMessages"
             interval="30"
-            name="DeleteOldMessageJob">
+            name="%job.name.2">
       </job>
    </extension>
    <extension
@@ -194,7 +194,7 @@
             category="org.eclipse.remus.ui.repositories"
             class="org.remus.infomngmnt.connector.twitter.ui.TwitterPreferencePage2"
             id="org.remus.infomngmnt.connector.twitter"
-            name="Twitter">
+            name="%page.name">
       </page>
    </extension>
    <extension

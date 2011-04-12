@@ -18,6 +18,7 @@ import org.eclipse.remus.common.core.util.StringUtils;
 import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.common.ui.image.ResourceManager;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.jobs.SendMessageJob;
 import org.remus.infomngmnt.connector.twitter.ui.TweetDialog;
@@ -35,15 +36,15 @@ public class RetweetAction extends Action {
 		this.id2 = id;
 		this.message = message;
 		this.repositoryId = repositoryId;
-		setText("Retweet");
+		setText(Messages.RetweetAction_Retweet);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(TwitterActivator.getDefault(),
-				"icons/iconexperience/nav_right_yellow.png"));
+				"icons/iconexperience/nav_right_yellow.png")); //$NON-NLS-1$
 	}
 
 	@Override
 	public void run() {
 		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), StringUtils
-				.join("RT @", this.id2, ": ", this.message), this.repositoryId);
+				.join("RT @", this.id2, ": ", this.message), this.repositoryId); //$NON-NLS-1$ //$NON-NLS-2$
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			SendMessageJob job = new SendMessageJob(dialog.getMessage(), this.repositoryId);
 			job.setUser(true);

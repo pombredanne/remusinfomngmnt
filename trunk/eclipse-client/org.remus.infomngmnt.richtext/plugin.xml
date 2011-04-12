@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.remus.core.informationType">
       <information
-            name="Rich Text"
+            name="%information.name"
             presentation="org.remus.infomngmnt.richtext.presentation.RichTextPresentation"
             structuredefinition="structuredefinition.xmi"
             type="HTML">
@@ -16,7 +16,7 @@
             editpage="org.remus.infomngmnt.richtext.editor.RichTextEditPage"
             icon="icons/iconexperience/richtext_edit.png"
             id="org.remus.infomngmnt.richtext.editor.RichTextEditPage"
-            label="Edit RichText"
+            label="%editPage.label"
             type="HTML">
       </editPage>
       <creationUiTrigger
@@ -32,7 +32,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/richtext_new.png"
             id="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
-            name="Rich Text">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension

@@ -41,8 +41,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-
 import org.remus.infomngmnt.connector.folder.FolderConnector;
+import org.remus.infomngmnt.connector.folder.Messages;
 
 public class FolderConnectionWizardPage extends WizardPage {
 
@@ -55,9 +55,9 @@ public class FolderConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public FolderConnectionWizardPage() {
-		super("folderWizardPage");
-		setTitle("Folder Connector");
-		setDescription("Enter the path to the shared folder");
+		super("folderWizardPage"); //$NON-NLS-1$
+		setTitle(Messages.FolderConnectionWizardPage_ConnectorName);
+		setDescription(Messages.FolderConnectionWizardPage_WizardSubtitle);
 
 	}
 
@@ -78,31 +78,34 @@ public class FolderConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.FolderConnectionWizardPage_Name);
 
-		this.nameText = new Text(group, SWT.BORDER);
-		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		nameText = new Text(group, SWT.BORDER);
+		nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+				2, 1));
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("Path:");
+		apiurlLabel.setText(Messages.FolderConnectionWizardPage_Path);
 
-		this.folderUrl = new Text(group, SWT.BORDER);
-		this.folderUrl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		folderUrl = new Text(group, SWT.BORDER);
+		folderUrl
+				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Button btnBrowse = new Button(group, SWT.NONE);
 
-		GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gridData.widthHint = 80;
+		GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1,
+				1);
+		// gridData.widthHint = 80;
 		btnBrowse.setLayoutData(gridData);
 
-		btnBrowse.setText("B&rowse...");
+		btnBrowse.setText(Messages.FolderConnectionWizardPage_Browse);
 		btnBrowse.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				DirectoryDialog dd = new DirectoryDialog(getShell());
-				dd.setMessage("Select a shared folder");
+				dd.setMessage(Messages.FolderConnectionWizardPage_SelectSharedFolder);
 				String open = dd.open();
 				if (open != null) {
-					FolderConnectionWizardPage.this.repository.setUrl(open);
+					repository.setUrl(open);
 				}
 			}
 		});
@@ -115,50 +118,57 @@ public class FolderConnectionWizardPage extends WizardPage {
 
 	public void bindValuesToUi() {
 		DataBindingContext ctx = new DataBindingContext();
-		ISWTObservableValue observeText = SWTObservables.observeText(this.nameText, SWT.Modify);
-		IObservableValue observeValue = EMFObservables.observeValue(this.repository,
+		ISWTObservableValue observeText = SWTObservables.observeText(nameText,
+				SWT.Modify);
+		IObservableValue observeValue = EMFObservables.observeValue(repository,
 				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
 		ctx.bindValue(observeText, observeValue);
-		ISWTObservableValue observeText2 = SWTObservables.observeDelayedValue(500, SWTObservables
-				.observeText(this.folderUrl, SWT.Modify));
+		ISWTObservableValue observeText2 = SWTObservables.observeDelayedValue(
+				500, SWTObservables.observeText(folderUrl, SWT.Modify));
 		observeText2.addValueChangeListener(new IValueChangeListener() {
 
 			public void handleValueChange(final ValueChangeEvent event) {
-				final String newString = (String) event.getObservableValue().getValue();
+				final String newString = (String) event.getObservableValue()
+						.getValue();
 				try {
-					getContainer().run(true, false, new IRunnableWithProgress() {
-						public void run(final IProgressMonitor monitor)
-								throws InvocationTargetException, InterruptedException {
-							IStatus validate = ((FolderConnector) FolderConnectionWizardPage.this.repositoryDefinition)
-									.validate(newString);
-							if (!validate.isOK()) {
-								throw new InvocationTargetException(validate.getException());
-							}
+					getContainer().run(true, false,
+							new IRunnableWithProgress() {
+								public void run(final IProgressMonitor monitor)
+										throws InvocationTargetException,
+										InterruptedException {
+									IStatus validate = ((FolderConnector) repositoryDefinition)
+											.validate(newString);
+									if (!validate.isOK()) {
+										throw new InvocationTargetException(
+												validate.getException());
+									}
 
-						}
-					});
+								}
+							});
 					setErrorMessage(null);
 					setPageComplete(true);
 				} catch (InvocationTargetException e) {
-					setErrorMessage("No valid folder selected");
+					setErrorMessage(Messages.FolderConnectionWizardPage_NoValidFolder);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		IObservableValue observeValue2 = EMFObservables.observeValue(this.repository,
-				InfomngmntPackage.Literals.REMOTE_OBJECT__URL);
+		IObservableValue observeValue2 = EMFObservables.observeValue(
+				repository, InfomngmntPackage.Literals.REMOTE_OBJECT__URL);
 		ctx.bindValue(observeText2, observeValue2);
 
 	}
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
-				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		IRepositoryExtensionService extensionService = RemoteUiActivator
+				.getDefault().getServiceTracker()
+				.getService(IRepositoryExtensionService.class);
 		try {
-			this.repositoryDefinition = extensionService.getItemByRepository(repository);
+			repositoryDefinition = extensionService
+					.getItemByRepository(repository);
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

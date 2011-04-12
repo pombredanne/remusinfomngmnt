@@ -21,6 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.calendar.model.Task;
 
 public class DeleteTaskCommand extends Command {
@@ -34,8 +35,8 @@ public class DeleteTaskCommand extends Command {
 	public void execute() {
 		Shell shell = new Shell(Display.getCurrent().getActiveShell());
 		MessageBox msg = new MessageBox(shell, SWT.ICON_WARNING | SWT.YES | SWT.NO);
-		msg.setText("Delete");
-		msg.setMessage("Are you sure?");
+		msg.setText(Messages.DeleteTaskCommand_Delete);
+		msg.setMessage(Messages.DeleteTaskCommand_ConfirmDelete);
 		int rval = msg.open();
 		if(rval == SWT.NO) {
 			return;

@@ -23,30 +23,29 @@ import org.eclipse.swt.graphics.Image;
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class CalendarElement extends PropertyChangeObject {
-	
-	public final static String TIMESPAN = "TIMESPAN";
-	public final static String FOREGROUND = "FOREGROUND";
-	public final static String BACKGROUND = "BACKGROUND";
-	public final static String SUBJECT = "SUBJECT";
-	public final static String DESCRIPTION = "DESCRIPTION";
-	public final static String TOOLTIPTEXT = "TOOLTIPTEXT";
-	public final static String ADD_IMAGE = "ADD_IMAGE";
-	public final static String REMOVE_IMAGE = "REMOVE_IMAGE";
-	
-	
+
+	public final static String TIMESPAN = "TIMESPAN"; //$NON-NLS-1$
+	public final static String FOREGROUND = "FOREGROUND"; //$NON-NLS-1$
+	public final static String BACKGROUND = "BACKGROUND"; //$NON-NLS-1$
+	public final static String SUBJECT = "SUBJECT"; //$NON-NLS-1$
+	public final static String DESCRIPTION = "DESCRIPTION"; //$NON-NLS-1$
+	public final static String TOOLTIPTEXT = "TOOLTIPTEXT"; //$NON-NLS-1$
+	public final static String ADD_IMAGE = "ADD_IMAGE"; //$NON-NLS-1$
+	public final static String REMOVE_IMAGE = "REMOVE_IMAGE"; //$NON-NLS-1$
+
 	private TimeSpan timeSpan;
-	
+
 	private Color foregroundColor;
-	
+
 	private Color backgroundColor;
-	
+
 	private String subject;
-	
+
 	private String description;
-	
+
 	private String tooltipText;
-	
-	private List<Image> images;
+
+	private final List<Image> images;
 
 	public List<Image> getImages() {
 		return images;
@@ -55,7 +54,7 @@ public class CalendarElement extends PropertyChangeObject {
 	public TimeSpan getTimeSpan() {
 		return timeSpan;
 	}
-	
+
 	public CalendarElement() {
 		images = new LinkedList<Image>();
 	}
@@ -124,7 +123,5 @@ public class CalendarElement extends PropertyChangeObject {
 	public boolean remove(Object o) {
 		return images.remove(o);
 	}
-	
-	
 
 }

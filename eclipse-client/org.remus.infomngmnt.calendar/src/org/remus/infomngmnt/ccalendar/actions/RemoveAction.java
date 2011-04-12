@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.calendar.model.Task;
 
 /**
@@ -37,7 +38,7 @@ import org.remus.infomngmnt.calendar.model.Task;
  *         Window - Preferences - Java - Code Style - Code Templates
  */
 public class RemoveAction extends Action implements ISelectionChangedListener {
-	public static final String ID = "org.aspencloud.calypso.ui.actions.RemoveAction";
+	public static final String ID = "org.aspencloud.calypso.ui.actions.RemoveAction"; //$NON-NLS-1$
 
 	private final ISelectionProvider provider;
 
@@ -46,8 +47,8 @@ public class RemoveAction extends Action implements ISelectionChangedListener {
 		this.provider = provider;
 		provider.addSelectionChangedListener(this);
 
-		setText("Delete");
-		setToolTipText("Delete");
+		setText(Messages.RemoveAction_Delete);
+		setToolTipText(Messages.RemoveAction_Delete);
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 		setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		setDisabledImageDescriptor(sharedImages
@@ -61,8 +62,8 @@ public class RemoveAction extends Action implements ISelectionChangedListener {
 		if (!this.provider.getSelection().isEmpty()) {
 			Shell shell = new Shell(Display.getCurrent().getActiveShell());
 			MessageBox msg = new MessageBox(shell, SWT.ICON_WARNING | SWT.YES | SWT.NO);
-			msg.setText("Delete");
-			msg.setMessage("Are you sure?");
+			msg.setText(Messages.RemoveAction_Delete);
+			msg.setMessage(Messages.RemoveAction_DeleteConfirm);
 			int rval = msg.open();
 			if (rval == SWT.NO) {
 				return;

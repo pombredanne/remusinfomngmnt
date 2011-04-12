@@ -32,8 +32,8 @@ public class TimeSpan extends PropertyChangeObject {
 	public static final long DAY = 1000 * 60 * 60 * 24;
 	public static final long WEEK = 1000 * 60 * 60 * 24 * 7;
 
-	public static final String PROP_START_TIME = "starttime";
-	public static final String PROP_END_TIME = "endtime";
+	public static final String PROP_START_TIME = "starttime"; //$NON-NLS-1$
+	public static final String PROP_END_TIME = "endtime"; //$NON-NLS-1$
 
 	public static TimeSpan createAllDay(final Date date) {
 		tmpcal1.setTime(date);
@@ -72,8 +72,10 @@ public class TimeSpan extends PropertyChangeObject {
 
 	public static long getTimeOfDay(final Date date) {
 		tmpcal1.setTime(date);
-		return (tmpcal1.get(Calendar.HOUR_OF_DAY) * HOUR) + (tmpcal1.get(Calendar.MINUTE) * MINUTE)
-				+ (tmpcal1.get(Calendar.SECOND) * SECOND) + tmpcal1.get(Calendar.MILLISECOND);
+		return (tmpcal1.get(Calendar.HOUR_OF_DAY) * HOUR)
+				+ (tmpcal1.get(Calendar.MINUTE) * MINUTE)
+				+ (tmpcal1.get(Calendar.SECOND) * SECOND)
+				+ tmpcal1.get(Calendar.MILLISECOND);
 	}
 
 	protected Date start = new Date(0);
@@ -105,8 +107,8 @@ public class TimeSpan extends PropertyChangeObject {
 
 	public TimeSpan(final TimeSpan ts) {
 		if (ts != null) {
-			this.start = ts.getStartDate();
-			this.end = ts.getEndDate();
+			start = ts.getStartDate();
+			end = ts.getEndDate();
 		}
 	}
 
@@ -120,7 +122,7 @@ public class TimeSpan extends PropertyChangeObject {
 	 * @return true if the given date is contained, false otherwise
 	 */
 	public boolean contains(final Date date) {
-		return ((this.start.before(date) || this.start.equals(date)) && this.end.after(date));
+		return ((start.before(date) || start.equals(date)) && end.after(date));
 	}
 
 	/**
@@ -155,7 +157,7 @@ public class TimeSpan extends PropertyChangeObject {
 	 */
 	@Deprecated
 	public boolean containsProper(final Date date) {
-		return (this.start.before(date) && this.end.after(date));
+		return (start.before(date) && end.after(date));
 	}
 
 	/**
@@ -163,44 +165,49 @@ public class TimeSpan extends PropertyChangeObject {
 	 */
 	@Deprecated
 	public boolean containsProper(final TimeSpan ts) {
-		return (containsProper(new Date(ts.getStart())) && containsProper(new Date(ts.getEnd())));
+		return (containsProper(new Date(ts.getStart())) && containsProper(new Date(
+				ts.getEnd())));
 	}
 
 	public long getDuration() {
-		return (this.end.getTime() - this.start.getTime());
+		return (end.getTime() - start.getTime());
 	}
 
 	public long getEnd() {
-		return this.end.getTime();
+		return end.getTime();
 	}
 
 	public Date getEndDate() {
-		return this.end;
+		return end;
 	}
 
 	public long getEndTimeOfDay() {
-		return getTimeOfDay(this.end);
+		return getTimeOfDay(end);
 	}
 
 	public long getStart() {
-		return this.start.getTime();
+		return start.getTime();
 	}
 
 	public Date getStartDate() {
-		return this.start;
+		return start;
 	}
 
 	public long getStartTimeOfDay() {
-		return getTimeOfDay(this.start);
+		return getTimeOfDay(start);
 	}
 
 	public boolean isAllDay() {
-		tmpcal1.setTime(this.start);
-		tmpcal2.setTime(this.end);
-		return ((tmpcal1.get(Calendar.HOUR_OF_DAY) == 0) && (tmpcal1.get(Calendar.MINUTE) == 0)
-				&& (tmpcal1.get(Calendar.SECOND) == 0) && (tmpcal1.get(Calendar.MILLISECOND) == 0)
-				&& (tmpcal2.get(Calendar.HOUR_OF_DAY) == 0) && (tmpcal2.get(Calendar.MINUTE) == 0)
-				&& (tmpcal2.get(Calendar.SECOND) == 0) && (tmpcal2.get(Calendar.MILLISECOND) == 0)
+		tmpcal1.setTime(start);
+		tmpcal2.setTime(end);
+		return ((tmpcal1.get(Calendar.HOUR_OF_DAY) == 0)
+				&& (tmpcal1.get(Calendar.MINUTE) == 0)
+				&& (tmpcal1.get(Calendar.SECOND) == 0)
+				&& (tmpcal1.get(Calendar.MILLISECOND) == 0)
+				&& (tmpcal2.get(Calendar.HOUR_OF_DAY) == 0)
+				&& (tmpcal2.get(Calendar.MINUTE) == 0)
+				&& (tmpcal2.get(Calendar.SECOND) == 0)
+				&& (tmpcal2.get(Calendar.MILLISECOND) == 0)
 				&& (tmpcal1.get(Calendar.YEAR) == tmpcal2.get(Calendar.YEAR)) && ((tmpcal1
 				.get(Calendar.DATE) + 1) == tmpcal2.get(Calendar.DATE)));
 	}
@@ -210,12 +217,12 @@ public class TimeSpan extends PropertyChangeObject {
 	}
 
 	public boolean isInstant() {
-		return this.start.equals(this.end);
+		return start.equals(end);
 	}
 
 	public boolean isMultiDay() {
-		tmpcal1.setTime(this.start);
-		tmpcal2.setTime(this.end);
+		tmpcal1.setTime(start);
+		tmpcal2.setTime(end);
 		return ((tmpcal1.get(Calendar.YEAR) != tmpcal2.get(Calendar.YEAR)) || (tmpcal1
 				.get(Calendar.DATE) != tmpcal2.get(Calendar.DATE)));
 	}
@@ -246,16 +253,16 @@ public class TimeSpan extends PropertyChangeObject {
 	}
 
 	public void setDurationFromEnd(final long duration) {
-		setStart(this.end.getTime() - duration);
+		setStart(end.getTime() - duration);
 	}
 
 	public void setDurationFromStart(final long duration) {
-		setEnd(this.start.getTime() + duration);
+		setEnd(start.getTime() + duration);
 	}
 
 	public void setEnd(final long arg) {
-		long oldValue = this.end.getTime();
-		this.end.setTime(arg);
+		long oldValue = end.getTime();
+		end.setTime(arg);
 		firePropertyChange(PROP_END_TIME, oldValue, arg);
 	}
 
@@ -264,8 +271,8 @@ public class TimeSpan extends PropertyChangeObject {
 	}
 
 	public void setStart(final long arg) {
-		long oldValue = this.start.getTime();
-		this.start.setTime(arg);
+		long oldValue = start.getTime();
+		start.setTime(arg);
 		firePropertyChange(PROP_START_TIME, oldValue, arg);
 	}
 
@@ -306,16 +313,17 @@ public class TimeSpan extends PropertyChangeObject {
 	public int getMonthDifference() {
 
 		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTime(this.start);
+		startCalendar.setTime(start);
 		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTime(this.end);
+		endCalendar.setTime(end);
 		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.setTime(this.start);
-		int yearDifference = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+		calendar.setTime(start);
+		int yearDifference = endCalendar.get(Calendar.YEAR)
+				- startCalendar.get(Calendar.YEAR);
 
 		calendar.roll(Calendar.YEAR, yearDifference);
 		// the difference is less than one year.
-		if (calendar.getTime().compareTo(this.end) > 0) {
+		if (calendar.getTime().compareTo(end) > 0) {
 			yearDifference = yearDifference - 1;
 			calendar.roll(Calendar.YEAR, -1);
 		}
@@ -324,7 +332,7 @@ public class TimeSpan extends PropertyChangeObject {
 			if (calendar.get(Calendar.MONTH % 11) == 0) {
 				calendar.roll(Calendar.YEAR, 1);
 			}
-			if (calendar.getTime().compareTo(this.end) > 0) {
+			if (calendar.getTime().compareTo(end) > 0) {
 				return yearDifference * 12 + i - 1;
 			}
 		}

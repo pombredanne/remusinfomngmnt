@@ -25,9 +25,12 @@ import org.eclipse.swt.widgets.Display;
 public class TaskFigure extends Figure {
 
 	private static final Rectangle rect = new Rectangle();
-	private static final Color borderActive = new Color(Display.getCurrent(), 120, 190, 255);
-	private static final Color bgActive = new Color(Display.getCurrent(), 211, 233, 255);
-	private static final Color fgActive = new Color(Display.getCurrent(), 175, 215, 255);
+	private static final Color borderActive = new Color(Display.getCurrent(),
+			120, 190, 255);
+	private static final Color bgActive = new Color(Display.getCurrent(), 211,
+			233, 255);
+	private static final Color fgActive = new Color(Display.getCurrent(), 175,
+			215, 255);
 	private static final Color borderCleared = ColorConstants.buttonDarker;
 	private static final Color bgCleared = ColorConstants.buttonLightest;
 	private static final Color fgCleared = ColorConstants.button;
@@ -35,9 +38,9 @@ public class TaskFigure extends Figure {
 	private static final Color bgDue = ColorConstants.red;
 	private static final Color fgDue = ColorConstants.red;
 
-	private String contact = "";
-	private String name = "";
-	private String details = "";
+	private String contact = ""; //$NON-NLS-1$
+	private String name = ""; //$NON-NLS-1$
+	private String details = ""; //$NON-NLS-1$
 	private boolean isCleared = false;
 	private boolean isEvent = false;
 	private boolean isDue = false;
@@ -49,7 +52,7 @@ public class TaskFigure extends Figure {
 	private Color fg;
 
 	private final int cornerRadius = 7;
-	private final int cornerDiameter = 2 * this.cornerRadius;
+	private final int cornerDiameter = 2 * cornerRadius;
 	private final int taskBarWidth = 5;
 	private final int marginWidth = 2;
 	private final int marginHeight = 2;
@@ -64,61 +67,63 @@ public class TaskFigure extends Figure {
 
 	@Override
 	public void paint(final Graphics graphics) {
-		this.txt = this.isCleared ? ColorConstants.gray : ColorConstants.black;
-		if (this.isCleared) {
-			this.border = borderCleared;
-			this.bg = bgCleared;
-			this.fg = fgCleared;
-		} else if (this.isDue) {
-			this.border = borderDue;
-			this.bg = bgDue;
-			this.fg = fgDue;
+		txt = isCleared ? ColorConstants.gray : ColorConstants.black;
+		if (isCleared) {
+			border = borderCleared;
+			bg = bgCleared;
+			fg = fgCleared;
+		} else if (isDue) {
+			border = borderDue;
+			bg = bgDue;
+			fg = fgDue;
 		} else {
-			this.border = borderActive;
-			this.bg = bgActive;
-			this.fg = fgActive;
+			border = borderActive;
+			bg = bgActive;
+			fg = fgActive;
 		}
 		graphics.setAntialias(SWT.ON);
 		super.paint(graphics);
 	}
 
 	private void paintLabels(final Graphics graphics) {
-		int marginLeft = Math.max(this.taskBarWidth, this.cornerRadius) + this.marginWidth;
+		int marginLeft = Math.max(taskBarWidth, cornerRadius) + marginWidth;
 		rect.setBounds(getBounds());
 		int figHeight = rect.height;
 		int txtHeight;
-		graphics.setForegroundColor(this.txt);
+		graphics.setForegroundColor(txt);
 
-		int yOffset = this.isEvent ? -(this.marginHeight + 1) : 0;
+		int yOffset = isEvent ? -(marginHeight + 1) : 0;
 
-		if (this.name.length() > 0) {
-			txtHeight = FigureUtilities.getTextExtents(this.name, getFont()).height;
-			graphics.drawString(this.name, rect.x + marginLeft, rect.y + yOffset
-					+ this.marginHeight);
+		if (name.length() > 0) {
+			txtHeight = FigureUtilities.getTextExtents(name, getFont()).height;
+			graphics.drawString(name, rect.x + marginLeft, rect.y + yOffset
+					+ marginHeight);
 			yOffset += txtHeight;
 		}
 
-		if (this.contact.length() > 0) {
-			txtHeight = FigureUtilities.getTextExtents(this.contact, getFont()).height;
-			if (yOffset + txtHeight > figHeight)
+		if (contact.length() > 0) {
+			txtHeight = FigureUtilities.getTextExtents(contact, getFont()).height;
+			if (yOffset + txtHeight > figHeight) {
 				return;
-			graphics.drawString(this.contact, rect.x + marginLeft, rect.y + yOffset
-					+ this.marginHeight);
+			}
+			graphics.drawString(contact, rect.x + marginLeft, rect.y + yOffset
+					+ marginHeight);
 			yOffset += txtHeight;
 		}
 
-		if (this.details.length() > 0) {
+		if (details.length() > 0) {
 			int w = getBounds().width - marginLeft;
 			if (w > 0) {
 				TextLayout tl = new TextLayout(Display.getCurrent());
-				tl.setText(this.details);
+				tl.setText(details);
 				tl.setFont(getFont());
 				tl.setWidth(w);
 				txtHeight = tl.getBounds().height;
-				if (yOffset + txtHeight > figHeight)
+				if (yOffset + txtHeight > figHeight) {
 					return;
-				graphics.drawTextLayout(tl, rect.x + marginLeft, rect.y + yOffset
-						+ this.marginHeight);
+				}
+				graphics.drawTextLayout(tl, rect.x + marginLeft, rect.y
+						+ yOffset + marginHeight);
 				tl.dispose();
 			}
 		}
@@ -132,23 +137,23 @@ public class TaskFigure extends Figure {
 		int middle = rect.y + r;
 		int bottom = rect.y + (2 * r);
 
-		graphics.setBackgroundColor(this.bg);
-		graphics.setForegroundColor(this.border);
-		int[] pts = new int[] { rect.x + r, top, rect.x + rect.width - r - 1, top,
-				rect.x + rect.width - 1, middle, rect.x + rect.width - r - 1, bottom, rect.x + r,
-				bottom, };
+		graphics.setBackgroundColor(bg);
+		graphics.setForegroundColor(border);
+		int[] pts = new int[] { rect.x + r, top, rect.x + rect.width - r - 1,
+				top, rect.x + rect.width - 1, middle,
+				rect.x + rect.width - r - 1, bottom, rect.x + r, bottom, };
 		graphics.fillPolygon(pts);
 
 		rect.x += r;
 		rect.width -= (2 * r);
 		rect.y = top;
 		rect.height = bottom - top;
-		graphics.setForegroundColor(this.fg);
+		graphics.setForegroundColor(fg);
 		graphics.fillGradient(rect, false);
 
 		rect.setBounds(getBounds());
-		graphics.setBackgroundColor(this.border);
-		graphics.setForegroundColor(this.border);
+		graphics.setBackgroundColor(border);
+		graphics.setForegroundColor(border);
 		graphics.drawPolygon(pts);
 		pts = new int[] { rect.x, middle, rect.x + r, top, rect.x + r, bottom };
 		graphics.fillPolygon(pts);
@@ -157,35 +162,36 @@ public class TaskFigure extends Figure {
 
 	@Override
 	protected void paintFigure(final Graphics graphics) {
-		if (this.isEvent)
+		if (isEvent) {
 			paintEvent(graphics);
-		else
+		} else {
 			paintTask(graphics);
+		}
 
 		paintLabels(graphics);
 	}
 
 	private void paintTask(final Graphics graphics) {
 		rect.setBounds(getBounds());
-		graphics.setBackgroundColor(this.bg);
-		graphics.setForegroundColor(this.border);
-		graphics.fillRoundRectangle(rect, this.cornerDiameter, this.cornerDiameter);
+		graphics.setBackgroundColor(bg);
+		graphics.setForegroundColor(border);
+		graphics.fillRoundRectangle(rect, cornerDiameter, cornerDiameter);
 		rect.width -= 1;
 		rect.height -= 1;
-		graphics.drawRoundRectangle(rect, this.cornerDiameter, this.cornerDiameter);
+		graphics.drawRoundRectangle(rect, cornerDiameter, cornerDiameter);
 
 		rect.setBounds(getBounds());
-		rect.width -= this.cornerRadius;
+		rect.width -= cornerRadius;
 		rect.y += 1;
 		rect.height -= 2;
-		graphics.setForegroundColor(this.fg);
+		graphics.setForegroundColor(fg);
 		graphics.fillGradient(rect, false);
 
 		rect.setBounds(getBounds());
-		rect.width = Math.max(this.taskBarWidth, this.cornerRadius);
+		rect.width = Math.max(taskBarWidth, cornerRadius);
 		graphics.setAlpha(255);
-		graphics.setBackgroundColor(this.border);
-		graphics.setForegroundColor(this.border);
+		graphics.setBackgroundColor(border);
+		graphics.setForegroundColor(border);
 		graphics.fillRectangle(rect);
 		rect.width -= 1;
 		rect.height -= (1);

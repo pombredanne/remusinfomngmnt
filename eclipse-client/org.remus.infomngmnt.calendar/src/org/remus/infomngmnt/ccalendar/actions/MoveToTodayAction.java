@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.calendar.model.Task;
 
 /**
@@ -33,14 +34,14 @@ import org.remus.infomngmnt.calendar.model.Task;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class MoveToTodayAction extends Action implements ISelectionChangedListener {
-	public static final String ID = "org.aspencloud.calypso.ui.actions.ClearTaskAction";
+	public static final String ID = "org.aspencloud.calypso.ui.actions.ClearTaskAction"; //$NON-NLS-1$
 
 	private final ISelectionProvider sprovider;
 
 	public MoveToTodayAction(final ISelectionProvider sprovider) {
 		super();
-		setText("Move To Today");
-		setToolTipText("Move the Task to Today");
+		setText(Messages.MoveToTodayAction_MoveToToday);
+		setToolTipText(Messages.MoveToTodayAction_MoveTaskToToday);
 		setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ELEMENT));
 		updateSelection();
 		this.sprovider = sprovider;

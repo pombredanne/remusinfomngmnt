@@ -27,17 +27,18 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import org.remus.infomngmnt.calendar.CalendarPlugin;
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.ccalendar.service.ICalendarService;
 
 public class CreateAction extends Action {
-	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.actions.ShowGridAction";
+	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.actions.ShowGridAction"; //$NON-NLS-1$
 
 	private final GraphicalViewer[] viewers;
 
 	public CreateAction(final GraphicalViewer[] viewers) {
-		super("Create");
+		super(Messages.CreateAction_Create);
 		this.viewers = viewers;
-		setToolTipText("Toggle Creation Tool");
+		setToolTipText(Messages.CreateAction_ToggleCreation);
 		setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 				ISharedImages.IMG_OBJ_ELEMENT));
 		setId(ID);

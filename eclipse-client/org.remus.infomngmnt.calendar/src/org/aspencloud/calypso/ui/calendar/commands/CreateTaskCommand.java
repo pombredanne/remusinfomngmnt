@@ -16,6 +16,7 @@ import java.util.Date;
 import org.aspencloud.calypso.util.CalypsoFactory;
 import org.aspencloud.calypso.util.TimeSpan;
 import org.eclipse.gef.commands.Command;
+import org.remus.infomngmnt.calendar.messages.Messages;
 
 public class CreateTaskCommand extends Command {
 
@@ -30,7 +31,7 @@ public class CreateTaskCommand extends Command {
 	@Override
 	public void execute() {
 		for(int i = 0; i < this.occ; i++) {
-			CalypsoFactory.createTask("New Task", this.start, this.end);
+			CalypsoFactory.createTask(Messages.CreateTaskCommand_NewTask, this.start, this.end);
 			this.start = new Date(this.start.getTime() + TimeSpan.DAY);
 			this.end = new Date(this.end.getTime() + TimeSpan.DAY);
 		}

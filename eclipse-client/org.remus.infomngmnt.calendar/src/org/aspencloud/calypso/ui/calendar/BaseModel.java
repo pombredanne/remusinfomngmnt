@@ -1,16 +1,15 @@
 /****************************************************************************
-* Copyright (c) 2005-2006 Jeremy Dowdall
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Jeremy Dowdall <aspencloud@users.sourceforge.net> - initial API and implementation
-*****************************************************************************/
+ * Copyright (c) 2005-2006 Jeremy Dowdall
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Jeremy Dowdall <aspencloud@users.sourceforge.net> - initial API and implementation
+ *****************************************************************************/
 
 package org.aspencloud.calypso.ui.calendar;
-
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -25,40 +24,38 @@ import org.eclipse.draw2d.geometry.Point;
 
 public abstract class BaseModel {
 
-	public static final String PROP_TIMESPAN = "timespan";
-	public static final String PROP_CHILDREN = "children";
-	public static final String PROP_LOCATION = "location";
-	public static final String PROP_SIZE = "size";
+	public static final String PROP_TIMESPAN = "timespan"; //$NON-NLS-1$
+	public static final String PROP_CHILDREN = "children"; //$NON-NLS-1$
+	public static final String PROP_LOCATION = "location"; //$NON-NLS-1$
+	public static final String PROP_SIZE = "size"; //$NON-NLS-1$
 
-	private BaseModel parent;
+	private final BaseModel parent;
 	protected TimeSpan timeSpan = new TimeSpan();
 	protected List children = new ArrayList();
 	protected Point location = new Point();
 	protected Dimension size = new Dimension();
 	protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
-	
 	public BaseModel(BaseModel parent) {
 		this.parent = parent;
 	}
 
-	
 	protected void addChild(Object child) {
-		if(!children.contains(child)) {
+		if (!children.contains(child)) {
 			children.add(child);
 			firePropertyChange(PROP_CHILDREN, null, child);
 		}
 	}
-	
+
 	protected void addChildren(List children) {
 		List list = new ArrayList();
-		for(Iterator i = children.iterator(); i.hasNext(); ) {
+		for (Iterator i = children.iterator(); i.hasNext();) {
 			Object child = i.next();
-			if(!this.children.contains(child)) {
+			if (!this.children.contains(child)) {
 				list.add(child);
 			}
 		}
-		if(!list.isEmpty()) {
+		if (!list.isEmpty()) {
 			this.children.addAll(list);
 			firePropertyChange(PROP_CHILDREN, null, list);
 		}
@@ -87,7 +84,8 @@ public abstract class BaseModel {
 		}
 	}
 
-	protected void firePropertyChange(String propName, Object old, Object newValue) {
+	protected void firePropertyChange(String propName, Object old,
+			Object newValue) {
 		listeners.firePropertyChange(propName, old, newValue);
 	}
 
@@ -119,13 +117,13 @@ public abstract class BaseModel {
 
 	protected void removeChildren(List children) {
 		List list = new ArrayList();
-		for(Iterator i = children.iterator(); i.hasNext(); ) {
+		for (Iterator i = children.iterator(); i.hasNext();) {
 			Object child = i.next();
-			if(this.children.remove(child)) {
+			if (this.children.remove(child)) {
 				list.add(child);
 			}
 		}
-		if(!list.isEmpty()) {
+		if (!list.isEmpty()) {
 			firePropertyChange(PROP_CHILDREN, list, null);
 		}
 	}
@@ -135,15 +133,17 @@ public abstract class BaseModel {
 	}
 
 	public void setLocation(Point place) {
-		if ((location != null) && (location.equals(place)))
+		if ((location != null) && (location.equals(place))) {
 			return;
+		}
 		location = place;
 		firePropertyChange(PROP_LOCATION, null, place);
 	}
 
 	public void setSize(Dimension dim) {
-		if ((size != null) && (size.equals(dim)))
+		if ((size != null) && (size.equals(dim))) {
 			return;
+		}
 		size = dim;
 		firePropertyChange(PROP_SIZE, null, size);
 	}

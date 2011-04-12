@@ -18,18 +18,19 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.ccalendar.CCalendar;
 
 public class ShowGridAction extends Action {
-	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.actions.ShowGridAction";
+	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.actions.ShowGridAction"; //$NON-NLS-1$
 
 	private CCalendar calendar;
 
 	public ShowGridAction() {
-		super("Grid", SWT.CHECK);
-		setToolTipText("Toggle Grid");
+		super(Messages.ShowGridAction_Grid, SWT.CHECK);
+		setToolTipText(Messages.ShowGridAction_ToggleGrid);
 		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(CCalendar.PLUGIN_ID,
-				"icons/iconexperience/16/table.png"));
+				"icons/iconexperience/16/table.png")); //$NON-NLS-1$
 		setId(ID);
 		setChecked(true);
 	}

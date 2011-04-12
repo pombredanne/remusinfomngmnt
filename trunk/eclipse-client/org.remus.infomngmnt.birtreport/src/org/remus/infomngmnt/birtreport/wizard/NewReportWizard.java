@@ -35,6 +35,7 @@ import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.extension.IReportTemplate;
+import org.remus.infomngmnt.birtreport.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -50,7 +51,7 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	 * 
 	 */
 	public NewReportWizard() {
-		setWindowTitle("New Report");
+		setWindowTitle(Messages.NewReportWizard_NewReport);
 	}
 
 	/*
@@ -125,7 +126,7 @@ public class NewReportWizard extends NewInfoObjectWizard {
 	@Override
 	protected Command getAdditionalCommands() {
 		if (this.templateSelected) {
-			IFile createTempFile = ResourceUtil.createTempFile("rptdesign");
+			IFile createTempFile = ResourceUtil.createTempFile("rptdesign"); //$NON-NLS-1$
 			InputStream createStream;
 			try {
 				createStream = this.selectedTemplage.createStream();

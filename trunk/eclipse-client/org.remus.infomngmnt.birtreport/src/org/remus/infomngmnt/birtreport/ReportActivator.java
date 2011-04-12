@@ -7,14 +7,13 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  */
 public class ReportActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.birtreport";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.birtreport"; //$NON-NLS-1$
 
 	// The shared instance
 	private static ReportActivator plugin;
@@ -49,14 +48,15 @@ public class ReportActivator extends AbstractUIPlugin {
 		 * At the first usage of reporting functionalities we acquire an open
 		 * port to run the internal app-server at. This value is saved.
 		 */
-		new Thread("Setting port") {
+		new Thread("Setting port") { //$NON-NLS-1$
 			@Override
 			public void run() {
-				int port = ViewerPlugin.getDefault().getPluginPreferences().getInt("port");
+				int port = ViewerPlugin.getDefault().getPluginPreferences()
+						.getInt("port"); //$NON-NLS-1$
 				if (port <= 0) {
 					int findUnusedLocalPort = SocketUtil.findUnusedLocalPort();
-					ViewerPlugin.getDefault().getPluginPreferences().setValue("port",
-							findUnusedLocalPort);
+					ViewerPlugin.getDefault().getPluginPreferences()
+							.setValue("port", findUnusedLocalPort); //$NON-NLS-1$
 					ViewerPlugin.getDefault().savePluginPreferences();
 
 				}

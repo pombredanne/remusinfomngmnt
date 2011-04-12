@@ -43,6 +43,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.birtreport.ReportActivator;
+import org.remus.infomngmnt.birtreport.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -76,7 +77,7 @@ public class ReportParameterPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Report-Parameters");
+		generalSection.setText(Messages.ReportParameterPage_ReportParameters);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(2, false));
@@ -95,18 +96,18 @@ public class ReportParameterPage extends AbstractInformationFormPage {
 		tc0.setWidth(200);
 		tc0.setResizable(true);
 		tc0.setMoveable(true);
-		tc0.setText("Parameter-Name");
+		tc0.setText(Messages.ReportParameterPage_ParameterName);
 
 		TableColumn tc1 = new TableColumn(createTable, SWT.NONE);
 		tc1.setWidth(200);
 		tc1.setResizable(true);
 		tc1.setMoveable(true);
-		tc1.setText("Parameter-Value");
+		tc1.setText(Messages.ReportParameterPage_ParameterValue);
 
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 100).grab(true, false).span(1, 3).applyTo(
 				createTable);
 		this.parameterTableViewer = new TableViewer(createTable);
-		Button addbutton = toolkit.createButton(client, "Add", SWT.FLAT);
+		Button addbutton = toolkit.createButton(client, Messages.ReportParameterPage_Add, SWT.FLAT);
 		addbutton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				ReportParameterDialog dialog = new ReportParameterDialog(getSite().getShell(),
@@ -121,7 +122,7 @@ public class ReportParameterPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		final Button editButton = toolkit.createButton(client, "Edit", SWT.FLAT);
+		final Button editButton = toolkit.createButton(client, Messages.ReportParameterPage_Edit, SWT.FLAT);
 		editButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				InformationUnit firstElement = (InformationUnit) ((IStructuredSelection) ReportParameterPage.this.parameterTableViewer
@@ -142,7 +143,7 @@ public class ReportParameterPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		final Button deleteButton = toolkit.createButton(client, "Delete", SWT.FLAT);
+		final Button deleteButton = toolkit.createButton(client, Messages.ReportParameterPage_Delete, SWT.FLAT);
 		deleteButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				Command deleteCmd = DeleteCommand.create(getEditingDomain(),

@@ -26,6 +26,7 @@ import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.birtreport.internal.extension.ReportTemplate;
 import org.remus.infomngmnt.birtreport.internal.extension.TemplateCategory;
 import org.remus.infomngmnt.birtreport.internal.extension.TemplateParameter;
+import org.remus.infomngmnt.birtreport.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -81,7 +82,7 @@ public class ReportTemplateManager extends PluginRegistryDynamic {
 	protected void init() {
 		this.templates = new ArrayList<IReportTemplate>();
 		this.categories = new ArrayList<ITemplateCategory>();
-		this.uncategorized = new TemplateCategory("", "Uncategorized");
+		this.uncategorized = new TemplateCategory("", Messages.ReportTemplateManager_Uncategorized); //$NON-NLS-1$
 		this.categories.add(this.uncategorized);
 
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(

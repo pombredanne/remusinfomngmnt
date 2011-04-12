@@ -30,7 +30,7 @@ public class ReaderInputStream extends InputStream {
 	/** Source Reader */
 	private Reader in;
 
-	private String encoding = System.getProperty("file.encoding");
+	private String encoding = System.getProperty("file.encoding"); //$NON-NLS-1$
 
 	private byte[] slack;
 
@@ -59,7 +59,7 @@ public class ReaderInputStream extends InputStream {
 	public ReaderInputStream(final Reader reader, final String encoding) {
 		this(reader);
 		if (encoding == null) {
-			throw new IllegalArgumentException("encoding must not be null");
+			throw new IllegalArgumentException("encoding must not be null"); //$NON-NLS-1$
 		} else {
 			this.encoding = encoding;
 		}
@@ -76,7 +76,7 @@ public class ReaderInputStream extends InputStream {
 	@Override
 	public synchronized int read() throws IOException {
 		if (this.in == null) {
-			throw new IOException("Stream Closed");
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
 
 		byte result;
@@ -115,9 +115,10 @@ public class ReaderInputStream extends InputStream {
 	 *                if an error occurs
 	 */
 	@Override
-	public synchronized int read(final byte[] b, final int off, int len) throws IOException {
+	public synchronized int read(final byte[] b, final int off, int len)
+			throws IOException {
 		if (this.in == null) {
-			throw new IOException("Stream Closed");
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
 
 		while (this.slack == null) {
@@ -169,7 +170,7 @@ public class ReaderInputStream extends InputStream {
 	@Override
 	public synchronized int available() throws IOException {
 		if (this.in == null) {
-			throw new IOException("Stream Closed");
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
 		if (this.slack != null) {
 			return this.slack.length - this.begin;
@@ -198,7 +199,7 @@ public class ReaderInputStream extends InputStream {
 	@Override
 	public synchronized void reset() throws IOException {
 		if (this.in == null) {
-			throw new IOException("Stream Closed");
+			throw new IOException("Stream Closed"); //$NON-NLS-1$
 		}
 		this.slack = null;
 		this.in.reset();

@@ -19,7 +19,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.remus.InformationUnit;
 import org.eclipse.remus.ui.handlerutil.InformationHandlerUtil;
 import org.eclipse.swt.program.Program;
-
 import org.remus.infomngmnt.birtreport.extension.BirtReportRepresentation;
 
 /**
@@ -35,9 +34,11 @@ public class OpenInBrowserHandler extends AbstractHandler {
 	 * ExecutionEvent)
 	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		InformationUnit unit = InformationHandlerUtil.getInformationUnitFromExecutionEvent(event);
+		InformationUnit unit = InformationHandlerUtil
+				.getInformationUnitFromExecutionEvent(event);
 		if (unit != null) {
-			Program.launch(BirtReportRepresentation.createURL("frameset", WebViewer.HTML, unit));
+			Program.launch(BirtReportRepresentation.createURL(
+					"frameset", WebViewer.HTML, unit)); //$NON-NLS-1$
 		}
 		return null;
 	}

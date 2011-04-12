@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.remus.infomngmnt.password.desktop.nl_de Fragment
+Bundle-SymbolicName: org.remus.infomngmnt.password.desktop.nl_de
+Bundle-Version: 1.0.0
+Fragment-Host: org.remus.infomngmnt.password.desktop;bundle-version="[0.1.0,0.2.0)"

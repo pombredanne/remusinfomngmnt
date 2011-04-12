@@ -16,26 +16,26 @@ package org.remus.infomngmnt.password.generator;
  * 
  */
 public class PGSettings {
-	public static final String[] ITEMS_DEFAULT_PASSWORD_LENGTH = { "8", "10", "12", "16", "20",
-			"64", "128", "256" };
-	public static final String CHARACTERS_WIDE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	public static final String CHARACTERS_SMALL = "abcdefghijklmnopqrstuvwxyz";
-	public static final String CHARACTERS_NUMBERS = "0123456789";
+	public static final String[] ITEMS_DEFAULT_PASSWORD_LENGTH = { "8", "10", "12", "16", "20", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+			"64", "128", "256" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	public static final String CHARACTERS_WIDE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
+	public static final String CHARACTERS_SMALL = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
+	public static final String CHARACTERS_NUMBERS = "0123456789"; //$NON-NLS-1$
 	public static final int QUANTITY_PASSWORDS = 5;
-	public static final String AC_DEFAULT_ADDITIONAL_CHARACTERS = "@<({[/=]})>!?$%&#*-+.,;:_";
-	public static final String AC_RADIO_DEFAULT_PASSWORD = "raddefpwd";
-	public static final String AC_RADIO_USER_DEFINED_PASSWORD = "raduserdefpwd";
-	public static final String AC_CURRENT_PASSWORD_LENGTH = "curpwdlen";
-	public static final String AC_CHECK_WIDE = "ckwide";
-	public static final String AC_CHECK_NUMBER = "chnumber";
-	public static final String AC_CHECK_SMALL = "cksmall";
-	public static final String AC_CHECK_ADDITIONAL = "ckadd";
-	public static final String AC_TX_ADDITIONAL_CHARACTERS = "txaddchar";
-	public static final String AC_COMBO_DEFAULT_PASSWORD_INDEX = "cbdefpwdi";
-	public static final String AC_COMBO_DEFAULT_PASSWORD_ENABLED = "cbdefpwden";
-	public static final String AC_SP_PASSWORD_LENGTH = "sppwdlen";
-	public static final String AC_TX_ADDITIONAL_CHARACTERS_ENABLED = "txaddcharen";
-	public static final String AC_USER_SETTINGS = "defsettings";
-	public static final String AC_TV_PASSWORDS_ENABLED = "tvpwden";
-	public static final String AC_BT_GENERATE_PASSWORDS_ENABLED = "btgenpwden";
+	public static final String AC_DEFAULT_ADDITIONAL_CHARACTERS = "@<({[/=]})>!?$%&#*-+.,;:_"; //$NON-NLS-1$
+	public static final String AC_RADIO_DEFAULT_PASSWORD = "raddefpwd"; //$NON-NLS-1$
+	public static final String AC_RADIO_USER_DEFINED_PASSWORD = "raduserdefpwd"; //$NON-NLS-1$
+	public static final String AC_CURRENT_PASSWORD_LENGTH = "curpwdlen"; //$NON-NLS-1$
+	public static final String AC_CHECK_WIDE = "ckwide"; //$NON-NLS-1$
+	public static final String AC_CHECK_NUMBER = "chnumber"; //$NON-NLS-1$
+	public static final String AC_CHECK_SMALL = "cksmall"; //$NON-NLS-1$
+	public static final String AC_CHECK_ADDITIONAL = "ckadd"; //$NON-NLS-1$
+	public static final String AC_TX_ADDITIONAL_CHARACTERS = "txaddchar"; //$NON-NLS-1$
+	public static final String AC_COMBO_DEFAULT_PASSWORD_INDEX = "cbdefpwdi"; //$NON-NLS-1$
+	public static final String AC_COMBO_DEFAULT_PASSWORD_ENABLED = "cbdefpwden"; //$NON-NLS-1$
+	public static final String AC_SP_PASSWORD_LENGTH = "sppwdlen"; //$NON-NLS-1$
+	public static final String AC_TX_ADDITIONAL_CHARACTERS_ENABLED = "txaddcharen"; //$NON-NLS-1$
+	public static final String AC_USER_SETTINGS = "defsettings"; //$NON-NLS-1$
+	public static final String AC_TV_PASSWORDS_ENABLED = "tvpwden"; //$NON-NLS-1$
+	public static final String AC_BT_GENERATE_PASSWORDS_ENABLED = "btgenpwden"; //$NON-NLS-1$
 }

@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.connector.youtube.messages.Messages;
 
 
 /**
@@ -30,7 +31,7 @@ public class NewReadonlyYoutubeRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewReadonlyYoutubeRepositoryWizard() {
-		setWindowTitle("Youtube Repository");
+		setWindowTitle(Messages.NewReadonlyYoutubeRepositoryWizard_RepositoryName);
 	}
 
 	@Override

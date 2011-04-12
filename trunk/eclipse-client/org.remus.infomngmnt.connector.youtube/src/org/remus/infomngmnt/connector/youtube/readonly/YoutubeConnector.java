@@ -54,6 +54,7 @@ import org.eclipse.remus.util.StatusCreator;
 
 import org.remus.infomngmnt.connector.youtube.SiteInspector;
 import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
+import org.remus.infomngmnt.connector.youtube.messages.Messages;
 import org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.video.VideoActivator;
 
@@ -100,7 +101,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	 */
 	public YouTubeService getYoutubeService() {
 		if (this.youtubeService == null) {
-			this.youtubeService = new YouTubeService("gdataSample-YouTube-1");
+			this.youtubeService = new YouTubeService("gdataSample-YouTube-1"); //$NON-NLS-1$
 		}
 
 		return this.youtubeService;
@@ -108,19 +109,19 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	public RemoteObject addToRepository(final SynchronizableObject item,
 			final IProgressMonitor monitor) throws OperationNotSupportedException {
-		throw new OperationNotSupportedException(StatusCreator.newStatus("Adding is not supported"));
+		throw new OperationNotSupportedException(StatusCreator.newStatus(Messages.YoutubeConnector_AddinNotSupported));
 	}
 
 	public RemoteObject commit(final SynchronizableObject item2commit,
 			final IProgressMonitor monitor) throws RemoteException {
 		throw new OperationNotSupportedException(StatusCreator
-				.newStatus("Committing is not supported"));
+				.newStatus(Messages.YoutubeConnector_CommittingNotSupported));
 	}
 
 	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
 			throws RemoteException {
 		throw new OperationNotSupportedException(StatusCreator
-				.newStatus("Deleting is not supported"));
+				.newStatus(Messages.YoutubeConnector_DeletingNotSupported));
 
 	}
 
@@ -178,7 +179,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error collecting video-information", e));
+						Messages.YoutubeConnector_ErrorCollectionVideoInfos, e));
 			}
 		}
 		return returnValue.toArray(new RemoteObject[returnValue.size()]);
@@ -194,9 +195,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		 */
 		MessageDigest instance;
 		try {
-			instance = MessageDigest.getInstance("MD5");
+			instance = MessageDigest.getInstance("MD5"); //$NON-NLS-1$
 		} catch (NoSuchAlgorithmException e) {
-			throw new RemoteException(StatusCreator.newStatus("Error creating MD5", e));
+			throw new RemoteException(StatusCreator.newStatus("Error creating MD5", e)); //$NON-NLS-1$
 		}
 
 		StringWriter sw = new StringWriter();
@@ -255,7 +256,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	private RemoteContainer buildSubscriptionFeed() {
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
-		remoteContainer.setName(NLS.bind("Subscriptions of {0}", getCredentialProvider()
+		remoteContainer.setName(NLS.bind(Messages.YoutubeConnector_Subscriptions, getCredentialProvider()
 				.getUserName()));
 		remoteContainer.setId(KEY_SUBSCRIPTION_FOLDER);
 		remoteContainer.setRepositoryTypeObjectId(KEY_SUBSCRIPTION_FOLDER);
@@ -265,7 +266,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 
 	private RemoteContainer buildPlayListFeed() {
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
-		remoteContainer.setName(NLS.bind("Playlist of {0}", getCredentialProvider().getUserName()));
+		remoteContainer.setName(NLS.bind(Messages.YoutubeConnector_Playlist, getCredentialProvider().getUserName()));
 		remoteContainer.setId(KEY_PLAYLIST_FOLDER);
 		remoteContainer.setRepositoryTypeObjectId(KEY_PLAYLIST_FOLDER);
 		remoteContainer.setHash(KEY_PLAYLIST_FOLDER);
@@ -275,7 +276,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 	private RemoteContainer buildFavoritesFeed() {
 		RemoteContainer remoteContainer = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteContainer
-				.setName(NLS.bind("Favorites of {0}", getCredentialProvider().getUserName()));
+				.setName(NLS.bind(Messages.YoutubeConnector_Favorites, getCredentialProvider().getUserName()));
 		remoteContainer.setId(KEY_FAVORITES_FOLDER);
 		remoteContainer.setRepositoryTypeObjectId(KEY_FAVORITES_FOLDER);
 		remoteContainer.setHash(KEY_FAVORITES_FOLDER);
@@ -288,7 +289,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			InformationStructureEdit edit = InformationStructureEdit
 					.newSession(VideoActivator.TYPE_ID);
 			InformationUnit createNewObject = edit.newInformationUnit();
-			edit.setValue(createNewObject, VideoActivator.NODE_NAME_MEDIATYPE, "flv");
+			edit.setValue(createNewObject, VideoActivator.NODE_NAME_MEDIATYPE, "flv"); //$NON-NLS-1$
 
 			RemoteObject remoteObjectBySynchronizableObject = getRemoteObjectBySynchronizableObject(
 					informationUnitListItem, monitor);
@@ -305,7 +306,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 						if (keywords != null) {
 							StringBuilder sb = new StringBuilder();
 							for (String string : keywords) {
-								sb.append(string).append(" ");
+								sb.append(string).append(" "); //$NON-NLS-1$
 							}
 							createNewObject.setKeywords(sb.toString());
 						}
@@ -325,18 +326,18 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		if (parentObject != null && !(parentObject instanceof RemoteRepository)) {
 			url = parentObject.getUrl();
 		} else {
-			url = INTERNAL_PROTOCOL + "://youtube/";
+			url = INTERNAL_PROTOCOL + "://youtube/"; //$NON-NLS-1$
 		}
 		if (KEY_FAVORITES_FOLDER.equals(remoteObject.getRepositoryTypeObjectId())) {
-			url += KEY_FAVORITES_FOLDER + "/";
+			url += KEY_FAVORITES_FOLDER + "/"; //$NON-NLS-1$
 		} else if (KEY_PLAYLIST_FOLDER.equals(remoteObject.getRepositoryTypeObjectId())) {
-			url += KEY_PLAYLIST_FOLDER + "/";
+			url += KEY_PLAYLIST_FOLDER + "/"; //$NON-NLS-1$
 		} else if (KEY_SUBSCRIPTION_FOLDER.equals(remoteObject.getRepositoryTypeObjectId())) {
-			url += KEY_PLAYLIST_FOLDER + "/";
+			url += KEY_PLAYLIST_FOLDER + "/"; //$NON-NLS-1$
 		} else if (KEY_PLAYLIST.equals(remoteObject.getRepositoryTypeObjectId())) {
-			url += remoteObject.getName() + "/";
+			url += remoteObject.getName() + "/"; //$NON-NLS-1$
 		} else if (KEY_VIDEO.equals(remoteObject.getRepositoryTypeObjectId())) {
-			url += "?" + remoteObject.getId();
+			url += "?" + remoteObject.getId(); //$NON-NLS-1$
 		}
 		remoteObject.setUrl(url);
 	}
@@ -367,9 +368,9 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 				URL downloadUrl = getDownloadUrl(tempFile, true);
 				if (downloadUrl == null) {
 					throw new RemoteException(StatusCreator
-							.newStatus("Error calculating download url."));
+							.newStatus(Messages.YoutubeConnector_ErrorDownload));
 				}
-				IFile videoFile = ResourceUtil.createTempFile("flv");
+				IFile videoFile = ResourceUtil.createTempFile("flv"); //$NON-NLS-1$
 
 				DownloadFileJob downloadVidJob = new DownloadFileJob(downloadUrl, videoFile,
 						getFileReceiveAdapter());
@@ -395,7 +396,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		try {
 			URL url2 = new URL(url);
 			String path = url2.getPath();
-			String[] origSplit = path.split("/");
+			String[] origSplit = path.split("/"); //$NON-NLS-1$
 			String[] split = new String[origSplit.length - 1];
 			System.arraycopy(origSplit, 1, split, 0, origSplit.length - 1);
 			if (KEY_PLAYLIST_FOLDER.equals(split[0])) {
@@ -510,12 +511,12 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		// }
 		try {
 			Map<String, String> urlMap = SiteInspector.getUrlMap(content);
-			if (urlMap.get("22") != null) {
-				return new URL(urlMap.get("22"));
-			} else if (urlMap.get("34") != null) {
-				return new URL(urlMap.get("34"));
-			} else if (urlMap.get("5") != null) {
-				return new URL(urlMap.get("5"));
+			if (urlMap.get("22") != null) { //$NON-NLS-1$
+				return new URL(urlMap.get("22")); //$NON-NLS-1$
+			} else if (urlMap.get("34") != null) { //$NON-NLS-1$
+				return new URL(urlMap.get("34")); //$NON-NLS-1$
+			} else if (urlMap.get("5") != null) { //$NON-NLS-1$
+				return new URL(urlMap.get("5")); //$NON-NLS-1$
 			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -532,7 +533,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 			try {
 				this.container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container", e);
+				throw new RuntimeException(Messages.YoutubeConnector_ErroInitECF, e);
 			}
 			this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
 					.getAdapter(IRetrieveFileTransferContainerAdapter.class);
@@ -560,7 +561,7 @@ public class YoutubeConnector extends AbstractExtensionRepository {
 		try {
 			getYoutubeService().getFeed(getFavoritesUrl(), VideoFeed.class);
 		} catch (Exception e) {
-			return StatusCreator.newStatus("Error validating connector", e);
+			return StatusCreator.newStatus(Messages.YoutubeConnector_ErrorValidating, e);
 		}
 		return Status.OK_STATUS;
 	}

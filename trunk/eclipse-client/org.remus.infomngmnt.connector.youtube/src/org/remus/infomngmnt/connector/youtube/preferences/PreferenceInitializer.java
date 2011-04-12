@@ -14,7 +14,6 @@ package org.remus.infomngmnt.connector.youtube.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
 
 /**
@@ -44,7 +43,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 * 
 	 */
 	public PreferenceInitializer() {
-		this.store = YoutubeActivator.getDefault().getPreferenceStore();
+		store = YoutubeActivator.getDefault().getPreferenceStore();
 	}
 
 	/*
@@ -55,19 +54,19 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		this.store.setDefault(GDATA_SERVER_URL, "http://gdata.youtube.com");
-		this.store.setDefault(VIDEO_HTML_URL, "http://www.youtube.com/watch?v={0}");
-		this.store.setDefault(FAVORITES_URL,
-				"http://gdata.youtube.com/feeds/api/users/{0}/favorites");
-		this.store.setDefault(PLAYLIST_URL,
-				"http://gdata.youtube.com/feeds/api/users/{0}/playlists");
-		this.store.setDefault(HIGH_DEFINITION_DOWNLOAD_URL,
-				"http://www.youtube.com/get_video?video_id={0}&t={1}&fmt=22");
-		this.store.setDefault(HIGH_QUALITY_DOWNLOAD_URL,
-				"http://www.youtube.com/get_video?video_id={0}&t={1}&fmt=18");
-		this.store.setDefault(NORMAL_DOWNLOAD_URL,
-				"http://www.youtube.com/get_video?video_id={0}&t={1}");
-		this.store.setDefault(ALWAYS_HD, true);
+		store.setDefault(GDATA_SERVER_URL, "http://gdata.youtube.com"); //$NON-NLS-1$
+		store.setDefault(VIDEO_HTML_URL, "http://www.youtube.com/watch?v={0}"); //$NON-NLS-1$
+		store.setDefault(FAVORITES_URL,
+				"http://gdata.youtube.com/feeds/api/users/{0}/favorites"); //$NON-NLS-1$
+		store.setDefault(PLAYLIST_URL,
+				"http://gdata.youtube.com/feeds/api/users/{0}/playlists"); //$NON-NLS-1$
+		store.setDefault(HIGH_DEFINITION_DOWNLOAD_URL,
+				"http://www.youtube.com/get_video?video_id={0}&t={1}&fmt=22"); //$NON-NLS-1$
+		store.setDefault(HIGH_QUALITY_DOWNLOAD_URL,
+				"http://www.youtube.com/get_video?video_id={0}&t={1}&fmt=18"); //$NON-NLS-1$
+		store.setDefault(NORMAL_DOWNLOAD_URL,
+				"http://www.youtube.com/get_video?video_id={0}&t={1}"); //$NON-NLS-1$
+		store.setDefault(ALWAYS_HD, true);
 
 	}
 

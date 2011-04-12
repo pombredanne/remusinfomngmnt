@@ -31,6 +31,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
+import org.remus.infomngmnt.meetingminutes.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -99,7 +100,7 @@ public class AdditionalLogsPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED | ExpandableComposite.TWISTIE);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Decisions");
+		generalSection.setText(Messages.AdditionalLogsPage_Decisions);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout());
@@ -126,7 +127,7 @@ public class AdditionalLogsPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED | ExpandableComposite.TWISTIE);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("TODOs");
+		generalSection.setText(Messages.AdditionalLogsPage_TODOs);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout());

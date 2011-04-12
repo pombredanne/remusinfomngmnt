@@ -4,14 +4,13 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  */
 public class MeetingMinutesActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.meetingminutes";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.meetingminutes"; //$NON-NLS-1$
 
 	// The shared instance
 	private static MeetingMinutesActivator plugin;
@@ -64,12 +63,12 @@ public class MeetingMinutesActivator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		this.serviceTracker = new RemusServiceTracker(getBundle());
+		serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
 	}
 
 	public RemusServiceTracker getServiceTracker() {
-		return this.serviceTracker;
+		return serviceTracker;
 	}
 
 	/*

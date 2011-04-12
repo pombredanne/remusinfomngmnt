@@ -16,6 +16,7 @@ import org.eclipse.remus.common.ui.image.ResourceManager;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
+import org.remus.infomngmnt.meetingminutes.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -24,7 +25,7 @@ public class NewMeetingWizard extends NewInfoObjectWizard {
 
 	public NewMeetingWizard() {
 		super();
-		setWindowTitle("New Appointment");
+		setWindowTitle(Messages.NewMeetingWizard_NewAppointment);
 	}
 
 	@Override
@@ -35,10 +36,10 @@ public class NewMeetingWizard extends NewInfoObjectWizard {
 	@Override
 	public void addPages() {
 		super.addPages();
-		this.page1.setTitle("New Appointment");
-		this.page1.setMessage("This wizard enables you to create a new appointment");
+		this.page1.setTitle(Messages.NewMeetingWizard_NewAppointment);
+		this.page1.setMessage(Messages.NewMeetingWizard_Subtitle);
 		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(
-				MeetingMinutesActivator.getDefault(), "icons/iconexperience/new_wizard.png"));
+				MeetingMinutesActivator.getDefault(), "icons/iconexperience/new_wizard.png")); //$NON-NLS-1$
 	}
 
 }

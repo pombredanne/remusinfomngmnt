@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class MarketPlaceActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.eclipsemarketplace";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.eclipsemarketplace"; //$NON-NLS-1$
 
 	public static final String TYPE_ID = "MARKETPLACE"; //$NON-NLS-1$
 

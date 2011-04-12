@@ -41,18 +41,19 @@ import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.remus.util.StatusCreator;
+import org.remus.infomngmnt.eclipsemarketplace.MarketPlaceActivator;
+import org.remus.infomngmnt.eclipsemarketplace.connector.Messages;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import org.remus.infomngmnt.eclipsemarketplace.MarketPlaceActivator;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class MarketPlaceInformationRepresentation extends AbstractInformationRepresentation {
+public class MarketPlaceInformationRepresentation extends
+		AbstractInformationRepresentation {
 
 	/*
 	 * (non-Javadoc)
@@ -62,27 +63,36 @@ public class MarketPlaceInformationRepresentation extends AbstractInformationRep
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		IFile binaryReferenceFile = InformationUtil.getBinaryReferenceFile(getValue());
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
+		IFile binaryReferenceFile = InformationUtil
+				.getBinaryReferenceFile(getValue());
 
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		try {
 			HashMap<String, String> additionals = new HashMap<String, String>();
-			additionals.put("embeddedContent", parseContent());
+			additionals.put("embeddedContent", parseContent()); //$NON-NLS-1$
 			if (binaryReferenceFile != null) {
-				additionals.put("imageHref", URI.createFileURI(
-						binaryReferenceFile.getLocation().toOSString()).toString());
+				additionals.put(
+						"imageHref", //$NON-NLS-1$
+						URI.createFileURI(
+								binaryReferenceFile.getLocation().toOSString())
+								.toString());
 			}
-			templateIs = FileLocator.openStream(Platform.getBundle(MarketPlaceActivator.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
-			FreemarkerRenderer.getInstance().process(MarketPlaceActivator.PLUGIN_ID, templateIs,
-					returnValue, additionals, read.getContentsAsStrucuturedMap(),
+			templateIs = FileLocator.openStream(
+					Platform.getBundle(MarketPlaceActivator.PLUGIN_ID),
+					new Path("$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
+			FreemarkerRenderer.getInstance().process(
+					MarketPlaceActivator.PLUGIN_ID, templateIs, returnValue,
+					additionals, read.getContentsAsStrucuturedMap(),
 					read.getDynamicContentAsStructuredMap());
 
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs);
 		}
@@ -90,23 +100,27 @@ public class MarketPlaceInformationRepresentation extends AbstractInformationRep
 	}
 
 	private String parseContent() {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		String content = (String) read.getValueByNodeId(MarketPlaceActivator.DESCRIPTION_NODE_ID);
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
+		String content = (String) read
+				.getValueByNodeId(MarketPlaceActivator.DESCRIPTION_NODE_ID);
 
 		final DOMParser parser = new DOMParser();
 		try {
 			parser.parse(new InputSource(new StringReader(content)));
 			final Document document = parser.getDocument();
-			NodeList elementsByTagName = document.getElementsByTagName("a");
+			NodeList elementsByTagName = document.getElementsByTagName("a"); //$NON-NLS-1$
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
 				final Node node = elementsByTagName.item(i);
-				((Element) node).setAttribute("target", "");
-				String attribute = ((Element) node).getAttribute("href");
-				((Element) node).setAttribute("href", StringUtils.join("javascript:openFile(\'",
-						StringEscapeUtils.escapeJavaScript(attribute), "\');"));
+				((Element) node).setAttribute("target", ""); //$NON-NLS-1$ //$NON-NLS-2$
+				String attribute = ((Element) node).getAttribute("href"); //$NON-NLS-1$
+				((Element) node).setAttribute("href", StringUtils.join( //$NON-NLS-1$
+						"javascript:openFile(\'", //$NON-NLS-1$
+						StringEscapeUtils.escapeJavaScript(attribute), "\');")); //$NON-NLS-1$
 			}
-			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			transformer.setOutputProperty("omit-xml-declaration", "yes");
+			final Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
+			transformer.setOutputProperty("omit-xml-declaration", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			final DOMSource source = new DOMSource(document);
 			final StringWriter writer = new StringWriter();

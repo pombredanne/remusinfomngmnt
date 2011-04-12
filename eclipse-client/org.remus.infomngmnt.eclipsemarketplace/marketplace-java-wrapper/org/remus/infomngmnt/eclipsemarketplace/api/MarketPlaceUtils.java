@@ -25,9 +25,10 @@ import java.util.Locale;
  */
 public class MarketPlaceUtils {
 
-	public static final String UTF_8 = "UTF-8";
+	public static final String UTF_8 = "UTF-8"; //$NON-NLS-1$
 
-	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	public static final String LINE_SEPARATOR = System
+			.getProperty("line.separator"); //$NON-NLS-1$
 
 	/**
 	 * Check to see if the input is <code>null</code> or blank
@@ -38,7 +39,7 @@ public class MarketPlaceUtils {
 	 *         otherwise
 	 */
 	public static boolean checkNullOrBlank(final String input) {
-		return (input == null || "".equals(input));
+		return (input == null || "".equals(input)); //$NON-NLS-1$
 	}
 
 	/**
@@ -76,14 +77,14 @@ public class MarketPlaceUtils {
 		}
 
 		if (keepSpaces) {
-			encodedInput = encodedInput.replaceAll("[+]", " ");
+			encodedInput = encodedInput.replaceAll("[+]", " "); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		return encodedInput;
 	}
 
 	public static boolean convertNumberToBoolean(final String str) {
-		if ("1".equals(str)) {
+		if ("1".equals(str)) { //$NON-NLS-1$
 			return true;
 		}
 		return false;
@@ -98,7 +99,7 @@ public class MarketPlaceUtils {
 	 * @return date the parsed date, <code>null</code> if date was not parsable.
 	 */
 	public static Date convertStringToDate(final String date) {
-		String pattern = "EEE MMM dd HH:mm:ss Z yyyy";
+		String pattern = "EEE MMM dd HH:mm:ss Z yyyy"; //$NON-NLS-1$
 		Locale locale = Locale.US;
 		try {
 			return new SimpleDateFormat(pattern, locale).parse(date);

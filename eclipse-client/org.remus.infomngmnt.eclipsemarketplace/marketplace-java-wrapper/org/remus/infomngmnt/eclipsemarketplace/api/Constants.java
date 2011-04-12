@@ -19,58 +19,58 @@ public final class Constants {
 
 	// ///////// General Settings
 
-	public static final String API_ENDPOINT = "http://marketplace.eclipse.org/";
+	public static final String API_ENDPOINT = "http://marketplace.eclipse.org/"; //$NON-NLS-1$
 
-	public static final String USER_AGENT_HEADER = "HTTP_USER_AGENT";
+	public static final String USER_AGENT_HEADER = "HTTP_USER_AGENT"; //$NON-NLS-1$
 
-	public static final String USER_AGENT_VALUE = "Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5";
+	public static final String USER_AGENT_VALUE = "Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5"; //$NON-NLS-1$
 
-	public static final String XML = "xml";
+	public static final String XML = "xml"; //$NON-NLS-1$
 
-	public static final String API = "api/p";
+	public static final String API = "api/p"; //$NON-NLS-1$
 
-	public static final String TAXONOMY = "taxonomy/";
-	public static final String TERM = "term/";
-	public static final String NODE = "node/";
+	public static final String TAXONOMY = "taxonomy/"; //$NON-NLS-1$
+	public static final String TERM = "term/"; //$NON-NLS-1$
+	public static final String NODE = "node/"; //$NON-NLS-1$
 	// ///////// XML Node-Names
 
-	public static final String MARKETPLACE_NODE = "marketplace";
+	public static final String MARKETPLACE_NODE = "marketplace"; //$NON-NLS-1$
 
-	public static final String MARKET_NODE = "market";
+	public static final String MARKET_NODE = "market"; //$NON-NLS-1$
 
-	public static final String NAME_ATTRIBUTE = "name";
+	public static final String NAME_ATTRIBUTE = "name"; //$NON-NLS-1$
 
-	public static final String ID_ATTRIBUTE = "id";
+	public static final String ID_ATTRIBUTE = "id"; //$NON-NLS-1$
 
-	public static final String CATEGORY_NODE = "category";
+	public static final String CATEGORY_NODE = "category"; //$NON-NLS-1$
 
-	public static final String COUNT_ATTRIBUTE = "count";
+	public static final String COUNT_ATTRIBUTE = "count"; //$NON-NLS-1$
 
-	public static final String NODE_NODE = "node";
+	public static final String NODE_NODE = "node"; //$NON-NLS-1$
 
-	public static final String TITLE_NODE = "title";
+	public static final String TITLE_NODE = "title"; //$NON-NLS-1$
 
-	public static final String NID_NODE = "nid";
+	public static final String NID_NODE = "nid"; //$NON-NLS-1$
 
-	public static final String FAVORITED_NODE = "favorited";
+	public static final String FAVORITED_NODE = "favorited"; //$NON-NLS-1$
 
-	public static final String TYPE_NODE = "type";
+	public static final String TYPE_NODE = "type"; //$NON-NLS-1$
 
-	public static final String OWNER_NODE = "owner";
+	public static final String OWNER_NODE = "owner"; //$NON-NLS-1$
 
-	public static final String BODY_NODE = "body";
+	public static final String BODY_NODE = "body"; //$NON-NLS-1$
 
-	public static final String CREATED_NODE = "created";
+	public static final String CREATED_NODE = "created"; //$NON-NLS-1$
 
-	public static final String CHANGED_NODE = "changed";
+	public static final String CHANGED_NODE = "changed"; //$NON-NLS-1$
 
-	public static final String FOUNDATION_NODE = "foundationmember";
+	public static final String FOUNDATION_NODE = "foundationmember"; //$NON-NLS-1$
 
-	public static final String URL_NODE = "url";
+	public static final String URL_NODE = "url"; //$NON-NLS-1$
 
-	public static final String IMAGE_NODE = "image";
+	public static final String IMAGE_NODE = "image"; //$NON-NLS-1$
 
-	public static final String VERSION_NODE = "version";
+	public static final String VERSION_NODE = "version"; //$NON-NLS-1$
 
 	public static final String LICENSE_NODE = "license"; //$NON-NLS-1$
 

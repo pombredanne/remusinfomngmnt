@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.connector.modeshape.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -29,7 +30,7 @@ public class NewModeshapeRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewModeshapeRepositoryWizard() {
-		// TODO Auto-generated constructor stub
+		setWindowTitle(Messages.NewModeshapeRepositoryWizard_NewModeShapeConnector);
 	}
 
 	@Override
@@ -39,8 +40,8 @@ public class NewModeshapeRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	public boolean performFinish() {
-		if (repository.getUrl().endsWith("/")) {
-			repository.setUrl(StringUtils.stripEnd(repository.getUrl(), "/"));
+		if (repository.getUrl().endsWith("/")) { //$NON-NLS-1$
+			repository.setUrl(StringUtils.stripEnd(repository.getUrl(), "/")); //$NON-NLS-1$
 		}
 		return super.performFinish();
 	};

@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.connector.modeshape.ModeshapeConnector"
             credentialprovider="org.remus.infomngmnt.connector.modeshape.ModeshapeCredentialProvider"
             id="org.remus.infomngmnt.connector.modeshape.repository-connector"
-            name="JBoss Modeshape">
+            name="%repository-connector.name">
       </repository-connector>
    </extension>
    <extension

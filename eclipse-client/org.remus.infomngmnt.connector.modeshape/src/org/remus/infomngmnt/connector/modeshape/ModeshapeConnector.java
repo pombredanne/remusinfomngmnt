@@ -78,7 +78,7 @@ import org.osgi.framework.ServiceReference;
 public class ModeshapeConnector extends AbstractExtensionRepository implements
 		IRepository {
 
-	private static final String INFO_UNIT_XML = "infoUnit.xml";
+	private static final String INFO_UNIT_XML = "infoUnit.xml"; //$NON-NLS-1$
 
 	private ModeshapeClient api;
 
@@ -106,11 +106,11 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 		}
 	};
 
-	public static final String REPOSITORY = "remus-online";
+	public static final String REPOSITORY = "remus-online"; //$NON-NLS-1$
 
-	public static final String TRANSFER_URL = "/Transfer";
+	public static final String TRANSFER_URL = "/Transfer"; //$NON-NLS-1$
 
-	public static final String POOL_URL = "/Pool";
+	public static final String POOL_URL = "/Pool"; //$NON-NLS-1$
 
 	/*
 	 * (non-Javadoc)
@@ -168,8 +168,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 
 		try {
 			List<Item> items = getApi().getItems(REPOSITORY,
-					getCredentialProvider().getUserName(),
-					wrappedObject.getPath());
+					getWorkspaceName(), wrappedObject.getPath());
 			for (Item item : items) {
 				if (item instanceof PoolCategory) {
 					returnValue.add(buildPoolItem((PoolCategory) item));
@@ -194,7 +193,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 		List<RemoteObject> returnValue = new ArrayList<RemoteObject>();
 		try {
 			List<Item> items = getApi().getItems(REPOSITORY,
-					getCredentialProvider().getUserName(), object.getPath());
+					getWorkspaceName(), object.getPath());
 			for (Item item : items) {
 				if (item instanceof org.eclipse.remus.jcrjson.model.InformationUnit) {
 					returnValue
@@ -203,10 +202,10 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			}
 		} catch (JSONException e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error loading transfer-items", e));
+					Messages.ModeshapeConnector_ErrorLoadingTransfer, e));
 		} catch (IOException e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error loading transfer-items", e));
+					Messages.ModeshapeConnector_ErrorLoadingTransfer, e));
 
 		}
 		return returnValue;
@@ -221,7 +220,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 		createRemoteObject.setId(element.getId());
 		createRemoteObject.setName(element.getName());
 		createRemoteObject.setWrappedObject(element);
-		createRemoteObject.setUrl(getRepositoryUrl() + "/" + element.getPath());
+		createRemoteObject.setUrl(getRepositoryUrl() + "/" + element.getPath()); //$NON-NLS-1$
 		return createRemoteObject;
 	}
 
@@ -229,15 +228,23 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			throws RemoteException {
 		try {
 			if (item == null) {
-				item = (PoolCategory) getApi().getItemByPath(REPOSITORY,
-						getCredentialProvider().getUserName(), POOL_URL);
+				try {
+					item = (PoolCategory) getApi().getItemByPath(REPOSITORY,
+							getWorkspaceName(), POOL_URL);
+				} catch (Exception e) {
+					// try again. it could be that the workspace is not
+					// initialized
+					getApi().checkInitialization(REPOSITORY, getWorkspaceName());
+					item = (PoolCategory) getApi().getItemByPath(REPOSITORY,
+							getWorkspaceName(), POOL_URL);
+				}
 			}
 			RemoteContainer returnValue = InfomngmntFactory.eINSTANCE
 					.createRemoteContainer();
 			returnValue.setId(item.getId());
 			returnValue.setName(item.getName());
 			returnValue.setHash(String.valueOf(item.getLastModified()));
-			if ((getRepositoryUrl() + "/" + POOL_URL).equals(item.getPath())
+			if ((getRepositoryUrl() + "/" + POOL_URL).equals(item.getPath()) //$NON-NLS-1$
 					&& !isTransfer()) {
 				IRepositoryService service = RemoteActivator.getDefault()
 						.getServiceTracker()
@@ -246,38 +253,38 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 						.getRepositoryById(getLocalRepositoryId());
 				returnValue.setUrl(repositoryById.getUrl());
 			} else {
-				returnValue.setUrl(getRepositoryUrl() + "/" + item.getPath());
+				returnValue.setUrl(getRepositoryUrl() + "/" + item.getPath()); //$NON-NLS-1$
 
 			}
 			returnValue.setWrappedObject(item);
 			return returnValue;
 		} catch (JSONException e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error building pool category", e));
+					Messages.ModeshapeConnector_ErrorPoolCategory, e));
 		} catch (IOException e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error building pool category", e));
+					Messages.ModeshapeConnector_ErrorPoolCategory, e));
 		}
 	}
 
 	private RemoteObject buildTransfer() throws RemoteException {
 		try {
 			Item itemByPath = getApi().getItemByPath(REPOSITORY,
-					getCredentialProvider().getUserName(), TRANSFER_URL);
+					getWorkspaceName(), TRANSFER_URL);
 			RemoteContainer returnValue = InfomngmntFactory.eINSTANCE
 					.createRemoteContainer();
 			returnValue.setId(itemByPath.getId());
 			returnValue.setName(itemByPath.getName());
 			returnValue.setHash(String.valueOf(itemByPath.getLastModified()));
-			returnValue.setUrl(getRepositoryUrl() + "/" + itemByPath.getPath());
+			returnValue.setUrl(getRepositoryUrl() + "/" + itemByPath.getPath()); //$NON-NLS-1$
 			returnValue.setWrappedObject(itemByPath);
 			return returnValue;
 		} catch (JSONException e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error building pool category", e));
+					Messages.ModeshapeConnector_ErrorPoolCategory, e));
 		} catch (IOException e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error building pool category", e));
+					Messages.ModeshapeConnector_ErrorPoolCategory, e));
 		}
 	}
 
@@ -320,7 +327,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 					byte[] loadData = getApi().loadData(REPOSITORY,
 							getWorkspaceName(), data.getPath());
 					File tmpZip = ResourceUtil
-							.createTempFileOnFileSystem("zip");
+							.createTempFileOnFileSystem("zip"); //$NON-NLS-1$
 					IOUtils.write(loadData, new FileOutputStream(tmpZip));
 					IFolder tmpFolder = ResourceUtil
 							.createTempFolderOnFileSystem();
@@ -363,45 +370,48 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			e.printStackTrace();
 		}
 
-		throw new RemoteException(StatusCreator.newStatus("Undefined"));
+		throw new RemoteException(StatusCreator.newStatus("Undefined")); //$NON-NLS-1$
 	}
 
 	public RemoteObject commit(SynchronizableObject item2commit,
 			IProgressMonitor monitor) throws CoreException {
 		String url = item2commit.getSynchronizationMetaData().getUrl();
 		if (item2commit instanceof Category
-				&& url.startsWith(getRepositoryUrl() + "/" + POOL_URL)) {
+				&& url.startsWith(getRepositoryUrl() + "/" + POOL_URL)) { //$NON-NLS-1$
 			PoolCategory cat = new PoolCategory();
 			cat.setName(((Category) item2commit).getLabel());
-			cat.setPath(StringUtils.replaceOnce(url, getRepositoryUrl() + "/",
-					""));
+			cat.setPath(StringUtils.replaceOnce(url, getRepositoryUrl() + "/", //$NON-NLS-1$
+					"")); //$NON-NLS-1$
 			try {
 				PoolCategory addCategory = getApi().addCategory(REPOSITORY,
 						getWorkspaceName(), cat);
 				return buildPoolItem(addCategory);
 			} catch (IOException e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error updating " + cat.getName(), e));
+						Messages.ModeshapeConnector_ErrorUpdating
+								+ cat.getName(), e));
 			}
 		} else if (item2commit instanceof InformationUnitListItem) {
 			InformationUnit origElement = (InformationUnit) item2commit
 					.getAdapter(InformationUnit.class);
 			org.eclipse.remus.jcrjson.model.InformationUnit convertToTargetObject = convertToTargetObject(
 					origElement,
-					url.startsWith(getRepositoryUrl() + "/" + POOL_URL));
+					url.startsWith(getRepositoryUrl() + "/" + POOL_URL)); //$NON-NLS-1$
 			convertToTargetObject.setPath(StringUtils.replaceOnce(url,
-					getRepositoryUrl() + "/", ""));
+					getRepositoryUrl() + "/", "")); //$NON-NLS-1$ //$NON-NLS-2$
 			try {
 				org.eclipse.remus.jcrjson.model.InformationUnit addInformationUnit = getApi()
 						.updateInformationUnit(REPOSITORY, getWorkspaceName(),
 								convertToTargetObject);
 				return buildSingleRemoteObject(addInformationUnit);
 			} catch (JSONException e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						"Error updating " + origElement.getLabel(), e));
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_ErrorUpdating2,
+						origElement.getLabel()), e));
 			} catch (IOException e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						"Error updating " + origElement.getLabel(), e));
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_ErrorUpdating2,
+						origElement.getLabel()), e));
 			}
 		}
 		return null;
@@ -419,8 +429,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			org.eclipse.remus.jcrjson.model.InformationUnit convertToTargetObject = convertToTargetObject(
 					origElement, false);
 			convertToTargetObject.setPath(((Item) parentRemoteCat
-					.getWrappedObject()).getPath()
-					+ "/"
+					.getWrappedObject()).getPath() + "/" //$NON-NLS-1$
 					+ System.currentTimeMillis());
 			org.eclipse.remus.jcrjson.model.InformationUnit addInformationUnit;
 			try {
@@ -428,11 +437,13 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 						getWorkspaceName(), convertToTargetObject);
 				return buildSingleRemoteObject(addInformationUnit);
 			} catch (JSONException e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						"Error adding element " + origElement.getLabel(), e));
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_ErrorAdding,
+						origElement.getLabel()), e));
 			} catch (IOException e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						"Error adding element " + origElement.getLabel(), e));
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_ErrorAdding,
+						origElement.getLabel()), e));
 			}
 
 		} else if (item instanceof InformationUnitListItem
@@ -442,8 +453,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			org.eclipse.remus.jcrjson.model.InformationUnit convertToPresentation = convertToTargetObject(
 					origElement, true);
 			convertToPresentation.setPath(((Item) parentRemoteCat
-					.getWrappedObject()).getPath()
-					+ "/"
+					.getWrappedObject()).getPath() + "/" //$NON-NLS-1$
 					+ System.currentTimeMillis());
 			try {
 				org.eclipse.remus.jcrjson.model.InformationUnit addInformationUnit = getApi()
@@ -451,11 +461,13 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 								convertToPresentation);
 				return buildSingleRemoteObject(addInformationUnit);
 			} catch (JSONException e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						"Error adding element " + origElement.getLabel(), e));
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_ErrorAdding,
+						origElement.getLabel()), e));
 			} catch (IOException e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						"Error adding element " + origElement.getLabel(), e));
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_ErrorAdding,
+						origElement.getLabel()), e));
 			}
 		}
 		if (item instanceof Category
@@ -463,7 +475,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			PoolCategory cat = new PoolCategory();
 			cat.setName(((Category) item).getLabel());
 			cat.setPath(((Item) parentRemoteCat.getWrappedObject()).getPath()
-					+ "/" + System.currentTimeMillis());
+					+ "/" + System.currentTimeMillis()); //$NON-NLS-1$
 			PoolCategory addCategory;
 			try {
 				addCategory = getApi().addCategory(REPOSITORY,
@@ -471,7 +483,8 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 				return buildPoolItem(addCategory);
 			} catch (IOException e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error adding element " + cat.getName(), e));
+						NLS.bind(Messages.ModeshapeConnector_ErrorAdding,
+								cat.getName()), e));
 			}
 		}
 		return null;
@@ -486,11 +499,12 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 
 		if (poolElement) {
 			returnValue = new InformationPresentation();
+			// TODO every information-type has to contribute a html-emitter
 			((InformationPresentation) returnValue)
-					.setHtmlPresenation("test1232");
+					.setHtmlPresenation("test1232"); //$NON-NLS-1$
 			List<BinaryReference> binaryReferences2 = read
 					.getBinaryReferences();
-			File tmpZip = ResourceUtil.createTempFileOnFileSystem("zip");
+			File tmpZip = ResourceUtil.createTempFileOnFileSystem("zip"); //$NON-NLS-1$
 			List<Pair<File, String>> entries = new ArrayList<Pair<File, String>>();
 			for (BinaryReference binaryReference : binaryReferences2) {
 				IFile binaryReferenceToFile = InformationUtil
@@ -511,20 +525,19 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 						.convertStreamToByte(new FileInputStream(tmpZip)));
 				((InformationPresentation) returnValue).setOrigZip(zipEntry);
 			} catch (IOException e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						"Error building packed-file for unit "
-								+ returnValue.getName(), e));
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_ErrorPackaging,
+						returnValue.getName()), e));
 			}
 		} else {
 			// Transfer-Category-Add. We support only HTML, LINK and FILE
 			returnValue.setValue((origElement).getStringValue());
-			if (!"HTML".equals(origElement.getType())
-					&& !"LINK".equals(origElement.getType())
-					&& !"FILE".equals(origElement.getType())) {
-				throw new RemoteException(
-						StatusCreator.newStatus(NLS
-								.bind("{0} is not supported for transfer. Valid-Elements are Links, Richtext or File-Units",
-										origElement.getType())));
+			if (!"HTML".equals(origElement.getType()) //$NON-NLS-1$
+					&& !"LINK".equals(origElement.getType()) //$NON-NLS-1$
+					&& !"FILE".equals(origElement.getType())) { //$NON-NLS-1$
+				throw new RemoteException(StatusCreator.newStatus(NLS.bind(
+						Messages.ModeshapeConnector_NotSupported,
+						origElement.getType())));
 			}
 			IFile file = InformationUtil.getBinaryReferenceFile(origElement);
 			if (file != null && file.exists()) {
@@ -539,13 +552,17 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 					returnValue.setBinaryReferences(Collections
 							.singletonList(binaryReference));
 				} catch (IOException e) {
-					throw new RemoteException(StatusCreator.newStatus(
-							"Error adding file references to unit "
-									+ returnValue.getName(), e));
+					throw new RemoteException(
+							StatusCreator.newStatus(
+									NLS.bind(
+											Messages.ModeshapeConnector_ErrorAddingFileReference,
+											returnValue.getName()), e));
 				} catch (CoreException e) {
-					throw new RemoteException(StatusCreator.newStatus(
-							"Error adding file references to unit "
-									+ returnValue.getName(), e));
+					throw new RemoteException(
+							StatusCreator.newStatus(
+									NLS.bind(
+											Messages.ModeshapeConnector_ErrorAddingFileReference,
+											returnValue.getName()), e));
 				}
 			}
 
@@ -565,10 +582,10 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 						((Item) remote.getWrappedObject()).getPath());
 			} catch (JSONException e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error deleting element", e));
+						Messages.ModeshapeConnector_ErrorDelete, e));
 			} catch (IOException e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error deleting element", e));
+						Messages.ModeshapeConnector_ErrorDelete, e));
 
 			}
 		}
@@ -630,7 +647,7 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			return repositoryById;
 
 		}
-		url = StringUtils.replaceOnce(url, getRepositoryUrl() + "/", "");
+		url = StringUtils.replaceOnce(url, getRepositoryUrl() + "/", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		try {
 			Item itemByPath = getApi().getItemByPath(REPOSITORY,
 					getWorkspaceName(), url);

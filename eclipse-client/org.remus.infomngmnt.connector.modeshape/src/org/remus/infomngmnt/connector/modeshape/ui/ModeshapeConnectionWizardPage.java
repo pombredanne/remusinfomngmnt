@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.connector.modeshape.Messages;
 import org.remus.infomngmnt.connector.modeshape.ModeshapeCredentialProvider;
 
 public class ModeshapeConnectionWizardPage extends WizardPage {
@@ -61,9 +62,9 @@ public class ModeshapeConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public ModeshapeConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("Modeshape Connector");
-		setDescription("Enter a url to your Modeshape Repository");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.ModeshapeConnectionWizardPage_ModeShapeConnector);
+		setDescription(Messages.ModeshapeConnectionWizardPage_EnterUrl);
 
 	}
 
@@ -85,25 +86,25 @@ public class ModeshapeConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.ModeshapeConnectionWizardPage_Name);
 
 		nameText = new Text(group, SWT.BORDER);
 		nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("Url");
+		apiurlLabel.setText(Messages.ModeshapeConnectionWizardPage_URL);
 
 		apiUrlText = new Text(group, SWT.BORDER);
 		apiUrlText
 				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(group, SWT.NONE);
 		useSeparateWorkspaceButton = new Button(group, SWT.CHECK);
-		useSeparateWorkspaceButton.setText("Use separate workspace");
+		useSeparateWorkspaceButton.setText(Messages.ModeshapeConnectionWizardPage_UseSeparateWorkspace);
 
 		Label lblWorkspace = new Label(group, SWT.NONE);
 		lblWorkspace.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
-		lblWorkspace.setText("Workspace");
+		lblWorkspace.setText(Messages.ModeshapeConnectionWizardPage_Workspace);
 
 		workspaceText = new Text(group, SWT.BORDER);
 		workspaceText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
@@ -140,33 +141,33 @@ public class ModeshapeConnectionWizardPage extends WizardPage {
 					setErrorMessage(null);
 				} catch (InvocationTargetException e) {
 					setErrorMessage(StringUtils.join(
-							"Error validating repository (", e.getCause()
-									.getMessage(), ")"));
+							Messages.ModeshapeConnectionWizardPage_ErrorValidating, e.getCause()
+									.getMessage(), ")")); //$NON-NLS-1$
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		validateCredentialsButton.setText("Validate");
+		validateCredentialsButton.setText(Messages.ModeshapeConnectionWizardPage_Validate);
 
 		final Group group3 = new Group(container, SWT.NONE);
 		group3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		group3.setText("Authentication");
+		group3.setText(Messages.ModeshapeConnectionWizardPage_Authentification);
 		GridLayout gridLayout_1 = new GridLayout();
 		gridLayout_1.numColumns = 2;
 		group3.setLayout(gridLayout_1);
 		Label username = new Label(group3, SWT.NONE);
 		username.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
-		username.setText("Username");
+		username.setText(Messages.ModeshapeConnectionWizardPage_Username);
 
 		userNameText = new Text(group3, SWT.BORDER);
 		userNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 
 		Label lblPassword = new Label(group3, SWT.NONE);
-		lblPassword.setText("Password");
+		lblPassword.setText(Messages.ModeshapeConnectionWizardPage_Password);
 
 		passwordText = new Text(group3, SWT.BORDER | SWT.PASSWORD);
 		passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,

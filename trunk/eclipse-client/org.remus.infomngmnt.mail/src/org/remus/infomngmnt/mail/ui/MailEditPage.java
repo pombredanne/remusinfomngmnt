@@ -45,6 +45,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.contact.shared.ContactsWithEmailSmartField;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.mail.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -92,7 +93,7 @@ public class MailEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Content");
+		generalSection.setText(Messages.MailEditPage_Content);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout());
@@ -102,7 +103,7 @@ public class MailEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		this.description = new AnnotatingQuickFixTextBox(client, "", "");
+		this.description = new AnnotatingQuickFixTextBox(client, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		addControl(this.description.getFTextField());
 	}
 
@@ -111,7 +112,7 @@ public class MailEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Header");
+		generalSection.setText(Messages.MailEditPage_Header);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(4, false));
@@ -121,30 +122,30 @@ public class MailEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		Label subjectLabel = toolkit.createLabel(client, "Subject");
+		Label subjectLabel = toolkit.createLabel(client, Messages.MailEditPage_Subject);
 		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.subjectText = toolkit.createText(client, "", SWT.BORDER);
+		this.subjectText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(this.subjectText);
-		Label receivedLabel = toolkit.createLabel(client, "Received");
+		Label receivedLabel = toolkit.createLabel(client, Messages.MailEditPage_Received);
 		receivedLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		this.receivedDate = new CDateTime(client, CDT.BORDER | CDT.TIME_MEDIUM | CDT.DATE_MEDIUM);
 		GridDataFactory.fillDefaults().hint(180, SWT.DEFAULT).grab(false, false).applyTo(
 				this.receivedDate);
 
-		Label contentTypeLabel = toolkit.createLabel(client, "Content-Type");
+		Label contentTypeLabel = toolkit.createLabel(client, Messages.MailEditPage_ContentType);
 		contentTypeLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		this.contentTypeCombo = new Combo(client, SWT.DROP_DOWN);
 		this.contentTypeCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		toolkit.adapt(this.contentTypeCombo, false, false);
 
-		Label senderLabel = toolkit.createLabel(client, "Sender");
+		Label senderLabel = toolkit.createLabel(client, Messages.MailEditPage_Sender);
 		senderLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.senderText = toolkit.createText(client, "", SWT.BORDER);
+		this.senderText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.senderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		new ContactsWithEmailSmartField(this.senderText);
 		addControl(this.senderText);

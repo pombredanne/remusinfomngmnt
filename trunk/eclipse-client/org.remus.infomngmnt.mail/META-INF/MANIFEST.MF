@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Mail
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.remus.infomngmnt.mail;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.mail.MailActivator
-Bundle-Vendor: Remus Software
+Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
  org.apache.commons.lang;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",

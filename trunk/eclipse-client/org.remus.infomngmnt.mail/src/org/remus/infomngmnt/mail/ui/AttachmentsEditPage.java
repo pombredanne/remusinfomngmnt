@@ -67,6 +67,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.mail.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -84,7 +85,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 			List<BinaryReference> binaryReferences = read.getBinaryReferences(element2.getType(),
 					false);
 			if (binaryReferences.size() == 0 || binaryReferences.get(0) == null) {
-				return "No file";
+				return Messages.AttachmentsEditPage_NoFile;
 			}
 			return binaryReferences.get(0).getProjectRelativePath();
 		}
@@ -100,7 +101,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				String projectRelativePath = binaryReferences.get(0).getProjectRelativePath();
 				String fileExtension = new Path(projectRelativePath).getFileExtension();
 				if (fileExtension == null) {
-					fileExtension = "";
+					fileExtension = ""; //$NON-NLS-1$
 				}
 				Program findProgram = Program.findProgram(fileExtension);
 				if (findProgram != null) {
@@ -130,7 +131,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				String projectRelativePath = binaryReferences.get(0).getProjectRelativePath();
 				String fileExtension = new Path(projectRelativePath).getFileExtension();
 				if (fileExtension == null) {
-					fileExtension = "";
+					fileExtension = ""; //$NON-NLS-1$
 				}
 				Program findProgram = Program.findProgram(fileExtension);
 				if (findProgram != null) {
@@ -169,7 +170,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Attachments");
+		generalSection.setText(Messages.AttachmentsEditPage_Attachments);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(2, false));
@@ -183,7 +184,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 100).grab(true, false).span(1, 3).applyTo(
 				createTable);
 		this.attachmentsTableViewer = new TableViewer(createTable);
-		Button addbutton = toolkit.createButton(client, "Add", SWT.FLAT);
+		Button addbutton = toolkit.createButton(client, Messages.AttachmentsEditPage_Add, SWT.FLAT);
 		addbutton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				FileDialog fileDialog = new FileDialog(getSite().getShell(), SWT.OPEN);
@@ -199,7 +200,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 								try {
 									loadFile.run(monitor);
 								} catch (InvocationTargetException e) {
-									return StatusCreator.newStatus("Error uploading file", e);
+									return StatusCreator.newStatus(Messages.AttachmentsEditPage_ErrorUploadingFile, e);
 								} catch (InterruptedException e) {
 									return Status.CANCEL_STATUS;
 								}
@@ -229,7 +230,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 			}
 		});
 
-		final Button deleteButton = toolkit.createButton(client, "Delete", SWT.FLAT);
+		final Button deleteButton = toolkit.createButton(client, Messages.AttachmentsEditPage_Delete, SWT.FLAT);
 		deleteButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				CompoundCommand cc = new CompoundCommand();
@@ -248,7 +249,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 						((IStructuredSelection) AttachmentsEditPage.this.attachmentsTableViewer
 								.getSelection()).toList());
 				cc.append(deleteCmd);
-				cc.setLabel("Delete attachment");
+				cc.setLabel(Messages.AttachmentsEditPage_DeleteAttachment);
 				getEditingDomain().getCommandStack().execute(cc);
 			}
 		});
@@ -259,8 +260,8 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 		});
 		this.attachmentsTableViewer.addOpenListener(new IOpenListener() {
 			public void open(final OpenEvent event) {
-				if (MessageDialog.openConfirm(getSite().getShell(), "Confirm open attachments",
-						"Don't open attachments from senders you don't trust. Continue?")) {
+				if (MessageDialog.openConfirm(getSite().getShell(), Messages.AttachmentsEditPage_ConfirmOpenAttachment,
+						Messages.AttachmentsEditPage_ConfirmOpenAttachmentDetails)) {
 					List list = ((IStructuredSelection) event.getSelection()).toList();
 					for (Object object : list) {
 						InformationStructureRead read = InformationStructureRead.newSession(
@@ -288,7 +289,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Embedded");
+		generalSection.setText(Messages.AttachmentsEditPage_Embedded);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(2, false));
@@ -302,7 +303,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 100).grab(true, false).span(1, 2).applyTo(
 				createTable);
 		this.embeddedTableViewer = new TableViewer(createTable);
-		Button addbutton = toolkit.createButton(client, "Add", SWT.FLAT);
+		Button addbutton = toolkit.createButton(client, Messages.AttachmentsEditPage_Add, SWT.FLAT);
 		addbutton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				FileDialog fileDialog = new FileDialog(getSite().getShell(), SWT.OPEN);
@@ -318,7 +319,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 								try {
 									loadFile.run(monitor);
 								} catch (InvocationTargetException e) {
-									return StatusCreator.newStatus("Error uploading file", e);
+									return StatusCreator.newStatus(Messages.AttachmentsEditPage_ErrorUploadingFile, e);
 								} catch (InterruptedException e) {
 									return Status.CANCEL_STATUS;
 								}
@@ -344,7 +345,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		final Button deleteButton = toolkit.createButton(client, "Delete", SWT.FLAT);
+		final Button deleteButton = toolkit.createButton(client, Messages.AttachmentsEditPage_Delete, SWT.FLAT);
 		deleteButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				CompoundCommand cc = new CompoundCommand();
@@ -364,7 +365,7 @@ public class AttachmentsEditPage extends AbstractInformationFormPage {
 						((IStructuredSelection) AttachmentsEditPage.this.embeddedTableViewer
 								.getSelection()).toList());
 				cc.append(deleteCmd);
-				cc.setLabel("Delete embedded data");
+				cc.setLabel(Messages.AttachmentsEditPage_DeleteEmbeddedData);
 				getEditingDomain().getCommandStack().execute(cc);
 			}
 		});

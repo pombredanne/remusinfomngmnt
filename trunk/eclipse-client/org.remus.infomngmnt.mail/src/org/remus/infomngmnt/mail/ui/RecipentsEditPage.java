@@ -44,6 +44,7 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.contact.shared.MailPersonDialog;
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.mail.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -80,7 +81,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Recipients");
+		generalSection.setText(Messages.RecipentsEditPage_Recipients);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(2, false));
@@ -94,7 +95,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 100).grab(true, false).span(1, 3).applyTo(
 				createTable);
 		this.recipientsTableViewer = new TableViewer(createTable);
-		Button addbutton = toolkit.createButton(client, "Add", SWT.FLAT);
+		Button addbutton = toolkit.createButton(client, Messages.RecipentsEditPage_Add, SWT.FLAT);
 		addbutton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				MailPersonDialog mailPersonDialog = new MailPersonDialog(getSite().getShell(), null);
@@ -107,7 +108,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		final Button editButton = toolkit.createButton(client, "Edit", SWT.FLAT);
+		final Button editButton = toolkit.createButton(client, Messages.RecipentsEditPage_Edit, SWT.FLAT);
 		editButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				InformationUnit firstElement = (InformationUnit) ((IStructuredSelection) RecipentsEditPage.this.recipientsTableViewer
@@ -124,7 +125,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		final Button deleteButton = toolkit.createButton(client, "Delete", SWT.FLAT);
+		final Button deleteButton = toolkit.createButton(client, Messages.RecipentsEditPage_Delete, SWT.FLAT);
 		deleteButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				Command deleteCmd = DeleteCommand.create(getEditingDomain(),
@@ -162,7 +163,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("CCs");
+		generalSection.setText(Messages.RecipentsEditPage_CCs);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(2, false));
@@ -176,7 +177,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 100).grab(true, false).span(1, 3).applyTo(
 				createTable);
 		this.ccTableViewer = new TableViewer(createTable);
-		Button addbutton = toolkit.createButton(client, "Add", SWT.FLAT);
+		Button addbutton = toolkit.createButton(client, Messages.RecipentsEditPage_Add, SWT.FLAT);
 		addbutton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				MailPersonDialog mailPersonDialog = new MailPersonDialog(getSite().getShell(), null);
@@ -189,7 +190,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		final Button editButton = toolkit.createButton(client, "Edit", SWT.FLAT);
+		final Button editButton = toolkit.createButton(client, Messages.RecipentsEditPage_Edit, SWT.FLAT);
 		editButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				InformationUnit firstElement = (InformationUnit) ((IStructuredSelection) RecipentsEditPage.this.ccTableViewer
@@ -206,7 +207,7 @@ public class RecipentsEditPage extends AbstractInformationFormPage {
 				}
 			}
 		});
-		final Button deleteButton = toolkit.createButton(client, "Delete", SWT.FLAT);
+		final Button deleteButton = toolkit.createButton(client, Messages.RecipentsEditPage_Delete, SWT.FLAT);
 		deleteButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				Command deleteCmd = DeleteCommand

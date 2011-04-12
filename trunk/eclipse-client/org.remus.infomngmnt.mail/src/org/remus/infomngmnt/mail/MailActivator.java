@@ -4,14 +4,13 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  */
 public class MailActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.mail";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.mail"; //$NON-NLS-1$
 
 	public static final String INFO_TYPE_ID = "MAIL"; //$NON-NLS-1$
 
@@ -64,7 +63,7 @@ public class MailActivator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		this.serviceTracker = new RemusServiceTracker(getBundle());
+		serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
 	}
 
@@ -82,7 +81,7 @@ public class MailActivator extends AbstractUIPlugin {
 	}
 
 	public RemusServiceTracker getServiceTracker() {
-		return this.serviceTracker;
+		return serviceTracker;
 	}
 
 	/**

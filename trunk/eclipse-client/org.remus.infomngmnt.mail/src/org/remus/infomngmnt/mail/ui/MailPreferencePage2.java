@@ -15,6 +15,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import org.remus.infomngmnt.mail.MailActivator;
+import org.remus.infomngmnt.mail.messages.Messages;
 import org.remus.infomngmnt.mail.preferences.MailPreferenceInitializer;
 
 public class MailPreferencePage2 extends FieldEditorPreferencePage implements
@@ -33,17 +34,17 @@ public class MailPreferencePage2 extends FieldEditorPreferencePage implements
 	@Override
 	protected void createFieldEditors() {
 		// Create the field editors
-		addField(new FontFieldEditor(MailPreferenceInitializer.BODY_FONT, "Body Font", "Body",
+		addField(new FontFieldEditor(MailPreferenceInitializer.BODY_FONT, Messages.MailPreferencePage2_BodyFont, Messages.MailPreferencePage2_Body,
 				getFieldEditorParent()));
-		addField(new FontFieldEditor(MailPreferenceInitializer.SUB_HEADER_FONT, "Subheader Font",
-				"Subheader", getFieldEditorParent()));
-		addField(new FontFieldEditor(MailPreferenceInitializer.HEADER_FONT, "Header Font",
-				"Header", getFieldEditorParent()));
+		addField(new FontFieldEditor(MailPreferenceInitializer.SUB_HEADER_FONT, Messages.MailPreferencePage2_SubheaderFont,
+				Messages.MailPreferencePage2_Subheader, getFieldEditorParent()));
+		addField(new FontFieldEditor(MailPreferenceInitializer.HEADER_FONT, Messages.MailPreferencePage2_HeaderFont,
+				Messages.MailPreferencePage2_Header, getFieldEditorParent()));
 	}
 
 	@Override
 	public boolean performOk() {
-		new Job("Rebuild") {
+		new Job(Messages.MailPreferencePage2_Rebuild) {
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				IProject[] relevantProjects = ResourceUtil.getRelevantProjects();

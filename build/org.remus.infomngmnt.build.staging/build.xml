@@ -531,7 +531,7 @@
 		<antcall target="checkoutPackage">
 					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 					<param name="cvs.tag"  value="HEAD" />
-					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.core.remote.nl_de" />
+					<param name="cvs.package" value="org.eclipse.remus/test/org.eclipse.remus.core.remote.nl_de" />
 					<param name="cvs.name" value="org.eclipse.remus.core.remote.nl_de"  />
 		</antcall>
 		<antcall target="checkoutPackage">

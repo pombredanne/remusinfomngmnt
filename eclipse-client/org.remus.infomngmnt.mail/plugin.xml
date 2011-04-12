@@ -5,7 +5,7 @@
          point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
-            name="Mail/News"
+            name="%information.name"
             presentation="org.remus.infomngmnt.mail.extension.MailInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="MAIL">
@@ -19,7 +19,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/mail_new.png"
             id="org.remus.infomngmnt.mail.newWizard"
-            name="Mail/Message">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -28,21 +28,21 @@
             editpage="org.remus.infomngmnt.mail.ui.MailEditPage"
             icon="icons/iconexperience/mail_edit.png"
             id="org.remus.infomngmnt.mail.editPage"
-            label="Edit Mail"
+            label="%editmail.editPage.label"
             type="MAIL">
       </editPage>
       <editPage
             editpage="org.remus.infomngmnt.mail.ui.RecipentsEditPage"
             icon="icons/iconexperience/businesspeople2.png"
             id="org.remus.infomngmnt.mail.recipients"
-            label="Recipients"
+            label="%recipients.editPage.label"
             type="MAIL">
       </editPage>
       <editPage
             editpage="org.remus.infomngmnt.mail.ui.AttachmentsEditPage"
             icon="icons/iconexperience/paperclip.png"
             id="org.remus.infomngmnt.mail.attachments"
-            label="Attachments"
+            label="%attachments.editPage.label"
             type="MAIL">
       </editPage>
       <editorAction
@@ -60,7 +60,7 @@
             category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.mail.ui.MailPreferencePage2"
             id="org.remus.infomngmnt.mail.preferences"
-            name="Mail">
+            name="%page.name">
       </page>
    </extension>
    <extension
@@ -70,8 +70,8 @@
          <menu
                icon="icons/iconexperience/mail.png"
                id="org.remus.infomngmnt.mail.contextmenu"
-               label="Mail/News"
-               mnemonic="m">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.mail.openBrowser"
                   style="push">
@@ -97,7 +97,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.mail.openBrowser"
-            name="Read full Mail/News">
+            name="%command.name">
       </command>
    </extension>
    <extension

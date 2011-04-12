@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.mail;
 
+import org.remus.infomngmnt.mail.messages.Messages;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -23,19 +25,19 @@ public enum ContentType {
 	public String toString() {
 		switch (this) {
 		case PLAIN:
-			return "Plain";
+			return Messages.ContentType_Plain;
 		case HTML:
-			return "HTML";
+			return Messages.ContentType_Html;
 		}
-		return "None";
+		return Messages.ContentType_None;
 	};
 
 	public String getKey() {
 		switch (this) {
 		case PLAIN:
-			return "PLAIN";
+			return "PLAIN"; //$NON-NLS-1$
 		case HTML:
-			return "HTML";
+			return "HTML"; //$NON-NLS-1$
 		}
 		return null;
 	}

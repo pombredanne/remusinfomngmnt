@@ -16,6 +16,7 @@ import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 
 import org.remus.infomngmnt.mail.MailActivator;
 import org.remus.infomngmnt.mail.internal.ResourceManager;
+import org.remus.infomngmnt.mail.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -24,7 +25,7 @@ public class NewMailWizard extends NewInfoObjectWizard {
 
 	public NewMailWizard() {
 		super();
-		setWindowTitle("New Mail/Message");
+		setWindowTitle(Messages.NewMailWizard_Title);
 	}
 
 	@Override
@@ -35,10 +36,10 @@ public class NewMailWizard extends NewInfoObjectWizard {
 	@Override
 	public void addPages() {
 		super.addPages();
-		this.page1.setTitle("New Mail/Message");
-		this.page1.setMessage("This wizard enables you to create new mail or message");
+		this.page1.setTitle(Messages.NewMailWizard_Title);
+		this.page1.setMessage(Messages.NewMailWizard_Subtitle);
 		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(MailActivator
-				.getDefault(), "icons/iconexperience/mail_wizard.png"));
+				.getDefault(), "icons/iconexperience/mail_wizard.png")); //$NON-NLS-1$
 	}
 
 }

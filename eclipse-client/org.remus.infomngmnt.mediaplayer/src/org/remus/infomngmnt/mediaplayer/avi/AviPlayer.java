@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.core.runtime.IPath;
-
 import org.remus.infomngmnt.mediaplayer.extension.AbstractMediaPlayer;
 
 /**
@@ -38,13 +37,13 @@ public class AviPlayer extends AbstractMediaPlayer {
 	 * org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer#buildHtml(org
 	 * .eclipse.core.runtime.IPath, int, int, java.util.Map)
 	 */
-	public String buildHtml(final IPath mediaFilePath, final int widht, final int height,
-			final Map<String, String> options) {
-		return "<p align=\"center\"><embed src=\""
+	public String buildHtml(final IPath mediaFilePath, final int widht,
+			final int height, final Map<String, String> options) {
+		return "<p align=\"center\"><embed src=\"" //$NON-NLS-1$
 				+ StringEscapeUtils.escapeHtml(mediaFilePath.toOSString())
-				+ "\" autoplay=\"false\"\r\n" + "fullscreen=\"full\"\r\n"
-				+ "quitwhendone=\"true\"height=\"" + (height == 0 ? 300 : height) + "\" width=\""
-				+ (widht == 0 ? 480 : widht) + "\"></p>";
+				+ "\" autoplay=\"false\"\r\n" + "fullscreen=\"full\"\r\n" //$NON-NLS-1$ //$NON-NLS-2$
+				+ "quitwhendone=\"true\"height=\"" + (height == 0 ? 300 : height) + "\" width=\"" //$NON-NLS-1$ //$NON-NLS-2$
+				+ (widht == 0 ? 480 : widht) + "\"></p>"; //$NON-NLS-1$
 	}
 
 }

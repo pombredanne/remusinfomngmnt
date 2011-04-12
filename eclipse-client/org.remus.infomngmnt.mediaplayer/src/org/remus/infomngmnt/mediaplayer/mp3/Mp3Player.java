@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.remus.js.extension.CheckResourceReferenceJob;
-
 import org.remus.infomngmnt.mediaplayer.extension.AbstractMediaPlayer;
 
 /**
@@ -29,25 +28,25 @@ public class Mp3Player extends AbstractMediaPlayer {
 	 * org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer#buildHtml(org
 	 * .eclipse.core.runtime.IPath, int, int, java.util.Map)
 	 */
-	public String buildHtml(final IPath mediaFilePath, final int widht, final int height,
-			final Map<String, String> options) {
-		String htmlString = "<div id=\"gsplayer\" style=\"margin-top:10px;text-align: center\">\r\n<script type=\"text/javascript\">\r\n"
-				+ "	var html = swf(\"gsplayer\",\""
+	public String buildHtml(final IPath mediaFilePath, final int widht,
+			final int height, final Map<String, String> options) {
+		String htmlString = "<div id=\"gsplayer\" style=\"margin-top:10px;text-align: center\">\r\n<script type=\"text/javascript\">\r\n" //$NON-NLS-1$
+				+ "	var html = swf(\"gsplayer\",\"" //$NON-NLS-1$
 				+ CheckResourceReferenceJob.map.get(REF_RES_1)
-				+ "\",\""
+				+ "\",\"" //$NON-NLS-1$
 				+ (widht == 0 ? 480 : widht)
-				+ "\",\""
+				+ "\",\"" //$NON-NLS-1$
 				+ (height == 0 ? 27 : height)
-				+ "\",{path:\""
-				+ mediaFilePath.toOSString().replaceAll("\\\\", "\\\\\\\\")
-				+ "\",type:\"mp3\",fullscreen:'false'},{allowfullscreen:\"false\",allowScriptAccess:\"sameDomain\"});\r\n"
-				+ "\r\ndocument.write(html);\r\n" + "</script></div>";
+				+ "\",{path:\"" //$NON-NLS-1$
+				+ mediaFilePath.toOSString().replaceAll("\\\\", "\\\\\\\\") //$NON-NLS-1$ //$NON-NLS-2$
+				+ "\",type:\"mp3\",fullscreen:'false'},{allowfullscreen:\"false\",allowScriptAccess:\"sameDomain\"});\r\n" //$NON-NLS-1$
+				+ "\r\ndocument.write(html);\r\n" + "</script></div>"; //$NON-NLS-1$ //$NON-NLS-2$
 		return htmlString;
 	}
 
 	@Override
 	public String buildHeaderScript() {
-		return "<script src=\"" + CheckResourceReferenceJob.map.get(REF_RES_2)
-				+ "\" type=\"text/javascript\"></script>";
+		return "<script src=\"" + CheckResourceReferenceJob.map.get(REF_RES_2) //$NON-NLS-1$
+				+ "\" type=\"text/javascript\"></script>"; //$NON-NLS-1$
 	}
 }

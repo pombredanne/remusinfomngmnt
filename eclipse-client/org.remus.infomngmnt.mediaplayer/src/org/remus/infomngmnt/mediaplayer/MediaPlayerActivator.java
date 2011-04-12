@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class MediaPlayerActivator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.mediaplayer";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.mediaplayer"; //$NON-NLS-1$
 
 	// The shared instance
 	private static MediaPlayerActivator plugin;

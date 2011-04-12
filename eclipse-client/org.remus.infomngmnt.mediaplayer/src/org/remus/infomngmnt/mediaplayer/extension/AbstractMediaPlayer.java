@@ -29,7 +29,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
 	 * @return the id
 	 */
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	/**
@@ -44,7 +44,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
 	 * @return the name
 	 */
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	/**
@@ -59,7 +59,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
 	 * @return the supportedMediaTypes
 	 */
 	public List<String> getSupportedMediaTypes() {
-		return this.supportedMediaTypes;
+		return supportedMediaTypes;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
 	}
 
 	public String buildHeaderScript() {
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 }

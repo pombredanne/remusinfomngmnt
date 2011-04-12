@@ -14,18 +14,19 @@ package org.aspencloud.calypso.ui.workbench.views.calendar.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.ccalendar.CCalendar;
 
 public class ZoomOutAction extends Action {
-	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.stuff.actions.ZoomOutAction";
+	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.stuff.actions.ZoomOutAction"; //$NON-NLS-1$
 
 	private CCalendar calendar;
 
 	public ZoomOutAction() {
-		super("Zoom Out");
-		setToolTipText("Zoom Out");
+		super(Messages.ZoomOutAction_ZoomOut);
+		setToolTipText(Messages.ZoomOutAction_ZoomOut);
 		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(CCalendar.PLUGIN_ID,
-				"icons/iconexperience/16/zoom_out.png"));
+				"icons/iconexperience/16/zoom_out.png")); //$NON-NLS-1$
 		setId(ID);
 
 	}

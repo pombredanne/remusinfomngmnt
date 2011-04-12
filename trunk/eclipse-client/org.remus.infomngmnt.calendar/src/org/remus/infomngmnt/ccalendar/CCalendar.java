@@ -81,6 +81,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.remus.infomngmnt.calendar.CalendarPlugin;
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.calendar.model.CEvent;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
@@ -91,9 +92,9 @@ import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
 public class CCalendar extends Composite implements PropertyChangeListener,
 		ISelectionChangedListener, ISelectionProvider {
 
-	public static final String PROP_DATE = "date";
-	public static final String PROP_TYPE = "type";
-	public static final String PROP_DETAIL = "detail";
+	public static final String PROP_DATE = "date"; //$NON-NLS-1$
+	public static final String PROP_TYPE = "type"; //$NON-NLS-1$
+	public static final String PROP_DETAIL = "detail"; //$NON-NLS-1$
 
 	public static final int TYPE_UNDEFINED = -1;
 	public static final int TYPE_SINGLETON = 0;
@@ -125,7 +126,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 	private ToolItem today;
 	private ToolItem prevDay;
 	private ToolItem prevWeek;
-	private final String buttonLabelFormat = "EE d";
+	private final String buttonLabelFormat = "EE d"; //$NON-NLS-1$
 	private int calendarType = TYPE_LIST;
 	private int detailType = TYPE_LIST;
 
@@ -143,7 +144,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 	private Image moveToTodayImage;
 	private Image prevWeekImage;
 	private Image prevDayImage;
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.calendar";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.calendar"; //$NON-NLS-1$
 
 	private final Adapter taskNotification = new EContentAdapter() {
 		@Override
@@ -380,22 +381,22 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 	private void initImages() {
 
 		this.dailyImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/calendar_1.png").createImage();
+				"icons/iconexperience/16/calendar_1.png").createImage(); //$NON-NLS-1$
 		this.workWeekImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/calendar_5.png").createImage();
+				"icons/iconexperience/16/calendar_5.png").createImage(); //$NON-NLS-1$
 		this.weekImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/calendar_7.png").createImage();
+				"icons/iconexperience/16/calendar_7.png").createImage(); //$NON-NLS-1$
 
 		this.nextWeekImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/navigate_end.png").createImage();
+				"icons/iconexperience/16/navigate_end.png").createImage(); //$NON-NLS-1$
 		this.nextDayImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/navigate_right.png").createImage();
+				"icons/iconexperience/16/navigate_right.png").createImage(); //$NON-NLS-1$
 		this.moveToTodayImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/bullet_ball_blue.png").createImage();
+				"icons/iconexperience/16/bullet_ball_blue.png").createImage(); //$NON-NLS-1$
 		this.prevWeekImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/navigate_beginning.png").createImage();
+				"icons/iconexperience/16/navigate_beginning.png").createImage(); //$NON-NLS-1$
 		this.prevDayImage = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/iconexperience/16/navigate_left.png").createImage();
+				"icons/iconexperience/16/navigate_left.png").createImage(); //$NON-NLS-1$
 
 	}
 
@@ -593,7 +594,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 
 		this.dayCal = new ToolItem(tb, SWT.RADIO);
 		this.dayCal.setImage(this.dailyImage);
-		this.dayCal.setToolTipText("Day Calendar");
+		this.dayCal.setToolTipText(Messages.CCalendar_Day);
 		this.dayCal.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -609,7 +610,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 
 		this.workWeekCal = new ToolItem(tb, SWT.RADIO);
 		this.workWeekCal.setImage(this.workWeekImage);
-		this.workWeekCal.setToolTipText("Work-Week Calendar");
+		this.workWeekCal.setToolTipText(Messages.CCalendar_WorkWeek);
 		this.workWeekCal.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -625,7 +626,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 
 		this.weekCal = new ToolItem(tb, SWT.RADIO);
 		this.weekCal.setImage(this.weekImage);
-		this.weekCal.setToolTipText("Week Calendar");
+		this.weekCal.setToolTipText(Messages.CCalendar_WeekCalendar);
 		this.weekCal.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -650,7 +651,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 		tb.setLayoutData(data);
 
 		this.prevWeek = new ToolItem(tb, SWT.PUSH);
-		this.prevWeek.setToolTipText("Move Backward One Week");
+		this.prevWeek.setToolTipText(Messages.CCalendar_MoveBackward);
 		this.prevWeek.setImage(this.prevWeekImage);
 		this.prevWeek.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -660,7 +661,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 		});
 
 		this.prevDay = new ToolItem(tb, SWT.PUSH);
-		this.prevDay.setToolTipText("Move Backward One Day");
+		this.prevDay.setToolTipText(Messages.CCalendar_MoveForward);
 		this.prevDay.setImage(this.prevDayImage);
 		this.prevDay.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -670,7 +671,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 		});
 
 		this.today = new ToolItem(tb, SWT.PUSH);
-		this.today.setToolTipText("Current Week");
+		this.today.setToolTipText(Messages.CCalendar_CurrentWeek);
 		this.today.setImage(this.moveToTodayImage);
 		this.today.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -680,7 +681,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 		});
 
 		this.nextDay = new ToolItem(tb, SWT.PUSH);
-		this.nextDay.setToolTipText("Move Forward One Day");
+		this.nextDay.setToolTipText(Messages.CCalendar_MoveForwardDay);
 		this.nextDay.setImage(this.nextDayImage);
 		this.nextDay.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -690,7 +691,7 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 		});
 
 		this.nextWeek = new ToolItem(tb, SWT.PUSH);
-		this.nextWeek.setToolTipText("Move Forward One Week");
+		this.nextWeek.setToolTipText(Messages.CCalendar_MoveBackwardDay);
 		this.nextWeek.setImage(this.nextWeekImage);
 		this.nextWeek.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -896,9 +897,9 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 
 		if (this.calendarType == TYPE_LIST) {
 			if (this.dates.length == 7) {
-				this.buttons[0].setText("Week");
+				this.buttons[0].setText(Messages.CCalendar_Week);
 			} else if (this.dates.length == 5) {
-				this.buttons[0].setText("Week");
+				this.buttons[0].setText(Messages.CCalendar_Week);
 			}
 		}
 
@@ -1047,9 +1048,9 @@ public class CCalendar extends Composite implements PropertyChangeListener,
 	}
 
 	private void updateHeader() {
-		String str = "";
+		String str = ""; //$NON-NLS-1$
 		if (hasDetailDate()) {
-			str = new SimpleDateFormat("MMMM yyyy").format(getDetailDate());
+			str = new SimpleDateFormat("MMMM yyyy").format(getDetailDate()); //$NON-NLS-1$
 		}
 		this.headerLabel.setText(str);
 	}

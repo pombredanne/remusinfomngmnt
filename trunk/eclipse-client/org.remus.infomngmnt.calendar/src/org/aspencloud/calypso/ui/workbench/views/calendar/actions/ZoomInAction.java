@@ -13,19 +13,19 @@ package org.aspencloud.calypso.ui.workbench.views.calendar.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-
+import org.remus.infomngmnt.calendar.messages.Messages;
 import org.remus.infomngmnt.ccalendar.CCalendar;
 
 public class ZoomInAction extends Action {
-	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.stuff.actions.ZoomInAction";
+	public static final String ID = "org.aspencloud.calypso.ui.views.Calendar.stuff.actions.ZoomInAction"; //$NON-NLS-1$
 
 	private CCalendar calendar;
 
 	public ZoomInAction() {
-		super("Zoom In");
-		setToolTipText("Zoom In");
-		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(CCalendar.PLUGIN_ID,
-				"icons/iconexperience/16/zoom_in.png"));
+		super(Messages.ZoomInAction_ZoomIn);
+		setToolTipText(Messages.ZoomInAction_ZoomIn);
+		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(
+				CCalendar.PLUGIN_ID, "icons/iconexperience/16/zoom_in.png")); //$NON-NLS-1$
 		setId(ID);
 	}
 
@@ -35,6 +35,6 @@ public class ZoomInAction extends Action {
 
 	@Override
 	public void run() {
-		this.calendar.zoom(2, 2);
+		calendar.zoom(2, 2);
 	}
 }

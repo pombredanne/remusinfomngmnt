@@ -10,7 +10,7 @@ import org.osgi.framework.ServiceReference;
 public class CalendarPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.ui";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static CalendarPlugin plugin;
@@ -58,10 +58,11 @@ public class CalendarPlugin extends AbstractUIPlugin {
 	}
 
 	public <T> T getService(final Class<T> serviceClass) {
-		ServiceReference serviceReference = getBundle().getBundleContext().getServiceReference(
-				serviceClass.getName());
+		ServiceReference serviceReference = getBundle().getBundleContext()
+				.getServiceReference(serviceClass.getName());
 		if (serviceReference != null) {
-			Object service = getBundle().getBundleContext().getService(serviceReference);
+			Object service = getBundle().getBundleContext().getService(
+					serviceReference);
 			return (T) service;
 		}
 		return null;

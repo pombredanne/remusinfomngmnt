@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.remus.infomngmnt.calendar.messages.Messages;
 
 /**
  * @author jeremy
@@ -27,7 +28,7 @@ import org.eclipse.ui.PlatformUI;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class EditModelAction extends Action implements ISelectionChangedListener {
-	public static final String ID = "org.aspencloud.calypso.ui.actions.EditModelAction";
+	public static final String ID = "org.aspencloud.calypso.ui.actions.EditModelAction"; //$NON-NLS-1$
 
 	private final ISelectionProvider sprovider;
 
@@ -62,8 +63,8 @@ public class EditModelAction extends Action implements ISelectionChangedListener
 	private void updateSelection() {
 		if((this.sprovider != null) && !this.sprovider.getSelection().isEmpty()) {
 			EObject eObject = (EObject) ((IStructuredSelection) this.sprovider.getSelection()).getFirstElement();
-			setText("Edit...");
-			setToolTipText("Edit...");
+			setText(Messages.EditModelAction_Edit);
+			setToolTipText(Messages.EditModelAction_Edit);
 			setEnabled(true);
 		} else {
 			setEnabled(false);

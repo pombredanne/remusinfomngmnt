@@ -52,9 +52,12 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	@Override
 	public void handlePreBuild(final IProgressMonitor monitor) {
 		if (getValue().getBinaryReferences() != null) {
-			this.imageHref = getFile().getProject().getLocation()
-					.append(ResourceUtil.BINARY_FOLDER).append(
-							getValue().getBinaryReferences().getProjectRelativePath()).toOSString();
+			imageHref = getFile()
+					.getProject()
+					.getLocation()
+					.append(ResourceUtil.BINARY_FOLDER)
+					.append(getValue().getBinaryReferences()
+							.getProjectRelativePath()).toOSString();
 		}
 	}
 
@@ -66,25 +69,28 @@ public class LinkRepresentation extends AbstractInformationRepresentation {
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(LinkActivator.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(LinkActivator.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
 
 			Map<String, String> map;
-			if (this.imageHref != null) {
-				map = Collections.<String, String> singletonMap("imageHref", URI.createFileURI(
-						this.imageHref).toString());
+			if (imageHref != null) {
+				map = Collections.<String, String> singletonMap("imageHref", //$NON-NLS-1$
+						URI.createFileURI(imageHref).toString());
 			} else {
 				map = Collections.<String, String> emptyMap();
 			}
-			FreemarkerRenderer.getInstance().process(LinkActivator.PLUGIN_ID, templateIs,
-					contentsIs, returnValue, map);
+			FreemarkerRenderer.getInstance().process(LinkActivator.PLUGIN_ID,
+					templateIs, contentsIs, returnValue, map);
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}

@@ -18,17 +18,22 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 
+import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.remus.common.core.streams.HTMLStripReader;
+import org.eclipse.remus.common.io.proxy.Proxy;
+import org.eclipse.remus.common.io.proxy.ProxyUtil;
 import org.eclipse.remus.ui.progress.CancelableRunnable;
-
+import org.remus.infomngmnt.link.messsage.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -51,18 +56,30 @@ public class IndexWebPageRunnable extends CancelableRunnable {
 	 */
 	@Override
 	protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-		monitor.beginTask(NLS.bind("Grabbing content from \"{0}\"", this.url.toString()),
+		monitor.beginTask(
+				NLS.bind(Messages.IndexWebPageRunnable_GrabbingContent, url.toString()),
 				IProgressMonitor.UNKNOWN);
 		HttpClient client = new HttpClient();
+		Proxy proxyByUrl = ProxyUtil.getProxyByUrl(url.toString());
+		if (proxyByUrl != null) {
+			HostConfiguration hostConfiguration = new HostConfiguration();
+			hostConfiguration.setProxy(proxyByUrl.getAddress().getHostName(),
+					proxyByUrl.getAddress().getPort());
+			client.setHostConfiguration(hostConfiguration);
+			client.getState().setProxyCredentials(
+					AuthScope.ANY,
+					new UsernamePasswordCredentials(proxyByUrl.getUsername(),
+							proxyByUrl.getPassword()));
+		}
 		// // Create a method instance.
-		GetMethod method = new GetMethod(this.url);
+		GetMethod method = new GetMethod(url);
 		// Execute the method.
 
 		try {
 			int statusCode = client.executeMethod(method);
 
 			if (statusCode != HttpStatus.SC_OK) {
-				System.err.println("Method failed: " + method.getStatusLine());
+				System.err.println("Method failed: " + method.getStatusLine()); //$NON-NLS-1$
 			}
 			InputStream stream = method.getResponseBodyAsStream();
 			Reader in = new HTMLStripReader(new InputStreamReader(stream));
@@ -73,10 +90,10 @@ public class IndexWebPageRunnable extends CancelableRunnable {
 			}
 
 			String string = sw.toString();
-			string = string.replaceAll("\\r\\n", " ");
-			string = string.replaceAll("\\n", " ");
-			string = string.replaceAll("\\s+", " ");
-			this.content = string;
+			string = string.replaceAll("\\r\\n", " "); //$NON-NLS-1$ //$NON-NLS-2$
+			string = string.replaceAll("\\n", " "); //$NON-NLS-1$ //$NON-NLS-2$
+			string = string.replaceAll("\\s+", " "); //$NON-NLS-1$ //$NON-NLS-2$
+			content = string;
 		} catch (HttpException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,7 +106,7 @@ public class IndexWebPageRunnable extends CancelableRunnable {
 	}
 
 	public String getContent() {
-		return this.content;
+		return content;
 	}
 
 }

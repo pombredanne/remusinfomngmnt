@@ -9,9 +9,9 @@ import org.osgi.framework.BundleContext;
 public class SlideshareActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.slideshare";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.slideshare"; //$NON-NLS-1$
 
-	public static final String REPOSITORY_OPTIONS_SEARCH_KEY = "search";
+	public static final String REPOSITORY_OPTIONS_SEARCH_KEY = "search"; //$NON-NLS-1$
 
 	public static final String API_KEY = "3500tot7"; //$NON-NLS-1$
 

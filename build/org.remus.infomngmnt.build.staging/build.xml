@@ -579,6 +579,12 @@
 		<antcall target="checkoutPackage">
 					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
 					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.search.ui.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.search.ui.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
 					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.desktop.clock.nl_de" />
 					<param name="cvs.name" value="org.eclipse.remus.ui.desktop.clock.nl_de"  />
 		</antcall>

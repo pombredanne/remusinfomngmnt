@@ -31,7 +31,6 @@ import org.eclipse.remus.core.remote.services.IRepositoryService;
 import org.eclipse.remus.core.remote.sync.SyncUtil;
 import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.model.remote.IRepository;
-
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
 
@@ -60,19 +59,30 @@ public class TwitterUtil {
 		InformationStructureEdit edit = InformationStructureEdit
 				.newSession(TwitterActivator.INFOTYPE_ID);
 
-		InformationUnit message = edit.createSubType(TwitterActivator.MESSAGE_TYPE, null);
+		InformationUnit message = edit.createSubType(
+				TwitterActivator.MESSAGE_TYPE, null);
 
-		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt());
-		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText());
-		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID, status.getId());
-		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE, status.getSource());
-		edit.setValue(message, TwitterActivator.REPLY_ID, status.getInReplyToScreenName());
-		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID, status.getInReplyToStatusId());
-		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, status.getUser().getName());
-		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, status.getUser()
-				.getScreenName());
-		TwitterActivator.getDefault().getImageCache().checkCache(status.getUser().getScreenName(),
-				status.getUser().getProfileImageURL(), null);
+		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE,
+				status.getCreatedAt());
+		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE,
+				status.getText());
+		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID,
+				status.getId());
+		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE,
+				status.getSource());
+		edit.setValue(message, TwitterActivator.REPLY_ID,
+				status.getInReplyToScreenName());
+		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID,
+				status.getInReplyToStatusId());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, status
+				.getUser().getName());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, status
+				.getUser().getScreenName());
+		TwitterActivator
+				.getDefault()
+				.getImageCache()
+				.checkCache(status.getUser().getScreenName(),
+						status.getUser().getProfileImageURL(), null);
 
 		return message;
 	}
@@ -81,16 +91,24 @@ public class TwitterUtil {
 		InformationStructureEdit edit = InformationStructureEdit
 				.newSession(TwitterActivator.INFOTYPE_ID);
 
-		InformationUnit message = edit.createSubType(TwitterActivator.MESSAGE_TYPE, null);
+		InformationUnit message = edit.createSubType(
+				TwitterActivator.MESSAGE_TYPE, null);
 
-		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt());
-		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText());
-		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID, status.getId());
-		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, status.getSender().getName());
-		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, status.getSender()
-				.getScreenName());
-		TwitterActivator.getDefault().getImageCache().checkCache(
-				status.getSender().getScreenName(), status.getSender().getProfileImageURL(), null);
+		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE,
+				status.getCreatedAt());
+		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE,
+				status.getText());
+		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID,
+				status.getId());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, status
+				.getSender().getName());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, status
+				.getSender().getScreenName());
+		TwitterActivator
+				.getDefault()
+				.getImageCache()
+				.checkCache(status.getSender().getScreenName(),
+						status.getSender().getProfileImageURL(), null);
 
 		return message;
 	}
@@ -105,12 +123,13 @@ public class TwitterUtil {
 			String group = matcher.group();
 			if (!matchings.contains(group)) {
 				matchings.add(group);
-				pres.add("<a href=\"" + HREF_USER_PREFIX + "." + group.substring(1) + "\">");
-				posts.add("</a>");
+				pres.add("<a href=\"" + HREF_USER_PREFIX + "." + group.substring(1) + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				posts.add("</a>"); //$NON-NLS-1$
 			}
 		}
-		String surroundMatchingInString = StringUtils.surroundMatchingInString(content, matchings
-				.toArray(new String[matchings.size()]), pres.toArray(new String[pres.size()]),
+		String surroundMatchingInString = StringUtils.surroundMatchingInString(
+				content, matchings.toArray(new String[matchings.size()]),
+				pres.toArray(new String[pres.size()]),
 				posts.toArray(new String[posts.size()]));
 		return surroundMatchingInString;
 	}
@@ -125,12 +144,13 @@ public class TwitterUtil {
 			String group = matcher.group();
 			if (!matchings.contains(group)) {
 				matchings.add(group);
-				pres.add("<a href=\"" + HREF_KEYWORD_PREFIX + "." + group.substring(1) + "\">");
-				posts.add("</a>");
+				pres.add("<a href=\"" + HREF_KEYWORD_PREFIX + "." + group.substring(1) + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				posts.add("</a>"); //$NON-NLS-1$
 			}
 		}
-		String surroundMatchingInString = StringUtils.surroundMatchingInString(content, matchings
-				.toArray(new String[matchings.size()]), pres.toArray(new String[pres.size()]),
+		String surroundMatchingInString = StringUtils.surroundMatchingInString(
+				content, matchings.toArray(new String[matchings.size()]),
+				pres.toArray(new String[pres.size()]),
 				posts.toArray(new String[posts.size()]));
 		return surroundMatchingInString;
 	}
@@ -145,12 +165,13 @@ public class TwitterUtil {
 			String group = matcher.group();
 			if (!matchings.contains(group)) {
 				matchings.add(group);
-				pres.add("<a href=\"" + group + "\">");
-				posts.add("</a>");
+				pres.add("<a href=\"" + group + "\">"); //$NON-NLS-1$ //$NON-NLS-2$
+				posts.add("</a>"); //$NON-NLS-1$
 			}
 		}
-		String surroundMatchingInString = StringUtils.surroundMatchingInString(content, matchings
-				.toArray(new String[matchings.size()]), pres.toArray(new String[pres.size()]),
+		String surroundMatchingInString = StringUtils.surroundMatchingInString(
+				content, matchings.toArray(new String[matchings.size()]),
+				pres.toArray(new String[pres.size()]),
 				posts.toArray(new String[posts.size()]));
 		return surroundMatchingInString;
 	}
@@ -159,12 +180,12 @@ public class TwitterUtil {
 		// String escapeXml = StringEscapeUtils.escapeXml(content);
 		String escapeXml = content;
 		StringWriter sw = new StringWriter();
-		sw.append("<form><p vspace=\"false\">");
+		sw.append("<form><p vspace=\"false\">"); //$NON-NLS-1$
 		escapeXml = parseUsers(escapeXml);
 		escapeXml = parseKeywords(escapeXml);
 		escapeXml = parseUrls(escapeXml);
 		sw.append(escapeXml);
-		sw.append("</p></form>");
+		sw.append("</p></form>"); //$NON-NLS-1$
 		return sw.toString();
 	}
 
@@ -178,34 +199,46 @@ public class TwitterUtil {
 		return null;
 	}
 
-	public static InformationUnit buildMessage(final Tweet status, final Twitter api)
-			throws TwitterException {
+	public static InformationUnit buildMessage(final Tweet status,
+			final Twitter api) throws TwitterException {
 
 		InformationStructureEdit edit = InformationStructureEdit
 				.newSession(TwitterActivator.INFOTYPE_ID);
 
-		InformationUnit message = edit.createSubType(TwitterActivator.MESSAGE_TYPE, null);
+		InformationUnit message = edit.createSubType(
+				TwitterActivator.MESSAGE_TYPE, null);
 
-		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE, status.getCreatedAt());
-		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE, status.getText());
-		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID, status.getId());
-		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE, StringEscapeUtils
-				.unescapeXml(status.getSource()));
+		edit.setValue(message, TwitterActivator.MESSAGE_DATE_TYPE,
+				status.getCreatedAt());
+		edit.setValue(message, TwitterActivator.MESSAGE_CONTENT_TYPE,
+				status.getText());
+		edit.setValue(message, TwitterActivator.MESSAGE_INTERNAL_ID,
+				status.getId());
+		edit.setValue(message, TwitterActivator.MESSAGE_SRC_TYPE,
+				StringEscapeUtils.unescapeXml(status.getSource()));
 		edit.setValue(message, TwitterActivator.REPLY_ID, status.getToUser());
-		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID, status.getToUserId());
+		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID,
+				status.getToUserId());
 
 		Status showStatus = api.showStatus(status.getId());
 		User userDetail = showStatus.getUser();
-		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID, showStatus.getInReplyToStatusId());
-		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE, userDetail.getName());
-		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE, userDetail.getScreenName());
+		edit.setValue(message, TwitterActivator.REPLY_STATUS_ID,
+				showStatus.getInReplyToStatusId());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_TYPE,
+				userDetail.getName());
+		edit.setValue(message, TwitterActivator.MESSAGE_USER_ID_TYPE,
+				userDetail.getScreenName());
 
-		TwitterActivator.getDefault().getImageCache().checkCache(userDetail.getScreenName(),
-				userDetail.getProfileImageURL(), null);
+		TwitterActivator
+				.getDefault()
+				.getImageCache()
+				.checkCache(userDetail.getScreenName(),
+						userDetail.getProfileImageURL(), null);
 		return message;
 	}
 
-	public static boolean onlineActionsAvailable(final InformationUnitListItem adapter) {
+	public static boolean onlineActionsAvailable(
+			final InformationUnitListItem adapter) {
 
 		return adapter != null
 				&& adapter.getSynchronizationMetaData() != null
@@ -219,27 +252,34 @@ public class TwitterUtil {
 		return onlineActionsAvailable(adapter);
 	}
 
-	public static boolean canAdd2Repository(final String repositoryId, final String keyWord) {
-		RemoteRepository repositoryById = RemoteActivator.getDefault().getServiceTracker()
-				.getService(IRepositoryService.class).getRepositoryById(repositoryId);
+	public static boolean canAdd2Repository(final String repositoryId,
+			final String keyWord) {
+		RemoteRepository repositoryById = RemoteActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryService.class)
+				.getRepositoryById(repositoryId);
 		String string = repositoryById.getOptions().get(
 				TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY);
-		List<String> asList = Arrays.asList(org.apache.commons.lang.StringUtils.split(string, "|"));
+		List<String> asList = Arrays.asList(org.apache.commons.lang.StringUtils
+				.split(string, "|")); //$NON-NLS-1$
 		return !asList.contains(keyWord);
 	}
 
-	public static void addKeyWordToRepository(final String repositoryId, final String keyWord) {
-		RemoteRepository repositoryById = RemoteActivator.getDefault().getServiceTracker()
-				.getService(IRepositoryService.class).getRepositoryById(repositoryId);
+	public static void addKeyWordToRepository(final String repositoryId,
+			final String keyWord) {
+		RemoteRepository repositoryById = RemoteActivator.getDefault()
+				.getServiceTracker().getService(IRepositoryService.class)
+				.getRepositoryById(repositoryId);
 		String string = repositoryById.getOptions().get(
 				TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY);
-		List<String> asList = new ArrayList<String>(Arrays
-				.asList(org.apache.commons.lang.StringUtils.split(string, "|")));
+		List<String> asList = new ArrayList<String>(
+				Arrays.asList(org.apache.commons.lang.StringUtils.split(string,
+						"|"))); //$NON-NLS-1$
 		asList.add(keyWord);
-		repositoryById.getOptions().put(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
-				org.apache.commons.lang.StringUtils.join(asList, "|"));
-		IEditingHandler service = RemoteActivator.getDefault().getServiceTracker().getService(
-				IEditingHandler.class);
+		repositoryById.getOptions().put(
+				TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
+				org.apache.commons.lang.StringUtils.join(asList, "|")); //$NON-NLS-1$
+		IEditingHandler service = RemoteActivator.getDefault()
+				.getServiceTracker().getService(IEditingHandler.class);
 		service.saveObjectToResource(repositoryById);
 		RemoteActivator.getDefault().getServiceTracker().ungetService(service);
 

@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
 
 import twitter4j.Twitter;
@@ -49,7 +50,7 @@ public class OAuthDialog extends Dialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Grant Remus Access to your twitter-account");
+		newShell.setText(Messages.OAuthDialog_GrantAccess);
 	}
 
 	/**
@@ -100,9 +101,9 @@ public class OAuthDialog extends Dialog {
 			this.tokenSecret = accessToken.getTokenSecret();
 			super.okPressed();
 		} catch (Exception e) {
-			ErrorDialog.openError(getShell(), "Error accessing twitter",
-					"An error occurred while connecting to twitter", StatusCreator.newStatus(
-							"Error getting token", e));
+			ErrorDialog.openError(getShell(), Messages.OAuthDialog_ErrorAccessingTwitter,
+					Messages.OAuthDialog_ErrorConnecting, StatusCreator.newStatus(
+							Messages.OAuthDialog_ErrorGettingToken, e));
 		}
 	}
 
@@ -131,7 +132,7 @@ public class OAuthDialog extends Dialog {
 			parser.parse(new InputSource(new StringReader(html)));
 			final Document document = parser.getDocument();
 
-			Element elementsByTagName = document.getElementById("oauth_pin");
+			Element elementsByTagName = document.getElementById("oauth_pin"); //$NON-NLS-1$
 			if (elementsByTagName != null) {
 				return org.apache.commons.lang.StringUtils.trim(elementsByTagName.getTextContent());
 			}

@@ -2,7 +2,6 @@ package org.remus.infomngmnt.connector.twitter;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
 import org.remus.infomngmnt.birtreport.ReportActivator;
 import org.remus.infomngmnt.connector.twitter.ui.TwitterImageCache;
 
@@ -12,14 +11,14 @@ import org.remus.infomngmnt.connector.twitter.ui.TwitterImageCache;
 public class TwitterActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.twitter";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.twitter"; //$NON-NLS-1$
 
 	// The shared instance
 	private static TwitterActivator plugin;
 
 	public static final String REPOSITORY_OPTIONS_SEARCH_KEY = "REPOSITORY_OPTIONS_SEARCH_KEY"; //$NON-NLS-1$
 	public static final String REPOSITORY_OPTIONS_DETAILED_KEY = "REPOSITORY_OPTIONS_SEARCH_KEY"; //$NON-NLS-1$
-	public static final String REPOSITORY_OPTIONS_WATCH_OWN_PROFILE = "REPOSITORY_OPTIONS_WATCH_OWN_PROFILE";
+	public static final String REPOSITORY_OPTIONS_WATCH_OWN_PROFILE = "REPOSITORY_OPTIONS_WATCH_OWN_PROFILE"; //$NON-NLS-1$
 
 	// Twitter Feed constancts
 	public static final String INFOTYPE_ID = "TWITTER"; //$NON-NLS-1$
@@ -42,7 +41,7 @@ public class TwitterActivator extends AbstractUIPlugin {
 
 	public static final String REPLY_STATUS_ID = "replystatusid"; //$NON-NLS-1$
 
-	public static final String MESSAGE_USER_ID_TYPE = "userid";
+	public static final String MESSAGE_USER_ID_TYPE = "userid"; //$NON-NLS-1$
 
 	// Twitter user constants
 	public static final String INFOTYPE_USERS = "TWITTER-USER"; //$NON-NLS-1$
@@ -129,10 +128,10 @@ public class TwitterActivator extends AbstractUIPlugin {
 	}
 
 	public TwitterImageCache getImageCache() {
-		if (this.imageCache == null) {
-			this.imageCache = new TwitterImageCache();
+		if (imageCache == null) {
+			imageCache = new TwitterImageCache();
 		}
-		return this.imageCache;
+		return imageCache;
 	}
 
 }

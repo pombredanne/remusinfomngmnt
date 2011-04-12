@@ -31,6 +31,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.preferences.TwitterPreferenceInitializer;
@@ -61,7 +62,7 @@ public class TwitterEditPage extends AbstractInformationFormPage {
 
 		IToolBarManager toolBarManager = ((InformationEditor) getEditor()).getHeaderForm()
 				.getForm().getToolBarManager();
-		this.previousAction = new Action("Newer") {
+		this.previousAction = new Action(Messages.TwitterEditPage_Newer) {
 			@Override
 			public void run() {
 				TwitterEditPage.this.page--;
@@ -69,7 +70,7 @@ public class TwitterEditPage extends AbstractInformationFormPage {
 			}
 		};
 		toolBarManager.add(this.previousAction);
-		this.nextAction = new Action("Older") {
+		this.nextAction = new Action(Messages.TwitterEditPage_Older) {
 			@Override
 			public void run() {
 				TwitterEditPage.this.page++;

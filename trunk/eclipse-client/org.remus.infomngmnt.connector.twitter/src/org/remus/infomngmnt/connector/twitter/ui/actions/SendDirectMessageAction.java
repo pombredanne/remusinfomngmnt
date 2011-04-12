@@ -18,6 +18,7 @@ import org.eclipse.remus.common.core.util.StringUtils;
 import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.common.ui.image.ResourceManager;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.jobs.SendMessageJob;
 import org.remus.infomngmnt.connector.twitter.ui.TweetDialog;
@@ -31,17 +32,17 @@ public class SendDirectMessageAction extends Action {
 	private final String repositoryId;
 
 	public SendDirectMessageAction(final String userId, final String repositoryId) {
-		super("Send direct message");
+		super(Messages.SendDirectMessageAction_SendDirectMessage);
 		this.id2 = userId;
 		this.repositoryId = repositoryId;
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(TwitterActivator.getDefault(),
-				"icons/iconexperience/user_into.png"));
+				"icons/iconexperience/user_into.png")); //$NON-NLS-1$
 	}
 
 	@Override
 	public void run() {
 		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), StringUtils
-				.join(this.id2, " "), this.repositoryId);
+				.join(this.id2, " "), this.repositoryId); //$NON-NLS-1$
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			SendMessageJob job = new SendMessageJob(dialog.getMessage(), this.repositoryId, null,
 					this.id2);

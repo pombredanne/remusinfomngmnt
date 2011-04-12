@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.remus.infomngmnt.connector.twitter.Messages;
 
 
 /**
@@ -90,7 +91,7 @@ public class ConversationPopup extends PopupDialog {
 	protected Control createDialogArea(final Composite parent) {
 		this.toolkit = new FormToolkit(parent.getDisplay());
 		this.form = this.toolkit.createScrolledForm(parent);
-		this.form.setText("Conversation");
+		this.form.setText(Messages.ConversationPopup_Conversation);
 		this.form.getToolBarManager().add(new CloseDialogAction());
 		this.form.getToolBarManager().update(true);
 		this.form.getBody().setLayout(new TableWrapLayout());
@@ -115,7 +116,7 @@ public class ConversationPopup extends PopupDialog {
 		private CloseDialogAction() {
 			setImageDescriptor(CommonImageRegistry.getInstance().getDescriptor(
 					CommonImageRegistry.NOTIFICATION_CLOSE));
-			setText("Close");
+			setText(Messages.ConversationPopup_Close);
 		}
 
 		@Override

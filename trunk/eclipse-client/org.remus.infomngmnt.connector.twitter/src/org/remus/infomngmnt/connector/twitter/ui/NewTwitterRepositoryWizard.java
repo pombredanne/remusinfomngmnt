@@ -20,6 +20,7 @@ import org.eclipse.remus.core.remote.sync.SyncUtil;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 
 /**
@@ -33,7 +34,7 @@ public class NewTwitterRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewTwitterRepositoryWizard() {
-		setWindowTitle("Twitter Repository");
+		setWindowTitle(Messages.NewTwitterRepositoryWizard_TwitterRepository);
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class NewTwitterRepositoryWizard extends NewRepositoryWizard {
 	@Override
 	public boolean performFinish() {
 		getRepository().getOptions().put(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
-				StringUtils.join(this.page1.getSearchList(), "|"));
+				StringUtils.join(this.page1.getSearchList(), "|")); //$NON-NLS-1$
 		getRepository().setUrl(
 				SyncUtil.getRepositoryImplemenationByRemoteRepository(getRepository())
 						.getRepositoryUrl());
@@ -82,7 +83,7 @@ public class NewTwitterRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		newRemoteRepositry.getOptions().put(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY, "");
+		newRemoteRepositry.getOptions().put(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY, ""); //$NON-NLS-1$
 	}
 
 }

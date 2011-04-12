@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 
 /**
@@ -86,14 +87,14 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 		final Label nameLabel = new Label(comp, SWT.NONE);
 		final GridData gd_nameLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		nameLabel.setLayoutData(gd_nameLabel);
-		nameLabel.setText("Name");
+		nameLabel.setText(Messages.TwitterSectionPreferences_Name);
 
 		this.nameText = new Text(comp, SWT.BORDER);
 		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
 		this.nameText.setLayoutData(gd_nameText);
 
 		final Label feedLabel = new Label(comp, SWT.NONE);
-		feedLabel.setText("Feed");
+		feedLabel.setText(Messages.TwitterSectionPreferences_Feed);
 		new Label(comp, SWT.NONE);
 
 		this.feedText = new Text(comp, SWT.READ_ONLY | SWT.BORDER);
@@ -102,7 +103,7 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 
 		final Button browseButton = new Button(comp, SWT.NONE);
 		browseButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
-		browseButton.setText("Browse...");
+		browseButton.setText(Messages.TwitterSectionPreferences_Browse);
 		browseButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				Set<? extends EObject> allItemsByType = InformationUtil
@@ -123,10 +124,10 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 						.getShell(), labelProvider);
 				dialog.setAllowDuplicates(false);
 				dialog.setElements(allItemsByType.toArray());
-				dialog.setEmptySelectionMessage("Selection is required");
+				dialog.setEmptySelectionMessage(Messages.TwitterSectionPreferences_SelectionRequired);
 				dialog.setMultipleSelection(false);
-				dialog.setTitle("Select a twitter feed");
-				dialog.setMessage("Please select a twitter feed from the list");
+				dialog.setTitle(Messages.TwitterSectionPreferences_SelectFeed);
+				dialog.setMessage(Messages.TwitterSectionPreferences_SelectFeedMessage);
 				dialog.setIgnoreCase(true);
 				if (dialog.open() == IDialogConstants.OK_ID) {
 					setSelectedInfoUnit(((InformationUnitListItem) dialog.getFirstResult()).getId());
@@ -136,7 +137,7 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 		setSelectedInfoUnit(this.section.getPreferenceOptions().get(PREFERENCE_INFOUNIT_ID));
 
 		final Label latestMessagesLabel = new Label(comp, SWT.NONE);
-		latestMessagesLabel.setText("Latest messages:");
+		latestMessagesLabel.setText(Messages.TwitterSectionPreferences_LatestMessage);
 
 		this.spinner = new Spinner(comp, SWT.BORDER);
 		this.spinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -147,7 +148,7 @@ public class TwitterSectionPreferences extends AbstractTrayPreferencePage {
 		setControl(comp);
 
 		final Label widthLabel = new Label(comp, SWT.NONE);
-		widthLabel.setText("Width");
+		widthLabel.setText(Messages.TwitterSectionPreferences_Width);
 
 		this.widthSpinner = new Spinner(comp, SWT.BORDER);
 		this.widthSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));

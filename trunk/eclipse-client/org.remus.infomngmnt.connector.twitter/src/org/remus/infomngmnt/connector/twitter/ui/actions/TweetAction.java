@@ -16,6 +16,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.remus.common.ui.UIUtil;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.jobs.SendMessageJob;
 import org.remus.infomngmnt.connector.twitter.ui.TweetDialog;
 
@@ -28,14 +29,14 @@ public class TweetAction extends Action {
 
 	public TweetAction(final String repositoryId) {
 		this.repositoryId = repositoryId;
-		setText("Tweet new message");
-		setToolTipText("Tweet new message");
+		setText(Messages.TweetAction_TweetNewMessage);
+		setToolTipText(Messages.TweetAction_TweetNewMessage);
 
 	}
 
 	@Override
 	public void run() {
-		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), "",
+		TweetDialog dialog = new TweetDialog(UIUtil.getDisplay().getActiveShell(), "", //$NON-NLS-1$
 				this.repositoryId);
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			SendMessageJob job = new SendMessageJob(dialog.getMessage(), this.repositoryId);

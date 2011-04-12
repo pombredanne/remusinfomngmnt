@@ -40,7 +40,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
-
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 import org.remus.infomngmnt.connector.twitter.ui.MessageComposite;
@@ -64,25 +63,26 @@ public class TwitterTraySection extends AbstractTraySection {
 	@Override
 	public void init(final FormToolkit pToolkit, final TraySection section) {
 		super.init(pToolkit, section);
-		RemusServiceTracker remusServiceTracker = new RemusServiceTracker(Platform
-				.getBundle(TwitterActivator.PLUGIN_ID));
-		IApplicationModel service = remusServiceTracker.getService(IApplicationModel.class);
+		RemusServiceTracker remusServiceTracker = new RemusServiceTracker(
+				Platform.getBundle(TwitterActivator.PLUGIN_ID));
+		IApplicationModel service = remusServiceTracker
+				.getService(IApplicationModel.class);
 
 		try {
-			this.messages = Integer.valueOf(section.getPreferenceOptions().get(
+			messages = Integer.valueOf(section.getPreferenceOptions().get(
 					TwitterSectionPreferences.PREFERENCE_MESSAGE_COUNT));
 		} catch (NumberFormatException e) {
 			// do nothing. not a valid value
 		}
 		try {
-			this.width = Integer.valueOf(section.getPreferenceOptions().get(
+			width = Integer.valueOf(section.getPreferenceOptions().get(
 					TwitterSectionPreferences.PREFERENCE_WIDTH));
 		} catch (NumberFormatException e) {
 			// do nothing. not a valid value
 		}
 		String string = section.getPreferenceOptions().get(
 				TwitterSectionPreferences.PREFERENCE_INFOUNIT_ID);
-		this.itemById = service.getItemById(string, null);
+		itemById = service.getItemById(string, null);
 		remusServiceTracker.ungetService(service);
 	}
 
@@ -93,30 +93,30 @@ public class TwitterTraySection extends AbstractTraySection {
 
 		parent.setLayout(layout);
 
-		if (this.itemById != null && TwitterUtil.onlineActionsAvailable(this.itemById)) {
+		if (itemById != null && TwitterUtil.onlineActionsAvailable(itemById)) {
 			final ToolBar toolBar = new ToolBar(parent, SWT.RIGHT);
-			this.toolkit.adapt(toolBar, true, true);
-			final TableWrapData twd_toolBar = new TableWrapData(TableWrapData.CENTER,
-					TableWrapData.TOP);
+			toolkit.adapt(toolBar, true, true);
+			final TableWrapData twd_toolBar = new TableWrapData(
+					TableWrapData.CENTER, TableWrapData.TOP);
 
 			toolBar.setLayoutData(twd_toolBar);
-			final TweetAction tweetAction = new TweetAction(this.itemById
+			final TweetAction tweetAction = new TweetAction(itemById
 					.getSynchronizationMetaData().getRepositoryId());
 			ToolItem toolItem = new ToolItem(toolBar, SWT.PUSH);
 			toolItem.setText(tweetAction.getText());
-			toolItem.setImage(ResourceManager.getPluginImage(TwitterActivator.getDefault(),
-					"icons/twitter.png"));
+			toolItem.setImage(ResourceManager.getPluginImage(
+					TwitterActivator.getDefault(), "icons/twitter.png")); //$NON-NLS-1$
 			toolItem.addListener(SWT.Selection, new Listener() {
 				public void handleEvent(final Event event) {
 					tweetAction.run();
 				}
 			});
 		}
-		if (this.itemById != null) {
-			this.listener = new IResourceChangeListener() {
+		if (itemById != null) {
+			listener = new IResourceChangeListener() {
 				public void resourceChanged(final IResourceChangeEvent event) {
-					if (ResourceUtil.isPathInResourceDelta(event.getDelta(), new Path(
-							TwitterTraySection.this.itemById.getWorkspacePath()))) {
+					if (ResourceUtil.isPathInResourceDelta(event.getDelta(),
+							new Path(itemById.getWorkspacePath()))) {
 						UIUtil.getDisplay().asyncExec(new Runnable() {
 							public void run() {
 								buildMessageList();
@@ -126,9 +126,9 @@ public class TwitterTraySection extends AbstractTraySection {
 
 				}
 			};
-			ResourcesPlugin.getWorkspace().addResourceChangeListener(this.listener);
+			ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
 		}
-		if (this.itemById != null) {
+		if (itemById != null) {
 			buildMessageList();
 		} else {
 			buildEmptyContents();
@@ -142,27 +142,29 @@ public class TwitterTraySection extends AbstractTraySection {
 	}
 
 	private void buildMessageList() {
-		for (MessageComposite composite : this.compositeCollection) {
+		for (MessageComposite composite : compositeCollection) {
 			composite.removeMessageFormHyperlinkListener();
 			composite.removeMetaFormHyperlinkListener();
 			composite.dispose();
 		}
-		this.compositeCollection.clear();
-		InformationUnit adapter = (InformationUnit) this.itemById.getAdapter(InformationUnit.class);
+		compositeCollection.clear();
+		InformationUnit adapter = (InformationUnit) itemById
+				.getAdapter(InformationUnit.class);
 		InformationUnit childByType = InformationUtil.getChildByType(adapter,
 				TwitterActivator.MESSAGES_ID);
 		EList<InformationUnit> childValues = childByType.getChildValues();
-		for (int i = 0, n = this.messages; i < n; i++) {
+		for (int i = 0, n = messages; i < n; i++) {
 			InformationUnit informationUnit = childValues.get(i);
-			System.out.println("PAINT");
-			MessageComposite messageComposite = new MessageComposite(this.parent, SWT.NONE,
-					this.toolkit, false, false, false);
+			MessageComposite messageComposite = new MessageComposite(parent,
+					SWT.NONE, toolkit, false, false, false);
 			messageComposite.setValues(childValues.get(i));
-			messageComposite.setMessageFormHyperlinkListener(new MessageHyperLinkAdapter(
-					informationUnit));
-			messageComposite.setMetaFormHyperlinkListener(new MessageHyperLinkAdapter(
-					informationUnit));
-			this.compositeCollection.add(messageComposite);
+			messageComposite
+					.setMessageFormHyperlinkListener(new MessageHyperLinkAdapter(
+							informationUnit));
+			messageComposite
+					.setMetaFormHyperlinkListener(new MessageHyperLinkAdapter(
+							informationUnit));
+			compositeCollection.add(messageComposite);
 			// needed information for the actions.
 			String userId = InformationUtil.getChildByType(informationUnit,
 					TwitterActivator.MESSAGE_USER_ID_TYPE).getStringValue();
@@ -171,28 +173,29 @@ public class TwitterTraySection extends AbstractTraySection {
 			Long internalId = InformationUtil.getChildByType(informationUnit,
 					TwitterActivator.MESSAGE_INTERNAL_ID).getLongValue();
 
-			this.toolkit.adapt(messageComposite);
-			final TableWrapData twd_metaFormText = new TableWrapData(TableWrapData.FILL,
-					TableWrapData.TOP);
+			toolkit.adapt(messageComposite);
+			final TableWrapData twd_metaFormText = new TableWrapData(
+					TableWrapData.FILL, TableWrapData.TOP);
 			twd_metaFormText.grabHorizontal = true;
-			twd_metaFormText.maxWidth = this.width;
+			twd_metaFormText.maxWidth = width;
 			messageComposite.setLayoutData(twd_metaFormText);
 			// this.compositeCollection.add(messageComposite);
 
 		}
-		this.parent.layout(true);
+		parent.layout(true);
 
 	}
 
 	@Override
 	public void dispose() {
-		if (this.itemById != null) {
+		if (itemById != null) {
 			// InformationUnit adapter = (InformationUnit) this.itemById
 			// .getAdapter(InformationUnit.class);
 			// if (adapter != null) {
 			// adapter.eAdapters().remove(this.refreshAdapter);
 			// }
-			ResourcesPlugin.getWorkspace().removeResourceChangeListener(this.listener);
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(
+					listener);
 		}
 		super.dispose();
 	}

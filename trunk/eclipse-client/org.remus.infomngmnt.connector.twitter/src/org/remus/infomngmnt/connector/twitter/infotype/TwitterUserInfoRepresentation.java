@@ -34,13 +34,13 @@ import org.eclipse.remus.InformationUnitListItem;
 import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
 import org.eclipse.remus.resources.util.ResourceUtil;
 import org.eclipse.remus.util.InformationUtil;
-
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class TwitterUserInfoRepresentation extends AbstractInformationRepresentation {
+public class TwitterUserInfoRepresentation extends
+		AbstractInformationRepresentation {
 
 	/*
 	 * (non-Javadoc)
@@ -50,30 +50,37 @@ public class TwitterUserInfoRepresentation extends AbstractInformationRepresenta
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 
-		String createURL = createURL("output", WebViewer.HTML, getValue());
+		String createURL = createURL("output", WebViewer.HTML, getValue()); //$NON-NLS-1$
 		StringReader stringReader = new StringReader(
-				"<html><head><meta HTTP-EQUIV=\"REFRESH\" content=\"0; url="
+				"<html><head><meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=" //$NON-NLS-1$
 						+ createURL
-						+ "\"></head><body><div style=\"width:100%; height:100%; align:center; font-family:Tahoma,Arial; font-size:10px; font-weight:bold;\" id=\"progressMessage\" >Loading Report. This may take a while...</div></body></html>");
+						+ "\"></head><body><div style=\"width:100%; height:100%; align:center; font-family:Tahoma,Arial; font-size:10px; font-weight:bold;\" id=\"progressMessage\" >Loading Report. This may take a while...</div></body></html>"); //$NON-NLS-1$
 		return new ReaderInputStream(stringReader);
 	}
 
-	public static String createURL(final String servletName, final String format,
-			final InformationUnit infoValue) {
+	public static String createURL(final String servletName,
+			final String format, final InformationUnit infoValue) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("avatarlocation", URI.createFileURI(
-				TwitterActivator.getDefault().getStateLocation().append("avatars").toOSString())
-				.toString());
-		params.put("headings", infoValue.getLabel());
-		params.put("path2infoUnit", InformationUtil
-				.getFullReadablePath((InformationUnitListItem) infoValue
-						.getAdapter(InformationUnitListItem.class)));
+		params.put(
+				"avatarlocation", URI.createFileURI( //$NON-NLS-1$
+						TwitterActivator.getDefault().getStateLocation()
+								.append("avatars").toOSString()) //$NON-NLS-1$
+						.toString());
+		params.put("headings", infoValue.getLabel()); //$NON-NLS-1$
+		params.put(
+				"path2infoUnit", InformationUtil //$NON-NLS-1$
+						.getFullReadablePath((InformationUnitListItem) infoValue
+								.getAdapter(InformationUnitListItem.class)));
 
-		String reportLocation = ((IResource) infoValue.getAdapter(IFile.class)).getProject()
-				.getLocation().append(ResourceUtil.BINARY_FOLDER).append(
-						infoValue.getBinaryReferences().getProjectRelativePath()).toOSString();
+		String reportLocation = ((IResource) infoValue.getAdapter(IFile.class))
+				.getProject()
+				.getLocation()
+				.append(ResourceUtil.BINARY_FOLDER)
+				.append(infoValue.getBinaryReferences()
+						.getProjectRelativePath()).toOSString();
 		String encodedReportName = null;
 		String encodedDocumentName = null;
 
@@ -84,19 +91,20 @@ public class TwitterUserInfoRepresentation extends AbstractInformationRepresenta
 			// Do nothing
 		}
 
-		String locale = ViewerPlugin.getDefault().getPluginPreferences().getString(
-				WebViewer.USER_LOCALE);
+		String locale = ViewerPlugin.getDefault().getPluginPreferences()
+				.getString(WebViewer.USER_LOCALE);
 
-		String svgFlag = ViewerPlugin.getDefault().getPluginPreferences().getString(
-				WebViewer.SVG_FLAG);
+		String svgFlag = ViewerPlugin.getDefault().getPluginPreferences()
+				.getString(WebViewer.SVG_FLAG);
 		boolean bSVGFlag = false;
 		if ("true".equalsIgnoreCase(svgFlag)) //$NON-NLS-1$
 		{
 			bSVGFlag = true;
 		}
 
-		String masterPageContent = ViewerPlugin.getDefault().getPluginPreferences().getString(
-				WebViewer.MASTER_PAGE_CONTENT);
+		String masterPageContent = ViewerPlugin.getDefault()
+				.getPluginPreferences()
+				.getString(WebViewer.MASTER_PAGE_CONTENT);
 		boolean bMasterPageContent = true;
 		if ("false".equalsIgnoreCase(masterPageContent)) //$NON-NLS-1$
 		{
@@ -123,8 +131,9 @@ public class TwitterUserInfoRepresentation extends AbstractInformationRepresenta
 		Set<String> keySet = params.keySet();
 		for (String string : keySet) {
 			try {
-				sw.append("&").append(URLEncoder.encode(string, "UTF-8")).append("=").append(
-						URLEncoder.encode(params.get(string != null ? string : ""), "UTF-8"));
+				sw.append("&").append(URLEncoder.encode(string, "UTF-8")).append("=").append( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								URLEncoder.encode(
+										params.get(string != null ? string : ""), "UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$
 			} catch (UnsupportedEncodingException e) {
 				// do nothing
 			}
@@ -135,13 +144,14 @@ public class TwitterUserInfoRepresentation extends AbstractInformationRepresenta
 
 	private static String getBaseURL() {
 		try {
-			WebappAccessor.start("viewer", ViewerPlugin.PLUGIN_ID);
+			WebappAccessor.start("viewer", ViewerPlugin.PLUGIN_ID); //$NON-NLS-1$
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "http://" + WebappAccessor.getHost() + ":" //$NON-NLS-1$ //$NON-NLS-2$
-				+ WebappAccessor.getPort(ViewerPlugin.WEBAPP_CONTEXT) + "/viewer/"; //$NON-NLS-1$
+				+ WebappAccessor.getPort(ViewerPlugin.WEBAPP_CONTEXT)
+				+ "/viewer/"; //$NON-NLS-1$
 	}
 
 }

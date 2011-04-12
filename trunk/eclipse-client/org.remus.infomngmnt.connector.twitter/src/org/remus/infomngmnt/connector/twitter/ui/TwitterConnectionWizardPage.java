@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.TwitterCredentials;
 import org.remus.infomngmnt.connector.twitter.TwitterRepository;
@@ -71,10 +71,10 @@ public class TwitterConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public TwitterConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("Twitter Connector");
-		setDescription("Enter your login credentials");
-		this.manualName = false;
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.TwitterConnectionWizardPage_Connector);
+		setDescription(Messages.TwitterConnectionWizardPage_EnterCredentials);
+		manualName = false;
 	}
 
 	/**
@@ -94,44 +94,45 @@ public class TwitterConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.TwitterConnectionWizardPage_Name);
 
-		this.nameText = new Text(group, SWT.BORDER);
-		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		this.nameText.addKeyListener(new KeyAdapter() {
+		nameText = new Text(group, SWT.BORDER);
+		nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		nameText.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
-				TwitterConnectionWizardPage.this.manualName = true;
+				manualName = true;
 
 			}
 		});
 
-		this.nameText.setText(String.format("%s@%s",
-				((TwitterCredentials) this.repositoryDefinition.getCredentialProvider())
-						.getInternalId(), "twitter"));
+		nameText.setText(String.format("%s@%s", //$NON-NLS-1$
+				((TwitterCredentials) repositoryDefinition
+						.getCredentialProvider()).getInternalId(), "twitter")); //$NON-NLS-1$
 		new Label(group, SWT.NONE);
 
-		this.btnGrantAccessOn = new Button(group, SWT.NONE);
-		this.btnGrantAccessOn
-				.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		this.btnGrantAccessOn.setText("Grant Access on twitter.com");
-		this.btnGrantAccessOn.addListener(SWT.Selection, new Listener() {
+		btnGrantAccessOn = new Button(group, SWT.NONE);
+		btnGrantAccessOn.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER,
+				false, false, 1, 1));
+		btnGrantAccessOn
+				.setText(Messages.TwitterConnectionWizardPage_GrantAccess);
+		btnGrantAccessOn.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				OAuthDialog oAuthDialog = new OAuthDialog(getShell());
 				if (oAuthDialog.open() == IDialogConstants.OK_ID) {
 					try {
-						TwitterConnectionWizardPage.this.repositoryDefinition
-								.getCredentialProvider().setUserName(oAuthDialog.getToken());
-						TwitterConnectionWizardPage.this.repositoryDefinition
-								.getCredentialProvider().setPassword(oAuthDialog.getTokenSecret());
+						repositoryDefinition.getCredentialProvider()
+								.setUserName(oAuthDialog.getToken());
+						repositoryDefinition.getCredentialProvider()
+								.setPassword(oAuthDialog.getTokenSecret());
 						String userId = StringUtils
-								.trim(((TwitterRepository) TwitterConnectionWizardPage.this.repositoryDefinition)
+								.trim(((TwitterRepository) repositoryDefinition)
 										.getApi().verifyCredentials().getName());
-						((TwitterCredentials) TwitterConnectionWizardPage.this.repositoryDefinition
+						((TwitterCredentials) repositoryDefinition
 								.getCredentialProvider()).setInternalId(userId);
-						if (!TwitterConnectionWizardPage.this.manualName) {
-							TwitterConnectionWizardPage.this.nameText.setText(String.format(
-									"%s@%s", userId, "twitter"));
+						if (!manualName) {
+							nameText.setText(String.format(
+									"%s@%s", userId, "twitter")); //$NON-NLS-1$ //$NON-NLS-2$
 						}
 					} catch (TwitterException e) {
 						// TODO Auto-generated catch block
@@ -146,48 +147,53 @@ public class TwitterConnectionWizardPage extends WizardPage {
 		final GridLayout gridLayout_2 = new GridLayout();
 		gridLayout_2.numColumns = 2;
 		group_1.setLayout(gridLayout_2);
-		group_1.setText("Additional search feeds");
+		group_1.setText(Messages.TwitterConnectionWizardPage_AdditionalSearch);
 
-		this.tableViewer = new TableViewer(group_1, SWT.BORDER);
-		Table table = this.tableViewer.getTable();
-		final GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2);
+		tableViewer = new TableViewer(group_1, SWT.BORDER);
+		Table table = tableViewer.getTable();
+		final GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true,
+				1, 2);
 		gd_table.heightHint = 70;
 		table.setLayoutData(gd_table);
 
 		final Button addButton = new Button(group_1, SWT.NONE);
-		addButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		addButton.setText("Add");
+		addButton
+				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		addButton.setText(Messages.TwitterConnectionWizardPage_Add);
 		addButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				InputDialog inputDialog = new InputDialog(getShell(), "Add new search query",
-						"Enter a new search query", "", new IInputValidator() {
+				InputDialog inputDialog = new InputDialog(getShell(),
+						Messages.TwitterConnectionWizardPage_AddSearchQuery,
+						Messages.TwitterConnectionWizardPage_EnterSearchQuery,
+						"", new IInputValidator() { //$NON-NLS-1$
 							public String isValid(final String newText) {
-								if (TwitterConnectionWizardPage.this.searchList.contains(newText)) {
-									return "Search word already in the list";
+								if (searchList.contains(newText)) {
+									return Messages.TwitterConnectionWizardPage_SearchWordAlreadyInList;
 								}
 								if (newText.trim().length() == 0) {
-									return "Input mandatory";
+									return Messages.TwitterConnectionWizardPage_InputRequired;
 								}
 								return null;
 							}
 
 						});
 				if (inputDialog.open() == IDialogConstants.OK_ID) {
-					TwitterConnectionWizardPage.this.searchList.add(inputDialog.getValue());
+					searchList.add(inputDialog.getValue());
 				}
 			}
 		});
 
-		this.removeButton = new Button(group_1, SWT.NONE);
-		this.removeButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		this.removeButton.setText("Remove");
-		this.removeButton.setEnabled(false);
-		this.removeButton.addListener(SWT.Selection, new Listener() {
+		removeButton = new Button(group_1, SWT.NONE);
+		removeButton
+				.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
+		removeButton.setText(Messages.TwitterConnectionWizardPage_Remove);
+		removeButton.setEnabled(false);
+		removeButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				List list = ((IStructuredSelection) TwitterConnectionWizardPage.this.tableViewer
-						.getSelection()).toList();
+				List list = ((IStructuredSelection) tableViewer.getSelection())
+						.toList();
 				for (Object object : list) {
-					TwitterConnectionWizardPage.this.searchList.remove(object);
+					searchList.remove(object);
 				}
 			}
 		});
@@ -197,35 +203,43 @@ public class TwitterConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		this.repositoryDefinition = SyncUtil
+		repositoryDefinition = SyncUtil
 				.getRepositoryImplemenationByRemoteRepository(repository);
 	}
 
 	public void bindValuesToUi() {
 
 		EMFDataBindingContext ctx = new EMFDataBindingContext();
-		this.searchList = new WritableList(new ArrayList<String>(Arrays
-				.asList(org.apache.commons.lang.StringUtils.split((this.repository).getOptions()
-						.get(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY), "|"))), String.class);
-		this.tableViewer.setContentProvider(new ObservableListContentProvider());
-		this.tableViewer.setLabelProvider(new LabelProvider());
-		this.tableViewer.setInput(this.searchList);
-		this.tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(final SelectionChangedEvent event) {
-				TwitterConnectionWizardPage.this.removeButton.setEnabled(!event.getSelection()
-						.isEmpty());
-			}
-		});
+		searchList = new WritableList(
+				new ArrayList<String>(
+						Arrays.asList(org.apache.commons.lang.StringUtils
+								.split((repository)
+										.getOptions()
+										.get(TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY),
+										"|"))), String.class); //$NON-NLS-1$
+		tableViewer.setContentProvider(new ObservableListContentProvider());
+		tableViewer.setLabelProvider(new LabelProvider());
+		tableViewer.setInput(searchList);
+		tableViewer
+				.addSelectionChangedListener(new ISelectionChangedListener() {
+					public void selectionChanged(
+							final SelectionChangedEvent event) {
+						removeButton
+								.setEnabled(!event.getSelection().isEmpty());
+					}
+				});
 
-		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
+		repositoryDefinition.getCredentialProvider().setIdentifier(
+				repository.getId());
 
-		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
-		IObservableValue emfName = EMFObservables.observeValue(this.repository,
+		ISWTObservableValue swtName = SWTObservables.observeText(nameText,
+				SWT.Modify);
+		IObservableValue emfName = EMFObservables.observeValue(repository,
 				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
 		ctx.bindValue(swtName, emfName, null, null);
 	}
 
 	public List getSearchList() {
-		return this.searchList;
+		return searchList;
 	}
 }

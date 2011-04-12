@@ -15,6 +15,7 @@ package org.remus.infomngmnt.connector.twitter.ui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.remus.common.ui.image.ResourceManager;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 import org.remus.infomngmnt.connector.twitter.jobs.AddFavoriteJob;
 
@@ -28,9 +29,9 @@ public class Add2FavoriteActions extends Action {
 	private final String repositoryId;
 
 	public Add2FavoriteActions(final Long internalId, final String repositoryId) {
-		super("Add to favorites");
+		super(Messages.Add2FavoriteActions_AddToFavorites);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(TwitterActivator.getDefault(),
-				"icons/iconexperience/star_yellow_add.png"));
+				"icons/iconexperience/star_yellow_add.png")); //$NON-NLS-1$
 		this.internalId = internalId;
 		this.repositoryId = repositoryId;
 	}

@@ -15,7 +15,6 @@ package org.remus.infomngmnt.connector.twitter;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.remus.core.remote.security.CredentialProvider;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -23,14 +22,14 @@ public class TwitterCredentials extends CredentialProvider {
 
 	public TwitterCredentials() {
 		super();
-		setGroup("twitter");
+		setGroup("twitter"); //$NON-NLS-1$
 	}
 
 	public static final String INTERNAL_ID = "internalId"; //$NON-NLS-1$
 
 	public String getInternalId() {
 		try {
-			return getNode().get(INTERNAL_ID, "");
+			return getNode().get(INTERNAL_ID, ""); //$NON-NLS-1$
 		} catch (StorageException e) {
 			throw new SecurityException(e);
 		}

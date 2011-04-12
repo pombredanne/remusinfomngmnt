@@ -19,6 +19,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.remus.common.core.operation.CancelableJob;
 import org.eclipse.remus.util.StatusCreator;
 
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.remus.infomngmnt.connector.twitter.infotype.TwitterUtil;
 
 import twitter4j.Twitter;
@@ -32,7 +33,7 @@ public class FollowUserJob extends CancelableJob {
 	private final String userId;
 
 	public FollowUserJob(final String userId, final String repositryId) {
-		super(NLS.bind("Adding \"{0}\" to followers", userId));
+		super(NLS.bind(Messages.FollowUserJob_AddToFollowers, userId));
 		this.userId = userId;
 		this.repositryId = repositryId;
 	}
@@ -47,11 +48,11 @@ public class FollowUserJob extends CancelableJob {
 	@Override
 	protected IStatus runCancelable(final IProgressMonitor monitor) {
 		try {
-			monitor.beginTask("Adding follower", IProgressMonitor.UNKNOWN);
+			monitor.beginTask(Messages.FollowUserJob_AddToFollowers2, IProgressMonitor.UNKNOWN);
 			Twitter twitterApi = TwitterUtil.getTwitterApi(this.repositryId);
 			twitterApi.enableNotification(this.userId);
 		} catch (Exception e) {
-			return StatusCreator.newStatus(NLS.bind("Error adding \"{0}\" to followers",
+			return StatusCreator.newStatus(NLS.bind(Messages.FollowUserJob_ErrorAddingFollower,
 					this.userId), e);
 		}
 		return Status.OK_STATUS;

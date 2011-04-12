@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.remus.common.core.streams.StreamUtil;
 import org.eclipse.remus.ui.progress.CancelableRunnable;
 import org.eclipse.remus.util.StatusCreator;
+import org.remus.infomngmnt.connector.twitter.Messages;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -47,7 +48,7 @@ import org.xml.sax.InputSource;
  */
 public class UploadImageJob extends CancelableRunnable {
 
-	private static final String API_UPLOAD_URL = "http://twitpic.com/api/upload";
+	private static final String API_UPLOAD_URL = "http://twitpic.com/api/upload"; //$NON-NLS-1$
 
 	private final String filePath;
 
@@ -71,7 +72,7 @@ public class UploadImageJob extends CancelableRunnable {
 	@Override
 	protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 		FileInputStream fileInputStream = null;
-		monitor.beginTask("Uploading image", IProgressMonitor.UNKNOWN);
+		monitor.beginTask(Messages.UploadImageJob_Upload, IProgressMonitor.UNKNOWN);
 		try {
 			HttpClient client = new HttpClient();
 			PostMethod method = new PostMethod(API_UPLOAD_URL);
@@ -79,11 +80,11 @@ public class UploadImageJob extends CancelableRunnable {
 			ArrayList<Part> partList = new ArrayList<Part>();
 			fileInputStream = new FileInputStream(this.filePath);
 
-			partList.add(new StringPart("username", this.username));
-			partList.add(new StringPart("password", this.password));
+			partList.add(new StringPart("username", this.username)); //$NON-NLS-1$
+			partList.add(new StringPart("password", this.password)); //$NON-NLS-1$
 			String fileExtension = new Path(this.filePath).getFileExtension();
-			partList.add(new FilePart("media", new ByteArrayPartSource("image." + fileExtension,
-					StreamUtil.convertStreamToByte(fileInputStream)), "image/" + fileExtension,
+			partList.add(new FilePart("media", new ByteArrayPartSource("image." + fileExtension, //$NON-NLS-1$ //$NON-NLS-2$
+					StreamUtil.convertStreamToByte(fileInputStream)), "image/" + fileExtension, //$NON-NLS-1$
 					null));
 
 			MultipartRequestEntity entity = new MultipartRequestEntity(partList
@@ -93,12 +94,12 @@ public class UploadImageJob extends CancelableRunnable {
 			client.executeMethod(method);
 
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(method
-					.getResponseBodyAsStream(), "UTF-8"));
+					.getResponseBodyAsStream(), "UTF-8")); //$NON-NLS-1$
 			String input;
 			StringBuffer result = new StringBuffer();
 
 			while ((input = bufferedReader.readLine()) != null) {
-				result.append(input).append(System.getProperty("line.separator"));
+				result.append(input).append(System.getProperty("line.separator")); //$NON-NLS-1$
 			}
 
 			method.releaseConnection();
@@ -114,7 +115,7 @@ public class UploadImageJob extends CancelableRunnable {
 
 			Document document = documentBuilder.parse(new InputSource(new StringReader(result
 					.toString())));
-			NodeList dateItems = document.getElementsByTagName("mediaurl");
+			NodeList dateItems = document.getElementsByTagName("mediaurl"); //$NON-NLS-1$
 			if (dateItems != null && dateItems.getLength() > 0) {
 				for (int i = 0; i < dateItems.getLength(); i++) {
 					Element url = (Element) dateItems.item(i);
@@ -124,7 +125,7 @@ public class UploadImageJob extends CancelableRunnable {
 			}
 
 		} catch (Exception e) {
-			return StatusCreator.newStatus("Error uploading image", e);
+			return StatusCreator.newStatus(Messages.UploadImageJob_ErrorUploading, e);
 		} finally {
 			if (fileInputStream != null) {
 				try {

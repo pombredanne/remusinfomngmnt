@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.remus.infomngmnt.connector.twitter.Messages;
 
 public class TwitPicPasswordPrompt extends StatusDialog {
 
@@ -53,13 +54,13 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 		final Label pleaseEnterALabel = new Label(container, SWT.WRAP);
 
 		pleaseEnterALabel
-				.setText("Remus does not store your twitter credentials but twitpic does. For accessing the services of twitpic you have to proivde your username and password, although twitpic does not belong to twitter.");
+				.setText(Messages.TwitPicPasswordPrompt_Warning);
 
 		final Label label_1 = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_1.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.TOP));
 
 		final Label enterYourUsernameLabel = new Label(container, SWT.NONE);
-		enterYourUsernameLabel.setText("Enter your twitter username.");
+		enterYourUsernameLabel.setText(Messages.TwitPicPasswordPrompt_EnterUsername);
 		this.text1 = new Text(container, SWT.BORDER);
 		TableWrapData twd_text = new TableWrapData(TableWrapData.LEFT, TableWrapData.TOP);
 		twd_text.align = TableWrapData.FILL;
@@ -72,7 +73,7 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 		});
 
 		final Label enterYourPasswordLabel = new Label(container, SWT.NONE);
-		enterYourPasswordLabel.setText("Enter your password.");
+		enterYourPasswordLabel.setText(Messages.TwitPicPasswordPrompt_EnterPassword);
 
 		this.text = new Text(container, SWT.BORDER | SWT.PASSWORD);
 		twd_text = new TableWrapData(TableWrapData.LEFT, TableWrapData.TOP);
@@ -88,7 +89,7 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 
 			}
 		});
-		btnSaveUsernamepassword.setText("Save username/password");
+		btnSaveUsernamepassword.setText(Messages.TwitPicPasswordPrompt_SaveUsernameAndPassword);
 		this.text.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(final Event event) {
 				TwitPicPasswordPrompt.this.pwd = ((Text) event.widget).getText();
@@ -120,7 +121,7 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Enter twitter username/password");
+		newShell.setText(Messages.TwitPicPasswordPrompt_DialogTitle);
 	}
 
 	/**

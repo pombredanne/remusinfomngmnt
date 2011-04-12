@@ -46,6 +46,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.link.delicious.Messages;
 
 
 public class DeliciousConnectionWizardPage extends WizardPage {
@@ -62,9 +63,9 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public DeliciousConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("Delicious Connector");
-		setDescription("Enter your login credentials");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.DeliciousConnectionWizardPage_Title);
+		setDescription(Messages.DeliciousConnectionWizardPage_Subtitle);
 		this.manualName = false;
 	}
 
@@ -85,7 +86,7 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.DeliciousConnectionWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -98,7 +99,7 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 		});
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("API-Url:");
+		apiurlLabel.setText(Messages.DeliciousConnectionWizardPage_APIUrl);
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		final GridData gd_apiUrlText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -106,7 +107,7 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 		this.apiUrlText.setEditable(false);
 
 		final Group credentialsGroup = new Group(container, SWT.NONE);
-		credentialsGroup.setText("Credentials");
+		credentialsGroup.setText(Messages.DeliciousConnectionWizardPage_Credentials);
 		final GridData gd_credentialsGroup = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		credentialsGroup.setLayoutData(gd_credentialsGroup);
 		final GridLayout gridLayout_1 = new GridLayout();
@@ -114,14 +115,14 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 		credentialsGroup.setLayout(gridLayout_1);
 
 		final Label usernameLabel = new Label(credentialsGroup, SWT.NONE);
-		usernameLabel.setText("Username");
+		usernameLabel.setText(Messages.DeliciousConnectionWizardPage_Username);
 
 		this.userNameText = new Text(credentialsGroup, SWT.BORDER);
 		final GridData gd_userNameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		this.userNameText.setLayoutData(gd_userNameText);
 
 		final Label passwordLabel = new Label(credentialsGroup, SWT.NONE);
-		passwordLabel.setText("Password");
+		passwordLabel.setText(Messages.DeliciousConnectionWizardPage_Password);
 
 		this.passwordText = new Text(credentialsGroup, SWT.BORDER | SWT.PASSWORD);
 		final GridData gd_passwordText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -141,14 +142,14 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 									.runCancelableRunnable(monitor);
 							if (!runCancelableRunnable.isOK()) {
 								throw new InvocationTargetException(null,
-										"Error validating repository");
+										Messages.DeliciousConnectionWizardPage_ErrorValidatingRepo);
 							}
 						}
 
 					});
 					setErrorMessage(null);
 				} catch (InvocationTargetException e) {
-					setErrorMessage("Error validating your settings");
+					setErrorMessage(Messages.DeliciousConnectionWizardPage_ErrorValidatingSettings);
 				} catch (InterruptedException e) {
 					// do nothing
 				}
@@ -158,12 +159,12 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false);
 		validateCredentialsButton.setLayoutData(gd_validateCredentialsButton);
-		validateCredentialsButton.setText("Validate credentials");
+		validateCredentialsButton.setText(Messages.DeliciousConnectionWizardPage_ValidateCredentials);
 		bindValuesToUi();
 		setControl(container);
 
-		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition
-				.getCredentialProvider().getUserName(), "delicious"));
+		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition //$NON-NLS-1$
+				.getCredentialProvider().getUserName(), "delicious")); //$NON-NLS-1$
 	}
 
 	public void setRemoteObject(final RemoteRepository repository) {
@@ -201,8 +202,8 @@ public class DeliciousConnectionWizardPage extends WizardPage {
 			public void handleValueChange(final ValueChangeEvent event) {
 				if (!DeliciousConnectionWizardPage.this.manualName) {
 					String userName = (String) event.getObservableValue().getValue();
-					DeliciousConnectionWizardPage.this.nameText.setText(String.format("%s@%s",
-							userName, "delicious"));
+					DeliciousConnectionWizardPage.this.nameText.setText(String.format("%s@%s", //$NON-NLS-1$
+							userName, "delicious")); //$NON-NLS-1$
 				}
 			}
 		});

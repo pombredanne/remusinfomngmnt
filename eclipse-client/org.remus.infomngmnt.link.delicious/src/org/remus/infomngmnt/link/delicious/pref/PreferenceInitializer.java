@@ -22,22 +22,25 @@ import org.remus.infomngmnt.link.delicious.Activator;
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 	private final IPreferenceStore preferenceStore;
-	
+
 	public static final String API_URL = "API_URL"; //$NON-NLS-1$
 
 	/**
 	 * 
 	 */
 	public PreferenceInitializer() {
-		this.preferenceStore = Activator.getDefault().getPreferenceStore();
+		preferenceStore = Activator.getDefault().getPreferenceStore();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#
+	 * initializeDefaultPreferences()
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		this.preferenceStore.setDefault(API_URL, "https://api.del.icio.us/v1/");
+		preferenceStore.setDefault(API_URL, "https://api.del.icio.us/v1/"); //$NON-NLS-1$
 	}
 
 }

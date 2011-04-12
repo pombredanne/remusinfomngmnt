@@ -21,7 +21,7 @@ public class PodCastCredentialProvider extends RssCredentialProvider {
 
 	public PodCastCredentialProvider() {
 		super();
-		setGroup("podcast");
+		setGroup("podcast"); //$NON-NLS-1$
 	}
 
 }

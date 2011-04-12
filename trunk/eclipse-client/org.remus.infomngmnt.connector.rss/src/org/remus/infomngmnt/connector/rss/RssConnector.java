@@ -134,7 +134,7 @@ public class RssConnector extends AbstractExtensionRepository implements
 	public void deleteFromRepository(final SynchronizableObject item,
 			final IProgressMonitor monitor) throws RemoteException {
 		throw new RemoteException(
-				StatusCreator.newStatus("Deletion is not supported"));
+				StatusCreator.newStatus(Messages.RssConnector_NotSupported));
 	}
 
 	/*
@@ -172,7 +172,7 @@ public class RssConnector extends AbstractExtensionRepository implements
 						.toArray(new RemoteObject[returnValue.size()]);
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error getting feed entries", e));
+						Messages.RssConnector_ErrorLoading, e));
 			} finally {
 				StreamCloser.closeStreams(xmlReader);
 				is = null;
@@ -193,7 +193,7 @@ public class RssConnector extends AbstractExtensionRepository implements
 		returnValue.setUrl(object.getUri());
 		returnValue.setId(object.getUri());
 		returnValue.setWrappedObject(object);
-		returnValue.setName(StringUtils.remove(object.getTitle(), "\n"));
+		returnValue.setName(StringUtils.remove(object.getTitle(), "\n")); //$NON-NLS-1$
 		return returnValue;
 	}
 
@@ -321,7 +321,7 @@ public class RssConnector extends AbstractExtensionRepository implements
 			for (Object object : categories) {
 				cats.add(((SyndCategory) object).getName());
 			}
-			String join = org.apache.commons.lang.StringUtils.join(cats, " ");
+			String join = org.apache.commons.lang.StringUtils.join(cats, " "); //$NON-NLS-1$
 			newInformationUnit.setKeywords(join);
 			try {
 				domain.dispose();
@@ -418,16 +418,16 @@ public class RssConnector extends AbstractExtensionRepository implements
 			/*
 			 * Replace all imgs with
 			 */
-			NodeList elementsByTagName = document.getElementsByTagName("img");
+			NodeList elementsByTagName = document.getElementsByTagName("img"); //$NON-NLS-1$
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
 				final Node node = elementsByTagName.item(i);
-				String src = ((Element) node).getAttribute("src");
+				String src = ((Element) node).getAttribute("src"); //$NON-NLS-1$
 				URL url = new URL(src);
 
 				IFile tmpFile;
 				String fileExtension = new Path(src).getFileExtension();
 				if (fileExtension == null || fileExtension.indexOf('?') != -1) {
-					fileExtension = "";
+					fileExtension = ""; //$NON-NLS-1$
 					tmpFile = ResourceUtil.createTempFile();
 				} else {
 					tmpFile = ResourceUtil.createTempFile(fileExtension);
@@ -446,9 +446,9 @@ public class RssConnector extends AbstractExtensionRepository implements
 					editingDomain.getCommandStack().execute(addFileToInfoUnit);
 					IFile targetFile = addFileToInfoUnit.getTargetFile();
 					if (targetFile.exists()) {
-						((Element) node).setAttribute("src",
+						((Element) node).setAttribute("src", //$NON-NLS-1$
 								org.eclipse.remus.common.core.util.StringUtils
-										.join("cid:", addFileToInfoUnit
+										.join("cid:", addFileToInfoUnit //$NON-NLS-1$
 												.getCreatedId()));
 						changed = true;
 					}
@@ -457,7 +457,7 @@ public class RssConnector extends AbstractExtensionRepository implements
 			}
 			final Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
-			transformer.setOutputProperty("omit-xml-declaration", "yes");
+			transformer.setOutputProperty("omit-xml-declaration", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			final DOMSource source = new DOMSource(document);
 			final StringWriter writer = new StringWriter();
@@ -491,7 +491,7 @@ public class RssConnector extends AbstractExtensionRepository implements
 			try {
 				container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container",
+				throw new RuntimeException(Messages.RssConnector_ErrorInitECF,
 						e);
 			}
 		}

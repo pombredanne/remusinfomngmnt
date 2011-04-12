@@ -7,13 +7,13 @@
             class="org.remus.infomngmnt.connector.rss.RssConnector"
             credentialprovider="org.remus.infomngmnt.connector.rss.RssCredentialProvider"
             id="org.remus.infomngmnt.connector.rss"
-            name="RSS/Atom Feed">
+            name="%rss.repository-connector.name">
       </repository-connector>
       <repository-connector
             class="org.remus.infomngmnt.connector.podcast.PodcastConnector"
             credentialprovider="org.remus.infomngmnt.connector.podcast.PodCastCredentialProvider"
             id="org.remus.infomngmnt.connector.rss.podcast"
-            name="Podcast">
+            name="%podcast.repository-connector.name">
       </repository-connector>
    </extension>
    <extension
@@ -36,13 +36,13 @@
       <job
             class="org.remus.infomngmnt.connector.rss.jobs.RefreshRssJob"
             id="org.remus.infomngmnt.connector.rss.refreshJob"
-            name="Refreh RSS Job">
+            name="%refresh.job.name">
       </job>
       <job
             class="org.remus.infomngmnt.connector.rss.jobs.DeleteOldEntriesJob"
             id="org.remus.infomngmnt.connector.rss.deleteOld"
             interval="200"
-            name="Delete Old RSS Entries">
+            name="%delete.job.name">
       </job>
    </extension>
 

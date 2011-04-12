@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.task;
 
+import org.remus.infomngmnt.task.messages.Messages;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -23,30 +25,30 @@ public enum TaskStatus {
 	public String toString() {
 		switch (this) {
 		case IN_PROGRESS:
-			return "In Progress";
+			return Messages.TaskStatus_InProgress;
 		case DEFERRED:
-			return "Deferred";
+			return Messages.TaskStatus_Deferred;
 		case NOT_STARTED:
-			return "Not started";
+			return Messages.TaskStatus_NotStarted;
 		case WAITING:
-			return "Waiting";
+			return Messages.TaskStatus_Waiting;
 		default:
 			break;
 		}
-		return "None";
+		return Messages.TaskStatus_None;
 
 	};
 
 	public String getKey() {
 		switch (this) {
 		case IN_PROGRESS:
-			return "S1";
+			return "S1"; //$NON-NLS-1$
 		case DEFERRED:
-			return "S2";
+			return "S2"; //$NON-NLS-1$
 		case NOT_STARTED:
-			return "S3";
+			return "S3"; //$NON-NLS-1$
 		case WAITING:
-			return "S4";
+			return "S4"; //$NON-NLS-1$
 		}
 		return null;
 	}

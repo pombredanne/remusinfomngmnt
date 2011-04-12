@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.task.messages.Messages;
 import org.remus.infomngmnt.task.navigation.TaskDecorationObject;
 import org.remus.infomngmnt.task.navigation.TaskStateStore;
 
@@ -51,9 +52,9 @@ public class DueDateSection extends AbstractTraySection {
 
 	private TreeViewer treeViewer;
 
-	public static final String DAY_TYPE = "D";
+	public static final String DAY_TYPE = "D"; //$NON-NLS-1$
 
-	public static final String WEEK_TYPE = "W";
+	public static final String WEEK_TYPE = "W"; //$NON-NLS-1$
 
 	class ContainerObject {
 
@@ -107,19 +108,19 @@ public class DueDateSection extends AbstractTraySection {
 
 					return ResourceManager.getPluginImage(
 							TaskActivator.getDefault(),
-							"icons/schedule-day.png");
+							"icons/schedule-day.png"); //$NON-NLS-1$
 				}
 				if (WEEK_TYPE.equals(((ContainerObject) element).getType())) {
 					return ResourceManager.getPluginImage(
 							TaskActivator.getDefault(),
-							"icons/schedule-week.png");
+							"icons/schedule-week.png"); //$NON-NLS-1$
 				}
 			}
 			if (element instanceof TaskDecorationObject) {
 
 				return ResourceManager.getPluginImage(
 						TaskActivator.getDefault(),
-						"icons/iconexperience/task.png");
+						"icons/iconexperience/task.png"); //$NON-NLS-1$
 			}
 			return super.getImage(element);
 		}
@@ -177,7 +178,7 @@ public class DueDateSection extends AbstractTraySection {
 
 			this.today = new ContainerObject(todayList);
 			this.today.setType(DAY_TYPE);
-			this.today.setLabel("Today");
+			this.today.setLabel(Messages.DueDateSection_Today);
 
 			List<TaskDecorationObject> thisWeekList = CollectionUtils.filter(
 					decorationsForDesktop,
@@ -193,7 +194,7 @@ public class DueDateSection extends AbstractTraySection {
 
 			this.thisWeek = new ContainerObject(thisWeekList);
 			this.thisWeek.setType(WEEK_TYPE);
-			this.thisWeek.setLabel("This week");
+			this.thisWeek.setLabel(Messages.DueDateSection_ThisWeek);
 			List<TaskDecorationObject> nextWeekList = CollectionUtils.filter(
 					decorationsForDesktop,
 					new CollectionFilter<TaskDecorationObject>() {
@@ -209,7 +210,7 @@ public class DueDateSection extends AbstractTraySection {
 
 			this.nextWeek = new ContainerObject(nextWeekList);
 			this.nextWeek.setType(WEEK_TYPE);
-			this.nextWeek.setLabel("Next week");
+			this.nextWeek.setLabel(Messages.DueDateSection_NextWeek);
 
 			return new Object[] { this.today, this.thisWeek, this.nextWeek };
 		}

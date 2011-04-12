@@ -49,17 +49,17 @@ public class TaskStateStore extends LuceneStore {
 
 	public static final String INDEX_LOCATION = "taskStates/"; //$NON-NLS-1$
 
-	public static final String DUE_DATE = "DUE_DATE";
+	public static final String DUE_DATE = "DUE_DATE"; //$NON-NLS-1$
 
-	public static final String STATUS = "STATUS";
+	public static final String STATUS = "STATUS"; //$NON-NLS-1$
 
-	public static final String COMPLETED = "COMPLETED";
+	public static final String COMPLETED = "COMPLETED"; //$NON-NLS-1$
 
-	public static final String INFO_ID = "INFO_ID";
+	public static final String INFO_ID = "INFO_ID"; //$NON-NLS-1$
 
-	public static final String LABEL = "LABEL";
+	public static final String LABEL = "LABEL"; //$NON-NLS-1$
 
-	public static final String PROJECT = "PROJECT";
+	public static final String PROJECT = "PROJECT"; //$NON-NLS-1$
 
 	public static final String DATEPATTERN = "yyyyMMddHHmmss"; //$NON-NLS-1$
 
@@ -82,7 +82,7 @@ public class TaskStateStore extends LuceneStore {
 				.getProject().getName();
 		Date dueDate = (Date) read
 				.getValueByNodeId(TaskActivator.NODE_NAME_DUE_DATE);
-		String dateString = "";
+		String dateString = ""; //$NON-NLS-1$
 		String label = unit.getLabel();
 		if (dueDate != null) {
 			dateString = convertDate(dueDate);
@@ -94,7 +94,7 @@ public class TaskStateStore extends LuceneStore {
 		Field projectField = new Field(PROJECT, project, Field.Store.YES,
 				Field.Index.NOT_ANALYZED_NO_NORMS);
 		document.add(projectField);
-		Field statusField = new Field(STATUS, status == null ? "" : status,
+		Field statusField = new Field(STATUS, status == null ? "" : status, //$NON-NLS-1$
 				Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS);
 		document.add(statusField);
 		Field completedField = new Field(COMPLETED, String.valueOf(completed),

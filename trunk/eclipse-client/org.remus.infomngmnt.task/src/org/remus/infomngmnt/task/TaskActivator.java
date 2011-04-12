@@ -10,7 +10,7 @@ import org.remus.infomngmnt.task.navigation.TaskStateStore;
 public class TaskActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.task";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.task"; //$NON-NLS-1$
 
 	// The shared instance
 	private static TaskActivator plugin;
@@ -45,7 +45,7 @@ public class TaskActivator extends AbstractUIPlugin {
 
 	public static final String NODE_NAME_COMPLETED = "completed"; //$NON-NLS-1$
 
-	public static final String INFO_TYPE_ID = "TASK";
+	public static final String INFO_TYPE_ID = "TASK"; //$NON-NLS-1$
 
 	private TaskStateStore store;
 

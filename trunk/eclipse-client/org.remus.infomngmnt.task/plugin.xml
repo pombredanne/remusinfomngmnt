@@ -6,7 +6,7 @@
       <information
             buildHtml="false"
             excludeFromIndex="false"
-            name="Task"
+            name="%information.name"
             presentation="org.remus.infomngmnt.task.extension.TaskInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="TASK">
@@ -18,14 +18,14 @@
             editpage="org.remus.infomngmnt.task.ui.TaskEditPage"
             icon="icons/iconexperience/task_edit.png"
             id="org.remus.infomngmnt.task.editPage1"
-            label="Edit Task"
+            label="%edit.editPage.label"
             type="TASK">
       </editPage>
       <editPage
             editpage="org.remus.infomngmnt.task.ui.WorkLogPage"
             icon="icons/iconexperience/document_time.png"
             id="org.remus.infomngmnt.task.worklog"
-            label="Worklog"
+            label="%worklog.editPage.label"
             type="TASK">
       </editPage>
       <creationUiTrigger
@@ -41,7 +41,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/task_new.png"
             id="org.remus.infomngmnt.task.new"
-            name="Task">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -50,7 +50,7 @@
             class="org.remus.infomngmnt.task.job.CheckTaskDueJob"
             id="org.remus.infomngmnt.task.checkDue"
             interval="10"
-            name="Check Due Date Job">
+            name="%job.name">
       </job>
    </extension>
    <extension
@@ -58,14 +58,14 @@
       <sectionBox
             id="org.remus.infomngmnt.task.workLog"
             multiple="false"
-            name="Work Logger"
+            name="%worklog.sectionBox.name"
             sectionControl="org.remus.infomngmnt.task.tray.WorkLoggerTray">
       </sectionBox>
       <sectionBox
             icon="icons/iconexperience/task.png"
             id="org.remus.infomngmnt.task.sectionBox1"
             multiple="false"
-            name="Tasks"
+            name="%tasks.sectionBox.name"
             sectionControl="org.remus.infomngmnt.task.tray.DueDateSection">
       </sectionBox>
    </extension>
@@ -137,7 +137,7 @@
             adaptable="true"
             class="org.remus.infomngmnt.task.navigation.TaskStatusDecorator"
             id="org.remus.infomngmnt.task.statusDescorator"
-            label="Task Status-Decorator"
+            label="%decorator.label"
             lightweight="true"
             location="TOP_LEFT"
             state="true">

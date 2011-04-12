@@ -9,11 +9,11 @@ import org.osgi.framework.BundleContext;
 public class RssActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.rss";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.rss"; //$NON-NLS-1$
 
-	public static final String REPOSITORY_OPTIONS_REFRESH_INTERVAL = "REPOSITORY_OPTIONS_REFRESH_INTERVAL";
-	public static final String REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY = "REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY";
-	public static final String REPOSITORY_OPTIONS_BASIC_AUTHENTICATION = "REPOSITORY_OPTIONS_BASIC_AUTHENTICATION";
+	public static final String REPOSITORY_OPTIONS_REFRESH_INTERVAL = "REPOSITORY_OPTIONS_REFRESH_INTERVAL"; //$NON-NLS-1$
+	public static final String REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY = "REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY"; //$NON-NLS-1$
+	public static final String REPOSITORY_OPTIONS_BASIC_AUTHENTICATION = "REPOSITORY_OPTIONS_BASIC_AUTHENTICATION"; //$NON-NLS-1$
 
 	public static final String REPOSITORY_ID = "org.remus.infomngmnt.connector.rss"; //$NON-NLS-1$
 	public static final String PODCAST_REPOSITORY_ID = "org.remus.infomngmnt.connector.rss.podcast"; //$NON-NLS-1$

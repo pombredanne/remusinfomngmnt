@@ -18,6 +18,7 @@ import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
 
+import org.remus.infomngmnt.connector.rss.Messages;
 import org.remus.infomngmnt.connector.rss.RssActivator;
 
 /**
@@ -31,7 +32,7 @@ public class RssRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public RssRepositoryWizard() {
-		setWindowTitle("RSS/Atom Feed");
+		setWindowTitle(Messages.RssRepositoryWizard_RSSAtomFeed);
 	}
 
 	@Override
@@ -70,9 +71,9 @@ public class RssRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		newRemoteRepositry.getOptions().put(RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL, "5");
+		newRemoteRepositry.getOptions().put(RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL, "5"); //$NON-NLS-1$
 		newRemoteRepositry.getOptions().put(RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY,
-				"30");
+				"30"); //$NON-NLS-1$
 	}
 
 }

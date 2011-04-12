@@ -29,7 +29,6 @@ import org.eclipse.remus.common.io.transfer.DownloadFileJob;
 import org.eclipse.remus.core.model.InformationStructureEdit;
 import org.eclipse.remus.core.remote.RemoteException;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.audio.AudioActivator;
 import org.remus.infomngmnt.connector.rss.RssConnector;
 
@@ -50,16 +49,18 @@ public class PodcastConnector extends RssConnector {
 
 	@Override
 	public boolean proceedLocalInformationUnitAfterSync(
-			final InformationUnit newOrUpdatedLocalInformationUnit, final IProgressMonitor monitor) {
+			final InformationUnit newOrUpdatedLocalInformationUnit,
+			final IProgressMonitor monitor) {
 		return false;
 	}
 
 	@Override
 	public IFile getBinaryReferences(final InformationUnitListItem syncObject,
-			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
-			throws RemoteException {
+			final InformationUnit localInfoFragment,
+			final IProgressMonitor monitor) throws RemoteException {
 		if (AudioActivator.TYPE_ID.equals(localInfoFragment.getType())) {
-			RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(syncObject, monitor);
+			RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(
+					syncObject, monitor);
 			IPath mediaUrl = null;
 			if (remoteObject.getWrappedObject() instanceof SyndEntry) {
 				SyndEntry entry = (SyndEntry) remoteObject.getWrappedObject();
@@ -71,14 +72,16 @@ public class PodcastConnector extends RssConnector {
 			try {
 				URL downloadUrl = new URL(mediaUrl.toString());
 				if (downloadUrl == null) {
-					throw new RemoteException(StatusCreator
-							.newStatus("Error calculating download url."));
+					throw new RemoteException(
+							StatusCreator
+									.newStatus("Error calculating download url.")); //$NON-NLS-1$
 				}
-				IFile videoFile = ResourceUtil.createTempFile(new Path(syncObject
-						.getSynchronizationMetaData().getUrl()).getFileExtension());
+				IFile videoFile = ResourceUtil.createTempFile(new Path(
+						syncObject.getSynchronizationMetaData().getUrl())
+						.getFileExtension());
 
-				DownloadFileJob downloadVidJob = new DownloadFileJob(downloadUrl, videoFile,
-						getFileReceiveAdapter());
+				DownloadFileJob downloadVidJob = new DownloadFileJob(
+						downloadUrl, videoFile, getFileReceiveAdapter());
 				IStatus run = downloadVidJob.run(monitor);
 				if (run.isOK()) {
 					return videoFile;
@@ -108,7 +111,8 @@ public class PodcastConnector extends RssConnector {
 	}
 
 	@Override
-	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
+	public InformationUnit getPrefetchedInformationUnit(
+			final RemoteObject remoteObject) {
 		Object wrappedObject = remoteObject.getWrappedObject();
 		if (wrappedObject instanceof SyndEntry) {
 			SyndEntry entry = (SyndEntry) wrappedObject;
@@ -120,15 +124,17 @@ public class PodcastConnector extends RssConnector {
 			if (contents.size() > 0 && contents.get(0) != null
 					&& contents.get(0) instanceof SyndContent) {
 				SyndContent object = (SyndContent) contents.get(0);
-				edit.setValue(newInformationUnit, "@description", object.getValue());
+				edit.setValue(newInformationUnit,
+						"@description", object.getValue()); //$NON-NLS-1$
 			} else if (entry.getDescription() != null) {
-				edit
-						.setValue(newInformationUnit, "@description", entry.getDescription()
+				edit.setValue(newInformationUnit,
+						"@description", entry.getDescription() //$NON-NLS-1$
 								.getValue());
 				IPath mediaUrl = getMediaUrl(entry);
 				if (mediaUrl != null) {
-					edit.setValue(newInformationUnit, AudioActivator.NODE_NAME_MEDIATYPE, mediaUrl
-							.getFileExtension());
+					edit.setValue(newInformationUnit,
+							AudioActivator.NODE_NAME_MEDIATYPE,
+							mediaUrl.getFileExtension());
 				}
 			}
 
@@ -137,7 +143,7 @@ public class PodcastConnector extends RssConnector {
 			for (Object object : categories) {
 				cats.add(((SyndCategory) object).getName());
 			}
-			String join = org.apache.commons.lang.StringUtils.join(cats, " ");
+			String join = org.apache.commons.lang.StringUtils.join(cats, " "); //$NON-NLS-1$
 			newInformationUnit.setKeywords(join);
 
 			return newInformationUnit;

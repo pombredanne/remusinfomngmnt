@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
+import org.remus.infomngmnt.connector.rss.Messages;
 import org.remus.infomngmnt.connector.rss.RssActivator;
 import org.remus.infomngmnt.connector.rss.RssConnector;
 import org.remus.infomngmnt.connector.rss.RssCredentialProvider;
@@ -68,9 +69,9 @@ public class RssConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public RssConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("RSS/Atom Connector");
-		setDescription("Enter a feed url");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.RssConnectionWizardPage_RSSConnector);
+		setDescription(Messages.RssConnectionWizardPage_EnterUrl);
 
 	}
 
@@ -92,13 +93,13 @@ public class RssConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.RssConnectionWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("Feed-Url:");
+		apiurlLabel.setText(Messages.RssConnectionWizardPage_URL);
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		this.apiUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -127,19 +128,19 @@ public class RssConnectionWizardPage extends WizardPage {
 					});
 					setErrorMessage(null);
 				} catch (InvocationTargetException e) {
-					setErrorMessage(StringUtils.join("Error validating repository (", e.getCause()
-							.getMessage(), ")"));
+					setErrorMessage(StringUtils.join(Messages.RssConnectionWizardPage_ErrorValidating, e.getCause()
+							.getMessage(), ")")); //$NON-NLS-1$
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		validateCredentialsButton.setText("Validate");
+		validateCredentialsButton.setText(Messages.RssConnectionWizardPage_Validate);
 
 		Button btnObtainFeedTitle = new Button(composite, SWT.NONE);
 		btnObtainFeedTitle.setBounds(0, 0, 75, 25);
-		btnObtainFeedTitle.setText("Obtain Feed Title");
+		btnObtainFeedTitle.setText(Messages.RssConnectionWizardPage_ObtainTitle);
 		btnObtainFeedTitle.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				String feedTitle = ((RssConnector) RssConnectionWizardPage.this.repositoryDefinition)
@@ -152,41 +153,41 @@ public class RssConnectionWizardPage extends WizardPage {
 
 		final Group group2 = new Group(container, SWT.NONE);
 		group2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		group2.setText("Properties");
+		group2.setText(Messages.RssConnectionWizardPage_Properties);
 		final GridLayout gridLayout2 = new GridLayout();
 		gridLayout2.numColumns = 2;
 		group2.setLayout(gridLayout2);
 		Label refreshLabel = new Label(group2, SWT.NONE);
-		refreshLabel.setText("Refresh feed (minutes)");
+		refreshLabel.setText(Messages.RssConnectionWizardPage_RefreshInterval);
 		this.refreshRateSpinner = new Spinner(group2, SWT.BORDER);
 		this.refreshRateSpinner.setMinimum(1);
 		this.refreshRateSpinner.setIncrement(1);
 
 		Label deleteLabel = new Label(group2, SWT.NONE);
-		deleteLabel.setText("Delete feed-entries older than (days):");
+		deleteLabel.setText(Messages.RssConnectionWizardPage_DeleteFeedOlderThan);
 		this.deleteSpinner = new Spinner(group2, SWT.BORDER);
 		this.deleteSpinner.setMinimum(1);
 		this.deleteSpinner.setIncrement(1);
 
 		final Group group3 = new Group(container, SWT.NONE);
 		group3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		group3.setText("Authentication");
+		group3.setText(Messages.RssConnectionWizardPage_Authentication);
 		GridLayout gridLayout_1 = new GridLayout();
 		gridLayout_1.numColumns = 2;
 		group3.setLayout(gridLayout_1);
 		this.authentificationButton = new Button(group3, SWT.CHECK);
 		this.authentificationButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
 				2, 1));
-		this.authentificationButton.setText("Use authentication");
+		this.authentificationButton.setText(Messages.RssConnectionWizardPage_UseAuthentication);
 		Label username = new Label(group3, SWT.NONE);
 		username.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		username.setText("Username");
+		username.setText(Messages.RssConnectionWizardPage_Username);
 
 		this.userNameText = new Text(group3, SWT.BORDER);
 		this.userNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblPassword = new Label(group3, SWT.NONE);
-		lblPassword.setText("Password");
+		lblPassword.setText(Messages.RssConnectionWizardPage_Password);
 
 		this.passwordText = new Text(group3, SWT.BORDER | SWT.PASSWORD);
 		this.passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

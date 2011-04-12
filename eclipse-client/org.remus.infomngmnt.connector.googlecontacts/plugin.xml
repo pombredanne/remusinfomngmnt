@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.connector.googlecontacts.ContactsRepository"
             credentialprovider="org.remus.infomngmnt.connector.googlecontacts.GoogleContactsCredentialProvider"
             id="org.remus.infomngmnt.connector.googlecontacts.repository"
-            name="Google Contacts">
+            name="%repository-connector.name">
          <changeDefinition
                id="org.remus.infomngmnt.connector.googlecontacts.change"
                informationType="CONTACT">

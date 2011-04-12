@@ -24,7 +24,7 @@ public class GoogleContactsCredentialProvider extends CredentialProvider {
 	 */
 	public GoogleContactsCredentialProvider() {
 		super();
-		setGroup("google-contacts");
+		setGroup("google-contacts"); //$NON-NLS-1$
 	}
 
 }

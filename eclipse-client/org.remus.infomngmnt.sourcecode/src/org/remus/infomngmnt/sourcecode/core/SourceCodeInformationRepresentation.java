@@ -40,23 +40,23 @@ import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
 import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.sourcecode.PreferenceInitializer;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class SourceCodeInformationRepresentation extends AbstractInformationRepresentation {
+public class SourceCodeInformationRepresentation extends
+		AbstractInformationRepresentation {
 
-	private static final String SRCCODE_SECTION_ID = "srccode";
+	private static final String SRCCODE_SECTION_ID = "srccode"; //$NON-NLS-1$
 	private final IPreferenceStore preferenceStore;
 
 	/**
 	 * 
 	 */
 	public SourceCodeInformationRepresentation() {
-		this.preferenceStore = SourceCodePlugin.getDefault().getPreferenceStore();
+		preferenceStore = SourceCodePlugin.getDefault().getPreferenceStore();
 	}
 
 	@Override
@@ -72,21 +72,26 @@ public class SourceCodeInformationRepresentation extends AbstractInformationRepr
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 		Map<String, String> additionals = new HashMap<String, String>();
-		additionals.put("formattedSrc", new String(getHtmlSource().toByteArray()));
+		additionals.put(
+				"formattedSrc", new String(getHtmlSource().toByteArray())); //$NON-NLS-1$
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream contentsIs = getFile().getContents();
 		InputStream templateIs = null;
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(SourceCodePlugin.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
-			FreemarkerRenderer.getInstance().process(SourceCodePlugin.PLUGIN_ID, templateIs,
-					contentsIs, returnValue, additionals);
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(SourceCodePlugin.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
+			FreemarkerRenderer.getInstance().process(
+					SourceCodePlugin.PLUGIN_ID, templateIs, contentsIs,
+					returnValue, additionals);
 			contentsIs.close();
 			templateIs.close();
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}
@@ -95,23 +100,31 @@ public class SourceCodeInformationRepresentation extends AbstractInformationRepr
 
 	private ByteArrayOutputStream getHtmlSource() {
 		ByteArrayOutputStream targetStream = new ByteArrayOutputStream();
-		if (getValue().getStringValue() != null && getValue().getStringValue().length() > 0) {
-			InformationUnit childByType = InformationUtil.getChildByType(getValue(),
-					SourceCodePlugin.SRCTYPE_NAME);
-			String type = SourceCodePlugin.getDefault().getSourceTypes().get(
-					childByType.getStringValue());
-			ReaderLineSource rls = new ReaderLineSource(new StringReader(getValue()
-					.getStringValue() == null ? "" : getValue().getStringValue()));
+		if (getValue().getStringValue() != null
+				&& getValue().getStringValue().length() > 0) {
+			InformationUnit childByType = InformationUtil.getChildByType(
+					getValue(), SourceCodePlugin.SRCTYPE_NAME);
+			String type = SourceCodePlugin.getDefault().getSourceTypes()
+					.get(childByType.getStringValue());
+			ReaderLineSource rls = new ReaderLineSource(
+					new StringReader(
+							getValue().getStringValue() == null ? "" : getValue().getStringValue())); //$NON-NLS-1$
 			Writer commonWriter = null;
-			commonWriter = new OutputStreamWriter(targetStream, Charset.forName("UTF-8"));
+			commonWriter = new OutputStreamWriter(targetStream,
+					Charset.forName("UTF-8")); //$NON-NLS-1$
 
 			ParserFactory pf = ColorerPlugin.getDefaultPF();
-			HTMLGenerator hg = new HTMLGenerator(pf, rls, this.preferenceStore
-					.getString(PreferenceInitializer.COLOR_SCHEME));
+			HTMLGenerator hg = new HTMLGenerator(pf, rls,
+					preferenceStore
+							.getString(PreferenceInitializer.COLOR_SCHEME));
 
 			try {
-				hg.generate(commonWriter, commonWriter, "tmp." + type, this.preferenceStore
-						.getBoolean(PreferenceInitializer.LINE_NUMBERS), false, false, false);
+				hg.generate(
+						commonWriter,
+						commonWriter,
+						"tmp." + type, preferenceStore //$NON-NLS-1$
+								.getBoolean(PreferenceInitializer.LINE_NUMBERS),
+						false, false, false);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

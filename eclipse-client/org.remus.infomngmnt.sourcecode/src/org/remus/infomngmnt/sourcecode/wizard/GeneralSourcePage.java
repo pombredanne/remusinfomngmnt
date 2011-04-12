@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
+import org.remus.infomngmnt.sourcecode.Messages;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 
 /**
@@ -42,8 +43,8 @@ import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
  */
 public class GeneralSourcePage extends GeneralPage {
 
-	protected static final String SECTION_NAME = "SECTION_NAME";
-	protected static final String SECTION_KEY = "SECTION_KEY";
+	protected static final String SECTION_NAME = "SECTION_NAME"; //$NON-NLS-1$
+	protected static final String SECTION_KEY = "SECTION_KEY"; //$NON-NLS-1$
 	private Combo typeCombo;
 	private Collection<String> values;
 	private IDialogSettings settings;
@@ -62,19 +63,19 @@ public class GeneralSourcePage extends GeneralPage {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
 
-		setTitle("New Source-Code");
-		setMessage("This wizard enables you to create a new source code snippet.");
+		setTitle(Messages.GeneralSourcePage_Title);
+		setMessage(Messages.GeneralSourcePage_Subtitle);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(SourceCodePlugin.getDefault(),
-				"icons/iconexperience/wizards/new_sourcode_wizard_title.png"));
+				"icons/iconexperience/wizards/new_sourcode_wizard_title.png")); //$NON-NLS-1$
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(2, false));
-		group.setText("Name && Type");
+		group.setText(Messages.GeneralSourcePage_NameType);
 		doCreateNameElements(group);
 
-		new Label(group, SWT.NONE).setText("Type");
+		new Label(group, SWT.NONE).setText(Messages.GeneralSourcePage_Type);
 		this.typeCombo = new Combo(group, SWT.READ_ONLY);
 		this.typeCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		this.values = SourceCodePlugin.getDefault().getSourceTypes().keySet();

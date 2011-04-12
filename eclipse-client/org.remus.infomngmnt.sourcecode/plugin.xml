@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.remus.core.informationType">
       <information
-            name="Source Code"
+            name="%information.name"
             presentation="org.remus.infomngmnt.sourcecode.core.SourceCodeInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="SOURCE">
@@ -18,7 +18,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/code_colored_new.png"
             id="org.remus.infomngmnt.sourcecode.newWizard"
-            name="Source Code">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -27,7 +27,7 @@
             category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.sourcecode.prefs.SourceCodePreferencePage"
             id="org.remus.infomngmnt.sourcecode.sourcePref"
-            name="Source-Code">
+            name="%page.name">
       </page>
    </extension>
    <extension
@@ -42,7 +42,7 @@
             editpage="org.remus.infomngmnt.sourcecode.editor.EditSourcePage"
             icon="icons/iconexperience/code_colored_edit.png"
             id="org.remus.infomngmnt.sourcecode.editPage"
-            label="Edit Source"
+            label="%editPage.label"
             type="SOURCE">
       </editPage>
       <editorAction
@@ -66,8 +66,8 @@
          <menu
                icon="icons/iconexperience/code_colored.png"
                id="org.remus.infomngmnt.sourcodecontextmenu"
-               label="Source-Code"
-               mnemonic="r">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.sourcecode.copyToClipboard"
                   style="push">
@@ -100,7 +100,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.sourcecode.copyToClipboard"
-            name="Copy to Clipboard">
+            name="%command.name">
       </command>
    </extension>
    <extension

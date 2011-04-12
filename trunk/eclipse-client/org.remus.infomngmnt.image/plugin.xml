@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.remus.core.informationType">
       <information
-            name="Photo/Graphics"
+            name="%information.name"
             presentation="org.remus.infomngmnt.image.core.ImageInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="IMAGE">
@@ -18,9 +18,9 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/photo_landscape_new.png"
             id="org.remus.infomngmnt.image.newImageWizard"
-            name="Photo/Graphics">
+            name="%wizard.name">
          <description>
-            This information type enables the handling of an image or a graphic.
+            %wizard.description
          </description>
       </wizard>
    </extension>
@@ -30,7 +30,7 @@
             editpage="org.remus.infomngmnt.image.ui.ImageEditPage"
             icon="icons/iconexperience/photo_landscape_edit.png"
             id="org.remus.infomngmnt.image.imageEditPage"
-            label="Edit Photo/Graphics"
+            label="%editPage.label"
             type="IMAGE">
       </editPage>
    </extension>
@@ -56,7 +56,7 @@
             class="org.remus.infomngmnt.image.importt.ImportImageFromDiskWizard"
             icon="icons/iconexperience/photo_landscape.png"
             id="org.remus.infomngmnt.image.imageFromDirectory"
-            name="Images from Filesystem">
+            name="%import.wizard.name">
       </wizard>
    </extension>
    <extension
@@ -65,7 +65,7 @@
             class="org.remus.infomngmnt.image.tray.CreateScreenShotAction"
             icon="icons/iconexperience/screenshot_new.png"
             id="org.remus.infomngmnt.image.trayAction"
-            name="Create Screenshot">
+            name="%trayAction.name">
       </trayAction>
    </extension>
    <extension

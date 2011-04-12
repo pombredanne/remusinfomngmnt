@@ -44,6 +44,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -63,7 +64,7 @@ public class ImageCreationTrigger extends NewObjectWizardDelegate {
 		if (value instanceof ImageData) {
 			ImageLoader loader = new ImageLoader();
 			loader.data = new ImageData[] { (ImageData) value };
-			IFile tmpFile = ResourceUtil.createTempFile("png");
+			IFile tmpFile = ResourceUtil.createTempFile("png"); //$NON-NLS-1$
 			loader.save(tmpFile.getLocation().toOSString(), SWT.IMAGE_PNG);
 			try {
 				tmpFile.refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -79,13 +80,13 @@ public class ImageCreationTrigger extends NewObjectWizardDelegate {
 					((ImageData) value).width);
 			edit.setValue(this.newInformationUnit, ImagePlugin.NODE_NAME_HEIGHT,
 					((ImageData) value).height);
-			edit.setValue(this.newInformationUnit, ImagePlugin.ORIGINAL_FILEPATH, "clipboard.png");
+			edit.setValue(this.newInformationUnit, ImagePlugin.ORIGINAL_FILEPATH, "clipboard.png"); //$NON-NLS-1$
 
 		} else if (transferType instanceof FileTransferWrapper) {
 			ImageLoader imageLoader = new ImageLoader();
 			imageLoader.load(((String[]) value)[0]);
 			ImageData data = imageLoader.data[0];
-			IFile tmpFile = ResourceUtil.createTempFile("png");
+			IFile tmpFile = ResourceUtil.createTempFile("png"); //$NON-NLS-1$
 			imageLoader.save(tmpFile.getLocation().toOSString(), SWT.IMAGE_PNG);
 			try {
 				tmpFile.refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -115,9 +116,9 @@ public class ImageCreationTrigger extends NewObjectWizardDelegate {
 
 					public void run(final IProgressMonitor monitor)
 							throws InvocationTargetException, InterruptedException {
-						monitor.beginTask("Download requested image", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(Messages.ImageCreationTrigger_DownloadRequestedImage, IProgressMonitor.UNKNOWN);
 						IStatus run = job.run(monitor);
-						monitor.beginTask("Calculating width and height", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(Messages.ImageCreationTrigger_CalculatingWidhtHeight, IProgressMonitor.UNKNOWN);
 						try {
 							ImageLoader loader = new ImageLoader();
 							InputStream contents = tmpFile.getContents();
@@ -128,7 +129,7 @@ public class ImageCreationTrigger extends NewObjectWizardDelegate {
 										e,
 										NLS
 												.bind(
-														"Error while processing the dragged data. Check if \'\'{0}\'\' is dragable image-source.",
+														Messages.ImageCreationTrigger_ErrorProcessingData,
 														value.toString()));
 							}
 							InformationUnit width = InformationUtil.getChildByType(
@@ -147,7 +148,7 @@ public class ImageCreationTrigger extends NewObjectWizardDelegate {
 									.setFiles(new IFile[] { tmpFile });
 							if (!run.isOK()) {
 								throw new InvocationTargetException(run.getException(),
-										"Error downloading image");
+										Messages.ImageCreationTrigger_ErrorDownloadingImage);
 							}
 						} catch (CoreException e) {
 							throw new InvocationTargetException(e);

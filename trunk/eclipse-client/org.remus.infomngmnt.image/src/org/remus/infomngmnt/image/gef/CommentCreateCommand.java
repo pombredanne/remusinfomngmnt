@@ -17,7 +17,6 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.remus.InformationUnit;
 import org.eclipse.remus.util.InformationUtil;
-
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 
@@ -51,13 +50,14 @@ public class CommentCreateCommand extends Command {
 	 *             if any parameter is null, or the request does not provide a
 	 *             new Shape instance
 	 */
-	public CommentCreateCommand(final ShapableInfoDelegate newShape, final InformationUnit parent,
-			final Rectangle bounds) {
+	public CommentCreateCommand(final ShapableInfoDelegate newShape,
+			final InformationUnit parent, final Rectangle bounds) {
 		this.newShape = newShape;
-		this.linkInfo = InformationUtil.getChildByType(parent, ImagePlugin.NODE_NAME_LINKS);
+		linkInfo = InformationUtil.getChildByType(parent,
+				ImagePlugin.NODE_NAME_LINKS);
 		this.parent = parent;
 		this.bounds = bounds;
-		setLabel("shape creation");
+		setLabel("shape creation"); //$NON-NLS-1$
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class CommentCreateCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		return this.newShape != null && this.parent != null && this.bounds != null;
+		return newShape != null && parent != null && bounds != null;
 	}
 
 	/*
@@ -77,11 +77,11 @@ public class CommentCreateCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		this.newShape.setLocation(new Point(this.bounds.getLocation().x,
-				this.bounds.getLocation().y));
-		Dimension size = this.bounds.getSize();
+		newShape.setLocation(new Point(bounds.getLocation().x, bounds
+				.getLocation().y));
+		Dimension size = bounds.getSize();
 		if (size.width > 0 && size.height > 0) {
-			this.newShape.setSize(new java.awt.Dimension(size.width, size.height));
+			newShape.setSize(new java.awt.Dimension(size.width, size.height));
 		}
 		redo();
 	}
@@ -93,7 +93,7 @@ public class CommentCreateCommand extends Command {
 	 */
 	@Override
 	public void redo() {
-		this.linkInfo.getChildValues().add(this.newShape.getOrigInfoObject());
+		linkInfo.getChildValues().add(newShape.getOrigInfoObject());
 	}
 
 	/*
@@ -103,7 +103,7 @@ public class CommentCreateCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		this.linkInfo.getChildValues().remove(this.newShape.getOrigInfoObject());
+		linkInfo.getChildValues().remove(newShape.getOrigInfoObject());
 	}
 
 }

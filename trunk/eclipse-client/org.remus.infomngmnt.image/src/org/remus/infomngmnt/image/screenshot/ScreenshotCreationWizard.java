@@ -13,6 +13,7 @@
 package org.remus.infomngmnt.image.screenshot;
 
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.messages.Messages;
 import org.remus.infomngmnt.image.ui.ImageCreationTrigger;
 
 import org.eclipse.core.runtime.CoreException;
@@ -47,8 +48,8 @@ public class ScreenshotCreationWizard extends Wizard {
 					imageCreationTrigger.handleCreationRequest();
 				} catch (CoreException e) {
 					ErrorDialog.openError(UIUtil.getDisplay().getActiveShell(),
-							"Error creating new information unit",
-							"Error occured while executing your request.",
+							Messages.ScreenshotCreationWizard_ErrorCreating,
+							Messages.ScreenshotCreationWizard_ErrorExecutingRequest,
 							e.getStatus());
 				}
 			}
@@ -60,7 +61,7 @@ public class ScreenshotCreationWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		setWindowTitle("Capture desktop");
+		setWindowTitle(Messages.ScreenshotCreationWizard_CaptureDesktop);
 		addPage(page1 = new ScreenshotCreationPage2());
 
 	}

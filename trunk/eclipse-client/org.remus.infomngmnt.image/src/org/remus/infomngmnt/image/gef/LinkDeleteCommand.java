@@ -13,10 +13,10 @@ package org.remus.infomngmnt.image.gef;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.remus.InformationUnit;
 
-
 /**
- * A command to remove a shape from its parent.
- * The command can be undone or redone.
+ * A command to remove a shape from its parent. The command can be undone or
+ * redone.
+ * 
  * @author Elias Volanakis
  */
 public class LinkDeleteCommand extends Command {
@@ -31,30 +31,37 @@ public class LinkDeleteCommand extends Command {
 
 	/**
 	 * Create a command that will remove the shape from its parent.
-	 * @param parent the ShapesDiagram containing the child
-	 * @param child    the Shape to remove
-	 * @throws IllegalArgumentException if any parameter is null
+	 * 
+	 * @param parent
+	 *            the ShapesDiagram containing the child
+	 * @param child
+	 *            the Shape to remove
+	 * @throws IllegalArgumentException
+	 *             if any parameter is null
 	 */
-	public LinkDeleteCommand(final InformationUnit parent, final InformationUnit child) {
+	public LinkDeleteCommand(final InformationUnit parent,
+			final InformationUnit child) {
 		if (parent == null || child == null) {
 			throw new IllegalArgumentException();
 		}
-		setLabel("shape deletion");
+		setLabel("shape deletion"); //$NON-NLS-1$
 		this.parent = parent;
 		this.child = child;
 	}
 
-
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#canUndo()
 	 */
 	@Override
 	public boolean canUndo() {
-		return this.wasRemoved;
+		return wasRemoved;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#execute()
 	 */
 	@Override
@@ -63,23 +70,25 @@ public class LinkDeleteCommand extends Command {
 		redo();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#redo()
 	 */
 	@Override
 	public void redo() {
 		// remove the child and disconnect its connections
-		this.wasRemoved = this.parent.getChildValues().remove(this.child);
+		wasRemoved = parent.getChildValues().remove(child);
 
 	}
 
-
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#undo()
 	 */
 	@Override
 	public void undo() {
-		this.parent.getChildValues().add(this.child);
+		parent.getChildValues().add(child);
 	}
 }

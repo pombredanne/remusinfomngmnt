@@ -23,6 +23,7 @@ import org.eclipse.remus.util.InformationUtil;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.image.gef.IEditingDomainHolder;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -35,7 +36,7 @@ public class CreateCommentAction extends Action implements IEditingDomainHolder 
 
 	public CreateCommentAction(final InformationUnit image) {
 		this.image2 = image;
-		setText("New Comment");
+		setText(Messages.CreateCommentAction_NewComment);
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class CreateCommentAction extends Action implements IEditingDomainHolder 
 		AddCommand add = (AddCommand) AddCommand.create(this.editingDomain, childByType,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, shapableInfoDelegate
 						.getOrigInfoObject());
-		add.setLabel("Add new comment");
+		add.setLabel(Messages.CreateCommentAction_AddNewComment);
 		this.editingDomain.getCommandStack().execute(add);
 		shapableInfoDelegate.dispose();
 

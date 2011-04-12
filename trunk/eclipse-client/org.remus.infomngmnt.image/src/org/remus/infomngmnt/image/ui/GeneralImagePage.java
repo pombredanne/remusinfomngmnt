@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.internal.ResourceManager;
+import org.remus.infomngmnt.image.messages.Messages;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
@@ -75,17 +76,17 @@ public class GeneralImagePage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
-		setTitle("New Photo/Graphics");
-		setMessage("This wizard enables you to create a new image from a file.");
+		setTitle(Messages.GeneralImagePage_WizardTitle);
+		setMessage(Messages.GeneralImagePage_WizardSubTitle);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
 				ImagePlugin.getDefault(),
-				"icons/iconexperience/photo_wizard_title.png"));
+				"icons/iconexperience/photo_wizard_title.png")); //$NON-NLS-1$
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(3, false));
-		group.setText("Name && File");
+		group.setText(Messages.GeneralImagePage_NameAndFile);
 		doCreateNameElements(group);
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -94,20 +95,20 @@ public class GeneralImagePage extends GeneralPage {
 
 		if (files[0] == null) {
 			final Label nameLabel = new Label(group, SWT.NONE);
-			nameLabel.setText("File");
+			nameLabel.setText(Messages.GeneralImagePage_File);
 			fileNameText = new Text(group, SWT.BORDER);
 			gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_nameText.horizontalSpan = 2;
 			fileNameText.setLayoutData(gd_nameText);
 
 			browseButton = new Button(group, SWT.PUSH);
-			browseButton.setText("Browse...");
+			browseButton.setText(Messages.GeneralImagePage_Browse);
 			browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
 					FileDialog fd = new FileDialog(getShell());
-					fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" });
-					fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
+					fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" }); //$NON-NLS-1$
+					fd.setFilterNames(new String[] { Messages.GeneralImagePage_SupportedFormats });
 					String open = fd.open();
 					if (open != null) {
 						fileNameText.setText(open);

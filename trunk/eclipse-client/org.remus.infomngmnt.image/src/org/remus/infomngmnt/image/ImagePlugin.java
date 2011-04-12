@@ -4,14 +4,13 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  */
 public class ImagePlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.image";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.image"; //$NON-NLS-1$
 
 	// The shared instance
 	private static ImagePlugin plugin;
@@ -26,15 +25,15 @@ public class ImagePlugin extends AbstractUIPlugin {
 
 	public static final String NODE_NAME_HEIGHT = "height"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_LINKS = "links";
+	public static final String NODE_NAME_LINKS = "links"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_LINK = "link";
+	public static final String NODE_NAME_LINK = "link"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_EXIF_ITEM = "exifitem";
+	public static final String NODE_NAME_EXIF_ITEM = "exifitem"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_EXIF_KEY = "exifkey";
+	public static final String NODE_NAME_EXIF_KEY = "exifkey"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_EXIF_VALUE = "exifvalue";
+	public static final String NODE_NAME_EXIF_VALUE = "exifvalue"; //$NON-NLS-1$
 
 	private RemusServiceTracker serviceTracker;
 
@@ -54,7 +53,7 @@ public class ImagePlugin extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		this.serviceTracker = new RemusServiceTracker(getBundle());
+		serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
 	}
 
@@ -72,7 +71,7 @@ public class ImagePlugin extends AbstractUIPlugin {
 	}
 
 	public RemusServiceTracker getServiceTracker() {
-		return this.serviceTracker;
+		return serviceTracker;
 	}
 
 	/**

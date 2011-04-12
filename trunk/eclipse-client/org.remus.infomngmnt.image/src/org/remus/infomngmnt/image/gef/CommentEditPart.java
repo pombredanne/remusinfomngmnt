@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * EditPart used for Shape instances (more specific for EllipticalShape and
@@ -153,7 +154,7 @@ class CommentEditPart extends AbstractGraphicalEditPart implements Adapter, IEdi
 	public void performRequest(final Request req) {
 		if (req.getType() == RequestConstants.REQ_OPEN) {
 			InputDialog inputDialog = new InputDialog(getViewer().getControl().getShell(),
-					"Set comment", "Set a new message", getCastedModel().getText(), null) {
+					Messages.CommentEditPart_SetComment, Messages.CommentEditPart_SetMessage, getCastedModel().getText(), null) {
 				@Override
 				protected int getInputTextStyle() {
 					return SWT.MULTI | SWT.BORDER | SWT.V_SCROLL;

@@ -27,6 +27,7 @@ import org.eclipse.remus.InfomngmntFactory;
 import org.eclipse.remus.InfomngmntPackage;
 import org.eclipse.remus.InformationUnit;
 import org.eclipse.remus.util.InformationUtil;
+import org.remus.infomngmnt.image.messages.Messages;
 
 
 /**
@@ -81,7 +82,7 @@ public class ShapableInfoDelegate extends AdapterImpl {
 		InformationUnit textUnit = createSubNodeOnDemand(TEXT);
 		SetCommand setCommand = (SetCommand) SetCommand.create(this.domain, textUnit,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, text);
-		setCommand.setDescription("Setting comment");
+		setCommand.setDescription(Messages.ShapableInfoDelegate_SetComment);
 		this.domain.getCommandStack().execute(setCommand);
 	}
 
@@ -103,7 +104,7 @@ public class ShapableInfoDelegate extends AdapterImpl {
 		cc.append(SetCommand.create(this.domain, diwHeight,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Math
 						.round((double) size.height / this.imageDimensions.height * 1000)));
-		cc.setDescription("Set size");
+		cc.setDescription(Messages.ShapableInfoDelegate_SetSize);
 		this.domain.getCommandStack().execute(cc);
 	}
 
@@ -117,7 +118,7 @@ public class ShapableInfoDelegate extends AdapterImpl {
 		cc.append(SetCommand.create(this.domain, locY,
 				InfomngmntPackage.Literals.INFORMATION_UNIT__LONG_VALUE, Math
 						.round((double) location.y / this.imageDimensions.height * 1000)));
-		cc.setDescription("Set location");
+		cc.setDescription(Messages.ShapableInfoDelegate_SetLocation);
 		this.domain.getCommandStack().execute(cc);
 	}
 

@@ -28,13 +28,13 @@ import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
 import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.resources.util.ResourceUtil;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.image.ImagePlugin;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class ImageInformationRepresentation extends AbstractInformationRepresentation {
+public class ImageInformationRepresentation extends
+		AbstractInformationRepresentation {
 
 	private String imageHref;
 
@@ -48,27 +48,35 @@ public class ImageInformationRepresentation extends AbstractInformationRepresent
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
-		this.imageHref = getFile().getProject().getLocation().append(ResourceUtil.BINARY_FOLDER)
-				.append(getValue().getBinaryReferences().getProjectRelativePath()).toOSString();
+		imageHref = getFile()
+				.getProject()
+				.getLocation()
+				.append(ResourceUtil.BINARY_FOLDER)
+				.append(getValue().getBinaryReferences()
+						.getProjectRelativePath()).toOSString();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(ImagePlugin.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(ImagePlugin.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
 			FreemarkerRenderer.getInstance().process(
 					ImagePlugin.PLUGIN_ID,
 					templateIs,
 					contentsIs,
 					returnValue,
-					Collections.<String, String> singletonMap("imageHref", URI.createFileURI(
-							this.imageHref).toString()));
+					Collections.<String, String> singletonMap(
+							"imageHref", URI.createFileURI( //$NON-NLS-1$
+									imageHref).toString()));
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
-			org.eclipse.remus.common.core.streams.StreamCloser.closeStreams(templateIs,
-					contentsIs);
+			org.eclipse.remus.common.core.streams.StreamCloser.closeStreams(
+					templateIs, contentsIs);
 		}
 		return new ByteArrayInputStream(returnValue.toByteArray());
 	}

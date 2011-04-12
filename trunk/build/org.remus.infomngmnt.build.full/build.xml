@@ -218,9 +218,13 @@
 		</antcall>
 		<delete dir="${unzipTarget}/RIM/workspace" failonerror="false">
 		</delete>
-		<zip destfile="${pack.zip}">
-			<zipfileset dir="${unzipTarget}">
-			</zipfileset>
+		<copyfile dest="${pack.zip}" src="${build.dir.location}/${pack.zip}"/>
+		<zip destfile="${pack.zip}" preserve0permissions="true" update="true">
+			<zipfileset dir="${unzipTarget}/RIM/features" prefix="RIM/features" />
+			<zipfileset dir="${unzipTarget}/RIM/plugins" prefix="RIM/plugins" />
+			<zipfileset dir="${unzipTarget}/RIM/configuration" prefix="RIM/configuration" />
+			<zipfileset dir="${unzipTarget}/RIM/p2" prefix="RIM/p2" />
+			<zipfileset file="${unzipTarget}/RIM/artifacts.xml" fullpath="RIM/artifacts.xml" />
 		</zip>
 
 	</target>

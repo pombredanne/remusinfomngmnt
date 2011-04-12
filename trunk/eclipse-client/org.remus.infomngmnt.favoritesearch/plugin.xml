@@ -6,7 +6,7 @@
       <information
             buildHtml="false"
             excludeFromIndex="true"
-            name="Favorite Search"
+            name="%information.name"
             presentation="org.remus.infomngmnt.favoritesearch.SearchPresentation"
             structuredefinition="structuredefinition.xmi"
             type="FAVSEARCH">
@@ -18,7 +18,7 @@
             editpage="org.remus.infomngmnt.favoritesearch.ui.SearchResultPage"
             icon="icons/iconexperience/text_find.png"
             id="org.remus.infomngmnt.favoritesearch.editPage"
-            label="Latest Search-Results"
+            label="%editPage.label"
             type="FAVSEARCH">
       </editPage>
    </extension>
@@ -38,7 +38,7 @@
       <command
             defaultHandler="org.remus.infomngmnt.favoritesearch.handler.LoadFavoriteSearchHandler"
             id="org.remus.infomngmnt.favoritesearch.loadFavSearch"
-            name="Load Favorite Search">
+            name="%command.name">
       </command>
    </extension>
    <extension

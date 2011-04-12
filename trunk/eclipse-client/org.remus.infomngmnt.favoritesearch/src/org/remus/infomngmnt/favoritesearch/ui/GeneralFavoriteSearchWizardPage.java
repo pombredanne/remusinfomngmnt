@@ -16,6 +16,7 @@ import org.eclipse.remus.Category;
 import org.eclipse.remus.common.core.util.StringUtils;
 import org.eclipse.remus.search.Search;
 import org.eclipse.remus.ui.newwizards.GeneralPage;
+import org.remus.infomngmnt.favoritesearch.Messages;
 
 
 /**
@@ -38,10 +39,10 @@ public class GeneralFavoriteSearchWizardPage extends GeneralPage {
 	@Override
 	protected void initDatabinding() {
 		if (this.search.getSearchString() != null && this.search.getSearchString().length() > 0) {
-			this.unit.setLabel(StringUtils.join("Search for \"", this.search.getSearchString(),
-					"\""));
+			this.unit.setLabel(StringUtils.join(Messages.GeneralFavoriteSearchWizardPage_SearchFor, this.search.getSearchString(),
+					Messages.GeneralFavoriteSearchWizardPage_1));
 		}
-		this.unit.setKeywords("Search");
+		this.unit.setKeywords(Messages.GeneralFavoriteSearchWizardPage_Search);
 		super.initDatabinding();
 	}
 

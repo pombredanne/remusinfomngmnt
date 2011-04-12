@@ -27,7 +27,6 @@ import org.eclipse.remus.search.Search;
 import org.eclipse.remus.search.SearchFactory;
 import org.eclipse.remus.search.SearchPackage;
 import org.eclipse.remus.search.SearchResult;
-
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 
 /**
@@ -36,27 +35,33 @@ import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
 public class SearchSerializer {
 
 	public static byte[] serialize(final Search search) {
-		IEditingHandler service = FavoriteSearchActivator.getDefault().getServiceTracker()
-				.getService(IEditingHandler.class);
+		IEditingHandler service = FavoriteSearchActivator.getDefault()
+				.getServiceTracker().getService(IEditingHandler.class);
 		EList<SearchResult> result = search.getResult();
 		for (SearchResult searchResult : result) {
-			searchResult.eUnset(SearchPackage.Literals.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES);
+			searchResult
+					.eUnset(SearchPackage.Literals.SEARCH_RESULT__HIGHLIGHT_ATTRIBUTES);
 			searchResult.eUnset(SearchPackage.Literals.SEARCH_RESULT__KEYWORDS);
 			searchResult.eUnset(SearchPackage.Literals.SEARCH_RESULT__TEXT);
 		}
 		byte[] saveObjectToByte = service.saveObjectToByte(search);
-		FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
+		FavoriteSearchActivator.getDefault().getServiceTracker()
+				.ungetService(service);
 		return saveObjectToByte;
 	}
 
 	public static Search deserialize(final byte[] bytes) {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-				org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
-				new XMLResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put(SearchPackage.eNS_URI, SearchPackage.eINSTANCE);
+		resourceSet
+				.getResourceFactoryRegistry()
+				.getExtensionToFactoryMap()
+				.put(org.eclipse.emf.ecore.resource.Resource.Factory.Registry.DEFAULT_EXTENSION,
+						new XMLResourceFactoryImpl());
+		resourceSet.getPackageRegistry().put(SearchPackage.eNS_URI,
+				SearchPackage.eINSTANCE);
 
-		Resource createResource = resourceSet.createResource(URI.createURI("deserialized"));
+		Resource createResource = resourceSet.createResource(URI
+				.createURI("deserialized")); //$NON-NLS-1$
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
 		try {
 			createResource.load(inputStream, ResourceConstants.SAVE_OPTIONS);

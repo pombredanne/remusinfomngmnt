@@ -30,6 +30,7 @@ import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.remus.ui.operation.LoadFileToTmpFromPathRunnable;
 import org.eclipse.ui.IWorkbench;
 import org.remus.infomngmnt.pdf.Activator;
+import org.remus.infomngmnt.pdf.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -41,7 +42,7 @@ public class NewPdfWizard extends NewInfoObjectWizard {
 	 */
 	public NewPdfWizard() {
 		setNeedsProgressMonitor(true);
-		setWindowTitle("New PDF Document");
+		setWindowTitle(Messages.NewPdfWizard_NewPDFDocument);
 
 	}
 

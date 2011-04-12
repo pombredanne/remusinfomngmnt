@@ -34,7 +34,6 @@ import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.pdf.extension.IPdfImageRenderer;
 import org.remus.infomngmnt.pdf.extension.ImageInformation;
@@ -44,7 +43,8 @@ import org.remus.infomngmnt.pdf.service.IPDF2ImageExtensionService;
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class PdfInformationRepresentation extends AbstractInformationRepresentation {
+public class PdfInformationRepresentation extends
+		AbstractInformationRepresentation {
 
 	/**
 	 * 
@@ -66,29 +66,34 @@ public class PdfInformationRepresentation extends AbstractInformationRepresentat
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
-		IFile binaryReferenceFile = InformationUtil.getBinaryReferenceFile(getValue());
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
+		IFile binaryReferenceFile = InformationUtil
+				.getBinaryReferenceFile(getValue());
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
 		Long width = (Long) read.getValueByNodeId(Activator.SLIDER_WIDTH);
 		width = width == 0 ? 300 : width;
-		IPDF2ImageExtensionService service = Activator.getDefault().getServiceTracker().getService(
-				IPDF2ImageExtensionService.class);
+		IPDF2ImageExtensionService service = Activator.getDefault()
+				.getServiceTracker()
+				.getService(IPDF2ImageExtensionService.class);
 		String renderer = (String) read.getValueByNodeId(Activator.RENDERER);
 		IPdfImageRenderer rendererById = null;
 		if (renderer != null) {
 			rendererById = service.getRendererById(renderer);
 		}
 		if (rendererById == null) {
-			String string = Activator.getDefault().getPreferenceStore().getString(
-					PreferenceInitializer.DEFAULT_RENDERER);
+			String string = Activator.getDefault().getPreferenceStore()
+					.getString(PreferenceInitializer.DEFAULT_RENDERER);
 			rendererById = service.getRendererById(string);
 		}
 		if (rendererById == null) {
 			rendererById = service.getAllRender()[0];
 		}
 
-		List<ImageInformation> convert = rendererById.getRenderer().convert(getBuildFolder(),
-				binaryReferenceFile, new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+		List<ImageInformation> convert = rendererById.getRenderer().convert(
+				getBuildFolder(), binaryReferenceFile,
+				new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
 
 		getBuildFolder().refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		int biggestHeight = 0;
@@ -125,31 +130,40 @@ public class PdfInformationRepresentation extends AbstractInformationRepresentat
 				// newFile.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 				// System.out.println("Saving image took "
 				// + (System.currentTimeMillis() - currentTimeMillis) + " ms");
-				string2.setFileName(URI.createFileURI(file.getLocation().toOSString()).toString());
+				string2.setFileName(URI.createFileURI(
+						file.getLocation().toOSString()).toString());
 
 				string2.setWidth(width.intValue());
-				string2.setHeight(((Double) (string2.getHeight() / factor2)).intValue());
+				string2.setHeight(((Double) (string2.getHeight() / factor2))
+						.intValue());
 				// image.dispose();
 			}
 		}
 		HashMap<String, Object> additionals = new HashMap<String, Object>();
-		additionals.put("imagesPaths", convert);
-		additionals.put("width", width);
-		additionals.put("height", !Double.isNaN(factor) ? width * factor : width);
-		additionals.put("pdfSrc", URI.createFileURI(binaryReferenceFile.getLocation().toOSString())
-				.toString());
+		additionals.put("imagesPaths", convert); //$NON-NLS-1$
+		additionals.put("width", width); //$NON-NLS-1$
+		additionals.put("height", !Double.isNaN(factor) ? width * factor //$NON-NLS-1$
+		: width);
+		additionals.put(
+				"pdfSrc", //$NON-NLS-1$
+				URI.createFileURI(
+						binaryReferenceFile.getLocation().toOSString())
+						.toString());
 
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(Activator.PLUGIN_ID), new Path(
-					"template/htmlserialization.html"), false);
-			FreemarkerRenderer.getInstance().process(Activator.PLUGIN_ID, templateIs, returnValue,
-					additionals, read.getContentsAsStrucuturedMap(),
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(Activator.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.html"), true); //$NON-NLS-1$
+			FreemarkerRenderer.getInstance().process(Activator.PLUGIN_ID,
+					templateIs, returnValue, additionals,
+					read.getContentsAsStrucuturedMap(),
 					read.getDynamicContentAsStructuredMap());
 
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs);
 		}

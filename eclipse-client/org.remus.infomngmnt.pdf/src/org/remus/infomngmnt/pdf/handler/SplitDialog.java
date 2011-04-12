@@ -47,6 +47,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.pdf.Activator;
+import org.remus.infomngmnt.pdf.messages.Messages;
 
 public class SplitDialog extends Dialog {
 	private Text pdf2Split;
@@ -83,7 +84,7 @@ public class SplitDialog extends Dialog {
 		container.setLayout(new GridLayout(3, false));
 
 		Label lblPdf = new Label(container, SWT.NONE);
-		lblPdf.setText("PDF");
+		lblPdf.setText(Messages.SplitDialog_PDF);
 
 		this.pdf2Split = new Text(container, SWT.BORDER | SWT.READ_ONLY);
 		this.pdf2Split.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -92,13 +93,13 @@ public class SplitDialog extends Dialog {
 		label_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
 
 		Label lblTargetCategory = new Label(container, SWT.NONE);
-		lblTargetCategory.setText("Target Category");
+		lblTargetCategory.setText(Messages.SplitDialog_TargetCat);
 
 		this.categoryField = new CategoryBrowser(container, SWT.BORDER);
 		this.categoryField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		Label lblPdfName = new Label(container, SWT.NONE);
-		lblPdfName.setText("Name Scheme:");
+		lblPdfName.setText(Messages.SplitDialog_NameScheme);
 
 		this.text_2 = new Text(container, SWT.BORDER);
 		this.text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -122,7 +123,7 @@ public class SplitDialog extends Dialog {
 		this.pdf2Split.setText(InformationUtil
 				.getFullReadablePath((InformationUnitListItem) this.unit
 						.getAdapter(InformationUnitListItem.class)));
-		this.text_2.setText(this.unit.getLabel() + " - Part {0}");
+		this.text_2.setText(this.unit.getLabel() + Messages.SplitDialog_Part);
 		ISWTObservableValue observeSelection = SWTObservables.observeSelection(this.scale);
 		Binding bindValue = ctx.bindValue(observeSelection, this.splitValue);
 
@@ -132,7 +133,7 @@ public class SplitDialog extends Dialog {
 				Integer value = (Integer) ((AbstractObservableValue) event.getObservable())
 						.getValue();
 				SplitDialog.this.splitLabel.setText(NLS
-						.bind("Split PDF after ever {0} page", value));
+						.bind(Messages.SplitDialog_SplitPDFAfterEvery, value));
 				SplitDialog.this.splitLabel.getParent().layout();
 			}
 		});
@@ -169,7 +170,7 @@ public class SplitDialog extends Dialog {
 							cat = CategoryUtil.findCategory(text, false);
 						}
 						for (int i = 0; i < documents.size(); i++) {
-							IFile file1 = ResourceUtil.createTempFile("pdf");
+							IFile file1 = ResourceUtil.createTempFile("pdf"); //$NON-NLS-1$
 							PDDocument doc = (PDDocument) documents.get(i);
 							FileOutputStream output = new FileOutputStream(file1.getLocation()
 									.toOSString());
@@ -180,7 +181,7 @@ public class SplitDialog extends Dialog {
 									.newSession(Activator.TYPE_ID);
 							InformationUnit newInformationUnit = edit.newInformationUnit();
 
-							edit.setValue(newInformationUnit, "@label", NLS.bind(pdf1, i + 1));
+							edit.setValue(newInformationUnit, "@label", NLS.bind(pdf1, i + 1)); //$NON-NLS-1$
 
 							CompoundCommand cc1 = CommandFactory.CREATE_INFOTYPE(
 									newInformationUnit, cat, monitor);
@@ -190,7 +191,7 @@ public class SplitDialog extends Dialog {
 							cc.append(cc1);
 						}
 						cc
-								.setLabel(NLS.bind("Split \'\'{0}\'\'", SplitDialog.this.unit
+								.setLabel(NLS.bind(Messages.SplitDialog_Split, SplitDialog.this.unit
 										.getLabel()));
 						service.execute(cc);
 					} catch (Exception e) {
@@ -243,7 +244,7 @@ public class SplitDialog extends Dialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Split PDF");
+		newShell.setText(Messages.SplitDialog_SplitPdf);
 	}
 
 }

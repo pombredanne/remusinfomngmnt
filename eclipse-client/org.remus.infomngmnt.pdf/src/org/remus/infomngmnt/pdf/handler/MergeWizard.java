@@ -27,7 +27,6 @@ import org.eclipse.remus.InformationUnitListItem;
 import org.eclipse.remus.common.core.util.ResourceUtil;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.ui.IWorkbench;
-
 import org.remus.infomngmnt.pdf.ui.NewPdfWizard;
 
 /**
@@ -36,14 +35,16 @@ import org.remus.infomngmnt.pdf.ui.NewPdfWizard;
 public class MergeWizard extends NewPdfWizard {
 
 	@Override
-	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
-		this.page1 = new MergeWizardPage(selection.toArray());
+	public void init(final IWorkbench workbench,
+			final IStructuredSelection selection) {
+		page1 = new MergeWizardPage(selection.toArray());
 		setCategoryToPage();
 	}
 
 	@Override
 	protected IFile getTmpFile() {
-		List<InformationUnitListItem> elements = ((MergeWizardPage) this.page1).getElements();
+		List<InformationUnitListItem> elements = ((MergeWizardPage) page1)
+				.getElements();
 		PDFMergerUtility merger = new PDFMergerUtility();
 
 		for (InformationUnitListItem informationUnitListItem : elements) {
@@ -55,11 +56,12 @@ public class MergeWizard extends NewPdfWizard {
 			}
 
 		}
-		IFile createTempFile = ResourceUtil.createTempFile("pdf");
+		IFile createTempFile = ResourceUtil.createTempFile("pdf"); //$NON-NLS-1$
 		merger.setDestinationFileName(createTempFile.getLocation().toOSString());
 		try {
 			merger.mergeDocuments();
-			createTempFile.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			createTempFile.refreshLocal(IResource.DEPTH_INFINITE,
+					new NullProgressMonitor());
 		} catch (COSVisitorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

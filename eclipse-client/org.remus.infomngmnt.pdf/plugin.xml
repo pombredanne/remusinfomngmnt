@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="pdf2image" name="pdf2image" schema="schema/pdf2image.exsd"/>
+   <extension-point id="pdf2image" name="%extension-point.name" schema="schema/pdf2image.exsd"/>
    <extension
          point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
-            name="PDF Document"
+            name="%information.name"
             presentation="org.remus.infomngmnt.pdf.core.PdfInformationRepresentation"
             structuredefinition="strucuturedefinition.xmi"
             type="PDF">
@@ -18,7 +18,7 @@
             editpage="org.remus.infomngmnt.pdf.ui.PdfMetadaEditPage"
             icon="icons/pdf.png"
             id="org.remus.infomngmnt.pdf.editPage1"
-            label="Edit Pdf Metadata"
+            label="%editPage.label"
             type="PDF">
       </editPage>
       <editorAction
@@ -38,7 +38,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/pdf.png"
             id="org.remus.infomngmnt.pdf.wizard"
-            name="PDF Document">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -46,12 +46,12 @@
       <pdfImageRenderer
             class="org.remus.infomngmnt.pdf.renderer.DefaultImageRenderer"
             id="org.remus.infomngmnt.pdf.pdfImageRenderer2"
-            name="Default Image Renderer">
+            name="%pdfImageRenderer.name">
       </pdfImageRenderer>
       <pdfImageRenderer
             class="org.remus.infomngmnt.pdf.renderer.NoImageRenderer"
             id="org.remus.infomngmnt.pdf.noRendering"
-            name="Embed System PDF Viewer">
+            name="%pdfImageRenderer.name.0">
       </pdfImageRenderer>
    </extension>
    <extension
@@ -81,7 +81,7 @@
             category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.pdf.preferences.RendererPreferencePage"
             id="org.remus.infomngmnt.pdf.page1"
-            name="Pdf">
+            name="%page.name">
       </page>
    </extension>
    <extension
@@ -111,8 +111,8 @@
          <menu
                icon="icons/pdf.png"
                id="org.remus.infomngmnt.pdf.contextmenu"
-               label="PDF"
-               mnemonic="m">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.pdf.split"
                   style="push">
@@ -146,15 +146,15 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.pdf.split"
-            name="Split PDF">
+            name="%split.command.name">
       </command>
       <command
             id="org.remus.infomngmnt.pdf.merge"
-            name="Merge">
+            name="%merge.command.name">
       </command>
       <command
             id="org.remus.infomngmnt.pdf.openExtenal"
-            name="Open in external Application">
+            name="%open.command.name">
       </command>
    </extension>
    <extension

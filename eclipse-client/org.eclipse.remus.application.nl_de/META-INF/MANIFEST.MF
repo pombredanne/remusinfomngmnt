@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.remus.application.nl_de Fragment
+Bundle-SymbolicName: org.eclipse.remus.application.nl_de
+Bundle-Version: 1.0.0
+Fragment-Host: org.eclipse.remus.application;bundle-version="[0.1.0,1.0.0)"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

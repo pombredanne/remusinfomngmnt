@@ -9,9 +9,9 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.webdav";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.webdav"; //$NON-NLS-1$
 
-	public static final String REPOSITORY_OPTIONS_BASIC_AUTHENTICATION = "REPOSITORY_OPTIONS_BASIC_AUTHENTICATION";
+	public static final String REPOSITORY_OPTIONS_BASIC_AUTHENTICATION = "REPOSITORY_OPTIONS_BASIC_AUTHENTICATION"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

@@ -128,10 +128,10 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				InformationUnit adapter = (InformationUnit) item.getAdapter(InformationUnit.class);
 				InformationUnit copy = (InformationUnit) EcoreUtil.copy(adapter);
 				String newPath = new StringWriter().append(url).append(FOLDER_PREFIX_INFO).append(
-						adapter.getId()).append("/").toString();
+						adapter.getId()).append("/").toString(); //$NON-NLS-1$
 				getApi().createDirectory(newPath);
 				String remotePathName = new StringWriter().append(newPath).append(copy.getId())
-						.append(".info").toString();
+						.append(".info").toString(); //$NON-NLS-1$
 
 				byte[] saveObjectToByte = this.editingService.saveObjectToByte(copy);
 				getApi().put(remotePathName, saveObjectToByte);
@@ -145,7 +145,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 						IFile binaryReferenceToFile = InformationUtil.binaryReferenceToFile(
 								binaryReference, adapter);
 						String projectRelativePath = binaryReference.getProjectRelativePath();
-						String binaryRefFile = new StringWriter().append(binaryFolder).append("/")
+						String binaryRefFile = new StringWriter().append(binaryFolder).append("/") //$NON-NLS-1$
 								.append(projectRelativePath).toString();
 						InputStream contents = null;
 						try {
@@ -164,7 +164,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error adding element to repository", e));
+						Messages.WebDAVConnector_ErrorAdding, e));
 			}
 		}
 		if (item instanceof Category) {
@@ -175,11 +175,11 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				copy
 						.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
 				String newPath = new StringWriter().append(url).append(FOLDER_PREFIX_CAT).append(
-						copy.getId()).append("/").toString();
+						copy.getId()).append("/").toString(); //$NON-NLS-1$
 				boolean exists = getApi().exists(newPath);
 				if (exists) {
 					newPath = new StringWriter().append(url).append(FOLDER_PREFIX_CAT).append(
-							IdFactory.createId()).append("/").toString();
+							IdFactory.createId()).append("/").toString(); //$NON-NLS-1$
 				}
 				getApi().createDirectory(newPath);
 				String newRemoteCatPath = new StringWriter().append(newPath).append(FILENAME_CAT)
@@ -191,7 +191,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 					return buildSingleCategory(resourceFromUrl);
 				}
 			} catch (SardineException e) {
-				throw new RemoteException(StatusCreator.newStatus("Error committing element", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.WebDAVConnector_ErrorCommitting, e));
 			}
 		}
 		return null;
@@ -209,10 +209,10 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 
 					byte[] saveObjectToByte = this.editingService.saveObjectToByte(copy);
 					String infoFile = new StringWriter().append(remoteObject.getUrl()).append(
-							remoteObject.getId()).append(".info").toString();
+							remoteObject.getId()).append(".info").toString(); //$NON-NLS-1$
 					getApi().put(infoFile, saveObjectToByte);
 					String binaryFolder = new StringWriter().append(remoteObject.getUrl()).append(
-							FOLDER_NAME_BINARIES).append("/").toString();
+							FOLDER_NAME_BINARIES).append("/").toString(); //$NON-NLS-1$
 
 					InformationStructureRead read = InformationStructureRead.newSession(adapter);
 					List<BinaryReference> binaryReferences = read.getBinaryReferences();
@@ -232,7 +232,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 									binaryReference, adapter);
 							String projectRelativePath = binaryReference.getProjectRelativePath();
 							String binaryRefFile = new StringWriter().append(binaryFolder).append(
-									"/").append(projectRelativePath).toString();
+									"/").append(projectRelativePath).toString(); //$NON-NLS-1$
 
 							InputStream contents = null;
 							try {
@@ -247,7 +247,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 					}
 				} catch (Exception e) {
 					throw new RemoteException(StatusCreator
-							.newStatus("Error committing element", e));
+							.newStatus(Messages.WebDAVConnector_ErrorCommitting, e));
 				}
 				DavResource resourceFromUrl = getResourceFromUrl(remoteObject.getUrl());
 				if (resourceFromUrl != null) {
@@ -261,13 +261,13 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				copy.getInformationUnit().clear();
 				copy
 						.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
-				String infoFile = new StringWriter().append(remoteObject.getUrl()).append("/")
+				String infoFile = new StringWriter().append(remoteObject.getUrl()).append("/") //$NON-NLS-1$
 						.append(FILENAME_CAT).toString();
 				try {
 					byte[] saveObjectToByte = this.editingService.saveObjectToByte(copy);
 					getApi().put(infoFile, saveObjectToByte);
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error committing category",
+					throw new RemoteException(StatusCreator.newStatus(Messages.WebDAVConnector_ErrorCommittingCategory,
 							e));
 				}
 				DavResource resourceFromUrl = getResourceFromUrl(remoteObject.getUrl());
@@ -286,7 +286,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 			getApi().delete(item.getSynchronizationMetaData().getUrl());
 
 		} catch (SardineException e) {
-			throw new RemoteException(StatusCreator.newStatus("Error deleting remote objects", e));
+			throw new RemoteException(StatusCreator.newStatus(Messages.WebDAVConnector_ErrorDeleting, e));
 		}
 
 	}
@@ -312,7 +312,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 		try {
 			resources = getApi().getResources(url);
 		} catch (SardineException e) {
-			throw new RemoteException(StatusCreator.newStatus("Error building remote object", e));
+			throw new RemoteException(StatusCreator.newStatus(Messages.WebDAVConnector_ErrorBuilding, e));
 		}
 		List<DavResource> filter = CollectionUtils.filter(resources,
 				new CollectionFilter<DavResource>() {
@@ -341,12 +341,12 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				resources = getApi().getResources(file2.getAbsoluteUrl());
 			} catch (Exception e1) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error building single remote object", e1));
+						Messages.WebDAVConnector_ErrorBuilding, e1));
 			}
 			List<DavResource> filter = CollectionUtils.filter(resources,
 					new CollectionFilter<DavResource>() {
 						public boolean select(final DavResource item) {
-							return item.getName().endsWith(".info");
+							return item.getName().endsWith(".info"); //$NON-NLS-1$
 						}
 					});
 
@@ -385,7 +385,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 		try {
 			resources = getApi().getResources(url);
 		} catch (Exception e) {
-			throw new RemoteException(StatusCreator.newStatus("Error building subfolders", e));
+			throw new RemoteException(StatusCreator.newStatus(Messages.WebDAVConnector_ErrorBuilding, e));
 		}
 		List<RemoteObject> returnValue = new ArrayList<RemoteObject>();
 		List<DavResource> filter = CollectionUtils.filter(resources,
@@ -418,7 +418,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				resources = getApi().getResources(file2.getAbsoluteUrl());
 			} catch (Exception e1) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error getting category from remote WebDav resource", e1));
+						Messages.WebDAVConnector_ErrorGettingCategory, e1));
 			}
 			List<DavResource> filter = CollectionUtils.filter(resources,
 					new CollectionFilter<DavResource>() {
@@ -501,7 +501,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 		try {
 			resources = getApi().getResources(url);
 		} catch (SardineException e) {
-			throw new RemoteException(StatusCreator.newStatus("Error resolving DAVElement", e));
+			throw new RemoteException(StatusCreator.newStatus(Messages.WebDAVConnector_ErrorResolving, e));
 		}
 		for (DavResource davResource : resources) {
 			if (davResource.getAbsoluteUrl().equals(url)) {
@@ -510,7 +510,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 		}
 		// we have to check for invalid responses
 		for (DavResource davResource : resources) {
-			if ((davResource.getAbsoluteUrl() + "/").equals(url)) {
+			if ((davResource.getAbsoluteUrl() + "/").equals(url)) { //$NON-NLS-1$
 				return davResource;
 			}
 		}
@@ -549,7 +549,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 		if (localInfoFragment.getBinaryReferences() != null) {
 			String url = remoteObject.getSynchronizationMetaData().getUrl();
 			String remoteFilePath = new StringWriter().append(url).append(FOLDER_NAME_BINARIES)
-					.append("/").append(
+					.append("/").append( //$NON-NLS-1$
 							localInfoFragment.getBinaryReferences().getProjectRelativePath())
 					.toString();
 			try {
@@ -571,7 +571,7 @@ public class WebDAVConnector extends AbstractExtensionRepository implements IRep
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error resolving binary references", e));
+						Messages.WebDAVConnector_ErrorResolving, e));
 			}
 		}
 		return null;

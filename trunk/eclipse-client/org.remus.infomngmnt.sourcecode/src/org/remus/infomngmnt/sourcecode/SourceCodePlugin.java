@@ -12,16 +12,16 @@ import org.osgi.framework.BundleContext;
 public class SourceCodePlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.sourcecode";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.sourcecode"; //$NON-NLS-1$
 
-	public static final String TYPE_ID = "SOURCE";
+	public static final String TYPE_ID = "SOURCE"; //$NON-NLS-1$
 
-	public static final String SRCTYPE_NAME = "srcType";
+	public static final String SRCTYPE_NAME = "srcType"; //$NON-NLS-1$
 
 	private final Map<String, String> sourceTypes;
 
 	public Map<String, String> getSourceTypes() {
-		return this.sourceTypes;
+		return sourceTypes;
 	}
 
 	// The shared instance
@@ -31,21 +31,21 @@ public class SourceCodePlugin extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public SourceCodePlugin() {
-		this.sourceTypes = new LinkedHashMap<String, String>();
-		this.sourceTypes.put("Assembly", "asm");
-		this.sourceTypes.put("C/C++", "cpp");
-		this.sourceTypes.put("CSS", "css");
-		this.sourceTypes.put("HTML", "html");
-		this.sourceTypes.put("Java", "java");
-		this.sourceTypes.put("Java Script", "js");
-		this.sourceTypes.put("JSP", "jsp");
-		this.sourceTypes.put("LISP", "lisp");
-		this.sourceTypes.put("Make", "makefile");
-		this.sourceTypes.put("TeX", "tex");
-		this.sourceTypes.put("Pearl", "pl");
-		this.sourceTypes.put("PHP", "php");
-		this.sourceTypes.put("Windows Script", "bat");
-		this.sourceTypes.put("XML", "xml");
+		sourceTypes = new LinkedHashMap<String, String>();
+		sourceTypes.put(Messages.SourceCodePlugin_Assembly, "asm"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_CPlusPlus, "cpp"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_CSS, "css"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_HTML, "html"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_Java, "java"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_JavaScript, "js"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_JSP, "jsp"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_LISP, "lisp"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_Make, "makefile"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_TeX, "tex"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_Pearl, "pl"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_PHP, "php"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_WindowsScript, "bat"); //$NON-NLS-1$
+		sourceTypes.put(Messages.SourceCodePlugin_XML, "xml"); //$NON-NLS-1$
 
 	}
 

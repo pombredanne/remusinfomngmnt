@@ -34,6 +34,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
+import org.remus.infomngmnt.sourcecode.Messages;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 
 /**
@@ -57,7 +58,7 @@ public class EditSourcePage extends AbstractInformationFormPage {
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.EditSourcePage_General);
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
@@ -66,18 +67,18 @@ public class EditSourcePage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(composite);
 		generalSection.setClient(composite);
 
-		toolkit.createLabel(composite, "Name", SWT.NONE);
+		toolkit.createLabel(composite, Messages.EditSourcePage_Name, SWT.NONE);
 
 		this.text = toolkit.createText(composite, null, SWT.NONE);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		toolkit.createLabel(composite, "Type", SWT.NONE);
+		toolkit.createLabel(composite, Messages.EditSourcePage_Type, SWT.NONE);
 
 		this.combo = new Combo(composite, SWT.READ_ONLY);
 
 		toolkit.adapt(this.combo, true, true);
 
-		final Label sourcecodeLabel = toolkit.createLabel(composite, "Source-Code", SWT.NONE);
+		final Label sourcecodeLabel = toolkit.createLabel(composite, Messages.EditSourcePage_SourceCode, SWT.NONE);
 		final GridData gd_sourcecodeLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1);
 		sourcecodeLabel.setLayoutData(gd_sourcecodeLabel);
 

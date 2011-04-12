@@ -10,6 +10,7 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import org.remus.infomngmnt.sourcecode.Messages;
 import org.remus.infomngmnt.sourcecode.PreferenceInitializer;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 
@@ -35,12 +36,12 @@ implements IWorkbenchPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 		{
-			addField(new BooleanFieldEditor(PreferenceInitializer.LINE_NUMBERS, "Extract line numbers", getFieldEditorParent()));
+			addField(new BooleanFieldEditor(PreferenceInitializer.LINE_NUMBERS, Messages.SourceCodePreferencePage_ExtractLineNumber, getFieldEditorParent()));
 		}
 
 		{
 			addField(new ComboFieldEditor(
-					PreferenceInitializer.COLOR_SCHEME, "Color-Sheme", this.keyValues, getFieldEditorParent()));
+					PreferenceInitializer.COLOR_SCHEME, Messages.SourceCodePreferencePage_ColorSheme, this.keyValues, getFieldEditorParent()));
 		}
 		// Create the field editors
 	}
@@ -53,10 +54,10 @@ implements IWorkbenchPreferencePage {
 
 		final net.sf.colorer.ParserFactory pf = ColorerPlugin.getDefaultPF();
 		this.hrdSchemaName = new ArrayList<String[]>();
-		for (Enumeration hrds = pf.enumerateHRDInstances("rgb"); hrds
+		for (Enumeration hrds = pf.enumerateHRDInstances("rgb"); hrds //$NON-NLS-1$
 		.hasMoreElements();) {
 			final String hrd_name = (String) hrds.nextElement();
-			final String hrd_descr = pf.getHRDescription("rgb", hrd_name);
+			final String hrd_descr = pf.getHRDescription("rgb", hrd_name); //$NON-NLS-1$
 			String[] entryValue = new String[2];
 			entryValue[0] = hrd_descr;
 			entryValue[1] = hrd_name;

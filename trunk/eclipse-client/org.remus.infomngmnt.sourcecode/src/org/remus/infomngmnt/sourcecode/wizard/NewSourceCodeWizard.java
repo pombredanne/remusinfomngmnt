@@ -18,6 +18,7 @@ import org.eclipse.remus.InformationUnitListItem;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 
+import org.remus.infomngmnt.sourcecode.Messages;
 import org.remus.infomngmnt.sourcecode.SourceCodePlugin;
 
 /**
@@ -29,7 +30,7 @@ public class NewSourceCodeWizard extends NewInfoObjectWizard {
 	 * 
 	 */
 	public NewSourceCodeWizard() {
-		setWindowTitle("New Source Code");
+		setWindowTitle(Messages.NewSourceCodeWizard_Title);
 	}
 
 	/*

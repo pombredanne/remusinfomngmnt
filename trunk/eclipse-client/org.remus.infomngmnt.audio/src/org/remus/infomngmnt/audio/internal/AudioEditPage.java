@@ -42,6 +42,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.audio.AudioActivator;
+import org.remus.infomngmnt.audio.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -62,7 +63,7 @@ public class AudioEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.AudioEditPage_General);
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
@@ -71,7 +72,7 @@ public class AudioEditPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(composite);
 		generalSection.setClient(composite);
 
-		toolkit.createLabel(composite, "Audio-Name", SWT.NONE);
+		toolkit.createLabel(composite, Messages.AudioEditPage_AudioName, SWT.NONE);
 
 		this.text = toolkit.createText(composite, null, SWT.READ_ONLY);
 		this.text.setEditable(false);
@@ -81,7 +82,7 @@ public class AudioEditPage extends AbstractInformationFormPage {
 		new Label(composite, SWT.NONE);
 
 		final Hyperlink openImageWithExternalApp = toolkit.createHyperlink(composite,
-				"Open Audio file with the default external application", SWT.NONE);
+				Messages.AudioEditPage_OpenWithExternal, SWT.NONE);
 		openImageWithExternalApp.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4,
 				1));
 		openImageWithExternalApp.addHyperlinkListener(new HyperlinkAdapter() {
@@ -105,15 +106,15 @@ public class AudioEditPage extends AbstractInformationFormPage {
 		new Label(composite, SWT.NONE);
 
 		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite,
-				"Change audio file", SWT.NONE);
+				Messages.AudioEditPage_ChangeFile, SWT.NONE);
 		changeImageHyperlink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		changeImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				FileDialog fd = new FileDialog(getSite().getShell());
-				fd.setFilterExtensions(new String[] { "*.mp3;*.wav" });
-				fd.setFilterNames(new String[] { "Supported Audios (MP3)" });
+				fd.setFilterExtensions(new String[] { "*.mp3;*.wav" }); //$NON-NLS-1$
+				fd.setFilterNames(new String[] { Messages.AudioEditPage_SupportedAudios });
 				String open = fd.open();
 				if (open != null) {
 

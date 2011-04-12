@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.remus.infomngmnt.audio.AudioActivator;
+import org.remus.infomngmnt.audio.messages.Messages;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 
@@ -59,17 +60,17 @@ public class GeneralAudioPage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
-		setTitle("New Audio");
-		setMessage("This wizard enables you to create a new audio from a file.");
+		setTitle(Messages.GeneralAudioPage_NewAudion);
+		setMessage(Messages.GeneralAudioPage_WizardSubtitle);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
 				AudioActivator.getDefault(),
-				"icons/iconexperience/loudspeaker_wizard.png"));
+				"icons/iconexperience/loudspeaker_wizard.png")); //$NON-NLS-1$
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(3, false));
-		group.setText("Name && File");
+		group.setText(Messages.GeneralAudioPage_NameFile);
 		doCreateNameElements(group);
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -77,7 +78,7 @@ public class GeneralAudioPage extends GeneralPage {
 		nameText.setLayoutData(gd_nameText);
 
 		final Label mediaTypeLabel = new Label(group, SWT.NONE);
-		mediaTypeLabel.setText("Media-Type");
+		mediaTypeLabel.setText(Messages.GeneralAudioPage_MediaType);
 
 		mediaTypeText = new Text(group, SWT.BORDER);
 		mediaTypeText.setEditable(false);
@@ -87,20 +88,20 @@ public class GeneralAudioPage extends GeneralPage {
 
 		if (files.length == 0) {
 			final Label nameLabel = new Label(group, SWT.NONE);
-			nameLabel.setText("File");
+			nameLabel.setText(Messages.GeneralAudioPage_File);
 			fileNameText = new Text(group, SWT.BORDER);
 			gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_nameText.horizontalSpan = 2;
 			fileNameText.setLayoutData(gd_nameText);
 
 			browseButton = new Button(group, SWT.PUSH);
-			browseButton.setText("Browse...");
+			browseButton.setText(Messages.GeneralAudioPage_Browse);
 			browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
 					FileDialog fd = new FileDialog(getShell());
-					fd.setFilterExtensions(new String[] { "*.*" });
-					fd.setFilterNames(new String[] { "Audio files" });
+					fd.setFilterExtensions(new String[] { "*.*" }); //$NON-NLS-1$
+					fd.setFilterNames(new String[] { Messages.GeneralAudioPage_AudioFiles });
 					String open = fd.open();
 					if (open != null) {
 						fileNameText.setText(open);

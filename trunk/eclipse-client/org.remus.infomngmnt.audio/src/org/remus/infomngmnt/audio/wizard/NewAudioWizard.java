@@ -23,6 +23,7 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 import org.remus.infomngmnt.audio.AudioActivator;
+import org.remus.infomngmnt.audio.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -37,7 +38,7 @@ public class NewAudioWizard extends NewInfoObjectWizard {
 	 */
 	public NewAudioWizard() {
 		setNeedsProgressMonitor(true);
-		setWindowTitle("New audio");
+		setWindowTitle(Messages.NewAudioWizard_NewAudio);
 		serviceTracker = new RemusServiceTracker(
 				Platform.getBundle(AudioActivator.PLUGIN_ID));
 		editService = serviceTracker.getService(IEditingHandler.class);

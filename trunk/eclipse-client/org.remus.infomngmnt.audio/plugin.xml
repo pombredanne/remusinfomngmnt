@@ -5,7 +5,7 @@
          point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
-            name="Audio"
+            name="%information.name"
             presentation="org.remus.infomngmnt.audio.internal.AudioRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="AUDIO">
@@ -21,7 +21,7 @@
             hasPages="true"
             icon="icons/iconexperience/loudspeaker_new.png"
             id="org.remus.infomngmnt.audio.newWizard"
-            name="Audio">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -29,7 +29,7 @@
       <editPage
             editpage="org.remus.infomngmnt.audio.internal.AudioEditPage"
             id="org.remus.infomngmnt.audio.editPage1"
-            label="Edit Audio"
+            label="%editPage.label"
             type="AUDIO">
       </editPage>
    </extension>

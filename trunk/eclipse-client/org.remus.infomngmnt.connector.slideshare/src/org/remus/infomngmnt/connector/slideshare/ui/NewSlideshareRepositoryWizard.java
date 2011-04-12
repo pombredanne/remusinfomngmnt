@@ -19,6 +19,7 @@ import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
 
+import org.remus.infomngmnt.connector.slideshare.Messages;
 import org.remus.infomngmnt.connector.slideshare.SlideshareActivator;
 
 /**
@@ -32,7 +33,7 @@ public class NewSlideshareRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewSlideshareRepositoryWizard() {
-		setWindowTitle("Slideshare Repository");
+		setWindowTitle(Messages.NewSlideshareRepositoryWizard_SlideshareRepository);
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class NewSlideshareRepositoryWizard extends NewRepositoryWizard {
 	@Override
 	public boolean performFinish() {
 		getRepository().getOptions().put(SlideshareActivator.REPOSITORY_OPTIONS_SEARCH_KEY,
-				StringUtils.join(this.page1.getSearchList(), "|"));
+				StringUtils.join(this.page1.getSearchList(), "|")); //$NON-NLS-1$
 		getRepository().setUrl(this.page1.getRepositoryDefinition().getRepositoryUrl());
 		return super.performFinish();
 	}
@@ -79,7 +80,7 @@ public class NewSlideshareRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		newRemoteRepositry.getOptions().put(SlideshareActivator.REPOSITORY_OPTIONS_SEARCH_KEY, "");
+		newRemoteRepositry.getOptions().put(SlideshareActivator.REPOSITORY_OPTIONS_SEARCH_KEY, ""); //$NON-NLS-1$
 	}
 
 }

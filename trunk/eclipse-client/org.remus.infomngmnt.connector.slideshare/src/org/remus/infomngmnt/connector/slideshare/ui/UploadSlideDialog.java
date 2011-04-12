@@ -46,6 +46,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import org.remus.infomngmnt.connector.slideshare.Messages;
 import org.remus.infomngmnt.connector.slideshare.SlideshareActivator;
 import org.remus.infomngmnt.connector.slideshare.SlideshareConnector;
 
@@ -94,9 +95,9 @@ public class UploadSlideDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(final Composite parent) {
-		setTitle("Upload new slides");
+		setTitle(Messages.UploadSlideDialog_UploadNewSlides);
 		setTitleImage(ResourceManager.getPluginImage(SlideshareActivator.getDefault(),
-				"icons/slideshare_dialog.png"));
+				"icons/slideshare_dialog.png")); //$NON-NLS-1$
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(3, false));
@@ -105,7 +106,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 			Label lblSource = new Label(container, SWT.NONE);
 			lblSource.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 			lblSource.setBounds(0, 0, 55, 15);
-			lblSource.setText("Source");
+			lblSource.setText(Messages.UploadSlideDialog_Source);
 		}
 		{
 			this.srcFile = new Text(container, SWT.BORDER);
@@ -113,7 +114,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 		}
 		{
 			this.browseButton = new Button(container, SWT.NONE);
-			this.browseButton.setText("B&rowse...");
+			this.browseButton.setText(Messages.UploadSlideDialog_Browse);
 			this.browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
@@ -121,11 +122,11 @@ public class UploadSlideDialog extends TitleAreaDialog {
 					Format[] values = Format.values();
 					List<String> extensions = new ArrayList<String>();
 					for (Format format : values) {
-						extensions.add(StringUtils.join("*.", format.getValue()));
+						extensions.add(StringUtils.join("*.", format.getValue())); //$NON-NLS-1$
 					}
 					fd.setFilterExtensions(new String[] { org.apache.commons.lang.StringUtils.join(
-							extensions, ";") });
-					fd.setFilterNames(new String[] { "Supported Slideformats" });
+							extensions, ";") }); //$NON-NLS-1$
+					fd.setFilterNames(new String[] { Messages.UploadSlideDialog_SupportedFormats });
 					String open = fd.open();
 					if (open != null) {
 						UploadSlideDialog.this.srcValue.setValue(open);
@@ -138,7 +139,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 		}
 		{
 			Group grpGeneralProperties = new Group(container, SWT.NONE);
-			grpGeneralProperties.setText("General properties");
+			grpGeneralProperties.setText(Messages.UploadSlideDialog_GeneralProperties);
 			grpGeneralProperties.setLayout(new GridLayout(2, false));
 			{
 				GridData gridData = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
@@ -146,13 +147,13 @@ public class UploadSlideDialog extends TitleAreaDialog {
 			}
 			{
 				Label lblTitle = new Label(grpGeneralProperties, SWT.NONE);
-				lblTitle.setText("Title");
+				lblTitle.setText(Messages.UploadSlideDialog_Title);
 				this.titleText = new Text(grpGeneralProperties, SWT.BORDER);
 				this.titleText
 						.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
 				Label lblDescription = new Label(grpGeneralProperties, SWT.NONE);
-				lblDescription.setText("Description");
+				lblDescription.setText(Messages.UploadSlideDialog_Description);
 			}
 			{
 				this.descriptionText = new Text(grpGeneralProperties, SWT.BORDER | SWT.MULTI
@@ -165,7 +166,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 			}
 			{
 				Label lblTags = new Label(grpGeneralProperties, SWT.NONE);
-				lblTags.setText("Tags");
+				lblTags.setText(Messages.UploadSlideDialog_Tags);
 			}
 			{
 				this.tagsText = new Text(grpGeneralProperties, SWT.BORDER);
@@ -175,12 +176,12 @@ public class UploadSlideDialog extends TitleAreaDialog {
 			{
 				this.btnAllowDownload = new Button(grpGeneralProperties, SWT.CHECK);
 				this.btnAllowDownload.setSelection(true);
-				this.btnAllowDownload.setText("Allow download");
+				this.btnAllowDownload.setText(Messages.UploadSlideDialog_AllowDownload);
 			}
 		}
 		{
 			Group grpPrivacy = new Group(container, SWT.NONE);
-			grpPrivacy.setText("Privacy");
+			grpPrivacy.setText(Messages.UploadSlideDialog_Privacy);
 			grpPrivacy.setLayout(new GridLayout(3, false));
 			grpPrivacy.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
 			{
@@ -188,7 +189,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 				this.btnMakeSlidePrivate.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
 						false, 3, 1));
 				this.btnMakeSlidePrivate.setSelection(true);
-				this.btnMakeSlidePrivate.setText("Make slide private");
+				this.btnMakeSlidePrivate.setText(Messages.UploadSlideDialog_MakeSlidesPrivate);
 			}
 			{
 				Label label = new Label(grpPrivacy, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -197,19 +198,19 @@ public class UploadSlideDialog extends TitleAreaDialog {
 			{
 				this.btnGenerateSecretUrl = new Button(grpPrivacy, SWT.CHECK);
 				this.btnGenerateSecretUrl.setSelection(true);
-				this.btnGenerateSecretUrl.setText("Generate secret URL");
+				this.btnGenerateSecretUrl.setText(Messages.UploadSlideDialog_GenerateSecretUrl);
 			}
 			{
 				this.btnAllowEmbed = new Button(grpPrivacy, SWT.CHECK);
 				this.btnAllowEmbed.setSelection(true);
-				this.btnAllowEmbed.setText("Allow embed");
+				this.btnAllowEmbed.setText(Messages.UploadSlideDialog_AllowEmbed);
 			}
 			{
 				this.btnShareWithContacts = new Button(grpPrivacy, SWT.CHECK);
 				this.btnShareWithContacts.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 						false, 1, 1));
 				this.btnShareWithContacts.setSelection(true);
-				this.btnShareWithContacts.setText("Share with contacts");
+				this.btnShareWithContacts.setText(Messages.UploadSlideDialog_ShareWithContacts);
 			}
 		}
 		bindValuesToUi();
@@ -281,7 +282,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 					setErrorMessage(null);
 					getButton(OK).setEnabled(true);
 				} else {
-					setErrorMessage("Not a valid file");
+					setErrorMessage(Messages.UploadSlideDialog_NoValidFile);
 					getButton(OK).setEnabled(false);
 				}
 
@@ -294,7 +295,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Upload new slide");
+		newShell.setText(Messages.UploadSlideDialog_UploadNewSlides);
 	}
 
 	/**
@@ -408,10 +409,10 @@ public class UploadSlideDialog extends TitleAreaDialog {
 		final boolean shareWithContacts2 = isShareWithContacts();
 		final boolean allowEmbed2 = isAllowEmbed();
 
-		CancelableJob job = new CancelableJob("Uploading slides") {
+		CancelableJob job = new CancelableJob(Messages.UploadSlideDialog_UploadingSlides) {
 			@Override
 			protected IStatus runCancelable(final IProgressMonitor monitor) {
-				monitor.beginTask("Uploading selected slide", IProgressMonitor.UNKNOWN);
+				monitor.beginTask(Messages.UploadSlideDialog_UploadingSelectedSlide, IProgressMonitor.UNKNOWN);
 				RemoteRepository repositoryImplementation = RemoteActivator.getDefault()
 						.getServiceTracker().getService(IRepositoryService.class)
 						.getRepositoryById(UploadSlideDialog.this.repositoryId);
@@ -435,7 +436,7 @@ public class UploadSlideDialog extends TitleAreaDialog {
 									makePrivate2, generateSecret2, allowEmbed2, shareWithContacts2,
 									file);
 						} catch (Exception e) {
-							return StatusCreator.newStatus("Error uploading slide", e);
+							return StatusCreator.newStatus(Messages.UploadSlideDialog_ErrorUploading, e);
 						}
 					}
 				}

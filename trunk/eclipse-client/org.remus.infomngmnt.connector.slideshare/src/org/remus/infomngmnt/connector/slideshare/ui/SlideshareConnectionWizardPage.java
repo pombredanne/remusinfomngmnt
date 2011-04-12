@@ -55,7 +55,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-
+import org.remus.infomngmnt.connector.slideshare.Messages;
 import org.remus.infomngmnt.connector.slideshare.SlideshareActivator;
 
 public class SlideshareConnectionWizardPage extends WizardPage {
@@ -74,9 +74,9 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public SlideshareConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("Slideshare Connector");
-		setDescription("Enter your login credentials");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.SlideshareConnectionWizardPage_WizardTitle);
+		setDescription(Messages.SlideshareConnectionWizardPage_WizardSubtitle);
 		this.manualName = false;
 	}
 
@@ -97,10 +97,11 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.SlideshareConnectionWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
-		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false));
 		this.nameText.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -110,29 +111,35 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 		});
 
 		final Group credentialsGroup = new Group(container, SWT.NONE);
-		credentialsGroup.setText("Credentials");
-		final GridData gd_credentialsGroup = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		credentialsGroup
+				.setText(Messages.SlideshareConnectionWizardPage_Credentials);
+		final GridData gd_credentialsGroup = new GridData(SWT.FILL, SWT.CENTER,
+				false, false);
 		credentialsGroup.setLayoutData(gd_credentialsGroup);
 		final GridLayout gridLayout_1 = new GridLayout();
 		gridLayout_1.numColumns = 2;
 		credentialsGroup.setLayout(gridLayout_1);
 
 		final Label usernameLabel = new Label(credentialsGroup, SWT.NONE);
-		usernameLabel.setText("Username");
+		usernameLabel.setText(Messages.SlideshareConnectionWizardPage_Username);
 
 		this.userNameText = new Text(credentialsGroup, SWT.BORDER);
-		final GridData gd_userNameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		final GridData gd_userNameText = new GridData(SWT.FILL, SWT.CENTER,
+				true, false);
 		this.userNameText.setLayoutData(gd_userNameText);
 
 		final Label passwordLabel = new Label(credentialsGroup, SWT.NONE);
-		passwordLabel.setText("Password");
+		passwordLabel.setText(Messages.SlideshareConnectionWizardPage_Password);
 
-		this.passwordText = new Text(credentialsGroup, SWT.BORDER | SWT.PASSWORD);
-		final GridData gd_passwordText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		this.passwordText = new Text(credentialsGroup, SWT.BORDER
+				| SWT.PASSWORD);
+		final GridData gd_passwordText = new GridData(SWT.FILL, SWT.CENTER,
+				true, false);
 		this.passwordText.setLayoutData(gd_passwordText);
 		new Label(credentialsGroup, SWT.NONE);
 
-		final Button validateCredentialsButton = new Button(credentialsGroup, SWT.NONE);
+		final Button validateCredentialsButton = new Button(credentialsGroup,
+				SWT.NONE);
 		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				// getContainer().run(
@@ -144,62 +151,72 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 
 			}
 		});
-		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false);
+		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT,
+				SWT.CENTER, false, false);
 		validateCredentialsButton.setLayoutData(gd_validateCredentialsButton);
-		validateCredentialsButton.setText("Validate credentials");
+		validateCredentialsButton
+				.setText(Messages.SlideshareConnectionWizardPage_ValidateCredentials);
 
-		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition
-				.getCredentialProvider().getUserName(), "slideshare"));
+		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition //$NON-NLS-1$
+				.getCredentialProvider().getUserName(), "slideshare")); //$NON-NLS-1$
 
 		final Group group_1 = new Group(container, SWT.NONE);
 		group_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		final GridLayout gridLayout_2 = new GridLayout();
 		gridLayout_2.numColumns = 2;
 		group_1.setLayout(gridLayout_2);
-		group_1.setText("Additional search feeds");
+		group_1.setText(Messages.SlideshareConnectionWizardPage_AdditionalSearchFeeds);
 
 		this.tableViewer = new TableViewer(group_1, SWT.BORDER);
 		Table table = this.tableViewer.getTable();
-		final GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2);
+		final GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true,
+				1, 2);
 		gd_table.heightHint = 70;
 		table.setLayoutData(gd_table);
 
 		final Button addButton = new Button(group_1, SWT.NONE);
-		addButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		addButton.setText("Add");
+		addButton
+				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		addButton.setText(Messages.SlideshareConnectionWizardPage_Add);
 		addButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				InputDialog inputDialog = new InputDialog(getShell(), "Add new search query",
-						"Enter a new search query", "", new IInputValidator() {
+				InputDialog inputDialog = new InputDialog(
+						getShell(),
+						Messages.SlideshareConnectionWizardPage_AddSearchQuery,
+						Messages.SlideshareConnectionWizardPage_EnterSearchQuery,
+						"", new IInputValidator() { //$NON-NLS-1$
 							public String isValid(final String newText) {
 								if (SlideshareConnectionWizardPage.this.searchList
 										.contains(newText)) {
-									return "Search word already in the list";
+									return Messages.SlideshareConnectionWizardPage_SearchWordAlreadyInList;
 								}
 								if (newText.trim().length() == 0) {
-									return "Input mandatory";
+									return Messages.SlideshareConnectionWizardPage_InputRequired;
 								}
 								return null;
 							}
 
 						});
 				if (inputDialog.open() == IDialogConstants.OK_ID) {
-					SlideshareConnectionWizardPage.this.searchList.add(inputDialog.getValue());
+					SlideshareConnectionWizardPage.this.searchList
+							.add(inputDialog.getValue());
 				}
 			}
 		});
 
 		this.removeButton = new Button(group_1, SWT.NONE);
-		this.removeButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		this.removeButton.setText("Remove");
+		this.removeButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
+				false));
+		this.removeButton
+				.setText(Messages.SlideshareConnectionWizardPage_Remove);
 		this.removeButton.setEnabled(false);
 		this.removeButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				List list = ((IStructuredSelection) SlideshareConnectionWizardPage.this.tableViewer
 						.getSelection()).toList();
 				for (Object object : list) {
-					SlideshareConnectionWizardPage.this.searchList.remove(object);
+					SlideshareConnectionWizardPage.this.searchList
+							.remove(object);
 				}
 			}
 		});
@@ -209,10 +226,12 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
-				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		IRepositoryExtensionService extensionService = RemoteUiActivator
+				.getDefault().getServiceTracker()
+				.getService(IRepositoryExtensionService.class);
 		try {
-			this.repositoryDefinition = extensionService.getItemByRepository(repository);
+			this.repositoryDefinition = extensionService
+					.getItemByRepository(repository);
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -223,31 +242,44 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 		DataBindingContext ctx = new DataBindingContext();
 		EMFDataBindingContext ectx = new EMFDataBindingContext();
 
-		this.searchList = new WritableList(new ArrayList<String>(Arrays
-				.asList(org.apache.commons.lang.StringUtils.split((this.repository).getOptions()
-						.get(SlideshareActivator.REPOSITORY_OPTIONS_SEARCH_KEY), "|"))),
+		this.searchList = new WritableList(
+				new ArrayList<String>(
+						Arrays.asList(org.apache.commons.lang.StringUtils
+								.split((this.repository)
+										.getOptions()
+										.get(SlideshareActivator.REPOSITORY_OPTIONS_SEARCH_KEY),
+										"|"))), //$NON-NLS-1$
 				String.class);
-		this.tableViewer.setContentProvider(new ObservableListContentProvider());
+		this.tableViewer
+				.setContentProvider(new ObservableListContentProvider());
 		this.tableViewer.setLabelProvider(new LabelProvider());
 		this.tableViewer.setInput(this.searchList);
-		this.tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(final SelectionChangedEvent event) {
-				SlideshareConnectionWizardPage.this.removeButton.setEnabled(!event.getSelection()
-						.isEmpty());
-			}
-		});
+		this.tableViewer
+				.addSelectionChangedListener(new ISelectionChangedListener() {
+					public void selectionChanged(
+							final SelectionChangedEvent event) {
+						SlideshareConnectionWizardPage.this.removeButton
+								.setEnabled(!event.getSelection().isEmpty());
+					}
+				});
 
-		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
-		IObservableValue beanUserName = BeansObservables.observeValue(this.repositoryDefinition
-				.getCredentialProvider(), CredentialProvider.USER_NAME);
-		ISWTObservableValue swtUserName = SWTObservables.observeText(this.userNameText, SWT.Modify);
+		this.repositoryDefinition.getCredentialProvider().setIdentifier(
+				this.repository.getId());
+		IObservableValue beanUserName = BeansObservables.observeValue(
+				this.repositoryDefinition.getCredentialProvider(),
+				CredentialProvider.USER_NAME);
+		ISWTObservableValue swtUserName = SWTObservables.observeText(
+				this.userNameText, SWT.Modify);
 		ctx.bindValue(swtUserName, beanUserName, null, null);
-		ISWTObservableValue swtPassword = SWTObservables.observeText(this.passwordText, SWT.Modify);
-		IObservableValue beanPassword = BeansObservables.observeValue(this.repositoryDefinition
-				.getCredentialProvider(), CredentialProvider.PASSWORD);
+		ISWTObservableValue swtPassword = SWTObservables.observeText(
+				this.passwordText, SWT.Modify);
+		IObservableValue beanPassword = BeansObservables.observeValue(
+				this.repositoryDefinition.getCredentialProvider(),
+				CredentialProvider.PASSWORD);
 		ctx.bindValue(swtPassword, beanPassword, null, null);
 
-		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText, SWT.Modify);
+		ISWTObservableValue swtName = SWTObservables.observeText(this.nameText,
+				SWT.Modify);
 		IObservableValue emfName = EMFObservables.observeValue(this.repository,
 				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
 		ectx.bindValue(swtName, emfName, null, null);
@@ -255,9 +287,11 @@ public class SlideshareConnectionWizardPage extends WizardPage {
 		swtUserName.addValueChangeListener(new IValueChangeListener() {
 			public void handleValueChange(final ValueChangeEvent event) {
 				if (!SlideshareConnectionWizardPage.this.manualName) {
-					String userName = (String) event.getObservableValue().getValue();
-					SlideshareConnectionWizardPage.this.nameText.setText(String.format("%s@%s",
-							userName, "slideshare"));
+					String userName = (String) event.getObservableValue()
+							.getValue();
+					SlideshareConnectionWizardPage.this.nameText.setText(String
+							.format("%s@%s", //$NON-NLS-1$
+									userName, "slideshare")); //$NON-NLS-1$
 				}
 			}
 		});

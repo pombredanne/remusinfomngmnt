@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.connector.slideshare.SlideshareConnector"
             credentialprovider="org.remus.infomngmnt.connector.slideshare.SlideshareCredentialProvider"
             id="org.remus.infomngmnt.connector.slideshare"
-            name="Slideshare">
+            name="%repository-connector.name">
       </repository-connector>
    </extension>
    <extension
@@ -26,8 +26,8 @@
          <menu
                icon="icons/slideshare.png"
                id="org.remus.infomngmnt.slidehsare.contextmenu"
-               label="Slideshare"
-               mnemonic="l">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.connector.slideshare.openUploadDialog"
                   style="push">
@@ -62,7 +62,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.connector.slideshare.openUploadDialog"
-            name="Upload new Slide">
+            name="%command.name">
       </command>
    </extension>
    <extension

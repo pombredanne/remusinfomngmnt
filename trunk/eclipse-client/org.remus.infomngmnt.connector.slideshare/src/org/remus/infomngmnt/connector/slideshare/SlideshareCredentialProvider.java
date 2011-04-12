@@ -21,7 +21,7 @@ public class SlideshareCredentialProvider extends CredentialProvider {
 
 	public SlideshareCredentialProvider() {
 		super();
-		setGroup("slideshare");
+		setGroup("slideshare"); //$NON-NLS-1$
 	}
 
 }

@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import org.remus.infomngmnt.connector.flickr.FlickrCredentials;
 import org.remus.infomngmnt.connector.flickr.FlickrPlugin;
+import org.remus.infomngmnt.connector.flickr.messages.Messages;
 
 import com.aetrion.flickr.Flickr;
 import com.aetrion.flickr.REST;
@@ -55,7 +56,7 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 	 */
 	public NewFlickrRepositoryWizard() {
 		super();
-		setWindowTitle("Flickr Repository");
+		setWindowTitle(Messages.NewFlickrRepositoryWizard_FlickRepository);
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 				@Override
 				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
 					try {
-						monitor.beginTask("Checking credentials", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(Messages.NewFlickrRepositoryWizard_CheckCredentials, IProgressMonitor.UNKNOWN);
 						Auth auth = NewFlickrRepositoryWizard.this.authInterface
 								.getToken(NewFlickrRepositoryWizard.this.frob);
 						FlickrCredentials credentialProvider = (FlickrCredentials) NewFlickrRepositoryWizard.this.repositoryDefinition
@@ -81,13 +82,13 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 						credentialProvider.setPassword(auth.getToken());
 						credentialProvider.setInternalId(user.getId());
 						credentialProvider.setRealName(user.getRealName());
-						getRepository().setName(user.getUsername() + "@flickr");
+						getRepository().setName(user.getUsername() + "@flickr"); //$NON-NLS-1$
 						getRepository().setUrl(
 								NewFlickrRepositoryWizard.this.repositoryDefinition
 										.getRepositoryUrl());
 					} catch (Exception e) {
 						return StatusCreator
-								.newStatus("Error validating credentials", e.getCause());
+								.newStatus(Messages.NewFlickrRepositoryWizard_ErrorValidatingCredentials, e.getCause());
 					}
 					return Status.OK_STATUS;
 				}
@@ -95,8 +96,8 @@ public class NewFlickrRepositoryWizard extends NewRepositoryWizard {
 			});
 
 		} catch (Exception e) {
-			ErrorDialog.openError(getShell(), "Error", "Error finishing repository", StatusCreator
-					.newStatus("Error initializing connector", e));
+			ErrorDialog.openError(getShell(), Messages.NewFlickrRepositoryWizard_Error, Messages.NewFlickrRepositoryWizard_ErrorFinish, StatusCreator
+					.newStatus(Messages.NewFlickrRepositoryWizard_ErrorInit, e));
 			return false;
 		}
 		return super.performFinish();

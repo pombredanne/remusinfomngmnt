@@ -9,11 +9,11 @@ import org.osgi.framework.BundleContext;
 public class FlickrPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.flickr";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.connector.flickr"; //$NON-NLS-1$
 
-	public static final String API_KEY = "846f561e138e9d4b80ceb6d68ae5ab2a";
+	public static final String API_KEY = "846f561e138e9d4b80ceb6d68ae5ab2a"; //$NON-NLS-1$
 
-	public static final String SHARED_SECRET = "3bc87877b3b5524e";
+	public static final String SHARED_SECRET = "3bc87877b3b5524e"; //$NON-NLS-1$
 
 	// The shared instance
 	private static FlickrPlugin plugin;

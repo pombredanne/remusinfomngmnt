@@ -32,6 +32,7 @@ import org.eclipse.remus.ui.util.CancelableRunnable;
 import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.remus.infomngmnt.connector.flickr.messages.Messages;
 
 
 import com.aetrion.flickr.FlickrException;
@@ -64,13 +65,13 @@ public class CopyImageUrlToClipboradHandler extends CopyToClipboardHandler {
 
 					@Override
 					protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-						monitor.beginTask("Contacting Flickr Repository", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(Messages.CopyImageUrlToClipboradHandler_ContactFlickr, IProgressMonitor.UNKNOWN);
 						RemoteObject remoteObject;
 						try {
 							remoteObject = remoteRepository.getRemoteObjectBySynchronizableObject(
 									adapter, monitor);
 						} catch (RemoteException e) {
-							return StatusCreator.newStatus("Error contacting Flickr Repository", e);
+							return StatusCreator.newStatus(Messages.CopyImageUrlToClipboradHandler_ErrorContactFlickr, e);
 						}
 						if (remoteObject != null
 								&& remoteObject.getWrappedObject() instanceof Photo) {
@@ -91,8 +92,8 @@ public class CopyImageUrlToClipboradHandler extends CopyToClipboardHandler {
 				try {
 					pmd.run(true, true, runnable);
 				} catch (Exception e) {
-					ErrorDialog.openError(HandlerUtil.getActiveShell(event), "Error",
-							"Error contacting Flickr",
+					ErrorDialog.openError(HandlerUtil.getActiveShell(event), Messages.CopyImageUrlToClipboradHandler_Error,
+							Messages.CopyImageUrlToClipboradHandler_ErrorContactFlickr,
 							e.getCause() instanceof CoreException ? ((CoreException) e.getCause())
 									.getStatus() : null);
 				}
@@ -101,7 +102,7 @@ public class CopyImageUrlToClipboradHandler extends CopyToClipboardHandler {
 			if (originalUrl[0] != null) {
 				copyToCliboard(event, originalUrl[0], TextTransfer.getInstance());
 			} else {
-				copyToCliboard(event, "Error copying url", TextTransfer.getInstance());
+				copyToCliboard(event, Messages.CopyImageUrlToClipboradHandler_ErrorCopyingUrl, TextTransfer.getInstance());
 			}
 		}
 

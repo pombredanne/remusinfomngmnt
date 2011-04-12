@@ -19,6 +19,7 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.connector.flickr.messages.Messages;
 
 public class FlickConnectionWizardPage extends WizardPage {
 
@@ -30,10 +31,10 @@ public class FlickConnectionWizardPage extends WizardPage {
 	 * @param buildAuthenticationUrl
 	 */
 	public FlickConnectionWizardPage(final URL buildAuthenticationUrl) {
-		super("wizardPage");
+		super("wizardPage"); //$NON-NLS-1$
 		this.buildAuthenticationUrl = buildAuthenticationUrl;
-		setTitle("Grant RIM Access to your Flickr-Account");
-		setDescription("Follow the instructions. If you have granted access you can finish this wizard");
+		setTitle(Messages.FlickConnectionWizardPage_GrantAccess);
+		setDescription(Messages.FlickConnectionWizardPage_FollowInstructions);
 	}
 
 	/**

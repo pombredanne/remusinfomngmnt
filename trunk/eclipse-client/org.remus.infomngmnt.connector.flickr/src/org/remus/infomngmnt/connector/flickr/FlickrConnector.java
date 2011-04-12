@@ -75,6 +75,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.xml.sax.SAXException;
 
+import org.remus.infomngmnt.connector.flickr.messages.Messages;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 
@@ -105,11 +106,11 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 
 	public static final String ID_SET = "ID_SET"; //$NON-NLS-1$
 
-	public static final String ID_GROUP_COLLECTION = "ID_GROUP_COLLECTION";
+	public static final String ID_GROUP_COLLECTION = "ID_GROUP_COLLECTION"; //$NON-NLS-1$
 
-	public static final String ID_FAVORITES = "ID_FAVORITES";
+	public static final String ID_FAVORITES = "ID_FAVORITES"; //$NON-NLS-1$
 
-	private static final String DUMMY_TITLE = "__rim_dummy_photo";
+	private static final String DUMMY_TITLE = "__rim_dummy_photo"; //$NON-NLS-1$
 
 	public static final String DUMMY_PHOTO_ID = "DUMMY_PHOTO_ID"; //$NON-NLS-1$
 
@@ -164,7 +165,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					 */
 					String dummyId = uploadDummyPhoto();
 					RemoteContainer buildPhotoSet = buildPhotoSet(getApi().getPhotosetsInterface()
-							.create(((Category) item).getLabel(), "", dummyId));
+							.create(((Category) item).getLabel(), "", dummyId)); //$NON-NLS-1$
 					getApi().getPhotosInterface().delete(dummyId);
 					return buildPhotoSet;
 
@@ -191,7 +192,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			}
 		} else if (ID_FAVORITES.equals(remoteObject.getRepositoryTypeObjectId())) {
 			throw new RemoteException(StatusCreator
-					.newStatus("Adding own photos to favorites is not supported"));
+					.newStatus(Messages.FlickrConnector_AddingPhotosToFavorites));
 		}
 		return null;
 	}
@@ -199,7 +200,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 	private String uploadDummyPhoto() throws Exception {
 
 		InputStream openStream = FileLocator.openStream(FlickrPlugin.getDefault().getBundle(),
-				new Path("dummy/dummy.png"), false);
+				new Path("dummy/dummy.png"), false); //$NON-NLS-1$
 		UploadMetaData metadata = new UploadMetaData();
 		metadata.setAsync(false);
 		metadata.setTitle(DUMMY_TITLE);
@@ -232,7 +233,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		metadata.setPublicFlag(true);
 
 		if (unit.getKeywords() != null) {
-			metadata.setTags(Arrays.asList(StringUtils.split(unit.getKeywords(), " ")));
+			metadata.setTags(Arrays.asList(StringUtils.split(unit.getKeywords(), " "))); //$NON-NLS-1$
 		}
 		IFile adapter = (IFile) unit.getAdapter(IFile.class);
 		IPath append = adapter.getProject().getFullPath().append(ResourceUtil.BINARY_FOLDER)
@@ -276,13 +277,13 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					delegate.getSize().width, delegate.getSize().height));
 			getApi().getNotesInterface().add(upload, note);
 		}
-		Photo info = getApi().getPhotosInterface().getInfo(upload, "");
+		Photo info = getApi().getPhotosInterface().getInfo(upload, ""); //$NON-NLS-1$
 		returnValue.setHash(String.valueOf(info.getLastUpdate().getTime()));
 		returnValue.setId(upload);
 		returnValue.setName(info.getTitle());
 		returnValue.setWrappedObject(info);
 		StringWriter sw = new StringWriter();
-		sw.append(info.getId()).append(".");
+		sw.append(info.getId()).append("."); //$NON-NLS-1$
 		if (info.getOriginalSecret() != null && info.getOriginalSecret().length() > 0) {
 			sw.append(info.getOriginalSecret());
 		} else {
@@ -290,10 +291,10 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		}
 		if (setId != null) {
 			getApi().getPhotosetsInterface().addPhoto(setId, upload);
-			returnValue.setUrl(FLICKR_URL + ID_SET_COLLECTION + "/" + setId + "/" + sw.toString());
+			returnValue.setUrl(FLICKR_URL + ID_SET_COLLECTION + "/" + setId + "/" + sw.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			getApi().getFavoritesInterface().add(upload);
-			returnValue.setUrl(FLICKR_URL + ID_FAVORITES + "/" + sw.toString());
+			returnValue.setUrl(FLICKR_URL + ID_FAVORITES + "/" + sw.toString()); //$NON-NLS-1$
 		}
 		tempEditingDomain.dispose();
 		return returnValue;
@@ -319,7 +320,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				return buildPhotoSet(getApi().getPhotosetsInterface()
 						.getInfo(wrappedObject.getId()));
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error creating photoset", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.FlickrConnector_ErrorCreatingPhotoSet, e));
 			}
 
 		} else if (ID_SET.equals(remoteParentObject.getRepositoryTypeObjectId())) {
@@ -336,13 +337,13 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					return updateOrAddPhoto(remoteParentObject, adapter, wrappedObject.getId(),
 							((Photoset) remoteParentObject.getWrappedObject()).getId());
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error commiting photo", e));
+					throw new RemoteException(StatusCreator.newStatus(Messages.FlickrConnector_ErrorComittingPhoto, e));
 				}
 
 			}
 		} else if (ID_FAVORITES.equals(remoteParentObject.getRepositoryTypeObjectId())) {
 			throw new RemoteException(StatusCreator
-					.newStatus("Committing images in favorites is not allowed"));
+					.newStatus(Messages.FlickrConnector_CommittingPhotosInFavsNotAllowed));
 		}
 		return null;
 	}
@@ -362,7 +363,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		RemoteObject remotePhoto = getRemoteObjectBySynchronizableObject(item, monitor);
 		if (remotePhoto == null) {
 			throw new RemoteException(StatusCreator.newStatus(NLS.bind(
-					"Error resolving online item", item.toString())));
+					Messages.FlickrConnector_ErrorResolvingItem, item.toString())));
 		}
 		if (ID_SET.equals(remoteObject.getRepositoryTypeObjectId())) {
 			Photo wrappedObject = (Photo) remotePhoto.getWrappedObject();
@@ -375,12 +376,12 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				getApi().getFavoritesInterface().remove(wrappedObject.getId());
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error deleting photo from favorites", e));
+						Messages.FlickrConnector_ErrorDeletingPhotoFavs, e));
 			}
 		}
 		if (ID_FAVORITES.equals(remotePhoto.getRepositoryTypeObjectId())) {
 			throw new RemoteException(StatusCreator
-					.newStatus("Deleting the favorites folder is not allowed"));
+					.newStatus(Messages.FlickrConnector_DeletingFavFolderNotAllowed));
 		}
 		if (ID_SET_COLLECTION.equals(remotePhoto.getRepositoryTypeObjectId())) {
 			try {
@@ -393,7 +394,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				}
 				getApi().getPhotosetsInterface().delete(wrappedObject.getId());
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error deleting photoset", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.FlickrConnector_ErrorDeletingPhotoset, e));
 			}
 		}
 
@@ -410,7 +411,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			}
 		} catch (Exception e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error whilde removing photo from set", e));
+					Messages.FlickrConnector_ErrorRemovingPhoto, e));
 		}
 	}
 
@@ -456,7 +457,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			}
 		} catch (Exception e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error while loading photos from a set", e));
+					Messages.FlickrConnector_ErrorLoadingPhoto, e));
 		}
 		return returnValue;
 	}
@@ -467,9 +468,9 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		remoteObject.setId(photo.getId());
 		remoteObject.setName(photo.getTitle());
 		if (photo.getOriginalSecret() != null && photo.getOriginalSecret().length() > 0) {
-			remoteObject.setUrl(baseUrl + "/" + photo.getId() + "." + photo.getOriginalSecret());
+			remoteObject.setUrl(baseUrl + "/" + photo.getId() + "." + photo.getOriginalSecret()); //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
-			remoteObject.setUrl(baseUrl + "/" + photo.getId() + "." + photo.getSecret());
+			remoteObject.setUrl(baseUrl + "/" + photo.getId() + "." + photo.getSecret()); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		remoteObject.setWrappedObject(photo);
 		return remoteObject;
@@ -488,7 +489,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			}
 		} catch (Exception e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error while loading photos from a set", e));
+					Messages.FlickrConnector_ErrorLoadingPhoto, e));
 		}
 		return returnValue;
 	}
@@ -497,7 +498,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		RemoteContainer container = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		container.setUrl(FLICKR_URL + ID_FAVORITES);
 		container.setRepositoryTypeObjectId(ID_FAVORITES);
-		container.setName("My Favorites");
+		container.setName(Messages.FlickrConnector_Favorites);
 		container.setHash(ID_FAVORITES);
 		return container;
 	}
@@ -515,7 +516,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				returnValue.add(buildPhotoSet((Photoset) object));
 			}
 		} catch (Exception e) {
-			throw new RemoteException(StatusCreator.newStatus("Error collecting data of photosets",
+			throw new RemoteException(StatusCreator.newStatus(Messages.FlickrConnector_ErrorCollectingData,
 					e));
 		}
 		return returnValue;
@@ -529,7 +530,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		remoteContainer.setWrappedObject(photoset);
 		remoteContainer.setId(photoset.getId());
 		remoteContainer.setName(photoset.getTitle());
-		remoteContainer.setUrl(FLICKR_URL + ID_SET_COLLECTION + "/" + photoset.getId());
+		remoteContainer.setUrl(FLICKR_URL + ID_SET_COLLECTION + "/" + photoset.getId()); //$NON-NLS-1$
 		return remoteContainer;
 	}
 
@@ -537,7 +538,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 		RemoteContainer container = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		container.setUrl(FLICKR_URL + ID_SET_COLLECTION);
 		container.setRepositoryTypeObjectId(ID_SET_COLLECTION);
-		container.setName("My Sets");
+		container.setName(Messages.FlickrConnector_MySets);
 		container.setHash(ID_SET_COLLECTION);
 		return container;
 	}
@@ -554,7 +555,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				tempFile.setContents(fileInputStream, true, false, new SubProgressMonitor(monitor,
 						IProgressMonitor.UNKNOWN));
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error loading downloaded file",
+				throw new RemoteException(StatusCreator.newStatus(Messages.FlickrConnector_ErrorDownloading,
 						e));
 			}
 			return tempFile;
@@ -594,10 +595,10 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 					Tag tag = (Tag) object;
 					tagValues.add(tag.getValue());
 				}
-				informationUnit.setKeywords(StringUtils.join(tagValues, " "));
+				informationUnit.setKeywords(StringUtils.join(tagValues, " ")); //$NON-NLS-1$
 				informationUnit.setDescription(currentPhoto.getDescription());
 
-				edit.setValue(informationUnit, ImagePlugin.ORIGINAL_FILEPATH, "flickr."
+				edit.setValue(informationUnit, ImagePlugin.ORIGINAL_FILEPATH, "flickr." //$NON-NLS-1$
 						+ currentPhoto.getOriginalFormat());
 
 				try {
@@ -740,17 +741,17 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 				Photoset info = getApi().getPhotosetsInterface().getInfo(path.lastSegment());
 				return buildPhotoSet(info);
 			} else if (path.segmentCount() == 3 && ID_FAVORITES.equals(path.segment(1))) {
-				String[] split = path.lastSegment().split("\\.");
+				String[] split = path.lastSegment().split("\\."); //$NON-NLS-1$
 				Photo photo = getApi().getPhotosInterface().getInfo(split[0], split[1]);
 				return buildPhoto(photo, path.removeLastSegments(1).toString());
 			} else if (path.segmentCount() == 4 && ID_SET_COLLECTION.equals(path.segment(1))) {
-				String[] split = path.lastSegment().split("\\.");
+				String[] split = path.lastSegment().split("\\."); //$NON-NLS-1$
 				Photo photo = getApi().getPhotosInterface().getInfo(split[0], split[1]);
 				return buildPhoto(photo, path.removeLastSegments(1).toString());
 			}
 		} catch (Exception e) {
 			throw new RemoteException(StatusCreator.newStatus(
-					"Error resolving remoteobject from local object", e));
+					Messages.FlickrConnector_ErrorResolving, e));
 		}
 		return null;
 	}
@@ -831,7 +832,7 @@ public class FlickrConnector extends AbstractExtensionRepository implements IRep
 			try {
 				this.container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container", e);
+				throw new RuntimeException(Messages.FlickrConnector_ErrorInitECF, e);
 			}
 			this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container
 					.getAdapter(IRetrieveFileTransferContainerAdapter.class);

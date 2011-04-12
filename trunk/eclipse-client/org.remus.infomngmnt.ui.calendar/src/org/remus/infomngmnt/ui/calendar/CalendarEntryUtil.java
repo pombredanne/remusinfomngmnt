@@ -23,6 +23,7 @@ import org.eclipse.remus.CalendarEntryType;
 import org.eclipse.remus.InfomngmntFactory;
 
 import org.remus.infomngmnt.calendar.model.Task;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -36,35 +37,35 @@ public class CalendarEntryUtil {
 
 		StringWriter sw = new StringWriter();
 		if (entry.getReminder() >= 0) {
-			sw.append("<img href=\"alarm\"/> ");
+			sw.append("<img href=\"alarm\"/> "); //$NON-NLS-1$
 		}
 		if (entry.getEntryType() != CalendarEntryType.ONE_TIME) {
 
-			sw.append("<img href=\"refresh\"/> ");
+			sw.append("<img href=\"refresh\"/> "); //$NON-NLS-1$
 		}
 
-		sw.append("\u2007");
-		sw.append("<a href=\"").append(entry.getId()).append("\">");
+		sw.append("\u2007"); //$NON-NLS-1$
+		sw.append("<a href=\"").append(entry.getId()).append("\">"); //$NON-NLS-1$ //$NON-NLS-2$
 		sw.append(StringEscapeUtils.escapeXml(entry.getTitle()));
-		sw.append("</a>");
+		sw.append("</a>"); //$NON-NLS-1$
 		if (entry.getEntryType() != CalendarEntryType.ONE_TIME) {
-			sw.append(" (");
+			sw.append(" ("); //$NON-NLS-1$
 			sw.append(StringEscapeUtils.escapeXml(CalendarEntryTypeStrings
 					.getStringByCalendarEntryType(entry.getEntryType())));
-			sw.append(")");
+			sw.append(")"); //$NON-NLS-1$
 		}
-		sw.append("<br />");
+		sw.append("<br />"); //$NON-NLS-1$
 		if (printEvents) {
-			sw.append("<b>from:</b>\u2007");
+			sw.append(Messages.CalendarEntryUtil_from);
 			Date nextStartDate = CalendarEntryTypeStrings.getNextStartDate(new Date(), entry
 					.getEntryType(), entry.getStart());
 			sw.append(sdf.format(nextStartDate));
-			sw.append("<br />");
+			sw.append("<br />"); //$NON-NLS-1$
 
-			sw.append("<b>to:</b>\u2007");
+			sw.append(Messages.CalendarEntryUtil_to);
 			sw.append(sdf.format(CalendarEntryTypeStrings.getNextEndDate(new TimeSpan(entry
 					.getStart(), entry.getEnd()), nextStartDate)));
-			sw.append("<br />");
+			sw.append("<br />"); //$NON-NLS-1$
 		}
 		return sw.toString();
 	}
@@ -86,7 +87,7 @@ public class CalendarEntryUtil {
 		calendarEntry.setReminder(entry.getNotification());
 		calendarEntry.setTitle(entry.getName());
 		if (!keepId) {
-			calendarEntry.setId(entry.getId().split("_")[1]);
+			calendarEntry.setId(entry.getId().split("_")[1]); //$NON-NLS-1$
 		} else {
 			calendarEntry.setId(entry.getId());
 		}

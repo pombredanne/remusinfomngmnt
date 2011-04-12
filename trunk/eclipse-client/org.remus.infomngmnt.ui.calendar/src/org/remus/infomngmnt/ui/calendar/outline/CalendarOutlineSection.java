@@ -65,6 +65,7 @@ import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
 import org.remus.infomngmnt.ui.calendar.NewCalendarEntryDialog;
 import org.remus.infomngmnt.ui.calendar.internal.ResourceManager;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -144,9 +145,9 @@ public class CalendarOutlineSection implements IOutlineSection {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				String string = e.getHref().toString();
-				if ("addEvent".equals(string)) {
+				if ("addEvent".equals(string)) { //$NON-NLS-1$
 					openNewCalendarEntryDialog();
-				} else if ("openCalendar".equals(string)) {
+				} else if ("openCalendar".equals(string)) { //$NON-NLS-1$
 					try {
 						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 								.openEditor(new CalendarEditorInput(), CalendarEditor.EDITOR_ID);
@@ -173,7 +174,7 @@ public class CalendarOutlineSection implements IOutlineSection {
 									CalendarOutlineSection.this.infoUnit,
 									InfomngmntPackage.Literals.INFORMATION_UNIT__CALENDAR_ENTRY,
 									diag.getNewObject(), Collections.EMPTY_LIST));
-							cc.setLabel("Edit Calendar-Entry");
+							cc.setLabel(Messages.CalendarOutlineSection_EditCalendarEntry);
 							CalendarOutlineSection.this.domain.getCommandStack().execute(cc);
 						}
 					}
@@ -195,29 +196,29 @@ public class CalendarOutlineSection implements IOutlineSection {
 				return o1.getStart().compareTo(o2.getStart());
 			}
 		});
-		this.eventSection.setText(NLS.bind("Associated Events ({0})", calendarEntry.size()));
+		this.eventSection.setText(NLS.bind(Messages.CalendarOutlineSection_AssociatedEvents, calendarEntry.size()));
 		if (calendarEntry.size() == 0) {
 			this.eventFormText
 					.setText(
-							"<form><p>No Events associated. You can <a href=\"addEvent\">add a new Event</a> or use the <a href=\"openCalendar\">Calendar</a> to create new events.</p></form>",
+							Messages.CalendarOutlineSection_NoEvents,
 							true, false);
 			return;
 		}
 
-		this.eventFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/alarmclock.png"));
-		this.eventFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/refresh.png"));
+		this.eventFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/alarmclock.png")); //$NON-NLS-1$
+		this.eventFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/refresh.png")); //$NON-NLS-1$
 		StringBuilder sw = new StringBuilder();
-		sw.append("<form>");
+		sw.append("<form>"); //$NON-NLS-1$
 		for (CalendarEntry entry : calendarEntry) {
-			sw.append("<p>");
+			sw.append("<p>"); //$NON-NLS-1$
 			// sw.append("<li>");
 			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, true));
 			// sw.append("</li>");
-			sw.append("</p>");
+			sw.append("</p>"); //$NON-NLS-1$
 		}
-		sw.append("</form>");
+		sw.append("</form>"); //$NON-NLS-1$
 		this.eventFormText.setText(sw.toString(), true, false);
 		this.sform.reflow(false);
 	}
@@ -227,7 +228,7 @@ public class CalendarOutlineSection implements IOutlineSection {
 	 */
 	private void initializeEventToolBar(final Section section, final FormToolkit toolkit) {
 
-		UIUtil.createSectionToolbar(section, toolkit, new Action("Add calendar entry") {
+		UIUtil.createSectionToolbar(section, toolkit, new Action(Messages.CalendarOutlineSection_AddCalenarEntry) {
 			@Override
 			public void run() {
 				openNewCalendarEntryDialog();
@@ -237,14 +238,14 @@ public class CalendarOutlineSection implements IOutlineSection {
 			public ImageDescriptor getImageDescriptor() {
 
 				Image baseImage = ResourceManager.getPluginImage(CalendarActivator.getDefault(),
-						"icons/iconexperience/16/calendar.png");
+						"icons/iconexperience/16/calendar.png"); //$NON-NLS-1$
 				Image decoratorImage = ResourceManager.getPluginImage(CalendarActivator
-						.getDefault(), "icons/iconexperience/decorator/new_decorator.png");
+						.getDefault(), "icons/iconexperience/decorator/new_decorator.png"); //$NON-NLS-1$
 				return ImageDescriptor.createFromImage(ResourceManager.decorateImage(baseImage,
 						decoratorImage, ResourceManager.TOP_RIGHT));
 
 			}
-		}, new Action("Remove calendar entries") {
+		}, new Action(Messages.CalendarOutlineSection_RemoveCalendarEntries) {
 			@Override
 			public void run() {
 				LabelProvider labelProvider = new LabelProvider() {
@@ -252,7 +253,7 @@ public class CalendarOutlineSection implements IOutlineSection {
 					public Image getImage(final Object object) {
 
 						return ResourceManager.getPluginImage(CalendarActivator.getDefault(),
-								"icons/iconexperience/16/calendar.png");
+								"icons/iconexperience/16/calendar.png"); //$NON-NLS-1$
 
 					}
 
@@ -265,7 +266,7 @@ public class CalendarOutlineSection implements IOutlineSection {
 				ListSelectionDialog diag = new ListSelectionDialog(section.getShell(),
 						CalendarOutlineSection.this.infoUnit.getCalendarEntry(), UIUtil
 								.getArrayContentProviderInstance(), labelProvider,
-						"Select the entries to delete");
+						Messages.CalendarOutlineSection_SelectEntriesToDelete);
 				if (diag.open() == IDialogConstants.OK_ID) {
 					Command create = RemoveCommand.create(CalendarOutlineSection.this.domain,
 							CalendarOutlineSection.this.infoUnit,
@@ -278,9 +279,9 @@ public class CalendarOutlineSection implements IOutlineSection {
 			@Override
 			public ImageDescriptor getImageDescriptor() {
 				Image baseImage = ResourceManager.getPluginImage(CalendarActivator.getDefault(),
-						"icons/iconexperience/16/calendar.png");
+						"icons/iconexperience/16/calendar.png"); //$NON-NLS-1$
 				Image decoratorImage = ResourceManager.getPluginImage(CalendarActivator
-						.getDefault(), "icons/iconexperience/decorator/delete.png");
+						.getDefault(), "icons/iconexperience/decorator/delete.png"); //$NON-NLS-1$
 				return ImageDescriptor.createFromImage(ResourceManager.decorateImage(baseImage,
 						decoratorImage, ResourceManager.TOP_RIGHT));
 

@@ -21,6 +21,7 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -39,7 +40,7 @@ public class CalendarEditor extends SharedHeaderFormEditor {
 
 	@Override
 	protected void createHeaderContents(final IManagedForm headerForm) {
-		headerForm.getForm().setText("Calendar");
+		headerForm.getForm().setText(Messages.CalendarEditor_Calendar);
 		// headerForm.getForm().setImage(InformationExtensionManager.getInstance().getInfoTypeByType(getPrimaryModel().getType()).getImageDescriptor().createImage());
 		getToolkit().decorateFormHeading(headerForm.getForm().getForm());
 		headerForm.getForm().getToolBarManager().add(this.zoomInAction = new ZoomInAction());
@@ -64,7 +65,7 @@ public class CalendarEditor extends SharedHeaderFormEditor {
 	@Override
 	protected void addPages() {
 		try {
-			addPage(this.page1 = new CalendarPage(this, "cal", "cal"));
+			addPage(this.page1 = new CalendarPage(this, "cal", "cal")); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

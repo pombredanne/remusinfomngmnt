@@ -315,14 +315,14 @@ public class CalendarEntryService extends LuceneStore implements
 		List<Occur> flagList = new ArrayList<Occur>();
 		if (timespan.getStartDate() != null) {
 			fieldList.add(STARTDATE);
-			termList.add("[" + convertDate(timespan.getStartDate()) + " TO "
-					+ convertDate(timespan.getEndDate()) + "]");
+			termList.add("[" + convertDate(timespan.getStartDate()) + " TO " //$NON-NLS-1$ //$NON-NLS-2$
+					+ convertDate(timespan.getEndDate()) + "]"); //$NON-NLS-1$
 			flagList.add(Occur.SHOULD);
 		}
 		if (timespan.getEndDate() != null) {
 			fieldList.add(ENDATE);
-			termList.add("[" + convertDate(timespan.getStartDate()) + " TO "
-					+ convertDate(timespan.getEndDate()) + "]");
+			termList.add("[" + convertDate(timespan.getStartDate()) + " TO " //$NON-NLS-1$ //$NON-NLS-2$
+					+ convertDate(timespan.getEndDate()) + "]"); //$NON-NLS-1$
 			flagList.add(Occur.SHOULD);
 		}
 		List<String> termList2 = new ArrayList<String>();
@@ -332,11 +332,11 @@ public class CalendarEntryService extends LuceneStore implements
 		if (timespan.getStartDate() != null && timespan.getEndDate() != null) {
 			fieldList2.add(STARTDATE);
 			termList2
-					.add("[0 TO " + convertDate(timespan.getStartDate()) + "]");
+					.add("[0 TO " + convertDate(timespan.getStartDate()) + "]"); //$NON-NLS-1$ //$NON-NLS-2$
 			flagList2.add(Occur.MUST);
 			fieldList2.add(ENDATE);
-			termList2.add("[" + convertDate(timespan.getEndDate()) + " TO "
-					+ Long.MAX_VALUE + "]");
+			termList2.add("[" + convertDate(timespan.getEndDate()) + " TO " //$NON-NLS-1$ //$NON-NLS-2$
+					+ Long.MAX_VALUE + "]"); //$NON-NLS-1$
 			flagList2.add(Occur.MUST);
 		}
 		final Tasklist taskList = ModelFactory.eINSTANCE.createTasklist();
@@ -378,7 +378,7 @@ public class CalendarEntryService extends LuceneStore implements
 								createEndEvent.setDate(convertDate(doc
 										.get(ENDATE)));
 								task.setName(doc.get(NAME));
-								task.setId(doc.get(INFOID) + "_"
+								task.setId(doc.get(INFOID) + "_" //$NON-NLS-1$
 										+ doc.get(ENTRYID));
 								task.setDetails(doc.get(DESCRIPTION));
 								task.setStart(createStartEvent);

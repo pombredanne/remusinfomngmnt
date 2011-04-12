@@ -60,6 +60,7 @@ import org.remus.infomngmnt.ui.calendar.CalendarActivator;
 import org.remus.infomngmnt.ui.calendar.CalendarEditor;
 import org.remus.infomngmnt.ui.calendar.CalendarEditorInput;
 import org.remus.infomngmnt.ui.calendar.CalendarEntryUtil;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**
@@ -87,7 +88,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		@Override
 		public void linkActivated(final HyperlinkEvent e) {
 			String href = (String) e.getHref();
-			String[] split = StringUtils.split(href, "_");
+			String[] split = StringUtils.split(href, "_"); //$NON-NLS-1$
 			EditorUtil.openInfoUnit(split[0]);
 		}
 	};
@@ -133,7 +134,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
 		// nextWeek.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 		// false));
-		nextWeek.setText("Next week");
+		nextWeek.setText(Messages.CalendarSection_NextWeek);
 		nextWeek.addExpansionListener(new IExpansionListener() {
 			public void expansionStateChanged(final ExpansionEvent e) {
 				// comp.layout(true);
@@ -165,7 +166,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 		final Section thisWeek = getToolkit().createSection(this.sform.getBody(), SECTION_STYLE);
 		// thisWeek.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 		// false));
-		thisWeek.setText("This week");
+		thisWeek.setText(Messages.CalendarSection_ThisWeek);
 
 		TableWrapData td = new TableWrapData();
 		td.align = TableWrapData.FILL;
@@ -182,7 +183,7 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 	private void createTodaySection() {
 		this.today = getToolkit().createSection(this.sform.getBody(), SECTION_STYLE);
 		// today.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		this.today.setText("Today");
+		this.today.setText(Messages.CalendarSection_Today);
 
 		TableWrapData td = new TableWrapData();
 		td.align = TableWrapData.FILL;
@@ -265,23 +266,23 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 			}
 		});
 		if (calendarEntry.size() == 0) {
-			this.todayFormText.setText("<form><p>No Events</p></form>", true, false);
+			this.todayFormText.setText(Messages.CalendarSection_NoEvents, true, false);
 			return;
 		}
-		this.todayFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/alarmclock.png"));
-		this.todayFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/refresh.png"));
+		this.todayFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/alarmclock.png")); //$NON-NLS-1$
+		this.todayFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/refresh.png")); //$NON-NLS-1$
 		StringBuilder sw = new StringBuilder();
-		sw.append("<form>");
+		sw.append("<form>"); //$NON-NLS-1$
 		for (Task entry : calendarEntry) {
-			sw.append("<p>");
+			sw.append("<p>"); //$NON-NLS-1$
 			// sw.append("<li>");
 			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false, true));
 			// sw.append("</li>");
-			sw.append("</p>");
+			sw.append("</p>"); //$NON-NLS-1$
 		}
-		sw.append("</form>");
+		sw.append("</form>"); //$NON-NLS-1$
 		this.todayFormText.setText(sw.toString(), true, false);
 		this.sform.reflow(false);
 	}
@@ -296,23 +297,23 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 			}
 		});
 		if (calendarEntry.size() == 0) {
-			this.thisWeekFormText.setText("<form><p>No Events</p></form>", true, false);
+			this.thisWeekFormText.setText(Messages.CalendarSection_NoEvents, true, false);
 			return;
 		}
-		this.thisWeekFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/alarmclock.png"));
-		this.thisWeekFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/refresh.png"));
+		this.thisWeekFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/alarmclock.png")); //$NON-NLS-1$
+		this.thisWeekFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/refresh.png")); //$NON-NLS-1$
 		StringBuilder sw = new StringBuilder();
-		sw.append("<form>");
+		sw.append("<form>"); //$NON-NLS-1$
 		for (Task entry : calendarEntry) {
-			sw.append("<p>");
+			sw.append("<p>"); //$NON-NLS-1$
 			// sw.append("<li>");
 			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false, true));
 			// sw.append("</li>");
-			sw.append("</p>");
+			sw.append("</p>"); //$NON-NLS-1$
 		}
-		sw.append("</form>");
+		sw.append("</form>"); //$NON-NLS-1$
 		this.thisWeekFormText.setText(sw.toString(), true, false);
 		this.sform.reflow(false);
 	}
@@ -327,23 +328,23 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 			}
 		});
 		if (calendarEntry.size() == 0) {
-			this.nextWeekFormText.setText("<form><p>No Events</p></form>", true, false);
+			this.nextWeekFormText.setText(Messages.CalendarSection_NoEvents, true, false);
 			return;
 		}
-		this.nextWeekFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/alarmclock.png"));
-		this.nextWeekFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator
-				.getDefault(), "icons/iconexperience/16/refresh.png"));
+		this.nextWeekFormText.setImage("alarm", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/alarmclock.png")); //$NON-NLS-1$
+		this.nextWeekFormText.setImage("refresh", ResourceManager.getPluginImage(CalendarActivator //$NON-NLS-1$
+				.getDefault(), "icons/iconexperience/16/refresh.png")); //$NON-NLS-1$
 		StringBuilder sw = new StringBuilder();
-		sw.append("<form>");
+		sw.append("<form>"); //$NON-NLS-1$
 		for (Task entry : calendarEntry) {
-			sw.append("<p>");
+			sw.append("<p>"); //$NON-NLS-1$
 			// sw.append("<li>");
 			sw.append(CalendarEntryUtil.setFormTextRepresentation(entry, false, true));
 			// sw.append("</li>");
-			sw.append("</p>");
+			sw.append("</p>"); //$NON-NLS-1$
 		}
-		sw.append("</form>");
+		sw.append("</form>"); //$NON-NLS-1$
 		this.nextWeekFormText.setText(sw.toString(), true, false);
 		this.sform.redraw();
 	}
@@ -366,9 +367,9 @@ public class CalendarSection extends CollapsibleButtonBar implements IDirtyTimes
 	}
 
 	protected void clearLists() {
-		this.nextWeekFormText.setText("<form><p>No Events</p></form>", true, false);
-		this.todayFormText.setText("<form><p>No Events</p></form>", true, false);
-		this.thisWeekFormText.setText("<form><p>No Events</p></form>", true, false);
+		this.nextWeekFormText.setText(Messages.CalendarSection_NoEvents, true, false);
+		this.todayFormText.setText(Messages.CalendarSection_NoEvents, true, false);
+		this.thisWeekFormText.setText(Messages.CalendarSection_NoEvents, true, false);
 
 	}
 

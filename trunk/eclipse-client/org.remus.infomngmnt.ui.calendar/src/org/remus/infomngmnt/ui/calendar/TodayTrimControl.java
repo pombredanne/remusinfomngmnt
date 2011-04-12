@@ -39,6 +39,7 @@ import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 import org.remus.infomngmnt.ccalendar.service.ICalendarChangeSupport;
 import org.remus.infomngmnt.ccalendar.service.IDirtyTimespanListener;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**
@@ -73,7 +74,7 @@ public class TodayTrimControl extends Composite implements IDirtyTimespanListene
 		this.service.addTimeSpanListener(this);
 		this.hyperLink = new ImageHyperlink(this, SWT.NONE);
 		this.hyperLink.setImage(ResourceManager.getPluginImage(UIPlugin.getDefault(),
-				"icons/iconexperience/16/calendar.png"));
+				"icons/iconexperience/16/calendar.png")); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(
 				this.hyperLink);
 		this.hyperLink.addMouseTrackListener(new MouseTrackAdapter() {
@@ -114,9 +115,9 @@ public class TodayTrimControl extends Composite implements IDirtyTimespanListene
 				}
 			});
 			if (calendarEntry.size() == 0) {
-				this.hyperLink.setText("Clear");
+				this.hyperLink.setText(Messages.TodayTrimControl_Clear);
 			} else {
-				this.hyperLink.setText(NLS.bind("{0} events today", calendarEntry.size()));
+				this.hyperLink.setText(NLS.bind(Messages.TodayTrimControl_EventsToday, calendarEntry.size()));
 			}
 		}
 

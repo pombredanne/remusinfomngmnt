@@ -7,7 +7,7 @@
             category="org.remus.infomngmnt.ui.main"
             class="org.remus.infomngmnt.geodata.preferences.GeoDataEditorPreferencePage"
             id="org.remus.infomngmnt.geodata.preferencePage"
-            name="GeoData">
+            name="%page.name">
       </page>
    </extension>
 

@@ -22,6 +22,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.cyberneko.html.parsers.DOMParser;
+import org.remus.infomngmnt.richtext.Messages;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -104,7 +105,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		final GridData gd_generalSection = new GridData(SWT.FILL,
 				SWT.BEGINNING, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.RichTextEditPage_General);
 
 		final Composite client = toolkit.createComposite(generalSection,
 				SWT.NONE);
@@ -166,9 +167,9 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		CoolItem item = new CoolItem(coolbar, SWT.NONE);
 		item.setControl(menu);
 
-		manager.add(new SetFormatDropdownAction("--[Format]--", composer));
-		manager.add(new SetSizeDropdownAction("--[Size]--", composer));
-		manager.add(new SetFontfamilyDropdownAction("--[Font]--", composer));
+		manager.add(new SetFormatDropdownAction(Messages.RichTextEditPage_Format, composer));
+		manager.add(new SetSizeDropdownAction(Messages.RichTextEditPage_Size, composer));
+		manager.add(new SetFontfamilyDropdownAction(Messages.RichTextEditPage_Font, composer));
 		manager.update(true);
 
 		menu = new ToolBar(coolbar, SWT.HORIZONTAL | SWT.FLAT);
@@ -286,19 +287,19 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 
 	@Override
 	public void doSave(final IProgressMonitor monitor) {
-		monitor.setTaskName("Pre-save formatting...");
+		monitor.setTaskName(Messages.RichTextEditPage_PresaveFormatting);
 		doSaveEditor();
 		final DOMParser parser = new DOMParser();
 
 		try {
 			parser.parse(new org.apache.xerces.xni.parser.XMLInputSource(null,
 					null, null, new StringReader(getModelObject()
-							.getStringValue()), "UTF-8"));
+							.getStringValue()), "UTF-8")); //$NON-NLS-1$
 			final Document document = parser.getDocument();
-			NodeList elementsByTagName = document.getElementsByTagName("a");
+			NodeList elementsByTagName = document.getElementsByTagName("a"); //$NON-NLS-1$
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
 				final Node node = elementsByTagName.item(i);
-				((Element) node).setAttribute("target", "_blank");
+				((Element) node).setAttribute("target", "_blank"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			final Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();

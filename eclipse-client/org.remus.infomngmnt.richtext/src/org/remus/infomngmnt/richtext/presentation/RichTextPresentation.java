@@ -26,7 +26,6 @@ import org.eclipse.remus.common.core.streams.StreamCloser;
 import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
 import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.richtext.RichTextPlugin;
 
 /**
@@ -35,17 +34,20 @@ import org.remus.infomngmnt.richtext.RichTextPlugin;
 public class RichTextPresentation extends AbstractInformationRepresentation {
 
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(RichTextPlugin.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
-			FreemarkerRenderer.getInstance().process(RichTextPlugin.PLUGIN_ID, templateIs,
-					contentsIs, returnValue, null);
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(RichTextPlugin.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
+			FreemarkerRenderer.getInstance().process(RichTextPlugin.PLUGIN_ID,
+					templateIs, contentsIs, returnValue, null);
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}

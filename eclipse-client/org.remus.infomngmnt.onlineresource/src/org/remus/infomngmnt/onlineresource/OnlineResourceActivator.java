@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class OnlineResourceActivator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.onlineresource";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.onlineresource"; //$NON-NLS-1$
 
 	// The shared instance
 	private static OnlineResourceActivator plugin;

@@ -1,0 +1,137 @@
+<#ftl ns_prefixes={"D":"http://eclipse.org/remus/1.0"}>
+<#setting url_escaping_charset="UTF-8">  
+<#setting number_format="computer">
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="${.globals.sharedResources.org_eclipse_remus_js_images}"></script>
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_js_curvycorner}"></script>
+  <script type="text/javascript" src="${.globals.sharedResources.org_remus_infomngmnt_pdf_script}"></script>
+  
+  <script type="text/JavaScript">
+	  window.onload = function()
+	  {
+	          settings = {
+	          tl: { radius: 5 },
+	          tr: { radius: 5 },
+	          bl: { radius: 0 },
+	          br: { radius: 0 },
+	          antiAlias: true,
+	          autoPad: true
+	      }
+	
+	      var myBoxObject = new curvyCorners(settings,"audioplayer");
+	      myBoxObject.applyCornersToAll();
+	  }
+</script>
+  <title>${data.__label}</title>
+  <style type="text/css">
+  	.systemfont,td,pagination,li {
+		font-family: ${.globals.defaultFont};
+		font-style: ${.globals.defaultFontStyle};
+		font-size: ${.globals.defaultFontSize}pt;
+	}
+	.bold {
+		font-family: ${.globals.defaultFont};
+		font-size: ${.globals.defaultFontSize}pt;
+		font-weight:bold;
+		color: #415564;
+	}
+	
+	
+	
+	
+	#wrapper {width:${additionals.width + 78}px; margin:5px auto}
+	
+	.sliderbutton {float:left; width:32px; padding-top:${additionals.height/2 -16}px; }
+	.sliderbutton img {cursor:pointer; background:#222}
+	.sliderbutton img:hover {background:#666}
+	#slider {float:left; position:relative; overflow:auto; width:${additionals.width}px; height:${additionals.height}px; border:2px solid #000; background:#000}
+	#slider ul {position:absolute; list-style:none; top:0; left:0}
+	#slider li {float:left; width:${additionals.width}px; height:${additionals.height}px; padding-right:10px}
+	
+	.pagination {float:left; list-style:none; height:25px; margin:15px 0 0 32px}
+	.pagination li {float:left; cursor:pointer; padding:5px 8px; background:#666; border:1px solid #999; margin:0 4px 0 0; text-align:center; color:#222}
+	.pagination li:hover {background:#777; border:1px solid #bbb; color:#000}
+	li.current {border:1px solid #ccc; background:#888}
+	
+	#content h1 {font:22px Georgia,Verdana; margin-bottom:15px; color:#036}
+	</style>
+</head>
+<body>
+	<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+	<div style="margin:5px;">
+		<table>
+			<tr>
+				<td class="bold">Name:</td>
+				<td>${data.__label?html}</td>
+			</tr>
+			<#if data.__keywords?has_content >
+			<tr>
+				<td class="bold">Schl&uuml;sselw&ouml;rter:</td>
+				<td>${data.__keywords?html}</td>
+			</tr>
+			</#if>
+			<#if data.__description?has_content >
+			<tr>
+				<td class="bold">Beschreibung:</td>
+				<td>${data.__description?html}</td>
+			</tr>
+			</#if>
+		</table>
+	</div>
+  	<div>
+  		<#assign images = additionals.imagesPaths >
+  		<div class="audioplayer" style="margin: 0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
+  			<span class="systemfont" style="font-weight:bold;">PDF Slider</span>
+  		</div>
+  		<div id="wrapper">
+  			
+			<div>
+				<#if (images?size > 0) >
+				<div class="sliderbutton"><img src="${.globals.sharedResources.org_remus_infomngmnt_pdf_previousbutton}" width="32" height="38" alt="Previous" onclick="slideshow.move(-1)" /></div>
+				</#if>
+				<div id="slider" style="border:1px black;">
+					<#if (images?size > 0) >
+					<ul style="margin:0; padding:0;">
+						<#list images as item >
+						<li style="margin:0; padding:0;"><img src="${item.fileName}" width="${item.width}" height="${item.height}" alt="Page ${item_index + 1}" /></li>
+						</#list>
+					</ul>
+					<#else >
+						<embed
+						    type="application/pdf"
+						    src="${additionals.pdfSrc?html}"
+						    id="pdfDocument"
+						    width="${additionals.width}"
+						    height="${additionals.height}">
+						</embed>
+					</#if>
+				</div>
+				<#if (images?size > 0) >
+				<div class="sliderbutton"><img src="${.globals.sharedResources.org_remus_infomngmnt_pdf_nextbutton}" width="32" height="38" alt="Next" onclick="slideshow.move(1)" /></div>
+				</#if>
+			</div>
+			<ul id="pagination" class="pagination">
+				<#list images as item >
+				<li onclick="slideshow.pos(${item_index})">${item_index + 1}</li>
+				</#list>
+			</ul>
+		</div>
+		<script type="text/javascript">
+		var slideshow=new TINY.slider.slide('slideshow',{
+			id:'slider',
+			auto:3,
+			resume:false,
+			vertical:false,
+			navid:'pagination',
+			activeclass:'current',
+			position:0
+		});
+</script>
+  		
+  			
+  	</div>
+</body>
+</html>

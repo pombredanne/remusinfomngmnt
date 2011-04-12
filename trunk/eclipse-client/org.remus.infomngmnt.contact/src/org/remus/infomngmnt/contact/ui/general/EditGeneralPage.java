@@ -71,6 +71,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactUtil;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
+import org.remus.infomngmnt.contact.messages.Messages;
 import org.remus.infomngmnt.contact.ui.ComboAndTextFieldComposite;
 
 public class EditGeneralPage extends AbstractInformationFormPage {
@@ -123,7 +124,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		final Section section_1 = this.toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("General");
+		section_1.setText(Messages.EditGeneralPage_General);
 
 		final Composite compositeGeneral = this.toolkit.createComposite(section_1, SWT.NONE);
 		final GridLayout gridLayoutGeneral = new GridLayout();
@@ -142,7 +143,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	private void createGroupPerson(final Composite compositeGeneral) {
 
 		final Group group_Person = new Group(compositeGeneral, SWT.NONE);
-		group_Person.setText("Name");
+		group_Person.setText(Messages.EditGeneralPage_Name);
 		final GridData gd_Person = new GridData();
 		gd_Person.grabExcessVerticalSpace = true;
 		gd_Person.verticalAlignment = GridData.FILL;
@@ -161,11 +162,11 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		this.tx_EditName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		this.tx_EditName.setEditable(false);
 		this.tx_EditName.setEnabled(false);
-		this.bt_EditName = this.toolkit.createButton(nameComposite, "Edit Name", SWT.NONE);
+		this.bt_EditName = this.toolkit.createButton(nameComposite, Messages.EditGeneralPage_EditName, SWT.NONE);
 		this.bt_EditName.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
 
-		this.lb_Image = this.toolkit.createLabel(group_Person, "", SWT.NONE);
-		this.lb_Image.setToolTipText("Add contact photo");
+		this.lb_Image = this.toolkit.createLabel(group_Person, "", SWT.NONE); //$NON-NLS-1$
+		this.lb_Image.setToolTipText(Messages.EditGeneralPage_AddContactPhoto);
 		GridData gd_text = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 		gd_text.verticalSpan = 4;
 		gd_text.verticalAlignment = GridData.FILL;
@@ -173,11 +174,11 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		gd_text.heightHint = 64;
 		this.lb_Image.setLayoutData(gd_text);
 
-		this.toolkit.createLabel(group_Person, "Role:");
+		this.toolkit.createLabel(group_Person, Messages.EditGeneralPage_Role);
 		this.tx_Role = this.toolkit.createText(group_Person, null, SWT.BORDER);
 		this.tx_Role.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_Person, "Organisation:");
+		this.toolkit.createLabel(group_Person, Messages.EditGeneralPage_Organisation);
 		this.tx_Organisation = this.toolkit.createText(group_Person, null, SWT.BORDER);
 		this.tx_Organisation.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
@@ -231,7 +232,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		gd_PhoneNumbers.grabExcessHorizontalSpace = true;
 		gd_PhoneNumbers.horizontalAlignment = GridData.FILL;
 		group_PhoneNumbers.setLayoutData(gd_PhoneNumbers);
-		group_PhoneNumbers.setText("Phone");
+		group_PhoneNumbers.setText(Messages.EditGeneralPage_Phone);
 
 		final GridLayout gl_PhoneNumbersGroup = new GridLayout();
 		gl_PhoneNumbersGroup.numColumns = 1;
@@ -258,7 +259,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 
 	private void createGroupAddress(final Composite compositeGeneral) {
 		final Group group_Address = new Group(compositeGeneral, SWT.NONE);
-		group_Address.setText("Address");
+		group_Address.setText(Messages.EditGeneralPage_Address);
 		final GridData gd_GroupAddress = new GridData();
 		gd_GroupAddress.grabExcessVerticalSpace = true;
 		gd_GroupAddress.verticalAlignment = GridData.FILL;
@@ -282,7 +283,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 		this.addressComboViewer.setInput(ContactUtil.getAdressCollection());
 		adressCombo.select(0);
 
-		this.bt_EditAddress = this.toolkit.createButton(group_Address, "Edit", SWT.NONE);
+		this.bt_EditAddress = this.toolkit.createButton(group_Address, Messages.EditGeneralPage_Edit, SWT.NONE);
 		GridData gd_EditAddress = new GridData(SWT.END, SWT.CENTER, false, true);
 		this.bt_EditAddress.setLayoutData(gd_EditAddress);
 
@@ -352,35 +353,35 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	private void createGroupInternet(final Composite compositeGeneral) {
 		final Group group_Internet = new Group(compositeGeneral, SWT.NONE);
 		group_Internet.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-		group_Internet.setText("Internet");
+		group_Internet.setText(Messages.EditGeneralPage_Internet);
 
 		final GridData gd_SpanHorizontal2 = new GridData(SWT.END, SWT.CENTER, false, false);
 		final GridLayout gl_Internet = new GridLayout();
 		gl_Internet.numColumns = 3;
 		group_Internet.setLayout(gl_Internet);
 
-		this.hl_Email = this.toolkit.createHyperlink(group_Internet, "E-Mail:", SWT.NONE);
+		this.hl_Email = this.toolkit.createHyperlink(group_Internet, Messages.EditGeneralPage_EMail, SWT.NONE);
 
 		this.tx_Email = this.toolkit.createText(group_Internet, null, SWT.BORDER);
 		this.tx_Email.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		this.tx_Email.setEditable(false);
 		this.tx_Email.setEnabled(false);
 
-		this.bt_EditEmail = this.toolkit.createButton(group_Internet, "Edit", SWT.NONE);
+		this.bt_EditEmail = this.toolkit.createButton(group_Internet, Messages.EditGeneralPage_Edit, SWT.NONE);
 		this.bt_EditEmail.setLayoutData(gd_SpanHorizontal2);
 
 		createSeparator(group_Internet, true, 3);
 
-		this.tl_Homepage = this.toolkit.createHyperlink(group_Internet, "Homepage:", SWT.NONE);
+		this.tl_Homepage = this.toolkit.createHyperlink(group_Internet, Messages.EditGeneralPage_Homepage, SWT.NONE);
 
 		this.tx_Homepage = this.toolkit.createText(group_Internet, null, SWT.BORDER);
 		this.tx_Homepage.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 
-		this.toolkit.createLabel(group_Internet, "Blog Feed:");
+		this.toolkit.createLabel(group_Internet, Messages.EditGeneralPage_Blog);
 		this.tx_BlogFeed = this.toolkit.createText(group_Internet, null, SWT.BORDER);
 		this.tx_BlogFeed.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 
-		this.toolkit.createLabel(group_Internet, "IM-Address:");
+		this.toolkit.createLabel(group_Internet, Messages.EditGeneralPage_IM);
 
 		this.instantMessagingComposite = new ComboAndTextFieldComposite(group_Internet, SWT.NONE,
 				ContactUtil.getImObjectCollection(),
@@ -427,7 +428,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				try {
-					Program.launch("mailto:" + EditGeneralPage.this.tx_Email.getText());
+					Program.launch("mailto:" + EditGeneralPage.this.tx_Email.getText()); //$NON-NLS-1$
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}
@@ -491,7 +492,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 				.getSelection()).getFirstElement());
 		addNameListeners();
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
-		Object valueByNodeId = read.getValueByNodeId("adresses/workAdress/street");
+		Object valueByNodeId = read.getValueByNodeId("adresses/workAdress/street"); //$NON-NLS-1$
 		System.out.println(valueByNodeId);
 
 	}
@@ -593,7 +594,7 @@ public class EditGeneralPage extends AbstractInformationFormPage {
 	protected void setBytesToImage(final byte[] value) {
 		if (value == null) {
 			this.lb_Image.setImage(ResourceManager.getPluginImage(ContactActivator.getDefault(),
-					"icons/iconexperience/photo_portrait.png"));
+					"icons/iconexperience/photo_portrait.png")); //$NON-NLS-1$
 		} else {
 			ByteArrayInputStream bais = new ByteArrayInputStream(value);
 			ImageData imageData = new ImageData(bais);

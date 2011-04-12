@@ -47,8 +47,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 public class EditContactEmailDialog extends StatusDialog {
 
@@ -63,29 +63,32 @@ public class EditContactEmailDialog extends StatusDialog {
 	private InformationUnit selectedEmail;
 	private final IEditingHandler service;
 
-	public EditContactEmailDialog(final Shell parentShell, final InformationUnit informationUnit,
+	public EditContactEmailDialog(final Shell parentShell,
+			final InformationUnit informationUnit,
 			final EditingDomain editingDomain) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 		this.informationUnit = informationUnit;
 		this.editingDomain = editingDomain;
-		this.service = ContactActivator.getDefault().getServiceTracker().getService(
-				IEditingHandler.class);
+		this.service = ContactActivator.getDefault().getServiceTracker()
+				.getService(IEditingHandler.class);
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.CLOSE_LABEL, true);
+		createButton(parent, IDialogConstants.OK_ID,
+				IDialogConstants.CLOSE_LABEL, true);
 	}
 
 	@Override
 	protected Control createDialogArea(final Composite parent) {
-		this.area = new Composite((Composite) super.createDialogArea(parent), SWT.NONE);
+		this.area = new Composite((Composite) super.createDialogArea(parent),
+				SWT.NONE);
 		this.area.setLayout(new GridLayout(2, false));
 		this.area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		this.tv_Email = new TableViewer(this.area, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL
-				| SWT.FULL_SELECTION | SWT.BORDER);
+		this.tv_Email = new TableViewer(this.area, SWT.SINGLE | SWT.H_SCROLL
+				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		final Table table = this.tv_Email.getTable();
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 4));
 		this.tv_Email.setLabelProvider(new LabelProvider() {
@@ -94,22 +97,27 @@ public class EditContactEmailDialog extends StatusDialog {
 				return ((InformationUnit) element).getStringValue();
 			}
 		});
-		this.tv_Email.setContentProvider(new AdapterFactoryContentProvider(this.service
-				.getAdapterFactory()));
+		this.tv_Email.setContentProvider(new AdapterFactoryContentProvider(
+				this.service.getAdapterFactory()));
 		this.bt_AddNew = new Button(this.area, SWT.PUSH);
-		this.bt_AddNew.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		this.bt_AddNew.setText("Add New E-Mail");
+		this.bt_AddNew.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+				false));
+		this.bt_AddNew.setText(Messages.EditContactEmailDialog_AddNewMail);
 		this.bt_SetStandard = new Button(this.area, SWT.PUSH);
-		this.bt_SetStandard.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		this.bt_SetStandard.setText("Set As Standard");
+		this.bt_SetStandard.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				false, false));
+		this.bt_SetStandard
+				.setText(Messages.EditContactEmailDialog_SetAsStandard);
 		this.bt_SetStandard.setEnabled(false);
 		this.bt_Delete = new Button(this.area, SWT.PUSH);
-		this.bt_Delete.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		this.bt_Delete.setText("Delete");
+		this.bt_Delete.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+				false));
+		this.bt_Delete.setText(Messages.EditContactEmailDialog_Delete);
 		this.bt_Delete.setEnabled(false);
 		this.bt_Change = new Button(this.area, SWT.PUSH);
-		this.bt_Change.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		this.bt_Change.setText("Change");
+		this.bt_Change.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
+				false));
+		this.bt_Change.setText(Messages.EditContactEmailDialog_Change);
 		this.bt_Change.setEnabled(false);
 
 		createListener();
@@ -119,81 +127,103 @@ public class EditContactEmailDialog extends StatusDialog {
 	}
 
 	private void bindValuesToUi() {
-		this.tv_Email.setInput(InformationUtil.getChildByType(this.informationUnit,
-				ContactActivator.NODE_MAILS));
+		this.tv_Email.setInput(InformationUtil.getChildByType(
+				this.informationUnit, ContactActivator.NODE_MAILS));
 
 	}
 
 	private void createListener() {
 		this.bt_AddNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				InputDialog newDialog = new InputDialog(getShell(), "Add new email",
-						"Enter new email adress", "", new IInputValidator() {
+				InputDialog newDialog = new InputDialog(getShell(),
+						Messages.EditContactEmailDialog_AddNewMail,
+						Messages.EditContactEmailDialog_EnterNewMailAdress,
+						"", new IInputValidator() { //$NON-NLS-1$
 							public String isValid(final String newText) {
-								return newText.trim().length() == 0 ? "Input required" : null;
+								return newText.trim().length() == 0 ? Messages.EditContactEmailDialog_InputRequired
+										: null;
 							}
 						});
 				if (newDialog.open() == IDialogConstants.OK_ID) {
-					InformationUnit newEmail = InfomngmntFactory.eINSTANCE.createInformationUnit();
+					InformationUnit newEmail = InfomngmntFactory.eINSTANCE
+							.createInformationUnit();
 					newEmail.setType(ContactActivator.NODE_MAIL);
 					newEmail.setStringValue(newDialog.getValue());
-					Command command = AddCommand.create(EditContactEmailDialog.this.editingDomain,
-							InformationUtil.getChildByType(
-									EditContactEmailDialog.this.informationUnit,
-									ContactActivator.NODE_MAILS),
-							InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES, newEmail);
-					EditContactEmailDialog.this.editingDomain.getCommandStack().execute(command);
+					Command command = AddCommand
+							.create(EditContactEmailDialog.this.editingDomain,
+									InformationUtil
+											.getChildByType(
+													EditContactEmailDialog.this.informationUnit,
+													ContactActivator.NODE_MAILS),
+									InfomngmntPackage.Literals.INFORMATION_UNIT__CHILD_VALUES,
+									newEmail);
+					EditContactEmailDialog.this.editingDomain.getCommandStack()
+							.execute(command);
 				}
 			}
 		});
-		this.tv_Email.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(final SelectionChangedEvent event) {
-				if (event.getSelection().isEmpty()) {
-					setSelection(null);
-				} else {
-					InformationUnit firstElement = (InformationUnit) ((IStructuredSelection) event
-							.getSelection()).getFirstElement();
-					setSelection(firstElement);
-				}
-			}
-		});
+		this.tv_Email
+				.addSelectionChangedListener(new ISelectionChangedListener() {
+					public void selectionChanged(
+							final SelectionChangedEvent event) {
+						if (event.getSelection().isEmpty()) {
+							setSelection(null);
+						} else {
+							InformationUnit firstElement = (InformationUnit) ((IStructuredSelection) event
+									.getSelection()).getFirstElement();
+							setSelection(firstElement);
+						}
+					}
+				});
 		this.bt_Change.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				InputDialog newDialog = new InputDialog(getShell(), "Edit email",
-						"Enter new email adress", EditContactEmailDialog.this.selectedEmail
+				InputDialog newDialog = new InputDialog(getShell(),
+						Messages.EditContactEmailDialog_EditEmail,
+						Messages.EditContactEmailDialog_EnterNewMailAdress,
+						EditContactEmailDialog.this.selectedEmail
 								.getStringValue(), new IInputValidator() {
 							public String isValid(final String newText) {
-								return newText.trim().length() == 0 ? "Input required" : null;
+								return newText.trim().length() == 0 ? Messages.EditContactEmailDialog_InputRequired
+										: null;
 							}
 						});
 				if (newDialog.open() == IDialogConstants.OK_ID) {
-					Command command = SetCommand.create(EditContactEmailDialog.this.editingDomain,
-							EditContactEmailDialog.this.selectedEmail,
-							InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, newDialog
-									.getValue());
-					EditContactEmailDialog.this.editingDomain.getCommandStack().execute(command);
+					Command command = SetCommand
+							.create(EditContactEmailDialog.this.editingDomain,
+									EditContactEmailDialog.this.selectedEmail,
+									InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+									newDialog.getValue());
+					EditContactEmailDialog.this.editingDomain.getCommandStack()
+							.execute(command);
 				}
 			}
 		});
 		this.bt_Delete.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				if (MessageDialog.openConfirm(getShell(), "Confirm deletion",
-						"Selected email will be deleted. Continue?")) {
+				if (MessageDialog.openConfirm(getShell(),
+						Messages.EditContactEmailDialog_ConfirmDelete,
+						Messages.EditContactEmailDialog_ConfirmDeleteDetails)) {
 					Command command = DeleteCommand.create(
 							EditContactEmailDialog.this.editingDomain,
 							EditContactEmailDialog.this.selectedEmail);
-					EditContactEmailDialog.this.editingDomain.getCommandStack().execute(command);
+					EditContactEmailDialog.this.editingDomain.getCommandStack()
+							.execute(command);
 				}
 			}
 		});
 		this.bt_SetStandard.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				Command command = SetCommand.create(EditContactEmailDialog.this.editingDomain,
-						InformationUtil.getChildByType(EditContactEmailDialog.this.informationUnit,
-								ContactActivator.NODE_MAIL_DEF),
-						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
-						EditContactEmailDialog.this.selectedEmail.getStringValue());
-				EditContactEmailDialog.this.editingDomain.getCommandStack().execute(command);
+				Command command = SetCommand
+						.create(EditContactEmailDialog.this.editingDomain,
+								InformationUtil
+										.getChildByType(
+												EditContactEmailDialog.this.informationUnit,
+												ContactActivator.NODE_MAIL_DEF),
+								InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE,
+								EditContactEmailDialog.this.selectedEmail
+										.getStringValue());
+				EditContactEmailDialog.this.editingDomain.getCommandStack()
+						.execute(command);
 			}
 		});
 
@@ -211,7 +241,8 @@ public class EditContactEmailDialog extends StatusDialog {
 
 	@Override
 	public boolean close() {
-		ContactActivator.getDefault().getServiceTracker().ungetService(this.service);
+		ContactActivator.getDefault().getServiceTracker()
+				.ungetService(this.service);
 		return super.close();
 	}
 
@@ -223,6 +254,6 @@ public class EditContactEmailDialog extends StatusDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Edit E-Mail Adresses");
+		newShell.setText(Messages.EditContactEmailDialog_EditEmailAdresses);
 	}
 }

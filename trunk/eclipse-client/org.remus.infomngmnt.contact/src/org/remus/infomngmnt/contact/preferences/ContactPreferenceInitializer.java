@@ -14,7 +14,6 @@ package org.remus.infomngmnt.contact.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import org.remus.infomngmnt.contact.ContactActivator;
 
 /**
@@ -49,12 +48,14 @@ public class ContactPreferenceInitializer extends AbstractPreferenceInitializer 
 	@Override
 	public void initializeDefaultPreferences() {
 		this.store.setDefault(SHOW_PHONE_LINKS, false);
-		this.store.setDefault(FORMATTED_NAME_PATTERN, "$title $firstname $lastname");
-		this.store.setDefault(FORMATTED_ADDRESS_PATTERN, "$street\n\n$postal $locality");
+		this.store.setDefault(FORMATTED_NAME_PATTERN,
+				"$title $firstname $lastname"); //$NON-NLS-1$
+		this.store.setDefault(FORMATTED_ADDRESS_PATTERN,
+				"$street\n\n$postal $locality"); //$NON-NLS-1$
 		this.store.setDefault(MAPS_IMAGE_WIDTH, 300);
 		this.store.setDefault(MAPS_IMAGE_HEIGHT, 300);
 		this.store.setDefault(MAPS_IMAGE_ZOOMLEVEL, 10);
-		this.store.setDefault(PHONE_CALL_PATTERN, "skype://{0}");
+		this.store.setDefault(PHONE_CALL_PATTERN, "skype://{0}"); //$NON-NLS-1$
 	}
 
 }

@@ -5,7 +5,7 @@
          point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="true"
-            name="Contact"
+            name="%information.name"
             postCreationHandler="org.remus.infomngmnt.contact.core.ContactPostCreation"
             presentation="org.remus.infomngmnt.contact.ContactInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
@@ -18,13 +18,13 @@
             editpage="org.remus.infomngmnt.contact.ui.general.EditGeneralPage"
             icon="icons/iconexperience/contact.png"
             id="org.remus.infomngmnt.contact.editGeneralPage"
-            label="General"
+            label="%general.editPage.label"
             type="CONTACT">
       </editPage>
       <editPage
             editpage="org.remus.infomngmnt.contact.ui.misc.EditMiscPage"
             id="org.remus.infomngmnt.contact.editMiscPage"
-            label="Details"
+            label="%details.editPage.label"
             type="CONTACT">
       </editPage>
    </extension>
@@ -36,7 +36,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/contact_new.png"
             id="org.remus.infomngmnt.contact.newContactWizard"
-            name="Contact">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -54,7 +54,7 @@
             category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.contact.ui.preferences.ContactPreferencePage"
             id="org.remus.infomngmnt.contact.preferences"
-            name="Contact">
+            name="%page.name">
       </page>
    </extension>
    <extension
@@ -76,7 +76,7 @@
             class="org.remus.infomngmnt.contact.ui.jobs.CheckBirthdayJob"
             id="org.remus.infomngmnt.contact.birthdayreminder"
             interval="30"
-            name="Birthday-Reminder">
+            name="%job.name">
       </job>
    </extension>
    <extension

@@ -47,6 +47,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 public class EditContactAddressDialog extends BindingStatusDialog {
 
@@ -87,34 +88,34 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 		GridData gd_text_fill_horizontal = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 
 		final Label lb_Street = new Label(comp, SWT.NONE);
-		lb_Street.setText("Street");
+		lb_Street.setText(Messages.EditContactAddressDialog_Street);
 		this.tx_Street = new Text(comp, SWT.BORDER | SWT.MULTI);
 		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		layoutData.heightHint = 30;
 		this.tx_Street.setLayoutData(layoutData);
 
 		final Label lb_Pob = new Label(comp, SWT.NONE);
-		lb_Pob.setText("Post Office Box");
+		lb_Pob.setText(Messages.EditContactAddressDialog_PostOfficeBox);
 		this.tx_Pob = new Text(comp, SWT.BORDER);
 		this.tx_Pob.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		final Label lb_Locality = new Label(comp, SWT.NONE);
-		lb_Locality.setText("Locality");
+		lb_Locality.setText(Messages.EditContactAddressDialog_Locality);
 		this.tx_Locality = new Text(comp, SWT.BORDER);
 		this.tx_Locality.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		final Label lb_Region = new Label(comp, SWT.NONE);
-		lb_Region.setText("Region");
+		lb_Region.setText(Messages.EditContactAddressDialog_Region);
 		this.tx_Region = new Text(comp, SWT.BORDER);
 		this.tx_Region.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		final Label lb_Postal = new Label(comp, SWT.NONE);
-		lb_Postal.setText("Postal Code");
+		lb_Postal.setText(Messages.EditContactAddressDialog_PostalCode);
 		this.tx_Postal = new Text(comp, SWT.BORDER);
 		this.tx_Postal.setLayoutData(gd_text_fill_horizontal);
 
 		final Label lb_Country = new Label(comp, SWT.NONE);
-		lb_Country.setText("Country");
+		lb_Country.setText(Messages.EditContactAddressDialog_Country);
 		this.countryCombo = new CountryCombo(comp, SWT.NONE, true);
 		this.countryCombo.getCombo().getControl().setLayoutData(
 				new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -123,13 +124,13 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
 		final Label longtitudeLabel = new Label(comp, SWT.NONE);
-		longtitudeLabel.setText("Longtitude");
+		longtitudeLabel.setText(Messages.EditContactAddressDialog_Longtitude);
 
 		this.tx_Longitude = new Text(comp, SWT.BORDER);
 		this.tx_Longitude.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label latitudeLabel = new Label(comp, SWT.NONE);
-		latitudeLabel.setText("Latitude");
+		latitudeLabel.setText(Messages.EditContactAddressDialog_Latitude);
 
 		this.tx_Latitude = new Text(comp, SWT.BORDER);
 		this.tx_Latitude.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -139,7 +140,7 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 		final GridData gd_getCoordinatesFromButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false);
 		this.getCoordinatesFromButton.setLayoutData(gd_getCoordinatesFromButton);
-		this.getCoordinatesFromButton.setText("Get Coordinates");
+		this.getCoordinatesFromButton.setText(Messages.EditContactAddressDialog_GetCoordinates);
 
 		createTextValueBindings();
 		createListener();
@@ -184,8 +185,8 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 	}
 
 	private void showGMapsApiKeyErrorMessageBox() {
-		MessageDialog.openError(getShell(), "No or incorrect Maps Key.",
-				"Please go to Extras -> Preferences -> GeoData -> Google Maps API Key");
+		MessageDialog.openError(getShell(), Messages.EditContactAddressDialog_NoMapsKEy,
+				Messages.EditContactAddressDialog_GotoPreferences);
 
 	}
 
@@ -246,6 +247,6 @@ public class EditContactAddressDialog extends BindingStatusDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Edit Address");
+		newShell.setText(Messages.EditContactAddressDialog_EditAdress);
 	}
 }

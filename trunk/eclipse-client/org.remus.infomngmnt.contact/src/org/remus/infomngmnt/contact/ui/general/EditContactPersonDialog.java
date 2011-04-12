@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 public class EditContactPersonDialog extends BindingStatusDialog {
 
@@ -75,31 +76,31 @@ public class EditContactPersonDialog extends BindingStatusDialog {
 		GridData gd_text = new GridData(SWT.FILL, SWT.TOP, true, false);
 		final Label lb_Title = new Label(comp, SWT.NONE);
 		lb_Title.setLayoutData(new GridData());
-		lb_Title.setText("Title");
+		lb_Title.setText(Messages.EditContactPersonDialog_Title);
 		this.cb_Title = new Combo(comp, SWT.DROP_DOWN | SWT.READ_ONLY);
 		this.cb_Title.setLayoutData(new GridData());
 
 		final Label lb_FirstName = new Label(comp, SWT.NONE);
 		lb_FirstName.setLayoutData(new GridData());
-		lb_FirstName.setText("First Name:");
+		lb_FirstName.setText(Messages.EditContactPersonDialog_FirstName);
 		this.tx_FirstName = new Text(comp, SWT.BORDER);
 		this.tx_FirstName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		final Label lb_AdditionalName = new Label(comp, SWT.NONE);
 		lb_AdditionalName.setLayoutData(new GridData());
-		lb_AdditionalName.setText("Additional Name:");
+		lb_AdditionalName.setText(Messages.EditContactPersonDialog_Additional);
 		this.tx_AdditionalName = new Text(comp, SWT.BORDER);
 		this.tx_AdditionalName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		final Label lb_LastName = new Label(comp, SWT.NONE);
 		lb_LastName.setLayoutData(new GridData());
-		lb_LastName.setText("Last Name:");
+		lb_LastName.setText(Messages.EditContactPersonDialog_LastName);
 		this.tx_LastName = new Text(comp, SWT.BORDER);
 		this.tx_LastName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		final Label lb_TitleAfterName = new Label(comp, SWT.NONE);
 		lb_TitleAfterName.setLayoutData(new GridData());
-		lb_TitleAfterName.setText("Title After Name:");
+		lb_TitleAfterName.setText(Messages.EditContactPersonDialog_TitleAfterName);
 		this.tx_TitleAfterName = new Text(comp, SWT.BORDER);
 		this.tx_TitleAfterName.setLayoutData(gd_text);
 
@@ -140,12 +141,12 @@ public class EditContactPersonDialog extends BindingStatusDialog {
 		ComboBindingWidget createComboBinding = BindingWidgetFactory.createComboBinding(
 				this.cb_Title, this.editingDomainProvider);
 		List<String> values = new ArrayList<String>();
-		values.add("");
-		values.add("Dr.");
-		values.add("Prof.");
-		values.add("Female");
-		values.add("Miss");
-		values.add("Male");
+		values.add(""); //$NON-NLS-1$
+		values.add(Messages.EditContactPersonDialog_Dr);
+		values.add(Messages.EditContactPersonDialog_Prof);
+		values.add(Messages.EditContactPersonDialog_Female);
+		values.add(Messages.EditContactPersonDialog_Miss);
+		values.add(Messages.EditContactPersonDialog_Mail);
 		createComboBinding.setLabelProvider(new LabelProvider());
 		createComboBinding.setInput(values);
 		createComboBinding.bindModel(InformationUtil.getChildByType(this.contact,
@@ -163,6 +164,6 @@ public class EditContactPersonDialog extends BindingStatusDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Edit Name");
+		newShell.setText(Messages.EditContactPersonDialog_EditName);
 	}
 }

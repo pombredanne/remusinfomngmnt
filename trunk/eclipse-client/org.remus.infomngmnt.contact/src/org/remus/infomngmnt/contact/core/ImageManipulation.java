@@ -24,6 +24,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import org.remus.infomngmnt.contact.messages.Messages;
 import org.remus.infomngmnt.contact.ui.general.LoadImageRunnable;
 
 public class ImageManipulation {
@@ -34,8 +35,8 @@ public class ImageManipulation {
 			final int imageTargetY) {
 
 		FileDialog fd = new FileDialog(shell);
-		fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" });
-		fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
+		fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" }); //$NON-NLS-1$
+		fd.setFilterNames(new String[] { Messages.ImageManipulation_SupportedImages });
 		String open = fd.open();
 
 		if (open != null) {

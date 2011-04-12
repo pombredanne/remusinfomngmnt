@@ -37,6 +37,7 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ImageManipulation;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 public class EditMiscPage extends AbstractInformationFormPage {
 
@@ -77,7 +78,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		final Section section_1 = this.toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("Company Logo");
+		section_1.setText(Messages.EditMiscPage_CompanyLogo);
 
 		final Composite compositeGeneral = this.toolkit.createComposite(section_1, SWT.NONE);
 		final GridLayout gridLayoutAdditional = new GridLayout();
@@ -96,7 +97,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		GridData gd_Image = new GridData(SWT.CENTER, SWT.BEGINNING, true, true);
 		final int sizeX = 128;
 		final int sizeY = 128;
-		this.btImage.setToolTipText("Add company logo");
+		this.btImage.setToolTipText(Messages.EditMiscPage_AddLogo);
 		gd_Image.widthHint = sizeX;
 		gd_Image.heightHint = sizeY;
 		this.btImage.setLayoutData(gd_Image);
@@ -116,7 +117,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		final Section section_1 = this.toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("Details");
+		section_1.setText(Messages.EditMiscPage_Details);
 
 		final Composite compositeGeneral = this.toolkit.createComposite(body, SWT.NONE);
 		final GridLayout gridLayoutAdditional = new GridLayout();
@@ -135,7 +136,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		final Section section_1 = this.toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.EXPANDED);
 		section_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section_1.setText("Encryption");
+		section_1.setText(Messages.EditMiscPage_Encryption);
 
 		final Composite compositeEncryption = this.toolkit.createComposite(section_1, SWT.NONE);
 		final GridLayout gridLayoutEncryption = new GridLayout();
@@ -149,10 +150,10 @@ public class EditMiscPage extends AbstractInformationFormPage {
 
 	private void createGroupPreferredKeys(final Composite compositeEncryption) {
 		GridData gd_text = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		this.toolkit.createLabel(compositeEncryption, "Preferred OpenPGP Encryption Key:");
+		this.toolkit.createLabel(compositeEncryption, Messages.EditMiscPage_OpenPGP);
 		this.tx_OpenGpg = this.toolkit.createText(compositeEncryption, null, SWT.BORDER | SWT.FILL);
 		this.tx_OpenGpg.setLayoutData(gd_text);
-		this.toolkit.createLabel(compositeEncryption, "Preferred S/MIME Encryption Certificate:");
+		this.toolkit.createLabel(compositeEncryption, Messages.EditMiscPage_SMIME);
 		this.tx_Smime = this.toolkit.createText(compositeEncryption, null, SWT.BORDER);
 		this.tx_Smime.setLayoutData(gd_text);
 
@@ -166,11 +167,11 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		group_Person.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group_Person.setLayout(UIUtil.createMarginLessGridLayout(4));
 		this.toolkit.adapt(group_Person);
-		this.toolkit.createLabel(group_Person, "Nickname:");
+		this.toolkit.createLabel(group_Person, Messages.EditMiscPage_Nickname);
 		this.tx_Nickname = this.toolkit.createText(group_Person, null, SWT.BORDER);
 		this.tx_Nickname.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_Person, "Birthday:");
+		this.toolkit.createLabel(group_Person, Messages.EditMiscPage_Birthday);
 		Composite birthDayParent = this.toolkit.createComposite(group_Person);
 		GridLayout layout = new GridLayout(2, false);
 		layout.marginHeight = 2;
@@ -188,11 +189,11 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		birthDayParent.setLayoutData(dueDateLayoutData);
 		this.toolkit.adapt(this.birthDay);
 
-		this.toolkit.createLabel(group_Person, "Name of Partner:");
+		this.toolkit.createLabel(group_Person, Messages.EditMiscPage_Partner);
 		this.tx_NamePartner = this.toolkit.createText(group_Person, null, SWT.BORDER);
 		this.tx_NamePartner.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_Person, "Jubilee:");
+		this.toolkit.createLabel(group_Person, Messages.EditMiscPage_Jubilee);
 		Composite jubileeParent = this.toolkit.createComposite(group_Person);
 		layout = new GridLayout(2, false);
 		layout.marginHeight = 2;
@@ -218,27 +219,27 @@ public class EditMiscPage extends AbstractInformationFormPage {
 		group_General.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		this.toolkit.adapt(group_General);
 
-		this.toolkit.createLabel(group_General, "Department:");
+		this.toolkit.createLabel(group_General, Messages.EditMiscPage_Department);
 		this.tx_Department = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_Department.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_General, "Name of Manager:");
+		this.toolkit.createLabel(group_General, Messages.EditMiscPage_NameOfManager);
 		this.tx_NameManager = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_NameManager.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_General, "Bureau:");
+		this.toolkit.createLabel(group_General, Messages.EditMiscPage_Bureau);
 		this.tx_Bureau = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_Bureau.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_General, "Name of Assistant:");
+		this.toolkit.createLabel(group_General, Messages.EditMiscPage_NameOfAssistant);
 		this.tx_Assistant = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_Assistant.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_General, "Job:");
+		this.toolkit.createLabel(group_General, Messages.EditMiscPage_Job);
 		this.tx_Job = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_Job.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		this.toolkit.createLabel(group_General, "Title:");
+		this.toolkit.createLabel(group_General, Messages.EditMiscPage_Title);
 		this.tx_Title = this.toolkit.createText(group_General, null, SWT.BORDER);
 		this.tx_Title.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 	}
@@ -259,7 +260,7 @@ public class EditMiscPage extends AbstractInformationFormPage {
 	protected void setBytesToImage(final byte[] value) {
 		if (value == null) {
 			this.btImage.setImage(ResourceManager.getPluginImage(ContactActivator.getDefault(),
-					"icons/iconexperience/factory.png"));
+					"icons/iconexperience/factory.png")); //$NON-NLS-1$
 		} else {
 			ByteArrayInputStream bais = new ByteArrayInputStream(value);
 			ImageData imageData = new ImageData(bais);

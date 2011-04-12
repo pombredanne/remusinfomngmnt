@@ -24,11 +24,12 @@ import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactUtil;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 public class NewContactWizard extends NewInfoObjectWizard implements INewWizard {
 
 	public NewContactWizard() {
-		setWindowTitle("Create new contact");
+		setWindowTitle(Messages.NewContactWizard_CreateNewContact);
 	}
 
 	@Override

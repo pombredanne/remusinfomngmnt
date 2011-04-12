@@ -34,6 +34,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.messages.Messages;
 import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
 
 /**
@@ -53,23 +54,23 @@ public class ContactPreferencePage extends FieldEditorPreferencePage implements
 	@Override
 	protected void createFieldEditors() {
 		MultiLineStringFieldEditor fieldEditor = new MultiLineStringFieldEditor(
-				ContactPreferenceInitializer.FORMATTED_ADDRESS_PATTERN, "Address format",
+				ContactPreferenceInitializer.FORMATTED_ADDRESS_PATTERN, Messages.ContactPreferencePage_AdressFormat,
 				this.formatGroup);
 		fieldEditor.setHeight(50);
 
 		addField(fieldEditor);
 		addField(new StringFieldEditor(ContactPreferenceInitializer.FORMATTED_NAME_PATTERN,
-				"Name format", this.formatGroup));
+				Messages.ContactPreferencePage_NameFormat, this.formatGroup));
 
 		// Google Preferences
 		Link link = new Link(this.editingGroup, SWT.NONE);
-		link.setText("For rendering maps you need a <a>Google Maps Key</a>");
+		link.setText(Messages.ContactPreferencePage_YouNeedMapsKey);
 		link.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 		link.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				IPreferenceNode preferenceNode = UIUtil
-						.getPreferenceNode("org.remus.infomngmnt.geodata.preferencePage");
+						.getPreferenceNode("org.remus.infomngmnt.geodata.preferencePage"); //$NON-NLS-1$
 				if (preferenceNode != null) {
 					((IWorkbenchPreferenceContainer) getContainer()).openPage(preferenceNode
 							.getId(), null);
@@ -77,24 +78,24 @@ public class ContactPreferencePage extends FieldEditorPreferencePage implements
 			}
 		});
 		BooleanFieldEditor editor = new BooleanFieldEditor(
-				ContactPreferenceInitializer.SHOW_MAPS_IMAGE, "Render Google maps image",
+				ContactPreferenceInitializer.SHOW_MAPS_IMAGE, Messages.ContactPreferencePage_RenderMapsImage,
 				this.editingGroup);
 		editor.fillIntoGrid(this.editingGroup, 2);
 		addField(editor);
 		addField(new IntegerFieldEditor(ContactPreferenceInitializer.MAPS_IMAGE_WIDTH,
-				"Image width", this.editingGroup));
+				Messages.ContactPreferencePage_ImageWidth, this.editingGroup));
 		addField(new IntegerFieldEditor(ContactPreferenceInitializer.MAPS_IMAGE_HEIGHT,
-				"Image height", this.editingGroup));
+				Messages.ContactPreferencePage_ImageHeight, this.editingGroup));
 		addField(new IntegerFieldEditor(ContactPreferenceInitializer.MAPS_IMAGE_ZOOMLEVEL,
-				"Zoom level", this.editingGroup));
+				Messages.ContactPreferencePage_ZoomLevel, this.editingGroup));
 
 		// Phone calls
 		BooleanFieldEditor showPhone = new BooleanFieldEditor(
 				ContactPreferenceInitializer.SHOW_PHONE_LINKS,
-				"Add icon for calling phone numbers", this.phoneCalls);
+				Messages.ContactPreferencePage_AddIconForPhone, this.phoneCalls);
 		showPhone.fillIntoGrid(this.phoneCalls, 2);
 		addField(showPhone);
-		addField(new StringFieldEditor(ContactPreferenceInitializer.PHONE_CALL_PATTERN, "Pattern",
+		addField(new StringFieldEditor(ContactPreferenceInitializer.PHONE_CALL_PATTERN, Messages.ContactPreferencePage_Pattern,
 				this.phoneCalls));
 
 	}
@@ -112,15 +113,15 @@ public class ContactPreferencePage extends FieldEditorPreferencePage implements
 		this.formatGroup = new Group(fieldEditorParent, SWT.NONE);
 		this.formatGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		this.formatGroup.setText("Formatting");
+		this.formatGroup.setText(Messages.ContactPreferencePage_Formatting);
 
 		this.editingGroup = new Group(fieldEditorParent, SWT.NONE);
 		this.editingGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		this.editingGroup.setText("Google Maps");
+		this.editingGroup.setText(Messages.ContactPreferencePage_GoogleMaps);
 
 		this.phoneCalls = new Group(fieldEditorParent, SWT.NONE);
 		this.phoneCalls.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		this.phoneCalls.setText("Phone");
+		this.phoneCalls.setText(Messages.ContactPreferencePage_Phone);
 
 		createFieldEditors();
 		// adjustGridLayout();

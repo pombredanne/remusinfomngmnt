@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -52,8 +53,8 @@ public class GeneralContactPage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
-		setTitle("New Contact");
-		setMessage("This wizard enables you to create a new contact.");
+		setTitle(Messages.GeneralContactPage_NewContact);
+		setMessage(Messages.GeneralContactPage_WizardSubtitle);
 		// setImageDescriptor(ResourceManager.getPluginImageDescriptor(ImagePlugin.getDefault(),
 		// "icons/iconexperience/photo_wizard_title.png"));
 
@@ -62,11 +63,11 @@ public class GeneralContactPage extends GeneralPage {
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(2, false));
 
-		new Label(group, SWT.NONE).setText("Firstname");
+		new Label(group, SWT.NONE).setText(Messages.GeneralContactPage_Firstname);
 		this.firstName = new Text(group, SWT.BORDER);
 		this.firstName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		new Label(group, SWT.NONE).setText("Lastname");
+		new Label(group, SWT.NONE).setText(Messages.GeneralContactPage_Lastname);
 		this.lastName = new Text(group, SWT.BORDER);
 		this.lastName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
@@ -101,7 +102,7 @@ public class GeneralContactPage extends GeneralPage {
 			if (this.firstName.getText().trim().length() == 0
 					&& this.lastName.getText().trim().length() == 0) {
 				if (showErrorMessage) {
-					setErrorMessage("Either firstname or lastname must be set.");
+					setErrorMessage(Messages.GeneralContactPage_FirstOrLastNameMustBeSet);
 				}
 				return false;
 			} else {

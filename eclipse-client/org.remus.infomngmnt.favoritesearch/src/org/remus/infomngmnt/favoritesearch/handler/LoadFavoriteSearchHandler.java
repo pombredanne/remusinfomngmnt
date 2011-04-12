@@ -33,8 +33,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
-
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
+import org.remus.infomngmnt.favoritesearch.Messages;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 
 /**
@@ -50,8 +50,8 @@ public class LoadFavoriteSearchHandler extends AbstractHandler {
 	 * ExecutionEvent)
 	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		IEditingHandler service = FavoriteSearchActivator.getDefault().getServiceTracker()
-				.getService(IEditingHandler.class);
+		IEditingHandler service = FavoriteSearchActivator.getDefault()
+				.getServiceTracker().getService(IEditingHandler.class);
 		Shell activeShell = HandlerUtil.getActiveShell(event);
 		Set<? extends EObject> allItemsByType = InformationUtil
 				.getAllItemsByType(FavoriteSearchActivator.TYPE_ID);
@@ -66,25 +66,28 @@ public class LoadFavoriteSearchHandler extends AbstractHandler {
 						return super.getText(element);
 					}
 				});
-		ElementListSelectionDialog dialog = new ElementListSelectionDialog(activeShell,
-				labelProvider);
+		ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+				activeShell, labelProvider);
 		dialog.setAllowDuplicates(false);
 		dialog.setElements(allItemsByType.toArray());
-		dialog.setEmptySelectionMessage("Selection is required");
+		dialog.setEmptySelectionMessage(Messages.LoadFavoriteSearchHandler_SelectionRequired);
 		dialog.setMultipleSelection(false);
-		dialog.setTitle("Select a favorite search feed");
-		dialog.setMessage("Please select a favorites search from the list");
+		dialog.setTitle(Messages.LoadFavoriteSearchHandler_SelectFavoriteSearch);
+		dialog.setMessage(Messages.LoadFavoriteSearchHandler_SelectFavoriteSearchDetail);
 		dialog.setIgnoreCase(true);
 		if (dialog.open() == IDialogConstants.OK_ID) {
 			InformationUnit selSearch = (InformationUnit) (((InformationUnitListItem) dialog
 					.getFirstResult()).getAdapter(InformationUnit.class));
-			IWorkbenchPart activePart = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getActivePage().findView(SearchView.ID);
+			IWorkbenchPart activePart = PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getActivePage()
+					.findView(SearchView.ID);
 			if (activePart != null) {
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().bringToTop(
-						activePart);
-				InformationStructureRead read = InformationStructureRead.newSession(selSearch);
-				byte[] search = (byte[]) read.getValueByNodeId(FavoriteSearchActivator.RESULT_NODE);
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+						.getActivePage().bringToTop(activePart);
+				InformationStructureRead read = InformationStructureRead
+						.newSession(selSearch);
+				byte[] search = (byte[]) read
+						.getValueByNodeId(FavoriteSearchActivator.RESULT_NODE);
 				if (search != null) {
 					Search deserialize = SearchSerializer.deserialize(search);
 					((SearchView) activePart).setCurrentSearch(deserialize);
@@ -92,7 +95,8 @@ public class LoadFavoriteSearchHandler extends AbstractHandler {
 			}
 
 		}
-		FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
+		FavoriteSearchActivator.getDefault().getServiceTracker()
+				.ungetService(service);
 		return null;
 	}
 }

@@ -27,6 +27,7 @@ import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
+import org.remus.infomngmnt.favoritesearch.Messages;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 
 /**
@@ -37,7 +38,7 @@ public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 	private Search search;
 
 	public NewFavoriteSearchWizard() {
-		setWindowTitle("Create new Favorite search");
+		setWindowTitle(Messages.NewFavoriteSearchWizard_CreateNewFavoriteSearch);
 
 	}
 
@@ -97,7 +98,7 @@ public class NewFavoriteSearchWizard extends NewInfoObjectWizard {
 	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
 		this.search = (Search) selection.getFirstElement();
 		this.page1 = new GeneralFavoriteSearchWizardPage(this.search);
-		setCategoryString("Inbox/Favorite Searches");
+		setCategoryString(Messages.NewFavoriteSearchWizard_PredefinedCategory);
 		setCategoryToPage();
 	}
 

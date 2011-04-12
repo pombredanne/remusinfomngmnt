@@ -44,8 +44,8 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
-
 import org.remus.infomngmnt.favoritesearch.FavoriteSearchActivator;
+import org.remus.infomngmnt.favoritesearch.Messages;
 import org.remus.infomngmnt.favoritesearch.util.SearchDiff;
 import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
 
@@ -54,7 +54,8 @@ import org.remus.infomngmnt.favoritesearch.util.SearchSerializer;
  */
 public class SearchResultPage extends AbstractInformationFormPage {
 
-	public final static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+	public final static SimpleDateFormat SDF = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 	private FormText formText;
 	private final Adapter searchChangeListener = new AdapterImpl() {
 		@Override
@@ -62,7 +63,8 @@ public class SearchResultPage extends AbstractInformationFormPage {
 			if (msg.getFeature() == InfomngmntPackage.Literals.INFORMATION_UNIT__BINARY_VALUE) {
 				getSite().getShell().getDisplay().asyncExec(new Runnable() {
 					public void run() {
-						setList(FavoriteSearchActivator.RESULT_NODE, SearchResultPage.this.formText);
+						setList(FavoriteSearchActivator.RESULT_NODE,
+								SearchResultPage.this.formText);
 					}
 				});
 			}
@@ -103,51 +105,61 @@ public class SearchResultPage extends AbstractInformationFormPage {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				String[] split = ((String) e.getHref()).split("\\|"); //$NON-NLS-1$
-				EditorUtil.openInfoUnit(new Path(split[1]).removeFileExtension().lastSegment());
+				EditorUtil.openInfoUnit(new Path(split[1])
+						.removeFileExtension().lastSegment());
 			}
 		};
 
-		final Section newResultSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE);
+		final Section newResultSection = toolkit.createSection(body,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
+		newResultSection.setLayoutData(new TableWrapData(
+				TableWrapData.FILL_GRAB, TableWrapData.TOP));
 		newResultSection
-				.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
-		newResultSection.setText("New Results since last search");
+				.setText(Messages.SearchResultPage_NewResultsSinceLastSearch);
 
-		final Composite newResultComposite = toolkit.createComposite(newResultSection, SWT.NONE);
+		final Composite newResultComposite = toolkit.createComposite(
+				newResultSection, SWT.NONE);
 
 		newResultComposite.setLayout(new TableWrapLayout());
 		toolkit.paintBordersFor(newResultComposite);
 		newResultSection.setClient(newResultComposite);
 
-		this.formTextNewResults = toolkit.createFormText(newResultComposite, true);
-		this.formTextNewResults.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
-				TableWrapData.TOP));
+		this.formTextNewResults = toolkit.createFormText(newResultComposite,
+				true);
+		this.formTextNewResults.setLayoutData(new TableWrapData(
+				TableWrapData.FILL_GRAB, TableWrapData.TOP));
 		this.formTextNewResults.addHyperlinkListener(hyperLinkListener);
 
-		final Section resultSection = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-		resultSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
-		resultSection.setText("Latest Results");
+		final Section resultSection = toolkit.createSection(body,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
+						| ExpandableComposite.EXPANDED);
+		resultSection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
+				TableWrapData.TOP));
+		resultSection.setText(Messages.SearchResultPage_LatestResults);
 
-		final Composite composite_2 = toolkit.createComposite(resultSection, SWT.NONE);
+		final Composite composite_2 = toolkit.createComposite(resultSection,
+				SWT.NONE);
 
 		composite_2.setLayout(new TableWrapLayout());
 		toolkit.paintBordersFor(composite_2);
 		resultSection.setClient(composite_2);
 
 		this.formText = toolkit.createFormText(composite_2, true);
-		this.formText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP));
+		this.formText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
+				TableWrapData.TOP));
 		this.formText.addHyperlinkListener(hyperLinkListener);
 
-		IToolBarManager toolBarManager = ((SharedHeaderFormEditor) getEditor()).getHeaderForm()
-				.getForm().getToolBarManager();
-		toolBarManager.add(new Action("Refresh") {
+		IToolBarManager toolBarManager = ((SharedHeaderFormEditor) getEditor())
+				.getHeaderForm().getForm().getToolBarManager();
+		toolBarManager.add(new Action(Messages.SearchResultPage_Refresh) {
 			@Override
 			public void run() {
-				boolean saveEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage().saveEditor(getEditor(), true);
+				boolean saveEditor = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage()
+						.saveEditor(getEditor(), true);
 				if (saveEditor) {
-					SearchDiff.applyDiffToFavorite(getModelObject(), getEditor());
+					SearchDiff.applyDiffToFavorite(getModelObject(),
+							getEditor());
 
 				}
 			}
@@ -162,59 +174,71 @@ public class SearchResultPage extends AbstractInformationFormPage {
 	public void bindValuesToUi() {
 		super.bindValuesToUi();
 		setList(FavoriteSearchActivator.RESULT_NODE, this.formText);
-		setList(FavoriteSearchActivator.NEW_ELEMENTS_TYPE, this.formTextNewResults);
-		InformationUtil.getChildByType(getModelObject(), FavoriteSearchActivator.RESULT_NODE)
-				.eAdapters().add(this.searchChangeListener);
-		InformationUtil.getChildByType(getModelObject(), FavoriteSearchActivator.NEW_ELEMENTS_TYPE)
-				.eAdapters().add(this.searchNewChangeListener);
+		setList(FavoriteSearchActivator.NEW_ELEMENTS_TYPE,
+				this.formTextNewResults);
+		InformationUtil
+				.getChildByType(getModelObject(),
+						FavoriteSearchActivator.RESULT_NODE).eAdapters()
+				.add(this.searchChangeListener);
+		InformationUtil
+				.getChildByType(getModelObject(),
+						FavoriteSearchActivator.NEW_ELEMENTS_TYPE).eAdapters()
+				.add(this.searchNewChangeListener);
 	}
 
 	private void setList(final String node, final FormText text) {
-		IInformationTypeImage service = FavoriteSearchActivator.getDefault().getServiceTracker()
-				.getService(IInformationTypeImage.class);
-		Search deserialize = SearchSerializer.deserialize(InformationUtil.getChildByType(
-				getModelObject(), node).getBinaryValue());
+		IInformationTypeImage service = FavoriteSearchActivator.getDefault()
+				.getServiceTracker().getService(IInformationTypeImage.class);
+		Search deserialize = SearchSerializer.deserialize(InformationUtil
+				.getChildByType(getModelObject(), node).getBinaryValue());
 		EList<SearchResult> result2 = deserialize.getResult();
 		StringBuilder sb = new StringBuilder();
-		sb.append("<form>");
+		sb.append("<form>"); //$NON-NLS-1$
 		if (result2.size() == 0) {
-			sb.append("<p><b>No results.</b></p>");
+			sb.append(Messages.SearchResultPage_NoResults);
 		} else {
 			for (int i = 0, n = result2.size(); i < n; i++) {
 				sb.append(buildSearchResultSting(result2.get(i), i, n));
-				text.setImage(result2.get(i).getInfoType(), service.getImageByInfoType(result2.get(
-						i).getInfoType()));
+				text.setImage(result2.get(i).getInfoType(), service
+						.getImageByInfoType(result2.get(i).getInfoType()));
 			}
 		}
-		sb.append("</form>");
+		sb.append("</form>"); //$NON-NLS-1$
 		text.setText(sb.toString(), true, false);
 		this.form.reflow(true);
-		FavoriteSearchActivator.getDefault().getServiceTracker().ungetService(service);
+		FavoriteSearchActivator.getDefault().getServiceTracker()
+				.ungetService(service);
 
 	}
 
 	@Override
 	public void disposeBinding() {
-		InformationUtil.getChildByType(getModelObject(), FavoriteSearchActivator.RESULT_NODE)
-				.eAdapters().remove(this.searchChangeListener);
-		InformationUtil.getChildByType(getModelObject(), FavoriteSearchActivator.NEW_ELEMENTS_TYPE)
-				.eAdapters().remove(this.searchNewChangeListener);
+		InformationUtil
+				.getChildByType(getModelObject(),
+						FavoriteSearchActivator.RESULT_NODE).eAdapters()
+				.remove(this.searchChangeListener);
+		InformationUtil
+				.getChildByType(getModelObject(),
+						FavoriteSearchActivator.NEW_ELEMENTS_TYPE).eAdapters()
+				.remove(this.searchNewChangeListener);
 	}
 
-	private String buildSearchResultSting(final SearchResult result, final int index,
-			final int count) {
+	private String buildSearchResultSting(final SearchResult result,
+			final int index, final int count) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<p>").append(index + 1).append(" of ").append(count).append(" \u00AD ");
+		sb.append("<p>").append(index + 1).append(Messages.SearchResultPage_of).append(count).append(" \u00AD "); //$NON-NLS-1$ //$NON-NLS-2$
 		if (result.getDate() != null) {
 			sb.append(SDF.format(result.getDate()));
 		} else {
-			sb.append("n.a.");
+			sb.append(Messages.SearchResultPage_na);
 		}
-		sb.append("</p><p>");
-		sb.append("<img href=\"").append(result.getInfoType()).append("\"/>").append(" <a href=\"")
-				.append(index).append("|").append(result.getPath().toString()).append("\">")
-				.append(StringEscapeUtils.escapeXml(result.getTitle())).append("</a>").append(
-						"</p>");
+		sb.append("</p><p>"); //$NON-NLS-1$
+		sb.append("<img href=\"").append(result.getInfoType()).append("\"/>").append(" <a href=\"") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.append(index)
+				.append("|").append(result.getPath().toString()).append("\">") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(StringEscapeUtils.escapeXml(result.getTitle()))
+				.append("</a>").append( //$NON-NLS-1$
+						"</p>"); //$NON-NLS-1$
 		return sb.toString();
 	}
 

@@ -14,6 +14,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
+import org.remus.infomngmnt.connector.youtube.messages.Messages;
 
 public class YoutubePreferencePage extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {
@@ -53,11 +54,11 @@ public class YoutubePreferencePage extends FieldEditorPreferencePage implements
 		this.createGroup = new Group(fieldEditorParent, SWT.NONE);
 		this.createGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		this.createGroup.setText("Connection URLs");
+		this.createGroup.setText(Messages.YoutubePreferencePage_ConnectionUrl);
 
 		this.editingGroup = new Group(fieldEditorParent, SWT.NONE);
 		this.editingGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		this.editingGroup.setText("Download");
+		this.editingGroup.setText(Messages.YoutubePreferencePage_Download);
 
 		createFieldEditors();
 		// adjustGridLayout();
@@ -72,23 +73,23 @@ public class YoutubePreferencePage extends FieldEditorPreferencePage implements
 	@Override
 	protected void createFieldEditors() {
 
-		addField(new StringFieldEditor(PreferenceInitializer.GDATA_SERVER_URL, "Youtube Data URL",
+		addField(new StringFieldEditor(PreferenceInitializer.GDATA_SERVER_URL, Messages.YoutubePreferencePage_YoutubeDataURL,
 				this.createGroup));
-		addField(new StringFieldEditor(PreferenceInitializer.FAVORITES_URL, "Favorites URL",
+		addField(new StringFieldEditor(PreferenceInitializer.FAVORITES_URL, Messages.YoutubePreferencePage_FavoritesURL,
 				this.createGroup));
-		addField(new StringFieldEditor(PreferenceInitializer.PLAYLIST_URL, "Playlist URL",
+		addField(new StringFieldEditor(PreferenceInitializer.PLAYLIST_URL, Messages.YoutubePreferencePage_PlaylistURL,
 				this.createGroup));
 		addField(new StringFieldEditor(PreferenceInitializer.HIGH_DEFINITION_DOWNLOAD_URL,
-				"HD Download URL", this.createGroup));
+				Messages.YoutubePreferencePage_HDDownloadURL, this.createGroup));
 		addField(new StringFieldEditor(PreferenceInitializer.HIGH_QUALITY_DOWNLOAD_URL,
-				"High Quality Download URL", this.createGroup));
+				Messages.YoutubePreferencePage_HighQualityURL, this.createGroup));
 		addField(new StringFieldEditor(PreferenceInitializer.NORMAL_DOWNLOAD_URL,
-				"Standard Quality Download URL", this.createGroup));
-		addField(new StringFieldEditor(PreferenceInitializer.VIDEO_HTML_URL, "Website Video URL",
+				Messages.YoutubePreferencePage_StandardURL, this.createGroup));
+		addField(new StringFieldEditor(PreferenceInitializer.VIDEO_HTML_URL, Messages.YoutubePreferencePage_WebsiteVideoURL,
 				this.createGroup));
 
 		BooleanFieldEditor fieldEditor = new BooleanFieldEditor(PreferenceInitializer.ALWAYS_HD,
-				"Download HD version if available", this.editingGroup);
+				Messages.YoutubePreferencePage_HDVersion, this.editingGroup);
 		addField(fieldEditor);
 	}
 

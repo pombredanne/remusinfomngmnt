@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.connector.youtube.readonly.YoutubeConnector"
             credentialprovider="org.remus.infomngmnt.connector.youtube.readonly.YoutubeRedonlyCredentials"
             id="org.remus.infomngmnt.connector.youtube"
-            name="Youtube">
+            name="%repository-connector.name">
       </repository-connector>
    </extension>
    <extension
@@ -31,7 +31,7 @@
             category="org.eclipse.remus.ui.repositories"
             class="org.remus.infomngmnt.connector.youtube.preferences.YoutubePreferencePage"
             id="org.remus.infomngmnt.connector.youtube.prefs"
-            name="Youtube">
+            name="%page.name">
       </page>
    </extension>
    <extension
@@ -41,8 +41,8 @@
          <menu
                icon="icons/youtube.png"
                id="org.remus.infomngmnt.youtube.contextmenu"
-               label="Youtube"
-               mnemonic="l">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.connector.youtube.copyEmbed"
                   style="push">
@@ -77,7 +77,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.connector.youtube.copyEmbed"
-            name="Open Video on Youtube">
+            name="%command.name">
       </command>
    </extension>
    <extension

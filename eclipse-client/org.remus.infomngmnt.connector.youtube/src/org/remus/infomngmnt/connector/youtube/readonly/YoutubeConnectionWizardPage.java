@@ -46,6 +46,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.connector.youtube.YoutubeActivator;
+import org.remus.infomngmnt.connector.youtube.messages.Messages;
 import org.remus.infomngmnt.connector.youtube.preferences.PreferenceInitializer;
 
 public class YoutubeConnectionWizardPage extends WizardPage {
@@ -61,9 +62,9 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public YoutubeConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("Youtube Connector");
-		setDescription("Enter the username you want to listen to");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.YoutubeConnectionWizardPage_WizardTitle);
+		setDescription(Messages.YoutubeConnectionWizardPage_WizardSubTitle);
 		this.manualName = false;
 	}
 
@@ -84,7 +85,7 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.YoutubeConnectionWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -97,7 +98,7 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 		});
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("API-Url:");
+		apiurlLabel.setText(Messages.YoutubeConnectionWizardPage_APIUrl);
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		final GridData gd_apiUrlText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -105,7 +106,7 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 		this.apiUrlText.setEditable(false);
 
 		final Group credentialsGroup = new Group(container, SWT.NONE);
-		credentialsGroup.setText("User Profile");
+		credentialsGroup.setText(Messages.YoutubeConnectionWizardPage_UserProfile);
 		final GridData gd_credentialsGroup = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		credentialsGroup.setLayoutData(gd_credentialsGroup);
 		final GridLayout gridLayout_1 = new GridLayout();
@@ -113,7 +114,7 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 		credentialsGroup.setLayout(gridLayout_1);
 
 		final Label usernameLabel = new Label(credentialsGroup, SWT.NONE);
-		usernameLabel.setText("Username");
+		usernameLabel.setText(Messages.YoutubeConnectionWizardPage_Username);
 
 		this.userNameText = new Text(credentialsGroup, SWT.BORDER);
 		final GridData gd_userNameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -135,8 +136,8 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 						}
 					});
 				} catch (InvocationTargetException e) {
-					setErrorMessage(StringUtils.join("Error validating repository (", e.getCause()
-							.getMessage(), ")"));
+					setErrorMessage(StringUtils.join(Messages.YoutubeConnectionWizardPage_ErrorValidating, e.getCause()
+							.getMessage(), ")")); //$NON-NLS-1$
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -146,12 +147,12 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 		final GridData gd_validateCredentialsButton = new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false);
 		validateCredentialsButton.setLayoutData(gd_validateCredentialsButton);
-		validateCredentialsButton.setText("Check username");
+		validateCredentialsButton.setText(Messages.YoutubeConnectionWizardPage_CheckUserName);
 		bindValuesToUi();
 		setControl(container);
 
-		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition
-				.getCredentialProvider().getUserName(), "youtube-readonly"));
+		this.nameText.setText(String.format("%s@%s", this.repositoryDefinition //$NON-NLS-1$
+				.getCredentialProvider().getUserName(), "youtube-readonly")); //$NON-NLS-1$
 		this.userNameText.setFocus();
 	}
 
@@ -189,8 +190,8 @@ public class YoutubeConnectionWizardPage extends WizardPage {
 			public void handleValueChange(final ValueChangeEvent event) {
 				if (!YoutubeConnectionWizardPage.this.manualName) {
 					String userName = (String) event.getObservableValue().getValue();
-					YoutubeConnectionWizardPage.this.nameText.setText(String.format("%s@%s",
-							userName, "youtube-readonly"));
+					YoutubeConnectionWizardPage.this.nameText.setText(String.format("%s@%s", //$NON-NLS-1$
+							userName, "youtube-readonly")); //$NON-NLS-1$
 				}
 			}
 		});

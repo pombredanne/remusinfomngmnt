@@ -32,7 +32,7 @@ import org.eclipse.remus.ui.util.CancelableRunnable;
 import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.program.Program;
 import org.eclipse.ui.handlers.HandlerUtil;
-
+import org.remus.infomngmnt.connector.youtube.messages.Messages;
 
 import com.google.gdata.data.youtube.VideoEntry;
 
@@ -55,41 +55,50 @@ public class OpenVideoOnYoutubeHandler extends CopyToClipboardHandler {
 			final InformationUnitListItem adapter = (InformationUnitListItem) infoUnit
 					.getAdapter(InformationUnitListItem.class);
 			final IRepository remoteRepository = SyncUtil
-					.getRepositoryImplemenationByRepositoryId(adapter.getSynchronizationMetaData()
-							.getRepositoryId());
+					.getRepositoryImplemenationByRepositoryId(adapter
+							.getSynchronizationMetaData().getRepositoryId());
 			if (remoteRepository != null) {
 				CancelableRunnable runnable = new CancelableRunnable() {
 
 					@Override
-					protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-						monitor
-								.beginTask("Contacting Youtube Repository",
-										IProgressMonitor.UNKNOWN);
+					protected IStatus runCancelableRunnable(
+							final IProgressMonitor monitor) {
+						monitor.beginTask(
+								Messages.OpenVideoOnYoutubeHandler_ContactYoutube,
+								IProgressMonitor.UNKNOWN);
 						RemoteObject remoteObject;
 						try {
-							remoteObject = remoteRepository.getRemoteObjectBySynchronizableObject(
-									adapter, monitor);
+							remoteObject = remoteRepository
+									.getRemoteObjectBySynchronizableObject(
+											adapter, monitor);
 						} catch (RemoteException e) {
 							return StatusCreator
-									.newStatus("Error contacting Youtube Repository", e);
+									.newStatus(
+											Messages.OpenVideoOnYoutubeHandler_ErrorContactYoutube,
+											e);
 						}
 						if (remoteObject != null
 								&& remoteObject.getWrappedObject() instanceof VideoEntry) {
-							VideoEntry wrappedObject = (VideoEntry) remoteObject.getWrappedObject();
-							Program.launch(wrappedObject.getHtmlLink().getHref());
+							VideoEntry wrappedObject = (VideoEntry) remoteObject
+									.getWrappedObject();
+							Program.launch(wrappedObject.getHtmlLink()
+									.getHref());
 						}
 						return Status.OK_STATUS;
 					}
 				};
-				ProgressMonitorDialog pmd = new ProgressMonitorDialog(HandlerUtil
-						.getActiveShell(event));
+				ProgressMonitorDialog pmd = new ProgressMonitorDialog(
+						HandlerUtil.getActiveShell(event));
 				try {
 					pmd.run(true, true, runnable);
 				} catch (Exception e) {
-					ErrorDialog.openError(HandlerUtil.getActiveShell(event), "Error",
-							"Error contacting Flickr",
-							e.getCause() instanceof CoreException ? ((CoreException) e.getCause())
-									.getStatus() : null);
+					ErrorDialog
+							.openError(
+									HandlerUtil.getActiveShell(event),
+									Messages.OpenVideoOnYoutubeHandler_Error,
+									Messages.OpenVideoOnYoutubeHandler_ErrorContactYoutube,
+									e.getCause() instanceof CoreException ? ((CoreException) e
+											.getCause()).getStatus() : null);
 				}
 
 			}

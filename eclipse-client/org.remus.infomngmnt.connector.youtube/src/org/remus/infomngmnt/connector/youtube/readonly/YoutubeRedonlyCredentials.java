@@ -24,7 +24,7 @@ public class YoutubeRedonlyCredentials extends CredentialProvider {
 	 */
 	public YoutubeRedonlyCredentials() {
 		super();
-		setGroup("youtube-readonly");
+		setGroup("youtube-readonly"); //$NON-NLS-1$
 	}
 
 }

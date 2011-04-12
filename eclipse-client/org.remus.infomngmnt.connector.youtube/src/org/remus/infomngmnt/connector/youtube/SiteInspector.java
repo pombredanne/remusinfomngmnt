@@ -25,30 +25,31 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.remus.common.core.streams.StreamUtil;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class SiteInspector {
-	public static final String REGEXP_STRING = "(\"fmt_url_map\": \")(.+)(\")";
+	public static final String REGEXP_STRING = "(\"fmt_url_map\": \")(.+)(\")"; //$NON-NLS-1$
 
-	public static Map<String, String> getUrlMap(final IFile file) throws CoreException {
+	public static Map<String, String> getUrlMap(final IFile file)
+			throws CoreException {
 		InputStream contents = file.getContents();
-		String convertStreamToString = StreamUtil.convertStreamToString(contents);
+		String convertStreamToString = StreamUtil
+				.convertStreamToString(contents);
 
-		Pattern compile = Pattern.compile("(fmt_url_map=)(.+)(&)");
+		Pattern compile = Pattern.compile("(fmt_url_map=)(.+)(&)"); //$NON-NLS-1$
 		Matcher matcher = compile.matcher(convertStreamToString);
 		Map<String, String> returnValue = new HashMap<String, String>();
 		if (matcher.find()) {
 			String escapeJavaScript;
 			try {
-				escapeJavaScript = URLDecoder.decode(matcher.group(2), "UTF-8");
-				String[] split = StringUtils.split(escapeJavaScript, ",");
+				escapeJavaScript = URLDecoder.decode(matcher.group(2), "UTF-8"); //$NON-NLS-1$
+				String[] split = StringUtils.split(escapeJavaScript, ","); //$NON-NLS-1$
 				for (String string : split) {
-					String[] split2 = StringUtils.split(string, "|");
+					String[] split2 = StringUtils.split(string, "|"); //$NON-NLS-1$
 					if (split2.length == 2) {
 						String data = split2[1];
-						if (data.endsWith("\"")) {
+						if (data.endsWith("\"")) { //$NON-NLS-1$
 							data = data.substring(0, data.length() - 1);
 						}
 						returnValue.put(split2[0], data);
@@ -60,18 +61,19 @@ public class SiteInspector {
 			}
 		} else {
 			// RIMCONNECTORS-24 old pattern does not work everywhere.
-			compile = Pattern.compile("(fmt_url_map=)(.+)(&)");
+			compile = Pattern.compile("(fmt_url_map=)(.+)(&)"); //$NON-NLS-1$
 			matcher = compile.matcher(convertStreamToString);
 			if (matcher.find()) {
 				String escapeJavaScript;
 				try {
-					escapeJavaScript = URLDecoder.decode(matcher.group(2), "UTF-8");
-					String[] split = StringUtils.split(escapeJavaScript, ",");
+					escapeJavaScript = URLDecoder.decode(matcher.group(2),
+							"UTF-8"); //$NON-NLS-1$
+					String[] split = StringUtils.split(escapeJavaScript, ","); //$NON-NLS-1$
 					for (String string : split) {
-						String[] split2 = StringUtils.split(string, "|");
+						String[] split2 = StringUtils.split(string, "|"); //$NON-NLS-1$
 						if (split2.length == 2) {
 							String data = split2[1];
-							if (data.endsWith("\"")) {
+							if (data.endsWith("\"")) { //$NON-NLS-1$
 								data = data.substring(0, data.length() - 1);
 							}
 							returnValue.put(split2[0], data);
@@ -87,7 +89,7 @@ public class SiteInspector {
 	}
 
 	public static String getId(final String url) {
-		int lastIndexOf = url.lastIndexOf("v=");
+		int lastIndexOf = url.lastIndexOf("v="); //$NON-NLS-1$
 		return url.substring(lastIndexOf + 2);
 	}
 

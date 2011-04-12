@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.connector.webdav.WebDAVConnector"
             credentialprovider="org.remus.infomngmnt.connector.webdav.WebDavCredentialProvider"
             id="org.remus.infomngmnt.connector.webdav.repository-connector"
-            name="WebDAV">
+            name="%repository-connector.name">
       </repository-connector>
    </extension>
    <extension

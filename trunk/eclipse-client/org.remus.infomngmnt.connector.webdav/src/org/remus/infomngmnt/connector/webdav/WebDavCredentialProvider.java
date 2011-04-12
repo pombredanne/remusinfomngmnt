@@ -14,7 +14,6 @@ package org.remus.infomngmnt.connector.webdav;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.remus.core.remote.security.CredentialProvider;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -27,12 +26,12 @@ public class WebDavCredentialProvider extends CredentialProvider {
 	 */
 	public WebDavCredentialProvider() {
 		super();
-		setGroup("rss");
+		setGroup("rss"); //$NON-NLS-1$
 	}
 
 	public String getUrl() {
 		try {
-			return getNode().get(URL, "");
+			return getNode().get(URL, ""); //$NON-NLS-1$
 		} catch (StorageException e) {
 			throw new SecurityException(e);
 		}

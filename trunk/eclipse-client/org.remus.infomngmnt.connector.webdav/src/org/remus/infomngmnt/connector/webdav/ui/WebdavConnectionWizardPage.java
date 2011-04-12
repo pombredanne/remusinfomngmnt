@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.connector.webdav.Activator;
+import org.remus.infomngmnt.connector.webdav.Messages;
 import org.remus.infomngmnt.connector.webdav.WebDavCredentialProvider;
 
 public class WebdavConnectionWizardPage extends WizardPage {
@@ -62,9 +63,9 @@ public class WebdavConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public WebdavConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("WebDAV Connector");
-		setDescription("Enter a url to your WebDAV Repository");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.WebdavConnectionWizardPage_WizardTitle);
+		setDescription(Messages.WebdavConnectionWizardPage_WizardSubtitle);
 
 	}
 
@@ -86,13 +87,13 @@ public class WebdavConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.WebdavConnectionWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("WebDAV-Url:");
+		apiurlLabel.setText(Messages.WebdavConnectionWizardPage_Url);
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		this.apiUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -121,35 +122,35 @@ public class WebdavConnectionWizardPage extends WizardPage {
 					});
 					setErrorMessage(null);
 				} catch (InvocationTargetException e) {
-					setErrorMessage(StringUtils.join("Error validating repository (", e.getCause()
-							.getMessage(), ")"));
+					setErrorMessage(StringUtils.join(Messages.WebdavConnectionWizardPage_ErrorValidating, e.getCause()
+							.getMessage(), ")")); //$NON-NLS-1$
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		validateCredentialsButton.setText("Validate");
+		validateCredentialsButton.setText(Messages.WebdavConnectionWizardPage_Validate);
 
 		final Group group3 = new Group(container, SWT.NONE);
 		group3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		group3.setText("Authentication");
+		group3.setText(Messages.WebdavConnectionWizardPage_Authentication);
 		GridLayout gridLayout_1 = new GridLayout();
 		gridLayout_1.numColumns = 2;
 		group3.setLayout(gridLayout_1);
 		this.authentificationButton = new Button(group3, SWT.CHECK);
 		this.authentificationButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
 				2, 1));
-		this.authentificationButton.setText("Use authentication");
+		this.authentificationButton.setText(Messages.WebdavConnectionWizardPage_UseAuthentication);
 		Label username = new Label(group3, SWT.NONE);
 		username.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		username.setText("Username");
+		username.setText(Messages.WebdavConnectionWizardPage_Username);
 
 		this.userNameText = new Text(group3, SWT.BORDER);
 		this.userNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblPassword = new Label(group3, SWT.NONE);
-		lblPassword.setText("Password");
+		lblPassword.setText(Messages.WebdavConnectionWizardPage_Password);
 
 		this.passwordText = new Text(group3, SWT.BORDER | SWT.PASSWORD);
 		this.passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

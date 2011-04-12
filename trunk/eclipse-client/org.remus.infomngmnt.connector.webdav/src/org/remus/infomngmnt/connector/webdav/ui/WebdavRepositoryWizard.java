@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.connector.webdav.Messages;
 
 
 /**
@@ -30,7 +31,7 @@ public class WebdavRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public WebdavRepositoryWizard() {
-		setWindowTitle("WebDAV");
+		setWindowTitle(Messages.WebdavRepositoryWizard_WebDAV);
 	}
 
 	@Override
@@ -40,8 +41,8 @@ public class WebdavRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	public boolean performFinish() {
-		if (!this.repository.getUrl().endsWith("/")) {
-			this.repository.setUrl(this.repository.getUrl() + "/");
+		if (!this.repository.getUrl().endsWith("/")) { //$NON-NLS-1$
+			this.repository.setUrl(this.repository.getUrl() + "/"); //$NON-NLS-1$
 		}
 		return super.performFinish();
 	};

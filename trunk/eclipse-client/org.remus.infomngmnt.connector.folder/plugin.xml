@@ -6,7 +6,7 @@
       <repository-connector
             class="org.remus.infomngmnt.connector.folder.FolderConnector"
             id="org.remus.infomngmnt.connector.folder.folder"
-            name="Local Folder">
+            name="%repository-connector.name">
       </repository-connector>
    </extension>
    <extension

@@ -111,7 +111,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 				File file = new File(newPath);
 				file.mkdirs();
 				Resource res = new XMLResourceImpl(URI.createFileURI(new StringWriter().append(
-						newPath).append(File.separator).append(copy.getId()).append(".info")
+						newPath).append(File.separator).append(copy.getId()).append(".info") //$NON-NLS-1$
 						.toString()));
 				res.getContents().add(copy);
 				this.editingService.saveObjectToResource(copy);
@@ -149,7 +149,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 				return buildSingleInfoUnit(new File(newPath));
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error adding element to repository", e));
+						Messages.FolderConnector_ErrorAddingElement, e));
 			}
 		}
 		if (item instanceof Category) {
@@ -190,7 +190,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 					Resource res = new XMLResourceImpl();
 					res.getContents().add(copy);
 					String infoFile = new StringWriter().append(remoteObject.getUrl()).append(
-							File.separator).append(remoteObject.getId()).append(".info").toString();
+							File.separator).append(remoteObject.getId()).append(".info").toString(); //$NON-NLS-1$
 					FileOutputStream fileos = null;
 					try {
 						fileos = new FileOutputStream(infoFile);
@@ -242,7 +242,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 					}
 				} catch (Exception e) {
 					throw new RemoteException(StatusCreator
-							.newStatus("Error committing element", e));
+							.newStatus(Messages.FolderConnector_ErrorCommittingElement, e));
 				}
 				return buildSingleInfoUnit(new File(remoteObject.getUrl()));
 
@@ -263,7 +263,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 					res.save(fileos, ResourceConstants.SAVE_OPTIONS);
 					res.unload();
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error committing category",
+					throw new RemoteException(StatusCreator.newStatus(Messages.FolderConnector_ErrorCommittingCategory,
 							e));
 				} finally {
 					if (fileos != null) {
@@ -296,11 +296,11 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 			try {
 				FileUtil.delete(file);
 			} catch (IOException e) {
-				throw new RemoteException(StatusCreator.newStatus("Error deleting item", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.FolderConnector_ErrorDeletingItem, e));
 			}
 
 		} else {
-			throw new RemoteException(StatusCreator.newStatus("Remote object was not found."));
+			throw new RemoteException(StatusCreator.newStatus(Messages.FolderConnector_RemoteObjectNotFound));
 		}
 
 	}
@@ -353,7 +353,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 		if (file2.exists() && file2.isDirectory()) {
 			File[] listInfo = file2.listFiles(new FilenameFilter() {
 				public boolean accept(final File dir, final String name) {
-					return name.endsWith(".info");
+					return name.endsWith(".info"); //$NON-NLS-1$
 				}
 			});
 			if (listInfo.length == 1) {
@@ -580,6 +580,6 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 		if (file.exists() && file.isDirectory() && file.canWrite()) {
 			return Status.OK_STATUS;
 		}
-		return StatusCreator.newStatus("Not a valid directory: " + url);
+		return StatusCreator.newStatus(Messages.FolderConnector_NoValidCategory + url);
 	}
 }

@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.connector.folder.Messages;
 
 
 /**
@@ -30,7 +31,7 @@ public class NewFolderRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewFolderRepositoryWizard() {
-		setWindowTitle("Local Folder Repository");
+		setWindowTitle(Messages.NewFolderRepositoryWizard_LocalFolderRepository);
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class NewFolderRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		newRemoteRepositry.setName("local");
+		newRemoteRepositry.setName(Messages.NewFolderRepositoryWizard_Local);
 	}
 
 }

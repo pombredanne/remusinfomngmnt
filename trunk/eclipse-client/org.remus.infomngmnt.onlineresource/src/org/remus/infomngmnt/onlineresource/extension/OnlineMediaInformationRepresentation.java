@@ -42,18 +42,18 @@ import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.resources.util.ResourceUtil;
 import org.eclipse.remus.util.StatusCreator;
+import org.remus.infomngmnt.onlineresource.OnlineResourceActivator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import org.remus.infomngmnt.onlineresource.OnlineResourceActivator;
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class OnlineMediaInformationRepresentation extends AbstractInformationRepresentation {
+public class OnlineMediaInformationRepresentation extends
+		AbstractInformationRepresentation {
 
 	/*
 	 * (non-Javadoc)
@@ -63,30 +63,37 @@ public class OnlineMediaInformationRepresentation extends AbstractInformationRep
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		Map<String, Object> additionals = new HashMap<String, Object>();
-		additionals.put("embedded", parseContent());
+		additionals.put("embedded", parseContent()); //$NON-NLS-1$
 		List<BinaryReference> binaryReferences = read.getBinaryReferences(
 				OnlineResourceActivator.NODE_NAME_ATTACHMENT, false);
 		if (binaryReferences.size() > 0) {
-			String projectRelativePath = binaryReferences.get(0).getProjectRelativePath();
-			IPath location = getFile().getProject().getFolder(ResourceUtil.BINARY_FOLDER).getFile(
-					projectRelativePath).getLocation();
-			additionals.put("attachment", URI.createFileURI(location.toOSString()));
+			String projectRelativePath = binaryReferences.get(0)
+					.getProjectRelativePath();
+			IPath location = getFile().getProject()
+					.getFolder(ResourceUtil.BINARY_FOLDER)
+					.getFile(projectRelativePath).getLocation();
+			additionals.put("attachment", //$NON-NLS-1$
+					URI.createFileURI(location.toOSString()));
 		}
 		try {
-			templateIs = FileLocator.openStream(Platform
-					.getBundle(OnlineResourceActivator.PLUGIN_ID), new Path(
-					"template/htmlserialization.flt"), false);
-			FreemarkerRenderer.getInstance().process(OnlineResourceActivator.PLUGIN_ID, templateIs,
-					returnValue, additionals, read.getContentsAsStrucuturedMap(),
+			templateIs = FileLocator.openStream(
+					Platform.getBundle(OnlineResourceActivator.PLUGIN_ID),
+					new Path("$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
+			FreemarkerRenderer.getInstance().process(
+					OnlineResourceActivator.PLUGIN_ID, templateIs, returnValue,
+					additionals, read.getContentsAsStrucuturedMap(),
 					read.getDynamicContentAsStructuredMap());
 
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					"Error reading locations", e)); //$NON-NLS-1$
 		} finally {
 			StreamCloser.closeStreams(templateIs);
 		}
@@ -94,21 +101,24 @@ public class OnlineMediaInformationRepresentation extends AbstractInformationRep
 	}
 
 	private String parseContent() {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		String content = (String) read.getValueByNodeId(OnlineResourceActivator.NODE_NAME_EMBED);
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
+		String content = (String) read
+				.getValueByNodeId(OnlineResourceActivator.NODE_NAME_EMBED);
 
 		final DOMParser parser = new DOMParser();
 		try {
 			parser.parse(new InputSource(new StringReader(content)));
 			final Document document = parser.getDocument();
 
-			NodeList elementsByTagName = document.getElementsByTagName("a");
+			NodeList elementsByTagName = document.getElementsByTagName("a"); //$NON-NLS-1$
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
 				final Node node = elementsByTagName.item(i);
-				((Element) node).setAttribute("target", "_blank");
+				((Element) node).setAttribute("target", "_blank"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
-			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			transformer.setOutputProperty("omit-xml-declaration", "yes");
+			final Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
+			transformer.setOutputProperty("omit-xml-declaration", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			final DOMSource source = new DOMSource(document);
 			final StringWriter writer = new StringWriter();

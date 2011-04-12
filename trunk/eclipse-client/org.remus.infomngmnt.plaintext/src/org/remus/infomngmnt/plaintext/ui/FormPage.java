@@ -14,6 +14,7 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.plaintext.messages.Messages;
 
 
 public class FormPage extends AbstractInformationFormPage {
@@ -32,7 +33,7 @@ public class FormPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.FormPage_General);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout());
@@ -42,7 +43,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		this.richtext = new AnnotatingQuickFixTextBox(client, "", "");
+		this.richtext = new AnnotatingQuickFixTextBox(client, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
 		addControl(this.richtext.getFTextField());
 		doCreateSemanticSection(body, toolkit);
@@ -55,8 +56,8 @@ public class FormPage extends AbstractInformationFormPage {
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
 		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
 				this.richtext.getFTextField(), this);
-		textBindingWidget.bindModel(read.getChildByNodeId("contents"), read
-				.getFeatureByNodeId("contents"));
+		textBindingWidget.bindModel(read.getChildByNodeId("contents"), read //$NON-NLS-1$
+				.getFeatureByNodeId("contents")); //$NON-NLS-1$
 		super.bindValuesToUi();
 	}
 }

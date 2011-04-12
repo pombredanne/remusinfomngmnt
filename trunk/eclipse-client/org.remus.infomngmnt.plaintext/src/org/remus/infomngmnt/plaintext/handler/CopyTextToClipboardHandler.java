@@ -23,7 +23,6 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -37,12 +36,15 @@ public class CopyTextToClipboardHandler extends AbstractHandler {
 	 * ExecutionEvent)
 	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		InformationUnit unit = InformationHandlerUtil.getInformationUnitFromExecutionEvent(event);
+		InformationUnit unit = InformationHandlerUtil
+				.getInformationUnitFromExecutionEvent(event);
 		if (unit != null) {
-			InformationStructureRead read = InformationStructureRead.newSession(unit);
+			InformationStructureRead read = InformationStructureRead
+					.newSession(unit);
 
-			new Clipboard(UIUtil.getDisplay()).setContents(new Object[] { read
-					.getValueByNodeId("contents") }, new Transfer[] { TextTransfer.getInstance() });
+			new Clipboard(UIUtil.getDisplay())
+					.setContents(
+							new Object[] { read.getValueByNodeId("contents") }, new Transfer[] { TextTransfer.getInstance() }); //$NON-NLS-1$
 		}
 		return null;
 	}

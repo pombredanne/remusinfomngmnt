@@ -14,8 +14,10 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 public class FormPage2 extends FormPage {
 
 	private StyledText styledText;
+
 	/**
 	 * Create the form page
+	 * 
 	 * @param id
 	 * @param title
 	 */
@@ -25,6 +27,7 @@ public class FormPage2 extends FormPage {
 
 	/**
 	 * Create the form page
+	 * 
 	 * @param editor
 	 * @param id
 	 * @param title
@@ -35,20 +38,21 @@ public class FormPage2 extends FormPage {
 
 	/**
 	 * Create contents of the form
+	 * 
 	 * @param managedForm
 	 */
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		ScrolledForm form = managedForm.getForm();
-		form.setText("Empty FormPage");
+		form.setText("Empty FormPage"); //$NON-NLS-1$
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		toolkit.paintBordersFor(body);
 
-		this.styledText = new StyledText(body, SWT.BORDER);
-		this.styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		toolkit.adapt(this.styledText, true, true);
+		styledText = new StyledText(body, SWT.BORDER);
+		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		toolkit.adapt(styledText, true, true);
 	}
 
 }

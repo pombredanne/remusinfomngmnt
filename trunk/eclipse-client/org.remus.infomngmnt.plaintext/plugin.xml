@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.remus.core.informationType">
       <information
-            name="Unformatted Text"
+            name="%information.name"
             presentation="org.remus.infomngmnt.plaintext.extension.PlainTextInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="PLAINTEXT">
@@ -18,7 +18,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/text_new.png"
             id="org.remus.infomngmnt.plaintext.wizard"
-            name="Plain Text">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -37,8 +37,8 @@
          <menu
                icon="icons/iconexperience/text.png"
                id="org.remus.infomngmnt.plaintcontextmenu"
-               label="Unformatted Text"
-               mnemonic="r">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.plaintext.copyToClipboard"
                   style="push">
@@ -71,7 +71,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.plaintext.copyToClipboard"
-            name="Copy To Clipboard">
+            name="%command.name">
       </command>
    </extension>
    <extension
@@ -94,7 +94,7 @@
             editpage="org.remus.infomngmnt.plaintext.ui.FormPage"
             icon="icons/iconexperience/text_edit.png"
             id="org.remus.infomngmnt.plaintext.editPage1"
-            label="Edit Text"
+            label="%editPage.label"
             type="PLAINTEXT">
       </editPage>
       <editorAction
@@ -131,6 +131,16 @@
             node="contents"
             typeId="PLAINTEXT">
       </index>
+   </extension>
+   <extension
+         point="org.eclipse.remus.ui.desktop.traySection">
+      <sectionBox
+            id="org.remus.infomngmnt.plaintext.sectionBox"
+            multiple="true"
+            name="%sectionBox.name"
+            preferencesclass="org.remus.infomngmnt.plaintext.section.InstantSectionPreferences"
+            sectionControl="org.remus.infomngmnt.plaintext.section.InstantCopySection">
+      </sectionBox>
    </extension>
 
 </plugin>

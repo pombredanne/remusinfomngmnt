@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Plaintext Plug-in
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.remus.infomngmnt.plaintext;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.plaintext.Activator
-Bundle-Vendor: Remus Software
+Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.remus.ui;bundle-version="[0.1.0,1.0.0)",
@@ -19,7 +19,10 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.remus.ui.infotypes;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.remus.search;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.remus.js;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.remus.ui.rules;bundle-version="[0.1.0,1.0.0)"
+ org.eclipse.remus.ui.rules;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.ui.desktop,
+ org.eclipse.remus.ui.viewer;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.remus.services;bundle-version="[0.1.0,1.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.remus.infomngmnt.plaintext

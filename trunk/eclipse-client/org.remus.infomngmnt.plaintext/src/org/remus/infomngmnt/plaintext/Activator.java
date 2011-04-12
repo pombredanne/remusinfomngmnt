@@ -9,13 +9,13 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.plaintext";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.plaintext"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
-	
+
 	public static final String INFO_TYPE_ID = "PLAINTEXT"; //$NON-NLS-1$
-	
+
 	/**
 	 * The constructor
 	 */
@@ -24,7 +24,10 @@ public class Activator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	@Override
 	public void start(final BundleContext context) throws Exception {
@@ -34,7 +37,10 @@ public class Activator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
 	@Override
 	public void stop(final BundleContext context) throws Exception {
@@ -44,7 +50,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {

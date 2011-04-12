@@ -17,6 +17,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
 import org.remus.infomngmnt.ui.calendar.internal.ResourceManager;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -40,7 +41,7 @@ public class CalendarEditorInput implements IEditorInput {
 	 */
 	public ImageDescriptor getImageDescriptor() {
 		return ResourceManager.getPluginImageDescriptor(CalendarActivator.getDefault(),
-				"icons/iconexperience/16/calendar.png");
+				"icons/iconexperience/16/calendar.png"); //$NON-NLS-1$
 
 	}
 
@@ -50,7 +51,7 @@ public class CalendarEditorInput implements IEditorInput {
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
 	public String getName() {
-		return "Calendar";
+		return Messages.CalendarEditorInput_Kalendar;
 	}
 
 	/*

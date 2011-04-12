@@ -48,6 +48,7 @@ import org.eclipse.ui.internal.WorkbenchMessages;
 import org.remus.infomgmnt.provider.CalendarContentProvider;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.ccalendar.CCalendar;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -146,8 +147,8 @@ public class CalendarPage extends InformationFormPage {
 		// FIXME
 		// this.createAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor(UIPlugin
 		// .getDefault(), "icons/iconexperience/16/calendar_new.png"));
-		this.createAction.setText("Create new calendar-entry");
-		this.removeAction = new BaseSelectionListenerAction("Delete") {
+		this.createAction.setText(Messages.CalendarPage_CreateCalendarEntry);
+		this.removeAction = new BaseSelectionListenerAction(Messages.CalendarPage_Delete) {
 
 			@Override
 			protected boolean updateSelection(final IStructuredSelection selection) {
@@ -162,9 +163,9 @@ public class CalendarPage extends InformationFormPage {
 		};
 		this.removeAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		this.removeAction.setId("org.eclipse.ui.edit.delete");
+		this.removeAction.setId(Messages.CalendarPage_2);
 
-		this.openInfoUnitAction = new BaseSelectionListenerAction("Open information unit") {
+		this.openInfoUnitAction = new BaseSelectionListenerAction(Messages.CalendarPage_OpenInfoUnit) {
 			@Override
 			protected boolean updateSelection(final IStructuredSelection selection) {
 				return !selection.isEmpty();
@@ -176,13 +177,13 @@ public class CalendarPage extends InformationFormPage {
 				for (Object object : list) {
 					if (object instanceof Task) {
 						String taskId = ((Task) object).getId();
-						String infoId = taskId.split("_")[0];
+						String infoId = taskId.split(Messages.CalendarPage_4)[0];
 						EditorUtil.openInfoUnit(infoId);
 					}
 				}
 			}
 		};
-		this.editAction = new BaseSelectionListenerAction(WorkbenchMessages.Edit) {
+		this.editAction = new BaseSelectionListenerAction("") { //$NON-NLS-1$
 			@Override
 			protected boolean updateSelection(final IStructuredSelection selection) {
 				return selection.toList().size() == 1;

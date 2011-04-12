@@ -58,6 +58,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -113,7 +114,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		final Group dateTimeGroup = new Group(container, SWT.NONE);
-		dateTimeGroup.setText("Entry Details");
+		dateTimeGroup.setText(Messages.NewCalendarEntryDialog_EntryDetails);
 		final GridData gd_dateTimeGroup = new GridData(SWT.FILL, SWT.CENTER,
 				true, false);
 		dateTimeGroup.setLayoutData(gd_dateTimeGroup);
@@ -122,7 +123,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		dateTimeGroup.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(dateTimeGroup, SWT.NONE);
-		nameLabel.setText("Name");
+		nameLabel.setText(Messages.NewCalendarEntryDialog_Name);
 
 		nameText = new Text(dateTimeGroup, SWT.BORDER);
 		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true,
@@ -130,7 +131,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		nameText.setLayoutData(gd_nameText);
 
 		final Label startdateLabel = new Label(dateTimeGroup, SWT.NONE);
-		startdateLabel.setText("Start-Date");
+		startdateLabel.setText(Messages.NewCalendarEntryDialog_Start);
 
 		startTime = new CDateTime(dateTimeGroup, CDT.BORDER | CDT.DROP_DOWN);
 		startTime.setFormat(CDT.DATE_MEDIUM | CDT.TIME_MEDIUM);
@@ -138,14 +139,14 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label enddateLabel = new Label(dateTimeGroup, SWT.NONE);
-		enddateLabel.setText("End-Date");
+		enddateLabel.setText(Messages.NewCalendarEntryDialog_End);
 
 		endTime = new CDateTime(dateTimeGroup, CDT.BORDER | CDT.DROP_DOWN);
 		endTime.setFormat(CDT.DATE_MEDIUM | CDT.TIME_MEDIUM);
 		endTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label notificationLabel = new Label(dateTimeGroup, SWT.NONE);
-		notificationLabel.setText("Notification");
+		notificationLabel.setText(Messages.NewCalendarEntryDialog_Notification);
 
 		notificationCombo = new Combo(dateTimeGroup, SWT.NONE);
 		final GridData gd_notificationCombo = new GridData(SWT.FILL,
@@ -153,7 +154,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		notificationCombo.setLayoutData(gd_notificationCombo);
 
 		final Label typeLabel = new Label(dateTimeGroup, SWT.NONE);
-		typeLabel.setText("Type");
+		typeLabel.setText(Messages.NewCalendarEntryDialog_Type);
 
 		typeCombo = new Combo(dateTimeGroup, SWT.NONE);
 		final GridData gd_typeCombo = new GridData(SWT.FILL, SWT.CENTER, true,
@@ -166,7 +167,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		informationunitGroup.setLayout(gridLayout_1);
 		informationunitGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				false, false));
-		informationunitGroup.setText("Information-Unit");
+		informationunitGroup.setText(Messages.NewCalendarEntryDialog_InformationUnit);
 
 		if (parentElement == null) {
 			text_5 = new Text(informationunitGroup, SWT.BORDER);
@@ -175,7 +176,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 
 			final Button browseButton = new Button(informationunitGroup,
 					SWT.NONE);
-			browseButton.setText("B&rowse...");
+			browseButton.setText(Messages.NewCalendarEntryDialog_Browse);
 			browseButton.addListener(SWT.Selection, new Listener() {
 				public void handleEvent(final Event event) {
 					InfoUnitSelectionDialog diag = InfoUnitSelectionDialog
@@ -198,11 +199,11 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		//
 
 		bindValuesToUi();
-		setTitle("Edit calendar entry");
-		setMessage("This wizard enables you to edit calendar entry");
+		setTitle(Messages.NewCalendarEntryDialog_EditCalendarEntry);
+		setMessage(Messages.NewCalendarEntryDialog_EditCalendarEntryDetails);
 		setTitleImage(ResourceManager.getPluginImage(
 				CalendarActivator.getDefault(),
-				"icons/iconexperience/wizards/calendar_entry_wizard.png"));
+				"icons/iconexperience/wizards/calendar_entry_wizard.png")); //$NON-NLS-1$
 		return area;
 
 	}
@@ -210,7 +211,7 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 	protected void setTargetObject(final InformationUnitListItem informationUnit) {
 		selectedObject = informationUnit;
 		String text = CategoryUtil.categoryToString((Category) informationUnit
-				.eContainer()) + "/" + informationUnit.getLabel();
+				.eContainer()) + "/" + informationUnit.getLabel(); //$NON-NLS-1$
 		if (parentElement == null) {
 			text_5.setText(text);
 		} else {
@@ -330,21 +331,21 @@ public class NewCalendarEntryDialog extends TitleAreaDialog {
 		NumberFormat instance = NumberFormat.getInstance();
 		instance.setMaximumFractionDigits(2);
 		if (minutes < 0) {
-			return "Without reminder";
+			return Messages.NewCalendarEntryDialog_WithoutReminder;
 		} else if (minutes < 60) {
-			return minutes + " Minutes";
+			return minutes + Messages.NewCalendarEntryDialog_Minutes;
 		} else if (minutes < 1440) {
-			return instance.format(((double) minutes / 60)) + " Hours";
+			return instance.format(((double) minutes / 60)) + Messages.NewCalendarEntryDialog_Hours;
 		} else if (minutes < 10800) {
-			return instance.format((double) minutes / 1440) + " Days";
+			return instance.format((double) minutes / 1440) + Messages.NewCalendarEntryDialog_Days;
 		}
-		return minutes + " Minutes";
+		return minutes + Messages.NewCalendarEntryDialog_Minutes;
 	}
 
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Edit Calendar Entry");
+		newShell.setText(Messages.NewCalendarEntryDialog_EditCalendarEntry);
 	}
 
 	@Override

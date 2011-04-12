@@ -19,6 +19,7 @@ import org.aspencloud.calypso.util.TimeSpan;
 import org.eclipse.remus.CalendarEntryType;
 
 import org.remus.infomngmnt.calendar.model.TaskType;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -28,17 +29,17 @@ public class CalendarEntryTypeStrings {
 	public static String getStringByCalendarEntryType(final CalendarEntryType type) {
 		switch (type) {
 		case ONE_TIME:
-			return "one-time";
+			return Messages.CalendarEntryTypeStrings_OneTime;
 		case WEEKLY:
-			return "weekly";
+			return Messages.CalendarEntryTypeStrings_Weekly;
 		case TWO_WEEK:
-			return "two-week";
+			return Messages.CalendarEntryTypeStrings_TwoWeek;
 		case MONTHLY:
-			return "monthly";
+			return Messages.CalendarEntryTypeStrings_Monthly;
 		case ANNUAL:
-			return "annual";
+			return Messages.CalendarEntryTypeStrings_Annual;
 		default:
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 	}
 

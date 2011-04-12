@@ -10,7 +10,7 @@
             extensions="calendar"
             icon="icons/iconexperience/16/calendar.png"
             id="org.remus.infomngmnt.ui.calendar.CalendarEditor"
-            name="Calendar">
+            name="%editor.name">
       </editor>
    </extension>
    <extension
@@ -41,9 +41,9 @@
             class="org.remus.infomngmnt.ui.calendar.collapsiblebuttons.CalendarSection"
             icon="icons/iconexperience/16/calendar.png"
             id="org.remus.infomngmnt.ui.calendar.collapsibleButton"
-            name="Calendar"
+            name="%collapsibleButton.name"
             order="15"
-            tooltip="Calendar">
+            tooltip="%collapsibleButton.tooltip">
       </collapsibleButton>
    </extension>
 </plugin>

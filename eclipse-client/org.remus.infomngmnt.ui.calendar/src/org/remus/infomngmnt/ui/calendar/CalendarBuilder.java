@@ -33,6 +33,7 @@ import org.eclipse.remus.core.services.IEditingHandler;
 import org.eclipse.remus.core.services.IInformationTypeHandler;
 import org.eclipse.remus.resources.util.ResourceUtil;
 
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**
@@ -72,7 +73,7 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 				folder.create(true, true, monitor);
 			}
 			IResource[] members = getProject().members();
-			monitor.beginTask(NLS.bind("Refreshing info-object on {0}", getProject().getName()),
+			monitor.beginTask(NLS.bind(Messages.CalendarBuilder_RefreshItem, getProject().getName()),
 					members.length);
 			for (IResource resource : members) {
 				if (resource.getType() == IResource.FILE
@@ -81,7 +82,7 @@ public class CalendarBuilder extends IncrementalProjectBuilder {
 					InformationUnit objectFromFile = this.editService.getObjectFromFile(
 							(IFile) resource, InfomngmntPackage.eINSTANCE.getInformationUnit());
 					if (objectFromFile != null) {
-						monitor.setTaskName(NLS.bind("Rebuilding \"{0}\"", objectFromFile
+						monitor.setTaskName(NLS.bind(Messages.CalendarBuilder_RebuildItem, objectFromFile
 								.getLabel()));
 						IInfoType infoTypeByType = this.informationTypeHandler
 								.getInfoTypeByType(objectFromFile.getType());

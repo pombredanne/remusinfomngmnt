@@ -36,6 +36,7 @@ import org.eclipse.remus.core.services.IEditingHandler;
 import org.remus.infomngmnt.calendar.model.Task;
 import org.remus.infomngmnt.calendar.model.Tasklist;
 import org.remus.infomngmnt.ccalendar.service.ICalendarService;
+import org.remus.infomngmnt.ui.calendar.messages.Messages;
 import org.remus.infomngmnt.ui.calendar.service.ICalendarStoreService;
 
 /**
@@ -80,12 +81,12 @@ public class CalendarServiceImpl implements ICalendarService {
 	 * .remus.infomngmnt.calendar.model.Task)
 	 */
 	public void deleteTask(final Task task) {
-		Job job = new Job("Deleting Task") {
+		Job job = new Job(Messages.CalendarServiceImpl_DeletingTask) {
 
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				String id = task.getId();
-				String[] split = id.split("_");
+				String[] split = id.split("_"); //$NON-NLS-1$
 				String infoId = split[0];
 				String entryId = split[1];
 
@@ -125,12 +126,12 @@ public class CalendarServiceImpl implements ICalendarService {
 	}
 
 	public void taskChanged(final Task task) {
-		Job job = new Job("Updating models") {
+		Job job = new Job(Messages.CalendarServiceImpl_UpdatingModels) {
 
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				String id = task.getId();
-				String[] split = id.split("_");
+				String[] split = id.split("_"); //$NON-NLS-1$
 				String infoId = split[0];
 				String entryId = split[1];
 				InformationUnitListItem itemById = CalendarServiceImpl.this.applicationService

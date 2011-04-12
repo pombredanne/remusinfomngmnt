@@ -20,7 +20,6 @@ import org.eclipse.remus.InformationUnit;
 import org.eclipse.remus.InformationUnitListItem;
 import org.eclipse.remus.core.model.InformationStructureEdit;
 import org.eclipse.remus.core.model.InformationStructureRead;
-
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
 
 import com.google.gdata.data.DateTime;
@@ -43,26 +42,32 @@ public class CalendarConverter {
 		InformationStructureEdit edit = InformationStructureEdit
 				.newSession(MeetingMinutesActivator.INFO_TYPE_ID);
 		InformationUnit newInformationUnit = edit.newInformationUnit();
-		edit.setValue(newInformationUnit, "@label", wrappedObject.getTitle().getPlainText());
+		edit.setValue(newInformationUnit,
+				"@label", wrappedObject.getTitle().getPlainText()); //$NON-NLS-1$
 		if (wrappedObject.getTextContent() != null) {
-			edit.setValue(newInformationUnit, "@description", wrappedObject.getTextContent()
-					.getContent().getPlainText());
+			edit.setValue(newInformationUnit,
+					"@description", wrappedObject.getTextContent() //$NON-NLS-1$
+							.getContent().getPlainText());
 		}
 		List<Where> locations = wrappedObject.getLocations();
 		if (locations.size() > 0) {
 			Where where = locations.get(0);
-			edit.setValue(newInformationUnit, MeetingMinutesActivator.NODE_NAME_PLACE, where
-					.getValueString());
+			edit.setValue(newInformationUnit,
+					MeetingMinutesActivator.NODE_NAME_PLACE,
+					where.getValueString());
 
 		}
 		List<EventWho> participants = wrappedObject.getParticipants();
 		for (EventWho eventWho : participants) {
-			if (eventWho.getRel() != null && eventWho.getRel().endsWith("organizer")) {
-				edit.setValue(newInformationUnit, MeetingMinutesActivator.NODE_NAME_MODERATOR,
+			if (eventWho.getRel() != null
+					&& eventWho.getRel().endsWith("organizer")) { //$NON-NLS-1$
+				edit.setValue(newInformationUnit,
+						MeetingMinutesActivator.NODE_NAME_MODERATOR,
 						eventWho.getEmail());
 			} else {
 				InformationUnit attendee = edit.createSubType(
-						MeetingMinutesActivator.NODE_NAME_ATTENDEE, eventWho.getEmail());
+						MeetingMinutesActivator.NODE_NAME_ATTENDEE,
+						eventWho.getEmail());
 				edit.addDynamicNode(newInformationUnit, attendee, null);
 			}
 		}
@@ -70,36 +75,44 @@ public class CalendarConverter {
 		if (times.size() > 0) {
 			Date startDate = new Date(times.get(0).getStartTime().getValue());
 			Date endDate = new Date(times.get(0).getEndTime().getValue());
-			edit
-					.setValue(newInformationUnit, MeetingMinutesActivator.NODE_NAME_DATETIME,
-							startDate);
-			edit.setValue(newInformationUnit, MeetingMinutesActivator.NODE_NAME_END_DATETIME,
-					endDate);
+			edit.setValue(newInformationUnit,
+					MeetingMinutesActivator.NODE_NAME_DATETIME, startDate);
+			edit.setValue(newInformationUnit,
+					MeetingMinutesActivator.NODE_NAME_END_DATETIME, endDate);
 		}
 		if (wrappedObject.getRecurrence() != null) {
-			edit.setValue(newInformationUnit, MeetingMinutesActivator.NODE_NAME_REPEAT,
-					wrappedObject.getRecurrence().getValue());
+			edit.setValue(newInformationUnit,
+					MeetingMinutesActivator.NODE_NAME_REPEAT, wrappedObject
+							.getRecurrence().getValue());
 		}
 		return newInformationUnit;
 	}
 
 	public CalendarEventEntry toRepo(final InformationUnitListItem element,
 			final CalendarEventEntry entry) {
-		InformationUnit unit = (InformationUnit) element.getAdapter(InformationUnit.class);
-		InformationStructureRead read = InformationStructureRead.newSession(unit);
-		entry.setTitle(TextConstruct.plainText((String) read.getValueByNodeId("@label")));
-		entry.setContent(TextConstruct.plainText((String) read.getValueByNodeId("@description")));
+		InformationUnit unit = (InformationUnit) element
+				.getAdapter(InformationUnit.class);
+		InformationStructureRead read = InformationStructureRead
+				.newSession(unit);
+		entry.setTitle(TextConstruct.plainText((String) read
+				.getValueByNodeId("@label"))); //$NON-NLS-1$
+		entry.setContent(TextConstruct.plainText((String) read
+				.getValueByNodeId("@description"))); //$NON-NLS-1$
 		entry.getLocations().clear();
-		entry.getLocations().add(
-				new Where(null, null, (String) read
-						.getValueByNodeId(MeetingMinutesActivator.NODE_NAME_PLACE)));
+		entry.getLocations()
+				.add(new Where(
+						null,
+						null,
+						(String) read
+								.getValueByNodeId(MeetingMinutesActivator.NODE_NAME_PLACE)));
 
 		entry.getTimes().clear();
 		When when = new When();
 		when.setStartTime(new DateTime((Date) read
 				.getValueByNodeId(MeetingMinutesActivator.NODE_NAME_DATETIME)));
-		when.setEndTime(new DateTime((Date) read
-				.getValueByNodeId(MeetingMinutesActivator.NODE_NAME_END_DATETIME)));
+		when.setEndTime(new DateTime(
+				(Date) read
+						.getValueByNodeId(MeetingMinutesActivator.NODE_NAME_END_DATETIME)));
 		entry.getTimes().add(when);
 		String moderator = (String) read
 				.getValueByNodeId(MeetingMinutesActivator.NODE_NAME_MODERATOR);
@@ -113,8 +126,8 @@ public class CalendarConverter {
 		EList<InformationUnit> dynamicList = read
 				.getDynamicList(MeetingMinutesActivator.NODE_NAME_ATTENDEES);
 		for (InformationUnit informationUnit : dynamicList) {
-			InformationStructureRead attendeeRead = InformationStructureRead.newSession(
-					informationUnit, unit.getType());
+			InformationStructureRead attendeeRead = InformationStructureRead
+					.newSession(informationUnit, unit.getType());
 			String attendee = (String) attendeeRead
 					.getValueByNodeId(MeetingMinutesActivator.NODE_NAME_ATTENDEE);
 			EventWho eventWho = new EventWho();

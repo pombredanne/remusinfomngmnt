@@ -47,6 +47,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.connector.googlecalendar.GoogleCalendarCredentialProvider;
+import org.remus.infomngmnt.connector.googlecalendar.Messages;
 
 public class GoogleCalendarConnectionWizardPage extends WizardPage {
 
@@ -64,9 +65,9 @@ public class GoogleCalendarConnectionWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public GoogleCalendarConnectionWizardPage() {
-		super("wizardPage");
-		setTitle("Google Calendar Connector");
-		setDescription("Enter your login credentials");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.GoogleCalendarConnectionWizardPage_GoogleCalendarConenctor);
+		setDescription(Messages.GoogleCalendarConnectionWizardPage_EnterCredentials);
 		this.manualName = false;
 	}
 
@@ -87,7 +88,7 @@ public class GoogleCalendarConnectionWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.GoogleCalendarConnectionWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -100,27 +101,27 @@ public class GoogleCalendarConnectionWizardPage extends WizardPage {
 		});
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("API-Url:");
+		apiurlLabel.setText(Messages.GoogleCalendarConnectionWizardPage_APIUrl);
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		this.apiUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		this.apiUrlText.setEditable(false);
 
 		final Group credentialsGroup = new Group(container, SWT.NONE);
-		credentialsGroup.setText("Credentials");
+		credentialsGroup.setText(Messages.GoogleCalendarConnectionWizardPage_Credentials);
 		credentialsGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		final GridLayout gridLayout_1 = new GridLayout();
 		gridLayout_1.numColumns = 2;
 		credentialsGroup.setLayout(gridLayout_1);
 
 		final Label usernameLabel = new Label(credentialsGroup, SWT.NONE);
-		usernameLabel.setText("Username");
+		usernameLabel.setText(Messages.GoogleCalendarConnectionWizardPage_Username);
 
 		this.userNameText = new Text(credentialsGroup, SWT.BORDER);
 		this.userNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label passwordLabel = new Label(credentialsGroup, SWT.NONE);
-		passwordLabel.setText("Password");
+		passwordLabel.setText(Messages.GoogleCalendarConnectionWizardPage_Password);
 
 		this.passwordText = new Text(credentialsGroup, SWT.BORDER | SWT.PASSWORD);
 		this.passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -146,7 +147,7 @@ public class GoogleCalendarConnectionWizardPage extends WizardPage {
 					setErrorMessage(null);
 					setPageComplete(true);
 				} catch (InvocationTargetException e) {
-					setErrorMessage("Error validating your settings");
+					setErrorMessage(Messages.GoogleCalendarConnectionWizardPage_ErrorValidatingSettings);
 					setPageComplete(false);
 				} catch (InterruptedException e) {
 					// do nothing
@@ -155,18 +156,18 @@ public class GoogleCalendarConnectionWizardPage extends WizardPage {
 			}
 		});
 		validateCredentialsButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		validateCredentialsButton.setText("Validate credentials");
+		validateCredentialsButton.setText(Messages.GoogleCalendarConnectionWizardPage_ValidatingCredentials);
 
 		this.nameText.setText(this.repositoryDefinition.getCredentialProvider().getUserName());
 
 		Group grpSynchronizationTimespan = new Group(container, SWT.NONE);
-		grpSynchronizationTimespan.setText("Synchronization Timespan");
+		grpSynchronizationTimespan.setText(Messages.GoogleCalendarConnectionWizardPage_SyncTimespan);
 		grpSynchronizationTimespan.setLayout(new GridLayout(3, false));
 		grpSynchronizationTimespan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1));
 
 		Label lblEventsInThe = new Label(grpSynchronizationTimespan, SWT.NONE);
-		lblEventsInThe.setText("Events in the past");
+		lblEventsInThe.setText(Messages.GoogleCalendarConnectionWizardPage_EventsPast);
 
 		this.startSpinner = new Spinner(grpSynchronizationTimespan, SWT.BORDER);
 		this.startSpinner.setPageIncrement(1);
@@ -174,10 +175,10 @@ public class GoogleCalendarConnectionWizardPage extends WizardPage {
 		this.startSpinner.setSelection(6);
 
 		Label lblMonth = new Label(grpSynchronizationTimespan, SWT.NONE);
-		lblMonth.setText("Month");
+		lblMonth.setText(Messages.GoogleCalendarConnectionWizardPage_Month);
 
 		Label lblEventsInThe_1 = new Label(grpSynchronizationTimespan, SWT.NONE);
-		lblEventsInThe_1.setText("Events in the future");
+		lblEventsInThe_1.setText(Messages.GoogleCalendarConnectionWizardPage_EventsFuture);
 
 		this.endSpinner = new Spinner(grpSynchronizationTimespan, SWT.BORDER);
 		this.endSpinner.setPageIncrement(1);
@@ -185,7 +186,7 @@ public class GoogleCalendarConnectionWizardPage extends WizardPage {
 		this.endSpinner.setSelection(6);
 
 		Label label = new Label(grpSynchronizationTimespan, SWT.NONE);
-		label.setText("Month");
+		label.setText(Messages.GoogleCalendarConnectionWizardPage_Month);
 		bindValuesToUi();
 		setControl(container);
 	}

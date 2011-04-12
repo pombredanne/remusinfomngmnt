@@ -7,7 +7,7 @@
             class="org.remus.infomngmnt.connector.googlecalendar.GoogleCalendarConnector"
             credentialprovider="org.remus.infomngmnt.connector.googlecalendar.GoogleCalendarCredentialProvider"
             id="org.remus.infomngmnt.connector.googlecalendar"
-            name="Google Calendar">
+            name="%repository-connector.name">
       </repository-connector>
    </extension>
    <extension

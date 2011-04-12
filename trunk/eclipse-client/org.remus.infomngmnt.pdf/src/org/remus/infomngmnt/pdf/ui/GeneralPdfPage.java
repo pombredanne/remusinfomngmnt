@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.pdf.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -62,14 +63,14 @@ public class GeneralPdfPage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
-		setTitle("New PDF Document");
-		setMessage("This wizard enables you to create a new pdf from a file.");
+		setTitle(Messages.GeneralPdfPage_Title);
+		setMessage(Messages.GeneralPdfPage_Subtitle);
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(3, false));
-		group.setText("Name && File");
+		group.setText(Messages.GeneralPdfPage_NameFile);
 		doCreateNameElements(group);
 
 		GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -78,20 +79,20 @@ public class GeneralPdfPage extends GeneralPage {
 
 		if (files == null || files.length == 0 || files[0] == null) {
 			final Label nameLabel = new Label(group, SWT.NONE);
-			nameLabel.setText("File");
+			nameLabel.setText(Messages.GeneralPdfPage_File);
 			fileNameText = new Text(group, SWT.BORDER);
 			gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_nameText.horizontalSpan = 2;
 			fileNameText.setLayoutData(gd_nameText);
 
 			browseButton = new Button(group, SWT.PUSH);
-			browseButton.setText("Browse...");
+			browseButton.setText(Messages.GeneralPdfPage_Browse);
 			browseButton.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(final Event event) {
 					FileDialog fd = new FileDialog(getShell());
-					fd.setFilterExtensions(new String[] { "*.pdf" });
-					fd.setFilterNames(new String[] { "PDF Files" });
+					fd.setFilterExtensions(new String[] { "*.pdf" }); //$NON-NLS-1$
+					fd.setFilterNames(new String[] { Messages.GeneralPdfPage_PDFFiles });
 					String open = fd.open();
 					if (open != null) {
 						fileNameText.setText(open);

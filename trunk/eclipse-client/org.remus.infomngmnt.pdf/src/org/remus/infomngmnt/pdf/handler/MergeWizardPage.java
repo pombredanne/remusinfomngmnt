@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import org.remus.infomngmnt.pdf.Activator;
+import org.remus.infomngmnt.pdf.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -67,20 +68,20 @@ public class MergeWizardPage extends GeneralPage {
 	public void createControl(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
-		setTitle("Merge PDF Documents");
-		setMessage("This wizard enables you to merge several PDF documents.");
+		setTitle(Messages.MergeWizardPage_Title);
+		setMessage(Messages.MergeWizardPage_Subtitle);
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(3, false));
-		group.setText("Name");
+		group.setText(Messages.MergeWizardPage_Name);
 		doCreateNameElements(group);
 
 		Group group2 = new Group(container, SWT.NONE);
 		group2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group2.setLayout(new GridLayout(2, false));
-		group2.setText("Order");
+		group2.setText(Messages.MergeWizardPage_Order);
 
 		this.viewer = new TableViewer(group2);
 		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
@@ -92,10 +93,10 @@ public class MergeWizardPage extends GeneralPage {
 
 		ToolBar tb = new ToolBar(group2, SWT.VERTICAL | SWT.FLAT);
 		final ToolItem toolItem = new ToolItem(tb, SWT.PUSH);
-		toolItem.setText("Up");
+		toolItem.setText(Messages.MergeWizardPage_Up);
 
 		final ToolItem toolItem2 = new ToolItem(tb, SWT.PUSH);
-		toolItem2.setText("Down");
+		toolItem2.setText(Messages.MergeWizardPage_Down);
 
 		toolItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {

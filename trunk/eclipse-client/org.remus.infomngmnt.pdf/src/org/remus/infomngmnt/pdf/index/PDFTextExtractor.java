@@ -26,6 +26,7 @@ import org.eclipse.remus.search.analyzer.ISecondaryAnalyzer;
 import org.eclipse.remus.search.analyzer.ISecondaryIndex;
 import org.eclipse.remus.search.analyzer.SecondaryIndex;
 import org.eclipse.remus.util.InformationUtil;
+import org.remus.infomngmnt.pdf.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -68,8 +69,8 @@ public class PDFTextExtractor implements ISecondaryAnalyzer {
 						stripper.writeText(document, stringOutputStream);
 
 						String string = stringOutputStream.toString();
-						string = string.replaceAll("\\x1f", "");
-						returnValue.add(SecondaryIndex.CREATE("Page " + i,
+						string = string.replaceAll("\\x1f", ""); //$NON-NLS-1$ //$NON-NLS-2$
+						returnValue.add(SecondaryIndex.CREATE(Messages.PDFTextExtractor_Page + i,
 								string, null));
 					} catch (IOException e) {
 						// skip

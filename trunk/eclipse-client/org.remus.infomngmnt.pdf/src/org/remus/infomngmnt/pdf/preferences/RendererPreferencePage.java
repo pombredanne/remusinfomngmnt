@@ -20,6 +20,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.pdf.extension.IPdfImageRenderer;
+import org.remus.infomngmnt.pdf.messages.Messages;
 import org.remus.infomngmnt.pdf.service.IPDF2ImageExtensionService;
 
 public class RendererPreferencePage extends FieldEditorPreferencePage implements
@@ -41,7 +42,7 @@ public class RendererPreferencePage extends FieldEditorPreferencePage implements
 	@Override
 	protected void createFieldEditors() {
 		// Create the field editors
-		addField(new ComboFieldEditor(PreferenceInitializer.DEFAULT_RENDERER, "PDF Image Renderer",
+		addField(new ComboFieldEditor(PreferenceInitializer.DEFAULT_RENDERER, Messages.RendererPreferencePage_PDFImageRenderer,
 				this.values, getFieldEditorParent()));
 	}
 
@@ -75,13 +76,13 @@ public class RendererPreferencePage extends FieldEditorPreferencePage implements
 	protected void performApply() {
 
 		super.performApply();
-		Job job = new Job("Refreshing all Pdfs") {
+		Job job = new Job(Messages.RendererPreferencePage_RefreshingAllPDfs) {
 
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				Set<? extends EObject> allItemsByType = InformationUtil
 						.getAllItemsByType(Activator.TYPE_ID);
-				monitor.beginTask("Rerendering all PDFs", allItemsByType.size());
+				monitor.beginTask(Messages.RendererPreferencePage_RenderingAllPdfs, allItemsByType.size());
 				for (EObject eObject : allItemsByType) {
 					if (eObject instanceof InformationUnitListItem) {
 						InformationUnit adapter = (InformationUnit) ((InformationUnitListItem) eObject)

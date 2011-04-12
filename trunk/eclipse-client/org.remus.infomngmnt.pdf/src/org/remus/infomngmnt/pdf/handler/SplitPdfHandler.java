@@ -30,6 +30,7 @@ import org.eclipse.remus.ui.progress.CancelableRunnable;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.remus.infomngmnt.pdf.messages.Messages;
 
 
 /**
@@ -54,7 +55,7 @@ public class SplitPdfHandler extends AbstractHandler {
 
 				@Override
 				protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-					monitor.beginTask("Scanning PDF", IProgressMonitor.UNKNOWN);
+					monitor.beginTask(Messages.SplitPdfHandler_ScanningPDF, IProgressMonitor.UNKNOWN);
 					IFile binaryReferenceFile = InformationUtil.getBinaryReferenceFile(unit);
 					try {
 						PDDocument load = PDDocument.load(binaryReferenceFile.getLocationURI()
@@ -63,14 +64,14 @@ public class SplitPdfHandler extends AbstractHandler {
 						load.close();
 						return Status.OK_STATUS;
 					} catch (Exception e) {
-						return StatusCreator.newStatus("Error inspecting pdf document");
+						return StatusCreator.newStatus(Messages.SplitPdfHandler_ErrorInspectingPDF);
 					}
 				}
 			});
 			new SplitDialog(HandlerUtil.getActiveShell(event), unit, pagecount[0]).open();
 		} catch (InvocationTargetException e) {
-			MessageDialog.openError(HandlerUtil.getActiveShell(event), "Error",
-					"Error reading PDF document");
+			MessageDialog.openError(HandlerUtil.getActiveShell(event), Messages.SplitPdfHandler_Error,
+					Messages.SplitPdfHandler_ErrorReadingPDF);
 		} catch (InterruptedException e) {
 			// do nothing
 		}

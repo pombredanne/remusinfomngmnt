@@ -14,7 +14,6 @@ package org.remus.infomngmnt.pdf.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import org.remus.infomngmnt.pdf.Activator;
 
 /**
@@ -30,7 +29,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 * 
 	 */
 	public PreferenceInitializer() {
-		this.preferenceStore = Activator.getDefault().getPreferenceStore();
+		preferenceStore = Activator.getDefault().getPreferenceStore();
 	}
 
 	/*
@@ -41,8 +40,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		this.preferenceStore.setDefault(DEFAULT_RENDERER,
-				"org.remus.infomngmnt.pdf.pdfImageRenderer2");
+		preferenceStore.setDefault(DEFAULT_RENDERER,
+				"org.remus.infomngmnt.pdf.pdfImageRenderer2"); //$NON-NLS-1$
 
 	}
 

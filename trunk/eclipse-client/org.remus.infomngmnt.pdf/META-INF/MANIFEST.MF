@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Pdf
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.remus.infomngmnt.pdf;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.remus.infomngmnt.pdf.Activator
-Bundle-Vendor: Tom Seidel
+Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.remus.core;bundle-version="[0.1.0,1.0.0)",
@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.remus.ui.viewer;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.remus.js;bundle-version="[0.1.0,1.0.0)",
  org.eclipse.remus.ui.rules;bundle-version="[0.1.0,1.0.0)",
- org.remus.infomngmnt.js;bundle-version="0.0.1"
+ org.remus.infomngmnt.js;bundle-version="0.0.1",
+ org.apache.commons.lang;bundle-version="2.3.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,

@@ -69,6 +69,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.pdf.Activator;
 import org.remus.infomngmnt.pdf.extension.IPdf2ImageRenderer;
 import org.remus.infomngmnt.pdf.extension.IPdfImageRenderer;
+import org.remus.infomngmnt.pdf.messages.Messages;
 import org.remus.infomngmnt.pdf.preferences.PreferenceInitializer;
 import org.remus.infomngmnt.pdf.service.IPDF2ImageExtensionService;
 
@@ -111,7 +112,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Document information");
+		generalSection.setText(Messages.PdfMetadaEditPage_DocumentInformation);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(2, false));
@@ -121,27 +122,27 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		Label authorLabel = toolkit.createLabel(client, "Author");
+		Label authorLabel = toolkit.createLabel(client, Messages.PdfMetadaEditPage_Author);
 		authorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.authorText = toolkit.createText(client, "", SWT.BORDER);
+		this.authorText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.authorText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		Label titleLabel = toolkit.createLabel(client, "Title");
+		Label titleLabel = toolkit.createLabel(client, Messages.PdfMetadaEditPage_Title);
 		titleLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.titleText = toolkit.createText(client, "", SWT.BORDER);
+		this.titleText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.titleText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		Label creatolrLabelLabel = toolkit.createLabel(client, "Creator");
+		Label creatolrLabelLabel = toolkit.createLabel(client, Messages.PdfMetadaEditPage_Creator);
 		creatolrLabelLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.creatorText = toolkit.createText(client, "", SWT.BORDER);
+		this.creatorText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.creatorText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		Label producerLabel = toolkit.createLabel(client, "Producer");
+		Label producerLabel = toolkit.createLabel(client, Messages.PdfMetadaEditPage_Producer);
 		producerLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		this.producerText = toolkit.createText(client, "", SWT.BORDER);
+		this.producerText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.producerText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		Button createButton = toolkit.createButton(client, "Write Metadata into PDF", SWT.PUSH);
+		Button createButton = toolkit.createButton(client, Messages.PdfMetadaEditPage_WirteMetadata, SWT.PUSH);
 		createButton.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
@@ -152,7 +153,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 						IFile binaryReferenceFile = InformationUtil
 								.getBinaryReferenceFile(getModelObject());
 						PDDocument document = null;
-						monitor.beginTask("Writing information to PDF", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(Messages.PdfMetadaEditPage_WriteInformation, IProgressMonitor.UNKNOWN);
 						try {
 							document = PDDocument
 									.load(binaryReferenceFile.getLocationURI().toURL());
@@ -169,14 +170,14 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 							basicSchema.setMetadataDate(new GregorianCalendar());
 							XMPSchemaDublinCore dcSchema = metadata.addDublinCoreSchema();
 							dcSchema.setTitle(info.getTitle());
-							dcSchema.addCreator("PDFBox");
+							dcSchema.addCreator(Messages.PdfMetadaEditPage_PDFBox);
 							dcSchema.setDescription(info.getSubject());
 							PDMetadata metadataStream = new PDMetadata(document);
 							metadataStream.importXMPMetadata(metadata);
 							catalog.setMetadata(metadataStream);
 							document.save(binaryReferenceFile.getLocation().toOSString());
 						} catch (Exception e) {
-							return StatusCreator.newStatus("Error writing to PDF", e);
+							return StatusCreator.newStatus(Messages.PdfMetadaEditPage_ErrorWritingPDF, e);
 						} finally {
 							if (document != null)
 								try {
@@ -194,7 +195,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 				try {
 					dialog.run(true, true, runnable);
 				} catch (InvocationTargetException e) {
-					ErrorDialog.openError(getSite().getShell(), "Error", e.getCause().getMessage(),
+					ErrorDialog.openError(getSite().getShell(), Messages.PdfMetadaEditPage_Error, e.getCause().getMessage(),
 							e.getCause() instanceof CoreException ? ((CoreException) e.getCause())
 									.getStatus() : null);
 				} catch (InterruptedException e) {
@@ -212,7 +213,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Rendering options");
+		generalSection.setText(Messages.PdfMetadaEditPage_RenderingOptions);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(3, false));
@@ -222,7 +223,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		Label subjectLabel = toolkit.createLabel(client, "Slider width");
+		Label subjectLabel = toolkit.createLabel(client, Messages.PdfMetadaEditPage_SliderWidth);
 		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		this.widthSpinner = new Spinner(client, SWT.BORDER);
@@ -231,7 +232,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 		this.widthSpinner.setIncrement(10);
 		this.widthSpinner.setMaximum(3000);
 		this.widthSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		Button createButton = toolkit.createButton(client, "Calculate optimal slider width",
+		Button createButton = toolkit.createButton(client, Messages.PdfMetadaEditPage_CalculateWidth,
 				SWT.PUSH);
 		createButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
@@ -263,7 +264,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 			}
 		});
 
-		Label rendererLabel = toolkit.createLabel(client, "Image Renderer");
+		Label rendererLabel = toolkit.createLabel(client, Messages.PdfMetadaEditPage_ImageRenderer);
 		rendererLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		this.comboViewer = new Combo(client, SWT.READ_ONLY);
@@ -311,7 +312,7 @@ public class PdfMetadaEditPage extends AbstractInformationFormPage {
 			}
 
 			public String getName() {
-				return "Global Preference";
+				return Messages.PdfMetadaEditPage_GlobalPreference;
 			}
 
 			public String getId() {

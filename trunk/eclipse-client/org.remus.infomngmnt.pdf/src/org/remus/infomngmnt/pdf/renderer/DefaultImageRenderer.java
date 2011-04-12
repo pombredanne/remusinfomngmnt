@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.remus.common.core.util.ResourceUtil;
 import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.graphics.Image;
-
 import org.remus.infomngmnt.pdf.extension.IPdf2ImageRenderer;
 import org.remus.infomngmnt.pdf.extension.ImageInformation;
 
@@ -44,31 +43,37 @@ public class DefaultImageRenderer implements IPdf2ImageRenderer {
 	 * .core.resources.IFolder, org.eclipse.core.resources.IFile,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public List<ImageInformation> convert(final IFolder outputFolder, final IFile pdfFile,
-			final IProgressMonitor monitor) {
+	public List<ImageInformation> convert(final IFolder outputFolder,
+			final IFile pdfFile, final IProgressMonitor monitor) {
 		PDDocument document = null;
 		List<ImageInformation> returnValue = new ArrayList<ImageInformation>();
 		try {
 			document = PDDocument.load(pdfFile.getLocationURI().toURL());
 			if (document.isEncrypted()) {
-				StandardDecryptionMaterial spm = new StandardDecryptionMaterial("*****");
+				StandardDecryptionMaterial spm = new StandardDecryptionMaterial(
+						"*****"); //$NON-NLS-1$
 				document.openProtection(spm);
 				AccessPermission ap = document.getCurrentAccessPermission();
-				if (!ap.canExtractContent())
-					throw new CoreException(StatusCreator
-							.newStatus("Error: You do not have permission to extract images."));
+				if (!ap.canExtractContent()) {
+					throw new CoreException(
+							StatusCreator
+									.newStatus("Error: You do not have permission to extract images.")); //$NON-NLS-1$
+				}
 			}
 			int numberOfPages = document.getNumberOfPages();
 			PDFImageWriter imageWriter = new PDFImageWriter();
-			boolean success = imageWriter.writeImage(document, "png", null, 1, numberOfPages,
-					outputFolder.getLocation().toFile().getAbsolutePath() + "/");
+			boolean success = imageWriter
+					.writeImage(document, "png", null, 1, numberOfPages, //$NON-NLS-1$
+							outputFolder.getLocation().toFile()
+									.getAbsolutePath()
+									+ "/"); //$NON-NLS-1$
 			if (success) {
 				for (int i = 1; i <= numberOfPages; i++) {
 					ImageInformation info = new ImageInformation();
-					info.setFileName(i + ".png");
-					Image image = new Image(null, outputFolder.getLocation().toFile()
-							.getAbsolutePath()
-							+ "/" + info.getFileName());
+					info.setFileName(i + ".png"); //$NON-NLS-1$
+					Image image = new Image(null, outputFolder.getLocation()
+							.toFile().getAbsolutePath()
+							+ "/" + info.getFileName()); //$NON-NLS-1$
 					info.setWidth(image.getImageData().width);
 					info.setHeight(image.getImageData().height);
 					returnValue.add(info);
@@ -95,12 +100,15 @@ public class DefaultImageRenderer implements IPdf2ImageRenderer {
 		try {
 			document = PDDocument.load(pdfFile.getLocationURI().toURL());
 			if (document.isEncrypted()) {
-				StandardDecryptionMaterial spm = new StandardDecryptionMaterial("*****");
+				StandardDecryptionMaterial spm = new StandardDecryptionMaterial(
+						"*****"); //$NON-NLS-1$
 				document.openProtection(spm);
 				AccessPermission ap = document.getCurrentAccessPermission();
-				if (!ap.canExtractContent())
-					throw new CoreException(StatusCreator
-							.newStatus("Error: You do not have permission to extract images."));
+				if (!ap.canExtractContent()) {
+					throw new CoreException(
+							StatusCreator
+									.newStatus("Error: You do not have permission to extract images.")); //$NON-NLS-1$
+				}
 			}
 			IFile createTempFile = ResourceUtil.createTempFile();
 			int numberOfPages = document.getNumberOfPages();
@@ -108,14 +116,16 @@ public class DefaultImageRenderer implements IPdf2ImageRenderer {
 				return new Dimension(0, 0);
 			}
 			PDFImageWriter imageWriter = new PDFImageWriter();
-			boolean success = imageWriter.writeImage(document, "png", null, 1, 1, createTempFile
-					.getLocation().toFile().getAbsolutePath());
+			boolean success = imageWriter.writeImage(document,
+					"png", null, 1, 1, createTempFile //$NON-NLS-1$
+							.getLocation().toFile().getAbsolutePath());
 			if (success) {
-				String imagePath = createTempFile.getLocation().toFile().getAbsolutePath()
-						+ "1.png";
+				String imagePath = createTempFile.getLocation().toFile()
+						.getAbsolutePath()
+						+ "1.png"; //$NON-NLS-1$
 				Image image = new Image(null, imagePath);
-				Dimension dimension = new Dimension(image.getImageData().width, image
-						.getImageData().height);
+				Dimension dimension = new Dimension(image.getImageData().width,
+						image.getImageData().height);
 				image.dispose();
 				return dimension;
 			}

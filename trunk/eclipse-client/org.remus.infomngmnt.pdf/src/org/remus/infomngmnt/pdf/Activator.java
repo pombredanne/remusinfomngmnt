@@ -4,18 +4,17 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  */
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.pdf";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.pdf"; //$NON-NLS-1$
 
-	public static final String TYPE_ID = "PDF";
+	public static final String TYPE_ID = "PDF"; //$NON-NLS-1$
 
-	public static final String SLIDER_WIDTH = "sliderWidth";
+	public static final String SLIDER_WIDTH = "sliderWidth"; //$NON-NLS-1$
 
 	public static final String RENDERER = "renderer"; //$NON-NLS-1$
 
@@ -50,7 +49,7 @@ public class Activator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		this.serviceTracker = new RemusServiceTracker(getBundle());
+		serviceTracker = new RemusServiceTracker(getBundle());
 		plugin = this;
 	}
 
@@ -77,7 +76,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public RemusServiceTracker getServiceTracker() {
-		return this.serviceTracker;
+		return serviceTracker;
 	}
 
 }

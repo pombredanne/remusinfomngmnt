@@ -15,13 +15,12 @@ package org.remus.infomngmnt.connector.googlecalendar;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.remus.core.remote.security.CredentialProvider;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class GoogleCalendarCredentialProvider extends CredentialProvider {
 
-	public static final String START_TIME = "startTime";
+	public static final String START_TIME = "startTime"; //$NON-NLS-1$
 
 	public static final String END_TIME = "endTime"; //$NON-NLS-1$
 
@@ -30,7 +29,7 @@ public class GoogleCalendarCredentialProvider extends CredentialProvider {
 	 */
 	public GoogleCalendarCredentialProvider() {
 		super();
-		setGroup("google-calendar");
+		setGroup("google-calendar"); //$NON-NLS-1$
 	}
 
 	public int getStartTime() {

@@ -63,13 +63,13 @@ import com.google.gdata.util.ServiceException;
  */
 public class GoogleCalendarConnector extends AbstractExtensionRepository implements IRepository {
 
-	private static final String EVENT_FEED_URL_SUFFIX = "/private/full";
+	private static final String EVENT_FEED_URL_SUFFIX = "/private/full"; //$NON-NLS-1$
 
-	private static final String METAFEED_URL_BASE = "http://www.google.com/calendar/feeds/";
+	private static final String METAFEED_URL_BASE = "http://www.google.com/calendar/feeds/"; //$NON-NLS-1$
 
 	// The string to add to the user's metafeedUrl to access the owncalendars
 	// feed.
-	private static final String OWNCALENDARS_FEED_URL_SUFFIX = "/owncalendars/full";
+	private static final String OWNCALENDARS_FEED_URL_SUFFIX = "/owncalendars/full"; //$NON-NLS-1$
 
 	private final CalendarConverter converter;
 
@@ -111,14 +111,14 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 						CalendarEntry wrappedObject = (CalendarEntry) remoteObjectBySynchronizableObject
 								.getWrappedObject();
 						String lastSegment = new Path(wrappedObject.getId()).lastSegment()
-								.replaceFirst("%40", "@");
+								.replaceFirst("%40", "@"); //$NON-NLS-1$ //$NON-NLS-2$
 
 						CalendarEventEntry insert = getApi().insert(
 								new URL(METAFEED_URL_BASE + lastSegment + EVENT_FEED_URL_SUFFIX),
 								repo);
 						String lastSegment2 = new Path(insert.getId()).lastSegment();
 						IPath append2 = new Path(insert.getId()).removeLastSegments(2).append(
-								"private/full/").append(lastSegment2);
+								"private/full/").append(lastSegment2); //$NON-NLS-1$
 						CalendarEventEntry entry = getApi().getEntry(new URL(append2.toString()),
 								CalendarEventEntry.class);
 						if (entry != null) {
@@ -127,7 +127,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 
 					}
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error adding contact", e));
+					throw new RemoteException(StatusCreator.newStatus(Messages.GoogleCalendarConnector_ErrorAdding, e));
 				}
 			}
 		} else if (item instanceof Category) {
@@ -139,7 +139,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 								+ OWNCALENDARS_FEED_URL_SUFFIX), contactGroupEntry);
 				return buildCalendar(insert);
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error creating new group", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.GoogleCalendarConnector_ErrorCreatingGroup, e));
 			}
 		}
 		return null;
@@ -168,7 +168,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 					return buildEventEntry(update, remoteParent.getId());
 				} catch (Exception e) {
 					throw new RemoteException(StatusCreator.newStatus(
-							"Error updating a calendar-event-entry", e));
+							Messages.GoogleCalendarConnector_ErrorUpdatingCalendarEvent, e));
 				}
 			} else if (item2commit instanceof Category
 					&& remoteObject.getWrappedObject() instanceof CalendarEntry) {
@@ -179,7 +179,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 					CalendarEntry update = wrappedObject.update();
 					return buildCalendar(update);
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus("Error updating category", e));
+					throw new RemoteException(StatusCreator.newStatus(Messages.GoogleCalendarConnector_ErrorUpdatingCategory, e));
 				}
 
 			}
@@ -207,7 +207,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 					((CalendarEventEntry) wrappedObject).delete();
 				}
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error deleting remoteobject"));
+				throw new RemoteException(StatusCreator.newStatus(Messages.GoogleCalendarConnector_ErrorDeleting));
 			}
 		}
 
@@ -277,7 +277,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 		createRemoteObject.setId(entry.getId());
 		createRemoteObject.setWrappedObject(entry);
 		createRemoteObject.setName(entry.getTitle().getPlainText());
-		createRemoteObject.setUrl(StringUtils.join(parentId, "_", entry.getId()));
+		createRemoteObject.setUrl(StringUtils.join(parentId, "_", entry.getId())); //$NON-NLS-1$
 		return createRemoteObject;
 	}
 
@@ -351,7 +351,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 			try {
 				String lastSegment = new Path(url).lastSegment();
 				IPath append = new Path(url).removeLastSegments(2).append(lastSegment);
-				System.out.println(lastSegment + "");
+				System.out.println(lastSegment + ""); //$NON-NLS-1$
 				CalendarEntry entry = getApi().getEntry(new URL(append.toString()),
 						CalendarEntry.class);
 				if (entry != null) {
@@ -359,17 +359,17 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error resolving online calendar", e));
+						Messages.GoogleCalendarConnector_ErrorResolving, e));
 			}
 		} else if (object instanceof InformationUnitListItem) {
 			try {
-				String[] split = url.split("_");
+				String[] split = url.split("_"); //$NON-NLS-1$
 				String lastSegment = new Path(split[0]).lastSegment();
 				IPath append = new Path(split[0]).removeLastSegments(2).append(lastSegment);
 				CalendarEntry calendarEntry = getApi().getEntry(new URL(append.toString()),
 						CalendarEntry.class);
 				String lastSegment2 = new Path(split[1]).lastSegment();
-				IPath append2 = new Path(split[1]).removeLastSegments(2).append("private/full/")
+				IPath append2 = new Path(split[1]).removeLastSegments(2).append("private/full/") //$NON-NLS-1$
 						.append(lastSegment2);
 				CalendarEventEntry entry = getApi().getEntry(new URL(append2.toString()),
 						CalendarEventEntry.class);
@@ -378,7 +378,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 				}
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error resolving online calendar", e));
+						Messages.GoogleCalendarConnector_ErrorResolving, e));
 			}
 		}
 		return null;
@@ -418,7 +418,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 			getApi();
 			return Status.OK_STATUS;
 		} catch (RemoteException e) {
-			return StatusCreator.newStatus("Error conecting to service", e);
+			return StatusCreator.newStatus(Messages.GoogleCalendarConnector_ErrorResolving, e);
 		}
 	}
 
@@ -436,7 +436,7 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 	public synchronized CalendarService getApi() throws RemoteException {
 		if (this.api == null) {
 			getCredentialProvider().setIdentifier(getLocalRepositoryId());
-			this.api = new CalendarService("Remus Information Management");
+			this.api = new CalendarService("Remus Information Management"); //$NON-NLS-1$
 			try {
 				this.api.setUserCredentials(getCredentialProvider().getUserName(),
 						getCredentialProvider().getPassword());
@@ -447,11 +447,11 @@ public class GoogleCalendarConnector extends AbstractExtensionRepository impleme
 							+ getCredentialProvider().getUserName());
 				} catch (MalformedURLException e) {
 					throw new RemoteException(StatusCreator.newStatus(
-							"Error while validating credentials", e));
+							Messages.GoogleCalendarConnector_ErrorValidatingCredentials, e));
 				}
 			} catch (AuthenticationException e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						"Error while validating credentials", e));
+						Messages.GoogleCalendarConnector_ErrorValidatingCredentials, e));
 			}
 			getCredentialProvider().addPropertyChangeListener(this.credentialsMovedListener);
 

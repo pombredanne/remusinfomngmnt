@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.ui.remote.NewRepositoryWizard;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.connector.googlecalendar.Messages;
 
 
 /**
@@ -30,7 +31,7 @@ public class NewGoogleCalendarRepositoryWizard extends NewRepositoryWizard {
 	 * 
 	 */
 	public NewGoogleCalendarRepositoryWizard() {
-		setWindowTitle("New Google-Calendar connector");
+		setWindowTitle(Messages.NewGoogleCalendarRepositoryWizard_NewGoogleCalendarConnector);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class NewGoogleCalendarRepositoryWizard extends NewRepositoryWizard {
 
 	@Override
 	protected void configureRepository(final RemoteRepository newRemoteRepositry) {
-		newRemoteRepositry.setUrl("http://www.google.com/calendar/feeds/");
+		newRemoteRepositry.setUrl("http://www.google.com/calendar/feeds/"); //$NON-NLS-1$
 
 	}
 

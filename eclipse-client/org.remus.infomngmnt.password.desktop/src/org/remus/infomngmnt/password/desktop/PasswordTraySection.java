@@ -56,7 +56,7 @@ import org.remus.infomngmnt.password.PasswordPlugin;
  */
 public class PasswordTraySection extends AbstractTraySection {
 
-	private static final String BUNDLE_ID = "org.remus.infomngmnt.password.desktop";
+	private static final String BUNDLE_ID = "org.remus.infomngmnt.password.desktop"; //$NON-NLS-1$
 
 	public static final String KEY_SELECTED_VALUE = "DESKTOP_SELECTED_VALUE"; //$NON-NLS-1$
 
@@ -114,10 +114,10 @@ public class PasswordTraySection extends AbstractTraySection {
 
 		toolbar.setLayoutData(gridData2);
 		this.toolItem1 = new ToolItem(toolbar, SWT.PUSH);
-		this.toolItem1.setToolTipText("Open Url in Browser");
+		this.toolItem1.setToolTipText(Messages.PasswordTraySection_OpenUrlInBrowser);
 		this.toolItem1.setImage(ResourceManager.getPluginImage(Platform.getBundle(
 				PasswordPlugin.PLUGIN_ID).getBundleContext(),
-				"icons/iconexperience/window_earth.png"));
+				"icons/iconexperience/window_earth.png")); //$NON-NLS-1$
 		this.toolItem1.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				InformationUnit selection = getSelection();
@@ -129,10 +129,10 @@ public class PasswordTraySection extends AbstractTraySection {
 			}
 		});
 		this.toolItem2 = new ToolItem(toolbar, SWT.PUSH);
-		this.toolItem2.setToolTipText("Copy Username to Clipboard");
+		this.toolItem2.setToolTipText(Messages.PasswordTraySection_CopyUsername);
 		this.toolItem2.setImage(ResourceManager.getPluginImage(Platform.getBundle(
 				PasswordPlugin.PLUGIN_ID).getBundleContext(),
-				"icons/iconexperience/copy_username.png"));
+				"icons/iconexperience/copy_username.png")); //$NON-NLS-1$
 		this.toolItem2.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				InformationUnit selection = getSelection();
@@ -147,10 +147,10 @@ public class PasswordTraySection extends AbstractTraySection {
 			}
 		});
 		this.toolItem3 = new ToolItem(toolbar, SWT.PUSH);
-		this.toolItem3.setToolTipText("Copy Password to Clipboard");
+		this.toolItem3.setToolTipText(Messages.PasswordTraySection_CopyPassword);
 		this.toolItem3.setImage(ResourceManager.getPluginImage(Platform.getBundle(
 				PasswordPlugin.PLUGIN_ID).getBundleContext(),
-				"icons/iconexperience/copy_password.png"));
+				"icons/iconexperience/copy_password.png")); //$NON-NLS-1$
 		this.toolItem3.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				InformationUnit selection = getSelection();
@@ -163,9 +163,9 @@ public class PasswordTraySection extends AbstractTraySection {
 			}
 		});
 		this.toolItem4 = new ToolItem(toolbar, SWT.PUSH);
-		this.toolItem4.setToolTipText("Fill username und password");
+		this.toolItem4.setToolTipText(Messages.PasswordTraySection_FillUsername);
 		this.toolItem4.setImage(ResourceManager.getPluginImage(Platform.getBundle(
-				PasswordPlugin.PLUGIN_ID).getBundleContext(), "icons/cog.png"));
+				PasswordPlugin.PLUGIN_ID).getBundleContext(), "icons/cog.png")); //$NON-NLS-1$
 		this.toolItem4.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				InformationUnit selection = getSelection();

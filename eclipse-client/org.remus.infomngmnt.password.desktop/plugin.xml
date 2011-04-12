@@ -6,7 +6,7 @@
       <sectionBox
             id="org.remus.infomngmnt.password.desktop.pwd"
             multiple="false"
-            name="Password Access"
+            name="%sectionBox.name"
             sectionControl="org.remus.infomngmnt.password.desktop.PasswordTraySection">
       </sectionBox>
    </extension>

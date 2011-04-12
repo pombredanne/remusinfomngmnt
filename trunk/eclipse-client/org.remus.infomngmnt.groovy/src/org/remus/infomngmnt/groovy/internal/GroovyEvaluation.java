@@ -22,14 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.remus.rules.provider.RuleEditPlugin;
 import org.eclipse.remus.ui.rules.execution.IGroovyEvaluation;
 import org.eclipse.remus.ui.rules.execution.IGroovyEvaluationBinding;
 import org.eclipse.remus.ui.rules.extension.IGroovyScript;
 import org.eclipse.remus.ui.rules.processing.GroovyClassloader;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -80,7 +79,7 @@ public class GroovyEvaluation implements IGroovyEvaluation {
 		if (engineCache.get(script) == null) {
 			IPath cpPath = RuleEditPlugin.getPlugin().getStateLocation()
 					.append(IGroovyScript.CPFOLDERNAME);
-			String scriptName = "S" + System.currentTimeMillis() + ".groovy";
+			String scriptName = "S" + System.currentTimeMillis() + ".groovy"; //$NON-NLS-1$ //$NON-NLS-2$
 			File[] listFiles = cpPath.toFile().listFiles();
 			scriptFile = cpPath.append(scriptName).toFile();
 

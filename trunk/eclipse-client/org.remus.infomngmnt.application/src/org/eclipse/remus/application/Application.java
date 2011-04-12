@@ -51,13 +51,13 @@ public class Application implements IApplication {
 	private static final String PROP_EXIT_CODE = "eclipse.exitcode"; //$NON-NLS-1$
 
 	/** Constant for the application being run on Windows or not */
-	public static final boolean IS_WINDOWS = "win32".equals(SWT.getPlatform());
+	public static final boolean IS_WINDOWS = "win32".equals(SWT.getPlatform()); //$NON-NLS-1$
 
 	/** Constant for the application being run on Linux or not */
-	public static final boolean IS_LINUX = "gtk".equals(SWT.getPlatform());
+	public static final boolean IS_LINUX = "gtk".equals(SWT.getPlatform()); //$NON-NLS-1$
 
 	/** Constant for the application being run on Mac or not */
-	public static final boolean IS_MAC = "carbon".equals(SWT.getPlatform());
+	public static final boolean IS_MAC = "carbon".equals(SWT.getPlatform()); //$NON-NLS-1$
 
 	/**
 	 * A special return code that will be recognized by the launcher and used to
@@ -188,9 +188,11 @@ public class Application implements IApplication {
 		// -data @none was specified but an ide requires workspace
 		Location instanceLoc = Platform.getInstanceLocation();
 		if (instanceLoc == null) {
-			MessageDialog.openError(shell,
-					IDEWorkbenchMessages.IDEApplication_workspaceMandatoryTitle,
-					IDEWorkbenchMessages.IDEApplication_workspaceMandatoryMessage);
+			MessageDialog
+					.openError(
+							shell,
+							IDEWorkbenchMessages.IDEApplication_workspaceMandatoryTitle,
+							IDEWorkbenchMessages.IDEApplication_workspaceMandatoryMessage);
 			return false;
 		}
 
@@ -214,26 +216,34 @@ public class Application implements IApplication {
 				// Two possibilities:
 				// 1. directory is already in use
 				// 2. directory could not be created
-				File workspaceDirectory = new File(instanceLoc.getURL().getFile());
+				File workspaceDirectory = new File(instanceLoc.getURL()
+						.getFile());
 				if (workspaceDirectory.exists()) {
-					MessageDialog.openError(shell,
-							IDEWorkbenchMessages.IDEApplication_workspaceCannotLockTitle,
-							IDEWorkbenchMessages.IDEApplication_workspaceCannotLockMessage);
+					MessageDialog
+							.openError(
+									shell,
+									IDEWorkbenchMessages.IDEApplication_workspaceCannotLockTitle,
+									IDEWorkbenchMessages.IDEApplication_workspaceCannotLockMessage);
 				} else {
-					MessageDialog.openError(shell,
-							IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetTitle,
-							IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetMessage);
+					MessageDialog
+							.openError(
+									shell,
+									IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetTitle,
+									IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetMessage);
 				}
 			} catch (IOException e) {
-				IDEWorkbenchPlugin.log("Could not obtain lock for workspace location", //$NON-NLS-1$
+				IDEWorkbenchPlugin.log(
+						"Could not obtain lock for workspace location", //$NON-NLS-1$
 						e);
-				MessageDialog.openError(shell, IDEWorkbenchMessages.InternalError, e.getMessage());
+				MessageDialog.openError(shell,
+						IDEWorkbenchMessages.InternalError, e.getMessage());
 			}
 			return false;
 		}
 
 		// -data @noDefault or -data not specified, prompt and set
-		ChooseWorkspaceData launchData = new ChooseWorkspaceData(instanceLoc.getDefault());
+		ChooseWorkspaceData launchData = new ChooseWorkspaceData(
+				instanceLoc.getDefault());
 
 		boolean force = false;
 		while (true) {
@@ -255,15 +265,18 @@ public class Application implements IApplication {
 					return true;
 				}
 			} catch (IllegalStateException e) {
-				MessageDialog.openError(shell,
-						IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetTitle,
-						IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetMessage);
+				MessageDialog
+						.openError(
+								shell,
+								IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetTitle,
+								IDEWorkbenchMessages.IDEApplication_workspaceCannotBeSetMessage);
 				return false;
 			}
 
 			// by this point it has been determined that the workspace is
 			// already in use -- force the user to choose again
-			MessageDialog.openError(shell, IDEWorkbenchMessages.IDEApplication_workspaceInUseTitle,
+			MessageDialog.openError(shell,
+					IDEWorkbenchMessages.IDEApplication_workspaceInUseTitle,
 					IDEWorkbenchMessages.IDEApplication_workspaceInUseMessage);
 		}
 	}
@@ -282,12 +295,13 @@ public class Application implements IApplication {
 	 * @return An URL storing the selected workspace or null if the user has
 	 *         canceled the launch operation.
 	 */
-	private URL promptForWorkspace(final Shell shell, final ChooseWorkspaceData launchData,
-			boolean force) {
+	private URL promptForWorkspace(final Shell shell,
+			final ChooseWorkspaceData launchData, boolean force) {
 		URL url = null;
 		do {
 			// okay to use the shell now - this is the splash shell
-			new ChooseWorkspaceDialog(shell, launchData, false, true).prompt(force);
+			new ChooseWorkspaceDialog(shell, launchData, false, true)
+					.prompt(force);
 			String instancePath = launchData.getSelection();
 			if (instancePath == null) {
 				return null;
@@ -300,9 +314,11 @@ public class Application implements IApplication {
 
 			// 70576: don't accept empty input
 			if (instancePath.length() <= 0) {
-				MessageDialog.openError(shell,
-						IDEWorkbenchMessages.IDEApplication_workspaceEmptyTitle,
-						IDEWorkbenchMessages.IDEApplication_workspaceEmptyMessage);
+				MessageDialog
+						.openError(
+								shell,
+								IDEWorkbenchMessages.IDEApplication_workspaceEmptyTitle,
+								IDEWorkbenchMessages.IDEApplication_workspaceEmptyMessage);
 				continue;
 			}
 
@@ -316,12 +332,15 @@ public class Application implements IApplication {
 				// Don't use File.toURL() since it adds a leading slash that
 				// Platform does not
 				// handle properly. See bug 54081 for more details.
-				String path = workspace.getAbsolutePath().replace(File.separatorChar, '/');
+				String path = workspace.getAbsolutePath().replace(
+						File.separatorChar, '/');
 				url = new URL("file", null, path); //$NON-NLS-1$
 			} catch (MalformedURLException e) {
-				MessageDialog.openError(shell,
-						IDEWorkbenchMessages.IDEApplication_workspaceInvalidTitle,
-						IDEWorkbenchMessages.IDEApplication_workspaceInvalidMessage);
+				MessageDialog
+						.openError(
+								shell,
+								IDEWorkbenchMessages.IDEApplication_workspaceInvalidTitle,
+								IDEWorkbenchMessages.IDEApplication_workspaceInvalidMessage);
 				continue;
 			}
 		} while (!checkValidWorkspace(shell, url));
@@ -366,11 +385,12 @@ public class Application implements IApplication {
 		// other than the current ide version -- find out if the user wants
 		// to use it anyhow.
 		String title = IDEWorkbenchMessages.IDEApplication_versionTitle;
-		String message = NLS
-				.bind(IDEWorkbenchMessages.IDEApplication_versionMessage, url.getFile());
+		String message = NLS.bind(
+				IDEWorkbenchMessages.IDEApplication_versionMessage,
+				url.getFile());
 
-		MessageBox mbox = new MessageBox(shell, SWT.OK | SWT.CANCEL | SWT.ICON_WARNING
-				| SWT.APPLICATION_MODAL);
+		MessageBox mbox = new MessageBox(shell, SWT.OK | SWT.CANCEL
+				| SWT.ICON_WARNING | SWT.APPLICATION_MODAL);
 		mbox.setText(title);
 		mbox.setMessage(message);
 		return mbox.open() == SWT.OK;
@@ -401,7 +421,8 @@ public class Application implements IApplication {
 			return props.getProperty(WORKSPACE_VERSION_KEY);
 		} catch (IOException e) {
 			IDEWorkbenchPlugin.log("Could not read version file", new Status( //$NON-NLS-1$
-					IStatus.ERROR, IDEWorkbenchPlugin.IDE_WORKBENCH, IStatus.ERROR,
+					IStatus.ERROR, IDEWorkbenchPlugin.IDE_WORKBENCH,
+					IStatus.ERROR,
 					e.getMessage() == null ? "" : e.getMessage(), //$NON-NLS-1$,
 					e));
 			return null;
@@ -426,7 +447,8 @@ public class Application implements IApplication {
 
 		OutputStream output = null;
 		try {
-			String versionLine = WORKSPACE_VERSION_KEY + '=' + WORKSPACE_VERSION_VALUE;
+			String versionLine = WORKSPACE_VERSION_KEY + '='
+					+ WORKSPACE_VERSION_VALUE;
 
 			output = new FileOutputStream(versionFile);
 			output.write(versionLine.getBytes("UTF-8")); //$NON-NLS-1$
@@ -455,7 +477,8 @@ public class Application implements IApplication {
 	 * @return An url to the file or null if the version file does not exist or
 	 *         could not be created.
 	 */
-	private static File getVersionFile(final URL workspaceUrl, final boolean create) {
+	private static File getVersionFile(final URL workspaceUrl,
+			final boolean create) {
 		if (workspaceUrl == null) {
 			return null;
 		}
@@ -469,7 +492,8 @@ public class Application implements IApplication {
 
 			// make sure the file exists
 			File versionFile = new File(metaDir, VERSION_FILENAME);
-			if (!versionFile.exists() && (!create || !versionFile.createNewFile())) {
+			if (!versionFile.exists()
+					&& (!create || !versionFile.createNewFile())) {
 				return null;
 			}
 

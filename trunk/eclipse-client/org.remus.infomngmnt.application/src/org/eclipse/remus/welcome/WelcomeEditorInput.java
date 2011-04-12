@@ -13,6 +13,7 @@
 package org.eclipse.remus.welcome;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.remus.application.messages.IDEWorkbenchMessages;
 import org.eclipse.remus.common.ui.image.ResourceManager;
 import org.eclipse.remus.ui.UIPlugin;
 import org.eclipse.ui.IEditorInput;
@@ -41,7 +42,7 @@ public class WelcomeEditorInput implements IEditorInput {
 	 */
 	public ImageDescriptor getImageDescriptor() {
 		return ResourceManager.getPluginImageDescriptor(UIPlugin.getDefault(),
-				"icons/iconexperience/16/earth.png");
+				"icons/iconexperience/16/earth.png"); //$NON-NLS-1$
 	}
 
 	/*
@@ -50,7 +51,7 @@ public class WelcomeEditorInput implements IEditorInput {
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
 	public String getName() {
-		return "Welcome to Remus!";
+		return IDEWorkbenchMessages.WelcomeEditorInput_WelcomeToRemus;
 	}
 
 	/*

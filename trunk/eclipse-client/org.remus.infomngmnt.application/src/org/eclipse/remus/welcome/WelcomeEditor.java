@@ -31,7 +31,7 @@ public class WelcomeEditor extends SharedHeaderFormEditor {
 	@Override
 	protected void addPages() {
 		try {
-			addPage(new WelcomePage(this, "welcome", "welcome"));
+			addPage(new WelcomePage(this, "welcome", "welcome")); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

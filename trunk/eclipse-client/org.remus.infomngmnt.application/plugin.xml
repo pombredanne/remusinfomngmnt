@@ -16,7 +16,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.remus.application.application"
-            name="Remus Information Management">
+            name="%product.name">
          <property
                name="windowImages"
                value="icons/iconexperience/windowimages/cabinet_open_16.png,icons/iconexperience/windowimages/cabinet_open_32.png,icons/iconexperience/windowimages/cabinet_open_48.png,icons/iconexperience/windowimages/cabinet_open_64.png,icons/iconexperience/windowimages/cabinet_open_128.png">
@@ -63,7 +63,7 @@
             class="org.eclipse.remus.ui.perspective.Perspective"
             icon="icons/rim_icon.png"
             id="org.remus.infomngmnt.ui.infoperspective"
-            name="Information Management">
+            name="%perspective.name">
       </perspective>
    </extension>
    <extension
@@ -93,7 +93,7 @@
             default="false"
             icon="icons/iconexperience/16/earth.png"
             id="org.eclipse.remus.welcome.WelcomeEditor"
-            name="Welcome to Remus!">
+            name="%welcome.editor.name">
       </editor>
    </extension>
    <extension
@@ -116,11 +116,11 @@
           <command
             defaultHandler="org.eclipse.remus.application.handler.OpenWelcomeHandler"
             id="org.eclipse.remus.ui.openWelcome"
-            name="Welcome">
+            name="%welcome.command.name">
       </command>
        <command
             id="org.eclipse.remus.ui.openInfoType"
-            name="Open Information-Type">
+            name="%open.command.name">
       </command>
    </extension>
    <extension
@@ -131,7 +131,7 @@
             class="org.eclipse.remus.ui.view.MainViewPart"
             icon="platform:/plugin/org.eclipse.remus.ui.editor/icons/iconexperience/16/document.png"
             id="org.eclipse.remus.ui.main"
-            name="Navigation"
+            name="%navigation.view.name"
             restorable="true">
       </view>
    </extension>
@@ -139,7 +139,7 @@
          point="org.eclipse.ui.contexts">
       <context
             id="org.eclipse.remus.ui.navigationContext"
-            name="Main View - Navigation Context"
+            name="%context.name"
             parentId="org.eclipse.ui.contexts.window">
       </context>
    </extension>
@@ -151,18 +151,18 @@
             contextId="org.eclipse.remus.ui.navigationContext"
             icon="icons/16/workplace_16x16.png"
             id="org.eclipse.remus.ui.navigation"
-            name="Navigation"
+            name="%navigation.collapsibleButton.name"
             order="10"
-            tooltip="Navigation">
+            tooltip="%navigation.collapsibleButton.tooltip">
       </collapsibleButton>
       <collapsibleButton
             bigImage="icons/24/bookmark_24x24.png"
             class="org.eclipse.remus.ui.collapsiblebuttons.TagSection"
             icon="icons/16/bookmark_16x16.png"
             id="org.eclipse.remus.ui.tags"
-            name="Tags"
+            name="%tags.collapsibleButton.name"
             order="20"
-            tooltip="Tags">
+            tooltip="%tags.collapsibleButton.tooltip">
       </collapsibleButton>
       <collapsibleButton
             bigImage="icons/24/server_24x24.png"
@@ -170,9 +170,9 @@
             contextId="org.eclipse.remus.ui.navigationContext"
             icon="icons/16/server_16x16.png"
             id="org.eclipse.remus.application.remoteRepo"
-            name="Remote Repositories"
+            name="%remote.collapsibleButton.name"
             order="30"
-            tooltip="Remote Repositories">
+            tooltip="%remote.collapsibleButton.tooltip">
       </collapsibleButton>
    </extension>
    
@@ -181,7 +181,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.remus.ui.navigation?after=sync">
          <menu
-               label="Remote Synchronization"
+               label="%remote.menu.label"
                mnemonic="e">
             <command
                   commandId="org.eclipse.remus.ui.remote.syncCategory"
@@ -284,7 +284,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.remus.ui.navigation?after=sync">
          <menu
-               label="Search"
+               label="%search.menu.label"
                mnemonic="a">
             <command
                   commandId="org.eclipse.remus.ui.searchReferences"
@@ -354,7 +354,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/16/folder_green_new.png"
             id="org.eclipse.remus.ui.newInfoProjectWizard"
-            name="Information Project"
+            name="%project.wizard.name"
             project="true">
       </wizard>
       <wizard
@@ -363,15 +363,15 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/16/folder_blue_new.png"
             id="org.eclipse.remus.ui.newCategoryWizard"
-            name="Category">
+            name="%category.wizard.name">
       </wizard>
     </extension>
      <extension
          point="org.eclipse.epp.mpc.ui.catalog">
       <catalog
-            description="Marketplace for installing additional components to your information management system."
+            description="%catalog.description"
             icon="icons/iconexperience/windowimages/cabinet_open_32.png"
-            label="Remus Information Management - Marketplace"
+            label="%catalog.label"
             url="http://remus-software.org/marketplace/">
       </catalog>
    </extension>

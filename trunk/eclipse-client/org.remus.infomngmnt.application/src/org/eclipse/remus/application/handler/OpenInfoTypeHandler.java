@@ -18,6 +18,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.application.messages.IDEWorkbenchMessages;
 import org.eclipse.remus.ui.editors.InformationEditor;
 import org.eclipse.remus.ui.editors.InformationEditorInput;
 import org.eclipse.remus.ui.viewer.dialogs.InfoUnitSelectionDialog;
@@ -55,7 +56,7 @@ public class OpenInfoTypeHandler extends AbstractHandler {
 										InformationEditor.ID);
 					} catch (PartInitException e) {
 						ErrorDialog.openError(HandlerUtil.getActiveShell(event),
-								"Error opening element", "Error opening element", e.getStatus());
+								IDEWorkbenchMessages.OpenInfoTypeHandler_ErrorOpeningElement, IDEWorkbenchMessages.OpenInfoTypeHandler_ErrorOpeningElement, e.getStatus());
 					}
 				}
 			}

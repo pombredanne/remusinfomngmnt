@@ -16,6 +16,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.application.messages.IDEWorkbenchMessages;
 import org.eclipse.remus.common.service.ITrayService;
 import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.ui.UIPlugin;
@@ -75,8 +76,8 @@ public class OpenElementToolItem implements IToolbarItemProvider {
 								getTrayService().restoreFromTray(
 										UIUtil.getPrimaryWindow().getShell());
 							} catch (PartInitException e) {
-								ErrorDialog.openError(parent.getShell(), "Error opening element",
-										"Error opening element", e.getStatus());
+								ErrorDialog.openError(parent.getShell(), IDEWorkbenchMessages.OpenElementToolItem_ErrorOpeningElement,
+										IDEWorkbenchMessages.OpenElementToolItem_ErrorOpeningElement, e.getStatus());
 							}
 						}
 					}

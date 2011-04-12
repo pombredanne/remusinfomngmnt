@@ -60,7 +60,7 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 	public static final String URL_PREFIX = "http://remus-software.org"; //$NON-NLS-1$
 
 	public DownloadLatestNewsJob() {
-		super(URL_LATEST_NEWS, ResourceUtil.getInternalFile("latest-news.html",
+		super(URL_LATEST_NEWS, ResourceUtil.getInternalFile("latest-news.html", //$NON-NLS-1$
 				false));
 		// TODO Auto-generated constructor stub
 	}
@@ -75,7 +75,7 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 	protected IStatus run(final IProgressMonitor monitor) {
 		try {
 			File tempFile = org.eclipse.remus.common.core.util.ResourceUtil
-					.createTempFileOnFileSystem("html");
+					.createTempFileOnFileSystem("html"); //$NON-NLS-1$
 			DownloadFileJob downloadJob = new DownloadFileJob(new URL(
 					URL_LATEST_NEWS), tempFile, getFileReceiveAdapter());
 			IStatus run = downloadJob.run(monitor);
@@ -112,9 +112,9 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 		try {
 			InputStream contents = new FileInputStream(tempFile);
 			parser.parse(new org.apache.xerces.xni.parser.XMLInputSource(null,
-					null, null, contents, "UTF-8"));
+					null, null, contents, "UTF-8")); //$NON-NLS-1$
 			final Document document = parser.getDocument();
-			NodeList elementsByTagName = document.getElementsByTagName("head");
+			NodeList elementsByTagName = document.getElementsByTagName("head"); //$NON-NLS-1$
 			// for (int i = 0; i < elementsByTagName.getLength(); i++) {
 			// final Node node = elementsByTagName.item(i);
 			//
@@ -167,7 +167,7 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 			// }
 			final Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
-			transformer.setOutputProperty("omit-xml-declaration", "yes");
+			transformer.setOutputProperty("omit-xml-declaration", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			final DOMSource source = new DOMSource(document);
 			final StringWriter writer = new StringWriter();
@@ -175,7 +175,7 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 			final StreamResult result = new StreamResult(writer);
 			transformer.transform(source, result);
 			ByteArrayInputStream source2 = new ByteArrayInputStream(writer
-					.toString().getBytes("UTF-8"));
+					.toString().getBytes("UTF-8")); //$NON-NLS-1$
 			FileOutputStream fileOutputStream = new FileOutputStream(tempFile,
 					false);
 			StreamUtil.stream(contents, fileOutputStream);
@@ -199,7 +199,7 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 			try {
 				container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container",
+				throw new RuntimeException("Error initializing sync-container", //$NON-NLS-1$
 						e);
 			}
 			fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) container

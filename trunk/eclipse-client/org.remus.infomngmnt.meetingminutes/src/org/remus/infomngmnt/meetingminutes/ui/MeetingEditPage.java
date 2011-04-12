@@ -39,6 +39,7 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.contact.shared.ContactsWithEmailSmartField;
 import org.remus.infomngmnt.meetingminutes.MeetingMinutesActivator;
+import org.remus.infomngmnt.meetingminutes.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -90,7 +91,7 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Log");
+		generalSection.setText(Messages.MeetingEditPage_Log);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout());
@@ -132,7 +133,7 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.EXPANDED | ExpandableComposite.TWISTIE);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL, true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.MeetingEditPage_General);
 
 		final Composite client = toolkit.createComposite(generalSection, SWT.NONE);
 		client.setLayout(new GridLayout(4, false));
@@ -142,13 +143,13 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		Label subjectLabel = toolkit.createLabel(client, "Name");
+		Label subjectLabel = toolkit.createLabel(client, Messages.MeetingEditPage_Name);
 		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.subjectText = toolkit.createText(client, "", SWT.BORDER);
+		this.subjectText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(this.subjectText);
-		Label receivedLabel = toolkit.createLabel(client, "Start");
+		Label receivedLabel = toolkit.createLabel(client, Messages.MeetingEditPage_Start);
 		receivedLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		Composite dueParent = toolkit.createComposite(client);
@@ -167,7 +168,7 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		dueParent.setLayoutData(dueDateLayoutData);
 		toolkit.adapt(this.date);
 
-		Label endLabel = toolkit.createLabel(client, "End");
+		Label endLabel = toolkit.createLabel(client, Messages.MeetingEditPage_End);
 		endLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
 		Composite endParent = toolkit.createComposite(client);
@@ -182,17 +183,17 @@ public class MeetingEditPage extends AbstractInformationFormPage {
 		GridData endDataLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		endParent.setLayoutData(endDataLayoutData);
 
-		Label contentTypeLabel = toolkit.createLabel(client, "Location");
+		Label contentTypeLabel = toolkit.createLabel(client, Messages.MeetingEditPage_Location);
 		contentTypeLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.placeText = toolkit.createText(client, "", SWT.BORDER);
+		this.placeText = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.placeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		addControl(this.placeText);
 
-		Label moderatorLabel = toolkit.createLabel(client, "Moderator");
+		Label moderatorLabel = toolkit.createLabel(client, Messages.MeetingEditPage_Moderator);
 		moderatorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.moderator = toolkit.createText(client, "", SWT.BORDER);
+		this.moderator = toolkit.createText(client, "", SWT.BORDER); //$NON-NLS-1$
 		this.moderator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new ContactsWithEmailSmartField(this.moderator);
 		addControl(this.moderator);

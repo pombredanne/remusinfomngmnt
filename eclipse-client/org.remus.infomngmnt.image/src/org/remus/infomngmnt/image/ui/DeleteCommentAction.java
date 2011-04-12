@@ -24,6 +24,7 @@ import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 import org.remus.infomngmnt.image.gef.IEditingDomainHolder;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -36,7 +37,7 @@ public class DeleteCommentAction extends BaseSelectionListenerAction implements
 	private EditingDomain editingDomain;
 
 	protected DeleteCommentAction(final InformationUnit unit) {
-		super("Delete");
+		super(Messages.DeleteCommentAction_Delete);
 
 		this.unit = unit;
 

@@ -15,6 +15,7 @@ package org.remus.infomngmnt.image.ui;
 import java.lang.reflect.InvocationTargetException;
 
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.messages.Messages;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 
 import org.eclipse.core.resources.IFile;
@@ -41,7 +42,7 @@ public class NewImageWizard extends NewInfoObjectWizard {
 	 */
 	public NewImageWizard() {
 		setNeedsProgressMonitor(true);
-		setWindowTitle("New photo/graphic");
+		setWindowTitle(Messages.NewImageWizard_Title);
 		editingHandler = ImagePlugin.getDefault().getServiceTracker()
 				.getService(IEditingHandler.class);
 

@@ -18,6 +18,7 @@ import org.eclipse.mylyn.commons.ui.screenshots.ScreenshotViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * NOTE: this class exposes a lot of implementation detial and is likely to
@@ -33,8 +34,8 @@ public class ScreenshotCreationPage2 extends WizardPage {
 
 	public ScreenshotCreationPage2() {
 		super("ScreenShotAttachment"); //$NON-NLS-1$
-		setTitle("Capture screenshot");
-		setDescription("This wizard enables you to create a new image from a screenshot");
+		setTitle(Messages.ScreenshotCreationPage2_WizardTitle);
+		setDescription(Messages.ScreenshotCreationPage2_WizardSubTitle);
 	}
 
 	private ScreenshotViewer viewer;

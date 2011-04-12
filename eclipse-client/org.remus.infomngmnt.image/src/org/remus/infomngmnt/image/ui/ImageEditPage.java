@@ -60,6 +60,7 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.internal.ResourceManager;
+import org.remus.infomngmnt.image.messages.Messages;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 
 /**
@@ -73,16 +74,16 @@ public class ImageEditPage extends AbstractInformationFormPage {
 	private boolean keepRatio = true;
 	private float ratio = 0;
 	private IFile newTmpFile;
-	private final Action keepRationAction = new Action("", IAction.AS_CHECK_BOX) {
+	private final Action keepRationAction = new Action("", IAction.AS_CHECK_BOX) { //$NON-NLS-1$
 		@Override
 		public ImageDescriptor getImageDescriptor() {
 			return ImageDescriptor.createFromImage(ResourceManager.getPluginImage(ImagePlugin
-					.getDefault(), "icons/iconexperience/fit_to_size.png"));
+					.getDefault(), "icons/iconexperience/fit_to_size.png")); //$NON-NLS-1$
 		};
 
 		@Override
 		public String getToolTipText() {
-			return "Keep Aspect ratio";
+			return Messages.ImageEditPage_KeepAspectRatio;
 		};
 
 		@Override
@@ -106,7 +107,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.ImageEditPage_General);
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
@@ -115,7 +116,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(composite);
 		generalSection.setClient(composite);
 
-		toolkit.createLabel(composite, "Image-Name", SWT.NONE);
+		toolkit.createLabel(composite, Messages.ImageEditPage_ImageName, SWT.NONE);
 
 		this.text = toolkit.createText(composite, null, SWT.READ_ONLY);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
@@ -123,7 +124,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		new Label(composite, SWT.NONE);
 
 		final Hyperlink openImageWithExternalApp = toolkit.createHyperlink(composite,
-				"Open Image with the default external application", SWT.NONE);
+				Messages.ImageEditPage_OpenImageWithExternal, SWT.NONE);
 		openImageWithExternalApp.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4,
 				1));
 		openImageWithExternalApp.addHyperlinkListener(new HyperlinkAdapter() {
@@ -139,7 +140,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		new Label(composite, SWT.NONE);
 
 		final Hyperlink setCommentsInImage = toolkit.createHyperlink(composite,
-				"Set Comments within image", SWT.NONE);
+				Messages.ImageEditPage_SetComments, SWT.NONE);
 		setCommentsInImage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		setCommentsInImage.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
@@ -151,15 +152,15 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		});
 		new Label(composite, SWT.NONE);
 
-		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite, "Change image",
+		final Hyperlink changeImageHyperlink = toolkit.createHyperlink(composite, Messages.ImageEditPage_ChangeImage,
 				SWT.NONE);
 		changeImageHyperlink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 		changeImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
 				FileDialog fd = new FileDialog(getSite().getShell());
-				fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" });
-				fd.setFilterNames(new String[] { "Supported Images (JPG,PNG,GIF,BMP)" });
+				fd.setFilterExtensions(new String[] { "*.jpg;*.jpeg;*.png;*.gif;*.bmp" }); //$NON-NLS-1$
+				fd.setFilterNames(new String[] { Messages.ImageEditPage_SupportedFormats });
 				String open = fd.open();
 				if (open != null) {
 					LoadImageRunnable loadImageRunnable = new LoadImageRunnable();
@@ -201,7 +202,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		// }
 		// });
 
-		toolkit.createLabel(composite, "Width", SWT.NONE);
+		toolkit.createLabel(composite, Messages.ImageEditPage_Width, SWT.NONE);
 
 		this.widthText = toolkit.createText(composite, null, SWT.NONE);
 		final GridData gd_widthText = new GridData();
@@ -209,7 +210,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		this.widthText.setLayoutData(gd_widthText);
 		this.widthText.addVerifyListener(new VerifyListener() {
 			public void verifyText(final VerifyEvent e) {
-				Pattern pattern = Pattern.compile("[0-9]*");
+				Pattern pattern = Pattern.compile("[0-9]*"); //$NON-NLS-1$
 				Matcher m = pattern.matcher(e.text);
 				// ONLY NUMERICAL VALUES ARE ACCEPTED .
 				if (!m.matches()) {
@@ -218,7 +219,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 			}
 		});
 
-		toolkit.createLabel(composite, "px", SWT.NONE);
+		toolkit.createLabel(composite, Messages.ImageEditPage_px, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
 		ToolBar tb = new ToolBar(composite, SWT.FLAT);
@@ -228,7 +229,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		tbm.update(true);
 		tb.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 2));
 
-		final Label heightLabel = toolkit.createLabel(composite, "Height", SWT.NONE);
+		final Label heightLabel = toolkit.createLabel(composite, Messages.ImageEditPage_Height, SWT.NONE);
 		final GridData gd_heightLabel = new GridData();
 		heightLabel.setLayoutData(gd_heightLabel);
 
@@ -238,7 +239,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		this.heightText.setLayoutData(gd_heightText);
 		this.heightText.addVerifyListener(new VerifyListener() {
 			public void verifyText(final VerifyEvent e) {
-				Pattern pattern = Pattern.compile("[0-9]*");
+				Pattern pattern = Pattern.compile("[0-9]*"); //$NON-NLS-1$
 				Matcher m = pattern.matcher(e.text);
 				// ONLY NUMERICAL VALUES ARE ACCEPTED .
 				if (!m.matches()) {
@@ -250,7 +251,7 @@ public class ImageEditPage extends AbstractInformationFormPage {
 		addControl(this.widthText);
 		addControl(this.heightText);
 
-		toolkit.createLabel(composite, "px", SWT.NONE);
+		toolkit.createLabel(composite, Messages.ImageEditPage_px, SWT.NONE);
 		doCreateSemanticSection(body, toolkit);
 	}
 

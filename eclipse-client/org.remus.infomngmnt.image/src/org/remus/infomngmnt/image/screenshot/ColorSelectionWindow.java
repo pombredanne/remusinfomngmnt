@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * Popup window for color selection
@@ -83,7 +84,7 @@ public class ColorSelectionWindow extends Window {
 		this.colors[15] = createColorCanvas(colorComposite, new RGB(255, 255, 255));
 
 		Button closeButton = new Button(parent, SWT.PUSH);
-		closeButton.setText("Close");
+		closeButton.setText(Messages.ColorSelectionWindow_Close);
 		closeButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 		closeButton.addSelectionListener(new SelectionAdapter() {
 

@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.messages.Messages;
 
 public class ImportImagesFromDiskWizardPage extends WizardPage implements IValidatingWizard {
 
@@ -64,10 +65,10 @@ public class ImportImagesFromDiskWizardPage extends WizardPage implements IValid
 	 * Create the wizard
 	 */
 	public ImportImagesFromDiskWizardPage(final ImportImageObject ioObject) {
-		super("wizardPage");
+		super("wizardPage"); //$NON-NLS-1$
 		this.importObject = ioObject;
-		setTitle("Import images from harddisc");
-		setDescription("This wizard enables you to import directory images into the application");
+		setTitle(Messages.ImportImagesFromDiskWizardPage_WizardTitle);
+		setDescription(Messages.ImportImagesFromDiskWizardPage_WizardSubtitle);
 		this.ctx = new DataBindingContext();
 		IDialogSettings dialogSettings = ImagePlugin.getDefault().getDialogSettings();
 		this.dialogSettings = UIUtil.getDialogSettings(DLG_IMAGEHDIMPORT, dialogSettings);
@@ -86,13 +87,13 @@ public class ImportImagesFromDiskWizardPage extends WizardPage implements IValid
 		//
 
 		final Label directoryLabel = new Label(container, SWT.NONE);
-		directoryLabel.setText("Directory");
+		directoryLabel.setText(Messages.ImportImagesFromDiskWizardPage_Directory);
 
 		this.text = new Text(container, SWT.BORDER);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Button browseButton = new Button(container, SWT.NONE);
-		browseButton.setText("Browse...");
+		browseButton.setText(Messages.ImportImagesFromDiskWizardPage_Browse);
 		browseButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				DirectoryDialog dd = new DirectoryDialog(getShell());
@@ -104,7 +105,7 @@ public class ImportImagesFromDiskWizardPage extends WizardPage implements IValid
 		});
 
 		final Label categoryLabel = new Label(container, SWT.NONE);
-		categoryLabel.setText("Category");
+		categoryLabel.setText(Messages.ImportImagesFromDiskWizardPage_Category);
 
 		this.categoryBrowser = new CategoryBrowser(container, SWT.BORDER);
 		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -119,13 +120,13 @@ public class ImportImagesFromDiskWizardPage extends WizardPage implements IValid
 		composite.setLayout(gridLayout_2);
 
 		this.importAsFlatButton = new Button(composite, SWT.RADIO);
-		this.importAsFlatButton.setText("Import as flat list");
+		this.importAsFlatButton.setText(Messages.ImportImagesFromDiskWizardPage_ImportAsFlatList);
 
 		this.copyFolderstructureToButton = new Button(composite, SWT.RADIO);
 		this.copyFolderstructureToButton.setSelection(true);
 		final GridData gd_copyFolderstructureToButton = new GridData();
 		this.copyFolderstructureToButton.setLayoutData(gd_copyFolderstructureToButton);
-		this.copyFolderstructureToButton.setText("Map folderstructure to categories");
+		this.copyFolderstructureToButton.setText(Messages.ImportImagesFromDiskWizardPage_MapFolderstructure);
 
 		bindValuesToUi();
 		setControl(container);
@@ -153,14 +154,14 @@ public class ImportImagesFromDiskWizardPage extends WizardPage implements IValid
 	public boolean validate(final boolean b) {
 		if (!new File(this.text.getText()).exists()) {
 			if (b) {
-				setErrorMessage("No valid directory.");
+				setErrorMessage(Messages.ImportImagesFromDiskWizardPage_NoValidCategory);
 			}
 			return false;
 		}
 		IStatus valid = this.categoryBrowser.isValid();
 		if (!valid.isOK()) {
 			if (b) {
-				setErrorMessage("No valid category");
+				setErrorMessage(Messages.ImportImagesFromDiskWizardPage_NoValidCategory);
 			}
 			return false;
 		}

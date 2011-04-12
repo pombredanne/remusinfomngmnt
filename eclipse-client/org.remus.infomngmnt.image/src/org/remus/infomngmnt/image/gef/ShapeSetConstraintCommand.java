@@ -16,7 +16,6 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
-
 import org.remus.infomngmnt.image.comments.ShapableInfoDelegate;
 
 /**
@@ -53,9 +52,9 @@ public class ShapeSetConstraintCommand extends Command {
 			throw new IllegalArgumentException();
 		}
 		this.shape = shape;
-		this.request = req;
+		request = req;
 		this.newBounds = newBounds.getCopy();
-		setLabel("move / resize");
+		setLabel("move / resize"); //$NON-NLS-1$
 	}
 
 	/*
@@ -65,7 +64,7 @@ public class ShapeSetConstraintCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		Object type = this.request.getType();
+		Object type = request.getType();
 		// make sure the Request is of a type we support:
 		return (RequestConstants.REQ_MOVE.equals(type)
 				|| RequestConstants.REQ_MOVE_CHILDREN.equals(type)
@@ -80,9 +79,9 @@ public class ShapeSetConstraintCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		this.oldBounds = new Rectangle(new Point(this.shape.getLocation().x, this.shape
-				.getLocation().y), new Dimension(this.shape.getSize().width,
-				this.shape.getSize().height));
+		oldBounds = new Rectangle(new Point(shape.getLocation().x,
+				shape.getLocation().y), new Dimension(shape.getSize().width,
+				shape.getSize().height));
 		redo();
 	}
 
@@ -93,10 +92,10 @@ public class ShapeSetConstraintCommand extends Command {
 	 */
 	@Override
 	public void redo() {
-		this.shape.setSize(new java.awt.Dimension(this.newBounds.getSize().width, this.newBounds
-				.getSize().height));
-		this.shape.setLocation(new java.awt.Point(this.newBounds.getLocation().x, this.newBounds
-				.getLocation().y));
+		shape.setSize(new java.awt.Dimension(newBounds.getSize().width,
+				newBounds.getSize().height));
+		shape.setLocation(new java.awt.Point(newBounds.getLocation().x,
+				newBounds.getLocation().y));
 	}
 
 	/*
@@ -106,9 +105,9 @@ public class ShapeSetConstraintCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		this.shape.setSize(new java.awt.Dimension(this.oldBounds.getSize().width, this.oldBounds
-				.getSize().height));
-		this.shape.setLocation(new java.awt.Point(this.oldBounds.getLocation().x, this.oldBounds
-				.getLocation().y));
+		shape.setSize(new java.awt.Dimension(oldBounds.getSize().width,
+				oldBounds.getSize().height));
+		shape.setLocation(new java.awt.Point(oldBounds.getLocation().x,
+				oldBounds.getLocation().y));
 	}
 }

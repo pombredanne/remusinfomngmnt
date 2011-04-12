@@ -38,6 +38,7 @@ import org.eclipse.remus.ui.progress.CancelableRunnable;
 import org.eclipse.remus.util.CategoryUtil;
 
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.messages.Messages;
 import org.remus.infomngmnt.image.operation.LoadImageRunnable;
 
 /**
@@ -45,8 +46,8 @@ import org.remus.infomngmnt.image.operation.LoadImageRunnable;
  */
 public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 
-	public static final String[] VALID_IMAGE_EXTENSIONS = new String[] { "png", "gif", "jpg",
-			"jpeg" };
+	public static final String[] VALID_IMAGE_EXTENSIONS = new String[] { "png", "gif", "jpg", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			"jpeg" }; //$NON-NLS-1$
 
 	private final ImportImageObject obj;
 
@@ -65,7 +66,7 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 			throws InvocationTargetException, InterruptedException {
 		ModalContext.checkCanceled(monitor);
 		File[] listFiles = directory.listFiles();
-		monitor.beginTask(NLS.bind("Searching through folder \"{0}\"", directory.getName()),
+		monitor.beginTask(NLS.bind(Messages.ImportImagesFromDiscRunnable_SearchTroughFolder, directory.getName()),
 				listFiles.length);
 		for (File file : listFiles) {
 			Path path = new Path(file.getAbsolutePath());
@@ -74,7 +75,7 @@ public class ImportImagesFromDiscRunnable extends CancelableRunnable {
 				copy2Tmp.setFilePath(file.getAbsolutePath());
 				copy2Tmp.run(new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
 
-				monitor.setTaskName(NLS.bind("Adding image \"{0}\"", path.lastSegment()));
+				monitor.setTaskName(NLS.bind(Messages.ImportImagesFromDiscRunnable_AddingImage, path.lastSegment()));
 				InformationUnit createNewObject = InformationStructureEdit.newSession(
 						ImagePlugin.TYPE_ID).newInformationUnit();
 

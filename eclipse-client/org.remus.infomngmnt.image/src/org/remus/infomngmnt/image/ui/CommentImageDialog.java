@@ -27,6 +27,7 @@ import org.eclipse.ui.PlatformUI;
 import org.remus.infomngmnt.image.ImagePlugin;
 import org.remus.infomngmnt.image.gef.ImageLinkEditPartFactory;
 import org.remus.infomngmnt.image.internal.ResourceManager;
+import org.remus.infomngmnt.image.messages.Messages;
 
 public class CommentImageDialog extends TitleAreaDialog {
 
@@ -120,10 +121,10 @@ public class CommentImageDialog extends TitleAreaDialog {
 				super.controlResized(e);
 			}
 		});
-		setTitle("Comments");
-		setMessage("Edit comments within the image");
+		setTitle(Messages.CommentImageDialog_Title);
+		setMessage(Messages.CommentImageDialog_Message);
 		setTitleImage(ResourceManager.getPluginImage(ImagePlugin.getDefault(),
-				"icons/iconexperience/comment_wizard_title.png"));
+				"icons/iconexperience/comment_wizard_title.png")); //$NON-NLS-1$
 		return this.area;
 	}
 
@@ -148,7 +149,7 @@ public class CommentImageDialog extends TitleAreaDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Comments");
+		newShell.setText(Messages.CommentImageDialog_Title);
 	}
 
 }

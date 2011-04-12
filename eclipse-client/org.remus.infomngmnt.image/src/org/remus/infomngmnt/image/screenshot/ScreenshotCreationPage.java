@@ -59,6 +59,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * NOTE: this class exposes a lot of implementation detial and is likely to
@@ -164,8 +165,8 @@ public class ScreenshotCreationPage extends WizardPage {
 
 	public ScreenshotCreationPage() {
 		super("ScreenShotAttachment"); //$NON-NLS-1$
-		setTitle("Capture screenshot");
-		setDescription("This wizard enables you to create a new image from a screenshot");
+		setTitle(Messages.ScreenshotCreationPage_WizardTitle);
+		setDescription(Messages.ScreenshotCreationPage_WizardSubTitle);
 	}
 
 	public void createControl(final Composite parent) {
@@ -179,7 +180,7 @@ public class ScreenshotCreationPage extends WizardPage {
 
 		// TODO: need disabled versions of all toolbar icons
 		ToolBarManager tbm = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL | SWT.RIGHT);
-		this.captureAction = new Action("Capture", IAction.AS_PUSH_BUTTON) {
+		this.captureAction = new Action(Messages.ScreenshotCreationPage_Capture, IAction.AS_PUSH_BUTTON) {
 
 			private boolean isFirstCapture = true;
 
@@ -198,7 +199,7 @@ public class ScreenshotCreationPage extends WizardPage {
 			}
 
 		};
-		this.captureAction.setToolTipText("Capture desktop");
+		this.captureAction.setToolTipText(Messages.ScreenshotCreationPage_CaptureDesktop);
 		this.captureAction.setImageDescriptor(ImageDescriptor.createFromImage(PlatformUI
 				.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 
@@ -242,14 +243,14 @@ public class ScreenshotCreationPage extends WizardPage {
 				refreshCanvasSize();
 			}
 		};
-		this.fitAction.setToolTipText("Fit image");
-		this.fitAction.setText("Fit image");
+		this.fitAction.setToolTipText(Messages.ScreenshotCreationPage_FitImage);
+		this.fitAction.setText(Messages.ScreenshotCreationPage_FitImage);
 		this.fitAction.setImageDescriptor(ImageDescriptor.createFromImage(PlatformUI.getWorkbench()
 				.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 		this.fitAction.setChecked(true);
 		this.fitAction.setEnabled(false);
 
-		this.cropAction = new Action("Crop", IAction.AS_RADIO_BUTTON) {
+		this.cropAction = new Action(Messages.ScreenshotCreationPage_Crop, IAction.AS_RADIO_BUTTON) {
 			@Override
 			public void run() {
 				ScreenshotCreationPage.this.currentAction = EditorAction.CROPPING;
@@ -259,12 +260,12 @@ public class ScreenshotCreationPage extends WizardPage {
 				ScreenshotCreationPage.this.canvas.redraw();
 			}
 		};
-		this.cropAction.setToolTipText("Crop");
+		this.cropAction.setToolTipText(Messages.ScreenshotCreationPage_Crop);
 		this.cropAction.setImageDescriptor(ImageDescriptor.createFromImage(PlatformUI
 				.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 		this.cropAction.setEnabled(false);
 
-		this.markAction = new Action("Annotate", IAction.AS_RADIO_BUTTON) {
+		this.markAction = new Action(Messages.ScreenshotCreationPage_Annotate, IAction.AS_RADIO_BUTTON) {
 			@Override
 			public void run() {
 				ScreenshotCreationPage.this.currentAction = EditorAction.MARKING;
@@ -274,7 +275,7 @@ public class ScreenshotCreationPage extends WizardPage {
 				ScreenshotCreationPage.this.canvas.redraw();
 			}
 		};
-		this.markAction.setToolTipText("Draw annotation");
+		this.markAction.setToolTipText(Messages.ScreenshotCreationPage_DrawAnnotation);
 		this.markAction.setImageDescriptor(ImageDescriptor.createFromImage(PlatformUI
 				.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 		// markAction.setDisabledImageDescriptor(ImageDescriptor.createFromFile(getClass(),
@@ -306,12 +307,12 @@ public class ScreenshotCreationPage extends WizardPage {
 				}
 			}
 		};
-		this.colorAction.setToolTipText("Pen color");
+		this.colorAction.setToolTipText(Messages.ScreenshotCreationPage_PenColor);
 		this.colorIcon = new Image(getShell().getDisplay(), 16, 16);
 		setMarkColor(new RGB(255, 85, 85));
 		this.colorAction.setEnabled(false);
 
-		this.clearAction = new Action("Clear annotations", IAction.AS_PUSH_BUTTON) {
+		this.clearAction = new Action(Messages.ScreenshotCreationPage_ClearnAnnotations, IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
 				ScreenshotCreationPage.this.clearAction.setEnabled(false);
@@ -321,7 +322,7 @@ public class ScreenshotCreationPage extends WizardPage {
 				setImageDirty(true);
 			}
 		};
-		this.clearAction.setToolTipText("Clear");
+		this.clearAction.setToolTipText(Messages.ScreenshotCreationPage_Clear);
 		this.clearAction.setImageDescriptor(ImageDescriptor.createFromImage(PlatformUI
 				.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 		this.clearAction.setEnabled(false);

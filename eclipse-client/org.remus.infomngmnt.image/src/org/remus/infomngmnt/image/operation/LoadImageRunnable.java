@@ -43,6 +43,7 @@ import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.graphics.ImageData;
 
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.messages.Messages;
 
 import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
@@ -85,10 +86,10 @@ public class LoadImageRunnable extends CancelableRunnable {
 
 	@Override
 	protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-		monitor.beginTask("Checking filename...", IProgressMonitor.UNKNOWN);
+		monitor.beginTask(Messages.LoadImageRunnable_CheckFilename, IProgressMonitor.UNKNOWN);
 		this.file = new File(this.imagePath);
 		if (this.file.exists() && this.file.isFile()) {
-			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file
+			monitor.beginTask(NLS.bind(Messages.LoadImageRunnable_ReadFile, this.file.getName()), (int) this.file
 					.length());
 			try {
 				if (this.domain == null) {
@@ -99,7 +100,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 				}
 
 				final CompoundCommand cc = new CompoundCommand();
-				boolean isJpgeg = Pattern.compile("^.*\\.jpe?g$", Pattern.CASE_INSENSITIVE)
+				boolean isJpgeg = Pattern.compile("^.*\\.jpe?g$", Pattern.CASE_INSENSITIVE) //$NON-NLS-1$
 						.matcher(this.imagePath).matches();
 				Metadata metadata = null;
 				List<InformationUnit> exifData = new ArrayList<InformationUnit>();
@@ -174,7 +175,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 							this.imagePath));
 				}
 				//				
-				cc.setLabel("Set new image");
+				cc.setLabel(Messages.LoadImageRunnable_SetNewImage);
 				UIUtil.getDisplay().asyncExec(new Runnable() {
 					public void run() {
 						if (LoadImageRunnable.this.executeOnEditingDomain) {
@@ -191,10 +192,10 @@ public class LoadImageRunnable extends CancelableRunnable {
 				is = null;
 				return Status.OK_STATUS;
 			} catch (IOException e) {
-				return StatusCreator.newStatus("File not exisits or is not accessible");
+				return StatusCreator.newStatus(Messages.LoadImageRunnable_FileNotAccessible);
 			}
 		}
-		return StatusCreator.newStatus("File not exisits or is not accessible");
+		return StatusCreator.newStatus(Messages.LoadImageRunnable_FileNotAccessible);
 	}
 
 	public void setImageNode(final InformationUnit infoUnit) {

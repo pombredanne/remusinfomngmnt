@@ -23,6 +23,7 @@ import org.eclipse.remus.search.analyzer.ISecondaryIndex;
 import org.eclipse.remus.search.analyzer.SecondaryIndex;
 
 import org.remus.infomngmnt.image.ImagePlugin;
+import org.remus.infomngmnt.image.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -50,9 +51,9 @@ public class CommentIndexer implements ISecondaryAnalyzer {
 		for (InformationUnit informationUnit : dynamicList) {
 			InformationStructureRead commentRead = InformationStructureRead.newSession(
 					informationUnit, ImagePlugin.TYPE_ID);
-			String valueByNodeId = (String) commentRead.getValueByNodeId("text");
+			String valueByNodeId = (String) commentRead.getValueByNodeId("text"); //$NON-NLS-1$
 			if (valueByNodeId != null && valueByNodeId.trim().length() > 0) {
-				returnValue.add(SecondaryIndex.CREATE("Comment", valueByNodeId, null));
+				returnValue.add(SecondaryIndex.CREATE(Messages.CommentIndexer_Comment, valueByNodeId, null));
 			}
 		}
 		return returnValue.toArray(new ISecondaryIndex[returnValue.size()]);

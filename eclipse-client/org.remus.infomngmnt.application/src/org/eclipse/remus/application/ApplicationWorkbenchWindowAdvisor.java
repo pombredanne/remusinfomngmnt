@@ -81,7 +81,6 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.internal.ide.AboutInfo;
 import org.eclipse.ui.internal.ide.IDEInternalPreferences;
-import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.internal.ide.dialogs.WelcomeEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -91,9 +90,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 
-
-public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor implements
-		ITrayService {
+public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
+		implements ITrayService {
 
 	private static final String WELCOME_EDITOR_ID = "org.eclipse.ui.internal.ide.dialogs.WelcomeEditor"; //$NON-NLS-1$
 
@@ -116,10 +114,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	private final IPropertyListener editorPropertyListener = new IPropertyListener() {
 		public void propertyChanged(final Object source, final int propId) {
 			if (propId == IWorkbenchPartConstants.PROP_TITLE) {
-				if (ApplicationWorkbenchWindowAdvisor.this.lastActiveEditor != null) {
-					String newTitle = ApplicationWorkbenchWindowAdvisor.this.lastActiveEditor
-							.getTitle();
-					if (!ApplicationWorkbenchWindowAdvisor.this.lastEditorTitle.equals(newTitle)) {
+				if (lastActiveEditor != null) {
+					String newTitle = lastActiveEditor.getTitle();
+					if (!lastEditorTitle.equals(newTitle)) {
 						recomputeTitle();
 					}
 				}
@@ -147,18 +144,20 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	 * @param configurer
 	 *            the window configurer
 	 */
-	public ApplicationWorkbenchWindowAdvisor(final ApplicationWorkbenchAdvisor wbAdvisor,
+	public ApplicationWorkbenchWindowAdvisor(
+			final ApplicationWorkbenchAdvisor wbAdvisor,
 			final IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 		this.wbAdvisor = wbAdvisor;
-		this.preferenceStore = UIPlugin.getDefault().getPreferenceStore();
-		ServiceReference serviceReference = Platform.getBundle(ApplicationPlugin.PLUGIN_ID)
-				.getBundleContext().getServiceReference(ITrayService.class.getName());
+		preferenceStore = UIPlugin.getDefault().getPreferenceStore();
+		ServiceReference serviceReference = Platform
+				.getBundle(ApplicationPlugin.PLUGIN_ID).getBundleContext()
+				.getServiceReference(ITrayService.class.getName());
 		if (serviceReference == null
-				|| Platform.getBundle(ApplicationPlugin.PLUGIN_ID).getBundleContext().getService(
-						serviceReference) == null) {
-			Platform.getBundle(ApplicationPlugin.PLUGIN_ID).getBundleContext().registerService(
-					ITrayService.class.getName(), this, null);
+				|| Platform.getBundle(ApplicationPlugin.PLUGIN_ID)
+						.getBundleContext().getService(serviceReference) == null) {
+			Platform.getBundle(ApplicationPlugin.PLUGIN_ID).getBundleContext()
+					.registerService(ITrayService.class.getName(), this, null);
 		}
 
 	}
@@ -171,9 +170,10 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	 * (org.eclipse.ui.application.IActionBarConfigurer)
 	 */
 	@Override
-	public ActionBarAdvisor createActionBarAdvisor(final IActionBarConfigurer configurer) {
-		this.actionBarAdvisor = new ApplicationActionBarAdvisor(configurer);
-		return this.actionBarAdvisor;
+	public ActionBarAdvisor createActionBarAdvisor(
+			final IActionBarConfigurer configurer) {
+		actionBarAdvisor = new ApplicationActionBarAdvisor(configurer);
+		return actionBarAdvisor;
 	}
 
 	/**
@@ -199,13 +199,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				/* Check if Prefs tell to move to tray */
 				if (ApplicationWorkbenchWindowAdvisor.this
 						.equals(UIUtil.fgPrimaryApplicationWorkbenchWindowAdvisor)
-						&& org.eclipse.remus.application.ApplicationWorkbenchWindowAdvisor.this.preferenceStore
+						&& preferenceStore
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_CLOSE)) {
-					org.eclipse.remus.application.ApplicationWorkbenchWindowAdvisor.this.fMinimizeFromClose = true;
-					getWindowConfigurer().getWindow().getShell().notifyListeners(SWT.Iconify,
-							new Event());
+					fMinimizeFromClose = true;
+					getWindowConfigurer().getWindow().getShell()
+							.notifyListeners(SWT.Iconify, new Event());
 					res[0] = false;
-					ApplicationWorkbenchWindowAdvisor.this.fMinimizeFromClose = false;
+					fMinimizeFromClose = false;
 				}
 
 				/* shutdown the normal way */
@@ -228,7 +228,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		}
 		// the user has asked to close the last window, while will cause the
 		// workbench to close in due course - prompt the user for confirmation
-		IPreferenceStore store = IDEWorkbenchPlugin.getDefault().getPreferenceStore();
+		IPreferenceStore store = IDEWorkbenchPlugin.getDefault()
+				.getPreferenceStore();
 		boolean promptOnExit = store
 				.getBoolean(IDEInternalPreferences.EXIT_PROMPT_ON_CLOSE_LAST_WINDOW);
 
@@ -241,20 +242,22 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				productName = product.getName();
 			}
 			if (productName == null) {
-				message = IDEWorkbenchMessages.PromptOnExitDialog_message0;
+				message = ""; //$NON-NLS-1$
 			} else {
-				message = NLS.bind(IDEWorkbenchMessages.PromptOnExitDialog_message1, productName);
+				message = NLS.bind("", productName); //$NON-NLS-1$
 			}
 
-			MessageDialogWithToggle dlg = MessageDialogWithToggle.openOkCancelConfirm(
-					getWindowConfigurer().getWindow().getShell(),
-					IDEWorkbenchMessages.PromptOnExitDialog_shellTitle, message,
-					IDEWorkbenchMessages.PromptOnExitDialog_choice, false, null, null);
+			MessageDialogWithToggle dlg = MessageDialogWithToggle
+					.openOkCancelConfirm(getWindowConfigurer().getWindow()
+							.getShell(), "", message, //$NON-NLS-1$
+							"", false, null, null); //$NON-NLS-1$
 			if (dlg.getReturnCode() != IDialogConstants.OK_ID) {
 				return false;
 			}
 			if (dlg.getToggleState()) {
-				store.setValue(IDEInternalPreferences.EXIT_PROMPT_ON_CLOSE_LAST_WINDOW, false);
+				store.setValue(
+						IDEInternalPreferences.EXIT_PROMPT_ON_CLOSE_LAST_WINDOW,
+						false);
 				IDEWorkbenchPlugin.getDefault().savePluginPreferences();
 			}
 		}
@@ -291,18 +294,18 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				boolean trayEnabled = false;
 
 				/* Hook TrayItem if supported on OS and 1st Window */
-				if (ApplicationWorkbenchWindowAdvisor.this.preferenceStore
+				if (preferenceStore
 						.getBoolean(UIPreferenceInitializer.TRAY_ON_MINIMIZE)
-						|| ApplicationWorkbenchWindowAdvisor.this.preferenceStore
+						|| preferenceStore
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_CLOSE)
-						|| ApplicationWorkbenchWindowAdvisor.this.preferenceStore
+						|| preferenceStore
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_START)) {
 					trayEnabled = enableTray();
 				}
 
 				/* Move to Tray if set */
 				if (trayEnabled
-						&& ApplicationWorkbenchWindowAdvisor.this.preferenceStore
+						&& preferenceStore
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_START)) {
 					moveToTray(shell);
 				}
@@ -321,23 +324,28 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 			}
 
 			public void run() throws Exception {
-				if (UIPlugin.getDefault().getPreferenceStore().getBoolean(
-						UIPreferenceInitializer.SHOW_WELCOME)
-						&& Perspective.PERSPECTIVE_ID.equals(PlatformUI.getWorkbench()
-								.getActiveWorkbenchWindow().getActivePage().getPerspective()
-								.getId())) {
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-							.openEditor(new org.eclipse.remus.welcome.WelcomeEditorInput(),
+				if (UIPlugin.getDefault().getPreferenceStore()
+						.getBoolean(UIPreferenceInitializer.SHOW_WELCOME)
+						&& Perspective.PERSPECTIVE_ID.equals(PlatformUI
+								.getWorkbench().getActiveWorkbenchWindow()
+								.getActivePage().getPerspective().getId())) {
+					PlatformUI
+							.getWorkbench()
+							.getActiveWorkbenchWindow()
+							.getActivePage()
+							.openEditor(
+									new org.eclipse.remus.welcome.WelcomeEditorInput(),
 									WelcomeEditor.EDITOR_ID);
 				}
 
 			}
 
 		});
-		IProject project = ResourceUtil.getProject("Inbox");
+		IProject project = ResourceUtil.getProject("Inbox"); //$NON-NLS-1$
 		if (project == null) {
 			try {
-				ResourceUtil.createNewProject("Inbox", new NullProgressMonitor());
+				ResourceUtil.createNewProject(
+						"Inbox", new NullProgressMonitor()); //$NON-NLS-1$
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -350,7 +358,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	 * 
 	 * @param configurer
 	 */
-	private void hookTitleUpdateListeners(final IWorkbenchWindowConfigurer configurer) {
+	private void hookTitleUpdateListeners(
+			final IWorkbenchWindowConfigurer configurer) {
 		// hook up the listeners to update the window title
 		configurer.getWindow().addPageListener(new IPageListener() {
 			public void pageActivated(final IWorkbenchPage page) {
@@ -385,43 +394,47 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				updateTitle();
 			}
 		});
-		configurer.getWindow().getPartService().addPartListener(new IPartListener2() {
-			public void partActivated(final IWorkbenchPartReference ref) {
-				if (ref instanceof IEditorReference) {
-					updateTitle();
-				}
-			}
+		configurer.getWindow().getPartService()
+				.addPartListener(new IPartListener2() {
+					public void partActivated(final IWorkbenchPartReference ref) {
+						if (ref instanceof IEditorReference) {
+							updateTitle();
+						}
+					}
 
-			public void partBroughtToTop(final IWorkbenchPartReference ref) {
-				if (ref instanceof IEditorReference) {
-					updateTitle();
-				}
-			}
+					public void partBroughtToTop(
+							final IWorkbenchPartReference ref) {
+						if (ref instanceof IEditorReference) {
+							updateTitle();
+						}
+					}
 
-			public void partClosed(final IWorkbenchPartReference ref) {
-				updateTitle();
-			}
+					public void partClosed(final IWorkbenchPartReference ref) {
+						updateTitle();
+					}
 
-			public void partDeactivated(final IWorkbenchPartReference ref) {
-				// do nothing
-			}
+					public void partDeactivated(
+							final IWorkbenchPartReference ref) {
+						// do nothing
+					}
 
-			public void partOpened(final IWorkbenchPartReference ref) {
-				// do nothing
-			}
+					public void partOpened(final IWorkbenchPartReference ref) {
+						// do nothing
+					}
 
-			public void partHidden(final IWorkbenchPartReference ref) {
-				// do nothing
-			}
+					public void partHidden(final IWorkbenchPartReference ref) {
+						// do nothing
+					}
 
-			public void partVisible(final IWorkbenchPartReference ref) {
-				// do nothing
-			}
+					public void partVisible(final IWorkbenchPartReference ref) {
+						// do nothing
+					}
 
-			public void partInputChanged(final IWorkbenchPartReference ref) {
-				// do nothing
-			}
-		});
+					public void partInputChanged(
+							final IWorkbenchPartReference ref) {
+						// do nothing
+					}
+				});
 	}
 
 	private String computeTitle() {
@@ -443,9 +456,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 
 		if (currentPage != null) {
 			if (activeEditor != null) {
-				this.lastEditorTitle = activeEditor.getTitleToolTip();
-				title = NLS.bind(IDEWorkbenchMessages.WorkbenchWindow_shellTitle,
-						this.lastEditorTitle, title);
+				lastEditorTitle = activeEditor.getTitleToolTip();
+				title = NLS.bind("", //$NON-NLS-1$
+						lastEditorTitle, title);
 			}
 			IPerspectiveDescriptor persp = currentPage.getPerspective();
 			String label = ""; //$NON-NLS-1$
@@ -453,17 +466,17 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				label = persp.getLabel();
 			}
 			IAdaptable input = currentPage.getInput();
-			if (input != null && !input.equals(this.wbAdvisor.getDefaultPageInput())) {
+			if (input != null && !input.equals(wbAdvisor.getDefaultPageInput())) {
 				label = currentPage.getLabel();
 			}
 			if (label != null && !label.equals("")) { //$NON-NLS-1$
-				title = NLS.bind(IDEWorkbenchMessages.WorkbenchWindow_shellTitle, label, title);
+				title = NLS.bind("", label, title); //$NON-NLS-1$
 			}
 		}
 
-		String workspaceLocation = this.wbAdvisor.getWorkspaceLocation();
+		String workspaceLocation = wbAdvisor.getWorkspaceLocation();
 		if (workspaceLocation != null) {
-			title = NLS.bind(IDEWorkbenchMessages.WorkbenchWindow_shellTitle, title,
+			title = NLS.bind("", title, //$NON-NLS-1$
 					workspaceLocation);
 		}
 
@@ -498,22 +511,22 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		}
 
 		// Nothing to do if the editor hasn't changed
-		if (activeEditor == this.lastActiveEditor && currentPage == this.lastActivePage
-				&& persp == this.lastPerspective && input == this.lastInput) {
+		if (activeEditor == lastActiveEditor && currentPage == lastActivePage
+				&& persp == lastPerspective && input == lastInput) {
 			return;
 		}
 
-		if (this.lastActiveEditor != null) {
-			this.lastActiveEditor.removePropertyListener(this.editorPropertyListener);
+		if (lastActiveEditor != null) {
+			lastActiveEditor.removePropertyListener(editorPropertyListener);
 		}
 
-		this.lastActiveEditor = activeEditor;
-		this.lastActivePage = currentPage;
-		this.lastPerspective = persp;
-		this.lastInput = input;
+		lastActiveEditor = activeEditor;
+		lastActivePage = currentPage;
+		lastPerspective = persp;
+		lastInput = input;
 
 		if (activeEditor != null) {
-			activeEditor.addPropertyListener(this.editorPropertyListener);
+			activeEditor.addPropertyListener(editorPropertyListener);
 		}
 
 		recomputeTitle();
@@ -531,8 +544,10 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 
 		int index = getWorkbench().getWorkbenchWindowCount() - 1;
 
-		AboutInfo[] welcomePerspectiveInfos = this.wbAdvisor.getWelcomePerspectiveInfos();
-		if (index >= 0 && welcomePerspectiveInfos != null && index < welcomePerspectiveInfos.length) {
+		AboutInfo[] welcomePerspectiveInfos = wbAdvisor
+				.getWelcomePerspectiveInfos();
+		if (index >= 0 && welcomePerspectiveInfos != null
+				&& index < welcomePerspectiveInfos.length) {
 			// find a page that exist in the window
 			IWorkbenchPage page = window.getActivePage();
 			if (page == null) {
@@ -543,13 +558,16 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 			}
 
 			// if the window does not contain a page, create one
-			String perspectiveId = welcomePerspectiveInfos[index].getWelcomePerspectiveId();
+			String perspectiveId = welcomePerspectiveInfos[index]
+					.getWelcomePerspectiveId();
 			if (page == null) {
-				IAdaptable root = this.wbAdvisor.getDefaultPageInput();
+				IAdaptable root = wbAdvisor.getDefaultPageInput();
 				page = window.openPage(perspectiveId, root);
 			} else {
-				IPerspectiveRegistry reg = getWorkbench().getPerspectiveRegistry();
-				IPerspectiveDescriptor desc = reg.findPerspectiveWithId(perspectiveId);
+				IPerspectiveRegistry reg = getWorkbench()
+						.getPerspectiveRegistry();
+				IPerspectiveDescriptor desc = reg
+						.findPerspectiveWithId(perspectiveId);
 				if (desc != null) {
 					page.setPerspective(desc);
 				}
@@ -557,8 +575,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 
 			// set the active page and open the welcome editor
 			window.setActivePage(page);
-			page.openEditor(new WelcomeEditorInput(welcomePerspectiveInfos[index]),
-					WELCOME_EDITOR_ID, true);
+			page.openEditor(new WelcomeEditorInput(
+					welcomePerspectiveInfos[index]), WELCOME_EDITOR_ID, true);
 		}
 	}
 
@@ -570,14 +588,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	 */
 	@Override
 	public void openIntro() {
-		if (this.editorsAndIntrosOpened) {
+		if (editorsAndIntrosOpened) {
 			return;
 		}
 
-		this.editorsAndIntrosOpened = true;
+		editorsAndIntrosOpened = true;
 
 		// don't try to open the welcome editors if there is an intro
-		if (this.wbAdvisor.hasIntro()) {
+		if (wbAdvisor.hasIntro()) {
 			super.openIntro();
 		} else {
 			openWelcomeEditors(getWindowConfigurer().getWindow());
@@ -591,8 +609,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	 * installed features.
 	 */
 	private void openWelcomeEditors(final IWorkbenchWindow window) {
-		if (IDEWorkbenchPlugin.getDefault().getPreferenceStore().getBoolean(
-				IDEInternalPreferences.WELCOME_DIALOG)) {
+		if (IDEWorkbenchPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IDEInternalPreferences.WELCOME_DIALOG)) {
 			// show the welcome page for the product the first time the
 			// workbench opens
 			IProduct product = Platform.getProduct();
@@ -606,17 +624,18 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				return;
 			}
 
-			IDEWorkbenchPlugin.getDefault().getPreferenceStore().setValue(
-					IDEInternalPreferences.WELCOME_DIALOG, false);
+			IDEWorkbenchPlugin.getDefault().getPreferenceStore()
+					.setValue(IDEInternalPreferences.WELCOME_DIALOG, false);
 			openWelcomeEditor(window, new WelcomeEditorInput(productInfo), null);
 		} else {
 			// Show the welcome page for any newly installed features
 			List welcomeFeatures = new ArrayList();
-			for (Iterator it = this.wbAdvisor.getNewlyAddedBundleGroups().entrySet().iterator(); it
-					.hasNext();) {
+			for (Iterator it = wbAdvisor.getNewlyAddedBundleGroups().entrySet()
+					.iterator(); it.hasNext();) {
 				Map.Entry entry = (Map.Entry) it.next();
 				String versionedId = (String) entry.getKey();
-				String featureId = versionedId.substring(0, versionedId.indexOf(':'));
+				String featureId = versionedId.substring(0,
+						versionedId.indexOf(':'));
 				AboutInfo info = (AboutInfo) entry.getValue();
 
 				if (info != null && info.getWelcomePageURL() != null) {
@@ -636,9 +655,11 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 								try {
 									bundle.start(Bundle.START_TRANSIENT);
 								} catch (BundleException exception) {
-									StatusManager.getManager().handle(
-											new Status(IStatus.ERROR,
-													"de.spiritlink.cskb.application",
+									StatusManager
+											.getManager()
+											.handle(new Status(
+													IStatus.ERROR,
+													ApplicationPlugin.PLUGIN_ID,
 													"Failed to load feature", exception));//$NON-NLS-1$
 								}
 							}
@@ -653,7 +674,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				String id = newInfo.getWelcomePerspectiveId();
 				// Other editors were already opened in postWindowRestore(..)
 				if (id == null || i >= wCount) {
-					openWelcomeEditor(window, new WelcomeEditorInput(newInfo), id);
+					openWelcomeEditor(window, new WelcomeEditorInput(newInfo),
+							id);
 				}
 			}
 		}
@@ -663,13 +685,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	private boolean enableTray() {
 
 		/* Avoid that this is being called redundantly */
-		if (this.fTrayEnabled) {
+		if (fTrayEnabled) {
 			return true;
 		}
 
 		/* Only enable for Primary Window */
 		IWorkbenchWindow primaryWindow = UIUtil.getPrimaryWindow();
-		if (primaryWindow == null || !primaryWindow.equals(getWindowConfigurer().getWindow())) {
+		if (primaryWindow == null
+				|| !primaryWindow.equals(getWindowConfigurer().getWindow())) {
 			return false;
 		}
 
@@ -682,35 +705,36 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		}
 
 		/* Create Item in Tray */
-		this.fTrayItem = new TrayItem(tray, SWT.NONE);
-		this.fTrayItem.setToolTipText(Platform.getProduct().getName());
-		this.fTrayEnabled = true;
+		fTrayItem = new TrayItem(tray, SWT.NONE);
+		fTrayItem.setToolTipText(Platform.getProduct().getName());
+		fTrayEnabled = true;
 
 		if (Application.IS_WINDOWS) {
-			this.fTrayItem.setVisible(false);
+			fTrayItem.setVisible(false);
 		}
 
 		/* Apply Image */
 		// TODO set correct image
-		this.fTrayItem.setImage(ResourceManager.getPluginImage(ApplicationPlugin.getDefault(),
-				"icons/iconexperience/windowimages/cabinet_open_16.png"));
+		fTrayItem.setImage(ResourceManager.getPluginImage(
+				ApplicationPlugin.getDefault(),
+				"icons/iconexperience/windowimages/cabinet_open_16.png")); //$NON-NLS-1$
 
 		/* Minimize to Tray on Shell Iconify if set */
-		this.fTrayShellListener = new ShellAdapter() {
+		fTrayShellListener = new ShellAdapter() {
 
 			@Override
 			public void shellIconified(final ShellEvent e) {
-				if (!ApplicationWorkbenchWindowAdvisor.this.fBlockIconifyEvent
-						&& (ApplicationWorkbenchWindowAdvisor.this.fMinimizeFromClose || ApplicationWorkbenchWindowAdvisor.this.preferenceStore
+				if (!fBlockIconifyEvent
+						&& (fMinimizeFromClose || preferenceStore
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_MINIMIZE))) {
 					moveToTray(shell);
 				}
 			}
 		};
-		shell.addShellListener(this.fTrayShellListener);
+		shell.addShellListener(fTrayShellListener);
 
 		/* Show Menu on Selection */
-		this.fTrayItem.addListener(SWT.MenuDetect, new Listener() {
+		fTrayItem.addListener(SWT.MenuDetect, new Listener() {
 			public void handleEvent(final Event event) {
 				MenuManager trayMenu = new MenuManager();
 
@@ -719,28 +743,33 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 					@Override
 					public void fill(final Menu menu, final int index) {
 						MenuItem restoreItem = new MenuItem(menu, SWT.PUSH);
-						restoreItem.setText("Restore");
-						restoreItem.addSelectionListener(new SelectionAdapter() {
-							@Override
-							public void widgetSelected(final SelectionEvent e) {
-								restoreFromTray(shell);
-							}
-						});
+						restoreItem
+								.setText(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_Restore);
+						restoreItem
+								.addSelectionListener(new SelectionAdapter() {
+									@Override
+									public void widgetSelected(
+											final SelectionEvent e) {
+										restoreFromTray(shell);
+									}
+								});
 						menu.setDefaultItem(restoreItem);
 						MenuItem restoreTray = new MenuItem(menu, SWT.PUSH);
-						restoreTray.setText("Restore Desktop-Panel");
-						restoreTray.addSelectionListener(new SelectionAdapter() {
-							@Override
-							public void widgetSelected(final SelectionEvent e) {
-								if (ApplicationWorkbenchWindowAdvisor.this.window.getShell() == null
-										|| !ApplicationWorkbenchWindowAdvisor.this.window
-												.getShell().isVisible()) {
-									openDesktopWindow(shell);
-								}
-								ApplicationWorkbenchWindowAdvisor.this.window.getShell()
-										.forceActive();
-							}
-						});
+						restoreTray
+								.setText(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_RestoreDesktopPanel);
+						restoreTray
+								.addSelectionListener(new SelectionAdapter() {
+									@Override
+									public void widgetSelected(
+											final SelectionEvent e) {
+										if (window.getShell() == null
+												|| !window.getShell()
+														.isVisible()) {
+											openDesktopWindow(shell);
+										}
+										window.getShell().forceActive();
+									}
+								});
 					}
 				});
 
@@ -748,14 +777,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 				trayMenu.add(new Separator());
 
 				/* Other Items */
-				ApplicationWorkbenchWindowAdvisor.this.actionBarAdvisor.fillTrayItem(trayMenu);
+				actionBarAdvisor.fillTrayItem(trayMenu);
 
 				Menu menu = trayMenu.createContextMenu(shell);
 				menu.setVisible(true);
 			}
 		});
 		/* Handle DefaultSelection */
-		this.fTrayItem.addListener(SWT.DefaultSelection, new Listener() {
+		fTrayItem.addListener(SWT.DefaultSelection, new Listener() {
 			public void handleEvent(final Event event) {
 
 				/* Restore from Tray */
@@ -773,7 +802,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	/* Move to System Tray */
 	public void moveToTray(final Shell shell) {
 		if (Application.IS_WINDOWS) {
-			this.fTrayItem.setVisible(true);
+			fTrayItem.setVisible(true);
 		}
 
 		/*
@@ -781,27 +810,27 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		 * result in a second Iconify Event. The fix is to disable processing of
 		 * this event meanwhile.
 		 */
-		this.fBlockIconifyEvent = true;
+		fBlockIconifyEvent = true;
 		try {
 			shell.setVisible(false);
 		} finally {
-			this.fBlockIconifyEvent = false;
+			fBlockIconifyEvent = false;
 		}
 
-		this.fMinimizedToTray = true;
+		fMinimizedToTray = true;
 
 		openDesktopWindow(shell);
 	}
 
 	private void openDesktopWindow(final Shell shell) {
-		this.window = new DesktopWindow(shell.getDisplay());
-		this.window.setBlockOnOpen(false);
-		this.window.open();
+		window = new DesktopWindow(shell.getDisplay());
+		window.setBlockOnOpen(false);
+		window.open();
 	}
 
 	private void closeDesktopWindow() {
-		if (this.window != null) {
-			this.window.close();
+		if (window != null) {
+			window.close();
 		}
 	}
 
@@ -820,48 +849,48 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		}
 
 		if (Application.IS_WINDOWS) {
-			this.fTrayItem.setVisible(false);
+			fTrayItem.setVisible(false);
 		}
 
-		if (this.fTrayTeasing) {
+		if (fTrayTeasing) {
 			// TODO Application Images
-			this.fTrayItem.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(
-					ISharedImages.IMG_OBJ_ELEMENT));
+			fTrayItem.setImage(PlatformUI.getWorkbench().getSharedImages()
+					.getImage(ISharedImages.IMG_OBJ_ELEMENT));
 		}
 		closeDesktopWindow();
-		this.fTrayTeasing = false;
-		this.fMinimizedToTray = false;
+		fTrayTeasing = false;
+		fMinimizedToTray = false;
 	}
 
 	/* Disable System-Tray Support */
 	private void disableTray() {
 
 		/* Avoid that this is being called redundantly */
-		if (!this.fTrayEnabled) {
+		if (!fTrayEnabled) {
 			return;
 		}
 
 		/* First make sure to have the Window restored */
 		restoreFromTray(getWindowConfigurer().getWindow().getShell());
 
-		this.fTrayEnabled = false;
-		this.fMinimizedToTray = false;
+		fTrayEnabled = false;
+		fMinimizedToTray = false;
 
-		if (this.fTrayItem != null) {
-			this.fTrayItem.dispose();
+		if (fTrayItem != null) {
+			fTrayItem.dispose();
 		}
 
-		if (this.fTrayShellListener != null) {
-			getWindowConfigurer().getWindow().getShell().removeShellListener(
-					this.fTrayShellListener);
+		if (fTrayShellListener != null) {
+			getWindowConfigurer().getWindow().getShell()
+					.removeShellListener(fTrayShellListener);
 		}
 	}
 
 	/**
 	 * Open a welcome editor for the given input
 	 */
-	private void openWelcomeEditor(final IWorkbenchWindow window, final WelcomeEditorInput input,
-			final String perspectiveId) {
+	private void openWelcomeEditor(final IWorkbenchWindow window,
+			final WelcomeEditorInput input, final String perspectiveId) {
 		if (getWorkbench().getWorkbenchWindowCount() == 0) {
 			// Something is wrong, there should be at least
 			// one workbench window open by now.
@@ -872,13 +901,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		if (perspectiveId != null) {
 			try {
 				win = getWorkbench().openWorkbenchWindow(perspectiveId,
-						this.wbAdvisor.getDefaultPageInput());
+						wbAdvisor.getDefaultPageInput());
 				if (win == null) {
 					win = window;
 				}
 			} catch (WorkbenchException e) {
-				IDEWorkbenchPlugin.log(
-						"Error opening window with welcome perspective.", e.getStatus()); //$NON-NLS-1$
+				IDEWorkbenchPlugin
+						.log("Error opening window with welcome perspective.", e.getStatus()); //$NON-NLS-1$
 				return;
 			}
 		}
@@ -890,14 +919,15 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		IWorkbenchPage page = win.getActivePage();
 		String id = perspectiveId;
 		if (id == null) {
-			id = getWorkbench().getPerspectiveRegistry().getDefaultPerspective();
+			id = getWorkbench().getPerspectiveRegistry()
+					.getDefaultPerspective();
 		}
 
 		if (page == null) {
 			try {
-				page = win.openPage(id, this.wbAdvisor.getDefaultPageInput());
+				page = win.openPage(id, wbAdvisor.getDefaultPageInput());
 			} catch (WorkbenchException e) {
-				ErrorDialog.openError(win.getShell(), IDEWorkbenchMessages.Problems_Opening_Page, e
+				ErrorDialog.openError(win.getShell(), "", e //$NON-NLS-1$
 						.getMessage(), e.getStatus());
 			}
 		}
@@ -909,9 +939,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 			try {
 				page = getWorkbench().showPerspective(id, win);
 			} catch (WorkbenchException e) {
-				ErrorDialog.openError(win.getShell(),
-						IDEWorkbenchMessages.Workbench_openEditorErrorDialogTitle,
-						IDEWorkbenchMessages.Workbench_openEditorErrorDialogMessage, e.getStatus());
+				ErrorDialog.openError(win.getShell(), "", //$NON-NLS-1$
+						"", e.getStatus()); //$NON-NLS-1$
 				return;
 			}
 		}
@@ -928,9 +957,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		try {
 			page.openEditor(input, WELCOME_EDITOR_ID);
 		} catch (PartInitException e) {
-			ErrorDialog.openError(win.getShell(),
-					IDEWorkbenchMessages.Workbench_openEditorErrorDialogTitle,
-					IDEWorkbenchMessages.Workbench_openEditorErrorDialogMessage, e.getStatus());
+			ErrorDialog.openError(win.getShell(), "", //$NON-NLS-1$
+					"", e.getStatus()); //$NON-NLS-1$
 		}
 		return;
 	}
@@ -949,18 +977,22 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		Display display = composite.getDisplay();
-		Color bgCol = display.getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND);
+		Color bgCol = display
+				.getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND);
 		composite.setBackground(bgCol);
 		Label label = new Label(composite, SWT.WRAP);
-		label.setForeground(display.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
+		label.setForeground(display
+				.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
 		label.setBackground(bgCol);
-		label.setFont(JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT));
-		String msg = IDEWorkbenchMessages.IDEWorkbenchAdvisor_noPerspective;
+		label.setFont(JFaceResources.getFontRegistry().getBold(
+				JFaceResources.DEFAULT_FONT));
+		String msg = ""; //$NON-NLS-1$
 		label.setText(msg);
 		ToolBarManager toolBarManager = new ToolBarManager();
 		// TODO: should obtain the open perspective action from ActionFactory
-		this.openPerspectiveAction = ActionFactory.OPEN_PERSPECTIVE_DIALOG.create(window);
-		toolBarManager.add(this.openPerspectiveAction);
+		openPerspectiveAction = ActionFactory.OPEN_PERSPECTIVE_DIALOG
+				.create(window);
+		toolBarManager.add(openPerspectiveAction);
 		ToolBar toolBar = toolBarManager.createControl(composite);
 		toolBar.setBackground(bgCol);
 		return composite;
@@ -973,15 +1005,15 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor im
 	 */
 	@Override
 	public void dispose() {
-		if (this.openPerspectiveAction != null) {
-			this.openPerspectiveAction.dispose();
-			this.openPerspectiveAction = null;
+		if (openPerspectiveAction != null) {
+			openPerspectiveAction.dispose();
+			openPerspectiveAction = null;
 		}
 		super.dispose();
 	}
 
 	public boolean isMinimized() {
-		return this.fMinimizedToTray;
+		return fMinimizedToTray;
 	}
 
 }

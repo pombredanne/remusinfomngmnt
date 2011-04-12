@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.application.messages.IDEWorkbenchMessages;
 import org.eclipse.remus.common.ui.image.ResourceManager;
 import org.eclipse.remus.ui.collapsiblebutton.CollapsibleButtonBar;
 import org.eclipse.remus.ui.collapsiblebutton.IViewerProvider;
@@ -198,7 +199,7 @@ public class NavigationSection extends CollapsibleButtonBar implements
 		}
 		// Link with editor
 
-		linkEditorAction = new Action("Link with editor", IAction.AS_CHECK_BOX) {
+		linkEditorAction = new Action(IDEWorkbenchMessages.NavigationSection_LinkWithEditor, IAction.AS_CHECK_BOX) {
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -227,7 +228,7 @@ public class NavigationSection extends CollapsibleButtonBar implements
 			@Override
 			public ImageDescriptor getImageDescriptor() {
 				return ResourceManager.getPluginImageDescriptor(
-						ViewerActivator.getDefault(), "icons/synced.gif");
+						ViewerActivator.getDefault(), "icons/synced.gif"); //$NON-NLS-1$
 
 			}
 

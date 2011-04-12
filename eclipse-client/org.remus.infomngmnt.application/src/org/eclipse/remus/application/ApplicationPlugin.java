@@ -1,11 +1,10 @@
 package org.eclipse.remus.application;
 
-import org.osgi.framework.BundleContext;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.remus.application.internal.PerspectiveService;
 import org.eclipse.remus.services.IPerspectiveService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -13,7 +12,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class ApplicationPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.remus.application";
+	public static final String PLUGIN_ID = "org.eclipse.remus.application"; //$NON-NLS-1$
 
 	// The shared instance
 	private static ApplicationPlugin plugin;

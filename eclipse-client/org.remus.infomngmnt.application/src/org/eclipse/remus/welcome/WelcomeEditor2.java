@@ -9,6 +9,7 @@ import org.eclipse.epp.internal.mpc.ui.CatalogRegistry;
 import org.eclipse.epp.internal.mpc.ui.commands.MarketplaceWizardCommand;
 import org.eclipse.epp.mpc.ui.CatalogDescriptor;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.application.messages.IDEWorkbenchMessages;
 import org.eclipse.remus.common.ui.html.OfflineBrowser;
 import org.eclipse.remus.common.ui.image.ResourceManager;
 import org.eclipse.remus.core.services.IInformationTypeHandler;
@@ -58,7 +59,7 @@ public class WelcomeEditor2 extends EditorPart {
 	public void createPartControl(final Composite parent) {
 		FormToolkit toolkit = new FormToolkit(parent.getDisplay());
 		Image image = ResourceManager.getImage(WelcomeEditor2.class,
-				"rim_banner_left.png");
+				"rim_banner_left.png"); //$NON-NLS-1$
 		Form form = toolkit.createForm(parent);
 		Composite body = form.getBody();
 		GridLayout layout = new GridLayout();
@@ -71,7 +72,7 @@ public class WelcomeEditor2 extends EditorPart {
 		label_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		label_1.setImage(image);
 		label_1.setBackgroundImage(ResourceManager.getImage(
-				WelcomeEditor2.class, "rim_banner_right.png"));
+				WelcomeEditor2.class, "rim_banner_right.png")); //$NON-NLS-1$
 		toolkit.adapt(label_1, true, true);
 
 		Composite createComposite = toolkit.createComposite(body);
@@ -81,7 +82,7 @@ public class WelcomeEditor2 extends EditorPart {
 		final Section section = toolkit.createSection(createComposite,
 				Section.DESCRIPTION);
 		section.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		section.setDescription("Welcome to Remus Information Management. This application allows you to store all your incoming information in an easy and comfortable way. If you are new to Remus check out the following links for Tutorials and Documentation.");
+		section.setDescription(IDEWorkbenchMessages.WelcomeEditor2_Welcome);
 
 		final Composite composite_1 = toolkit
 				.createComposite(section, SWT.NONE);
@@ -93,7 +94,7 @@ public class WelcomeEditor2 extends EditorPart {
 		sctnStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		toolkit.paintBordersFor(sctnStatus);
-		sctnStatus.setText("Installation Status");
+		sctnStatus.setText(IDEWorkbenchMessages.WelcomeEditor2_InstallationStatus);
 
 		Composite composite_3 = toolkit.createComposite(sctnStatus, SWT.NONE);
 		toolkit.paintBordersFor(composite_3);
@@ -108,7 +109,7 @@ public class WelcomeEditor2 extends EditorPart {
 		IInformationTypeHandler service = UIPlugin.getDefault()
 				.getServiceTracker().getService(IInformationTypeHandler.class);
 		int installedInformationTypes = service.getTypes().size();
-		mghprlnkInformationTypes.setText(NLS.bind("{0} Information type(s)",
+		mghprlnkInformationTypes.setText(NLS.bind(IDEWorkbenchMessages.WelcomeEditor2_InformationTypes,
 				installedInformationTypes));
 
 		ImageHyperlink mghprlnkConnectorsInstalled = toolkit
@@ -120,7 +121,7 @@ public class WelcomeEditor2 extends EditorPart {
 				.getServiceTracker()
 				.getService(IRepositoryExtensionService.class);
 		int installedRepositoryUis = service2.getAllItems().size();
-		mghprlnkConnectorsInstalled.setText(NLS.bind("{0} Connector(s)",
+		mghprlnkConnectorsInstalled.setText(NLS.bind(IDEWorkbenchMessages.WelcomeEditor2_Connectors,
 				installedRepositoryUis));
 
 		ImageHyperlink mghprlnkInstallAddons = toolkit.createImageHyperlink(
@@ -128,7 +129,7 @@ public class WelcomeEditor2 extends EditorPart {
 		mghprlnkInstallAddons.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER,
 				true, false, 1, 1));
 		toolkit.paintBordersFor(mghprlnkInstallAddons);
-		mghprlnkInstallAddons.setText("Install Add-Ons...");
+		mghprlnkInstallAddons.setText(IDEWorkbenchMessages.WelcomeEditor2_InstallAddons);
 		mghprlnkInstallAddons.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
@@ -138,7 +139,7 @@ public class WelcomeEditor2 extends EditorPart {
 				command.setCatalogDescriptors(catalogDescriptors);
 				for (CatalogDescriptor catalogDescriptor : catalogDescriptors) {
 					if (catalogDescriptor.getLabel().toLowerCase()
-							.contains("remus")) {
+							.contains("remus")) { //$NON-NLS-1$
 						command.setSelectedCatalogDescriptor(catalogDescriptor);
 						break;
 					}
@@ -155,7 +156,7 @@ public class WelcomeEditor2 extends EditorPart {
 				SWT.NONE);
 		linksSection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false));
-		linksSection.setText("Links");
+		linksSection.setText(IDEWorkbenchMessages.WelcomeEditor2_Links);
 
 		final Composite composite_2 = toolkit.createComposite(linksSection,
 				SWT.NONE);
@@ -169,14 +170,14 @@ public class WelcomeEditor2 extends EditorPart {
 				TableWrapData.TOP, 1, 1));
 		toolkit.paintBordersFor(formText);
 		formText.setText(
-				"<form><p><img href=\"info\" /> <a>Getting started</a> - Learn how to use the different functionalities of Remus.</p></form>",
+				IDEWorkbenchMessages.WelcomeEditor2_GettingStarted,
 				true, false);
-		formText.setImage("info", ResourceManager.getPluginImage(
-				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
-				Program.launch("http://wiki.eclipse.org/Remus/Getting_started");
+				Program.launch(IDEWorkbenchMessages.WelcomeEditor2_GettingStartedLink);
 			}
 		});
 
@@ -186,10 +187,10 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.paintBordersFor(formText_1);
 		formText_1
 				.setText(
-						"<form><p><img href=\"info\" /> <a>Install add-ons, new information types or remote connectors</a> - Extend your Remus installation with new functionalities.</p></form>",
+						IDEWorkbenchMessages.WelcomeEditor2_InstallAddonsDetail,
 						true, false);
-		formText_1.setImage("info", ResourceManager.getPluginImage(
-				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText_1.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_1.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
@@ -199,7 +200,7 @@ public class WelcomeEditor2 extends EditorPart {
 				command.setCatalogDescriptors(catalogDescriptors);
 				for (CatalogDescriptor catalogDescriptor : catalogDescriptors) {
 					if (catalogDescriptor.getLabel().toLowerCase()
-							.contains("remus")) {
+							.contains("remus")) { //$NON-NLS-1$
 						command.setSelectedCatalogDescriptor(catalogDescriptor);
 						break;
 					}
@@ -216,14 +217,14 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.paintBordersFor(formText_2);
 		formText_2
 				.setText(
-						"<form><p><img href=\"info\" /> <a>User documentation</a> - Browse through the detailed user documentation to learn Remus.</p></form>",
+						IDEWorkbenchMessages.WelcomeEditor2_UserDocumentationDetail,
 						true, false);
-		formText_2.setImage("info", ResourceManager.getPluginImage(
-				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText_2.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_2.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
-				Program.launch("http://wiki.eclipse.org/Remus");
+				Program.launch(IDEWorkbenchMessages.WelcomeEditor2_WebsiteDoc);
 			}
 		});
 
@@ -231,14 +232,14 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.paintBordersFor(formText_3);
 		formText_3
 				.setText(
-						"<form><p><img href=\"info\" /> <a>User Forums</a> - Get help in the user forums from the Remus community.</p></form>",
+						IDEWorkbenchMessages.WelcomeEditor2_UserForumsDetail,
 						true, false);
-		formText_3.setImage("info", ResourceManager.getPluginImage(
-				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText_3.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_3.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
-				Program.launch("http://www.eclipse.org/forums/index.php?t=thread&frm_id=166");
+				Program.launch(IDEWorkbenchMessages.WelcomeEditor2_ForumsLink);
 			}
 		});
 
@@ -246,14 +247,14 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.paintBordersFor(formText_4);
 		formText_4
 				.setText(
-						"<form><p><img href=\"info\" /> <a>Get involved</a> - Report bugs and feedback, request new features or join our development team.</p></form>",
+						IDEWorkbenchMessages.WelcomeEditor2_GetInvolvedDetail,
 						true, false);
-		formText_4.setImage("info", ResourceManager.getPluginImage(
-				UIPlugin.getDefault(), "icons/iconexperience/16/help.png"));
+		formText_4.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
+				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_4.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
-				Program.launch("http://remus-software.org/jira");
+				Program.launch(IDEWorkbenchMessages.WelcomeEditor2_GetInvolvedLink);
 			}
 		});
 
@@ -266,7 +267,7 @@ public class WelcomeEditor2 extends EditorPart {
 				createComposite, SWT.NONE);
 		latestNewsSection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
-		latestNewsSection.setText("Latest News");
+		latestNewsSection.setText(IDEWorkbenchMessages.WelcomeEditor2_LatestNews);
 
 		final Composite composite = toolkit.createComposite(latestNewsSection,
 				SWT.NONE);
@@ -288,7 +289,7 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.adapt(label2, true, true);
 
 		final Button button = toolkit.createButton(createComposite,
-				"Show this page on startup", SWT.CHECK);
+				IDEWorkbenchMessages.WelcomeEditor2_ShowPageOnStartup, SWT.CHECK);
 		button.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
 		button.setSelection(UIPlugin.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferenceInitializer.SHOW_WELCOME));

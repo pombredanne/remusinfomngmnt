@@ -58,16 +58,16 @@ public class WebshotUtil {
 		int selectedRenderer = Integer.valueOf(store
 				.getString(LinkPreferenceInitializer.RENDERER_SELECTED));
 		String[] arguments = store.getString(
-				LinkPreferenceInitializer.LIST_RENDERER_ARGUMENTS).split("\\|")[selectedRenderer]
-				.split(",");
+				LinkPreferenceInitializer.LIST_RENDERER_ARGUMENTS).split("\\|")[selectedRenderer] //$NON-NLS-1$
+				.split(","); //$NON-NLS-1$
 		for (int i = 0; i < arguments.length; i++) {
 			arguments[i] = arguments[i]
-					.replaceAll("\\{URL\\}", url)
-					.replaceAll("\\{OUT\\}", out.replaceAll("\\\\", "\\\\\\\\"))
-					.replaceAll("\\{LOC\\}",
-							string.replaceAll("\\\\", "\\\\\\\\"));
+					.replaceAll("\\{URL\\}", url) //$NON-NLS-1$
+					.replaceAll("\\{OUT\\}", out.replaceAll("\\\\", "\\\\\\\\")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					.replaceAll("\\{LOC\\}", //$NON-NLS-1$
+							string.replaceAll("\\\\", "\\\\\\\\")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		System.out.println("executing: " + StringUtils.join(arguments));
+		System.out.println("executing: " + StringUtils.join(arguments)); //$NON-NLS-1$
 		try {
 
 			Process exec = Runtime.getRuntime().exec(arguments);
@@ -80,10 +80,10 @@ public class WebshotUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (store.getString(LinkPreferenceInitializer.LIST_RENDERER).split(",")[selectedRenderer]
-				.startsWith("Webkit")) {
+		if (store.getString(LinkPreferenceInitializer.LIST_RENDERER).split(",")[selectedRenderer] //$NON-NLS-1$
+				.startsWith("Webkit")) { //$NON-NLS-1$
 			try {
-				File file = new File(out + "-full.png");
+				File file = new File(out + "-full.png"); //$NON-NLS-1$
 				if (file.exists()) {
 					FileInputStream fileInputStream = new FileInputStream(file);
 					FileOutputStream fileOutputStream = new FileOutputStream(
@@ -110,7 +110,7 @@ public class WebshotUtil {
 		try {
 			parser.parse(url);
 			NodeList elementsByTagName = parser.getDocument()
-					.getElementsByTagName("title");
+					.getElementsByTagName("title"); //$NON-NLS-1$
 			if (elementsByTagName.getLength() > 0) {
 				NodeList childNodes = elementsByTagName.item(0).getChildNodes();
 				if (childNodes.getLength() > 0) {

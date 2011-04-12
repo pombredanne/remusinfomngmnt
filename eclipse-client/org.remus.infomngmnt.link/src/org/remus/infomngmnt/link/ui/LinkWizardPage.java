@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Listener;
 
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.internal.ResourceManager;
+import org.remus.infomngmnt.link.messsage.Messages;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 
@@ -24,7 +25,7 @@ public class LinkWizardPage extends WizardPage {
 	private final InformationUnit newElement;
 
 	public LinkWizardPage(final InformationUnit newElement) {
-		super("wizardPage");
+		super("wizardPage"); //$NON-NLS-1$
 		this.newElement = newElement;
 
 	}
@@ -40,15 +41,15 @@ public class LinkWizardPage extends WizardPage {
 		final IPreferenceStore store = LinkActivator.getDefault().getPreferenceStore();
 		//
 
-		setTitle("New Link");
-		setMessage("This wizard enables you to create a new link from a url.");
+		setTitle(Messages.LinkWizardPage_Title);
+		setMessage(Messages.LinkWizardPage_Subtitle);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(LinkActivator.getDefault(),
-				"icons/iconexperience/link_wizard_title.png"));
+				"icons/iconexperience/link_wizard_title.png")); //$NON-NLS-1$
 
 		setControl(container);
 
 		final Button makeContentSearchableButton = new Button(container, SWT.CHECK);
-		makeContentSearchableButton.setText("Make Content searchable");
+		makeContentSearchableButton.setText(Messages.LinkWizardPage_MakeContentSearchable);
 		makeContentSearchableButton.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
@@ -63,14 +64,14 @@ public class LinkWizardPage extends WizardPage {
 
 		final Label theContentWillLabel = new Label(container, SWT.NONE);
 		theContentWillLabel
-				.setText("The content will be indexed and is avaialable for the local search.");
+				.setText(Messages.LinkWizardPage_MakeContentSearchableDescription);
 
 		final Label label = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		final Button makeScreenhotOfButton = new Button(container, SWT.CHECK);
 		makeScreenhotOfButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		makeScreenhotOfButton.setText("Make Screenshot of target");
+		makeScreenhotOfButton.setText(Messages.LinkWizardPage_MakeScreenshot);
 		makeScreenhotOfButton.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
@@ -85,7 +86,7 @@ public class LinkWizardPage extends WizardPage {
 		makeScreenhotOfButton.setEnabled(WebshotUtil.isWebShotToolingEnabled());
 		final Link eclipseorgLink = new Link(container, SWT.NONE);
 		eclipseorgLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		eclipseorgLink.setText("<a>Why is the screenshot feature disabled?</a>");
+		eclipseorgLink.setText(Messages.LinkWizardPage_WhyDisable);
 		eclipseorgLink.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				Program.launch(LinkActivator.getDefault().getPreferenceStore().getString(

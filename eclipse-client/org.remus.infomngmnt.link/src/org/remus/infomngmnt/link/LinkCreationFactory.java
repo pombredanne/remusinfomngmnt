@@ -14,6 +14,7 @@ package org.remus.infomngmnt.link;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.remus.infomngmnt.link.messsage.Messages;
 import org.remus.infomngmnt.link.preferences.LinkPreferenceInitializer;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.operation.IndexWebPageRunnable;
@@ -49,7 +50,7 @@ public class LinkCreationFactory extends PostCreationHandler {
 				.getBoolean(LinkPreferenceInitializer.MAKE_SCREENSHOT)
 				&& string.length() > 0;
 		if (indexWebContent) {
-			monitor.beginTask("Indexing web-content", IProgressMonitor.UNKNOWN);
+			monitor.beginTask(Messages.LinkCreationFactory_IndexContent, IProgressMonitor.UNKNOWN);
 			IndexWebPageRunnable runnable = new IndexWebPageRunnable(
 					unit.getStringValue());
 			try {
@@ -68,8 +69,8 @@ public class LinkCreationFactory extends PostCreationHandler {
 		if (makeWebShot && WebshotUtil.isWebShotToolingEnabled()) {
 			IEditingHandler service = LinkActivator.getDefault()
 					.getServiceTracker().getService(IEditingHandler.class);
-			monitor.beginTask("Webshotting the link", IProgressMonitor.UNKNOWN);
-			IFile tmpFile = ResourceUtil.createTempFile("png");
+			monitor.beginTask(Messages.LinkCreationFactory_Webshotting, IProgressMonitor.UNKNOWN);
+			IFile tmpFile = ResourceUtil.createTempFile("png"); //$NON-NLS-1$
 			WebshotUtil.performWebShot(unit.getStringValue(), tmpFile
 					.getLocation().toOSString());
 			CreateBinaryReferenceCommand addFileToInfoUnit = CommandFactory

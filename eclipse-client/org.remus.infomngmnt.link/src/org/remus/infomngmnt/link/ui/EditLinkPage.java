@@ -50,6 +50,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.link.messsage.Messages;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 import org.remus.infomngmnt.operation.IndexWebPageRunnable;
 
@@ -72,7 +73,7 @@ public class EditLinkPage extends AbstractInformationFormPage {
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.EditLinkPage_General);
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
@@ -81,14 +82,14 @@ public class EditLinkPage extends AbstractInformationFormPage {
 		toolkit.paintBordersFor(composite);
 		generalSection.setClient(composite);
 
-		toolkit.createLabel(composite, "Url:", SWT.NONE);
+		toolkit.createLabel(composite, Messages.EditLinkPage_Url, SWT.NONE);
 
 		this.text = toolkit.createText(composite, null, SWT.NONE);
 		this.text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(composite, SWT.NONE);
 
 		Hyperlink createHyperlink = toolkit.createHyperlink(composite,
-				"Open Url in System-Browser", SWT.NONE);
+				Messages.EditLinkPage_OpenUrlInSystemBrowser, SWT.NONE);
 		createHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
@@ -99,11 +100,11 @@ public class EditLinkPage extends AbstractInformationFormPage {
 
 		final ImageHyperlink refreshWebshotImageHyperlink = toolkit.createImageHyperlink(composite,
 				SWT.NONE);
-		refreshWebshotImageHyperlink.setText("Refresh Webshot");
+		refreshWebshotImageHyperlink.setText(Messages.EditLinkPage_RefreshWebshot);
 		refreshWebshotImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
-				IFile tmpFile = ResourceUtil.createTempFile("png");
+				IFile tmpFile = ResourceUtil.createTempFile("png"); //$NON-NLS-1$
 				WebshotUtil.performWebShot(getModelObject().getStringValue(), tmpFile.getLocation()
 						.toOSString());
 				CompoundCommand cc = new CompoundCommand();
@@ -114,7 +115,7 @@ public class EditLinkPage extends AbstractInformationFormPage {
 				}
 				cc.append(CommandFactory.addFileToInfoUnit(tmpFile, getModelObject(),
 						getEditingDomain()));
-				cc.setLabel("Refresh Webshot");
+				cc.setLabel(Messages.EditLinkPage_RefreshWebshot);
 				getEditingDomain().getCommandStack().execute(cc);
 			}
 		});
@@ -122,7 +123,7 @@ public class EditLinkPage extends AbstractInformationFormPage {
 
 		final ImageHyperlink refreshSearchableContentImageHyperlink = toolkit.createImageHyperlink(
 				composite, SWT.NONE);
-		refreshSearchableContentImageHyperlink.setText("Refresh searchable content");
+		refreshSearchableContentImageHyperlink.setText(Messages.EditLinkPage_RefreshSearchablecontent);
 		refreshSearchableContentImageHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final HyperlinkEvent e) {
@@ -136,14 +137,14 @@ public class EditLinkPage extends AbstractInformationFormPage {
 							LinkActivator.NODE_INDEX);
 					Command create = SetCommand.create(getEditingDomain(), childByType,
 							InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, content);
-					((AbstractCommand) create).setLabel("Refreshing searchable content");
+					((AbstractCommand) create).setLabel(Messages.EditLinkPage_RefreshSearchablecontent);
 					getEditingDomain().getCommandStack().execute(create);
 				} catch (InterruptedException e1) {
 					// do nothing.
 				} catch (Exception e1) {
-					ErrorDialog.openError(getSite().getShell(), "Error refreshing index",
-							"An error occurred while refreshing the index", StatusCreator
-									.newStatus("Error grabbing content from webpage", e1));
+					ErrorDialog.openError(getSite().getShell(), Messages.EditLinkPage_ErrorRefresh,
+							Messages.EditLinkPage_ErrorRefreshDescription, StatusCreator
+									.newStatus(Messages.EditLinkPage_ErrorGrabbingContent, e1));
 				}
 			}
 		});

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.remus.core.informationType">
       <information
-            name="Link"
+            name="%information.name"
             postCreationHandler="org.remus.infomngmnt.link.LinkCreationFactory"
             presentation="org.remus.infomngmnt.link.LinkRepresentation"
             structuredefinition="structuredefinition.xmi"
@@ -17,7 +17,7 @@
             editpage="org.remus.infomngmnt.link.ui.EditLinkPage"
             icon="icons/iconexperience/link_edit.png"
             id="org.remus.infomngmnt.link.editPage"
-            label="Edit Link"
+            label="%editPage.label"
             type="LINK">
       </editPage>
       <editorAction
@@ -33,7 +33,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/link_new.png"
             id="org.remus.infomngmnt.link.newLinkWizard"
-            name="Link">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -48,14 +48,14 @@
             category="org.eclipse.remus.ui.infotypes"
             class="org.remus.infomngmnt.link.preferences.LinkEditorPreferencePage"
             id="org.remus.infomngmnt.link.preferencePage"
-            name="Link">
+            name="%page.name">
       </page>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.link.newLinkCommand"
-            name="name">
+            name="%command.name">
       </command>
    </extension>
    <extension
@@ -81,8 +81,8 @@
          <menu
                icon="icons/iconexperience/link.png"
                id="org.remus.infomngmnt.sourcecode.contextmenu"
-               label="Link"
-               mnemonic="l">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.link.openBrowser"
                   style="push">
@@ -111,7 +111,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.link.openBrowser"
-            name="Open in Browser">
+            name="%openBrowser.command.name">
       </command>
    </extension>
    <extension
@@ -167,8 +167,8 @@
       </groovyScript>
       <method
             id="org.remus.infomngmnt.link.method1"
-            name="Getting the Title from a URL"
-            string="LinkUtil.getTitleFromUrl(String url)">
+            name="%method.name"
+            string="%method.string">
       </method>
    </extension>
 

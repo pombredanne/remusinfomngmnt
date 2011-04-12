@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.remus.infomngmnt.link.LinkActivator;
 import org.remus.infomngmnt.link.internal.ResourceManager;
+import org.remus.infomngmnt.link.messsage.Messages;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -53,7 +54,7 @@ public class GeneralLinkPage extends GeneralPage {
 	private final IRunnableWithProgress obtainJob = new IRunnableWithProgress() {
 		public void run(final IProgressMonitor monitor)
 				throws InvocationTargetException, InterruptedException {
-			monitor.beginTask("Obtaining title", IProgressMonitor.UNKNOWN);
+			monitor.beginTask(Messages.GeneralLinkPage_ObtainingTitle, IProgressMonitor.UNKNOWN);
 			Thread runThread = new Thread() {
 				@Override
 				public void run() {
@@ -91,20 +92,20 @@ public class GeneralLinkPage extends GeneralPage {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());
 
-		setTitle("New Link");
-		setMessage("This wizard enables you to create a new link from a url.");
+		setTitle(Messages.GeneralLinkPage_Title);
+		setMessage(Messages.GeneralLinkPage_Subtitle);
 		setImageDescriptor(ResourceManager.getPluginImageDescriptor(
 				LinkActivator.getDefault(),
-				"icons/iconexperience/link_wizard_title.png"));
+				"icons/iconexperience/link_wizard_title.png")); //$NON-NLS-1$
 
 		doCreateParentElementGroup(container);
 		Group group = new Group(container, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(3, false));
-		group.setText("Name && URL");
+		group.setText(Messages.GeneralLinkPage_NameUrl);
 		doCreateNameElements(group);
 		obTainTextFromHtml = new Button(group, SWT.PUSH);
-		obTainTextFromHtml.setText("Obtain title");
+		obTainTextFromHtml.setText(Messages.GeneralLinkPage_ObtainTitle);
 		obTainTextFromHtml.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(final Event event) {
@@ -124,7 +125,7 @@ public class GeneralLinkPage extends GeneralPage {
 		});
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("URL");
+		nameLabel.setText(Messages.GeneralLinkPage_URL);
 		urlText = new Text(group, SWT.BORDER);
 		final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true,
 				false);

@@ -3,6 +3,7 @@ package org.remus.infomngmnt.link.preferences;
 import java.util.Set;
 
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.link.messsage.Messages;
 import org.remus.infomngmnt.link.webshot.WebshotUtil;
 
 import org.eclipse.core.resources.IFile;
@@ -84,11 +85,11 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage
 		createGroup
 				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		createGroup.setText("Creation");
+		createGroup.setText(Messages.LinkEditorPreferencePage_Creating);
 
 		createFieldEditors();
 		Link link = new Link(createGroup, SWT.NONE);
-		link.setText("<a>Download renderer...</a>");
+		link.setText(Messages.LinkEditorPreferencePage_DownloadRenderer);
 		link.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -96,23 +97,23 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage
 				if (selectionIndex >= 1) {
 					String url = getPreferenceStore().getString(
 							LinkPreferenceInitializer.LIST_RENDERER_URL).split(
-							",")[selectionIndex];
+							",")[selectionIndex]; //$NON-NLS-1$
 					Program.launch(url);
 				} else {
 					MessageDialog
 							.openInformation(
 									getShell(),
-									"Select a renderer",
-									"Please select a renderer for your operating software and click here afterwards to download the renderer");
+									Messages.LinkEditorPreferencePage_SelectRenderer,
+									Messages.LinkEditorPreferencePage_PleaseSelectRenderrer);
 				}
 			}
 		});
 		Button button = new Button(createGroup, SWT.PUSH);
-		button.setText("Refresh webshots of all links");
+		button.setText(Messages.LinkEditorPreferencePage_RefreshWebshots);
 		button.setLayoutData(new GridData(SWT.END, SWT.TOP, true, false, 2, 1));
 		button.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				Job job = new Job("Refreshing all webshots") {
+				Job job = new Job(Messages.LinkEditorPreferencePage_RefreshingWebshots) {
 
 					@Override
 					protected IStatus run(final IProgressMonitor monitor) {
@@ -123,17 +124,17 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage
 								.createNewEditingDomain();
 						Set<? extends EObject> allItemsByType = InformationUtil
 								.getAllItemsByType(LinkActivator.LINK_INFO_ID);
-						monitor.beginTask("Refreshing webshots",
+						monitor.beginTask(Messages.LinkEditorPreferencePage_RefreshingWebshots,
 								allItemsByType.size());
 						for (EObject eObject : allItemsByType) {
 							if (eObject instanceof InformationUnitListItem) {
 								InformationUnit adapter = (InformationUnit) ((InformationUnitListItem) eObject)
 										.getAdapter(InformationUnit.class);
-								monitor.subTask(NLS.bind("Refreshing \"{0}\"",
+								monitor.subTask(NLS.bind(Messages.LinkEditorPreferencePage_RefreshingElement,
 										adapter.getLabel()));
 								if (adapter != null) {
 									IFile tmpFile = ResourceUtil
-											.createTempFile("png");
+											.createTempFile("png"); //$NON-NLS-1$
 									WebshotUtil.performWebShot(adapter
 											.getStringValue(), tmpFile
 											.getLocation().toOSString());
@@ -177,16 +178,16 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage
 	protected void createFieldEditors() {
 		BooleanFieldEditor fieldEditor = new BooleanFieldEditor(
 				LinkPreferenceInitializer.INDEX_DOCUMENT,
-				"Index html webpages by default", createGroup);
+				Messages.LinkEditorPreferencePage_IndexByDefault, createGroup);
 		fieldEditor.fillIntoGrid(createGroup, 2);
 		addField(fieldEditor);
 		BooleanFieldEditor fieldEditor2 = new BooleanFieldEditor(
 				LinkPreferenceInitializer.MAKE_SCREENSHOT,
-				"Make Webshot by default", createGroup);
+				Messages.LinkEditorPreferencePage_MakeWebshotByDefault, createGroup);
 		fieldEditor2.fillIntoGrid(createGroup, 2);
 		addField(fieldEditor2);
 		String[] split = getPreferenceStore().getString(
-				LinkPreferenceInitializer.LIST_RENDERER).split(",");
+				LinkPreferenceInitializer.LIST_RENDERER).split(","); //$NON-NLS-1$
 		String[][] entries = new String[split.length][2];
 		for (int i = 0; i < split.length; i++) {
 			entries[i][0] = split[i];
@@ -194,12 +195,12 @@ public class LinkEditorPreferencePage extends FieldEditorPreferencePage
 		}
 
 		comboEditor = new ComboFieldEditor(
-				LinkPreferenceInitializer.RENDERER_SELECTED, "Select Renderer",
+				LinkPreferenceInitializer.RENDERER_SELECTED, Messages.LinkEditorPreferencePage_SelectRenderer,
 				entries, createGroup);
 
 		addField(comboEditor);
 		addField(new StringFieldEditor(
-				LinkPreferenceInitializer.SCREENSHOT_CMD, "Path to Webshot:",
+				LinkPreferenceInitializer.SCREENSHOT_CMD, Messages.LinkEditorPreferencePage_PathToWebshot,
 				createGroup));
 	}
 

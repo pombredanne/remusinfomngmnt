@@ -19,6 +19,7 @@ import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 
 import org.remus.infomngmnt.link.LinkActivator;
+import org.remus.infomngmnt.link.messsage.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -29,7 +30,7 @@ public class NewLinkWizard extends NewInfoObjectWizard {
 
 	public NewLinkWizard() {
 		setNeedsProgressMonitor(true);
-		setWindowTitle("New link");
+		setWindowTitle(Messages.NewLinkWizard_Title);
 	}
 
 	@Override

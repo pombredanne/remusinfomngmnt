@@ -49,15 +49,15 @@ public class LinkPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(INDEX_DOCUMENT, true);
 		store.setDefault(MAKE_SCREENSHOT, true);
 		store.setDefault(URL_WEBSHOTHELP,
-				"http://remus-software.org/faq/10-why-is-webshotting-diabled");
+				"http://remus-software.org/faq/10-why-is-webshotting-diabled"); //$NON-NLS-1$
 		store.setDefault(LIST_RENDERER,
-				"None,IECapt (Win),CutyCapt (Linux),Webkit2png (Mac)");
+				"None,IECapt (Win),CutyCapt (Linux),Webkit2png (Mac)"); //$NON-NLS-1$
 		store.setDefault(
 				LIST_RENDERER_URL,
-				",http://iecapt.sourceforge.net/,http://cutycapt.sourceforge.net/,http://www.paulhammond.org/webkit2png/");
+				",http://iecapt.sourceforge.net/,http://cutycapt.sourceforge.net/,http://www.paulhammond.org/webkit2png/"); //$NON-NLS-1$
 		store.setDefault(
 				LIST_RENDERER_ARGUMENTS,
-				"|{LOC},--url=\"{URL}\",--out=\"{OUT}\",--silent|{LOC},--url={URL},--out={OUT}|python,{LOC},-o,{OUT},-F,{URL}");
+				"|{LOC},--url=\"{URL}\",--out=\"{OUT}\",--silent|{LOC},--url={URL},--out={OUT}|python,{LOC},-o,{OUT},-F,{URL}"); //$NON-NLS-1$
 		store.setDefault(RENDERER_SELECTED, 0);
 
 		//this.store.setDefault(SCREENSHOT_CMD, "C:\\Downloads\\IECapt.exe --url=\"{URL}\" --out=\"{OUT}\" --silent"); //$NON-NLS-1$

@@ -64,6 +64,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.task.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -113,8 +114,8 @@ public class WorkLogPage extends AbstractInformationFormPage {
 
 			Section section = toolkit
 					.createSection(parent, Section.DESCRIPTION);
-			section.setText("Worklog history");
-			section.setDescription("This list contains all logged units of work.");
+			section.setText(Messages.WorkLogPage_WorklogHistory);
+			section.setDescription(Messages.WorkLogPage_WorklogHistoryDetails);
 			section.marginWidth = 10;
 			section.marginHeight = 5;
 			section.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -173,7 +174,7 @@ public class WorkLogPage extends AbstractInformationFormPage {
 									TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION);
 					if (childByType.getStringValue() == null
 							|| childByType.getStringValue().trim().length() == 0) {
-						return "No desciption";
+						return Messages.WorkLogPage_NoDescription;
 					}
 					return childByType.getStringValue();
 				}
@@ -182,7 +183,7 @@ public class WorkLogPage extends AbstractInformationFormPage {
 				public Image getImage(Object element) {
 					return ResourceManager.getPluginImage(
 							TaskActivator.getDefault(),
-							"icons/iconexperience/history2.png");
+							"icons/iconexperience/history2.png"); //$NON-NLS-1$
 				}
 			});
 			this.viewer.setSorter(new ViewerSorter() {
@@ -214,7 +215,7 @@ public class WorkLogPage extends AbstractInformationFormPage {
 
 		@Override
 		protected void createToolBarActions(IManagedForm managedForm) {
-			Action addAction = new Action("Add") {
+			Action addAction = new Action(Messages.WorkLogPage_Add) {
 				@Override
 				public void run() {
 					InformationStructureEdit edit = InformationStructureEdit
@@ -232,7 +233,7 @@ public class WorkLogPage extends AbstractInformationFormPage {
 				}
 			};
 			BaseSelectionListenerAction removeAction = new BaseSelectionListenerAction(
-					"Delete") {
+					Messages.WorkLogPage_Delete) {
 				@Override
 				protected boolean updateSelection(IStructuredSelection selection) {
 					return !selection.isEmpty();
@@ -295,8 +296,8 @@ public class WorkLogPage extends AbstractInformationFormPage {
 			FormToolkit toolkit = this.form.getToolkit();
 			this.s1 = toolkit.createSection(parent, Section.DESCRIPTION);
 			this.s1.marginWidth = 10;
-			this.s1.setText("Worklog details");
-			this.s1.setDescription("Selected unit of work.");
+			this.s1.setText(Messages.WorkLogPage_WorklogDetails);
+			this.s1.setDescription(Messages.WorkLogPage_SelectedUnitOfWork);
 			GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 			gridData.widthHint = SWT.DEFAULT;
 			gridData.heightHint = SWT.DEFAULT;
@@ -311,15 +312,15 @@ public class WorkLogPage extends AbstractInformationFormPage {
 			composite.setLayout(wrapLayout);
 			this.s1.setClient(composite);
 
-			toolkit.createLabel(composite, "Description");
-			this.descriptionText = new AnnotatingQuickFixTextBox(composite, "",
-					"");
+			toolkit.createLabel(composite, Messages.WorkLogPage_Description);
+			this.descriptionText = new AnnotatingQuickFixTextBox(composite, "", //$NON-NLS-1$
+					""); //$NON-NLS-1$
 			TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB,
 					TableWrapData.TOP);
 			data.heightHint = 80;
 			this.descriptionText.setLayoutData(data);
 
-			toolkit.createLabel(composite, "Start");
+			toolkit.createLabel(composite, Messages.WorkLogPage_Start);
 			this.startTime = new CDateTime(composite, CDT.BORDER
 					| CDT.DROP_DOWN | CDT.TIME_MEDIUM | CDT.DATE_MEDIUM);
 
@@ -327,7 +328,7 @@ public class WorkLogPage extends AbstractInformationFormPage {
 					TableWrapData.FILL_GRAB, TableWrapData.TOP));
 			toolkit.adapt(this.startTime, false, false);
 
-			toolkit.createLabel(composite, "End");
+			toolkit.createLabel(composite, Messages.WorkLogPage_End);
 			this.endTime = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN
 					| CDT.TIME_MEDIUM | CDT.DATE_MEDIUM);
 			this.endTime.setLayoutData(new TableWrapData(

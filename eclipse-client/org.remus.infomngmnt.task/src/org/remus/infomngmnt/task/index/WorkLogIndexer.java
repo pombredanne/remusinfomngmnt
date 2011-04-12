@@ -24,6 +24,7 @@ import org.eclipse.remus.search.analyzer.ISecondaryIndex;
 import org.eclipse.remus.search.analyzer.SecondaryIndex;
 
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.task.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -49,7 +50,7 @@ public class WorkLogIndexer implements ISecondaryAnalyzer {
 			String description = (String) workLogRead
 					.getValueByNodeId(TaskActivator.NODE_NAME_WORKED_UNIT_DESCRIPTION);
 			if (description != null && description.length() > 0) {
-				returnValue.add(SecondaryIndex.CREATE(NLS.bind("Workitem {0}", i++), description,
+				returnValue.add(SecondaryIndex.CREATE(NLS.bind(Messages.WorkLogIndexer_WorkItem, i++), description,
 						null));
 			}
 		}

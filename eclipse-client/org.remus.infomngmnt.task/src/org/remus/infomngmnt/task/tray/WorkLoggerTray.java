@@ -49,6 +49,7 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.task.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -56,9 +57,9 @@ import org.remus.infomngmnt.task.TaskActivator;
 public class WorkLoggerTray extends AbstractTraySection {
 
 	public static final String SELECTED_TASK_ID = "SELECTED_TASK_ID"; //$NON-NLS-1$
-	private static final String LAST_START_DATE = "LAST_START_DATE";
-	private static final String TRACKING = "TRACKING";
-	private static final String LAST_COMMENT = "LAST_COMMENT";
+	private static final String LAST_START_DATE = "LAST_START_DATE"; //$NON-NLS-1$
+	private static final String TRACKING = "TRACKING"; //$NON-NLS-1$
+	private static final String LAST_COMMENT = "LAST_COMMENT"; //$NON-NLS-1$
 	private InformationUnitListItem itemById;
 	private boolean tracking;
 	private Date startTime;
@@ -111,10 +112,10 @@ public class WorkLoggerTray extends AbstractTraySection {
 						.getShell(), labelProvider);
 				dialog.setAllowDuplicates(false);
 				dialog.setElements(allItemsByType.toArray());
-				dialog.setEmptySelectionMessage("Selection is required");
+				dialog.setEmptySelectionMessage(Messages.WorkLoggerTray_SelectionRequired);
 				dialog.setMultipleSelection(false);
-				dialog.setTitle("Select a task");
-				dialog.setMessage("Please select a task you want to work on.");
+				dialog.setTitle(Messages.WorkLoggerTray_SelectTask);
+				dialog.setMessage(Messages.WorkLoggerTray_SelectTaskDetails);
 				dialog.setIgnoreCase(true);
 				dialog.setBlockOnOpen(true);
 				if (dialog.open() == IDialogConstants.OK_ID) {
@@ -129,11 +130,11 @@ public class WorkLoggerTray extends AbstractTraySection {
 		layoutData2.grabHorizontal = true;
 		tb.setLayoutData(layoutData2);
 		this.toolBarManager = new ToolBarManager(tb);
-		this.startAction = new Action("Start timetracking", IAction.AS_CHECK_BOX) {
+		this.startAction = new Action(Messages.WorkLoggerTray_StartTimetracking, IAction.AS_CHECK_BOX) {
 			@Override
 			public ImageDescriptor getImageDescriptor() {
 				return ResourceManager.getPluginImageDescriptor(TaskActivator.getDefault(),
-						"icons/iconexperience/tray/stopwatch_run.png");
+						"icons/iconexperience/tray/stopwatch_run.png"); //$NON-NLS-1$
 			}
 
 			@Override
@@ -155,11 +156,11 @@ public class WorkLoggerTray extends AbstractTraySection {
 				updateButtonStatus();
 			}
 		};
-		this.stopAction = new Action("Stop and Save timetracking", IAction.AS_PUSH_BUTTON) {
+		this.stopAction = new Action(Messages.WorkLoggerTray_StopAndSave, IAction.AS_PUSH_BUTTON) {
 			@Override
 			public ImageDescriptor getImageDescriptor() {
 				return ResourceManager.getPluginImageDescriptor(TaskActivator.getDefault(),
-						"icons/iconexperience/tray/stopwatch_stop.png");
+						"icons/iconexperience/tray/stopwatch_stop.png"); //$NON-NLS-1$
 			}
 
 			@Override
@@ -168,11 +169,11 @@ public class WorkLoggerTray extends AbstractTraySection {
 				updateButtonStatus();
 			}
 		};
-		this.resetAction = new Action("Stop and don't save timetracking", IAction.AS_PUSH_BUTTON) {
+		this.resetAction = new Action(Messages.WorkLoggerTray_StopAndDontSave, IAction.AS_PUSH_BUTTON) {
 			@Override
 			public ImageDescriptor getImageDescriptor() {
 				return ResourceManager.getPluginImageDescriptor(TaskActivator.getDefault(),
-						"icons/iconexperience/tray/stopwatch_reset.png");
+						"icons/iconexperience/tray/stopwatch_reset.png"); //$NON-NLS-1$
 			}
 
 			@Override
@@ -219,12 +220,12 @@ public class WorkLoggerTray extends AbstractTraySection {
 	}
 
 	void refreshHyperLinkLabel() {
-		String text = "Click to select a task";
+		String text = Messages.WorkLoggerTray_ClicktoSelectTask;
 		if (this.itemById != null) {
 			text = StringEscapeUtils.escapeXml(this.itemById.getLabel());
 		}
 		this.createHyperlink.setText(StringUtils
-				.join("<form><p>Task: <a>", text, "</a></p></form>"), true, false);
+				.join(Messages.WorkLoggerTray_Task, text, Messages.WorkLoggerTray_14), true, false);
 	}
 
 	@Override

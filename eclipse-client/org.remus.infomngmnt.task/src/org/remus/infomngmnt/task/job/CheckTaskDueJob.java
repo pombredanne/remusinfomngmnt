@@ -31,6 +31,7 @@ import org.eclipse.remus.core.jobs.AbstractJob;
 import org.eclipse.remus.util.InformationUtil;
 
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.task.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -83,8 +84,8 @@ public class CheckTaskDueJob extends AbstractJob {
 								createNotification.setImportance(NotificationImportance.MEDIUM);
 								createNotification.setSeverity(Severity.INFO);
 								createNotification.setMessage(NLS.bind(
-										"Task \"{0}\" needs your attention", adapter.getLabel()));
-								createNotification.setDetails("Task is not completed");
+										Messages.CheckTaskDueJob_TaskNeedsYour, adapter.getLabel()));
+								createNotification.setDetails(Messages.CheckTaskDueJob_TaskNotCompleted);
 								createNotification.getAffectedInfoUnitIds().add(adapter.getId());
 								returnValue.add(createNotification);
 

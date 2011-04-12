@@ -54,12 +54,12 @@ public class TaskStatusDecorator extends LabelProvider implements
 					decoration
 							.addOverlay(ResourceManager.getPluginImageDescriptor(
 									TaskActivator.getDefault(),
-									"icons/iconexperience/decorations/due.png"));
+									"icons/iconexperience/decorations/due.png")); //$NON-NLS-1$
 				} else if (decorationObjectByInfoUnit.isCompleted()) {
 					decoration
 							.addOverlay(ResourceManager.getPluginImageDescriptor(
 									TaskActivator.getDefault(),
-									"icons/iconexperience/decorations/check.png"));
+									"icons/iconexperience/decorations/check.png")); //$NON-NLS-1$
 
 				}
 			}

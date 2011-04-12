@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import org.remus.infomngmnt.task.TaskActivator;
+import org.remus.infomngmnt.task.messages.Messages;
 
 public class EnterDescriptionDialog extends TitleAreaDialog {
 
@@ -57,7 +58,7 @@ public class EnterDescriptionDialog extends TitleAreaDialog {
 
 		final Label enterYourTextLabel = new Label(container, SWT.NONE);
 		enterYourTextLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
-		enterYourTextLabel.setText("Enter your text");
+		enterYourTextLabel.setText(Messages.EnterDescriptionDialog_EnterText);
 
 		Composite composite = new Composite(container, SWT.NONE);
 		GridLayout layout = new GridLayout(1, false);
@@ -66,7 +67,7 @@ public class EnterDescriptionDialog extends TitleAreaDialog {
 		composite.setLayout(layout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-		this.styledText = new AnnotatingQuickFixTextBox(composite, "", "");
+		this.styledText = new AnnotatingQuickFixTextBox(composite, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
 		this.styledText.addPropertyChangeListener(new IPropertyChangeListener() {
 			public void propertyChange(final PropertyChangeEvent event) {
@@ -79,10 +80,10 @@ public class EnterDescriptionDialog extends TitleAreaDialog {
 			}
 		});
 
-		setTitle("New Worklog-Description");
-		setMessage("Enter a message what you're doing");
+		setTitle(Messages.EnterDescriptionDialog_NewWorklogDescription);
+		setMessage(Messages.EnterDescriptionDialog_EnterWhatYouReDoing);
 		setTitleImage(ResourceManager.getPluginImage(TaskActivator.getDefault(),
-				"icons/iconexperience/worklog_wizard.png"));
+				"icons/iconexperience/worklog_wizard.png")); //$NON-NLS-1$
 		return area;
 	}
 
@@ -130,7 +131,7 @@ public class EnterDescriptionDialog extends TitleAreaDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("New Worklog-Description");
+		newShell.setText(Messages.EnterDescriptionDialog_NewWorklogDescription);
 	}
 
 	/**

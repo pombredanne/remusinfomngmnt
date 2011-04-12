@@ -12,6 +12,8 @@
 
 package org.remus.infomngmnt.task;
 
+import org.remus.infomngmnt.task.messages.Messages;
+
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
@@ -23,23 +25,23 @@ public enum TaskPriority {
 	public String toString() {
 		switch (this) {
 		case LOW:
-			return "Low";
+			return Messages.TaskPriority_Low;
 		case MEDIUM:
-			return "Medium";
+			return Messages.TaskPriority_Medium;
 		case HIGH:
-			return "High";
+			return Messages.TaskPriority_High;
 		}
-		return "None";
+		return Messages.TaskPriority_None;
 	};
 
 	public String getKey() {
 		switch (this) {
 		case LOW:
-			return "P1";
+			return "P1"; //$NON-NLS-1$
 		case MEDIUM:
-			return "P2";
+			return "P2"; //$NON-NLS-1$
 		case HIGH:
-			return "P3";
+			return "P3"; //$NON-NLS-1$
 		}
 		return null;
 	}

@@ -51,6 +51,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.remus.infomngmnt.task.TaskActivator;
 import org.remus.infomngmnt.task.TaskPriority;
 import org.remus.infomngmnt.task.TaskStatus;
+import org.remus.infomngmnt.task.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -97,7 +98,7 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		final GridData gd_generalSection = new GridData(SWT.FILL,
 				SWT.BEGINNING, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.TaskEditPage_General);
 
 		final Composite client = toolkit.createComposite(generalSection,
 				SWT.NONE);
@@ -108,15 +109,15 @@ public class TaskEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		Label subjectLabel = toolkit.createLabel(client, "Subject");
+		Label subjectLabel = toolkit.createLabel(client, Messages.TaskEditPage_Subject);
 		subjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
 				false, false));
 
-		this.subjectText = toolkit.createText(client, "");
+		this.subjectText = toolkit.createText(client, ""); //$NON-NLS-1$
 		this.subjectText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 5, 1));
 
-		Label dueLabel = toolkit.createLabel(client, "Due date");
+		Label dueLabel = toolkit.createLabel(client, Messages.TaskEditPage_DueDate);
 		dueLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
 				false));
 
@@ -139,7 +140,7 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		dueParent.setLayoutData(dueDateLayoutData);
 		toolkit.adapt(this.dueDate);
 
-		Label statusLabel = toolkit.createLabel(client, "Status");
+		Label statusLabel = toolkit.createLabel(client, Messages.TaskEditPage_Status);
 		statusLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
 				false, false));
 
@@ -148,13 +149,13 @@ public class TaskEditPage extends AbstractInformationFormPage {
 				false, 3, 1));
 		toolkit.adapt(this.statusCombo, false, false);
 
-		toolkit.createLabel(client, "");
-		this.completedCheckBox = toolkit.createButton(client, "Completed",
+		toolkit.createLabel(client, ""); //$NON-NLS-1$
+		this.completedCheckBox = toolkit.createButton(client, Messages.TaskEditPage_Completed,
 				SWT.CHECK);
 		this.completedCheckBox.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				true, false, 5, 1));
 
-		Label startsLabel = toolkit.createLabel(client, "Starts");
+		Label startsLabel = toolkit.createLabel(client, Messages.TaskEditPage_Starts);
 		startsLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
 				false, false));
 
@@ -170,7 +171,7 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		startsAtParent.setLayoutData(dueDateLayoutData);
 		toolkit.adapt(this.startsDate);
 
-		Label prioLabel = toolkit.createLabel(client, "Priority");
+		Label prioLabel = toolkit.createLabel(client, Messages.TaskEditPage_Priority);
 		prioLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
 				false));
 
@@ -180,7 +181,7 @@ public class TaskEditPage extends AbstractInformationFormPage {
 
 		toolkit.adapt(this.prioCombo, false, false);
 
-		Label completion = toolkit.createLabel(client, "Completion");
+		Label completion = toolkit.createLabel(client, Messages.TaskEditPage_Completion);
 		completion.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
 				false));
 
@@ -207,18 +208,18 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		createSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 6, 1));
 
-		toolkit.createLabel(client, "");
-		this.notficiaionButton = toolkit.createButton(client, "Notfication",
+		toolkit.createLabel(client, ""); //$NON-NLS-1$
+		this.notficiaionButton = toolkit.createButton(client, Messages.TaskEditPage_Notification,
 				SWT.CHECK);
 
 		this.notificationCombo = new Combo(client, SWT.DROP_DOWN);
 		this.notificationCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				false, false, 2, 1));
 
-		toolkit.createLabel(client, "Assignee").setLayoutData(
+		toolkit.createLabel(client, Messages.TaskEditPage_Assignee).setLayoutData(
 				new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-		this.assigneeText = toolkit.createText(client, "");
+		this.assigneeText = toolkit.createText(client, ""); //$NON-NLS-1$
 		this.assigneeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				true, false));
 
@@ -231,7 +232,7 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.FILL,
 				true, true);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("Description");
+		generalSection.setText(Messages.TaskEditPage_Description);
 
 		final Composite client = toolkit.createComposite(generalSection,
 				SWT.NONE);
@@ -242,7 +243,7 @@ public class TaskEditPage extends AbstractInformationFormPage {
 
 		generalSection.setClient(client);
 
-		this.description = new AnnotatingQuickFixTextBox(client, "", "");
+		this.description = new AnnotatingQuickFixTextBox(client, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		addControl(this.description.getFTextField());
 
 	}
@@ -372,15 +373,15 @@ public class TaskEditPage extends AbstractInformationFormPage {
 		NumberFormat instance = NumberFormat.getInstance();
 		instance.setMaximumFractionDigits(2);
 		if (minutes < 0) {
-			return "Without reminder";
+			return Messages.TaskEditPage_WithoutReminder;
 		} else if (minutes < 60) {
-			return minutes + " Minutes";
+			return minutes + Messages.TaskEditPage_Minutes;
 		} else if (minutes < 1440) {
-			return instance.format(((double) minutes / 60)) + " Hours";
+			return instance.format(((double) minutes / 60)) + Messages.TaskEditPage_Hours;
 		} else if (minutes < 10800) {
-			return instance.format((double) minutes / 1440) + " Days";
+			return instance.format((double) minutes / 1440) + Messages.TaskEditPage_Days;
 		}
-		return minutes + " Minutes";
+		return minutes + Messages.TaskEditPage_Minutes;
 	}
 
 }

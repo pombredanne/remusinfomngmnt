@@ -22,6 +22,7 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 import org.eclipse.ui.IWorkbench;
 import org.remus.infomngmnt.video.VideoActivator;
+import org.remus.infomngmnt.video.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -36,7 +37,7 @@ public class NewVideoWizard extends NewInfoObjectWizard {
 	 */
 	public NewVideoWizard() {
 		setNeedsProgressMonitor(true);
-		setWindowTitle("New video");
+		setWindowTitle(Messages.NewVideoWizard_Title);
 		this.remusServiceTracker = new RemusServiceTracker(
 				Platform.getBundle(VideoActivator.PLUGIN_ID));
 		this.editingHandler = this.remusServiceTracker

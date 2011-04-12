@@ -5,7 +5,7 @@
          point="org.eclipse.remus.core.informationType">
       <information
             buildHtml="true"
-            name="Video"
+            name="%information.name"
             presentation="org.remus.infomngmnt.video.internal.VideoRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="VIDEO">
@@ -17,7 +17,7 @@
             editpage="org.remus.infomngmnt.video.editor.VideoEditPage"
             icon="icons/iconexperience/film_edit.png"
             id="org.remus.infomngmnt.video.editPage"
-            label="Edit Video"
+            label="%editPage.label"
             type="VIDEO">
       </editPage>
       <creationUiTrigger
@@ -35,7 +35,7 @@
             hasPages="true"
             icon="icons/iconexperience/film_new.png"
             id="org.remus.infomngmnt.video.newWizard"
-            name="Video">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension

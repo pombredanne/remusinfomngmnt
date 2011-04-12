@@ -19,23 +19,23 @@ import org.eclipse.remus.core.remote.security.CredentialProvider;
  */
 public class ModeshapeCredentialProvider extends CredentialProvider {
 
-	public static final String URL = "url";
+	public static final String URL = "url"; //$NON-NLS-1$
 
-	public static final String WORKSPACE = "workspace";
+	public static final String WORKSPACE = "workspace"; //$NON-NLS-1$
 
-	public static String USESEPARATEWORKSPACE = "useSeparateWorkspace";
+	public static String USESEPARATEWORKSPACE = "useSeparateWorkspace"; //$NON-NLS-1$
 
 	/**
 	 * 
 	 */
 	public ModeshapeCredentialProvider() {
 		super();
-		setGroup("modeshape");
+		setGroup("modeshape"); //$NON-NLS-1$
 	}
 
 	public String getUrl() {
 		try {
-			return getNode().get(URL, "");
+			return getNode().get(URL, ""); //$NON-NLS-1$
 		} catch (StorageException e) {
 			throw new SecurityException(e);
 		}
@@ -53,7 +53,7 @@ public class ModeshapeCredentialProvider extends CredentialProvider {
 
 	public String getWorkspace() {
 		try {
-			return getNode().get(WORKSPACE, "");
+			return getNode().get(WORKSPACE, ""); //$NON-NLS-1$
 		} catch (StorageException e) {
 			throw new SecurityException(e);
 		}

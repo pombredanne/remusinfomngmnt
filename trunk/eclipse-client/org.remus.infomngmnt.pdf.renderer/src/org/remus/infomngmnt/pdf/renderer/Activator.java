@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.pdf";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.pdf"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

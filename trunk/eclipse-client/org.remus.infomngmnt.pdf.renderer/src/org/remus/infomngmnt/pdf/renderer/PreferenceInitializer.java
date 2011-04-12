@@ -29,7 +29,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 * 
 	 */
 	public PreferenceInitializer() {
-		this.preferenceStore = Activator.getDefault().getPreferenceStore();
+		preferenceStore = Activator.getDefault().getPreferenceStore();
 	}
 
 	/*
@@ -40,10 +40,10 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		this.preferenceStore
+		preferenceStore
 				.setDefault(
 						OPTIONS,
-						"-dSAFER -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r150 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dMaxStripSize=8192");
+						"-dSAFER -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r150 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dMaxStripSize=8192"); //$NON-NLS-1$
 
 	}
 }

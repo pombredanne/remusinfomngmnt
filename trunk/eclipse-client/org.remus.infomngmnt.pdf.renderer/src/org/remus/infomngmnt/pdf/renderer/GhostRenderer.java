@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.program.Program;
-
 import org.remus.infomngmnt.pdf.extension.IPdf2ImageRenderer;
 import org.remus.infomngmnt.pdf.extension.ImageInformation;
 
@@ -54,26 +53,30 @@ public class GhostRenderer implements IPdf2ImageRenderer {
 	 * .core.resources.IFolder, org.eclipse.core.resources.IFile,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public List<ImageInformation> convert(final IFolder outputFolder, final IFile pdfFile,
-			final IProgressMonitor monitor) {
+	public List<ImageInformation> convert(final IFolder outputFolder,
+			final IFile pdfFile, final IProgressMonitor monitor) {
 		List<ImageInformation> returnValue = new ArrayList<ImageInformation>();
-		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+		IPreferenceStore preferenceStore = Activator.getDefault()
+				.getPreferenceStore();
 		String path = preferenceStore.getString(PreferenceInitializer.PATH);
-		String options = preferenceStore.getString(PreferenceInitializer.OPTIONS);
+		String options = preferenceStore
+				.getString(PreferenceInitializer.OPTIONS);
 
-		options += " -sOutputFile=\"" + outputFolder.getLocation().toOSString() + File.separator
-				+ "0000%d_pdfimage.png\" ";
-		options += "\"" + pdfFile.getLocation().toOSString() + "\"";
-		String fileName = "\"" + path + "\" " + options;
+		options += " -sOutputFile=\"" + outputFolder.getLocation().toOSString() + File.separator //$NON-NLS-1$
+				+ "0000%d_pdfimage.png\" "; //$NON-NLS-1$
+		options += "\"" + pdfFile.getLocation().toOSString() + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+		String fileName = "\"" + path + "\" " + options; //$NON-NLS-1$ //$NON-NLS-2$
 		try {
 			ProcessBuilder processBuilder = new ProcessBuilder(fileName);
 			processBuilder.redirectErrorStream(true);
 			Process exec = processBuilder.start();
 
-			BufferedReader output = new BufferedReader(new InputStreamReader(exec.getInputStream()));
+			BufferedReader output = new BufferedReader(new InputStreamReader(
+					exec.getInputStream()));
 			String line;
-			while ((line = output.readLine()) != null)
+			while ((line = output.readLine()) != null) {
 				System.out.println(line);
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -86,9 +89,9 @@ public class GhostRenderer implements IPdf2ImageRenderer {
 				if (iResource instanceof IFile) {
 					ImageInformation info = new ImageInformation();
 					info.setFileName(iResource.getName());
-					Image image = new Image(null, outputFolder.getLocation().toFile()
-							.getAbsolutePath()
-							+ "/" + info.getFileName());
+					Image image = new Image(null, outputFolder.getLocation()
+							.toFile().getAbsolutePath()
+							+ "/" + info.getFileName()); //$NON-NLS-1$
 					info.setWidth(image.getImageData().width);
 					info.setHeight(image.getImageData().height);
 					returnValue.add(info);
@@ -100,7 +103,8 @@ public class GhostRenderer implements IPdf2ImageRenderer {
 			e.printStackTrace();
 		}
 		Collections.sort(returnValue, new Comparator<ImageInformation>() {
-			public int compare(final ImageInformation o1, final ImageInformation o2) {
+			public int compare(final ImageInformation o1,
+					final ImageInformation o2) {
 				return o1.getFileName().compareTo(o2.getFileName());
 			}
 		});
@@ -115,19 +119,22 @@ public class GhostRenderer implements IPdf2ImageRenderer {
 	 * .core.resources.IFile)
 	 */
 	public Dimension firstSlid(final IFile pdfFile) {
-		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+		IPreferenceStore preferenceStore = Activator.getDefault()
+				.getPreferenceStore();
 		String path = preferenceStore.getString(PreferenceInitializer.PATH);
-		String options = preferenceStore.getString(PreferenceInitializer.OPTIONS);
+		String options = preferenceStore
+				.getString(PreferenceInitializer.OPTIONS);
 		Dimension returnValue = new Dimension();
 
 		try {
-			File createTempFile = File.createTempFile("tst", "png");
-			options += "-dFirstPage=1 -dLastPage=1 -sOutputFile="
-					+ createTempFile.getAbsolutePath() + " ";
-			options += "\"" + pdfFile.getLocation().toOSString() + "\"";
-			Program.launch("\"" + path + "\" " + options);
+			File createTempFile = File.createTempFile("tst", "png"); //$NON-NLS-1$ //$NON-NLS-2$
+			options += "-dFirstPage=1 -dLastPage=1 -sOutputFile=" //$NON-NLS-1$
+					+ createTempFile.getAbsolutePath() + " "; //$NON-NLS-1$
+			options += "\"" + pdfFile.getLocation().toOSString() + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+			Program.launch("\"" + path + "\" " + options); //$NON-NLS-1$ //$NON-NLS-2$
 			Image image = new Image(null, createTempFile.getAbsolutePath());
-			returnValue = new Dimension(image.getImageData().width, image.getImageData().height);
+			returnValue = new Dimension(image.getImageData().width,
+					image.getImageData().height);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 
 public class MailPersonDialog extends StatusDialog {
@@ -40,7 +41,7 @@ public class MailPersonDialog extends StatusDialog {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Add/Edit Person");
+		newShell.setText(Messages.MailPersonDialog_AddEditPerson);
 	}
 
 	/**
@@ -55,7 +56,7 @@ public class MailPersonDialog extends StatusDialog {
 
 		Label label = new Label(container, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, true, 1, 1));
-		label.setText("Enter name:");
+		label.setText(Messages.MailPersonDialog_EnterName);
 
 		this.text = new Text(container, SWT.BORDER);
 		if (this.content != null) {
@@ -76,7 +77,7 @@ public class MailPersonDialog extends StatusDialog {
 	protected void updateStatus(final boolean initial) {
 		IStatus status2set = Status.OK_STATUS;
 		if (this.text.getText().trim().length() == 0) {
-			status2set = StatusCreator.newStatus("Input is mandatory");
+			status2set = StatusCreator.newStatus(Messages.MailPersonDialog_InputMandatory);
 		}
 		if (initial) {
 			updateButtonsEnableState(status2set);

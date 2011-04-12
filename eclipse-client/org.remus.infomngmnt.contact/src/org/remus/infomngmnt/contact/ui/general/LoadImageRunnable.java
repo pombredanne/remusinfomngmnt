@@ -32,6 +32,7 @@ import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.Point;
 
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 public class LoadImageRunnable extends CancelableRunnable {
 
@@ -45,12 +46,12 @@ public class LoadImageRunnable extends CancelableRunnable {
 
 	@Override
 	protected IStatus runCancelableRunnable(final IProgressMonitor monitor) {
-		monitor.beginTask("Checking filename...", IProgressMonitor.UNKNOWN);
+		monitor.beginTask(Messages.LoadImageRunnable_CheckFilename, IProgressMonitor.UNKNOWN);
 		this.file = new File(this.imagePath);
 		IEditingHandler service = ContactActivator.getDefault().getServiceTracker().getService(
 				IEditingHandler.class);
 		if (this.file.exists() && this.file.isFile()) {
-			monitor.beginTask(NLS.bind("Reading file {0}", this.file.getName()), (int) this.file
+			monitor.beginTask(NLS.bind(Messages.LoadImageRunnable_ReadFile, this.file.getName()), (int) this.file
 					.length());
 			try {
 				if (this.domain == null) {
@@ -89,7 +90,7 @@ public class LoadImageRunnable extends CancelableRunnable {
 						this.infoUnit, ContactActivator.ORIGINAL_FILEPATH),
 						InfomngmntPackage.Literals.INFORMATION_UNIT__STRING_VALUE, this.imagePath));
 
-				cc.setLabel("Set new image");
+				cc.setLabel(Messages.LoadImageRunnable_SettingImage);
 				UIUtil.getDisplay().asyncExec(new Runnable() {
 					public void run() {
 						if (LoadImageRunnable.this.executeOnEditingDomain) {
@@ -106,11 +107,11 @@ public class LoadImageRunnable extends CancelableRunnable {
 				is = null;
 				return Status.OK_STATUS;
 			} catch (IOException e) {
-				return StatusCreator.newStatus("File not exisits or is not accessible");
+				return StatusCreator.newStatus(Messages.LoadImageRunnable_FileNotAccessible);
 			}
 		}
 		ContactActivator.getDefault().getServiceTracker().ungetService(service);
-		return StatusCreator.newStatus("File not exisits or is not accessible");
+		return StatusCreator.newStatus(Messages.LoadImageRunnable_FileNotAccessible);
 	}
 
 	public void setImageNode(final InformationUnit infoUnit, final String string) {

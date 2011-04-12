@@ -46,24 +46,29 @@ import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.ui.UIPlugin;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.contact.core.ContactUtil;
+import org.remus.infomngmnt.contact.messages.Messages;
 import org.remus.infomngmnt.contact.preferences.ContactPreferenceInitializer;
 
-public class ContactInformationRepresentation extends AbstractInformationRepresentation {
+public class ContactInformationRepresentation extends
+		AbstractInformationRepresentation {
 
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 		String imageHref = null;
-		String fileExtension = "png";
-		InformationUnit rawDataNode = InformationUtil.getChildByType(getValue(),
-				ContactActivator.NODE_NAME_RAWDATA_IMAGE);
+		String fileExtension = "png"; //$NON-NLS-1$
+		InformationUnit rawDataNode = InformationUtil.getChildByType(
+				getValue(), ContactActivator.NODE_NAME_RAWDATA_IMAGE);
 		if (rawDataNode != null && rawDataNode.getBinaryValue() != null) {
-			monitor.setTaskName("Extracting image...");
+			monitor.setTaskName(Messages.ContactInformationRepresentation_ExtractImages);
 			IFile file = getBuildFolder().getFile(
-					new Path(getValue().getId()).addFileExtension(fileExtension));
-			imageHref = URI.createFileURI(file.getLocation().toOSString()).toString();
-			ByteArrayInputStream bais = new ByteArrayInputStream(rawDataNode.getBinaryValue());
+					new Path(getValue().getId())
+							.addFileExtension(fileExtension));
+			imageHref = URI.createFileURI(file.getLocation().toOSString())
+					.toString();
+			ByteArrayInputStream bais = new ByteArrayInputStream(
+					rawDataNode.getBinaryValue());
 			try {
 				if (file.exists()) {
 					file.setContents(bais, true, false, monitor);
@@ -79,53 +84,81 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 			}
 		}
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		parameterMap.put("photo", imageHref);
+		parameterMap.put("photo", imageHref); //$NON-NLS-1$
 		try {
-			parameterMap.put("mapskey", UIPlugin.getDefault().getService(IGeoData.class)
-					.getApiKey());
+			parameterMap.put("mapskey", //$NON-NLS-1$
+					UIPlugin.getDefault().getService(IGeoData.class)
+							.getApiKey());
 		} catch (Exception e1) {
-			parameterMap.put("mapskey", "");
+			parameterMap.put("mapskey", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
 		EList<InformationUnit> dynamicList = read
 				.getDynamicList(ContactActivator.NODE_NAME_ADDRESSES);
 		for (InformationUnit informationUnit : dynamicList) {
-			InformationStructureRead adressRead = InformationStructureRead.newSession(
-					informationUnit, ContactActivator.TYPE_ID);
-			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS).equals(
-					ContactActivator.NODE_NAME_HOME_ADDRESS)) {
-				parameterMap.put("formattedHomeAdress", ContactUtil
-						.getFormattedAdress(informationUnit));
+			InformationStructureRead adressRead = InformationStructureRead
+					.newSession(informationUnit, ContactActivator.TYPE_ID);
+			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS)
+					.equals(ContactActivator.NODE_NAME_HOME_ADDRESS)) {
+				parameterMap.put("formattedHomeAdress", //$NON-NLS-1$
+						ContactUtil.getFormattedAdress(informationUnit));
 			}
-			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS).equals(
-					ContactActivator.NODE_NAME_WORK_ADDRESS)) {
-				parameterMap.put("formattedWorkAdress", ContactUtil
-						.getFormattedAdress(informationUnit));
+			if (adressRead.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS)
+					.equals(ContactActivator.NODE_NAME_WORK_ADDRESS)) {
+				parameterMap.put("formattedWorkAdress", //$NON-NLS-1$
+						ContactUtil.getFormattedAdress(informationUnit));
 			}
 		}
-		parameterMap.put("createMapsImage", ContactActivator.getDefault().getPreferenceStore()
-				.getBoolean(ContactPreferenceInitializer.SHOW_MAPS_IMAGE));
-		parameterMap.put("mapsWidth", Integer.toString(ContactActivator.getDefault()
-				.getPreferenceStore().getInt(ContactPreferenceInitializer.MAPS_IMAGE_WIDTH)));
-		parameterMap.put("mapsZoom", Integer.toString(ContactActivator.getDefault()
-				.getPreferenceStore().getInt(ContactPreferenceInitializer.MAPS_IMAGE_ZOOMLEVEL)));
-		parameterMap.put("mapsHeight", Integer.toString(ContactActivator.getDefault()
-				.getPreferenceStore().getInt(ContactPreferenceInitializer.MAPS_IMAGE_HEIGHT)));
-		parameterMap.put("formattedName", ContactUtil.getFormattedName(getValue()));
-		parameterMap.put("renderPhoneLinks", ContactActivator.getDefault().getPreferenceStore()
-				.getBoolean(ContactPreferenceInitializer.SHOW_PHONE_LINKS));
-		parameterMap.put("phonePattern", ContactActivator.getDefault().getPreferenceStore()
-				.getString(ContactPreferenceInitializer.PHONE_CALL_PATTERN));
+		parameterMap.put(
+				"createMapsImage", //$NON-NLS-1$
+				ContactActivator
+						.getDefault()
+						.getPreferenceStore()
+						.getBoolean(
+								ContactPreferenceInitializer.SHOW_MAPS_IMAGE));
+		parameterMap
+				.put("mapsWidth", Integer.toString(ContactActivator //$NON-NLS-1$
+						.getDefault().getPreferenceStore()
+						.getInt(ContactPreferenceInitializer.MAPS_IMAGE_WIDTH)));
+		parameterMap.put("mapsZoom", Integer.toString(ContactActivator //$NON-NLS-1$
+				.getDefault().getPreferenceStore()
+				.getInt(ContactPreferenceInitializer.MAPS_IMAGE_ZOOMLEVEL)));
+		parameterMap.put("mapsHeight", Integer.toString(ContactActivator //$NON-NLS-1$
+				.getDefault().getPreferenceStore()
+				.getInt(ContactPreferenceInitializer.MAPS_IMAGE_HEIGHT)));
+		parameterMap.put("formattedName", //$NON-NLS-1$
+				ContactUtil.getFormattedName(getValue()));
+		parameterMap.put(
+				"renderPhoneLinks", //$NON-NLS-1$
+				ContactActivator
+						.getDefault()
+						.getPreferenceStore()
+						.getBoolean(
+								ContactPreferenceInitializer.SHOW_PHONE_LINKS));
+		parameterMap
+				.put("phonePattern", //$NON-NLS-1$
+						ContactActivator
+								.getDefault()
+								.getPreferenceStore()
+								.getString(
+										ContactPreferenceInitializer.PHONE_CALL_PATTERN));
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(ContactActivator.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
-			FreemarkerRenderer.getInstance().process(ContactActivator.PLUGIN_ID, templateIs,
-					contentsIs, returnValue, parameterMap);
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(ContactActivator.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
+			FreemarkerRenderer.getInstance().process(
+					ContactActivator.PLUGIN_ID, templateIs, contentsIs,
+					returnValue, parameterMap);
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(
+					StatusCreator
+							.newStatus(
+									Messages.ContactInformationRepresentation_ErrorReadingLocations,
+									e));
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}
@@ -134,10 +167,13 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 
 	@Override
 	public CalendarEntry[] getCalendarContributions() {
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
-		Date birthday = (Date) read.getValueByNodeId(ContactActivator.NODE_DETAILS_BIRTHDAY);
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
+		Date birthday = (Date) read
+				.getValueByNodeId(ContactActivator.NODE_DETAILS_BIRTHDAY);
 		if (birthday != null) {
-			CalendarEntry createCalendarEntry = InfomngmntFactory.eINSTANCE.createCalendarEntry();
+			CalendarEntry createCalendarEntry = InfomngmntFactory.eINSTANCE
+					.createCalendarEntry();
 			Calendar instance = Calendar.getInstance();
 			instance.setTime(birthday);
 			instance.set(Calendar.HOUR, 0);
@@ -154,8 +190,9 @@ public class ContactInformationRepresentation extends AbstractInformationReprese
 			instance.set(Calendar.AM_PM, Calendar.AM);
 			createCalendarEntry.setEnd(instance.getTime());
 			createCalendarEntry.setEntryType(CalendarEntryType.ANNUAL);
-			createCalendarEntry.setTitle(NLS.bind("Birthday of {0}", ContactUtil
-					.getFormattedName(getValue())));
+			createCalendarEntry.setTitle(NLS.bind(
+					Messages.ContactInformationRepresentation_Birthday,
+					ContactUtil.getFormattedName(getValue())));
 			return new CalendarEntry[] { createCalendarEntry };
 		}
 		return super.getCalendarContributions();

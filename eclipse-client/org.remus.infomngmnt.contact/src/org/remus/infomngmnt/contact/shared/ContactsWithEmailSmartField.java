@@ -29,7 +29,6 @@ import org.eclipse.remus.ui.infotypes.service.IInformationTypeImage;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
-
 import org.remus.infomngmnt.contact.ContactActivator;
 
 /**
@@ -61,10 +60,12 @@ public class ContactsWithEmailSmartField extends SmartField {
 	protected IContentProposalProvider getContentProposalProvider() {
 		return new IContentProposalProvider() {
 
-			public IContentProposal[] getProposals(final String contents, final int position) {
+			public IContentProposal[] getProposals(final String contents,
+					final int position) {
 				Set<? extends EObject> allItemsByType = InformationUtil
 						.getAllItemsByType(ContactActivator.TYPE_ID);
-				IContentProposal[] proposals = new IContentProposal[allItemsByType.size()];
+				IContentProposal[] proposals = new IContentProposal[allItemsByType
+						.size()];
 				int i = 0;
 				for (EObject eObject : allItemsByType) {
 					InformationUnitListItem item = (InformationUnitListItem) eObject;
@@ -80,10 +81,13 @@ public class ContactsWithEmailSmartField extends SmartField {
 		return new LabelProvider() {
 			@Override
 			public Image getImage(final Object element) {
-				IInformationTypeImage service = ContactActivator.getDefault().getServiceTracker()
+				IInformationTypeImage service = ContactActivator.getDefault()
+						.getServiceTracker()
 						.getService(IInformationTypeImage.class);
-				Image imageByInfoType = service.getImageByInfoType(ContactActivator.TYPE_ID);
-				ContactActivator.getDefault().getServiceTracker().ungetService(service);
+				Image imageByInfoType = service
+						.getImageByInfoType(ContactActivator.TYPE_ID);
+				ContactActivator.getDefault().getServiceTracker()
+						.ungetService(service);
 				return imageByInfoType;
 			}
 
@@ -117,11 +121,13 @@ public class ContactsWithEmailSmartField extends SmartField {
 			InformationUnit adapter = (InformationUnit) this.listItem
 					.getAdapter(InformationUnit.class);
 			if (adapter != null) {
-				InformationStructureRead read = InformationStructureRead.newSession(adapter);
+				InformationStructureRead read = InformationStructureRead
+						.newSession(adapter);
 				String defaultAdress = (String) read
 						.getValueByNodeId(ContactActivator.NODE_MAIL_DEF);
 				if (defaultAdress != null && defaultAdress.trim().length() > 0) {
-					return StringUtils.join(this.listItem.getLabel(), " <", defaultAdress, ">");
+					return StringUtils.join(this.listItem.getLabel(),
+							" <", defaultAdress, ">"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 			return this.listItem.getLabel();

@@ -32,6 +32,7 @@ import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.remus.util.InformationUtil;
 
 import org.remus.infomngmnt.contact.ContactActivator;
+import org.remus.infomngmnt.contact.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -84,8 +85,8 @@ public class CheckBirthdayJob extends AbstractJob {
 							// .getInfoTypeByType(ContactActivator.TYPE_ID).getImage());
 							createNotification.setSeverity(Severity.INFO);
 							createNotification.setMessage(NLS.bind(
-									"Contact \"{0}\" needs your attention", adapter.getLabel()));
-							createNotification.setDetails("Reason: Contact has birthday");
+									Messages.CheckBirthdayJob_ContactNeedsAttention, adapter.getLabel()));
+							createNotification.setDetails(Messages.CheckBirthdayJob_ContactHasBirthday);
 							createNotification.getAffectedInfoUnitIds().add(adapter.getId());
 							returnValue.add(createNotification);
 

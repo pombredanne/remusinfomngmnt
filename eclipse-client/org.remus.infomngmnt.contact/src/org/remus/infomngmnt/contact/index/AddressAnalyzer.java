@@ -25,7 +25,6 @@ import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.remus.search.analyzer.ISecondaryAnalyzer;
 import org.eclipse.remus.search.analyzer.ISecondaryIndex;
 import org.eclipse.remus.search.analyzer.SecondaryIndex;
-
 import org.remus.infomngmnt.contact.ContactActivator;
 import org.remus.infomngmnt.contact.core.ContactUtil;
 
@@ -40,7 +39,8 @@ public class AddressAnalyzer implements ISecondaryAnalyzer {
 		addressConverter = new HashMap<String, String>();
 		KeyValueObject[] adressCollection = ContactUtil.getAdressCollection();
 		for (KeyValueObject keyValueObject : adressCollection) {
-			addressConverter.put(keyValueObject.getId(), keyValueObject.getValue());
+			addressConverter.put(keyValueObject.getId(),
+					keyValueObject.getValue());
 		}
 	}
 
@@ -51,34 +51,50 @@ public class AddressAnalyzer implements ISecondaryAnalyzer {
 	 * org.remus.infomngmnt.search.analyzer.ISecondaryAnalyzer#analyze(org.remus
 	 * .infomngmnt.InformationUnit, java.lang.String)
 	 */
-	public ISecondaryIndex[] analyze(final InformationUnit unit, final String node) {
-		InformationStructureRead read = InformationStructureRead.newSession(unit);
+	public ISecondaryIndex[] analyze(final InformationUnit unit,
+			final String node) {
+		InformationStructureRead read = InformationStructureRead
+				.newSession(unit);
 		EList<InformationUnit> dynamicList = read
 				.getDynamicList(ContactActivator.NODE_NAME_ADDRESSES);
 		List<ISecondaryIndex> returnValue = new ArrayList<ISecondaryIndex>();
 		for (InformationUnit informationUnit : dynamicList) {
-			InformationStructureRead adressRead = InformationStructureRead.newSession(
-					informationUnit, ContactActivator.TYPE_ID);
+			InformationStructureRead adressRead = InformationStructureRead
+					.newSession(informationUnit, ContactActivator.TYPE_ID);
 			StringWriter sw = new StringWriter();
-			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_REGION));
-			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_LOCALITY));
-			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_STREET));
-			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_POSTAL));
-			appendToSearch(sw, adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_POST_OFFICE_BOX));
-			returnValue.add(SecondaryIndex.CREATE(addressConverter.get(adressRead
-					.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS)), sw.toString(), null));
+			appendToSearch(
+					sw,
+					adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_REGION));
+			appendToSearch(
+					sw,
+					adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_LOCALITY));
+			appendToSearch(
+					sw,
+					adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_STREET));
+			appendToSearch(
+					sw,
+					adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_POSTAL));
+			appendToSearch(
+					sw,
+					adressRead
+							.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS_POST_OFFICE_BOX));
+			returnValue
+					.add(SecondaryIndex.CREATE(
+							addressConverter
+									.get(adressRead
+											.getValueByNodeId(ContactActivator.NODE_NAME_ADDRESS)),
+							sw.toString(), null));
 		}
 		return returnValue.toArray(new ISecondaryIndex[returnValue.size()]);
 	}
 
 	private void appendToSearch(final StringWriter sw, final Object object) {
 		if (object != null && object.toString().trim().length() > 0) {
-			sw.append(object.toString()).append(" ");
+			sw.append(object.toString()).append(" "); //$NON-NLS-1$
 		}
 	}
 }

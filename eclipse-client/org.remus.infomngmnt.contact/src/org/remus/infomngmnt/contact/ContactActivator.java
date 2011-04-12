@@ -19,19 +19,18 @@ import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  */
 public class ContactActivator extends AbstractUIPlugin {
 
-	public static String TYPE_ID = "CONTACT";
+	public static String TYPE_ID = "CONTACT"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_RAWDATA_IMAGE = "imageData"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_RAWDATA_LOGO = "logoData"; //$NON-NLS-1$
 
-	public static final String ORIGINAL_FILEPATH = "originalfilepath";
+	public static final String ORIGINAL_FILEPATH = "originalfilepath"; //$NON-NLS-1$
 
 	// group person
 	public static final String NODE_NAME_PERS_NAME_TITLE = "title"; //$NON-NLS-1$
@@ -118,7 +117,7 @@ public class ContactActivator extends AbstractUIPlugin {
 	public static final String NODE_MISC_MIME = "miscMime"; //$NON-NLS-1$
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.contact"; //$NON-NLS-1$
 
 	// The shared instance
 	private static ContactActivator plugin;

@@ -5,7 +5,7 @@
          point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
-            name="MindMap"
+            name="%information.name"
             postCreationHandler="org.remus.infomngmnt.mindmap.extension.MindmapPostCreationHandler"
             presentation="org.remus.infomngmnt.mindmap.extension.MindMapInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
@@ -20,7 +20,7 @@
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/mindmap_new.png"
             id="org.remus.infomngmnt.mindmap.new"
-            name="MindMap">
+            name="%wizard.name">
       </wizard>
    </extension>
    <extension
@@ -29,7 +29,7 @@
             editpage="org.remus.infomngmnt.mindmap.ui.MindMapEditPage"
             icon="icons/iconexperience/mindmap_edit.png"
             id="org.remus.infomngmnt.mindmap.editPage1"
-            label="Edit MindMap"
+            label="%editPage.label"
             type="MINDMAP">
       </editPage>
       <editorAction
@@ -62,8 +62,8 @@
          <menu
                icon="icons/iconexperience/brain.png"
                id="org.remus.infomngmnt.mindmap.contextmenu"
-               label="Mindmap"
-               mnemonic="m">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="org.remus.infomngmnt.mindmap.openMindMapEditor"
                   style="push">
@@ -92,7 +92,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.remus.infomngmnt.mindmap.openMindMapEditor"
-            name="Open Mindmap in Edit-Mode">
+            name="%command.name">
       </command>
    </extension>
    <extension

@@ -29,6 +29,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.remus.infomngmnt.mindmap.handler.OpenMindMapEditorHandler;
+import org.remus.infomngmnt.mindmap.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -69,7 +70,7 @@ public class MindMapEditPage extends AbstractInformationFormPage {
 				| ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		generalSection.setLayoutData(gd_generalSection);
-		generalSection.setText("General");
+		generalSection.setText(Messages.MindMapEditPage_General);
 
 		final Composite composite = toolkit.createComposite(generalSection, SWT.NONE);
 		final GridLayout gridLayout = new GridLayout();
@@ -78,7 +79,7 @@ public class MindMapEditPage extends AbstractInformationFormPage {
 		generalSection.setClient(composite);
 
 		org.eclipse.ui.forms.widgets.Hyperlink createHyperlink = toolkit.createHyperlink(composite,
-				"Open Mindmap Editor", SWT.NONE);
+				Messages.MindMapEditPage_OpenEditor, SWT.NONE);
 		createHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(final org.eclipse.ui.forms.events.HyperlinkEvent e) {

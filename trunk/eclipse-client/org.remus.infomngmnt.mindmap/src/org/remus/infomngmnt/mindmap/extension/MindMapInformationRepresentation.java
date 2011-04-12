@@ -19,13 +19,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
-import org.remus.infomngmnt.mindmap.MindmapActivator;
-import org.xmind.core.IWorkbook;
-import org.xmind.core.io.IStorage;
-import org.xmind.ui.internal.editor.WorkbookRef;
-import org.xmind.ui.internal.editor.WorkbookRefManager;
-import org.xmind.ui.mindmap.MindMapImageExtractor;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -44,6 +37,12 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Display;
+import org.remus.infomngmnt.mindmap.MindmapActivator;
+import org.xmind.core.IWorkbook;
+import org.xmind.core.io.IStorage;
+import org.xmind.ui.internal.editor.WorkbookRef;
+import org.xmind.ui.internal.editor.WorkbookRefManager;
+import org.xmind.ui.mindmap.MindMapImageExtractor;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -119,7 +118,7 @@ public class MindMapInformationRepresentation extends
 			ImageLoader loader = new ImageLoader();
 
 			loader.data = new ImageData[] { image.getImageData() };
-			IFile file = getBuildFolder().getFile("out.png");
+			IFile file = getBuildFolder().getFile("out.png"); //$NON-NLS-1$
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			loader.save(baos, SWT.IMAGE_PNG);
 			mindMapImageExtractor.dispose();
@@ -140,20 +139,20 @@ public class MindMapInformationRepresentation extends
 			try {
 				templateIs = FileLocator.openStream(
 						Platform.getBundle(MindmapActivator.PLUGIN_ID),
-						new Path("template/htmlserialization.flt"), false);
+						new Path("$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
 				org.eclipse.remus.js.rendering.FreemarkerRenderer.getInstance()
 						.process(
 								MindmapActivator.PLUGIN_ID,
 								templateIs,
 								returnValue,
-								Collections.singletonMap("imageHref", URI
+								Collections.singletonMap("imageHref", URI //$NON-NLS-1$
 										.createFileURI(file.getLocation()
 												.toOSString())),
 								read.getContentsAsStrucuturedMap(),
 								read.getDynamicContentAsStructuredMap());
 			} catch (IOException e) {
 				throw new CoreException(StatusCreator.newStatus(
-						"Error reading locations", e));
+						"Error reading locations", e)); //$NON-NLS-1$
 			} finally {
 				StreamCloser.closeStreams(templateIs);
 			}
@@ -161,7 +160,7 @@ public class MindMapInformationRepresentation extends
 
 		} catch (IOException e) {
 			throw new CoreException(StatusCreator.newStatus(
-					"Error generating html-output", e));
+					"Error generating html-output", e)); //$NON-NLS-1$
 		}
 
 	}

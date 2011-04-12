@@ -27,6 +27,7 @@ import org.xmind.ui.internal.WorkbookFactory;
 import org.xmind.ui.mindmap.MindMapUI;
 
 import org.remus.infomngmnt.mindmap.MindmapActivator;
+import org.remus.infomngmnt.mindmap.messages.Messages;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -38,7 +39,7 @@ public class NewMindmapWizard extends NewInfoObjectWizard {
 
 	public NewMindmapWizard() {
 		super();
-		setWindowTitle("New Mindmap");
+		setWindowTitle(Messages.NewMindmapWizard_Title);
 		this.remusServiceTracker = new RemusServiceTracker(Platform
 				.getBundle(MindmapActivator.PLUGIN_ID));
 		this.service = this.remusServiceTracker.getService(IEditingHandler.class);
@@ -71,10 +72,10 @@ public class NewMindmapWizard extends NewInfoObjectWizard {
 	@Override
 	public void addPages() {
 		super.addPages();
-		this.page1.setTitle("New Mindmap");
-		this.page1.setMessage("This wizard enables you to create a new meeting protocol");
+		this.page1.setTitle(Messages.NewMindmapWizard_Title);
+		this.page1.setMessage(Messages.NewMindmapWizard_Subtitle);
 		this.page1.setImageDescriptor(ResourceManager.getPluginImageDescriptor(MindmapActivator
-				.getDefault(), "icons/iconexperience/new-wizard.png"));
+				.getDefault(), "icons/iconexperience/new-wizard.png")); //$NON-NLS-1$
 	}
 
 }

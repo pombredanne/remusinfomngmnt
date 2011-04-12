@@ -9,18 +9,18 @@ import org.osgi.framework.BundleContext;
 public class AudioActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.remus.infomngmnt.audio";
+	public static final String PLUGIN_ID = "org.remus.infomngmnt.audio"; //$NON-NLS-1$
 
 	// The shared instance
 	private static AudioActivator plugin;
 
-	public static String TYPE_ID = "AUDIO";
+	public static String TYPE_ID = "AUDIO"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_MEDIATYPE = "mediatype"; //$NON-NLS-1$
 
 	public static final String NODE_NAME_CUEPOINTS = "cuepoints"; //$NON-NLS-1$
 
-	public static final String NODE_NAME_CUEPOINT = "cuepoint"; // $NON
+	public static final String NODE_NAME_CUEPOINT = "cuepoint"; // $NON //$NON-NLS-1$
 
 	/**
 	 * The constructor

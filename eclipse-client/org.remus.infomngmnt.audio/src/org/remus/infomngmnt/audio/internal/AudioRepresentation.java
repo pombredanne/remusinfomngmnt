@@ -32,8 +32,8 @@ import org.eclipse.remus.core.model.InformationStructureRead;
 import org.eclipse.remus.js.rendering.FreemarkerRenderer;
 import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.remus.util.StatusCreator;
-
 import org.remus.infomngmnt.audio.AudioActivator;
+import org.remus.infomngmnt.audio.messages.Messages;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayer;
 import org.remus.infomngmnt.mediaplayer.extension.IMediaPlayerExtensionService;
 
@@ -59,25 +59,32 @@ public class AudioRepresentation extends AbstractInformationRepresentation {
 	 * #handleHtmlGeneration(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public InputStream handleHtmlGeneration(final IProgressMonitor monitor) throws CoreException {
+	public InputStream handleHtmlGeneration(final IProgressMonitor monitor)
+			throws CoreException {
 
-		InformationStructureRead read = InformationStructureRead.newSession(getValue());
+		InformationStructureRead read = InformationStructureRead
+				.newSession(getValue());
 		/*
 		 * At first we have to determine the player extension that can provide
 		 * the correct html for displaying the video.
 		 */
-		String playerType = (String) read.getValueByNodeId(AudioActivator.NODE_NAME_MEDIATYPE);
+		String playerType = (String) read
+				.getValueByNodeId(AudioActivator.NODE_NAME_MEDIATYPE);
 
-		RemusServiceTracker remusServiceTracker = new RemusServiceTracker(Platform
-				.getBundle(AudioActivator.PLUGIN_ID));
+		RemusServiceTracker remusServiceTracker = new RemusServiceTracker(
+				Platform.getBundle(AudioActivator.PLUGIN_ID));
 
 		IMediaPlayerExtensionService service = remusServiceTracker
 				.getService(IMediaPlayerExtensionService.class);
 		IMediaPlayer mediaPlayer = service.getPlayerByType(playerType);
 		remusServiceTracker.ungetService(service);
-		this.audioHref = getFile().getProject().getFolder(
-				org.eclipse.remus.resources.util.ResourceUtil.BINARY_FOLDER).getFile(
-				getValue().getBinaryReferences().getProjectRelativePath()).getLocation();
+		audioHref = getFile()
+				.getProject()
+				.getFolder(
+						org.eclipse.remus.resources.util.ResourceUtil.BINARY_FOLDER)
+				.getFile(
+						getValue().getBinaryReferences()
+								.getProjectRelativePath()).getLocation();
 		/*
 		 * Next: build the html snippet for displaying the media and put them
 		 * into a collection This collection will be passed to freemark. The
@@ -85,26 +92,31 @@ public class AudioRepresentation extends AbstractInformationRepresentation {
 		 */
 		Map<String, String> freemarkParameters = new HashMap<String, String>();
 		if (mediaPlayer != null) {
-			freemarkParameters.put("mediaplayerheader", mediaPlayer.buildHeaderScript());
-			freemarkParameters.put("mediaplayer", mediaPlayer.buildHtml(this.audioHref, 0, 0,
-					Collections.<String, String> emptyMap()));
+			freemarkParameters.put(
+					"mediaplayerheader", mediaPlayer.buildHeaderScript()); //$NON-NLS-1$
+			freemarkParameters.put(
+					"mediaplayer", mediaPlayer.buildHtml(audioHref, 0, 0, //$NON-NLS-1$
+							Collections.<String, String> emptyMap()));
 		}
 
 		ByteArrayOutputStream returnValue = new ByteArrayOutputStream();
 		InputStream templateIs = null;
 		InputStream contentsIs = getFile().getContents();
 		try {
-			templateIs = FileLocator.openStream(Platform.getBundle(AudioActivator.PLUGIN_ID),
-					new Path("template/htmlserialization.flt"), false);
+			templateIs = FileLocator.openStream(Platform
+					.getBundle(AudioActivator.PLUGIN_ID), new Path(
+					"$nl$/template/htmlserialization.flt"), true); //$NON-NLS-1$
 			/*
 			 * We give the html-snippet for creating the mediaplayer
 			 */
-			FreemarkerRenderer.getInstance().process(AudioActivator.PLUGIN_ID, templateIs,
-					returnValue, freemarkParameters, read.getContentsAsStrucuturedMap(),
+			FreemarkerRenderer.getInstance().process(AudioActivator.PLUGIN_ID,
+					templateIs, returnValue, freemarkParameters,
+					read.getContentsAsStrucuturedMap(),
 					read.getDynamicContentAsStructuredMap());
 
 		} catch (IOException e) {
-			throw new CoreException(StatusCreator.newStatus("Error reading locations", e));
+			throw new CoreException(StatusCreator.newStatus(
+					Messages.AudioRepresentation_ErrorReadingLocation, e));
 		} finally {
 			StreamCloser.closeStreams(templateIs, contentsIs);
 		}

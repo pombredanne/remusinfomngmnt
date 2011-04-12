@@ -103,7 +103,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
 			throws RemoteException {
 		throw new RemoteException(StatusCreator
-				.newStatus("Deletion is not supported by this repository"));
+				.newStatus(Messages.MarketplaceConnector_DeletionNotSupported));
 
 	}
 
@@ -123,7 +123,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 				MarketPlaceRoot root = getApi().getRoot();
 				return buildMarkets(root);
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error getting markets", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.MarketplaceConnector_ErrorMarkets, e));
 			}
 		} else if (container.getWrappedObject() instanceof Market) {
 			return buildCategories((Market) container.getWrappedObject());
@@ -131,7 +131,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 			try {
 				return buildElements((Category) container.getWrappedObject(), monitor);
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus("Error getting elements", e));
+				throw new RemoteException(StatusCreator.newStatus(Messages.MarketplaceConnector_ErrorElements, e));
 			}
 		}
 		return new RemoteObject[0];
@@ -150,15 +150,15 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 	private RemoteObject buildSingleElement(final int id, final IProgressMonitor monitor)
 			throws MarketPlaceException, IOException {
 		MarketPlaceElement marketPlaceElementById = getApi().getMarketPlaceElementById(id);
-		monitor.subTask(NLS.bind("Contacting marketplace for element \'\'{0}\'\'",
+		monitor.subTask(NLS.bind(Messages.MarketplaceConnector_ContactingMarketForElement,
 				marketPlaceElementById.getTitle()));
 		RemoteObject remoteElement = InfomngmntFactory.eINSTANCE.createRemoteObject();
 		remoteElement.setId(String.valueOf(marketPlaceElementById.getId()));
-		remoteElement.setHash(marketPlaceElementById.getChanged().getTime() + "-"
+		remoteElement.setHash(marketPlaceElementById.getChanged().getTime() + "-" //$NON-NLS-1$
 				+ marketPlaceElementById.getFavorited());
 		remoteElement.setName(marketPlaceElementById.getTitle());
 		remoteElement.setWrappedObject(marketPlaceElementById);
-		remoteElement.setUrl(getRepositoryUrl() + "/node/" + remoteElement.getId());
+		remoteElement.setUrl(getRepositoryUrl() + "/node/" + remoteElement.getId()); //$NON-NLS-1$
 		return remoteElement;
 	}
 
@@ -180,7 +180,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 		RemoteContainer remoteCategory = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteCategory.setId(String.valueOf(category.getId()));
 		remoteCategory.setName(category.getName());
-		remoteCategory.setUrl(getRepositoryUrl() + "/category/" + category.getId());
+		remoteCategory.setUrl(getRepositoryUrl() + "/category/" + category.getId()); //$NON-NLS-1$
 		remoteCategory.setWrappedObject(category);
 		return remoteCategory;
 	}
@@ -198,7 +198,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 		RemoteContainer remoteMarket = InfomngmntFactory.eINSTANCE.createRemoteContainer();
 		remoteMarket.setId(String.valueOf(market.getId()));
 		remoteMarket.setName(market.getName());
-		remoteMarket.setUrl(getRepositoryUrl() + "/market/" + market.getId());
+		remoteMarket.setUrl(getRepositoryUrl() + "/market/" + market.getId()); //$NON-NLS-1$
 		remoteMarket.setWrappedObject(market);
 		return remoteMarket;
 	}
@@ -261,7 +261,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 			if (imageUrl != null) {
 				String fileExtension = new Path(imageUrl).getFileExtension();
 				if (fileExtension == null || fileExtension.indexOf('?') != -1) {
-					fileExtension = "";
+					fileExtension = ""; //$NON-NLS-1$
 					tmpFile = ResourceUtil.createTempFile();
 				} else {
 					tmpFile = ResourceUtil.createTempFile(fileExtension);
@@ -327,7 +327,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 					Path path = new Path(url);
 					String segment = path.segment(path.segmentCount() - 2);
 					// TODO : Better handling of the strings
-					if (segment.equals("market")) {
+					if (segment.equals("market")) { //$NON-NLS-1$
 						MarketPlaceRoot root = getApi().getRoot();
 						List<Market> markets = root.getMarkets();
 						for (Market market : markets) {
@@ -336,7 +336,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 							}
 						}
 					}
-					if (segment.equals("category")) {
+					if (segment.equals("category")) { //$NON-NLS-1$
 						MarketPlaceRoot root = getApi().getRoot();
 						List<Market> markets = root.getMarkets();
 						for (Market market : markets) {
@@ -348,7 +348,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 							}
 						}
 					}
-					if (segment.equals("node")) {
+					if (segment.equals("node")) { //$NON-NLS-1$
 						return buildSingleElement(Integer.valueOf(path.lastSegment()), monitor);
 					}
 				} catch (Exception e) {
@@ -412,7 +412,7 @@ public class MarketplaceConnector extends AbstractExtensionRepository implements
 			try {
 				this.container = ContainerFactory.getDefault().createContainer();
 			} catch (final ContainerCreateException e) {
-				throw new RuntimeException("Error initializing sync-container", e);
+				throw new RuntimeException(Messages.MarketplaceConnector_ErrorInitECF, e);
 			}
 		}
 		this.fileReceiveAdapter = (IRetrieveFileTransferContainerAdapter) this.container

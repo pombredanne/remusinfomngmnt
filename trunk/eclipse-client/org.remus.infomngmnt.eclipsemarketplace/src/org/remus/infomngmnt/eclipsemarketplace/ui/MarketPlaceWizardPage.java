@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.eclipsemarketplace.connector.Messages;
 
 
 public class MarketPlaceWizardPage extends WizardPage {
@@ -38,9 +39,9 @@ public class MarketPlaceWizardPage extends WizardPage {
 	 * Create the wizard
 	 */
 	public MarketPlaceWizardPage() {
-		super("wizardPage");
-		setTitle("Eclipse Marketplace Connector");
-		setDescription("Enter a name for the connector");
+		super("wizardPage"); //$NON-NLS-1$
+		setTitle(Messages.MarketPlaceWizardPage_WizardTitle);
+		setDescription(Messages.MarketPlaceWizardPage_WizardSubtitle);
 	}
 
 	/**
@@ -60,13 +61,13 @@ public class MarketPlaceWizardPage extends WizardPage {
 		group.setLayout(gridLayout);
 
 		final Label nameLabel = new Label(group, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.MarketPlaceWizardPage_Name);
 
 		this.nameText = new Text(group, SWT.BORDER);
 		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
-		apiurlLabel.setText("API-Url:");
+		apiurlLabel.setText(Messages.MarketPlaceWizardPage_APIUrl);
 
 		this.apiUrlText = new Text(group, SWT.BORDER);
 		final GridData gd_apiUrlText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -90,7 +91,7 @@ public class MarketPlaceWizardPage extends WizardPage {
 				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
 		ectx.bindValue(swtName, emfName, null, null);
 		this.apiUrlText.setText(this.repository.getUrl());
-		this.nameText.setText("Eclipse Marketplace");
+		this.nameText.setText(Messages.MarketPlaceWizardPage_EclipseMarketplace);
 
 	}
 }

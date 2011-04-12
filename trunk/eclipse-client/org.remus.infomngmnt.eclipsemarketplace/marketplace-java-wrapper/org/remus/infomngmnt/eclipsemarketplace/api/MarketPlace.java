@@ -27,22 +27,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.remus.infomngmnt.eclipsemarketplace.api.beans.Category;
-import org.remus.infomngmnt.eclipsemarketplace.api.beans.CategoryEntry;
-import org.remus.infomngmnt.eclipsemarketplace.api.beans.Market;
-import org.remus.infomngmnt.eclipsemarketplace.api.beans.MarketPlaceElement;
-import org.remus.infomngmnt.eclipsemarketplace.api.beans.MarketPlaceRoot;
-import org.remus.infomngmnt.eclipsemarketplace.api.beans.Type;
-import org.w3c.dom.CDATASection;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import org.eclipse.remus.common.core.util.StringUtils;
-
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
@@ -56,6 +40,20 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.remus.common.core.util.StringUtils;
+import org.remus.infomngmnt.eclipsemarketplace.api.beans.Category;
+import org.remus.infomngmnt.eclipsemarketplace.api.beans.CategoryEntry;
+import org.remus.infomngmnt.eclipsemarketplace.api.beans.Market;
+import org.remus.infomngmnt.eclipsemarketplace.api.beans.MarketPlaceElement;
+import org.remus.infomngmnt.eclipsemarketplace.api.beans.MarketPlaceRoot;
+import org.remus.infomngmnt.eclipsemarketplace.api.beans.Type;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * Class for accessing <a href="http://marketplace.eclipse.org">Eclipse
@@ -120,7 +118,7 @@ public class MarketPlace {
 		post.addParameters(params.toArray(new NameValuePair[params.size()]));
 		try {
 			int httpResult = httpClient.executeMethod(post);
-			logger.debug("Result:" + httpResult);
+			logger.debug("Result:" + httpResult); //$NON-NLS-1$
 			if (post.getResponseBodyAsStream() != null) {
 				BufferedReader bufferedReader = new BufferedReader(
 						new InputStreamReader(post.getResponseBodyAsStream(),
@@ -158,7 +156,7 @@ public class MarketPlace {
 									market.setId(Integer.valueOf(marketId));
 								} catch (NumberFormatException e) {
 									throw new MarketPlaceException(
-											"Market Id no valid integer");
+											"Market Id no valid integer"); //$NON-NLS-1$
 								}
 							}
 							NodeList categoryNodes = marketNode.getChildNodes();
@@ -179,7 +177,7 @@ public class MarketPlace {
 													.valueOf(categoryId));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Category Id no valid integer");
+													"Category Id no valid integer"); //$NON-NLS-1$
 										}
 									}
 									String categoryCount = categoryNode
@@ -193,7 +191,7 @@ public class MarketPlace {
 													.valueOf(categoryCount));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Categoriy Count no valid integer");
+													"Categoriy Count no valid integer"); //$NON-NLS-1$
 										}
 									}
 									category.setName(((Element) categoryNode)
@@ -211,7 +209,7 @@ public class MarketPlace {
 			}
 		} catch (SAXException e) {
 			throw new IOException(
-					"Error processing result, invalid xml-response.");
+					"Error processing result, invalid xml-response."); //$NON-NLS-1$
 		}
 		return rootElement;
 	}
@@ -222,11 +220,11 @@ public class MarketPlace {
 		List<CategoryEntry> returnValue = new ArrayList<CategoryEntry>();
 		List<NameValuePair> params = getBaseQuery();
 		PostMethod post = new PostMethod(apiEndpoint + Constants.TAXONOMY
-				+ Constants.TERM + category + "/" + Constants.XML);
+				+ Constants.TERM + category + "/" + Constants.XML); //$NON-NLS-1$
 		post.addParameters(params.toArray(new NameValuePair[params.size()]));
 		try {
 			int httpResult = httpClient.executeMethod(post);
-			logger.debug("Result:" + httpResult);
+			logger.debug("Result:" + httpResult); //$NON-NLS-1$
 			if (post.getResponseBodyAsStream() != null) {
 				BufferedReader bufferedReader = new BufferedReader(
 						new InputStreamReader(post.getResponseBodyAsStream(),
@@ -279,7 +277,7 @@ public class MarketPlace {
 													.valueOf(id));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Entry Id is not a valid integer");
+													"Entry Id is not a valid integer"); //$NON-NLS-1$
 										}
 									}
 									if (Constants.FAVORITED_NODE
@@ -293,7 +291,7 @@ public class MarketPlace {
 													.valueOf(favorited));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Favorite count is not a valid integer");
+													"Favorite count is not a valid integer"); //$NON-NLS-1$
 										}
 									}
 									returnValue.add(categoryEntry);
@@ -305,7 +303,7 @@ public class MarketPlace {
 			}
 		} catch (SAXException e) {
 			throw new IOException(
-					"Error processing result, invalid xml-response.");
+					"Error processing result, invalid xml-response."); //$NON-NLS-1$
 		}
 		return returnValue.toArray(new CategoryEntry[returnValue.size()]);
 	}
@@ -316,11 +314,11 @@ public class MarketPlace {
 		List<NameValuePair> params = getBaseQuery();
 		MarketPlaceElement returnValue = new MarketPlaceElement();
 		PostMethod post = new PostMethod(apiEndpoint + Constants.NODE
-				+ elementId + "/" + Constants.API);
+				+ elementId + "/" + Constants.API); //$NON-NLS-1$
 		post.addParameters(params.toArray(new NameValuePair[params.size()]));
 		try {
 			int httpResult = httpClient.executeMethod(post);
-			logger.debug("Result:" + httpResult);
+			logger.debug("Result:" + httpResult); //$NON-NLS-1$
 			if (post.getResponseBodyAsStream() != null) {
 				BufferedReader bufferedReader = new BufferedReader(
 						new InputStreamReader(post.getResponseBodyAsStream(),
@@ -376,7 +374,7 @@ public class MarketPlace {
 													.valueOf(firstChild));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Market Id no valid integer");
+													"Market Id no valid integer"); //$NON-NLS-1$
 										}
 									}
 									if (Constants.TITLE_NODE.equals(marketNode
@@ -399,7 +397,7 @@ public class MarketPlace {
 													.valueOf(firstChild));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Favorited no valid integer");
+													"Favorited no valid integer"); //$NON-NLS-1$
 										}
 									}
 									if (Constants.BODY_NODE.equals(marketNode
@@ -416,7 +414,7 @@ public class MarketPlace {
 													timestamp * 1000));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Creation date no valid long");
+													"Creation date no valid long"); //$NON-NLS-1$
 										}
 									}
 									if (Constants.CHANGED_NODE
@@ -428,7 +426,7 @@ public class MarketPlace {
 													timestamp * 1000));
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"Change date no valid long");
+													"Change date no valid long"); //$NON-NLS-1$
 										}
 									}
 									if (Constants.FOUNDATION_NODE
@@ -440,7 +438,7 @@ public class MarketPlace {
 													.setFoundationMember(value != 0);
 										} catch (NumberFormatException e) {
 											throw new MarketPlaceException(
-													"No valid foundation member flag");
+													"No valid foundation member flag"); //$NON-NLS-1$
 										}
 									}
 
@@ -487,7 +485,7 @@ public class MarketPlace {
 			}
 		} catch (SAXException e) {
 			throw new IOException(
-					"Error processing result, invalid xml-response.");
+					"Error processing result, invalid xml-response."); //$NON-NLS-1$
 		}
 		return returnValue;
 	}
@@ -500,14 +498,14 @@ public class MarketPlace {
 	 */
 	private String marketPlaceHack(final StringWriter result) {
 		String returnValue = result.toString();
-		returnValue = escapeTag("title", returnValue);
+		returnValue = escapeTag("title", returnValue); //$NON-NLS-1$
 		return returnValue;
 
 	}
 
 	private String escapeTag(final String string, String returnValue) {
 		Matcher matcher = Pattern.compile(
-				"<" + string + "[^>/]*>(.*?)</" + string + ">").matcher(
+				"<" + string + "[^>/]*>(.*?)</" + string + ">").matcher( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				returnValue);
 		String replacement = null;
 		if (matcher.find()) {
@@ -515,9 +513,9 @@ public class MarketPlace {
 		}
 		if (replacement != null) {
 			returnValue = returnValue.replaceAll(
-					"<" + string + "[^>/]*>(.*?)</" + string + ">",
-					StringUtils.join("<" + string + ">", replacement, "</"
-							+ string + ">"));
+					"<" + string + "[^>/]*>(.*?)</" + string + ">", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					StringUtils.join("<" + string + ">", replacement, "</" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							+ string + ">")); //$NON-NLS-1$
 		}
 		return returnValue;
 	}

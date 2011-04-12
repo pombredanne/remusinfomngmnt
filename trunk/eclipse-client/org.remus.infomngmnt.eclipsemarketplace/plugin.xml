@@ -5,7 +5,7 @@
          point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
-            name="Marketplace Entry"
+            name="%information.name"
             presentation="org.remus.infomngmnt.eclipsemarketplace.internal.MarketPlaceInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="MARKETPLACE">
@@ -17,7 +17,7 @@
             editpage="org.remus.infomngmnt.eclipsemarketplace.internal.EditMetaDataPage"
             icon="icons/edit_metadata.png"
             id="org.remus.infomngmnt.eclipsemarketplace.editPage1"
-            label="Edit Metadata"
+            label="%editPage.label"
             type="MARKETPLACE">
       </editPage>
    </extension>
@@ -26,7 +26,7 @@
       <repository-connector
             class="org.remus.infomngmnt.eclipsemarketplace.connector.MarketplaceConnector"
             id="org.remus.infomngmnt.eclipsemarketplace.repository"
-            name="Eclipse Marketplace">
+            name="%repository-connector.name">
          <changeDefinition
                id="org.remus.infomngmnt.eclipsemarketplace.changeDefinition"
                informationType="MARKETPLACE">

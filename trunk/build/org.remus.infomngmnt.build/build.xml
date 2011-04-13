@@ -408,6 +408,133 @@
 			<param name="cvs.package" value="org.eclipse.remus/bundles/org.eclipse.remus.ui.widgets.databinding" />
 			<param name="cvs.name" value="org.eclipse.remus.ui.widgets.databinding" />
 		</antcall>
+		
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.common.ui.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.common.ui.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/test/org.eclipse.remus.core.remote.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.core.remote.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.core.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.core.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.efs.file.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.efs.file.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.efs.password.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.efs.password.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.efs.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.efs.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.js.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.js.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.search.desktop.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.search.desktop.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.search.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.search.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.search.ui.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.search.ui.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.desktop.clock.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.desktop.clock.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.desktop.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.desktop.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.editor.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.editor.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.link.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.link.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.notification.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.notification.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.popup.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.popup.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.remote.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.remote.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.rules.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.rules.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.viewer.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.viewer.nl_de"  />
+		</antcall>
+		<antcall target="checkoutPackage">
+					<param name="cvs.root" value=":pserver:anonymous@dev.eclipse.org/cvsroot/technology" />
+					<param name="cvs.tag"  value="HEAD" />
+					<param name="cvs.package" value="org.eclipse.remus/i18n/org.eclipse.remus.ui.widgets.nl_de" />
+					<param name="cvs.name" value="org.eclipse.remus.ui.widgets.nl_de"  />
+		</antcall>
 
 		<copy todir="${build.dir.location}/../plugins/org.eclipse.nebula.widgets.cdatetime/src/org/eclipse/nebula/widgets/cdatetime">
 			<fileset dir="${build.dir.location}/../customization/cdateiconreplacement">

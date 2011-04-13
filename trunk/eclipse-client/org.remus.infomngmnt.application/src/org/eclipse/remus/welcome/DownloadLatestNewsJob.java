@@ -29,9 +29,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.cyberneko.html.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -41,11 +38,14 @@ import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.ContainerFactory;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
+import org.eclipse.remus.application.messages.IDEWorkbenchMessages;
 import org.eclipse.remus.common.core.streams.StreamCloser;
 import org.eclipse.remus.common.core.streams.StreamUtil;
 import org.eclipse.remus.common.io.transfer.DownloadFileJob;
 import org.eclipse.remus.common.ui.html.DownloadMissingUrlJob;
 import org.eclipse.remus.resources.util.ResourceUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -56,7 +56,7 @@ public class DownloadLatestNewsJob extends DownloadMissingUrlJob {
 
 	private IRetrieveFileTransferContainerAdapter fileReceiveAdapter;
 
-	public static final String URL_LATEST_NEWS = "http://remus-software.org/project-news?tmpl=component"; //$NON-NLS-1$
+	public static final String URL_LATEST_NEWS = IDEWorkbenchMessages.DownloadLatestNewsJob_URLLatestNews;
 	public static final String URL_PREFIX = "http://remus-software.org"; //$NON-NLS-1$
 
 	public DownloadLatestNewsJob() {

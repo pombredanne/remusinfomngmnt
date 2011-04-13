@@ -81,6 +81,7 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.internal.ide.AboutInfo;
 import org.eclipse.ui.internal.ide.IDEInternalPreferences;
+import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.internal.ide.dialogs.WelcomeEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -242,15 +243,20 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 				productName = product.getName();
 			}
 			if (productName == null) {
-				message = ""; //$NON-NLS-1$
+				message = IDEWorkbenchMessages.PromptOnExitDialog_message0;
 			} else {
-				message = NLS.bind("", productName); //$NON-NLS-1$
+				message = NLS.bind(
+						IDEWorkbenchMessages.PromptOnExitDialog_message1,
+						productName);
 			}
 
 			MessageDialogWithToggle dlg = MessageDialogWithToggle
 					.openOkCancelConfirm(getWindowConfigurer().getWindow()
-							.getShell(), "", message, //$NON-NLS-1$
-							"", false, null, null); //$NON-NLS-1$
+							.getShell(),
+							IDEWorkbenchMessages.PromptOnExitDialog_shellTitle,
+							message,
+							IDEWorkbenchMessages.PromptOnExitDialog_choice,
+							false, null, null);
 			if (dlg.getReturnCode() != IDialogConstants.OK_ID) {
 				return false;
 			}
@@ -457,7 +463,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 		if (currentPage != null) {
 			if (activeEditor != null) {
 				lastEditorTitle = activeEditor.getTitleToolTip();
-				title = NLS.bind("", //$NON-NLS-1$
+				title = NLS.bind(
+						IDEWorkbenchMessages.WorkbenchWindow_shellTitle,
 						lastEditorTitle, title);
 			}
 			IPerspectiveDescriptor persp = currentPage.getPerspective();
@@ -470,14 +477,16 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 				label = currentPage.getLabel();
 			}
 			if (label != null && !label.equals("")) { //$NON-NLS-1$
-				title = NLS.bind("", label, title); //$NON-NLS-1$
+				title = NLS.bind(
+						IDEWorkbenchMessages.WorkbenchWindow_shellTitle, label,
+						title);
 			}
 		}
 
 		String workspaceLocation = wbAdvisor.getWorkspaceLocation();
 		if (workspaceLocation != null) {
-			title = NLS.bind("", title, //$NON-NLS-1$
-					workspaceLocation);
+			title = NLS.bind(IDEWorkbenchMessages.WorkbenchWindow_shellTitle,
+					title, workspaceLocation);
 		}
 
 		return title;
@@ -927,8 +936,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			try {
 				page = win.openPage(id, wbAdvisor.getDefaultPageInput());
 			} catch (WorkbenchException e) {
-				ErrorDialog.openError(win.getShell(), "", e //$NON-NLS-1$
-						.getMessage(), e.getStatus());
+				ErrorDialog.openError(win.getShell(),
+						IDEWorkbenchMessages.Problems_Opening_Page,
+						e.getMessage(), e.getStatus());
 			}
 		}
 		if (page == null) {
@@ -939,8 +949,12 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			try {
 				page = getWorkbench().showPerspective(id, win);
 			} catch (WorkbenchException e) {
-				ErrorDialog.openError(win.getShell(), "", //$NON-NLS-1$
-						"", e.getStatus()); //$NON-NLS-1$
+				ErrorDialog
+						.openError(
+								win.getShell(),
+								IDEWorkbenchMessages.Workbench_openEditorErrorDialogTitle,
+								IDEWorkbenchMessages.Workbench_openEditorErrorDialogMessage,
+								e.getStatus());
 				return;
 			}
 		}
@@ -957,8 +971,12 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 		try {
 			page.openEditor(input, WELCOME_EDITOR_ID);
 		} catch (PartInitException e) {
-			ErrorDialog.openError(win.getShell(), "", //$NON-NLS-1$
-					"", e.getStatus()); //$NON-NLS-1$
+			ErrorDialog
+					.openError(
+							win.getShell(),
+							IDEWorkbenchMessages.Workbench_openEditorErrorDialogTitle,
+							IDEWorkbenchMessages.Workbench_openEditorErrorDialogMessage,
+							e.getStatus());
 		}
 		return;
 	}
@@ -986,7 +1004,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 		label.setBackground(bgCol);
 		label.setFont(JFaceResources.getFontRegistry().getBold(
 				JFaceResources.DEFAULT_FONT));
-		String msg = ""; //$NON-NLS-1$
+		String msg = IDEWorkbenchMessages.IDEWorkbenchAdvisor_noPerspective;
 		label.setText(msg);
 		ToolBarManager toolBarManager = new ToolBarManager();
 		// TODO: should obtain the open perspective action from ActionFactory

@@ -16,7 +16,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.remus.application.application"
-            name="%product.name">
+            name="Remus Information Management">
          <property
                name="windowImages"
                value="icons/iconexperience/windowimages/cabinet_open_16.png,icons/iconexperience/windowimages/cabinet_open_32.png,icons/iconexperience/windowimages/cabinet_open_48.png,icons/iconexperience/windowimages/cabinet_open_64.png,icons/iconexperience/windowimages/cabinet_open_128.png">

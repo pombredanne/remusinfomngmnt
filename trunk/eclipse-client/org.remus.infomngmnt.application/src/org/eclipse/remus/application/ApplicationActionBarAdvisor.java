@@ -20,7 +20,9 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.ide.IDEActionFactory;
 import org.eclipse.ui.internal.IWorkbenchHelpContextIds;
+import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.internal.handlers.IActionCommandMappingService;
+import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.osgi.framework.BundleContext;
@@ -148,7 +150,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	private MenuManager createHelpMenu() {
-		MenuManager menu = new MenuManager("", //$NON-NLS-1$
+		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_help,
 				IWorkbenchActionConstants.M_HELP);
 		menu.add(new GroupMarker("help-primary-additions-start")); //$NON-NLS-1$
 		menu.add(new GroupMarker("help-primary-additions-end")); //$NON-NLS-1$
@@ -183,13 +185,13 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	 * Creates and returns the File menu.
 	 */
 	private MenuManager createFileMenu() {
-		MenuManager menu = new MenuManager("", //$NON-NLS-1$
+		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_file,
 				IWorkbenchActionConstants.M_FILE);
 		menu.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
 		{
 			// create the New submenu, using the same id for it as the New
 			// action
-			String newText = ""; //$NON-NLS-1$
+			String newText = IDEWorkbenchMessages.Workbench_new;
 			String newId = ActionFactory.NEW.getId();
 			MenuManager newMenu = new MenuManager(newText, newId);
 			newMenu.setActionDefinitionId("org.eclipse.ui.file.newQuickMenu"); //$NON-NLS-1$
@@ -250,7 +252,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	 * Creates and returns the Edit menu.
 	 */
 	private MenuManager createEditMenu() {
-		MenuManager menu = new MenuManager("", //$NON-NLS-1$
+		MenuManager menu = new MenuManager(IDEWorkbenchMessages.Workbench_edit,
 				IWorkbenchActionConstants.M_EDIT);
 		menu.add(new GroupMarker(IWorkbenchActionConstants.EDIT_START));
 
@@ -281,46 +283,57 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	private IContributionItem getCutItem() {
-		return getItem(ActionFactory.CUT.getId(),
+		return getItem(
+				ActionFactory.CUT.getId(),
 				"org.eclipse.ui.edit.cut", //$NON-NLS-1$
 				ISharedImages.IMG_TOOL_CUT,
-				ISharedImages.IMG_TOOL_CUT_DISABLED, "", "", null); //$NON-NLS-1$ //$NON-NLS-2$
+				ISharedImages.IMG_TOOL_CUT_DISABLED,
+				WorkbenchMessages.Workbench_cut,
+				WorkbenchMessages.Workbench_cutToolTip, null);
 	}
 
 	private IContributionItem getCopyItem() {
-		return getItem(ActionFactory.COPY.getId(),
+		return getItem(
+				ActionFactory.COPY.getId(),
 				"org.eclipse.ui.edit.copy", //$NON-NLS-1$
 				ISharedImages.IMG_TOOL_COPY,
-				ISharedImages.IMG_TOOL_COPY_DISABLED, "", "", null); //$NON-NLS-1$ //$NON-NLS-2$ 
+				ISharedImages.IMG_TOOL_COPY_DISABLED,
+				WorkbenchMessages.Workbench_copy,
+				WorkbenchMessages.Workbench_copyToolTip, null);
 	}
 
 	private IContributionItem getPasteItem() {
-		return getItem(ActionFactory.PASTE.getId(),
+		return getItem(
+				ActionFactory.PASTE.getId(),
 				"org.eclipse.ui.edit.paste", ISharedImages.IMG_TOOL_PASTE, //$NON-NLS-1$
-				ISharedImages.IMG_TOOL_PASTE_DISABLED, "", //$NON-NLS-1$
-				"", null); //$NON-NLS-1$
+				ISharedImages.IMG_TOOL_PASTE_DISABLED,
+				WorkbenchMessages.Workbench_paste,
+				WorkbenchMessages.Workbench_pasteToolTip, null);
 	}
 
 	private IContributionItem getPrintItem() {
 		return getItem(
 				ActionFactory.PRINT.getId(),
 				"org.eclipse.ui.file.print", ISharedImages.IMG_ETOOL_PRINT_EDIT, //$NON-NLS-1$
-				ISharedImages.IMG_ETOOL_PRINT_EDIT_DISABLED, "", //$NON-NLS-1$
-				"", null); //$NON-NLS-1$
+				ISharedImages.IMG_ETOOL_PRINT_EDIT_DISABLED,
+				WorkbenchMessages.Workbench_print,
+				WorkbenchMessages.Workbench_printToolTip, null);
 	}
 
 	private IContributionItem getSelectAllItem() {
-		return getItem(ActionFactory.SELECT_ALL.getId(),
+		return getItem(
+				ActionFactory.SELECT_ALL.getId(),
 				"org.eclipse.ui.edit.selectAll", //$NON-NLS-1$
-				null, null, "", //$NON-NLS-1$
-				"", null); //$NON-NLS-1$
+				null, null, WorkbenchMessages.Workbench_selectAll,
+				WorkbenchMessages.Workbench_selectAllToolTip, null);
 	}
 
 	private IContributionItem getFindItem() {
-		return getItem(ActionFactory.FIND.getId(),
+		return getItem(
+				ActionFactory.FIND.getId(),
 				"org.eclipse.ui.edit.findReplace", //$NON-NLS-1$
-				null, null, "", //$NON-NLS-1$
-				"", null); //$NON-NLS-1$
+				null, null, WorkbenchMessages.Workbench_findReplace,
+				WorkbenchMessages.Workbench_findReplaceToolTip, null);
 	}
 
 	private IContributionItem getDeleteItem() {
@@ -328,20 +341,24 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				ActionFactory.DELETE.getId(),
 				"org.eclipse.ui.edit.delete", //$NON-NLS-1$
 				ISharedImages.IMG_TOOL_DELETE,
-				ISharedImages.IMG_TOOL_DELETE_DISABLED, "", "", //$NON-NLS-1$ //$NON-NLS-2$ 
+				ISharedImages.IMG_TOOL_DELETE_DISABLED,
+				WorkbenchMessages.Workbench_delete,
+				WorkbenchMessages.Workbench_deleteToolTip,
 				IWorkbenchHelpContextIds.DELETE_RETARGET_ACTION);
 	}
 
 	private IContributionItem getMoveItem() {
-		return getItem(ActionFactory.MOVE.getId(), "org.eclipse.ui.edit.move", //$NON-NLS-1$
-				null, null, "", //$NON-NLS-1$
-				"", null); //$NON-NLS-1$
+		return getItem(ActionFactory.MOVE.getId(),
+				"org.eclipse.ui.edit.move", //$NON-NLS-1$
+				null, null, WorkbenchMessages.Workbench_move,
+				WorkbenchMessages.Workbench_moveToolTip, null);
 	}
 
 	private IContributionItem getRenameItem() {
 		return getItem(ActionFactory.RENAME.getId(),
 				"org.eclipse.ui.edit.rename", null, null, //$NON-NLS-1$
-				"", "", null); //$NON-NLS-1$ //$NON-NLS-2$ 
+				WorkbenchMessages.Workbench_rename,
+				WorkbenchMessages.Workbench_renameToolTip, null);
 	}
 
 	private IContributionItem getItem(final String actionId,

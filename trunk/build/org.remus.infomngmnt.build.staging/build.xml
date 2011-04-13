@@ -97,10 +97,12 @@
 		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip"></unzip>
 		<antcall target="testFeatureInstallFromMarketplace" />
 		<delete dir="${unzipTarget}" failonerror="false" />
+		<!--
 		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip"></unzip>
+		
 		<antcall target="installTestFeature"></antcall>
 		<antcall target="run-test"></antcall>
-		
+		-->
 		
 		<move todir="${build.dir.location2}/N.RIM">
 			<fileset dir="${build.dir.location}/N.RIM" />
@@ -182,6 +184,7 @@
 	
 	
 	<target name="run-test" description="--> Uses org.eclipse.test plugin">
+		
 		    <ant
 		        antfile="${deployDir}/plugins/org.eclipse.test_3.3.100/library.xml"
 		        target="ui-test"
@@ -199,6 +202,7 @@
 		    <property name="plugincustomization" value="${build.dir.location}/../customization/test/plugin_customization.ini" />
 		   	<property name="eclipse-home" value="${deployDir}"/>
 		    </ant>
+		 
 		</target>
 	
 	 <target name="installTestFeature" description="description">

@@ -100,10 +100,12 @@
 		<delete dir="${unzipTarget}" failonerror="false" />
 		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip">
 		</unzip>
+		<!--
 		<antcall target="installTestFeature">
 		</antcall>
 		<antcall target="run-test">
 		</antcall>
+		-->
 		<move todir="${build.dir.location2}/N.RIM">
 			<fileset dir="${build.dir.location}/N.RIM" />
 		</move>

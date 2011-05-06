@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Uixml
+Bundle-SymbolicName: org.remus.infomngmnt.emitter.uixml
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Remus Software
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)"
+Export-Package: org.remus.infomngmnt.emitter.uixml

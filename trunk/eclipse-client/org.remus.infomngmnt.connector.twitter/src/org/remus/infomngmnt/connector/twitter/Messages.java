@@ -128,6 +128,8 @@ public class Messages extends NLS {
 	public static String URLShorterSection_InClipboard;
 	public static String URLShorterSection_Search;
 	public static String URLShorterSection_ShrinkUrl;
+	public static String OAuthDialog_lblEnterThePin_text;
+	public static String OAuthDialog_text_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

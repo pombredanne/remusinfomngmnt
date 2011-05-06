@@ -1,6 +1,7 @@
 package org.remus.infomngmnt.connector.twitter.ui;
 
 import java.io.StringReader;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.cyberneko.html.parsers.DOMParser;
 import org.eclipse.jface.dialogs.Dialog;
@@ -12,16 +13,18 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.remus.infomngmnt.connector.twitter.Messages;
+import org.remus.infomngmnt.connector.twitter.TwitterRepository;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
-
-import org.remus.infomngmnt.connector.twitter.Messages;
-import org.remus.infomngmnt.connector.twitter.TwitterRepository;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -35,6 +38,7 @@ public class OAuthDialog extends Dialog {
 	protected String pin;
 	private String token;
 	private String tokenSecret;
+	private Text text;
 
 	/**
 	 * Create the dialog.
@@ -60,26 +64,45 @@ public class OAuthDialog extends Dialog {
 	 */
 	@Override
 	protected Control createDialogArea(final Composite parent) {
-		Composite container = (Composite) super.createDialogArea(parent);
-		container.setLayout(new FillLayout(SWT.HORIZONTAL));
-		this.twitter = new Twitter();
-		this.twitter.setOAuthConsumer(TwitterRepository.CONSUMER_KEY,
+		final Composite container = (Composite) super.createDialogArea(parent);
+		twitter = new Twitter();
+		twitter.setOAuthConsumer(TwitterRepository.CONSUMER_KEY,
 				TwitterRepository.CONSUMER_SECRET);
-		String authorizationURL = null;
+		final AtomicReference<String> authorizationURL = new AtomicReference<String>();
 		try {
-			this.oAuthRequestToken = this.twitter.getOAuthRequestToken();
-			authorizationURL = this.oAuthRequestToken.getAuthorizationURL();
+			oAuthRequestToken = twitter.getOAuthRequestToken();
+			authorizationURL.set(oAuthRequestToken.getAuthorizationURL());
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		GridLayout layout = new GridLayout(2, false);
+		container.setLayout(layout);
 		final Browser browser = new Browser(container, SWT.NONE);
-		browser.setUrl(authorizationURL);
+		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		browser.setUrl(authorizationURL.get());
+
+		final Label lblEnterThePin = new Label(container, SWT.NONE);
+		lblEnterThePin.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+				false, 1, 1));
+		lblEnterThePin.setText(Messages.OAuthDialog_lblEnterThePin_text);
+		lblEnterThePin.setVisible(false);
+
+		text = new Text(container, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text.setVisible(false);
+		((GridData) text.getLayoutData()).exclude = true;
+		((GridData) lblEnterThePin.getLayoutData()).exclude = true;
+
 		browser.addProgressListener(new ProgressListener() {
 
 			public void completed(final ProgressEvent event) {
-				if ((OAuthDialog.this.pin = getPin(browser.getText())) != null) {
-					okPressed();
+				if (!browser.getUrl().equals(authorizationURL.get())) {
+					text.setVisible(true);
+					lblEnterThePin.setVisible(true);
+					((GridData) text.getLayoutData()).exclude = false;
+					((GridData) lblEnterThePin.getLayoutData()).exclude = false;
+					container.layout(true);
 				}
 			}
 
@@ -95,24 +118,26 @@ public class OAuthDialog extends Dialog {
 	@Override
 	protected void okPressed() {
 		try {
-			AccessToken accessToken = this.twitter.getOAuthAccessToken(this.oAuthRequestToken,
-					this.pin);
-			this.token = accessToken.getToken();
-			this.tokenSecret = accessToken.getTokenSecret();
+			AccessToken accessToken = twitter.getOAuthAccessToken(
+					oAuthRequestToken, text.getText());
+			token = accessToken.getToken();
+			tokenSecret = accessToken.getTokenSecret();
 			super.okPressed();
 		} catch (Exception e) {
-			ErrorDialog.openError(getShell(), Messages.OAuthDialog_ErrorAccessingTwitter,
-					Messages.OAuthDialog_ErrorConnecting, StatusCreator.newStatus(
-							Messages.OAuthDialog_ErrorGettingToken, e));
+			ErrorDialog.openError(getShell(),
+					Messages.OAuthDialog_ErrorAccessingTwitter,
+					Messages.OAuthDialog_ErrorConnecting, StatusCreator
+							.newStatus(Messages.OAuthDialog_ErrorGettingToken,
+									e));
 		}
 	}
 
 	public String getToken() {
-		return this.token;
+		return token;
 	}
 
 	public String getTokenSecret() {
-		return this.tokenSecret;
+		return tokenSecret;
 	}
 
 	/**
@@ -122,8 +147,10 @@ public class OAuthDialog extends Dialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+				true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
 	}
 
 	private String getPin(final String html) {
@@ -134,7 +161,8 @@ public class OAuthDialog extends Dialog {
 
 			Element elementsByTagName = document.getElementById("oauth_pin"); //$NON-NLS-1$
 			if (elementsByTagName != null) {
-				return org.apache.commons.lang.StringUtils.trim(elementsByTagName.getTextContent());
+				return org.apache.commons.lang.StringUtils
+						.trim(elementsByTagName.getTextContent());
 			}
 		} catch (Exception e) {
 			// do nothing

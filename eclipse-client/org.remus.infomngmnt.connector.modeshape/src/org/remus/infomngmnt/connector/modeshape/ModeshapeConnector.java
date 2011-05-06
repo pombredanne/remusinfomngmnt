@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sf.json.JSONException;
 
@@ -50,6 +51,7 @@ import org.eclipse.remus.common.core.util.ResourceUtil;
 import org.eclipse.remus.common.core.zip.Pair;
 import org.eclipse.remus.common.core.zip.UnzipUtil;
 import org.eclipse.remus.common.core.zip.ZipUtil;
+import org.eclipse.remus.core.extension.IEmitter;
 import org.eclipse.remus.core.extension.IInfoType;
 import org.eclipse.remus.core.model.InformationStructureEdit;
 import org.eclipse.remus.core.model.InformationStructureRead;
@@ -67,16 +69,20 @@ import org.eclipse.remus.jcrjson.model.TransferCategory;
 import org.eclipse.remus.jcrjson.model.ZipEntry;
 import org.eclipse.remus.model.remote.ILoginCallBack;
 import org.eclipse.remus.model.remote.IRepository;
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.remus.util.InformationUtil;
 import org.eclipse.remus.util.StatusCreator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.remus.infomngmnt.emitter.uixml.UiXml;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
 public class ModeshapeConnector extends AbstractExtensionRepository implements
 		IRepository {
+
+	private static final String UIXML_EMITTER = "UIXML"; //$NON-NLS-1$
 
 	private static final String INFO_UNIT_XML = "infoUnit.xml"; //$NON-NLS-1$
 
@@ -98,6 +104,9 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			editingService = (IEditingHandler) bundleContext
 					.getService(serviceReference);
 		}
+		infoTypeService = new RemusServiceTracker(ModeshapeActivator
+				.getDefault().getBundle())
+				.getService(IInformationTypeHandler.class);
 	}
 
 	private final PropertyChangeListener credentialsMovedListener = new PropertyChangeListener() {
@@ -111,6 +120,8 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 	public static final String TRANSFER_URL = "/Transfer"; //$NON-NLS-1$
 
 	public static final String POOL_URL = "/Pool"; //$NON-NLS-1$
+
+	private final IInformationTypeHandler infoTypeService;
 
 	/*
 	 * (non-Javadoc)
@@ -320,26 +331,32 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 			if (wrappedObject instanceof InformationPresentation) {
 				List<Item> items = getApi().getItems(REPOSITORY,
 						getWorkspaceName(), ((Item) wrappedObject).getPath());
-				if (items.size() == 1
-						&& items.get(0) instanceof org.eclipse.remus.jcrjson.model.ZipEntry) {
-					org.eclipse.remus.jcrjson.model.ZipEntry data = (org.eclipse.remus.jcrjson.model.ZipEntry) items
-							.get(0);
-					byte[] loadData = getApi().loadData(REPOSITORY,
-							getWorkspaceName(), data.getPath());
-					File tmpZip = ResourceUtil
-							.createTempFileOnFileSystem("zip"); //$NON-NLS-1$
-					IOUtils.write(loadData, new FileOutputStream(tmpZip));
-					IFolder tmpFolder = ResourceUtil
-							.createTempFolderOnFileSystem();
-					new UnzipUtil(tmpZip, tmpFolder.getLocation().toFile())
-							.unzipAll();
-					tmpFile.set(tmpFolder);
-					tmpFolder.refreshLocal(IResource.DEPTH_INFINITE, monitor);
-					InformationUnit unit = editingService.getObjectFromFile(
-							tmpFolder.getFile(INFO_UNIT_XML),
-							InfomngmntPackage.Literals.INFORMATION_UNIT, null,
-							false);
-					return unit;
+				if (items.size() >= 1) {
+					for (Item item : items) {
+						if (item instanceof ZipEntry) {
+							org.eclipse.remus.jcrjson.model.ZipEntry data = (ZipEntry) item;
+							byte[] loadData = getApi().loadData(REPOSITORY,
+									getWorkspaceName(), data.getPath());
+							File tmpZip = ResourceUtil
+									.createTempFileOnFileSystem("zip"); //$NON-NLS-1$
+							IOUtils.write(loadData,
+									new FileOutputStream(tmpZip));
+							IFolder tmpFolder = ResourceUtil
+									.createTempFolderOnFileSystem();
+							new UnzipUtil(tmpZip, tmpFolder.getLocation()
+									.toFile()).unzipAll();
+							tmpFile.set(tmpFolder);
+							tmpFolder.refreshLocal(IResource.DEPTH_INFINITE,
+									monitor);
+							InformationUnit unit = editingService
+									.getObjectFromFile(
+											tmpFolder.getFile(INFO_UNIT_XML),
+											InfomngmntPackage.Literals.INFORMATION_UNIT,
+											null, false);
+							return unit;
+						}
+					}
+
 				}
 			} else if (wrappedObject instanceof org.eclipse.remus.jcrjson.model.InformationUnit) {
 				org.eclipse.remus.jcrjson.model.InformationUnit transferElement = (org.eclipse.remus.jcrjson.model.InformationUnit) wrappedObject;
@@ -499,9 +516,51 @@ public class ModeshapeConnector extends AbstractExtensionRepository implements
 
 		if (poolElement) {
 			returnValue = new InformationPresentation();
-			// TODO every information-type has to contribute a html-emitter
-			((InformationPresentation) returnValue)
-					.setHtmlPresenation("test1232"); //$NON-NLS-1$
+			IEmitter emitterByType = infoTypeService.getEmitterByType(
+					origElement.getType(), UIXML_EMITTER);
+			if (emitterByType != null) {
+				emitterByType.preEmitt();
+				try {
+					Object emitt = emitterByType.emitt(origElement);
+					if (emitt instanceof UiXml) {
+						UiXml uiXml = (UiXml) emitt;
+						((InformationPresentation) returnValue)
+								.setHtmlPresenation(uiXml.getXmlString());
+						if (uiXml.getBinaryReferences() != null) {
+							Set<String> keySet = uiXml.getBinaryReferences()
+									.keySet();
+							returnValue
+									.setBinaryReferences(new ArrayList<org.eclipse.remus.jcrjson.model.BinaryReference>());
+							for (String string : keySet) {
+								try {
+									org.eclipse.remus.jcrjson.model.BinaryReference binaryReference = new org.eclipse.remus.jcrjson.model.BinaryReference();
+									binaryReference.setReferenceId(string);
+									IFile iFile = uiXml.getBinaryReferences()
+											.get(string);
+									binaryReference.setData(StreamUtil
+											.convertStreamToByte(iFile
+													.getContents()));
+									binaryReference.setExtension(iFile
+											.getFullPath().getFileExtension());
+									returnValue.getBinaryReferences().add(
+											binaryReference);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (CoreException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+
+					}
+					emitterByType.postEmitt();
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			List<BinaryReference> binaryReferences2 = read
 					.getBinaryReferences();
 			File tmpZip = ResourceUtil.createTempFileOnFileSystem("zip"); //$NON-NLS-1$

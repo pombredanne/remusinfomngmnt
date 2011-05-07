@@ -9,6 +9,11 @@
             structuredefinition="structuredefinition.xmi"
             type="SOURCE">
       </information>
+      <emitter
+            class="org.remus.infomngmnt.sourcecode.core.UIXMLEmitter"
+            emitter-type="UIXML"
+            typeId="SOURCE">
+      </emitter>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

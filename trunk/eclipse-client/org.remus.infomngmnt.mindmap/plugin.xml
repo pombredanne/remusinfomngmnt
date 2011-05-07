@@ -11,6 +11,11 @@
             structuredefinition="structuredefinition.xmi"
             type="MINDMAP">
       </information>
+      <emitter
+            class="org.remus.infomngmnt.mindmap.extension.UiXmlEmitter"
+            emitter-type="UIXML"
+            typeId="MINDMAP">
+      </emitter>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

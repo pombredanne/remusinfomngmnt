@@ -10,6 +10,11 @@
             structuredefinition="structuredefinition.xmi"
             type="VIDEO">
       </information>
+      <emitter
+            class="org.remus.infomngmnt.video.internal.UIXMLEmitter"
+            emitter-type="UIXML"
+            typeId="VIDEO">
+      </emitter>
    </extension>
    <extension
          point="org.eclipse.remus.ui.editor.informationUi">

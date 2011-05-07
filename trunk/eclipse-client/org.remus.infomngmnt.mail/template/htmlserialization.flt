@@ -49,9 +49,12 @@
 	</#if>
 	<div style="margin:5px;">
 		<table>
-			
 			<tr>
+				<#if data.MAIL?has_content >
 				<td class="bold" colspan="2">${data.MAIL?html}</td>
+				<#else>
+				<td class="bold" colspan="2">${data.__label?html}</td>
+				</#if>
 			</tr>
 			<tr>
 			<#if data.__keywords?has_content >
@@ -97,7 +100,7 @@
 			</tr>
 			</#if >
 			<#assign ccs = dynamic.ccs >
-			<#if (recipients?size > 0) >
+			<#if (ccs?size > 0) >
 			<tr>
 				<td class="bold">CC:</td>
 				<td>

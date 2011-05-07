@@ -4,7 +4,7 @@
   <structureItems type="STRING" id="contenttype"/>
   <structureItems xsi:type="remus:DynamicStructure" id="attachments" upperBound="-1">
     <structureItems type="STRING" canHaveBinaryReferences="true" label="An attachement" id="attachment" createAlways="false">
-      <structureItems type="STRING" id="label" createAlways="false"/>
+      <structureItems type="STRING" id="label"/>
     </structureItems>
   </structureItems>
   <structureItems xsi:type="remus:DynamicStructure" id="embeddeds" upperBound="-1">

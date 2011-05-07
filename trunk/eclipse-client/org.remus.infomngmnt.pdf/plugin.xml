@@ -11,6 +11,11 @@
             structuredefinition="strucuturedefinition.xmi"
             type="PDF">
       </information>
+      <emitter
+            class="org.remus.infomngmnt.pdf.internal.extension.UIXMLEmitter"
+            emitter-type="UIXML"
+            typeId="PDF">
+      </emitter>
    </extension>
    <extension
          point="org.eclipse.remus.ui.editor.informationUi">

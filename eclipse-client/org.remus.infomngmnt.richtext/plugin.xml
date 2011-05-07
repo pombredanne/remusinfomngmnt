@@ -9,6 +9,11 @@
             structuredefinition="structuredefinition.xmi"
             type="HTML">
       </information>
+      <emitter
+            class="org.remus.infomngmnt.richtext.presentation.UIXMLEmitter"
+            emitter-type="UIXML"
+            typeId="HTML">
+      </emitter>
    </extension>
    <extension
          point="org.eclipse.remus.ui.editor.informationUi">

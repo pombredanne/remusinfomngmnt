@@ -22,12 +22,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.cyberneko.html.parsers.DOMParser;
-import org.remus.infomngmnt.richtext.Messages;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -77,6 +71,11 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.remus.infomngmnt.richtext.Messages;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -132,7 +131,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		// initActions();
 		//
 		// richtext.adjustBars();
-		createWidget(client);
+		createWidget(client, toolkit);
 
 		doCreateSemanticSection(body, toolkit);
 
@@ -140,15 +139,10 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 
 	}
 
-	private void createWidget(Composite parent) {
+	private void createWidget(Composite parent, FormToolkit toolkit) {
 		final Composite comp = new Composite(parent, SWT.NO_FOCUS);
 		comp.setLayout(new GridLayout(1, false));
 		comp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		composer = new HtmlComposer(comp, SWT.NONE);
-		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		layoutData.heightHint = 400;
-		composer.setLayoutData(layoutData);
 
 		CoolBar coolbar = new CoolBar(comp, SWT.NONE);
 
@@ -162,14 +156,23 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 			}
 		});
 
+		composer = new HtmlComposer(comp, SWT.NONE);
+		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		layoutData.heightHint = 400;
+		composer.setLayoutData(layoutData);
+
 		ToolBar menu = new ToolBar(coolbar, SWT.HORIZONTAL | SWT.FLAT);
+
 		ToolBarManager manager = new ToolBarManager(menu);
 		CoolItem item = new CoolItem(coolbar, SWT.NONE);
 		item.setControl(menu);
 
-		manager.add(new SetFormatDropdownAction(Messages.RichTextEditPage_Format, composer));
-		manager.add(new SetSizeDropdownAction(Messages.RichTextEditPage_Size, composer));
-		manager.add(new SetFontfamilyDropdownAction(Messages.RichTextEditPage_Font, composer));
+		manager.add(new SetFormatDropdownAction(
+				Messages.RichTextEditPage_Format, composer));
+		manager.add(new SetSizeDropdownAction(Messages.RichTextEditPage_Size,
+				composer));
+		manager.add(new SetFontfamilyDropdownAction(
+				Messages.RichTextEditPage_Font, composer));
 		manager.update(true);
 
 		menu = new ToolBar(coolbar, SWT.HORIZONTAL | SWT.FLAT);

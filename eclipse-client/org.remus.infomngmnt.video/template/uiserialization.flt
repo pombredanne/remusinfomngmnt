@@ -52,7 +52,6 @@
     <Video>
       <ref>${additionals.refId?xml}</ref>
       <width>${additionals.width?xml}</width>
-      <alignmentMask>20</alignmentMask>
     </Video>
    </children>
 </Ui>

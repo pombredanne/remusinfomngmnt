@@ -9,6 +9,11 @@
             structuredefinition="structuredefinition.xmi"
             type="PLAINTEXT">
       </information>
+      <emitter
+            class="org.remus.infomngmnt.plaintext.extension.UIXMLEmitter"
+            emitter-type="UIXML"
+            typeId="PLAINTEXT">
+      </emitter>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

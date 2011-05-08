@@ -39,6 +39,7 @@ import org.eclipse.remus.ui.widgets.richtext.actions.IndentAction;
 import org.eclipse.remus.ui.widgets.richtext.actions.InsertEditAnchorAction;
 import org.eclipse.remus.ui.widgets.richtext.actions.InsertEditImageAction;
 import org.eclipse.remus.ui.widgets.richtext.actions.InsertEditLinkAction;
+import org.eclipse.remus.ui.widgets.richtext.actions.InsertEditTableAction;
 import org.eclipse.remus.ui.widgets.richtext.actions.InsertHrAction;
 import org.eclipse.remus.ui.widgets.richtext.actions.ItalicAction;
 import org.eclipse.remus.ui.widgets.richtext.actions.JustifyBlockAction;
@@ -211,6 +212,7 @@ public class RichTextEditPage extends AbstractInformationFormPage {
 		manager.add(new InsertEditImageAction(composer));
 		manager.add(new InsertEditAnchorAction(composer));
 		manager.add(new InsertEditLinkAction(composer));
+		manager.add(new InsertEditTableAction(composer));
 		manager.add(new UnlinkAction(composer));
 		manager.add(new InsertHrAction(composer));
 		// manager.add(new InsertNonBreakingWhitespace(composer));

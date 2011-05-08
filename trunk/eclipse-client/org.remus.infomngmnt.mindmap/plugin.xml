@@ -116,6 +116,11 @@
    </extension>
    <extension
          point="org.eclipse.remus.search.indexer">
+      <index
+            analyzer="org.remus.infomngmnt.mindmap.analyzer"
+            node="MINDMAP"
+            typeId="MINDMAP">
+      </index>
    </extension>
    <extension
          point="org.eclipse.remus.search.analyzer">

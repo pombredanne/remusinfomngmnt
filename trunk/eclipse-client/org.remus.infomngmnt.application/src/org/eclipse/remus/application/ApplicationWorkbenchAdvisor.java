@@ -8,12 +8,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.Version;
-
 import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -26,6 +23,7 @@ import org.eclipse.core.runtime.IBundleGroupProvider;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -67,6 +65,9 @@ import org.eclipse.ui.internal.ide.undo.WorkspaceUndoMonitor;
 import org.eclipse.ui.internal.progress.ProgressMonitorJobsDialog;
 import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.statushandlers.AbstractStatusHandler;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.Version;
 
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
@@ -393,6 +394,20 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 							.getProject(ResourceUtil.PROJECT_NAME_TMP);
 					if (project.exists()) {
 						project.delete(true, monitor);
+					}
+					IProject[] relevantProjects = org.eclipse.remus.resources.util.ResourceUtil
+							.getRelevantProjects();
+					for (IProject iProject : relevantProjects) {
+						IFolder folder = iProject
+								.getFolder(org.eclipse.remus.resources.util.ResourceUtil.CMDSTACK_FOLDER);
+						if (folder.exists()) {
+							try {
+								folder.delete(false, false,
+										new NullProgressMonitor());
+							} catch (Exception e) {
+								// skip that
+							}
+						}
 					}
 					status.merge(ResourcesPlugin.getWorkspace().save(true,
 							monitor));

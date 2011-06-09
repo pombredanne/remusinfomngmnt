@@ -393,10 +393,11 @@ public class WebDAVConnector extends AbstractExtensionRepository implements
 			if (filter.size() == 1) {
 				InputStream fileInputStream = null;
 				DavResource davResource = filter.get(0);
+				IFile createTempFile = null;
 				try {
 					fileInputStream = getApi().getInputStream(
 							davResource.getAbsoluteUrl());
-					IFile createTempFile = ResourceUtil.createTempFile();
+					createTempFile = ResourceUtil.createTempFile();
 					createTempFile.setContents(fileInputStream, true, false,
 							new NullProgressMonitor());
 					InformationUnit unit = editingService.getObjectFromFile(
@@ -417,6 +418,13 @@ public class WebDAVConnector extends AbstractExtensionRepository implements
 					// return just null.
 				} finally {
 					StreamCloser.closeStreams(fileInputStream);
+					if (createTempFile != null && createTempFile.exists()) {
+						try {
+							createTempFile.delete(false, null);
+						} catch (CoreException e) {
+							// skipt that
+						}
+					}
 				}
 			}
 		}
@@ -475,11 +483,12 @@ public class WebDAVConnector extends AbstractExtensionRepository implements
 					});
 			if (filter.size() == 1) {
 				InputStream inputStream = null;
+				IFile createTempFile = null;
 				try {
 					DavResource davResource = filter.get(0);
 					inputStream = getApi().getInputStream(
 							davResource.getAbsoluteUrl());
-					IFile createTempFile = ResourceUtil.createTempFile();
+					createTempFile = ResourceUtil.createTempFile();
 					createTempFile.setContents(inputStream, true, false,
 							new NullProgressMonitor());
 					Category unit = editingService.getObjectFromFile(
@@ -501,6 +510,13 @@ public class WebDAVConnector extends AbstractExtensionRepository implements
 					// return just null.
 				} finally {
 					StreamCloser.closeStreams(inputStream);
+					if (createTempFile != null && createTempFile.exists()) {
+						try {
+							createTempFile.delete(false, null);
+						} catch (CoreException e) {
+							// skip
+						}
+					}
 				}
 
 			}

@@ -65,11 +65,11 @@ import org.eclipse.remus.util.StatusCreator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
  */
-public class FolderConnector extends AbstractExtensionRepository implements IRepository {
+public class FolderConnector extends AbstractExtensionRepository implements
+		IRepository {
 
 	public static final String FOLDER_PREFIX_CAT = "CAT_"; //$NON-NLS-1$
 	public static final String FOLDER_PREFIX_INFO = "INFO_"; //$NON-NLS-1$
@@ -81,11 +81,13 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	 * 
 	 */
 	public FolderConnector() {
-		BundleContext bundleContext = FolderActivator.getDefault().getBundle().getBundleContext();
-		ServiceReference serviceReference = bundleContext.getServiceReference(IEditingHandler.class
-				.getName());
+		BundleContext bundleContext = FolderActivator.getDefault().getBundle()
+				.getBundleContext();
+		ServiceReference serviceReference = bundleContext
+				.getServiceReference(IEditingHandler.class.getName());
 		if (serviceReference != null) {
-			this.editingService = (IEditingHandler) bundleContext.getService(serviceReference);
+			editingService = (IEditingHandler) bundleContext
+					.getService(serviceReference);
 		}
 	}
 
@@ -104,30 +106,39 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 		String url = parentRemoteCat.getUrl();
 		if (item instanceof InformationUnitListItem) {
 			try {
-				InformationUnit adapter = (InformationUnit) item.getAdapter(InformationUnit.class);
-				InformationUnit copy = (InformationUnit) EcoreUtil.copy(adapter);
-				String newPath = new StringWriter().append(url).append(File.separator).append(
-						FOLDER_PREFIX_INFO).append(adapter.getId()).toString();
+				InformationUnit adapter = (InformationUnit) item
+						.getAdapter(InformationUnit.class);
+				InformationUnit copy = EcoreUtil.copy(adapter);
+				String newPath = new StringWriter().append(url)
+						.append(File.separator).append(FOLDER_PREFIX_INFO)
+						.append(adapter.getId()).toString();
 				File file = new File(newPath);
 				file.mkdirs();
-				Resource res = new XMLResourceImpl(URI.createFileURI(new StringWriter().append(
-						newPath).append(File.separator).append(copy.getId()).append(".info") //$NON-NLS-1$
-						.toString()));
+				Resource res = new XMLResourceImpl(
+						URI.createFileURI(new StringWriter().append(newPath)
+								.append(File.separator).append(copy.getId())
+								.append(".info") //$NON-NLS-1$
+								.toString()));
 				res.getContents().add(copy);
-				this.editingService.saveObjectToResource(copy);
+				editingService.saveObjectToResource(copy);
 				res.unload();
-				InformationStructureRead read = InformationStructureRead.newSession(adapter);
-				List<BinaryReference> binaryReferences = read.getBinaryReferences();
+				InformationStructureRead read = InformationStructureRead
+						.newSession(adapter);
+				List<BinaryReference> binaryReferences = read
+						.getBinaryReferences();
 				if (binaryReferences.size() > 0) {
-					String binaryFolder = new StringWriter().append(newPath).append(File.separator)
+					String binaryFolder = new StringWriter().append(newPath)
+							.append(File.separator)
 							.append(FOLDER_NAME_BINARIES).toString();
 					new File(binaryFolder).mkdirs();
 					for (BinaryReference binaryReference : binaryReferences) {
-						IFile binaryReferenceToFile = InformationUtil.binaryReferenceToFile(
-								binaryReference, adapter);
-						String projectRelativePath = binaryReference.getProjectRelativePath();
-						String binaryRefFile = new StringWriter().append(binaryFolder).append(
-								File.separator).append(projectRelativePath).toString();
+						IFile binaryReferenceToFile = InformationUtil
+								.binaryReferenceToFile(binaryReference, adapter);
+						String projectRelativePath = binaryReference
+								.getProjectRelativePath();
+						String binaryRefFile = new StringWriter()
+								.append(binaryFolder).append(File.separator)
+								.append(projectRelativePath).toString();
 						FileOutputStream fos = null;
 						InputStream contents = null;
 						try {
@@ -156,16 +167,18 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 			Category copy = (Category) EcoreUtil.copy(item);
 			copy.getChildren().clear();
 			copy.getInformationUnit().clear();
-			copy
-					.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
-			String newPath = new StringWriter().append(url).append(File.separator).append(
-					FOLDER_PREFIX_CAT).append(copy.getId()).toString();
+			copy.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
+			String newPath = new StringWriter().append(url)
+					.append(File.separator).append(FOLDER_PREFIX_CAT)
+					.append(copy.getId()).toString();
 			File file = new File(newPath);
 			file.mkdirs();
-			Resource res = new XMLResourceImpl(URI.createFileURI(new StringWriter().append(newPath)
-					.append(File.separator).append(FILENAME_CAT).toString()));
+			Resource res = new XMLResourceImpl(
+					URI.createFileURI(new StringWriter().append(newPath)
+							.append(File.separator).append(FILENAME_CAT)
+							.toString()));
 			res.getContents().add(copy);
-			this.editingService.saveObjectToResource(copy);
+			editingService.saveObjectToResource(copy);
 			return buildSingleCategory(new File(newPath));
 		}
 		return null;
@@ -180,17 +193,21 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	 */
 	public RemoteObject commit(final SynchronizableObject item2commit,
 			final IProgressMonitor monitor) throws RemoteException {
-		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(item2commit, monitor);
+		RemoteObject remoteObject = getRemoteObjectBySynchronizableObject(
+				item2commit, monitor);
 		if (remoteObject != null) {
 			if (item2commit instanceof InformationUnitListItem) {
 				try {
 					InformationUnit adapter = (InformationUnit) item2commit
 							.getAdapter(InformationUnit.class);
-					InformationUnit copy = (InformationUnit) EcoreUtil.copy(adapter);
+					InformationUnit copy = EcoreUtil.copy(adapter);
 					Resource res = new XMLResourceImpl();
 					res.getContents().add(copy);
-					String infoFile = new StringWriter().append(remoteObject.getUrl()).append(
-							File.separator).append(remoteObject.getId()).append(".info").toString(); //$NON-NLS-1$
+					String infoFile = new StringWriter()
+							.append(remoteObject.getUrl())
+							.append(File.separator)
+							.append(remoteObject.getId())
+							.append(".info").toString(); //$NON-NLS-1$
 					FileOutputStream fileos = null;
 					try {
 						fileos = new FileOutputStream(infoFile);
@@ -201,11 +218,15 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 							fileos.close();
 						}
 					}
-					String binaryFolder = new StringWriter().append(remoteObject.getUrl()).append(
-							File.separator).append(FOLDER_NAME_BINARIES).toString();
+					String binaryFolder = new StringWriter()
+							.append(remoteObject.getUrl())
+							.append(File.separator)
+							.append(FOLDER_NAME_BINARIES).toString();
 					File binaryRemoteFolder = new File(binaryFolder);
-					InformationStructureRead read = InformationStructureRead.newSession(adapter);
-					List<BinaryReference> binaryReferences = read.getBinaryReferences();
+					InformationStructureRead read = InformationStructureRead
+							.newSession(adapter);
+					List<BinaryReference> binaryReferences = read
+							.getBinaryReferences();
 					if (binaryReferences.size() == 0) {
 						if (binaryRemoteFolder.exists()) {
 							binaryRemoteFolder.delete();
@@ -218,11 +239,15 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 							}
 						}
 						for (BinaryReference binaryReference : binaryReferences) {
-							IFile binaryReferenceToFile = InformationUtil.binaryReferenceToFile(
-									binaryReference, adapter);
-							String projectRelativePath = binaryReference.getProjectRelativePath();
-							String binaryRefFile = new StringWriter().append(binaryFolder).append(
-									File.separator).append(projectRelativePath).toString();
+							IFile binaryReferenceToFile = InformationUtil
+									.binaryReferenceToFile(binaryReference,
+											adapter);
+							String projectRelativePath = binaryReference
+									.getProjectRelativePath();
+							String binaryRefFile = new StringWriter()
+									.append(binaryFolder)
+									.append(File.separator)
+									.append(projectRelativePath).toString();
 							FileOutputStream fos = null;
 							InputStream contents = null;
 							try {
@@ -241,8 +266,8 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 						}
 					}
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator
-							.newStatus(Messages.FolderConnector_ErrorCommittingElement, e));
+					throw new RemoteException(StatusCreator.newStatus(
+							Messages.FolderConnector_ErrorCommittingElement, e));
 				}
 				return buildSingleInfoUnit(new File(remoteObject.getUrl()));
 
@@ -251,20 +276,23 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 				Category copy = (Category) EcoreUtil.copy(item2commit);
 				copy.getChildren().clear();
 				copy.getInformationUnit().clear();
-				copy
-						.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
+				copy.eUnset(InfomngmntPackage.Literals.SYNCHRONIZABLE_OBJECT__SYNCHRONIZATION_META_DATA);
 				Resource res = new XMLResourceImpl();
 				res.getContents().add(copy);
-				String infoFile = new StringWriter().append(remoteObject.getUrl()).append(
-						File.separator).append(FILENAME_CAT).toString();
+				String infoFile = new StringWriter()
+						.append(remoteObject.getUrl()).append(File.separator)
+						.append(FILENAME_CAT).toString();
 				FileOutputStream fileos = null;
 				try {
 					fileos = new FileOutputStream(infoFile);
 					res.save(fileos, ResourceConstants.SAVE_OPTIONS);
 					res.unload();
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus(Messages.FolderConnector_ErrorCommittingCategory,
-							e));
+					throw new RemoteException(
+							StatusCreator
+									.newStatus(
+											Messages.FolderConnector_ErrorCommittingCategory,
+											e));
 				} finally {
 					if (fileos != null) {
 						try {
@@ -289,24 +317,28 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	 * .remus.infomngmnt.SynchronizableObject,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public void deleteFromRepository(final SynchronizableObject item, final IProgressMonitor monitor)
-			throws RemoteException {
+	public void deleteFromRepository(final SynchronizableObject item,
+			final IProgressMonitor monitor) throws RemoteException {
 		File file = new File(item.getSynchronizationMetaData().getUrl());
 		if (file.exists()) {
 			try {
 				FileUtil.delete(file);
 			} catch (IOException e) {
-				throw new RemoteException(StatusCreator.newStatus(Messages.FolderConnector_ErrorDeletingItem, e));
+				throw new RemoteException(StatusCreator.newStatus(
+						Messages.FolderConnector_ErrorDeletingItem, e));
 			}
 
 		} else {
-			throw new RemoteException(StatusCreator.newStatus(Messages.FolderConnector_RemoteObjectNotFound));
+			throw new RemoteException(
+					StatusCreator
+							.newStatus(Messages.FolderConnector_RemoteObjectNotFound));
 		}
 
 	}
 
 	@Override
-	public InformationUnit getPrefetchedInformationUnit(final RemoteObject remoteObject) {
+	public InformationUnit getPrefetchedInformationUnit(
+			final RemoteObject remoteObject) {
 		return (InformationUnit) remoteObject.getWrappedObject();
 	}
 
@@ -359,27 +391,40 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 			if (listInfo.length == 1) {
 				FileInputStream fileInputStream = null;
 				BufferedInputStream bufferedInputStream = null;
+				IFile createTempFile = null;
 				try {
 					fileInputStream = new FileInputStream(listInfo[0]);
-					bufferedInputStream = new BufferedInputStream(fileInputStream);
-					IFile createTempFile = ResourceUtil.createTempFile();
-					createTempFile.setContents(bufferedInputStream, true, false,
-							new NullProgressMonitor());
-					InformationUnit unit = this.editingService.getObjectFromFile(createTempFile,
+					bufferedInputStream = new BufferedInputStream(
+							fileInputStream);
+					createTempFile = ResourceUtil.createTempFile();
+					createTempFile.setContents(bufferedInputStream, true,
+							false, new NullProgressMonitor());
+					InformationUnit unit = editingService.getObjectFromFile(
+							createTempFile,
 							InfomngmntPackage.Literals.INFORMATION_UNIT, null);
 					if (unit != null) {
-						RemoteObject container = InfomngmntFactory.eINSTANCE.createRemoteObject();
+						RemoteObject container = InfomngmntFactory.eINSTANCE
+								.createRemoteObject();
 						container.setName(unit.getLabel());
 						container.setUrl(file2.getAbsolutePath());
 						container.setWrappedObject(unit);
 						container.setId(unit.getId());
-						container.setHash(String.valueOf(listInfo[0].lastModified()));
+						container.setHash(String.valueOf(listInfo[0]
+								.lastModified()));
 						return container;
 					}
 				} catch (Exception e) {
 					// return just null.
 				} finally {
-					StreamCloser.closeStreams(fileInputStream, bufferedInputStream);
+					StreamCloser.closeStreams(fileInputStream,
+							bufferedInputStream);
+					if (createTempFile != null && createTempFile.exists()) {
+						try {
+							createTempFile.delete(false, null);
+						} catch (CoreException e) {
+							// skip that
+						}
+					}
 				}
 			}
 		}
@@ -415,13 +460,16 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 			if (listCat.length == 1) {
 				FileInputStream fileInputStream = null;
 				BufferedInputStream bufferedInputStream = null;
+				IFile createTempFile = null;
 				try {
 					fileInputStream = new FileInputStream(listCat[0]);
-					bufferedInputStream = new BufferedInputStream(fileInputStream);
-					IFile createTempFile = ResourceUtil.createTempFile();
-					createTempFile.setContents(bufferedInputStream, true, false,
-							new NullProgressMonitor());
-					Category unit = this.editingService.getObjectFromFile(createTempFile,
+					bufferedInputStream = new BufferedInputStream(
+							fileInputStream);
+					createTempFile = ResourceUtil.createTempFile();
+					createTempFile.setContents(bufferedInputStream, true,
+							false, new NullProgressMonitor());
+					Category unit = editingService.getObjectFromFile(
+							createTempFile,
 							InfomngmntPackage.Literals.CATEGORY, null);
 					if (unit != null) {
 						RemoteContainer container = InfomngmntFactory.eINSTANCE
@@ -430,14 +478,23 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 						container.setUrl(remoteFolder.getAbsolutePath());
 						container.setWrappedObject(unit);
 						container.setId(unit.getId());
-						container.setHash(String.valueOf(listCat[0].lastModified()));
+						container.setHash(String.valueOf(listCat[0]
+								.lastModified()));
 						return container;
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					// return just null.
 				} finally {
-					StreamCloser.closeStreams(fileInputStream, bufferedInputStream);
+					StreamCloser.closeStreams(fileInputStream,
+							bufferedInputStream);
+					if (createTempFile != null && createTempFile.exists()) {
+						try {
+							createTempFile.delete(false, null);
+						} catch (CoreException e) {
+							// skip
+						}
+					}
 				}
 
 			}
@@ -453,32 +510,40 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	 * infomngmnt.InformationUnitListItem,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public InformationUnit getFullObject(final InformationUnitListItem informationUnitListItem,
+	public InformationUnit getFullObject(
+			final InformationUnitListItem informationUnitListItem,
 			final IProgressMonitor monitor) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public IFile getBinaryReferences(final InformationUnitListItem remoteObject,
-			final InformationUnit localInfoFragment, final IProgressMonitor monitor)
-			throws RemoteException {
+	public IFile getBinaryReferences(
+			final InformationUnitListItem remoteObject,
+			final InformationUnit localInfoFragment,
+			final IProgressMonitor monitor) throws RemoteException {
 		if (localInfoFragment.getBinaryReferences() != null) {
 			String url = remoteObject.getSynchronizationMetaData().getUrl();
-			String remoteFilePath = new StringWriter().append(url).append(File.separator).append(
-					FOLDER_NAME_BINARIES).append(File.separator).append(
-					localInfoFragment.getBinaryReferences().getProjectRelativePath()).toString();
+			String remoteFilePath = new StringWriter()
+					.append(url)
+					.append(File.separator)
+					.append(FOLDER_NAME_BINARIES)
+					.append(File.separator)
+					.append(localInfoFragment.getBinaryReferences()
+							.getProjectRelativePath()).toString();
 			File remoteReference = new File(remoteFilePath);
 			if (remoteReference.exists() && remoteReference.isFile()) {
-				IFile createTempFile = ResourceUtil.createTempFile(new Path(remoteReference
-						.getAbsolutePath()).getFileExtension());
+				IFile createTempFile = ResourceUtil.createTempFile(new Path(
+						remoteReference.getAbsolutePath()).getFileExtension());
 				FileInputStream fileInputStream = null;
 				BufferedInputStream bufferedInputStream = null;
 				try {
 					fileInputStream = new FileInputStream(remoteReference);
-					bufferedInputStream = new BufferedInputStream(fileInputStream);
-					createTempFile.setContents(bufferedInputStream, true, false,
-							new SubProgressMonitor(monitor, IProgressMonitor.UNKNOWN));
+					bufferedInputStream = new BufferedInputStream(
+							fileInputStream);
+					createTempFile.setContents(bufferedInputStream, true,
+							false, new SubProgressMonitor(monitor,
+									IProgressMonitor.UNKNOWN));
 					return createTempFile;
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -487,7 +552,8 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally {
-					StreamCloser.closeStreams(fileInputStream, bufferedInputStream);
+					StreamCloser.closeStreams(fileInputStream,
+							bufferedInputStream);
 				}
 			}
 		}
@@ -503,11 +569,12 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	 * (org.remus.infomngmnt.SynchronizableObject,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public RemoteObject getRemoteObjectBySynchronizableObject(final SynchronizableObject object,
-			final IProgressMonitor monitor) throws RemoteException {
+	public RemoteObject getRemoteObjectBySynchronizableObject(
+			final SynchronizableObject object, final IProgressMonitor monitor)
+			throws RemoteException {
 		String url = object.getSynchronizationMetaData().getUrl();
 		// validate whether Directory exists, otherwise access is not possible
-		if (validate(url).isOK()){
+		if (validate(url).isOK()) {
 			if (getRepositoryById(getLocalRepositoryId()).getUrl().equals(url)) {
 				return getRepositoryById(getLocalRepositoryId());
 			}
@@ -532,10 +599,12 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 		Object wrappedObject = remoteObject.getWrappedObject();
 		if (wrappedObject instanceof InformationUnit) {
 			String type = ((InformationUnit) wrappedObject).getType();
-			IInformationTypeHandler service = RemoteActivator.getDefault().getServiceTracker()
+			IInformationTypeHandler service = RemoteActivator.getDefault()
+					.getServiceTracker()
 					.getService(IInformationTypeHandler.class);
 			IInfoType infoTypeByType = service.getInfoTypeByType(type);
-			RemoteActivator.getDefault().getServiceTracker().ungetService(service);
+			RemoteActivator.getDefault().getServiceTracker()
+					.ungetService(service);
 			if (infoTypeByType != null) {
 				return type;
 			}
@@ -555,7 +624,8 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 	 * org.remus.infomngmnt.core.remote.IRepository#login(org.remus.infomngmnt
 	 * .core.remote.ILoginCallBack, org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public void login(final ILoginCallBack callback, final IProgressMonitor monitor) {
+	public void login(final ILoginCallBack callback,
+			final IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
 
 	}
@@ -580,6 +650,7 @@ public class FolderConnector extends AbstractExtensionRepository implements IRep
 		if (file.exists() && file.isDirectory() && file.canWrite()) {
 			return Status.OK_STATUS;
 		}
-		return StatusCreator.newStatus(Messages.FolderConnector_NoValidCategory + url);
+		return StatusCreator.newStatus(Messages.FolderConnector_NoValidCategory
+				+ url);
 	}
 }

@@ -11,6 +11,8 @@ public class IDEWorkbenchMessages extends NLS {
 	public static String NavigationSection_LinkWithEditor;
 	public static String OpenElementToolItem_ErrorOpeningElement;
 	public static String OpenInfoTypeHandler_ErrorOpeningElement;
+	public static String WelcomeEditor2_browserError;
+	public static String WelcomeEditor2_browserErrorLink;
 	public static String WelcomeEditor2_Connectors;
 	public static String WelcomeEditor2_ForumsLink;
 	public static String WelcomeEditor2_GetInvolvedDetail;

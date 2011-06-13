@@ -12,6 +12,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.remus.application.messages.IDEWorkbenchMessages;
 import org.eclipse.remus.common.ui.html.OfflineBrowser;
 import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.common.ui.image.SWTResourceManager;
 import org.eclipse.remus.core.services.IInformationTypeHandler;
 import org.eclipse.remus.js.TemplateLocation;
 import org.eclipse.remus.ui.UIPlugin;
@@ -94,7 +95,8 @@ public class WelcomeEditor2 extends EditorPart {
 		sctnStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		toolkit.paintBordersFor(sctnStatus);
-		sctnStatus.setText(IDEWorkbenchMessages.WelcomeEditor2_InstallationStatus);
+		sctnStatus
+				.setText(IDEWorkbenchMessages.WelcomeEditor2_InstallationStatus);
 
 		Composite composite_3 = toolkit.createComposite(sctnStatus, SWT.NONE);
 		toolkit.paintBordersFor(composite_3);
@@ -109,7 +111,8 @@ public class WelcomeEditor2 extends EditorPart {
 		IInformationTypeHandler service = UIPlugin.getDefault()
 				.getServiceTracker().getService(IInformationTypeHandler.class);
 		int installedInformationTypes = service.getTypes().size();
-		mghprlnkInformationTypes.setText(NLS.bind(IDEWorkbenchMessages.WelcomeEditor2_InformationTypes,
+		mghprlnkInformationTypes.setText(NLS.bind(
+				IDEWorkbenchMessages.WelcomeEditor2_InformationTypes,
 				installedInformationTypes));
 
 		ImageHyperlink mghprlnkConnectorsInstalled = toolkit
@@ -121,7 +124,8 @@ public class WelcomeEditor2 extends EditorPart {
 				.getServiceTracker()
 				.getService(IRepositoryExtensionService.class);
 		int installedRepositoryUis = service2.getAllItems().size();
-		mghprlnkConnectorsInstalled.setText(NLS.bind(IDEWorkbenchMessages.WelcomeEditor2_Connectors,
+		mghprlnkConnectorsInstalled.setText(NLS.bind(
+				IDEWorkbenchMessages.WelcomeEditor2_Connectors,
 				installedRepositoryUis));
 
 		ImageHyperlink mghprlnkInstallAddons = toolkit.createImageHyperlink(
@@ -129,7 +133,8 @@ public class WelcomeEditor2 extends EditorPart {
 		mghprlnkInstallAddons.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER,
 				true, false, 1, 1));
 		toolkit.paintBordersFor(mghprlnkInstallAddons);
-		mghprlnkInstallAddons.setText(IDEWorkbenchMessages.WelcomeEditor2_InstallAddons);
+		mghprlnkInstallAddons
+				.setText(IDEWorkbenchMessages.WelcomeEditor2_InstallAddons);
 		mghprlnkInstallAddons.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
@@ -169,8 +174,7 @@ public class WelcomeEditor2 extends EditorPart {
 		formText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB,
 				TableWrapData.TOP, 1, 1));
 		toolkit.paintBordersFor(formText);
-		formText.setText(
-				IDEWorkbenchMessages.WelcomeEditor2_GettingStarted,
+		formText.setText(IDEWorkbenchMessages.WelcomeEditor2_GettingStarted,
 				true, false);
 		formText.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
 				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
@@ -185,10 +189,9 @@ public class WelcomeEditor2 extends EditorPart {
 		formText_1.setLayoutData(new TableWrapData(TableWrapData.FILL,
 				TableWrapData.TOP, 1, 1));
 		toolkit.paintBordersFor(formText_1);
-		formText_1
-				.setText(
-						IDEWorkbenchMessages.WelcomeEditor2_InstallAddonsDetail,
-						true, false);
+		formText_1.setText(
+				IDEWorkbenchMessages.WelcomeEditor2_InstallAddonsDetail, true,
+				false);
 		formText_1.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
 				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_1.addHyperlinkListener(new HyperlinkAdapter() {
@@ -215,10 +218,9 @@ public class WelcomeEditor2 extends EditorPart {
 
 		FormText formText_2 = toolkit.createFormText(composite_2, false);
 		toolkit.paintBordersFor(formText_2);
-		formText_2
-				.setText(
-						IDEWorkbenchMessages.WelcomeEditor2_UserDocumentationDetail,
-						true, false);
+		formText_2.setText(
+				IDEWorkbenchMessages.WelcomeEditor2_UserDocumentationDetail,
+				true, false);
 		formText_2.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
 				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_2.addHyperlinkListener(new HyperlinkAdapter() {
@@ -230,10 +232,9 @@ public class WelcomeEditor2 extends EditorPart {
 
 		FormText formText_3 = toolkit.createFormText(composite_2, false);
 		toolkit.paintBordersFor(formText_3);
-		formText_3
-				.setText(
-						IDEWorkbenchMessages.WelcomeEditor2_UserForumsDetail,
-						true, false);
+		formText_3.setText(
+				IDEWorkbenchMessages.WelcomeEditor2_UserForumsDetail, true,
+				false);
 		formText_3.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
 				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_3.addHyperlinkListener(new HyperlinkAdapter() {
@@ -245,10 +246,9 @@ public class WelcomeEditor2 extends EditorPart {
 
 		FormText formText_4 = toolkit.createFormText(composite_2, false);
 		toolkit.paintBordersFor(formText_4);
-		formText_4
-				.setText(
-						IDEWorkbenchMessages.WelcomeEditor2_GetInvolvedDetail,
-						true, false);
+		formText_4.setText(
+				IDEWorkbenchMessages.WelcomeEditor2_GetInvolvedDetail, true,
+				false);
 		formText_4.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
 				UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
 		formText_4.addHyperlinkListener(new HyperlinkAdapter() {
@@ -267,7 +267,8 @@ public class WelcomeEditor2 extends EditorPart {
 				createComposite, SWT.NONE);
 		latestNewsSection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
-		latestNewsSection.setText(IDEWorkbenchMessages.WelcomeEditor2_LatestNews);
+		latestNewsSection
+				.setText(IDEWorkbenchMessages.WelcomeEditor2_LatestNews);
 
 		final Composite composite = toolkit.createComposite(latestNewsSection,
 				SWT.NONE);
@@ -275,13 +276,32 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.paintBordersFor(composite);
 		latestNewsSection.setClient(composite);
 
-		final Browser browser = new Browser(composite, SWT.NONE);
-		browser.setMenu(new Menu(browser));
-		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		toolkit.adapt(browser, true, true);
+		try {
+			final Browser browser = new Browser(composite, SWT.NONE);
+			browser.setMenu(new Menu(browser));
+			browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			toolkit.adapt(browser, true, true);
 
-		new OfflineBrowser(browser).init(TemplateLocation.getLoadingUrl(),
-				new DownloadLatestNewsJob());
+			new OfflineBrowser(browser).init(TemplateLocation.getLoadingUrl(),
+					new DownloadLatestNewsJob());
+		} catch (Exception e1) {
+			FormText formText_5 = toolkit.createFormText(composite, false);
+			toolkit.paintBordersFor(formText_4);
+			formText_5
+					.setText(
+							IDEWorkbenchMessages.WelcomeEditor2_browserError,
+							true, false);
+			formText_5.setImage("info", ResourceManager.getPluginImage( //$NON-NLS-1$
+					UIPlugin.getDefault(), "icons/iconexperience/16/help.png")); //$NON-NLS-1$
+			formText_5.setFont(SWTResourceManager.getBoldFont(formText_5
+					.getFont()));
+			formText_5.addHyperlinkListener(new HyperlinkAdapter() {
+				@Override
+				public void linkActivated(HyperlinkEvent e) {
+					Program.launch(IDEWorkbenchMessages.WelcomeEditor2_browserErrorLink);
+				}
+			});
+		}
 
 		final Label label2 = new Label(createComposite, SWT.SEPARATOR
 				| SWT.HORIZONTAL);
@@ -289,7 +309,8 @@ public class WelcomeEditor2 extends EditorPart {
 		toolkit.adapt(label2, true, true);
 
 		final Button button = toolkit.createButton(createComposite,
-				IDEWorkbenchMessages.WelcomeEditor2_ShowPageOnStartup, SWT.CHECK);
+				IDEWorkbenchMessages.WelcomeEditor2_ShowPageOnStartup,
+				SWT.CHECK);
 		button.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
 		button.setSelection(UIPlugin.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferenceInitializer.SHOW_WELCOME));

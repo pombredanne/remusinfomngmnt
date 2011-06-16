@@ -14,6 +14,7 @@ package org.remus.infomngmnt.mail.extension;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -26,11 +27,15 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.cyberneko.html.parsers.DOMParser;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
@@ -47,7 +52,6 @@ import org.eclipse.remus.resources.util.ResourceUtil;
 import org.eclipse.remus.util.StatusCreator;
 import org.remus.infomngmnt.mail.ContentType;
 import org.remus.infomngmnt.mail.MailActivator;
-import org.remus.infomngmnt.mail.messages.Messages;
 import org.remus.infomngmnt.mail.preferences.MailPreferenceInitializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -116,8 +120,16 @@ public class MailInformationRepresentation extends
 		String content = (String) read
 				.getValueByNodeId(MailActivator.NODE_NAME_CONTENT);
 
+		return analyzeContent(content, read, false);
+	}
+
+	private String analyzeContent(String content,
+			InformationStructureRead read, boolean inFrame) {
 		final DOMParser parser = new DOMParser();
 		try {
+			parser.setFeature(
+					"http://cyberneko.org/html/features/balance-tags/document-fragment",
+					true);
 			parser.parse(new InputSource(new StringReader(content)));
 			final Document document = parser.getDocument();
 
@@ -145,14 +157,94 @@ public class MailInformationRepresentation extends
 					}
 				}
 			}
+			elementsByTagName = document.getElementsByTagName("link"); //$NON-NLS-1$
+			for (int i = 0; i < elementsByTagName.getLength(); i++) {
+				final Node node = elementsByTagName.item(i);
+				String src = ((Element) node).getAttribute("href"); //$NON-NLS-1$
+				if (src.startsWith("cid:")) { //$NON-NLS-1$
+					String substring = src.substring(4);
+					List<BinaryReference> binaryReferences = read
+							.getBinaryReferences(
+									MailActivator.NODE_NAME_EMBEDDEDS, true);
+					for (BinaryReference binaryReference : binaryReferences) {
+						if (binaryReference.getId().equals(substring)) {
+							String osString = getFile()
+									.getProject()
+									.getLocation()
+									.append(ResourceUtil.BINARY_FOLDER)
+									.append(binaryReference
+											.getProjectRelativePath())
+									.toOSString();
+							((Element) node).setAttribute("href", URI //$NON-NLS-1$
+									.createFileURI(osString).toString());
+						}
+					}
+				}
+			}
+			if (!inFrame) {
+
+				elementsByTagName = document.getElementsByTagName("iframe"); //$NON-NLS-1$
+				for (int i = 0; i < elementsByTagName.getLength(); i++) {
+					final Node node = elementsByTagName.item(i);
+					String src = ((Element) node).getAttribute("src"); //$NON-NLS-1$
+					if (src.startsWith("cid:")) { //$NON-NLS-1$
+						String substring = src.substring(4);
+						List<BinaryReference> binaryReferences = read
+								.getBinaryReferences(
+										MailActivator.NODE_NAME_EMBEDDEDS, true);
+						for (BinaryReference binaryReference : binaryReferences) {
+							if (binaryReference.getId().equals(substring)) {
+								String osString = getFile()
+										.getProject()
+										.getLocation()
+										.append(ResourceUtil.BINARY_FOLDER)
+										.append(binaryReference
+												.getProjectRelativePath())
+										.toOSString();
+								String string = URI.createFileURI(osString)
+										.toString();
+								getBuildFolder().getLocation().toOSString();
+								IFile file = getBuildFolder().getFile(
+										"iframe.html");
+								if (file.exists()) {
+									file.delete(true, new NullProgressMonitor());
+								}
+
+								String readFileToString = FileUtils
+										.readFileToString(new File(osString));
+								String newcontent = analyzeContent(
+										readFileToString, read, true);
+								file.create(IOUtils.toInputStream(newcontent),
+										true, new NullProgressMonitor());
+								((Element) node)
+										.setAttribute(
+												"src",
+												URI.createFileURI(
+														file.getLocation()
+																.toOSString())
+														.toString());
+
+							}
+						}
+					}
+				}
+			}
 			elementsByTagName = document.getElementsByTagName("a"); //$NON-NLS-1$
 			for (int i = 0; i < elementsByTagName.getLength(); i++) {
 				final Node node = elementsByTagName.item(i);
 				((Element) node).setAttribute("target", ""); //$NON-NLS-1$ //$NON-NLS-2$
 				String attribute = ((Element) node).getAttribute("href"); //$NON-NLS-1$
-				((Element) node).setAttribute("href", StringUtils.join( //$NON-NLS-1$
-						"javascript:openFile(\'", //$NON-NLS-1$
-						StringEscapeUtils.escapeJavaScript(attribute), "\');")); //$NON-NLS-1$
+				if (inFrame) {
+					((Element) node).setAttribute("href", StringUtils.join( //$NON-NLS-1$
+							"javascript:parent.openFile(\'", //$NON-NLS-1$
+							StringEscapeUtils.escapeJavaScript(attribute),
+							"\');")); //$NON-NLS-1$
+				} else {
+					((Element) node).setAttribute("href", StringUtils.join( //$NON-NLS-1$
+							"javascript:openFile(\'", //$NON-NLS-1$
+							StringEscapeUtils.escapeJavaScript(attribute),
+							"\');")); //$NON-NLS-1$
+				}
 			}
 			final Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
@@ -168,5 +260,11 @@ public class MailInformationRepresentation extends
 			// TODO: handle exception
 		}
 		return content;
+
+	}
+
+	@Override
+	public boolean createFolderOnBuild() {
+		return true;
 	}
 }

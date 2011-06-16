@@ -21,6 +21,10 @@
 	      var myBoxObject = new curvyCorners(settings,"srccode");
 	      myBoxObject.applyCornersToAll();
 	  }
+	  function openLink(link) {
+  		alert(link);
+  		openFile(link);
+  	   }
 </script>
   <title>${data.__label}</title>
   <style type="text/css">
@@ -35,6 +39,8 @@
 		font-weight:bold;
 		color: #415564;
 	}
+	html, body { height:100%; }
+   	iframe { height:100%; margin-top:10px;display:block; width:100%; border:none; }
 	
 }
  ${additionals.bodycss}

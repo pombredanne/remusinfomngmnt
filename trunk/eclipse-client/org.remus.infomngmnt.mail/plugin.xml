@@ -6,6 +6,7 @@
       <information
             excludeFromIndex="false"
             name="%information.name"
+            postCreationHandler="org.remus.infomngmnt.mail.extension.MailPostCreationHandler"
             presentation="org.remus.infomngmnt.mail.extension.MailInformationRepresentation"
             structuredefinition="structuredefinition.xmi"
             type="MAIL">

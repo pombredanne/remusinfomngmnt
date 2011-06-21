@@ -306,8 +306,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_CLOSE)
 						|| preferenceStore
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_START)) {
-					trayEnabled = enableTray();
 				}
+				trayEnabled = enableTray();
 
 				/* Move to Tray if set */
 				if (trayEnabled
@@ -719,7 +719,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 		fTrayEnabled = true;
 
 		if (Application.IS_WINDOWS) {
-			fTrayItem.setVisible(false);
+			fTrayItem.setVisible(true);
 		}
 
 		/* Apply Image */
@@ -738,7 +738,16 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 								.getBoolean(UIPreferenceInitializer.TRAY_ON_MINIMIZE))) {
 					moveToTray(shell);
 				}
+				if (window == null || window.getShell() == null
+						|| window.getShell().isDisposed()) {
+					openDesktopWindow(shell);
+				}
 			}
+
+			@Override
+			public void shellDeiconified(ShellEvent e) {
+				closeDesktopWindow();
+			};
 		};
 		shell.addShellListener(fTrayShellListener);
 
@@ -857,9 +866,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			shell.setMinimized(false);
 		}
 
-		if (Application.IS_WINDOWS) {
-			fTrayItem.setVisible(false);
-		}
+		// if (Application.IS_WINDOWS) {
+		// fTrayItem.setVisible(false);
+		// }
 
 		if (fTrayTeasing) {
 			// TODO Application Images

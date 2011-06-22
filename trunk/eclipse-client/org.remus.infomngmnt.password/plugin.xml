@@ -48,7 +48,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.simple"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.password.NewPasswordWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/password_new.png"
@@ -193,6 +193,15 @@
             image="icons/iconexperience/key.png"
             infotype="PASSWORD">
       </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.password.newPasswordWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

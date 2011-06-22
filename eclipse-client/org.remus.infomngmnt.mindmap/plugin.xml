@@ -20,7 +20,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.business"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.mindmap.ui.NewMindmapWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/mindmap_new.png"
@@ -153,6 +153,15 @@
             id="org.remus.infomngmnt.mindmap.fittosizeimage"
             resource="icons/iconexperience/fit_to_size.png">
       </referenceResource>
+   </extension>
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.mindmap.new">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

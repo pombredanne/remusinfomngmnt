@@ -38,7 +38,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.simple"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.pdf.ui.NewPdfWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/pdf.png"
@@ -220,6 +220,15 @@
             transferId="org.eclipse.remus.core.filetransfer"
             typeId="PDF">
       </validTransfers>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.pdf.wizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

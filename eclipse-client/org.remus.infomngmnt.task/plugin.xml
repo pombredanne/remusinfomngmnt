@@ -36,7 +36,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.business"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.task.ui.wizard.NewTaskWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/task_new.png"
@@ -142,6 +142,15 @@
             location="TOP_LEFT"
             state="true">
       </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.task.new">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

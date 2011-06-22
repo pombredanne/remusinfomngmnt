@@ -18,7 +18,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.business"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.sourcecode.wizard.NewSourceCodeWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/code_colored_new.png"
@@ -152,5 +152,13 @@
             infotype="SOURCE">
       </image>
    </extension>
-
+	<extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.sourcecode.newWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
 </plugin>

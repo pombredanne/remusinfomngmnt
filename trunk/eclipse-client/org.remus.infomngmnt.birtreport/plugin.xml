@@ -66,7 +66,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.business"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.birtreport.wizard.NewReportWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/report_new.png"
@@ -115,5 +115,14 @@
             image="icons/report.gif"
             infotype="REPORT">
       </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.report.new">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 </plugin>

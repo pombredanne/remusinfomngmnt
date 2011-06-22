@@ -31,7 +31,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.business"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.contact.wizard.NewContactWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/contact_new.png"

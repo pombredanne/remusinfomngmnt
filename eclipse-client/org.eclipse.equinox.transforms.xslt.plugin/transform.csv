@@ -6,4 +6,6 @@ org\.eclipse\.compare,plugin\.xml,/compare.xslt
 org\.xmind\.ui,plugin\.xml,/xmind.xslt
 org\.eclipse\.equinox\.p2\.ui\.sdk,plugin\.xml,/p2.xslt
 org\.eclipse\.epp\.mpc\.ui,plugin\.xml,/mpc.xslt
+org\.eclipse\.birt\.report\.designer\.ui\.rcp,plugin\.xml,/birtrcp.xslt
+org\.eclipse\.datatools\.connectivity\.ui,plugin\.xml,/connectivity.xslt
 

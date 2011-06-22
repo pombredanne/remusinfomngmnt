@@ -32,7 +32,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.simple"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/richtext_new.png"
@@ -73,6 +73,15 @@
             node="HTML"
             typeId="HTML">
       </index>
+   </extension>
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.richtext.wizard.NewRichTextWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

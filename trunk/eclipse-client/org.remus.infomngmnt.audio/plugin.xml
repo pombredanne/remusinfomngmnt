@@ -51,5 +51,14 @@
             infotype="AUDIO">
       </image>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.audio.newWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
 
 </plugin>

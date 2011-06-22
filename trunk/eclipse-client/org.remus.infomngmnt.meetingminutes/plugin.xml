@@ -14,7 +14,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.business"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.meetingminutes.ui.NewMeetingWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/meeting_new.png"
@@ -116,6 +116,15 @@
             image="icons/iconexperience/document_cup.png"
             infotype="MEETING">
       </image>
+   </extension>
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.remus.infomngmnt.ui.infoperspective">
+         <newWizardShortcut
+               id="org.remus.infomngmnt.meetingminutes.new">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

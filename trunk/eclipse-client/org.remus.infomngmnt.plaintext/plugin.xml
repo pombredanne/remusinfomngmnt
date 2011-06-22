@@ -18,7 +18,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.simple"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.plaintext.wizard.NewPlainTextWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/text_new.png"

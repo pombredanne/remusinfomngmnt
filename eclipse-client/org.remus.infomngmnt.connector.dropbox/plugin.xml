@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.remus.core.remote.remoteRepository">
+      <repository-connector
+            class="org.remus.infomngmnt.connector.dropbox.DropboxConnector"
+            credentialprovider="org.remus.infomngmnt.connector.dropbox.DropboxCredentialProvider"
+            id="org.remus.infomngmnt.connector.dropbox"
+            name="%repository-connector.name">
+      </repository-connector>
+   </extension>
+   <extension
+         point="org.eclipse.remus.ui.remote.repositoryUi">
+      <respository
+            icon="icons/dropbox.png"
+            id="org.remus.infomngmnt.connector.dropbox.ui"
+            newWizard="org.remus.infomngmnt.connector.dropbox.ui.NewDropboxRepositoryWizard"
+            repository-id="org.remus.infomngmnt.connector.dropbox">
+      </respository>
+   </extension>
+
+</plugin>

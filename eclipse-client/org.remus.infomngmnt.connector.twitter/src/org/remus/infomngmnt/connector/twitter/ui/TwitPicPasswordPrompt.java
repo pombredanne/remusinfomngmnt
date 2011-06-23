@@ -2,6 +2,7 @@ package org.remus.infomngmnt.connector.twitter.ui;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.StatusDialog;
+import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.remus.infomngmnt.connector.twitter.Messages;
+import org.remus.infomngmnt.connector.twitter.TwitterActivator;
 
 public class TwitPicPasswordPrompt extends StatusDialog {
 
@@ -33,11 +35,13 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 	 * 
 	 * @param parentShell
 	 */
-	public TwitPicPasswordPrompt(final Shell parentShell, final String userName, final String pwd) {
+	public TwitPicPasswordPrompt(final Shell parentShell,
+			final String userName, final String pwd) {
 		super(parentShell);
-		this.username = userName;
+		setShellStyle(getShellStyle() | SWT.RESIZE);
+		username = userName;
 		this.pwd = pwd;
-		this.save = userName != null && userName.trim().length() > 0 && pwd != null
+		save = userName != null && userName.trim().length() > 0 && pwd != null
 				&& pwd.trim().length() > 0;
 	}
 
@@ -53,46 +57,51 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 
 		final Label pleaseEnterALabel = new Label(container, SWT.WRAP);
 
-		pleaseEnterALabel
-				.setText(Messages.TwitPicPasswordPrompt_Warning);
+		pleaseEnterALabel.setText(Messages.TwitPicPasswordPrompt_Warning);
 
-		final Label label_1 = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
-		label_1.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.TOP));
+		final Label label_1 = new Label(container, SWT.SEPARATOR
+				| SWT.HORIZONTAL);
+		label_1.setLayoutData(new TableWrapData(TableWrapData.FILL,
+				TableWrapData.TOP));
 
 		final Label enterYourUsernameLabel = new Label(container, SWT.NONE);
-		enterYourUsernameLabel.setText(Messages.TwitPicPasswordPrompt_EnterUsername);
-		this.text1 = new Text(container, SWT.BORDER);
-		TableWrapData twd_text = new TableWrapData(TableWrapData.LEFT, TableWrapData.TOP);
+		enterYourUsernameLabel
+				.setText(Messages.TwitPicPasswordPrompt_EnterUsername);
+		text1 = new Text(container, SWT.BORDER);
+		TableWrapData twd_text = new TableWrapData(TableWrapData.LEFT,
+				TableWrapData.TOP);
 		twd_text.align = TableWrapData.FILL;
-		this.text1.setLayoutData(twd_text);
-		this.text1.setText(this.username);
-		this.text1.addListener(SWT.Modify, new Listener() {
+		text1.setLayoutData(twd_text);
+		text1.setText(username);
+		text1.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(final Event event) {
-				TwitPicPasswordPrompt.this.username = ((Text) event.widget).getText();
+				username = ((Text) event.widget).getText();
 			}
 		});
 
 		final Label enterYourPasswordLabel = new Label(container, SWT.NONE);
-		enterYourPasswordLabel.setText(Messages.TwitPicPasswordPrompt_EnterPassword);
+		enterYourPasswordLabel
+				.setText(Messages.TwitPicPasswordPrompt_EnterPassword);
 
-		this.text = new Text(container, SWT.BORDER | SWT.PASSWORD);
+		text = new Text(container, SWT.BORDER | SWT.PASSWORD);
 		twd_text = new TableWrapData(TableWrapData.LEFT, TableWrapData.TOP);
 		twd_text.align = TableWrapData.FILL;
-		this.text.setLayoutData(twd_text);
-		this.text.setText(this.pwd);
+		text.setLayoutData(twd_text);
+		text.setText(pwd);
 
 		final Button btnSaveUsernamepassword = new Button(container, SWT.CHECK);
-		btnSaveUsernamepassword.setSelection(this.save);
+		btnSaveUsernamepassword.setSelection(save);
 		btnSaveUsernamepassword.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				TwitPicPasswordPrompt.this.save = btnSaveUsernamepassword.getSelection();
+				save = btnSaveUsernamepassword.getSelection();
 
 			}
 		});
-		btnSaveUsernamepassword.setText(Messages.TwitPicPasswordPrompt_SaveUsernameAndPassword);
-		this.text.addListener(SWT.Modify, new Listener() {
+		btnSaveUsernamepassword
+				.setText(Messages.TwitPicPasswordPrompt_SaveUsernameAndPassword);
+		text.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(final Event event) {
-				TwitPicPasswordPrompt.this.pwd = ((Text) event.widget).getText();
+				pwd = ((Text) event.widget).getText();
 			}
 		});
 
@@ -106,8 +115,10 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+				true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
 	}
 
 	/**
@@ -115,7 +126,16 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(300, 315);
+		return UIUtil.getDialogSettingsInitialSize(
+				TwitterActivator.getDefault(), this, new Point(300, 315));
+	}
+
+	@Override
+	protected Point getInitialLocation(Point initialSize) {
+		return UIUtil.getDialogSettingsInitialSize(
+				TwitterActivator.getDefault(), this,
+				super.getInitialLocation(initialSize));
+
 	}
 
 	@Override
@@ -124,19 +144,25 @@ public class TwitPicPasswordPrompt extends StatusDialog {
 		newShell.setText(Messages.TwitPicPasswordPrompt_DialogTitle);
 	}
 
+	@Override
+	public boolean close() {
+		UIUtil.saveDialogSettings(TwitterActivator.getDefault(), this);
+		return super.close();
+	}
+
 	/**
 	 * @return the pwd
 	 */
 	public String getPwd() {
-		return this.pwd;
+		return pwd;
 	}
 
 	public String getUsername() {
-		return this.username;
+		return username;
 	}
 
 	public boolean isSave() {
-		return this.save;
+		return save;
 	}
 
 }

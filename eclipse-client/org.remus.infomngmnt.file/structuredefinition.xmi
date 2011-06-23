@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<remus:InformationStructureDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:remus="http://eclipse.org/remus/1.0" xsi:schemaLocation="http://eclipse.org/remus/1.0 ../org.eclipse.remus.model/model/infomngmnt.ecore" canHaveBinaryReferences="true">
+  <structureItems type="STRING" label="Filename" id="filename"/>
+  <structureItems type="STRING" label="" id="origin"/>
+</remus:InformationStructureDefinition>

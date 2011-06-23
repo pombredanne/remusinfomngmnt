@@ -216,6 +216,12 @@
 			<param name="p2.ws" value="${p2.ws}" />
 			<param name="p2.arch" value="${p2.arch}" />
 		</antcall>
+		<antcall target="installFeatureFromMarketplace">
+			<param name="marketplace.installUI" value="org.remus.infomngmnt.dropbox" />
+			<param name="p2.os" value="${p2.os}" />
+			<param name="p2.ws" value="${p2.ws}" />
+			<param name="p2.arch" value="${p2.arch}" />
+		</antcall>
 		<delete dir="${unzipTarget}/RIM/workspace" failonerror="false">
 		</delete>
 		<copyfile dest="${pack.zip}" src="${build.dir.location}/${pack.zip}"/>

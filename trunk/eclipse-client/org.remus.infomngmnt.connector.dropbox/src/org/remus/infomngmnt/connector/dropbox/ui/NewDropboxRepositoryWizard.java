@@ -31,6 +31,7 @@ import org.eclipse.remus.ui.util.CancelableRunnable;
 import org.eclipse.remus.util.StatusCreator;
 import org.eclipse.swt.widgets.Composite;
 import org.remus.infomngmnt.connector.dropbox.DropboxActivator;
+import org.remus.infomngmnt.connector.dropbox.Messages;
 
 import com.dropbox.client.Authenticator;
 
@@ -60,7 +61,7 @@ public class NewDropboxRepositoryWizard extends NewRepositoryWizard {
 		super.init(selection);
 		try {
 			auth = new Authenticator(DropboxActivator.CONNECTION_PROPERTIES);
-			String url = auth.retrieveRequestToken("");
+			String url = auth.retrieveRequestToken(""); //$NON-NLS-1$
 			page1 = new DropboxConnectionWizardPage(url);
 			page1.setRemoteObject(getRepository());
 		} catch (OAuthCommunicationException e) {
@@ -84,22 +85,27 @@ public class NewDropboxRepositoryWizard extends NewRepositoryWizard {
 				protected IStatus runCancelableRunnable(
 						final IProgressMonitor monitor) {
 					try {
-						auth.retrieveAccessToken("");
-						getRepository().setUrl("/Remus");
+						auth.retrieveAccessToken(""); //$NON-NLS-1$
+						getRepository().setUrl("/Remus"); //$NON-NLS-1$
 						repositoryDefinition.getCredentialProvider()
 								.setUserName(auth.getTokenKey());
 						repositoryDefinition.getCredentialProvider()
 								.setPassword(auth.getTokenSecret());
 						return Status.OK_STATUS;
 					} catch (Exception e) {
-						final IStatus newStatus = StatusCreator.newStatus(
-								"Error creating repository", e);
+						final IStatus newStatus = StatusCreator
+								.newStatus(
+										Messages.NewDropboxRepositoryWizard_ErrorCreating,
+										e);
 						getShell().getDisplay().syncExec(new Runnable() {
 
 							public void run() {
-								ErrorDialog.openError(getShell(), "Error",
-										"Error connecting to repository",
-										newStatus);
+								ErrorDialog
+										.openError(
+												getShell(),
+												Messages.NewDropboxRepositoryWizard_Error,
+												Messages.NewDropboxRepositoryWizard_ErrorConnecting,
+												newStatus);
 
 							}
 						});

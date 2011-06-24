@@ -187,11 +187,11 @@ public class DropboxClient extends RESTUtility {
 	public HttpResponse getFileWithVersion(String root, String from_path,
 			String etag) throws DropboxException {
 		String path = "/files/" + root + from_path;
-		HttpClient client = getClient();
 
 		try {
 			String target = buildFullURL(secureProtocol, content_host, port,
 					buildURL(path, API_VERSION, null));
+			HttpClient client = getClient(target);
 			HttpGet req = new HttpGet(target);
 			if (etag != null) {
 				req.addHeader("If-None-Match", etag);
@@ -251,13 +251,13 @@ public class DropboxClient extends RESTUtility {
 	public HttpResponse eventContent(String root, int user_id,
 			int namespace_id, int journal_id) throws DropboxException {
 		String path = "/event_content";
-		HttpClient client = getClient();
 		Object[] params = { "root", root, "target_event",
 				"" + user_id + ":" + namespace_id + ":" + journal_id };
 
 		try {
 			String target = buildFullURL(defaultProtocol, content_host, port,
 					buildURL(path, API_VERSION, params));
+			HttpClient client = getClient(target);
 			HttpGet req = new HttpGet(target);
 			auth.sign(req);
 			return client.execute(req);
@@ -282,8 +282,6 @@ public class DropboxClient extends RESTUtility {
 			throws DropboxException {
 		String path = "/files/" + root + to_path;
 
-		HttpClient client = getClient();
-
 		try {
 			Path targetPath = new Path(path);
 			String target = buildFullURL(
@@ -293,6 +291,7 @@ public class DropboxClient extends RESTUtility {
 					buildURL(targetPath.removeLastSegments(1)
 							.addTrailingSeparator().toString(), API_VERSION,
 							null));
+			HttpClient client = getClient(target);
 			HttpPost req = new HttpPost(target);
 			// this has to be done this way because of how oauth signs params
 			// first we add a "fake" param of file=path of *uploaded* file

@@ -11,15 +11,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.StatusLine;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -32,6 +36,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
+import org.eclipse.remus.common.io.proxy.Proxy;
+import org.eclipse.remus.common.io.proxy.ProxyUtil;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -72,9 +78,23 @@ public class RESTUtility {
 		return secureProtocol;
 	}
 
-	static public HttpClient getClient() {
-		// DefaultHttpClient ret = new DefaultHttpClient(sManager, sParams);
+	static public HttpClient getClient(String url) {
+		Proxy proxyByUrl = ProxyUtil.getProxyByUrl(url);
 		DefaultHttpClient ret = new DefaultHttpClient();
+		if (proxyByUrl != null) {
+			if (proxyByUrl.getUsername() != null
+					&& proxyByUrl.getUsername().length() > 0) {
+				ret.getCredentialsProvider().setCredentials(
+						new AuthScope(proxyByUrl.getAddress().getHostName(),
+								proxyByUrl.getAddress().getPort()),
+						new UsernamePasswordCredentials(proxyByUrl
+								.getUsername(), proxyByUrl.getPassword()));
+			}
+			HttpHost proxy = new HttpHost(
+					proxyByUrl.getAddress().getHostName(), proxyByUrl
+							.getAddress().getPort());
+			ret.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		}
 		return ret;
 	}
 
@@ -171,7 +191,7 @@ public class RESTUtility {
 	 */
 	@SuppressWarnings("unchecked")
 	static public Object executeRequest(HttpUriRequest req) throws IOException {
-		HttpClient client = getClient();
+		HttpClient client = getClient(req.getURI().toString());
 
 		HttpResponse response = client.execute(req);
 		Object result = parseAsJSON(response);
@@ -187,7 +207,7 @@ public class RESTUtility {
 	 */
 	static public String buildFullURL(String protocol, String host, int port,
 			String target) {
-		String port_string = (port == 80) ? "" : (":" + port);
+		String port_string = port == 80 ? "" : ":" + port;
 		return protocol + "://" + host + port_string + target;
 	}
 

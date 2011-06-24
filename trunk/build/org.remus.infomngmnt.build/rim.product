@@ -8,7 +8,7 @@
 
    <launcherArgs>
       <programArgs>-clean</programArgs>
-      <vmArgs>-Dosgi.framework.extensions=org.eclipse.equinox.transforms.hook -XX:MaxPermSize=256m</vmArgs>
+      <vmArgs>-Dosgi.framework.extensions=org.eclipse.equinox.transforms.hook -XX:MaxPermSize=256m -Dsun.net.http.allowRestrictedHeaders=true</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 

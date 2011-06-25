@@ -171,7 +171,8 @@ public class TwitterRepository extends AbstractExtensionRepository implements
 			returnValue.add(buildDetail(false, null));
 			returnValue.add(buildAllFriendsMessages(false, null));
 			returnValue.add(buildRepliesMessages(false, null));
-			returnValue.add(buildDirectMessages(false, null));
+			// we skip that since twitter does not allow this anymore.
+			// returnValue.add(buildDirectMessages(false, null));
 			String[] split = org.apache.commons.lang.StringUtils.split(
 					((RemoteRepository) container).getOptions().get(
 							TwitterActivator.REPOSITORY_OPTIONS_SEARCH_KEY),

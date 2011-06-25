@@ -85,8 +85,7 @@ public class TwitterUserInfoRepresentation extends
 		String encodedDocumentName = null;
 
 		try {
-			String report = URI.createFileURI(reportLocation).toString();
-			encodedReportName = URLEncoder.encode(report, "utf-8"); //$NON-NLS-1$
+			encodedReportName = URLEncoder.encode(reportLocation, "utf-8"); //$NON-NLS-1$
 		} catch (UnsupportedEncodingException e) {
 			// Do nothing
 		}

@@ -29,7 +29,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.remus.InformationUnit;
 import org.eclipse.remus.core.extension.AbstractInformationRepresentation;
 import org.eclipse.remus.core.model.InformationStructureRead;
@@ -100,8 +99,7 @@ public class BirtReportRepresentation extends AbstractInformationRepresentation 
 		String encodedDocumentName = null;
 
 		try {
-			String report = URI.createFileURI(reportLocation).toString();
-			encodedReportName = URLEncoder.encode(report, "utf-8"); //$NON-NLS-1$
+			encodedReportName = URLEncoder.encode(reportLocation, "utf-8"); //$NON-NLS-1$
 		} catch (UnsupportedEncodingException e) {
 			// Do nothing
 		}

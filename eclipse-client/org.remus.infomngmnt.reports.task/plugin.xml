@@ -59,6 +59,21 @@
             </parameterclassparameter>
          </parameter>
       </template>
+      <templatecategory
+            id="org.remus.infomngmnt.reports.worklog"
+            label="Tasks">
+      </templatecategory>
+      <template
+            category="org.remus.infomngmnt.reports.worklog"
+            id="org.remus.infomngmnt.reports.task.overview"
+            label="Task-Overview"
+            rptfile="templates/taskoverview.rptdesign">
+         <parameter
+               label="Category"
+               name="source"
+               parametertype="org.remus.infomngmnt.birtreport.categoryselector">
+         </parameter>
+      </template>
    </extension>
 
 </plugin>

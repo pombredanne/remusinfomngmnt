@@ -45,8 +45,9 @@ public class DropboxActivator extends AbstractUIPlugin {
 				"http://api.getdropbox.com/0/oauth/access_token"); //$NON-NLS-1$
 		CONNECTION_PROPERTIES.put(AUTHORIZATION_URL,
 				"http://api.getdropbox.com/0/oauth/authorize"); //$NON-NLS-1$
-		CONNECTION_PROPERTIES.put(CONSUMER_KEY, "fzhm4b6syruphjf"); //$NON-NLS-1$
-		CONNECTION_PROPERTIES.put(CONSUMER_SECRET, "283c1p6u24b69dh"); //$NON-NLS-1$
+		// Key and secret are replaced at build-time
+		CONNECTION_PROPERTIES.put(CONSUMER_KEY, "${env.DROPBOX_KEY}"); //$NON-NLS-1$
+		CONNECTION_PROPERTIES.put(CONSUMER_SECRET, "${env.DROPBOX_SECRET}"); //$NON-NLS-1$
 		CONNECTION_PROPERTIES.put(VERIFIER, ""); //$NON-NLS-1$
 	}
 

@@ -5,8 +5,9 @@ import org.eclipse.osgi.util.NLS;
 public class IDEWorkbenchMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.remus.application.messages.messages"; //$NON-NLS-1$
 	public static String ApplicationActionBarAdvisor_Extra;
-	public static String ApplicationWorkbenchWindowAdvisor_Restore;
-	public static String ApplicationWorkbenchWindowAdvisor_RestoreDesktopPanel;
+	public static String ApplicationWorkbenchWindowAdvisor_InitializeMessage;
+	public static String ApplicationWorkbenchWindowAdvisor_PrepareRemus;
+	public static String ApplicationWorkbenchWindowAdvisor_WelcomeToRemus;
 	public static String DownloadLatestNewsJob_URLLatestNews;
 	public static String NavigationSection_LinkWithEditor;
 	public static String OpenElementToolItem_ErrorOpeningElement;

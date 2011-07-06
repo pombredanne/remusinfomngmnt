@@ -1,0 +1,36 @@
+<table border="0" cellpadding="1" cellspacing="1" style="width: 100%; background-color: rgb(38, 75, 96);">
+	<tbody>
+		<tr>
+			<td>
+				<img _cke_saved_src="http://remus-software.org/old_joomla/templates/ja_purity/images/logo.png" alt="" src="http://remus-software.org/old_joomla/templates/ja_purity/images/logo.png" style="WIDTH: 330px; HEIGHT: 80px" /></td>
+		</tr>
+	</tbody>
+</table>
+<h3>
+	Welcome to Remus</h3>
+<p>
+	Remus is your personal assistant recording your thoughts, interesting media and everything interesting you see. If you want to store your nodes, managing your photos videos or audio files, creating tasks, lists or meeting minutes or even index your PDF-documents Remus is the software you need. Everything you see on your screen can be dragged into Remus or copied via the clipboard. A hierarchical structure, free tagging and a clean visualization of your personal information make Remus to the most useful tool in the daily information-overload at work or at home.</p>
+<p>
+	With Remus you can</p>
+<ul>
+	<li>
+		Manage your documents</li>
+	<li>
+		Organize your Browser-Favorites</li>
+	<li>
+		Synchronize with multiple Repositories</li>
+	<li>
+		Store your information in the Web</li>
+	<li>
+		...</li>
+</ul>
+<h3>
+	Getting started</h3>
+<ul>
+	<li>
+		Click on the New Menu and create a new information unit</li>
+	<li>
+		You can edit and save the opened information unit</li>
+	<li>
+		Use the New Connector Wizard to connect to a remote repository</li>
+</ul>

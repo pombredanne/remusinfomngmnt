@@ -44,6 +44,17 @@
             interval="200"
             name="%delete.job.name">
       </job>
+      <job
+            class="org.remus.infomngmnt.connector.rss.jobs.FirstStartJob"
+            id="org.remus.infomngmnt.connector.rss.firstStart"
+            name="FirstStartCheck">
+      </job>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.preferences.preferences">
+      <initializer
+            class="org.remus.infomngmnt.connector.rss.PreferenceInitializer">
+      </initializer>
    </extension>
 
 </plugin>

@@ -4,6 +4,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.remus.infomngmnt.connector.rss.messages"; //$NON-NLS-1$
+	public static String FirstStartJob_BlogName;
+	public static String FirstStartJob_BlogUrl;
+	public static String FirstStartJob_Checkout;
 	public static String RssConnectionWizardPage_Authentication;
 	public static String RssConnectionWizardPage_DeleteFeedOlderThan;
 	public static String RssConnectionWizardPage_EnterUrl;

@@ -263,19 +263,20 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 				productName = product.getName();
 			}
 			if (productName == null) {
-				message = ""; //$NON-NLS-1$
+				message = IDEWorkbenchMessages.PromptOnExitDialog_message0;
+				;
 			} else {
 				message = NLS.bind(
-						"", //$NON-NLS-1$
+						IDEWorkbenchMessages.PromptOnExitDialog_message1,
 						productName);
 			}
 
 			MessageDialogWithToggle dlg = MessageDialogWithToggle
 					.openOkCancelConfirm(getWindowConfigurer().getWindow()
 							.getShell(),
-							"", //$NON-NLS-1$
+							IDEWorkbenchMessages.PromptOnExitDialog_shellTitle,
 							message,
-							"", //$NON-NLS-1$
+							IDEWorkbenchMessages.PromptOnExitDialog_choice,
 							false, null, null);
 			if (dlg.getReturnCode() != IDialogConstants.OK_ID) {
 				return false;
@@ -370,7 +371,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 							.setValue(PreferenceInitializer.FIRST_START, false);
 					final Category findCategory = CategoryUtil.findCategory(
 							"Inbox", false); //$NON-NLS-1$
-					Job job = new Job(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_PrepareRemus) {
+					Job job = new Job(
+							org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_PrepareRemus) {
 
 						@Override
 						protected IStatus run(IProgressMonitor monitor) {
@@ -395,7 +397,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 										.newSession("HTML"); //$NON-NLS-1$
 								InformationUnit newInformationUnit = edit
 										.newInformationUnit();
-								newInformationUnit.setLabel(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_WelcomeToRemus);
+								newInformationUnit
+										.setLabel(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_WelcomeToRemus);
 								InputStream resourceAsStream = getClass()
 										.getResourceAsStream("welcome.txt"); //$NON-NLS-1$
 								newInformationUnit.setStringValue(StreamUtil
@@ -569,7 +572,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			if (activeEditor != null) {
 				lastEditorTitle = activeEditor.getTitleToolTip();
 				title = NLS.bind(
-						"", //$NON-NLS-1$
+						IDEWorkbenchMessages.WorkbenchWindow_shellTitle,
 						lastEditorTitle, title);
 			}
 			IPerspectiveDescriptor persp = currentPage.getPerspective();
@@ -583,14 +586,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			}
 			if (label != null && !label.equals("")) { //$NON-NLS-1$
 				title = NLS.bind(
-						"", label, //$NON-NLS-1$
+						IDEWorkbenchMessages.WorkbenchWindow_shellTitle, label,
 						title);
 			}
 		}
 
 		String workspaceLocation = wbAdvisor.getWorkspaceLocation();
 		if (workspaceLocation != null) {
-			title = NLS.bind("", //$NON-NLS-1$
+			title = NLS.bind(IDEWorkbenchMessages.WorkbenchWindow_shellTitle,
 					title, workspaceLocation);
 		}
 
@@ -867,7 +870,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 					public void fill(final Menu menu, final int index) {
 						MenuItem restoreItem = new MenuItem(menu, SWT.PUSH);
 						restoreItem
-								.setText("");
+								.setText(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_Restore);
 						restoreItem
 								.addSelectionListener(new SelectionAdapter() {
 									@Override
@@ -879,7 +882,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 						menu.setDefaultItem(restoreItem);
 						MenuItem restoreTray = new MenuItem(menu, SWT.PUSH);
 						restoreTray
-								.setText("");
+								.setText(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_RestoreDesktopPanel);
 						restoreTray
 								.addSelectionListener(new SelectionAdapter() {
 									@Override
@@ -1050,8 +1053,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			try {
 				page = win.openPage(id, wbAdvisor.getDefaultPageInput());
 			} catch (WorkbenchException e) {
-				ErrorDialog.openError(win.getShell(),
-						"", //$NON-NLS-1$
+				ErrorDialog.openError(win.getShell(), "", //$NON-NLS-1$
 						e.getMessage(), e.getStatus());
 			}
 		}
@@ -1063,12 +1065,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			try {
 				page = getWorkbench().showPerspective(id, win);
 			} catch (WorkbenchException e) {
-				ErrorDialog
-						.openError(
-								win.getShell(),
-								"", //$NON-NLS-1$
-								"", //$NON-NLS-1$
-								e.getStatus());
+				ErrorDialog.openError(win.getShell(), "", //$NON-NLS-1$
+						"", //$NON-NLS-1$
+						e.getStatus());
 				return;
 			}
 		}
@@ -1085,12 +1084,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 		try {
 			page.openEditor(input, WELCOME_EDITOR_ID);
 		} catch (PartInitException e) {
-			ErrorDialog
-					.openError(
-							win.getShell(),
-							"", //$NON-NLS-1$
-							"", //$NON-NLS-1$
-							e.getStatus());
+			ErrorDialog.openError(win.getShell(), "", //$NON-NLS-1$
+					"", //$NON-NLS-1$
+					e.getStatus());
 		}
 		return;
 	}

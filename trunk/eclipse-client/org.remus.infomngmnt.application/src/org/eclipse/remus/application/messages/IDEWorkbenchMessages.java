@@ -8,6 +8,8 @@ public class IDEWorkbenchMessages extends NLS {
 	public static String ApplicationWorkbenchWindowAdvisor_InitializeMessage;
 	public static String ApplicationWorkbenchWindowAdvisor_PrepareRemus;
 	public static String ApplicationWorkbenchWindowAdvisor_WelcomeToRemus;
+	public static String ApplicationWorkbenchWindowAdvisor_Restore;
+	public static String ApplicationWorkbenchWindowAdvisor_RestoreDesktopPanel;
 	public static String DownloadLatestNewsJob_URLLatestNews;
 	public static String NavigationSection_LinkWithEditor;
 	public static String OpenElementToolItem_ErrorOpeningElement;

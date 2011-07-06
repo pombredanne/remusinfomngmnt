@@ -1,21 +1,29 @@
 package org.eclipse.remus.application;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProduct;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -26,15 +34,26 @@ import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.remus.Category;
+import org.eclipse.remus.InformationUnit;
+import org.eclipse.remus.InformationUnitListItem;
+import org.eclipse.remus.common.core.streams.StreamCloser;
+import org.eclipse.remus.common.core.streams.StreamUtil;
 import org.eclipse.remus.common.service.ITrayService;
 import org.eclipse.remus.common.ui.UIUtil;
 import org.eclipse.remus.common.ui.image.ResourceManager;
+import org.eclipse.remus.core.commands.CommandFactory;
+import org.eclipse.remus.core.extension.IInfoType;
+import org.eclipse.remus.core.model.InformationStructureEdit;
+import org.eclipse.remus.core.services.IEditingHandler;
+import org.eclipse.remus.core.services.IInformationTypeHandler;
+import org.eclipse.remus.js.extension.CheckResourceReferenceJob;
 import org.eclipse.remus.resources.util.ResourceUtil;
+import org.eclipse.remus.services.RemusServiceTracker;
 import org.eclipse.remus.ui.UIPlugin;
 import org.eclipse.remus.ui.desktop.panel.DesktopWindow;
-import org.eclipse.remus.ui.perspective.Perspective;
 import org.eclipse.remus.ui.preference.UIPreferenceInitializer;
-import org.eclipse.remus.welcome.WelcomeEditor;
+import org.eclipse.remus.util.CategoryUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -79,6 +98,7 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.ide.AboutInfo;
 import org.eclipse.ui.internal.ide.IDEInternalPreferences;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
@@ -243,19 +263,19 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 				productName = product.getName();
 			}
 			if (productName == null) {
-				message = IDEWorkbenchMessages.PromptOnExitDialog_message0;
+				message = ""; //$NON-NLS-1$
 			} else {
 				message = NLS.bind(
-						IDEWorkbenchMessages.PromptOnExitDialog_message1,
+						"", //$NON-NLS-1$
 						productName);
 			}
 
 			MessageDialogWithToggle dlg = MessageDialogWithToggle
 					.openOkCancelConfirm(getWindowConfigurer().getWindow()
 							.getShell(),
-							IDEWorkbenchMessages.PromptOnExitDialog_shellTitle,
+							"", //$NON-NLS-1$
 							message,
-							IDEWorkbenchMessages.PromptOnExitDialog_choice,
+							"", //$NON-NLS-1$
 							false, null, null);
 			if (dlg.getReturnCode() != IDialogConstants.OK_ID) {
 				return false;
@@ -322,31 +342,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 
 			}
 		});
-		SafeRunner.run(new ISafeRunnable() {
 
-			public void handleException(final Throwable exception) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void run() throws Exception {
-				if (UIPlugin.getDefault().getPreferenceStore()
-						.getBoolean(UIPreferenceInitializer.SHOW_WELCOME)
-						&& Perspective.PERSPECTIVE_ID.equals(PlatformUI
-								.getWorkbench().getActiveWorkbenchWindow()
-								.getActivePage().getPerspective().getId())) {
-					PlatformUI
-							.getWorkbench()
-							.getActiveWorkbenchWindow()
-							.getActivePage()
-							.openEditor(
-									new org.eclipse.remus.welcome.WelcomeEditorInput(),
-									WelcomeEditor.EDITOR_ID);
-				}
-
-			}
-
-		});
 		IProject project = ResourceUtil.getProject("Inbox"); //$NON-NLS-1$
 		if (project == null) {
 			try {
@@ -357,6 +353,115 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 				e.printStackTrace();
 			}
 		}
+		SafeRunner.run(new ISafeRunnable() {
+
+			public void handleException(final Throwable exception) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void run() throws Exception {
+				if (ApplicationPlugin.getDefault().getPreferenceStore()
+						.getBoolean(PreferenceInitializer.FIRST_START)) {
+					final RemusServiceTracker remusServiceTracker = new RemusServiceTracker(
+							ApplicationPlugin.getDefault().getBundle());
+					final AtomicReference<InformationUnit> result = new AtomicReference<InformationUnit>();
+					ApplicationPlugin.getDefault().getPreferenceStore()
+							.setValue(PreferenceInitializer.FIRST_START, false);
+					final Category findCategory = CategoryUtil.findCategory(
+							"Inbox", false); //$NON-NLS-1$
+					Job job = new Job(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_PrepareRemus) {
+
+						@Override
+						protected IStatus run(IProgressMonitor monitor) {
+							monitor.beginTask(
+									org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_InitializeMessage,
+									IProgressMonitor.UNKNOWN);
+							while (!CheckResourceReferenceJob.completed) {
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+
+							IInformationTypeHandler service = remusServiceTracker
+									.getService(IInformationTypeHandler.class);
+							IInfoType infoTypeByType = service
+									.getInfoTypeByType("HTML"); //$NON-NLS-1$
+							if (infoTypeByType != null) {
+								InformationStructureEdit edit = InformationStructureEdit
+										.newSession("HTML"); //$NON-NLS-1$
+								InformationUnit newInformationUnit = edit
+										.newInformationUnit();
+								newInformationUnit.setLabel(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_WelcomeToRemus);
+								InputStream resourceAsStream = getClass()
+										.getResourceAsStream("welcome.txt"); //$NON-NLS-1$
+								newInformationUnit.setStringValue(StreamUtil
+										.convertStreamToString(resourceAsStream));
+								StreamCloser.closeStreams(resourceAsStream);
+								CompoundCommand create_INFOTYPE = CommandFactory
+										.CREATE_INFOTYPE(newInformationUnit,
+												findCategory);
+								AdapterFactoryEditingDomain domain = remusServiceTracker
+										.getService(IEditingHandler.class)
+										.getNavigationEditingDomain();
+								domain.getCommandStack().execute(
+										create_INFOTYPE);
+								result.set(newInformationUnit);
+
+							}
+							return Status.OK_STATUS;
+						}
+					};
+					job.setUser(true);
+					job.schedule();
+					job.addJobChangeListener(new JobChangeAdapter() {
+						@Override
+						public void done(
+								org.eclipse.core.runtime.jobs.IJobChangeEvent event) {
+
+							UIUtil.getDisplay().asyncExec(new Runnable() {
+
+								public void run() {
+									try {
+										IDE.openEditor(
+												PlatformUI
+														.getWorkbench()
+														.getActiveWorkbenchWindow()
+														.getActivePage(),
+												(IFile) result
+														.get()
+														.getAdapter(IFile.class));
+										UIUtil.selectAndReveal(
+												result.get(),
+												PlatformUI
+														.getWorkbench()
+														.getActiveWorkbenchWindow());
+										UIUtil.selectAndReveal(
+												result.get()
+														.getAdapter(
+																InformationUnitListItem.class),
+												PlatformUI
+														.getWorkbench()
+														.getActiveWorkbenchWindow());
+									} catch (PartInitException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+
+								}
+							});
+
+						};
+					});
+
+				}
+
+			}
+
+		});
 	}
 
 	/**
@@ -464,7 +569,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			if (activeEditor != null) {
 				lastEditorTitle = activeEditor.getTitleToolTip();
 				title = NLS.bind(
-						IDEWorkbenchMessages.WorkbenchWindow_shellTitle,
+						"", //$NON-NLS-1$
 						lastEditorTitle, title);
 			}
 			IPerspectiveDescriptor persp = currentPage.getPerspective();
@@ -478,14 +583,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			}
 			if (label != null && !label.equals("")) { //$NON-NLS-1$
 				title = NLS.bind(
-						IDEWorkbenchMessages.WorkbenchWindow_shellTitle, label,
+						"", label, //$NON-NLS-1$
 						title);
 			}
 		}
 
 		String workspaceLocation = wbAdvisor.getWorkspaceLocation();
 		if (workspaceLocation != null) {
-			title = NLS.bind(IDEWorkbenchMessages.WorkbenchWindow_shellTitle,
+			title = NLS.bind("", //$NON-NLS-1$
 					title, workspaceLocation);
 		}
 
@@ -762,7 +867,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 					public void fill(final Menu menu, final int index) {
 						MenuItem restoreItem = new MenuItem(menu, SWT.PUSH);
 						restoreItem
-								.setText(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_Restore);
+								.setText("");
 						restoreItem
 								.addSelectionListener(new SelectionAdapter() {
 									@Override
@@ -774,7 +879,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 						menu.setDefaultItem(restoreItem);
 						MenuItem restoreTray = new MenuItem(menu, SWT.PUSH);
 						restoreTray
-								.setText(org.eclipse.remus.application.messages.IDEWorkbenchMessages.ApplicationWorkbenchWindowAdvisor_RestoreDesktopPanel);
+								.setText("");
 						restoreTray
 								.addSelectionListener(new SelectionAdapter() {
 									@Override
@@ -946,7 +1051,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 				page = win.openPage(id, wbAdvisor.getDefaultPageInput());
 			} catch (WorkbenchException e) {
 				ErrorDialog.openError(win.getShell(),
-						IDEWorkbenchMessages.Problems_Opening_Page,
+						"", //$NON-NLS-1$
 						e.getMessage(), e.getStatus());
 			}
 		}
@@ -961,8 +1066,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 				ErrorDialog
 						.openError(
 								win.getShell(),
-								IDEWorkbenchMessages.Workbench_openEditorErrorDialogTitle,
-								IDEWorkbenchMessages.Workbench_openEditorErrorDialogMessage,
+								"", //$NON-NLS-1$
+								"", //$NON-NLS-1$
 								e.getStatus());
 				return;
 			}
@@ -983,8 +1088,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 			ErrorDialog
 					.openError(
 							win.getShell(),
-							IDEWorkbenchMessages.Workbench_openEditorErrorDialogTitle,
-							IDEWorkbenchMessages.Workbench_openEditorErrorDialogMessage,
+							"", //$NON-NLS-1$
+							"", //$NON-NLS-1$
 							e.getStatus());
 		}
 		return;
@@ -1013,7 +1118,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
 		label.setBackground(bgCol);
 		label.setFont(JFaceResources.getFontRegistry().getBold(
 				JFaceResources.DEFAULT_FONT));
-		String msg = IDEWorkbenchMessages.IDEWorkbenchAdvisor_noPerspective;
+		String msg = ""; //$NON-NLS-1$
 		label.setText(msg);
 		ToolBarManager toolBarManager = new ToolBarManager();
 		// TODO: should obtain the open perspective action from ActionFactory

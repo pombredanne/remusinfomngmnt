@@ -122,6 +122,10 @@
             id="org.eclipse.remus.ui.openInfoType"
             name="%open.command.name">
       </command>
+       <command
+             id="org.eclipse.remus.application.syncAll"
+             name="%synchronize.command.name">
+       </command>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -305,6 +309,17 @@
             </command>
          </menu>
       </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.workbench.file?after=newWizardDropDown">
+         <command
+               commandId="org.eclipse.remus.ui.remote.newRepository"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.remus.application.syncAll"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
     <extension
           point="org.eclipse.ui.bindings">
@@ -339,6 +354,10 @@
             class="org.eclipse.remus.application.handler.OpenInfoTypeHandler"
             commandId="org.eclipse.remus.ui.openInfoType">
       </handler>
+        <handler
+              class="org.eclipse.remus.application.handler.SynchronizeAllHandler"
+              commandId="org.eclipse.remus.application.syncAll">
+        </handler>
     </extension>
     <extension
           point="org.eclipse.ui.newWizards">
@@ -375,4 +394,26 @@
             url="http://remus-software.org/marketplace/">
       </catalog>
    </extension>
+     <extension
+           point="org.eclipse.ui.commandImages">
+        <image
+              commandId="org.eclipse.remus.application.syncAll"
+              icon="icons/iconexperience/16/server_client_exchange.png">
+        </image>
+     </extension>
+     <extension
+           point="org.eclipse.ui.bindings">
+        <key
+              commandId="org.eclipse.remus.application.syncAll"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="F9">
+        </key>
+     </extension>
+     <extension
+           point="org.eclipse.equinox.preferences.preferences">
+        <initializer
+              class="org.eclipse.remus.application.PreferenceInitializer">
+        </initializer>
+     </extension>
 </plugin>

@@ -4,7 +4,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
@@ -19,10 +21,12 @@ import org.eclipse.ui.actions.NewWizardMenu;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.ide.IDEActionFactory;
+import org.eclipse.ui.ide.IIDEActionConstants;
 import org.eclipse.ui.internal.IWorkbenchHelpContextIds;
 import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.internal.handlers.IActionCommandMappingService;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
+import org.eclipse.ui.internal.provisional.application.IActionBarConfigurer2;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.osgi.framework.BundleContext;
@@ -56,6 +60,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction cleanAction;
 	private IWorkbenchAction aboutaction;
 	private IWorkbenchAction resetPerspectiveAction;
+	private MenuManager coolbarPopupMenuManager;
+	private IWorkbenchAction newWizardDropDownAction;
+	private IWorkbenchAction lockToolBarAction;
 
 	/**
 	 * Constructs a new action builder which contributes actions to the given
@@ -121,6 +128,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
 		register(redoAction);
 
+		newWizardDropDownAction = IDEActionFactory.NEW_WIZARD_DROP_DOWN
+				.create(window);
+		register(newWizardDropDownAction);
+
 		importResourcesAction = ActionFactory.IMPORT.create(window);
 		register(importResourcesAction);
 
@@ -138,6 +149,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 		resetPerspectiveAction = ActionFactory.RESET_PERSPECTIVE.create(window);
 		register(resetPerspectiveAction);
+
+		lockToolBarAction = ActionFactory.LOCK_TOOL_BAR.create(window);
+		register(lockToolBarAction);
 
 	}
 
@@ -171,6 +185,85 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		menu.add(new Separator());
 		menu.add(preferenceAction);
 		return menu;
+	}
+
+	@Override
+	protected void fillCoolBar(ICoolBarManager coolBar) {
+		IActionBarConfigurer2 actionBarConfigurer = (IActionBarConfigurer2) getActionBarConfigurer();
+		{ // Set up the context Menu
+			coolbarPopupMenuManager = new MenuManager();
+			coolbarPopupMenuManager.add(new ActionContributionItem(
+					lockToolBarAction));
+			coolBar.setContextMenuManager(coolbarPopupMenuManager);
+			// IMenuService menuService = (IMenuService) window
+			// .getService(IMenuService.class);
+			// menuService.populateContributionManager(coolbarPopupMenuManager,
+			//					"popup:windowCoolbarContextMenu"); //$NON-NLS-1$
+		}
+		coolBar.add(new GroupMarker(IIDEActionConstants.GROUP_FILE));
+		{ // File Group
+			IToolBarManager fileToolBar = actionBarConfigurer
+					.createToolBarManager();
+			fileToolBar.add(new Separator(IWorkbenchActionConstants.NEW_GROUP));
+			fileToolBar.add(newWizardDropDownAction);
+			fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.NEW_EXT));
+			fileToolBar.add(new GroupMarker(
+					IWorkbenchActionConstants.SAVE_GROUP));
+			fileToolBar.add(saveAction);
+			fileToolBar.add(saveAllAction);
+			fileToolBar
+					.add(new GroupMarker(IWorkbenchActionConstants.SAVE_EXT));
+			fileToolBar.add(getPrintItem());
+			fileToolBar
+					.add(new GroupMarker(IWorkbenchActionConstants.PRINT_EXT));
+
+			fileToolBar
+					.add(new Separator(IWorkbenchActionConstants.BUILD_GROUP));
+			fileToolBar
+					.add(new GroupMarker(IWorkbenchActionConstants.BUILD_EXT));
+			// fileToolBar.add(new Separator(
+			// IWorkbenchActionConstants.MB_ADDITIONS));
+
+			// Add to the cool bar manager
+			coolBar.add(actionBarConfigurer.createToolBarContributionItem(
+					fileToolBar, IWorkbenchActionConstants.TOOLBAR_FILE));
+		}
+
+		// coolBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+
+		// coolBar.add(new GroupMarker(IIDEActionConstants.GROUP_NAV));
+		// { // Navigate group
+		// IToolBarManager navToolBar = actionBarConfigurer
+		// .createToolBarManager();
+		// navToolBar.add(new Separator(
+		// IWorkbenchActionConstants.HISTORY_GROUP));
+		// navToolBar
+		// .add(new GroupMarker(IWorkbenchActionConstants.GROUP_APP));
+		//
+		// navToolBar.add(new Separator(IWorkbenchActionConstants.PIN_GROUP));
+		//
+		// // Add to the cool bar manager
+		// coolBar.add(actionBarConfigurer.createToolBarContributionItem(
+		// navToolBar, IWorkbenchActionConstants.TOOLBAR_NAVIGATE));
+		// }
+
+		// coolBar.add(new GroupMarker(IWorkbenchActionConstants.GROUP_EDITOR));
+
+		coolBar.add(new GroupMarker(IWorkbenchActionConstants.GROUP_HELP));
+
+		{ // Help group
+			IToolBarManager helpToolBar = actionBarConfigurer
+					.createToolBarManager();
+			helpToolBar
+					.add(new Separator(IWorkbenchActionConstants.GROUP_HELP));
+			// helpToolBar.add(searchComboItem);
+			// Add the group for applications to contribute
+			helpToolBar
+					.add(new GroupMarker(IWorkbenchActionConstants.GROUP_APP));
+			// Add to the cool bar manager
+			coolBar.add(actionBarConfigurer.createToolBarContributionItem(
+					helpToolBar, IWorkbenchActionConstants.TOOLBAR_HELP));
+		}
 	}
 
 	/**

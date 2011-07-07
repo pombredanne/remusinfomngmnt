@@ -79,7 +79,10 @@ public class FirstStartJob extends AbstractJob {
 					.setRepositoryTypeId("org.remus.infomngmnt.connector.rss"); //$NON-NLS-1$
 			createRemoteRepository.setName(Messages.FirstStartJob_BlogName);
 			createRemoteRepository.setUrl(Messages.FirstStartJob_BlogUrl);
-
+			createRemoteRepository.getOptions().put(
+					RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL, "60"); //$NON-NLS-1$
+			createRemoteRepository.getOptions().put(
+					RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY, "50"); //$NON-NLS-1$
 			IEditingHandler editingHandler = remusServiceTracker
 					.getService(IEditingHandler.class);
 			DisposableEditingDomain domain = editingHandler
@@ -108,7 +111,8 @@ public class FirstStartJob extends AbstractJob {
 									 * ChangeSetManager . MODE_CHECKOUT_REPLACE
 									 */, new NullProgressMonitor());
 				AbstractSynchronizationJob job2 = new AbstractSynchronizationJob(
-						Messages.FirstStartJob_Checkout, Collections.singletonList(findCategory)) {
+						Messages.FirstStartJob_Checkout,
+						Collections.singletonList(findCategory)) {
 
 					@Override
 					protected IStatus doRun(final IProgressMonitor monitor) {

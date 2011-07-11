@@ -13,6 +13,7 @@ package org.remus.infomngmnt.internal.file.commands;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -64,18 +65,20 @@ public class SaveFileOnDiskHandler extends AbstractHandler {
 				@Override
 				protected IStatus runCancelableRunnable(IProgressMonitor monitor) {
 					IStatus returnValue = Status.OK_STATUS;
-					monitor.beginTask(
-							NLS.bind(Messages.SaveFileOnDiskHandler_SavingFiles, open),
+					monitor.beginTask(NLS.bind(
+							Messages.SaveFileOnDiskHandler_SavingFiles, open),
 							informationUnitsFromExecutionEvent.size());
 					for (InformationUnit informationUnit : informationUnitsFromExecutionEvent) {
 						if (!monitor.isCanceled()) {
-							monitor.setTaskName(NLS.bind(Messages.SaveFileOnDiskHandler_Saving,
+							monitor.setTaskName(NLS.bind(
+									Messages.SaveFileOnDiskHandler_Saving,
 									informationUnit.getLabel()));
 							InformationStructureRead read = InformationStructureRead
 									.newSession(informationUnit);
 							read.getValueByNodeId(Activator.FILENAME);
 							IFile binaryReferenceFile = InformationUtil
 									.getBinaryReferenceFile(informationUnit);
+							FileWriter writer = null;
 							try {
 								if (binaryReferenceFile != null) {
 									File file = new File(
@@ -84,8 +87,9 @@ public class SaveFileOnDiskHandler extends AbstractHandler {
 													.getValueByNodeId(Activator.FILENAME));
 									InputStream contents = binaryReferenceFile
 											.getContents();
-									FileWriter writer = new FileWriter(file);
+									writer = new FileWriter(file);
 									IOUtils.copy(contents, writer);
+
 									monitor.worked(1);
 								}
 							} catch (Exception e) {
@@ -95,6 +99,15 @@ public class SaveFileOnDiskHandler extends AbstractHandler {
 														informationUnit
 																.getLabel(), e));
 								break;
+							} finally {
+								if (writer != null) {
+									try {
+										writer.flush();
+										writer.close();
+									} catch (IOException e) {
+										// do nothing.. we've done our best.
+									}
+								}
 							}
 						}
 					}
@@ -113,10 +126,15 @@ public class SaveFileOnDiskHandler extends AbstractHandler {
 							Messages.SaveFileOnDiskHandler_ErrorSaving2,
 							((CoreException) e.getCause()).getStatus());
 				} else {
-					ErrorDialog.openError(activeShell,
-							Messages.SaveFileOnDiskHandler_ErrorSaving2,
-							Messages.SaveFileOnDiskHandler_ErrorSaving2,
-							StatusCreator.newStatus(Messages.SaveFileOnDiskHandler_ErrorSaving3, e));
+					ErrorDialog
+							.openError(
+									activeShell,
+									Messages.SaveFileOnDiskHandler_ErrorSaving2,
+									Messages.SaveFileOnDiskHandler_ErrorSaving2,
+									StatusCreator
+											.newStatus(
+													Messages.SaveFileOnDiskHandler_ErrorSaving3,
+													e));
 
 				}
 			} catch (InterruptedException e) {

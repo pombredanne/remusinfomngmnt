@@ -30,7 +30,6 @@ import org.eclipse.remus.RemoteRepository;
 import org.eclipse.remus.RepositoryCollection;
 import org.eclipse.remus.core.edit.DisposableEditingDomain;
 import org.eclipse.remus.core.jobs.AbstractJob;
-import org.eclipse.remus.core.remote.AbstractExtensionRepository;
 import org.eclipse.remus.core.remote.services.IRepositoryExtensionService;
 import org.eclipse.remus.core.remote.services.IRepositoryService;
 import org.eclipse.remus.core.remote.sync.AbstractSynchronizationJob;
@@ -44,7 +43,6 @@ import org.eclipse.remus.util.IdFactory;
 import org.remus.infomngmnt.connector.rss.Messages;
 import org.remus.infomngmnt.connector.rss.PreferenceInitializer;
 import org.remus.infomngmnt.connector.rss.RssActivator;
-import org.remus.infomngmnt.connector.rss.RssCredentialProvider;
 
 /**
  * @author Tom Seidel <tom.seidel@remus-software.org>
@@ -100,11 +98,7 @@ public class FirstStartJob extends AbstractJob {
 			IRepositoryExtensionService extensionService = remusServiceTracker
 					.getService(IRepositoryExtensionService.class);
 			try {
-				AbstractExtensionRepository itemByRepository = extensionService
-						.getItemByRepository(createRemoteRepository);
-				((RssCredentialProvider) itemByRepository
-						.getCredentialProvider())
-						.setUrl(Messages.FirstStartJob_BlogUrl);
+				createRemoteRepository.setUrl(Messages.FirstStartJob_BlogUrl);
 				List list = Collections.singletonList(createRemoteRepository);
 				final ChangeSet createChangeSet = manager.createChangeSet(null,
 						list, null, 2/*

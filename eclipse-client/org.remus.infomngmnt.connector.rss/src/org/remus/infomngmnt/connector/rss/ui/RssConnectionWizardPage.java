@@ -43,11 +43,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-
 import org.remus.infomngmnt.connector.rss.Messages;
 import org.remus.infomngmnt.connector.rss.RssActivator;
 import org.remus.infomngmnt.connector.rss.RssConnector;
-import org.remus.infomngmnt.connector.rss.RssCredentialProvider;
 
 public class RssConnectionWizardPage extends WizardPage {
 
@@ -95,18 +93,20 @@ public class RssConnectionWizardPage extends WizardPage {
 		final Label nameLabel = new Label(group, SWT.NONE);
 		nameLabel.setText(Messages.RssConnectionWizardPage_Name);
 
-		this.nameText = new Text(group, SWT.BORDER);
-		this.nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		nameText = new Text(group, SWT.BORDER);
+		nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label apiurlLabel = new Label(group, SWT.NONE);
 		apiurlLabel.setText(Messages.RssConnectionWizardPage_URL);
 
-		this.apiUrlText = new Text(group, SWT.BORDER);
-		this.apiUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		apiUrlText = new Text(group, SWT.BORDER);
+		apiUrlText
+				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(group, SWT.NONE);
 
 		Composite composite = new Composite(group, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+				false, 1, 1));
 		GridLayout gridLayout_2 = new GridLayout(2, false);
 		gridLayout_2.marginWidth = 0;
 		gridLayout_2.marginHeight = 0;
@@ -116,37 +116,43 @@ public class RssConnectionWizardPage extends WizardPage {
 		validateCredentialsButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
 				try {
-					getContainer().run(true, false, new IRunnableWithProgress() {
-						public void run(final IProgressMonitor monitor)
-								throws InvocationTargetException, InterruptedException {
-							IStatus validate = RssConnectionWizardPage.this.repositoryDefinition
-									.validate();
-							if (!validate.isOK()) {
-								throw new InvocationTargetException(validate.getException());
-							}
-						}
-					});
+					getContainer().run(true, false,
+							new IRunnableWithProgress() {
+								public void run(final IProgressMonitor monitor)
+										throws InvocationTargetException,
+										InterruptedException {
+									IStatus validate = repositoryDefinition
+											.validate();
+									if (!validate.isOK()) {
+										throw new InvocationTargetException(
+												validate.getException());
+									}
+								}
+							});
 					setErrorMessage(null);
 				} catch (InvocationTargetException e) {
-					setErrorMessage(StringUtils.join(Messages.RssConnectionWizardPage_ErrorValidating, e.getCause()
-							.getMessage(), ")")); //$NON-NLS-1$
+					setErrorMessage(StringUtils.join(
+							Messages.RssConnectionWizardPage_ErrorValidating, e
+									.getCause().getMessage(), ")")); //$NON-NLS-1$
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		validateCredentialsButton.setText(Messages.RssConnectionWizardPage_Validate);
+		validateCredentialsButton
+				.setText(Messages.RssConnectionWizardPage_Validate);
 
 		Button btnObtainFeedTitle = new Button(composite, SWT.NONE);
 		btnObtainFeedTitle.setBounds(0, 0, 75, 25);
-		btnObtainFeedTitle.setText(Messages.RssConnectionWizardPage_ObtainTitle);
+		btnObtainFeedTitle
+				.setText(Messages.RssConnectionWizardPage_ObtainTitle);
 		btnObtainFeedTitle.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				String feedTitle = ((RssConnector) RssConnectionWizardPage.this.repositoryDefinition)
+				String feedTitle = ((RssConnector) repositoryDefinition)
 						.getFeedTitle();
 				if (feedTitle != null) {
-					RssConnectionWizardPage.this.nameText.setText(feedTitle);
+					nameText.setText(feedTitle);
 				}
 			}
 		});
@@ -159,15 +165,16 @@ public class RssConnectionWizardPage extends WizardPage {
 		group2.setLayout(gridLayout2);
 		Label refreshLabel = new Label(group2, SWT.NONE);
 		refreshLabel.setText(Messages.RssConnectionWizardPage_RefreshInterval);
-		this.refreshRateSpinner = new Spinner(group2, SWT.BORDER);
-		this.refreshRateSpinner.setMinimum(1);
-		this.refreshRateSpinner.setIncrement(1);
+		refreshRateSpinner = new Spinner(group2, SWT.BORDER);
+		refreshRateSpinner.setMinimum(1);
+		refreshRateSpinner.setIncrement(1);
 
 		Label deleteLabel = new Label(group2, SWT.NONE);
-		deleteLabel.setText(Messages.RssConnectionWizardPage_DeleteFeedOlderThan);
-		this.deleteSpinner = new Spinner(group2, SWT.BORDER);
-		this.deleteSpinner.setMinimum(1);
-		this.deleteSpinner.setIncrement(1);
+		deleteLabel
+				.setText(Messages.RssConnectionWizardPage_DeleteFeedOlderThan);
+		deleteSpinner = new Spinner(group2, SWT.BORDER);
+		deleteSpinner.setMinimum(1);
+		deleteSpinner.setIncrement(1);
 
 		final Group group3 = new Group(container, SWT.NONE);
 		group3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -175,22 +182,26 @@ public class RssConnectionWizardPage extends WizardPage {
 		GridLayout gridLayout_1 = new GridLayout();
 		gridLayout_1.numColumns = 2;
 		group3.setLayout(gridLayout_1);
-		this.authentificationButton = new Button(group3, SWT.CHECK);
-		this.authentificationButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
-				2, 1));
-		this.authentificationButton.setText(Messages.RssConnectionWizardPage_UseAuthentication);
+		authentificationButton = new Button(group3, SWT.CHECK);
+		authentificationButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				false, false, 2, 1));
+		authentificationButton
+				.setText(Messages.RssConnectionWizardPage_UseAuthentication);
 		Label username = new Label(group3, SWT.NONE);
-		username.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		username.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+				false, 1, 1));
 		username.setText(Messages.RssConnectionWizardPage_Username);
 
-		this.userNameText = new Text(group3, SWT.BORDER);
-		this.userNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		userNameText = new Text(group3, SWT.BORDER);
+		userNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
 
 		Label lblPassword = new Label(group3, SWT.NONE);
 		lblPassword.setText(Messages.RssConnectionWizardPage_Password);
 
-		this.passwordText = new Text(group3, SWT.BORDER | SWT.PASSWORD);
-		this.passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		passwordText = new Text(group3, SWT.BORDER | SWT.PASSWORD);
+		passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
 
 		bindValuesToUi();
 		setControl(container);
@@ -198,10 +209,12 @@ public class RssConnectionWizardPage extends WizardPage {
 
 	public void setRemoteObject(final RemoteRepository repository) {
 		this.repository = repository;
-		IRepositoryExtensionService extensionService = RemoteUiActivator.getDefault()
-				.getServiceTracker().getService(IRepositoryExtensionService.class);
+		IRepositoryExtensionService extensionService = RemoteUiActivator
+				.getDefault().getServiceTracker()
+				.getService(IRepositoryExtensionService.class);
 		try {
-			this.repositoryDefinition = extensionService.getItemByRepository(repository);
+			repositoryDefinition = extensionService
+					.getItemByRepository(repository);
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -210,70 +223,74 @@ public class RssConnectionWizardPage extends WizardPage {
 
 	public void bindValuesToUi() {
 		DataBindingContext ctx = new DataBindingContext();
-		this.repositoryDefinition.getCredentialProvider().setIdentifier(this.repository.getId());
-		ISWTObservableValue observeText = SWTObservables.observeText(this.nameText, SWT.Modify);
-		IObservableValue observeValue = EMFObservables.observeValue(this.repository,
+		repositoryDefinition.getCredentialProvider().setIdentifier(
+				repository.getId());
+		ISWTObservableValue observeText = SWTObservables.observeText(nameText,
+				SWT.Modify);
+		IObservableValue observeValue = EMFObservables.observeValue(repository,
 				InfomngmntPackage.Literals.REMOTE_OBJECT__NAME);
 		ctx.bindValue(observeText, observeValue);
-		ISWTObservableValue observeText2 = SWTObservables.observeText(this.apiUrlText, SWT.Modify);
-		IObservableValue observeValue3 = BeansObservables.observeValue(this.repositoryDefinition
-				.getCredentialProvider(), RssCredentialProvider.URL);
-		IObservableValue observeValue2 = EMFObservables.observeValue(this.repository,
-				InfomngmntPackage.Literals.REMOTE_OBJECT__URL);
+		ISWTObservableValue observeText2 = SWTObservables.observeText(
+				apiUrlText, SWT.Modify);
+		IObservableValue observeValue2 = EMFObservables.observeValue(
+				repository, InfomngmntPackage.Literals.REMOTE_OBJECT__URL);
 
-		this.refreshRateSpinner.setSelection(Integer.parseInt(this.repository.getOptions().get(
-				RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL)));
-		this.refreshRateSpinner.addListener(SWT.Selection, new Listener() {
+		refreshRateSpinner.setSelection(Integer.parseInt(repository
+				.getOptions().get(
+						RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL)));
+		refreshRateSpinner.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				RssConnectionWizardPage.this.repository.getOptions().put(
+				repository.getOptions().put(
 						RssActivator.REPOSITORY_OPTIONS_REFRESH_INTERVAL,
-						String.valueOf(RssConnectionWizardPage.this.refreshRateSpinner
-								.getSelection()));
+						String.valueOf(refreshRateSpinner.getSelection()));
 			}
 		});
 
-		this.deleteSpinner.setSelection(Integer.parseInt(this.repository.getOptions().get(
-				RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY)));
-		this.deleteSpinner.addListener(SWT.Selection, new Listener() {
+		deleteSpinner.setSelection(Integer.parseInt(repository.getOptions()
+				.get(RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY)));
+		deleteSpinner.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				RssConnectionWizardPage.this.repository.getOptions().put(
+				repository.getOptions().put(
 						RssActivator.REPOSITORY_OPTIONS_DELETE_AFTER_X_DAY,
-						String.valueOf(RssConnectionWizardPage.this.deleteSpinner.getSelection()));
+						String.valueOf(deleteSpinner.getSelection()));
 			}
 		});
-		this.authentificationButton.setSelection(Boolean.valueOf(this.repository.getOptions().get(
-				RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION)));
+		authentificationButton.setSelection(Boolean.valueOf(repository
+				.getOptions().get(
+						RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION)));
 		ISWTObservableValue authEnabledObservable = SWTObservables
-				.observeSelection(this.authentificationButton);
+				.observeSelection(authentificationButton);
 		ISWTObservableValue userNameEnabledObservable = SWTObservables
-				.observeEnabled(this.userNameText);
+				.observeEnabled(userNameText);
 		ISWTObservableValue passWordEnabledObservable = SWTObservables
-				.observeEnabled(this.passwordText);
+				.observeEnabled(passwordText);
 		ctx.bindValue(authEnabledObservable, userNameEnabledObservable, null,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)).updateTargetToModel();
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER))
+				.updateTargetToModel();
 		ctx.bindValue(authEnabledObservable, passWordEnabledObservable, null,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)).updateTargetToModel();
-		this.authentificationButton.addListener(SWT.Selection, new Listener() {
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER))
+				.updateTargetToModel();
+		authentificationButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event event) {
-				RssConnectionWizardPage.this.repository.getOptions().put(
+				repository.getOptions().put(
 						RssActivator.REPOSITORY_OPTIONS_BASIC_AUTHENTICATION,
-						String.valueOf(RssConnectionWizardPage.this.authentificationButton
-								.getSelection()));
+						String.valueOf(authentificationButton.getSelection()));
 			}
 		});
 
-		IObservableValue userNameModel = BeansObservables.observeValue(this.repositoryDefinition
-				.getCredentialProvider(), CredentialProvider.USER_NAME);
-		IObservableValue passwordModel = BeansObservables.observeValue(this.repositoryDefinition
-				.getCredentialProvider(), CredentialProvider.PASSWORD);
+		IObservableValue userNameModel = BeansObservables.observeValue(
+				repositoryDefinition.getCredentialProvider(),
+				CredentialProvider.USER_NAME);
+		IObservableValue passwordModel = BeansObservables.observeValue(
+				repositoryDefinition.getCredentialProvider(),
+				CredentialProvider.PASSWORD);
 
-		ISWTObservableValue userNameTarget = SWTObservables.observeText(this.userNameText,
-				SWT.Modify);
-		ISWTObservableValue passwordTarget = SWTObservables.observeText(this.passwordText,
-				SWT.Modify);
+		ISWTObservableValue userNameTarget = SWTObservables.observeText(
+				userNameText, SWT.Modify);
+		ISWTObservableValue passwordTarget = SWTObservables.observeText(
+				passwordText, SWT.Modify);
 
-		ctx.bindValue(observeText2, observeValue3);
-		ctx.bindValue(observeValue3, observeValue2);
+		ctx.bindValue(observeText2, observeValue2);
 		ctx.bindValue(userNameTarget, userNameModel);
 		ctx.bindValue(passwordTarget, passwordModel);
 

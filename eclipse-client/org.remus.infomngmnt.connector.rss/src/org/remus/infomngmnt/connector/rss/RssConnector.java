@@ -248,7 +248,7 @@ public class RssConnector extends AbstractExtensionRepository implements
 	 */
 	@Override
 	public String getRepositoryUrl() {
-		return ((RssCredentialProvider) getCredentialProvider()).getUrl();
+		return getRepositoryById(getLocalRepositoryId()).getUrl();
 	}
 
 	public String getFeedTitle() {

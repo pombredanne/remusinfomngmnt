@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.remus.infomngmnt.connector.rss;
 
-import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.remus.core.remote.security.CredentialProvider;
 
 /**
@@ -19,32 +18,12 @@ import org.eclipse.remus.core.remote.security.CredentialProvider;
  */
 public class RssCredentialProvider extends CredentialProvider {
 
-	public static final String URL = "url"; //$NON-NLS-1$
-
 	/**
 	 * 
 	 */
 	public RssCredentialProvider() {
 		super();
 		setGroup("rss"); //$NON-NLS-1$
-	}
-
-	public String getUrl() {
-		try {
-			return getNode().get(URL, ""); //$NON-NLS-1$
-		} catch (StorageException e) {
-			throw new SecurityException(e);
-		}
-	}
-
-	public void setUrl(final String url) {
-		try {
-			String oldValue = getUserName();
-			getNode().put(URL, url, true);
-			firePropertyChange(URL, oldValue, url);
-		} catch (StorageException e) {
-			throw new SecurityException(e);
-		}
 	}
 
 }

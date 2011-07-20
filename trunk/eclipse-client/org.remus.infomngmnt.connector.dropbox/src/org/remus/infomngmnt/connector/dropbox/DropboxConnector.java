@@ -210,7 +210,8 @@ public class DropboxConnector extends AbstractExtensionRepository implements
 						false, null);
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						Messages.DropboxConnector_ErrorBuildingSingleCategory, e));
+						Messages.DropboxConnector_ErrorBuildingSingleCategory,
+						e));
 			}
 			if (metadata.get(CONTENTS_NODE) != null
 					&& metadata.get(CONTENTS_NODE) instanceof JSONArray) {
@@ -332,7 +333,8 @@ public class DropboxConnector extends AbstractExtensionRepository implements
 						false, null);
 			} catch (Exception e) {
 				throw new RemoteException(StatusCreator.newStatus(
-						Messages.DropboxConnector_ErrorBuildingSingleCategory, e));
+						Messages.DropboxConnector_ErrorBuildingSingleCategory,
+						e));
 			}
 			if (metadata.get(CONTENTS_NODE) != null
 					&& metadata.get(CONTENTS_NODE) instanceof JSONArray) {
@@ -462,8 +464,11 @@ public class DropboxConnector extends AbstractExtensionRepository implements
 					}
 				}
 			} catch (Exception e) {
-				throw new RemoteException(StatusCreator.newStatus(
-						Messages.DropboxConnector_ErrorResolvingBinaryReference, e));
+				throw new RemoteException(
+						StatusCreator
+								.newStatus(
+										Messages.DropboxConnector_ErrorResolvingBinaryReference,
+										e));
 			}
 		}
 		return null;
@@ -541,7 +546,8 @@ public class DropboxConnector extends AbstractExtensionRepository implements
 					}
 				} catch (Exception e) {
 					throw new RemoteException(
-							StatusCreator.newStatus(Messages.DropboxConnector_ErrorCommittingElement));
+							StatusCreator
+									.newStatus(Messages.DropboxConnector_ErrorCommittingElement));
 				}
 				Map resourceFromUrl = getResourceFromUrl(remoteObject.getUrl(),
 						true);
@@ -565,8 +571,11 @@ public class DropboxConnector extends AbstractExtensionRepository implements
 					FileUtils.writeByteArrayToFile(file, saveObjectToByte);
 					getApi().putFile(DROPBOX, infoFile, file);
 				} catch (Exception e) {
-					throw new RemoteException(StatusCreator.newStatus(
-							Messages.DropboxConnector_ErrorComittingCategory, e));
+					throw new RemoteException(
+							StatusCreator
+									.newStatus(
+											Messages.DropboxConnector_ErrorComittingCategory,
+											e));
 				} finally {
 					file.delete();
 				}
@@ -653,8 +662,9 @@ public class DropboxConnector extends AbstractExtensionRepository implements
 					getApi().metadata(DROPBOX, newPath, 1000, null, false,
 							false, null);
 					exists = true;
-				} finally {
-					// skip that
+
+				} catch (DropboxException e) {
+
 				}
 				if (exists) {
 					newPath = new StringWriter()

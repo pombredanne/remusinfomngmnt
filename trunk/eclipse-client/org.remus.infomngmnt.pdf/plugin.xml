@@ -190,14 +190,6 @@
             <with
                   variable="selection">
                <and>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <test
-                           property="org.remus.infomngmnt.iutypes.typeEquals"
-                           value="PDF">
-                     </test>
-                  </iterate>
                   <count
                         value="(1-">
                   </count>

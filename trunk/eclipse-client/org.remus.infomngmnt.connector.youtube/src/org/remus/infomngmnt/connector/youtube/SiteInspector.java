@@ -140,7 +140,7 @@ public class SiteInspector {
 				new Comparator<String>() {
 
 					public int compare(String o1, String o2) {
-						return Collator.getInstance().compare(o1, o2);
+						return Collator.getInstance().compare(o1, o2) * -1;
 					}
 				});
 		treeMap.putAll(returnValue);

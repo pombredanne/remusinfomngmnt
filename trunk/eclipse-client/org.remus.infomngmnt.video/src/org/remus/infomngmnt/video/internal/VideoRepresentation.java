@@ -83,19 +83,22 @@ public class VideoRepresentation extends AbstractInformationRepresentation {
 				VideoActivator.NODE_NAME_WIDTH).getLongValue();
 		long height = InformationUtil.getChildByType(getValue(),
 				VideoActivator.NODE_NAME_HEIGHT).getLongValue();
-		this.videoHref = getFile()
-				.getProject()
-				.getFolder(ResourceUtil.BINARY_FOLDER)
-				.getFile(
-						getValue().getBinaryReferences()
-								.getProjectRelativePath()).getLocation();
+		if (getValue().getBinaryReferences() != null) {
+			this.videoHref = getFile()
+					.getProject()
+					.getFolder(ResourceUtil.BINARY_FOLDER)
+					.getFile(
+							getValue().getBinaryReferences()
+									.getProjectRelativePath()).getLocation();
+
+		}
 		/*
 		 * Next: build the html snippet for displaying the media and put them
 		 * into a collection This collection will be passed to freemark. The
 		 * renderer will render this media html in the viewer.
 		 */
 		Map<String, String> freemarkParameters = new HashMap<String, String>();
-		if (mediaPlayer != null) {
+		if (mediaPlayer != null && this.videoHref != null) {
 			freemarkParameters.put("mediaplayerheader", //$NON-NLS-1$
 					mediaPlayer.buildHeaderScript());
 			freemarkParameters.put("mediaplayer", mediaPlayer.buildHtml( //$NON-NLS-1$

@@ -47,7 +47,9 @@
 		color: #415564;
 	}
   </style>
+  <#if additionals.mediaplayer?? >
   ${additionals.mediaplayerheader}
+  </#if>
 </head>
 <body>
 	<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
@@ -75,8 +77,11 @@
   		<div class="videoPlayer" style="margin: 0 position:relative; auto;width:100%; color: #${.globals.sectionTitleColor};border: 1px solid #${.globals.sectionBgColor}; padding: 5px;text-align: left;background-image: url(${.globals.jslibstatelocation}/images/gradientSectionImage.png); background-repeat: repeat-x; position:relative;">
   			<span class="systemfont" style="font-weight:bold;">Videoplayer</span>
   		</div>
-  		
+  			<#if additionals.mediaplayer?? >
   			${additionals.mediaplayer}
+  			<#else>
+  			No file found...
+  			</#if>
   		
   	</div>
 </body>

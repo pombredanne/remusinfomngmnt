@@ -271,7 +271,7 @@ public class MailPostCreationHandler extends PostCreationHandler {
 
 			String iframe = "<iframe src=\"cid:"
 					+ referenceCommand.getCreatedId()
-					+ "\" width=\"100%\" height=\"100%\"></iframe>";
+					+ "\" width=\"100%\" height=\"500\"></iframe>";
 			edit.setValue(unit, MailActivator.NODE_NAME_CONTENT, iframe);
 
 		} catch (Exception e) {

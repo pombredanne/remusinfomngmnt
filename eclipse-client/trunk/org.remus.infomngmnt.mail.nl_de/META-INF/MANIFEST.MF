@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.remus.infomngmnt.mail.nl_de Fragment
 Bundle-SymbolicName: org.remus.infomngmnt.mail.nl_de
-Bundle-Version: 1.0.0
-Fragment-Host: org.remus.infomngmnt.mail;bundle-version="[1.0.0,1.1.0)"
+Bundle-Version: 0.3.0.qualifier
+Fragment-Host: org.remus.infomngmnt.mail;bundle-version="[0.1.0,1.1.0)"

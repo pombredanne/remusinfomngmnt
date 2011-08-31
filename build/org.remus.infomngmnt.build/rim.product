@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Remus Information Management" id="org.eclipse.remus.application.product" application="org.eclipse.remus.application.application" version="0.1.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Remus Information Management" id="org.eclipse.remus.application.product" application="org.eclipse.remus.application.application" version="0.3.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>

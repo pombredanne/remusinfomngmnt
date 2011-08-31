@@ -2,7 +2,7 @@
 <feature
       id="org.remus.infomngmnt.rcp"
       label="Rcp Remus Feature"
-      version="1.0.0.qualifier">
+      version="0.3.0.qualifier">
 
    <description url="http://www.remus-software.org">
       This feature includes all basis functionalities to get RIM working

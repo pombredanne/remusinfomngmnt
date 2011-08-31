@@ -83,5 +83,13 @@
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
+    <extension
+          point="org.eclipse.remus.ui.desktop.traySection">
+       <sectionBox
+             id="org.remus.infomngmnt.richtext.notes"
+             name="Notes"
+             sectionControl="org.remus.infomngmnt.richtext.desktop.NotesTraySection">
+       </sectionBox>
+    </extension>
 
 </plugin>

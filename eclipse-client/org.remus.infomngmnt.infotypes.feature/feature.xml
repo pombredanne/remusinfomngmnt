@@ -2,7 +2,7 @@
 <feature
       id="org.remus.infomngmnt.infotypes.feature"
       label="RIM Basic Infotyoes"
-      version="0.1.0.qualifier"
+      version="0.3.0.qualifier"
       provider-name="Remus Software">
 
    <description url="http://remus-software.org/">

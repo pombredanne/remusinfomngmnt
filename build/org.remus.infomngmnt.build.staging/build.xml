@@ -65,7 +65,7 @@
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
-		<!--
+		
 		<zip destfile="output/N.RIM/RIM-win32.win32.x86.zip" update="true">
 			<zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.ui.sdk.scheduler.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
@@ -91,7 +91,7 @@
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.metadata.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs"/>
 		    <zipfileset dir="${build.dir.location}/../customization/p2profiledata" includes="org.eclipse.equinox.p2.artifact.repository.prefs" fullpath="RIM/p2/org.eclipse.equinox.p2.engine/profileRegistry/profile.profile/.data/.settings/org.eclipse.equinox.p2.artifact.repository.prefs"/>
 		</zip>
-		-->
+		
 		<delete dir="${unzipTarget}" failonerror="false" />
 		
 		<unzip dest="${unzipTarget}" src="output/N.RIM/RIM-linux.gtk.x86.zip"></unzip>

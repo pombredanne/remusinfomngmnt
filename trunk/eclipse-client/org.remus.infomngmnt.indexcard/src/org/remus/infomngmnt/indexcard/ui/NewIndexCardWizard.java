@@ -11,9 +11,9 @@
  *******************************************************************************/
 package org.remus.infomngmnt.indexcard.ui;
 
-import org.remus.infomngmnt.common.ui.image.ResourceManager;
+import org.eclipse.remus.common.ui.image.ResourceManager;
 import org.remus.infomngmnt.indexcard.Activator;
-import org.remus.infomngmnt.ui.newwizards.NewInfoObjectWizard;
+import org.eclipse.remus.ui.newwizards.NewInfoObjectWizard;
 
 public class NewIndexCardWizard extends NewInfoObjectWizard {
 
@@ -21,12 +21,12 @@ public class NewIndexCardWizard extends NewInfoObjectWizard {
 		super();
 		setWindowTitle("New index card");
 	}
-	
+
 	@Override
 	protected String getInfoTypeId() {
 		return Activator.INFO_TYPE_ID;
 	}
-	
+
 	@Override
 	public void addPages() {
 		super.addPages();

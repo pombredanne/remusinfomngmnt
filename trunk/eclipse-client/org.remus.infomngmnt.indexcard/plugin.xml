@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.remus.infomngmnt.core.informationType">
+         point="org.eclipse.remus.core.informationType">
       <information
             excludeFromIndex="false"
             icon="icons/iconexperience/indexcard.png"
@@ -15,7 +15,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.remus.infomngmnt.ui.simple"
+            category="org.eclipse.remus.ui.simple"
             class="org.remus.infomngmnt.indexcard.ui.NewIndexCardWizard"
             finalPerspective="org.remus.infomngmnt.ui.infoperspective"
             icon="icons/iconexperience/indexcard_new.png"
@@ -24,22 +24,22 @@
       </wizard>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.rules.ruleDefinition">
+         point="org.eclipse.remus.ui.rules.ruleDefinition">
       <validTransfers
-            transferId="org.remus.infomngmnt.indexcard.filetransfer"
+            transferId="org.eclipse.remus.core.filetransfer"
             typeId="INDEXCARD">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.indexcard.htmltransfer"
+            transferId="org.eclipse.remus.core.htmltransfer"
             typeId="INDEXCARD">
       </validTransfers>
       <validTransfers
-            transferId="org.remus.infomngmnt.indexcard.texttransfer"
+            transferId="org.eclipse.remus.core.texttransfer"
             typeId="INDEXCARD">
       </validTransfers>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.editor.informationUi">
+         point="org.eclipse.remus.ui.editor.informationUi">
       <editPage
             editpage="org.remus.infomngmnt.indexcard.ui.FormPage"
             icon="icons/iconexperience/indexcard_edit.png"
@@ -49,7 +49,7 @@
       </editPage>
    </extension>
    <extension
-         point="org.remus.infomngmnt.ui.infotypes.infotypeimages">
+         point="org.eclipse.remus.ui.infotypes.infotypeimages">
       <image
             image="icons/iconexperience/indexcard.png"
             infotype="INDEXCARD">

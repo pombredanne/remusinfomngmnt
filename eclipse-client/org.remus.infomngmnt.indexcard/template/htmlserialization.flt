@@ -1,10 +1,10 @@
-<#ftl ns_prefixes={"D":"http://remus-software.org/infomngmnt/1.0"}>
-<#setting url_escaping_charset="UTF-8">  
+<#ftl ns_prefixes={"D":"http://eclipse.org/remus/1.0"}>
+<#setting url_escaping_charset="UTF-8">
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="${.globals.sharedResources.org_remus_infomngmnt_jslib_curvycorner}"></script>
+  <script src="${.globals.sharedResources.org_remus_infomngmnt_js_curvycorner}"></script>
   <script type="text/JavaScript">
 	  window.onload = function()
 	  {
@@ -16,7 +16,7 @@
 	          antiAlias: true,
 	          autoPad: true
 	      }
-	
+
 	      var myBoxObject = new curvyCorners(settings,"headerSection");
 	      myBoxObject.applyCornersToAll();
 	  }
@@ -34,16 +34,16 @@
 		font-weight:bold;
 		color: #415564;
 	}
-	
+
 }
  </style>
 <body>
-	<div style="margin:5px;">		 		
+	<div style="margin:5px;">
 		<table>
-			<tr>			
+			<tr>
 				<td class="bold">Title:</td>
 				<td class="bold" colspan="2">${data.__label?html}</td>
-			</tr>			
+			</tr>
 			<tr>
 			<#if data.__keywords?has_content >
 				<td class="bold">Keywords:</td>
@@ -61,7 +61,7 @@
 	<div style="margin:8px;">
 		<#if data.frontside?has_content >
 			<p>
-				<div class="bold">Frontside:</div>				
+				<div class="bold">Frontside:</div>
 				${data.frontside?html?replace("\n","<br>")}
 			</p>
 		</#if>
@@ -69,7 +69,7 @@
 	<div style="margin:8px;">
 		<#if data.backside?has_content >
 			<p>
-				<div class="bold">Backside:</div>				
+				<div class="bold">Backside:</div>
 				${data.backside?html?replace("\n","<br>")}
 			</p>
 		</#if>

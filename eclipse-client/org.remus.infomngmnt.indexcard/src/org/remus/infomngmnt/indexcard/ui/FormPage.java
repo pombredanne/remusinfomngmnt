@@ -21,11 +21,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.remus.infomngmnt.ui.databinding.BindingWidgetFactory;
-import org.remus.infomngmnt.ui.databinding.StyledTextBindingWidget;
-import org.remus.infomngmnt.ui.editors.editpage.AbstractInformationFormPage;
-import org.remus.infomngmnt.common.ui.jface.AnnotatingQuickFixTextBox;
-import org.remus.infomngmnt.core.model.InformationStructureRead;
+import org.eclipse.remus.ui.databinding.BindingWidgetFactory;
+import org.eclipse.remus.ui.databinding.StyledTextBindingWidget;
+import org.eclipse.remus.ui.editors.editpage.AbstractInformationFormPage;
+import org.eclipse.remus.common.ui.jface.AnnotatingQuickFixTextBox;
+import org.eclipse.remus.core.model.InformationStructureRead;
 import org.remus.infomngmnt.indexcard.Activator;
 
 
@@ -58,7 +58,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 		this.frontside = new AnnotatingQuickFixTextBox(client, "", "");
 		addControl(this.frontside.getFTextField());
-		
+
 		final Section generalSection1 = toolkit.createSection(body, ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.EXPANDED);
 		final GridData gd_generalSection1 = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -75,7 +75,7 @@ public class FormPage extends AbstractInformationFormPage {
 
 		this.backside = new AnnotatingQuickFixTextBox(client1, "", "");
 		addControl(this.backside.getFTextField());
-		
+
 		doCreateSemanticSection(body, toolkit);
 		form.reflow(true);
 
@@ -83,19 +83,19 @@ public class FormPage extends AbstractInformationFormPage {
 
 	@Override
 	public void bindValuesToUi() {
-		super.bindValuesToUi();		
+		super.bindValuesToUi();
 		InformationStructureRead read = InformationStructureRead.newSession(getModelObject());
-		
+
 		StyledTextBindingWidget textBindingWidget = BindingWidgetFactory.createStyledText(
 				this.frontside.getFTextField(), this);
 		textBindingWidget.bindModel(read.getChildByNodeId(Activator.NODE_NAME_FRONTSIDE),
 				read.getFeatureByNodeId(Activator.NODE_NAME_FRONTSIDE));
-		
+
 		StyledTextBindingWidget textBindingWidget1 = BindingWidgetFactory.createStyledText(
 				this.backside.getFTextField(), this);
 		textBindingWidget1.bindModel(read.getChildByNodeId(Activator.NODE_NAME_BACKSIDE),
 				read.getFeatureByNodeId(Activator.NODE_NAME_BACKSIDE));
-		
+
 	}
 
 }
